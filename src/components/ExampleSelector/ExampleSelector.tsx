@@ -1,13 +1,17 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, Code } from 'lucide-react'
+import { ChevronDown, Code, Search } from 'lucide-react'
 import { useExecutionStore } from '@/store'
 import { codeExamples, exampleCategories, type CodeExample } from '@/data/examples'
 import styles from './ExampleSelector.module.css'
 
+type Difficulty = 'all' | 'easy' | 'medium' | 'hard'
+
 export function ExampleSelector() {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('all')
+  const [searchQuery, setSearchQuery] = useState('')
 
   const setCode = useExecutionStore(state => state.setCode)
   const reset = useExecutionStore(state => state.reset)
@@ -20,11 +24,41 @@ export function ExampleSelector() {
     setCode(example.code)
     setIsOpen(false)
     setSelectedCategory(null)
+    setSearchQuery('')
   }
 
-  const filteredExamples = selectedCategory
-    ? codeExamples.filter(e => e.category === selectedCategory)
-    : codeExamples
+  const filteredExamples = useMemo(() => {
+    let examples = codeExamples
+
+    // Filter by category
+    if (selectedCategory) {
+      examples = examples.filter(e => e.category === selectedCategory)
+    }
+
+    // Filter by difficulty
+    if (selectedDifficulty !== 'all') {
+      examples = examples.filter(e => e.difficulty === selectedDifficulty)
+    }
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+      examples = examples.filter(e =>
+        e.name.toLowerCase().includes(query) ||
+        e.description.toLowerCase().includes(query)
+      )
+    }
+
+    return examples
+  }, [selectedCategory, selectedDifficulty, searchQuery])
+
+  const categoryCount = useMemo(() => {
+    const counts: Record<string, number> = {}
+    codeExamples.forEach(e => {
+      counts[e.category] = (counts[e.category] || 0) + 1
+    })
+    return counts
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -37,6 +71,7 @@ export function ExampleSelector() {
       >
         <Code size={16} />
         <span className={styles.triggerText}>Examples</span>
+        <span className={styles.count}>{codeExamples.length}</span>
         <ChevronDown
           size={14}
           className={`${styles.chevron} ${isOpen ? styles.open : ''}`}
@@ -52,13 +87,38 @@ export function ExampleSelector() {
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.15 }}
           >
+            {/* Search */}
+            <div className={styles.searchContainer}>
+              <Search size={14} className={styles.searchIcon} />
+              <input
+                type="text"
+                placeholder="Search problems..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+
+            {/* Difficulty filter */}
+            <div className={styles.difficultyFilter}>
+              {(['all', 'easy', 'medium', 'hard'] as const).map(diff => (
+                <button
+                  key={diff}
+                  className={`${styles.difficultyBtn} ${styles[diff]} ${selectedDifficulty === diff ? styles.active : ''}`}
+                  onClick={() => setSelectedDifficulty(diff)}
+                >
+                  {diff === 'all' ? 'All' : diff.charAt(0).toUpperCase() + diff.slice(1)}
+                </button>
+              ))}
+            </div>
+
             {/* Categories */}
             <div className={styles.categories}>
               <button
                 className={`${styles.categoryBtn} ${!selectedCategory ? styles.active : ''}`}
                 onClick={() => setSelectedCategory(null)}
               >
-                All
+                All ({codeExamples.length})
               </button>
               {exampleCategories.map(cat => (
                 <button
@@ -68,22 +128,32 @@ export function ExampleSelector() {
                 >
                   <span>{cat.icon}</span>
                   <span>{cat.name}</span>
+                  <span className={styles.catCount}>({categoryCount[cat.id] || 0})</span>
                 </button>
               ))}
             </div>
 
             {/* Examples list */}
             <div className={styles.examples}>
-              {filteredExamples.map(example => (
-                <button
-                  key={example.id}
-                  className={styles.exampleBtn}
-                  onClick={() => handleSelectExample(example)}
-                >
-                  <div className={styles.exampleName}>{example.name}</div>
-                  <div className={styles.exampleDesc}>{example.description}</div>
-                </button>
-              ))}
+              {filteredExamples.length === 0 ? (
+                <div className={styles.noResults}>No problems found</div>
+              ) : (
+                filteredExamples.map(example => (
+                  <button
+                    key={example.id}
+                    className={styles.exampleBtn}
+                    onClick={() => handleSelectExample(example)}
+                  >
+                    <div className={styles.exampleHeader}>
+                      <span className={styles.exampleName}>{example.name}</span>
+                      <span className={`${styles.difficultyBadge} ${styles[example.difficulty]}`}>
+                        {example.difficulty}
+                      </span>
+                    </div>
+                    <div className={styles.exampleDesc}>{example.description}</div>
+                  </button>
+                ))
+              )}
             </div>
           </motion.div>
         )}
@@ -96,6 +166,7 @@ export function ExampleSelector() {
           onClick={() => {
             setIsOpen(false)
             setSelectedCategory(null)
+            setSearchQuery('')
           }}
         />
       )}

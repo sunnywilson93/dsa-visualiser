@@ -22,6 +22,15 @@
   color: var(--text-primary);
 }
 
+.count {
+  background: var(--accent-blue);
+  color: white;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: 600;
+}
+
 .chevron {
   transition: transform var(--transition-fast);
 }
@@ -40,7 +49,7 @@
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  width: 320px;
+  width: 400px;
   max-width: calc(100vw - 32px);
   background: var(--bg-secondary);
   border: 1px solid var(--border-primary);
@@ -60,10 +69,96 @@
     width: 100%;
     max-width: 100%;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    max-height: 70vh;
+    max-height: 80vh;
   }
 }
 
+/* Search */
+.searchContainer {
+  position: relative;
+  padding: var(--space-sm);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.searchIcon {
+  position: absolute;
+  left: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.searchInput {
+  width: 100%;
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) 32px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.searchInput::placeholder {
+  color: var(--text-muted);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+}
+
+/* Difficulty filter */
+.difficultyFilter {
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.difficultyBtn {
+  flex: 1;
+  padding: 6px 8px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+}
+
+.difficultyBtn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.difficultyBtn.active.all {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: white;
+}
+
+.difficultyBtn.active.easy {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.difficultyBtn.active.medium {
+  background: #f59e0b;
+  border-color: #f59e0b;
+  color: white;
+}
+
+.difficultyBtn.active.hard {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: white;
+}
+
+/* Categories */
 .categories {
   display: flex;
   flex-wrap: wrap;
@@ -71,6 +166,8 @@
   padding: var(--space-sm);
   background: var(--bg-tertiary);
   border-bottom: 1px solid var(--border-primary);
+  max-height: 120px;
+  overflow-y: auto;
 }
 
 .categoryBtn {
@@ -99,10 +196,23 @@
   color: white;
 }
 
+.catCount {
+  opacity: 0.7;
+  font-size: 10px;
+}
+
+/* Examples list */
 .examples {
-  max-height: 300px;
+  max-height: 350px;
   overflow-y: auto;
   padding: var(--space-xs);
+}
+
+.noResults {
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
 }
 
 .exampleBtn {
@@ -121,11 +231,41 @@
   background: var(--bg-tertiary);
 }
 
+.exampleHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: 2px;
+}
+
 .exampleName {
   font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 2px;
+}
+
+.difficultyBadge {
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.difficultyBadge.easy {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.difficultyBadge.medium {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+
+.difficultyBadge.hard {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
 }
 
 .exampleDesc {
@@ -151,11 +291,20 @@
     display: none;
   }
 
+  .searchContainer {
+    padding: var(--space-md);
+  }
+
+  .difficultyFilter {
+    padding: var(--space-md);
+  }
+
   .categories {
     padding: var(--space-md);
     gap: var(--space-sm);
-    overflow-x: auto;
+    max-height: 100px;
     flex-wrap: nowrap;
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -166,7 +315,7 @@
   }
 
   .examples {
-    max-height: calc(70vh - 100px);
+    max-height: calc(80vh - 200px);
     padding: var(--space-sm);
   }
 
