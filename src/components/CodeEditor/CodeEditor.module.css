@@ -1,0 +1,105 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+
+.statusBadge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.editorWrapper {
+  flex: 1;
+  min-height: 0;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Line decorations */
+.currentLine {
+  background: rgba(56, 139, 253, 0.15) !important;
+}
+
+.currentLineGlyph {
+  background: var(--accent-blue);
+  border-radius: 2px;
+  margin-left: 5px;
+  width: 4px !important;
+}
+
+.breakpointLine {
+  background: rgba(248, 81, 73, 0.1) !important;
+}
+
+.breakpointGlyph::before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin: 4px 0 0 4px;
+  background: var(--accent-red);
+  border-radius: 50%;
+}
+
+.errorLine {
+  background: rgba(248, 81, 73, 0.2) !important;
+  border-left: 3px solid var(--accent-red);
+}
+
+/* Error panel */
+.errorPanel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(248, 81, 73, 0.1);
+  border-top: 1px solid rgba(248, 81, 73, 0.3);
+  color: var(--accent-red);
+  font-size: 13px;
+}
+
+.errorIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: var(--accent-red);
+  color: var(--bg-primary);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: bold;
+}

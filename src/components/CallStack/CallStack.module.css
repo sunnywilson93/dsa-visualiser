@@ -1,0 +1,246 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+}
+
+.content {
+  flex: 1;
+  padding: var(--space-md);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Empty state */
+.empty,
+.completed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.emptyIcon,
+.completedIcon {
+  font-size: 28px;
+  margin-bottom: var(--space-sm);
+  opacity: 0.5;
+}
+
+.completedIcon {
+  color: var(--accent-green);
+  opacity: 1;
+}
+
+/* Stack frame */
+.frame {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-left: 3px solid var(--frame-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  transition: all var(--transition-fast);
+}
+
+.frame.active {
+  background: var(--bg-elevated);
+  box-shadow: 0 0 0 1px var(--frame-color);
+}
+
+.frameHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.frameIndicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--frame-color);
+}
+
+.frameName {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.frameDepth {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.recursiveBadge {
+  font-size: 14px;
+  color: var(--accent-purple);
+  cursor: help;
+}
+
+/* Sections */
+.section {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border-secondary);
+}
+
+.sectionLabel {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.variables {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+}
+
+.variable {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.variable.param .varName {
+  color: var(--accent-cyan);
+}
+
+.variable.local .varName {
+  color: var(--accent-purple);
+}
+
+.varName {
+  font-weight: 500;
+}
+
+.varEquals {
+  color: var(--text-muted);
+}
+
+.varValue {
+  color: var(--text-secondary);
+}
+
+/* Return value */
+.returnSection {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  background: rgba(63, 185, 80, 0.1);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.returnLabel {
+  color: var(--accent-green);
+  font-weight: 500;
+}
+
+.returnValue {
+  color: var(--text-primary);
+}
+
+/* Call site */
+.callSite {
+  margin-top: var(--space-sm);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* Warning */
+.warning {
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(210, 153, 34, 0.1);
+  border: 1px solid rgba(210, 153, 34, 0.3);
+  border-radius: var(--radius-md);
+  color: var(--accent-yellow);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* Stack bar */
+.stackBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-tertiary);
+  border-top: 1px solid var(--border-primary);
+}
+
+.stackBarLabel {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.stackBarTrack {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-primary);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.stackBarFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: background-color var(--transition-fast);
+}
+
+.stackBarValue {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  min-width: 20px;
+  text-align: right;
+}

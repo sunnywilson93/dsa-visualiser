@@ -1,0 +1,225 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-sm);
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Scope section */
+.scope {
+  margin-bottom: var(--space-sm);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.scope.active {
+  border-color: var(--accent-blue);
+}
+
+.scopeHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition-fast);
+}
+
+.scopeHeader:hover {
+  background: var(--bg-elevated);
+}
+
+.scopeName {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.scopeType {
+  font-size: 10px;
+  color: var(--text-muted);
+  padding: 1px 6px;
+  background: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+}
+
+.varCount {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.scopeContent {
+  padding: var(--space-sm) var(--space-md);
+  border-top: 1px solid var(--border-secondary);
+  overflow: hidden;
+}
+
+/* Variable row */
+.variableRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  padding: var(--space-xs) 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.varName {
+  color: var(--accent-cyan);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.equals {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Value display */
+.value {
+  color: var(--text-secondary);
+  word-break: break-all;
+}
+
+.value.primitive {
+  color: var(--accent-yellow);
+}
+
+.value.array,
+.value.object {
+  color: var(--accent-purple);
+}
+
+.value.function {
+  color: var(--accent-green);
+  font-style: italic;
+}
+
+.value.null,
+.value.undefined {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Expandable value */
+.expandableValue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-xs);
+}
+
+.expandBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.expandBtn:hover {
+  color: var(--text-primary);
+}
+
+.expandedContent {
+  width: 100%;
+  padding-left: var(--space-md);
+  border-left: 1px solid var(--border-secondary);
+  margin-left: var(--space-xs);
+  margin-top: var(--space-xs);
+  overflow: hidden;
+}
+
+/* Array items */
+.arrayItems {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.arrayItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.index {
+  color: var(--text-muted);
+  min-width: 24px;
+  flex-shrink: 0;
+}
+
+/* Object props */
+.objectProps {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.objectProp {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.propKey {
+  color: var(--accent-orange);
+  flex-shrink: 0;
+}
+
+/* Empty indicator */
+.empty {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 11px;
+}
