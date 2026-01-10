@@ -13,6 +13,8 @@ export const exampleCategories = [
   { id: 'sliding-window', name: 'Sliding Window', icon: '🪟' },
   { id: 'stack', name: 'Stack', icon: '📚' },
   { id: 'binary-search', name: 'Binary Search', icon: '🔍' },
+  { id: 'linked-list', name: 'Linked List', icon: '🔗' },
+  { id: 'strings', name: 'Strings', icon: '📝' },
   { id: 'sorting', name: 'Sorting', icon: '📈' },
   { id: 'recursion', name: 'Recursion', icon: '🔄' },
   { id: 'dynamic-programming', name: 'Dynamic Programming', icon: '🧮' },
@@ -20,6 +22,7 @@ export const exampleCategories = [
   { id: 'backtracking', name: 'Backtracking', icon: '↩️' },
   { id: 'graphs', name: 'Graphs', icon: '🕸️' },
   { id: 'trees', name: 'Trees', icon: '🌳' },
+  { id: 'trie', name: 'Trie', icon: '🌲' },
   { id: 'heap', name: 'Heap', icon: '⛰️' },
   { id: 'intervals', name: 'Intervals', icon: '📏' },
   { id: 'bit-manipulation', name: 'Bit Manipulation', icon: '🔢' },
@@ -3399,6 +3402,4583 @@ console.log("Number:", x);
 
 let result = isPalindrome(x);
 console.log("Is palindrome:", result);
+`,
+  },
+  // ==================== LINKED LIST ====================
+  {
+    id: 'reverse-linked-list',
+    name: 'Reverse Linked List',
+    category: 'linked-list',
+    difficulty: 'easy',
+    description: 'Reverse a singly linked list',
+    code: `// Reverse Linked List
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function reverseList(head) {
+  let prev = null;
+  let current = head;
+
+  while (current !== null) {
+    let next = current.next;
+    current.next = prev;
+    console.log("Reversing node:", current.val);
+    prev = current;
+    current = next;
+  }
+
+  return prev;
+}
+
+// Create: 1 -> 2 -> 3 -> 4 -> 5
+let head = new ListNode(1);
+head.next = new ListNode(2);
+head.next.next = new ListNode(3);
+head.next.next.next = new ListNode(4);
+head.next.next.next.next = new ListNode(5);
+
+console.log("Original list: 1 -> 2 -> 3 -> 4 -> 5");
+let reversed = reverseList(head);
+
+// Print reversed
+let result = [];
+let node = reversed;
+while (node) {
+  result.push(node.val);
+  node = node.next;
+}
+console.log("Reversed:", result.join(" -> "));
+`,
+  },
+  {
+    id: 'merge-two-sorted-lists',
+    name: 'Merge Two Sorted Lists',
+    category: 'linked-list',
+    difficulty: 'easy',
+    description: 'Merge two sorted linked lists into one sorted list',
+    code: `// Merge Two Sorted Lists
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function mergeTwoLists(l1, l2) {
+  let dummy = new ListNode(0);
+  let current = dummy;
+
+  while (l1 !== null && l2 !== null) {
+    if (l1.val <= l2.val) {
+      current.next = l1;
+      console.log("Taking from L1:", l1.val);
+      l1 = l1.next;
+    } else {
+      current.next = l2;
+      console.log("Taking from L2:", l2.val);
+      l2 = l2.next;
+    }
+    current = current.next;
+  }
+
+  current.next = l1 !== null ? l1 : l2;
+  console.log("Appending remaining list");
+
+  return dummy.next;
+}
+
+// Create list1: 1 -> 2 -> 4
+let l1 = new ListNode(1);
+l1.next = new ListNode(2);
+l1.next.next = new ListNode(4);
+
+// Create list2: 1 -> 3 -> 4
+let l2 = new ListNode(1);
+l2.next = new ListNode(3);
+l2.next.next = new ListNode(4);
+
+console.log("List 1: 1 -> 2 -> 4");
+console.log("List 2: 1 -> 3 -> 4");
+
+let merged = mergeTwoLists(l1, l2);
+
+let result = [];
+while (merged) {
+  result.push(merged.val);
+  merged = merged.next;
+}
+console.log("Merged:", result.join(" -> "));
+`,
+  },
+  {
+    id: 'linked-list-cycle',
+    name: 'Linked List Cycle',
+    category: 'linked-list',
+    difficulty: 'easy',
+    description: 'Detect if a linked list has a cycle',
+    code: `// Linked List Cycle Detection (Floyd's Algorithm)
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function hasCycle(head) {
+  if (!head || !head.next) return false;
+
+  let slow = head;
+  let fast = head;
+
+  while (fast !== null && fast.next !== null) {
+    slow = slow.next;
+    fast = fast.next.next;
+    console.log("Slow at:", slow.val, "Fast at:", fast ? fast.val : "null");
+
+    if (slow === fast) {
+      console.log("Cycle detected! Pointers met at:", slow.val);
+      return true;
+    }
+  }
+
+  console.log("No cycle found");
+  return false;
+}
+
+// Create: 1 -> 2 -> 3 -> 4 -> back to 2
+let head = new ListNode(1);
+head.next = new ListNode(2);
+head.next.next = new ListNode(3);
+head.next.next.next = new ListNode(4);
+head.next.next.next.next = head.next; // Create cycle
+
+console.log("List: 1 -> 2 -> 3 -> 4 -> (back to 2)");
+let result = hasCycle(head);
+console.log("Has cycle:", result);
+`,
+  },
+  {
+    id: 'remove-nth-from-end',
+    name: 'Remove Nth Node From End',
+    category: 'linked-list',
+    difficulty: 'medium',
+    description: 'Remove the nth node from the end of a linked list',
+    code: `// Remove Nth Node From End of List
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function removeNthFromEnd(head, n) {
+  let dummy = new ListNode(0);
+  dummy.next = head;
+  let fast = dummy;
+  let slow = dummy;
+
+  // Move fast n+1 steps ahead
+  for (let i = 0; i <= n; i++) {
+    fast = fast.next;
+    console.log("Moving fast to:", fast ? fast.val : "null");
+  }
+
+  // Move both until fast reaches end
+  while (fast !== null) {
+    slow = slow.next;
+    fast = fast.next;
+    console.log("Slow at:", slow.val);
+  }
+
+  console.log("Removing node:", slow.next.val);
+  slow.next = slow.next.next;
+
+  return dummy.next;
+}
+
+// Create: 1 -> 2 -> 3 -> 4 -> 5
+let head = new ListNode(1);
+head.next = new ListNode(2);
+head.next.next = new ListNode(3);
+head.next.next.next = new ListNode(4);
+head.next.next.next.next = new ListNode(5);
+
+console.log("Original: 1 -> 2 -> 3 -> 4 -> 5");
+console.log("Removing 2nd from end");
+
+let result = removeNthFromEnd(head, 2);
+
+let arr = [];
+while (result) {
+  arr.push(result.val);
+  result = result.next;
+}
+console.log("Result:", arr.join(" -> "));
+`,
+  },
+  {
+    id: 'reorder-list',
+    name: 'Reorder List',
+    category: 'linked-list',
+    difficulty: 'medium',
+    description: 'Reorder list to L0→Ln→L1→Ln-1→L2→Ln-2→...',
+    code: `// Reorder List
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function reorderList(head) {
+  if (!head || !head.next) return;
+
+  // Find middle
+  let slow = head, fast = head;
+  while (fast.next && fast.next.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  console.log("Middle found at:", slow.val);
+
+  // Reverse second half
+  let prev = null, curr = slow.next;
+  slow.next = null;
+  while (curr) {
+    let next = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+  }
+  console.log("Second half reversed");
+
+  // Merge two halves
+  let first = head, second = prev;
+  while (second) {
+    let tmp1 = first.next, tmp2 = second.next;
+    first.next = second;
+    second.next = tmp1;
+    console.log("Linked:", first.val, "->", second.val);
+    first = tmp1;
+    second = tmp2;
+  }
+}
+
+// Create: 1 -> 2 -> 3 -> 4 -> 5
+let head = new ListNode(1);
+head.next = new ListNode(2);
+head.next.next = new ListNode(3);
+head.next.next.next = new ListNode(4);
+head.next.next.next.next = new ListNode(5);
+
+console.log("Original: 1 -> 2 -> 3 -> 4 -> 5");
+reorderList(head);
+
+let result = [];
+let node = head;
+while (node) {
+  result.push(node.val);
+  node = node.next;
+}
+console.log("Reordered:", result.join(" -> "));
+`,
+  },
+  {
+    id: 'add-two-numbers',
+    name: 'Add Two Numbers',
+    category: 'linked-list',
+    difficulty: 'medium',
+    description: 'Add two numbers represented as linked lists',
+    code: `// Add Two Numbers
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function addTwoNumbers(l1, l2) {
+  let dummy = new ListNode(0);
+  let current = dummy;
+  let carry = 0;
+
+  while (l1 !== null || l2 !== null || carry > 0) {
+    let sum = carry;
+
+    if (l1 !== null) {
+      sum += l1.val;
+      l1 = l1.next;
+    }
+    if (l2 !== null) {
+      sum += l2.val;
+      l2 = l2.next;
+    }
+
+    carry = Math.floor(sum / 10);
+    current.next = new ListNode(sum % 10);
+    current = current.next;
+    console.log("Sum:", sum, "Digit:", sum % 10, "Carry:", carry);
+  }
+
+  return dummy.next;
+}
+
+// Number 342 stored as 2 -> 4 -> 3
+let l1 = new ListNode(2);
+l1.next = new ListNode(4);
+l1.next.next = new ListNode(3);
+
+// Number 465 stored as 5 -> 6 -> 4
+let l2 = new ListNode(5);
+l2.next = new ListNode(6);
+l2.next.next = new ListNode(4);
+
+console.log("Num1: 342 (2 -> 4 -> 3)");
+console.log("Num2: 465 (5 -> 6 -> 4)");
+
+let result = addTwoNumbers(l1, l2);
+
+let arr = [];
+while (result) {
+  arr.push(result.val);
+  result = result.next;
+}
+console.log("Sum: 807 (" + arr.join(" -> ") + ")");
+`,
+  },
+  {
+    id: 'copy-list-random-pointer',
+    name: 'Copy List with Random Pointer',
+    category: 'linked-list',
+    difficulty: 'medium',
+    description: 'Deep copy a linked list with random pointers',
+    code: `// Copy List with Random Pointer
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+    this.random = null;
+  }
+}
+
+function copyRandomList(head) {
+  if (!head) return null;
+
+  let map = new Map();
+
+  // First pass: create all nodes
+  let current = head;
+  while (current) {
+    map.set(current, new Node(current.val));
+    console.log("Created copy of node:", current.val);
+    current = current.next;
+  }
+
+  // Second pass: set next and random pointers
+  current = head;
+  while (current) {
+    let copy = map.get(current);
+    copy.next = map.get(current.next) || null;
+    copy.random = map.get(current.random) || null;
+    console.log("Node", copy.val, "-> next:", copy.next?.val, "random:", copy.random?.val);
+    current = current.next;
+  }
+
+  return map.get(head);
+}
+
+// Create: 1 -> 2 -> 3, with randoms
+let n1 = new Node(1);
+let n2 = new Node(2);
+let n3 = new Node(3);
+n1.next = n2;
+n2.next = n3;
+n1.random = n3;
+n2.random = n1;
+n3.random = n2;
+
+console.log("Original list with random pointers:");
+console.log("1 -> 2 -> 3");
+console.log("1.random = 3, 2.random = 1, 3.random = 2");
+
+let copy = copyRandomList(n1);
+console.log("Deep copy created successfully!");
+`,
+  },
+  {
+    id: 'lru-cache',
+    name: 'LRU Cache',
+    category: 'linked-list',
+    difficulty: 'medium',
+    description: 'Implement Least Recently Used cache',
+    code: `// LRU Cache using Map (maintains insertion order)
+class LRUCache {
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.cache = new Map();
+    console.log("LRU Cache created with capacity:", capacity);
+  }
+
+  get(key) {
+    if (!this.cache.has(key)) {
+      console.log("GET", key, "-> -1 (not found)");
+      return -1;
+    }
+
+    // Move to end (most recently used)
+    let value = this.cache.get(key);
+    this.cache.delete(key);
+    this.cache.set(key, value);
+    console.log("GET", key, "->", value);
+    return value;
+  }
+
+  put(key, value) {
+    if (this.cache.has(key)) {
+      this.cache.delete(key);
+    } else if (this.cache.size >= this.capacity) {
+      // Remove least recently used (first item)
+      let lru = this.cache.keys().next().value;
+      this.cache.delete(lru);
+      console.log("Evicted LRU key:", lru);
+    }
+
+    this.cache.set(key, value);
+    console.log("PUT", key, "=", value, "| Cache:", [...this.cache.entries()]);
+  }
+}
+
+let cache = new LRUCache(2);
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);
+cache.put(3, 3);  // Evicts key 2
+cache.get(2);     // Returns -1
+cache.put(4, 4);  // Evicts key 1
+cache.get(1);     // Returns -1
+cache.get(3);     // Returns 3
+cache.get(4);     // Returns 4
+`,
+  },
+  // ==================== STRING PROBLEMS ====================
+  {
+    id: 'longest-substring-no-repeat',
+    name: 'Longest Substring Without Repeating',
+    category: 'strings',
+    difficulty: 'medium',
+    description: 'Find length of longest substring without repeating characters',
+    code: `// Longest Substring Without Repeating Characters
+function lengthOfLongestSubstring(s) {
+  let charIndex = {};
+  let maxLength = 0;
+  let start = 0;
+
+  for (let end = 0; end < s.length; end++) {
+    let char = s[end];
+
+    if (charIndex[char] !== undefined && charIndex[char] >= start) {
+      start = charIndex[char] + 1;
+      console.log("Duplicate '" + char + "' found, moving start to", start);
+    }
+
+    charIndex[char] = end;
+    let currentLength = end - start + 1;
+    maxLength = Math.max(maxLength, currentLength);
+    console.log("Window:", s.substring(start, end + 1), "Length:", currentLength);
+  }
+
+  return maxLength;
+}
+
+let s = "abcabcbb";
+console.log("String:", s);
+
+let result = lengthOfLongestSubstring(s);
+console.log("Longest substring length:", result);
+`,
+  },
+  {
+    id: 'longest-palindromic-substring',
+    name: 'Longest Palindromic Substring',
+    category: 'strings',
+    difficulty: 'medium',
+    description: 'Find the longest palindromic substring',
+    code: `// Longest Palindromic Substring
+function longestPalindrome(s) {
+  if (s.length < 2) return s;
+
+  let start = 0, maxLen = 1;
+
+  function expandAroundCenter(left, right) {
+    while (left >= 0 && right < s.length && s[left] === s[right]) {
+      let len = right - left + 1;
+      if (len > maxLen) {
+        start = left;
+        maxLen = len;
+        console.log("Found palindrome:", s.substring(left, right + 1));
+      }
+      left--;
+      right++;
+    }
+  }
+
+  for (let i = 0; i < s.length; i++) {
+    expandAroundCenter(i, i);     // Odd length
+    expandAroundCenter(i, i + 1); // Even length
+  }
+
+  return s.substring(start, start + maxLen);
+}
+
+let s = "babad";
+console.log("String:", s);
+
+let result = longestPalindrome(s);
+console.log("Longest palindrome:", result);
+`,
+  },
+  {
+    id: 'palindromic-substrings',
+    name: 'Palindromic Substrings',
+    category: 'strings',
+    difficulty: 'medium',
+    description: 'Count all palindromic substrings',
+    code: `// Palindromic Substrings - Count all palindromes
+function countSubstrings(s) {
+  let count = 0;
+
+  function expandAroundCenter(left, right) {
+    while (left >= 0 && right < s.length && s[left] === s[right]) {
+      count++;
+      console.log("Palindrome found:", s.substring(left, right + 1));
+      left--;
+      right++;
+    }
+  }
+
+  for (let i = 0; i < s.length; i++) {
+    expandAroundCenter(i, i);     // Odd length
+    expandAroundCenter(i, i + 1); // Even length
+  }
+
+  return count;
+}
+
+let s = "aaa";
+console.log("String:", s);
+
+let result = countSubstrings(s);
+console.log("Total palindromic substrings:", result);
+`,
+  },
+  {
+    id: 'group-anagrams',
+    name: 'Group Anagrams',
+    category: 'strings',
+    difficulty: 'medium',
+    description: 'Group strings that are anagrams of each other',
+    code: `// Group Anagrams
+function groupAnagrams(strs) {
+  let map = {};
+
+  for (let str of strs) {
+    let sorted = str.split('').sort().join('');
+    console.log("String:", str, "-> Sorted:", sorted);
+
+    if (!map[sorted]) {
+      map[sorted] = [];
+    }
+    map[sorted].push(str);
+  }
+
+  let result = Object.values(map);
+  console.log("Groups:", result);
+  return result;
+}
+
+let strs = ["eat", "tea", "tan", "ate", "nat", "bat"];
+console.log("Input:", strs);
+
+let result = groupAnagrams(strs);
+console.log("Grouped anagrams:", result.length, "groups");
+`,
+  },
+  {
+    id: 'valid-parentheses',
+    name: 'Valid Parentheses',
+    category: 'strings',
+    difficulty: 'easy',
+    description: 'Check if string has valid bracket pairs',
+    code: `// Valid Parentheses
+function isValid(s) {
+  let stack = [];
+  let pairs = {
+    ')': '(',
+    ']': '[',
+    '}': '{'
+  };
+
+  for (let char of s) {
+    if (char === '(' || char === '[' || char === '{') {
+      stack.push(char);
+      console.log("Push:", char, "| Stack:", stack);
+    } else {
+      if (stack.length === 0 || stack[stack.length - 1] !== pairs[char]) {
+        console.log("Invalid: no matching open bracket for", char);
+        return false;
+      }
+      stack.pop();
+      console.log("Pop for:", char, "| Stack:", stack);
+    }
+  }
+
+  let valid = stack.length === 0;
+  console.log("Result:", valid ? "Valid" : "Invalid - unclosed brackets");
+  return valid;
+}
+
+let s = "({[]})";
+console.log("String:", s);
+
+let result = isValid(s);
+console.log("Is valid:", result);
+`,
+  },
+  {
+    id: 'generate-parentheses',
+    name: 'Generate Parentheses',
+    category: 'strings',
+    difficulty: 'medium',
+    description: 'Generate all valid combinations of n pairs of parentheses',
+    code: `// Generate Parentheses
+function generateParenthesis(n) {
+  let result = [];
+
+  function backtrack(current, open, close) {
+    if (current.length === 2 * n) {
+      console.log("Valid combination:", current);
+      result.push(current);
+      return;
+    }
+
+    if (open < n) {
+      backtrack(current + '(', open + 1, close);
+    }
+    if (close < open) {
+      backtrack(current + ')', open, close + 1);
+    }
+  }
+
+  backtrack('', 0, 0);
+  return result;
+}
+
+let n = 3;
+console.log("Generate", n, "pairs of parentheses:");
+
+let result = generateParenthesis(n);
+console.log("Total combinations:", result.length);
+`,
+  },
+  {
+    id: 'decode-ways',
+    name: 'Decode Ways',
+    category: 'strings',
+    difficulty: 'medium',
+    description: 'Count ways to decode a numeric string to letters',
+    code: `// Decode Ways
+function numDecodings(s) {
+  if (s[0] === '0') return 0;
+
+  let n = s.length;
+  let dp = new Array(n + 1).fill(0);
+  dp[0] = 1;
+  dp[1] = 1;
+
+  for (let i = 2; i <= n; i++) {
+    let oneDigit = parseInt(s[i - 1]);
+    let twoDigit = parseInt(s.substring(i - 2, i));
+
+    if (oneDigit >= 1) {
+      dp[i] += dp[i - 1];
+    }
+    if (twoDigit >= 10 && twoDigit <= 26) {
+      dp[i] += dp[i - 2];
+    }
+
+    console.log("Position", i, "| OneDigit:", oneDigit, "TwoDigit:", twoDigit, "| Ways:", dp[i]);
+  }
+
+  return dp[n];
+}
+
+let s = "226";
+console.log("String:", s);
+console.log("(A=1, B=2, ..., Z=26)");
+
+let result = numDecodings(s);
+console.log("Number of ways to decode:", result);
+// 226 can be: BZ, VF, BBF
+`,
+  },
+  {
+    id: 'minimum-window-substring',
+    name: 'Minimum Window Substring',
+    category: 'strings',
+    difficulty: 'hard',
+    description: 'Find minimum window containing all characters of target',
+    code: `// Minimum Window Substring
+function minWindow(s, t) {
+  if (t.length > s.length) return "";
+
+  let need = {};
+  for (let c of t) {
+    need[c] = (need[c] || 0) + 1;
+  }
+
+  let have = {};
+  let required = Object.keys(need).length;
+  let formed = 0;
+  let left = 0;
+  let minLen = Infinity;
+  let result = "";
+
+  for (let right = 0; right < s.length; right++) {
+    let char = s[right];
+    have[char] = (have[char] || 0) + 1;
+
+    if (need[char] && have[char] === need[char]) {
+      formed++;
+    }
+
+    while (formed === required) {
+      let windowLen = right - left + 1;
+      if (windowLen < minLen) {
+        minLen = windowLen;
+        result = s.substring(left, right + 1);
+        console.log("New minimum window:", result);
+      }
+
+      let leftChar = s[left];
+      have[leftChar]--;
+      if (need[leftChar] && have[leftChar] < need[leftChar]) {
+        formed--;
+      }
+      left++;
+    }
+  }
+
+  return result;
+}
+
+let s = "ADOBECODEBANC";
+let t = "ABC";
+console.log("String:", s);
+console.log("Target:", t);
+
+let result = minWindow(s, t);
+console.log("Minimum window:", result);
+`,
+  },
+  // ==================== MORE DYNAMIC PROGRAMMING ====================
+  {
+    id: 'word-break',
+    name: 'Word Break',
+    category: 'dynamic-programming',
+    difficulty: 'medium',
+    description: 'Check if string can be segmented into dictionary words',
+    code: `// Word Break
+function wordBreak(s, wordDict) {
+  let wordSet = new Set(wordDict);
+  let dp = new Array(s.length + 1).fill(false);
+  dp[0] = true;
+
+  for (let i = 1; i <= s.length; i++) {
+    for (let j = 0; j < i; j++) {
+      let word = s.substring(j, i);
+      if (dp[j] && wordSet.has(word)) {
+        dp[i] = true;
+        console.log("Found word:", word, "at position", j, "-", i);
+        break;
+      }
+    }
+  }
+
+  console.log("DP array:", dp);
+  return dp[s.length];
+}
+
+let s = "leetcode";
+let wordDict = ["leet", "code"];
+console.log("String:", s);
+console.log("Dictionary:", wordDict);
+
+let result = wordBreak(s, wordDict);
+console.log("Can break:", result);
+`,
+  },
+  {
+    id: 'longest-increasing-subsequence',
+    name: 'Longest Increasing Subsequence',
+    category: 'dynamic-programming',
+    difficulty: 'medium',
+    description: 'Find length of longest strictly increasing subsequence',
+    code: `// Longest Increasing Subsequence
+function lengthOfLIS(nums) {
+  let dp = new Array(nums.length).fill(1);
+  let maxLen = 1;
+
+  for (let i = 1; i < nums.length; i++) {
+    for (let j = 0; j < i; j++) {
+      if (nums[j] < nums[i]) {
+        dp[i] = Math.max(dp[i], dp[j] + 1);
+      }
+    }
+    maxLen = Math.max(maxLen, dp[i]);
+    console.log("At index", i, "value", nums[i], "| LIS length:", dp[i]);
+  }
+
+  console.log("DP array:", dp);
+  return maxLen;
+}
+
+let nums = [10, 9, 2, 5, 3, 7, 101, 18];
+console.log("Array:", nums);
+
+let result = lengthOfLIS(nums);
+console.log("Longest increasing subsequence length:", result);
+`,
+  },
+  {
+    id: 'unique-paths',
+    name: 'Unique Paths',
+    category: 'dynamic-programming',
+    difficulty: 'medium',
+    description: 'Count unique paths from top-left to bottom-right',
+    code: `// Unique Paths
+function uniquePaths(m, n) {
+  let dp = [];
+  for (let i = 0; i < m; i++) {
+    dp[i] = new Array(n).fill(0);
+    dp[i][0] = 1;
+  }
+  for (let j = 0; j < n; j++) {
+    dp[0][j] = 1;
+  }
+
+  console.log("Initial grid (first row/col = 1):");
+
+  for (let i = 1; i < m; i++) {
+    for (let j = 1; j < n; j++) {
+      dp[i][j] = dp[i-1][j] + dp[i][j-1];
+      console.log("Cell[" + i + "][" + j + "] = " + dp[i][j]);
+    }
+  }
+
+  return dp[m-1][n-1];
+}
+
+let m = 3, n = 7;
+console.log("Grid size:", m, "x", n);
+
+let result = uniquePaths(m, n);
+console.log("Unique paths:", result);
+`,
+  },
+  {
+    id: 'coin-change-ii',
+    name: 'Coin Change II',
+    category: 'dynamic-programming',
+    difficulty: 'medium',
+    description: 'Count combinations to make up amount',
+    code: `// Coin Change II - Number of combinations
+function change(amount, coins) {
+  let dp = new Array(amount + 1).fill(0);
+  dp[0] = 1;
+
+  for (let coin of coins) {
+    for (let i = coin; i <= amount; i++) {
+      dp[i] += dp[i - coin];
+    }
+    console.log("After coin", coin + ":", dp);
+  }
+
+  return dp[amount];
+}
+
+let amount = 5;
+let coins = [1, 2, 5];
+console.log("Amount:", amount);
+console.log("Coins:", coins);
+
+let result = change(amount, coins);
+console.log("Number of combinations:", result);
+`,
+  },
+  {
+    id: 'edit-distance',
+    name: 'Edit Distance',
+    category: 'dynamic-programming',
+    difficulty: 'medium',
+    description: 'Find minimum edits to convert word1 to word2',
+    code: `// Edit Distance (Levenshtein Distance)
+function minDistance(word1, word2) {
+  let m = word1.length, n = word2.length;
+  let dp = [];
+
+  for (let i = 0; i <= m; i++) {
+    dp[i] = new Array(n + 1).fill(0);
+    dp[i][0] = i;
+  }
+  for (let j = 0; j <= n; j++) {
+    dp[0][j] = j;
+  }
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (word1[i-1] === word2[j-1]) {
+        dp[i][j] = dp[i-1][j-1];
+      } else {
+        dp[i][j] = 1 + Math.min(
+          dp[i-1][j],    // delete
+          dp[i][j-1],    // insert
+          dp[i-1][j-1]   // replace
+        );
+      }
+    }
+    console.log("Row", i + ":", dp[i]);
+  }
+
+  return dp[m][n];
+}
+
+let word1 = "horse";
+let word2 = "ros";
+console.log("Word1:", word1);
+console.log("Word2:", word2);
+
+let result = minDistance(word1, word2);
+console.log("Minimum edits:", result);
+`,
+  },
+  {
+    id: 'partition-equal-subset-sum',
+    name: 'Partition Equal Subset Sum',
+    category: 'dynamic-programming',
+    difficulty: 'medium',
+    description: 'Check if array can be partitioned into two equal sum subsets',
+    code: `// Partition Equal Subset Sum
+function canPartition(nums) {
+  let total = nums.reduce((a, b) => a + b, 0);
+
+  if (total % 2 !== 0) {
+    console.log("Total sum is odd, cannot partition");
+    return false;
+  }
+
+  let target = total / 2;
+  console.log("Need to find subset with sum:", target);
+
+  let dp = new Set([0]);
+
+  for (let num of nums) {
+    let newSums = new Set();
+    for (let sum of dp) {
+      let newSum = sum + num;
+      if (newSum === target) {
+        console.log("Found subset! Added", num, "to reach", target);
+        return true;
+      }
+      if (newSum < target) {
+        newSums.add(newSum);
+      }
+    }
+    for (let s of newSums) {
+      dp.add(s);
+    }
+    console.log("After", num + ":", [...dp]);
+  }
+
+  return false;
+}
+
+let nums = [1, 5, 11, 5];
+console.log("Array:", nums);
+
+let result = canPartition(nums);
+console.log("Can partition:", result);
+`,
+  },
+  // ==================== MORE TREES ====================
+  {
+    id: 'binary-tree-level-order',
+    name: 'Binary Tree Level Order Traversal',
+    category: 'trees',
+    difficulty: 'medium',
+    description: 'Return level order traversal of binary tree',
+    code: `// Binary Tree Level Order Traversal
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function levelOrder(root) {
+  if (!root) return [];
+
+  let result = [];
+  let queue = [root];
+
+  while (queue.length > 0) {
+    let levelSize = queue.length;
+    let currentLevel = [];
+
+    for (let i = 0; i < levelSize; i++) {
+      let node = queue.shift();
+      currentLevel.push(node.val);
+
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+
+    console.log("Level", result.length + 1 + ":", currentLevel);
+    result.push(currentLevel);
+  }
+
+  return result;
+}
+
+//     3
+//    / \\
+//   9  20
+//     /  \\
+//    15   7
+let root = new TreeNode(3);
+root.left = new TreeNode(9);
+root.right = new TreeNode(20);
+root.right.left = new TreeNode(15);
+root.right.right = new TreeNode(7);
+
+console.log("Tree structure:");
+console.log("    3");
+console.log("   / \\\\");
+console.log("  9  20");
+console.log("    / \\\\");
+console.log("   15  7");
+
+let result = levelOrder(root);
+console.log("Level order:", result);
+`,
+  },
+  {
+    id: 'validate-bst',
+    name: 'Validate Binary Search Tree',
+    category: 'trees',
+    difficulty: 'medium',
+    description: 'Check if a binary tree is a valid BST',
+    code: `// Validate Binary Search Tree
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function isValidBST(root, min = -Infinity, max = Infinity) {
+  if (!root) return true;
+
+  console.log("Checking node:", root.val, "| Range: (" + min + ", " + max + ")");
+
+  if (root.val <= min || root.val >= max) {
+    console.log("Invalid! Node", root.val, "violates range");
+    return false;
+  }
+
+  return isValidBST(root.left, min, root.val) &&
+         isValidBST(root.right, root.val, max);
+}
+
+//     5
+//    / \\
+//   1   7
+//      / \\
+//     4   8  (4 < 5, invalid!)
+let root = new TreeNode(5);
+root.left = new TreeNode(1);
+root.right = new TreeNode(7);
+root.right.left = new TreeNode(4);
+root.right.right = new TreeNode(8);
+
+console.log("Tree:");
+console.log("    5");
+console.log("   / \\\\");
+console.log("  1   7");
+console.log("     / \\\\");
+console.log("    4   8");
+
+let result = isValidBST(root);
+console.log("Is valid BST:", result);
+`,
+  },
+  {
+    id: 'kth-smallest-bst',
+    name: 'Kth Smallest Element in BST',
+    category: 'trees',
+    difficulty: 'medium',
+    description: 'Find the kth smallest element in a BST',
+    code: `// Kth Smallest Element in BST
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function kthSmallest(root, k) {
+  let count = 0;
+  let result = null;
+
+  function inorder(node) {
+    if (!node || result !== null) return;
+
+    inorder(node.left);
+
+    count++;
+    console.log("Visiting node:", node.val, "| Count:", count);
+    if (count === k) {
+      result = node.val;
+      console.log("Found kth smallest!");
+      return;
+    }
+
+    inorder(node.right);
+  }
+
+  inorder(root);
+  return result;
+}
+
+//     5
+//    / \\
+//   3   6
+//  / \\
+// 2   4
+// 1
+let root = new TreeNode(5);
+root.left = new TreeNode(3);
+root.right = new TreeNode(6);
+root.left.left = new TreeNode(2);
+root.left.right = new TreeNode(4);
+root.left.left.left = new TreeNode(1);
+
+console.log("BST inorder: 1, 2, 3, 4, 5, 6");
+let k = 3;
+console.log("Finding", k + "rd smallest:");
+
+let result = kthSmallest(root, k);
+console.log("Result:", result);
+`,
+  },
+  {
+    id: 'construct-binary-tree',
+    name: 'Construct Binary Tree from Traversals',
+    category: 'trees',
+    difficulty: 'medium',
+    description: 'Build tree from preorder and inorder traversals',
+    code: `// Construct Binary Tree from Preorder and Inorder
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function buildTree(preorder, inorder) {
+  if (!preorder.length || !inorder.length) return null;
+
+  let rootVal = preorder[0];
+  let root = new TreeNode(rootVal);
+  let mid = inorder.indexOf(rootVal);
+
+  console.log("Root:", rootVal, "| Left inorder:", inorder.slice(0, mid), "| Right inorder:", inorder.slice(mid + 1));
+
+  root.left = buildTree(
+    preorder.slice(1, mid + 1),
+    inorder.slice(0, mid)
+  );
+
+  root.right = buildTree(
+    preorder.slice(mid + 1),
+    inorder.slice(mid + 1)
+  );
+
+  return root;
+}
+
+let preorder = [3, 9, 20, 15, 7];
+let inorder = [9, 3, 15, 20, 7];
+
+console.log("Preorder:", preorder);
+console.log("Inorder:", inorder);
+console.log("\\nBuilding tree:");
+
+let root = buildTree(preorder, inorder);
+
+// Verify with level order
+function levelOrder(node) {
+  if (!node) return [];
+  let result = [], queue = [node];
+  while (queue.length) {
+    let n = queue.shift();
+    result.push(n.val);
+    if (n.left) queue.push(n.left);
+    if (n.right) queue.push(n.right);
+  }
+  return result;
+}
+
+console.log("\\nBuilt tree level order:", levelOrder(root));
+`,
+  },
+  {
+    id: 'binary-tree-max-path-sum',
+    name: 'Binary Tree Maximum Path Sum',
+    category: 'trees',
+    difficulty: 'hard',
+    description: 'Find maximum path sum in binary tree',
+    code: `// Binary Tree Maximum Path Sum
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function maxPathSum(root) {
+  let maxSum = -Infinity;
+
+  function dfs(node) {
+    if (!node) return 0;
+
+    let leftMax = Math.max(0, dfs(node.left));
+    let rightMax = Math.max(0, dfs(node.right));
+
+    let pathSum = node.val + leftMax + rightMax;
+    maxSum = Math.max(maxSum, pathSum);
+
+    console.log("Node:", node.val, "| Left:", leftMax, "| Right:", rightMax, "| Path sum:", pathSum);
+
+    return node.val + Math.max(leftMax, rightMax);
+  }
+
+  dfs(root);
+  return maxSum;
+}
+
+//     -10
+//     / \\
+//    9  20
+//      /  \\
+//     15   7
+let root = new TreeNode(-10);
+root.left = new TreeNode(9);
+root.right = new TreeNode(20);
+root.right.left = new TreeNode(15);
+root.right.right = new TreeNode(7);
+
+console.log("Tree:");
+console.log("   -10");
+console.log("   / \\\\");
+console.log("  9  20");
+console.log("    / \\\\");
+console.log("   15  7");
+
+let result = maxPathSum(root);
+console.log("\\nMax path sum:", result);
+console.log("Path: 15 -> 20 -> 7");
+`,
+  },
+  {
+    id: 'serialize-deserialize-tree',
+    name: 'Serialize and Deserialize Binary Tree',
+    category: 'trees',
+    difficulty: 'hard',
+    description: 'Serialize tree to string and deserialize back',
+    code: `// Serialize and Deserialize Binary Tree
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function serialize(root) {
+  let result = [];
+
+  function dfs(node) {
+    if (!node) {
+      result.push('null');
+      return;
+    }
+    result.push(node.val.toString());
+    dfs(node.left);
+    dfs(node.right);
+  }
+
+  dfs(root);
+  let str = result.join(',');
+  console.log("Serialized:", str);
+  return str;
+}
+
+function deserialize(data) {
+  let values = data.split(',');
+  let index = 0;
+
+  function dfs() {
+    if (values[index] === 'null') {
+      index++;
+      return null;
+    }
+
+    let node = new TreeNode(parseInt(values[index]));
+    console.log("Created node:", node.val);
+    index++;
+    node.left = dfs();
+    node.right = dfs();
+    return node;
+  }
+
+  return dfs();
+}
+
+//     1
+//    / \\
+//   2   3
+//      / \\
+//     4   5
+let root = new TreeNode(1);
+root.left = new TreeNode(2);
+root.right = new TreeNode(3);
+root.right.left = new TreeNode(4);
+root.right.right = new TreeNode(5);
+
+console.log("Original tree:");
+let serialized = serialize(root);
+console.log("\\nDeserializing:");
+let deserialized = deserialize(serialized);
+console.log("\\nVerification:", serialize(deserialized));
+`,
+  },
+  // ==================== MORE GRAPHS ====================
+  {
+    id: 'course-schedule',
+    name: 'Course Schedule',
+    category: 'graphs',
+    difficulty: 'medium',
+    description: 'Check if possible to finish all courses (cycle detection)',
+    code: `// Course Schedule - Topological Sort / Cycle Detection
+function canFinish(numCourses, prerequisites) {
+  let graph = {};
+  for (let i = 0; i < numCourses; i++) {
+    graph[i] = [];
+  }
+
+  for (let [course, prereq] of prerequisites) {
+    graph[prereq].push(course);
+  }
+
+  let visited = new Set();
+  let visiting = new Set();
+
+  function hasCycle(course) {
+    if (visiting.has(course)) {
+      console.log("Cycle detected at course:", course);
+      return true;
+    }
+    if (visited.has(course)) return false;
+
+    visiting.add(course);
+    console.log("Visiting course:", course);
+
+    for (let next of graph[course]) {
+      if (hasCycle(next)) return true;
+    }
+
+    visiting.delete(course);
+    visited.add(course);
+    return false;
+  }
+
+  for (let i = 0; i < numCourses; i++) {
+    if (hasCycle(i)) return false;
+  }
+
+  console.log("No cycles - all courses can be finished!");
+  return true;
+}
+
+let numCourses = 4;
+let prerequisites = [[1,0], [2,0], [3,1], [3,2]];
+console.log("Courses:", numCourses);
+console.log("Prerequisites:", prerequisites);
+console.log("(Course 1 requires 0, Course 2 requires 0, etc.)");
+console.log("");
+
+let result = canFinish(numCourses, prerequisites);
+console.log("\\nCan finish all courses:", result);
+`,
+  },
+  {
+    id: 'course-schedule-ii',
+    name: 'Course Schedule II',
+    category: 'graphs',
+    difficulty: 'medium',
+    description: 'Return order to take courses (topological sort)',
+    code: `// Course Schedule II - Topological Sort Order
+function findOrder(numCourses, prerequisites) {
+  let graph = {};
+  let inDegree = new Array(numCourses).fill(0);
+
+  for (let i = 0; i < numCourses; i++) {
+    graph[i] = [];
+  }
+
+  for (let [course, prereq] of prerequisites) {
+    graph[prereq].push(course);
+    inDegree[course]++;
+  }
+
+  console.log("In-degrees:", inDegree);
+
+  let queue = [];
+  for (let i = 0; i < numCourses; i++) {
+    if (inDegree[i] === 0) {
+      queue.push(i);
+    }
+  }
+
+  let order = [];
+  while (queue.length > 0) {
+    let course = queue.shift();
+    order.push(course);
+    console.log("Taking course:", course);
+
+    for (let next of graph[course]) {
+      inDegree[next]--;
+      if (inDegree[next] === 0) {
+        queue.push(next);
+      }
+    }
+  }
+
+  if (order.length !== numCourses) {
+    console.log("Cycle detected - impossible!");
+    return [];
+  }
+
+  return order;
+}
+
+let numCourses = 4;
+let prerequisites = [[1,0], [2,0], [3,1], [3,2]];
+console.log("Courses:", numCourses);
+console.log("Prerequisites:", prerequisites);
+console.log("");
+
+let result = findOrder(numCourses, prerequisites);
+console.log("\\nCourse order:", result);
+`,
+  },
+  {
+    id: 'graph-valid-tree',
+    name: 'Graph Valid Tree',
+    category: 'graphs',
+    difficulty: 'medium',
+    description: 'Check if edges form a valid tree',
+    code: `// Graph Valid Tree
+function validTree(n, edges) {
+  // A valid tree has exactly n-1 edges and is connected
+  if (edges.length !== n - 1) {
+    console.log("Invalid: tree needs exactly", n-1, "edges, got", edges.length);
+    return false;
+  }
+
+  // Build adjacency list
+  let graph = {};
+  for (let i = 0; i < n; i++) graph[i] = [];
+  for (let [a, b] of edges) {
+    graph[a].push(b);
+    graph[b].push(a);
+  }
+
+  // BFS to check connectivity
+  let visited = new Set();
+  let queue = [0];
+  visited.add(0);
+
+  while (queue.length > 0) {
+    let node = queue.shift();
+    console.log("Visiting node:", node);
+
+    for (let neighbor of graph[node]) {
+      if (!visited.has(neighbor)) {
+        visited.add(neighbor);
+        queue.push(neighbor);
+      }
+    }
+  }
+
+  let isValid = visited.size === n;
+  console.log("Visited", visited.size, "of", n, "nodes");
+  return isValid;
+}
+
+let n = 5;
+let edges = [[0,1], [0,2], [0,3], [1,4]];
+console.log("Nodes:", n);
+console.log("Edges:", edges);
+console.log("");
+
+let result = validTree(n, edges);
+console.log("\\nIs valid tree:", result);
+`,
+  },
+  {
+    id: 'word-ladder',
+    name: 'Word Ladder',
+    category: 'graphs',
+    difficulty: 'hard',
+    description: 'Find shortest transformation sequence between words',
+    code: `// Word Ladder - BFS Shortest Path
+function ladderLength(beginWord, endWord, wordList) {
+  let wordSet = new Set(wordList);
+  if (!wordSet.has(endWord)) {
+    console.log("End word not in dictionary");
+    return 0;
+  }
+
+  let queue = [[beginWord, 1]];
+  let visited = new Set([beginWord]);
+
+  while (queue.length > 0) {
+    let [word, length] = queue.shift();
+    console.log("Level", length + ":", word);
+
+    if (word === endWord) {
+      console.log("Found path!");
+      return length;
+    }
+
+    // Try all single-letter transformations
+    for (let i = 0; i < word.length; i++) {
+      for (let c = 97; c <= 122; c++) { // a-z
+        let newWord = word.slice(0, i) + String.fromCharCode(c) + word.slice(i + 1);
+
+        if (wordSet.has(newWord) && !visited.has(newWord)) {
+          visited.add(newWord);
+          queue.push([newWord, length + 1]);
+        }
+      }
+    }
+  }
+
+  console.log("No path found");
+  return 0;
+}
+
+let beginWord = "hit";
+let endWord = "cog";
+let wordList = ["hot","dot","dog","lot","log","cog"];
+
+console.log("Start:", beginWord);
+console.log("End:", endWord);
+console.log("Dictionary:", wordList);
+console.log("");
+
+let result = ladderLength(beginWord, endWord, wordList);
+console.log("\\nShortest path length:", result);
+`,
+  },
+  {
+    id: 'alien-dictionary',
+    name: 'Alien Dictionary',
+    category: 'graphs',
+    difficulty: 'hard',
+    description: 'Derive character order from sorted alien words',
+    code: `// Alien Dictionary - Topological Sort
+function alienOrder(words) {
+  // Build graph from adjacent word comparisons
+  let graph = {};
+  let inDegree = {};
+
+  // Initialize all characters
+  for (let word of words) {
+    for (let c of word) {
+      if (!graph[c]) {
+        graph[c] = new Set();
+        inDegree[c] = 0;
+      }
+    }
+  }
+
+  // Compare adjacent words
+  for (let i = 0; i < words.length - 1; i++) {
+    let w1 = words[i], w2 = words[i + 1];
+
+    // Check for invalid case
+    if (w1.length > w2.length && w1.startsWith(w2)) {
+      console.log("Invalid order:", w1, "before", w2);
+      return "";
+    }
+
+    for (let j = 0; j < Math.min(w1.length, w2.length); j++) {
+      if (w1[j] !== w2[j]) {
+        if (!graph[w1[j]].has(w2[j])) {
+          graph[w1[j]].add(w2[j]);
+          inDegree[w2[j]]++;
+          console.log("Found order:", w1[j], "->", w2[j]);
+        }
+        break;
+      }
+    }
+  }
+
+  // Topological sort
+  let queue = [];
+  for (let c in inDegree) {
+    if (inDegree[c] === 0) queue.push(c);
+  }
+
+  let result = "";
+  while (queue.length > 0) {
+    let c = queue.shift();
+    result += c;
+    for (let next of graph[c]) {
+      inDegree[next]--;
+      if (inDegree[next] === 0) queue.push(next);
+    }
+  }
+
+  if (result.length !== Object.keys(graph).length) {
+    console.log("Cycle detected!");
+    return "";
+  }
+
+  return result;
+}
+
+let words = ["wrt", "wrf", "er", "ett", "rftt"];
+console.log("Alien words (sorted):", words);
+console.log("");
+
+let result = alienOrder(words);
+console.log("\\nAlien alphabet order:", result);
+`,
+  },
+  // ==================== TRIE ====================
+  {
+    id: 'implement-trie',
+    name: 'Implement Trie',
+    category: 'trie',
+    difficulty: 'medium',
+    description: 'Implement a prefix tree (Trie)',
+    code: `// Implement Trie (Prefix Tree)
+class TrieNode {
+  constructor() {
+    this.children = {};
+    this.isEnd = false;
+  }
+}
+
+class Trie {
+  constructor() {
+    this.root = new TrieNode();
+    console.log("Trie initialized");
+  }
+
+  insert(word) {
+    let node = this.root;
+    for (let char of word) {
+      if (!node.children[char]) {
+        node.children[char] = new TrieNode();
+      }
+      node = node.children[char];
+    }
+    node.isEnd = true;
+    console.log("Inserted:", word);
+  }
+
+  search(word) {
+    let node = this.root;
+    for (let char of word) {
+      if (!node.children[char]) {
+        console.log("Search", word + ":", false);
+        return false;
+      }
+      node = node.children[char];
+    }
+    console.log("Search", word + ":", node.isEnd);
+    return node.isEnd;
+  }
+
+  startsWith(prefix) {
+    let node = this.root;
+    for (let char of prefix) {
+      if (!node.children[char]) {
+        console.log("Prefix", prefix + ":", false);
+        return false;
+      }
+      node = node.children[char];
+    }
+    console.log("Prefix", prefix + ":", true);
+    return true;
+  }
+}
+
+let trie = new Trie();
+trie.insert("apple");
+trie.insert("app");
+trie.insert("application");
+
+console.log("");
+trie.search("apple");
+trie.search("app");
+trie.search("appl");
+trie.startsWith("app");
+trie.startsWith("apl");
+`,
+  },
+  {
+    id: 'word-search-ii',
+    name: 'Word Search II',
+    category: 'trie',
+    difficulty: 'hard',
+    description: 'Find all words from dictionary in a grid',
+    code: `// Word Search II using Trie
+class TrieNode {
+  constructor() {
+    this.children = {};
+    this.word = null;
+  }
+}
+
+function findWords(board, words) {
+  // Build trie
+  let root = new TrieNode();
+  for (let word of words) {
+    let node = root;
+    for (let c of word) {
+      if (!node.children[c]) {
+        node.children[c] = new TrieNode();
+      }
+      node = node.children[c];
+    }
+    node.word = word;
+  }
+
+  let result = [];
+  let rows = board.length, cols = board[0].length;
+
+  function dfs(r, c, node) {
+    let char = board[r][c];
+    if (char === '#' || !node.children[char]) return;
+
+    node = node.children[char];
+    if (node.word) {
+      console.log("Found word:", node.word);
+      result.push(node.word);
+      node.word = null; // Avoid duplicates
+    }
+
+    board[r][c] = '#'; // Mark visited
+
+    if (r > 0) dfs(r - 1, c, node);
+    if (r < rows - 1) dfs(r + 1, c, node);
+    if (c > 0) dfs(r, c - 1, node);
+    if (c < cols - 1) dfs(r, c + 1, node);
+
+    board[r][c] = char; // Restore
+  }
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      dfs(r, c, root);
+    }
+  }
+
+  return result;
+}
+
+let board = [
+  ['o','a','a','n'],
+  ['e','t','a','e'],
+  ['i','h','k','r'],
+  ['i','f','l','v']
+];
+let words = ["oath","pea","eat","rain"];
+
+console.log("Board:");
+for (let row of board) console.log(row.join(' '));
+console.log("\\nWords to find:", words);
+console.log("");
+
+let result = findWords(board, words);
+console.log("\\nFound words:", result);
+`,
+  },
+  // ==================== MORE BACKTRACKING ====================
+  {
+    id: 'combination-sum',
+    name: 'Combination Sum',
+    category: 'backtracking',
+    difficulty: 'medium',
+    description: 'Find all combinations that sum to target',
+    code: `// Combination Sum
+function combinationSum(candidates, target) {
+  let result = [];
+
+  function backtrack(start, current, sum) {
+    if (sum === target) {
+      console.log("Found combination:", current);
+      result.push([...current]);
+      return;
+    }
+    if (sum > target) return;
+
+    for (let i = start; i < candidates.length; i++) {
+      current.push(candidates[i]);
+      backtrack(i, current, sum + candidates[i]);
+      current.pop();
+    }
+  }
+
+  backtrack(0, [], 0);
+  return result;
+}
+
+let candidates = [2, 3, 6, 7];
+let target = 7;
+console.log("Candidates:", candidates);
+console.log("Target:", target);
+console.log("");
+
+let result = combinationSum(candidates, target);
+console.log("\\nTotal combinations:", result.length);
+`,
+  },
+  {
+    id: 'permutations',
+    name: 'Permutations',
+    category: 'backtracking',
+    difficulty: 'medium',
+    description: 'Generate all permutations of an array',
+    code: `// Permutations
+function permute(nums) {
+  let result = [];
+
+  function backtrack(current, remaining) {
+    if (remaining.length === 0) {
+      console.log("Permutation:", current);
+      result.push([...current]);
+      return;
+    }
+
+    for (let i = 0; i < remaining.length; i++) {
+      current.push(remaining[i]);
+      let newRemaining = [...remaining.slice(0, i), ...remaining.slice(i + 1)];
+      backtrack(current, newRemaining);
+      current.pop();
+    }
+  }
+
+  backtrack([], nums);
+  return result;
+}
+
+let nums = [1, 2, 3];
+console.log("Array:", nums);
+console.log("");
+
+let result = permute(nums);
+console.log("\\nTotal permutations:", result.length);
+`,
+  },
+  {
+    id: 'subsets',
+    name: 'Subsets',
+    category: 'backtracking',
+    difficulty: 'medium',
+    description: 'Generate all subsets of an array',
+    code: `// Subsets (Power Set)
+function subsets(nums) {
+  let result = [];
+
+  function backtrack(start, current) {
+    console.log("Subset:", current);
+    result.push([...current]);
+
+    for (let i = start; i < nums.length; i++) {
+      current.push(nums[i]);
+      backtrack(i + 1, current);
+      current.pop();
+    }
+  }
+
+  backtrack(0, []);
+  return result;
+}
+
+let nums = [1, 2, 3];
+console.log("Array:", nums);
+console.log("");
+
+let result = subsets(nums);
+console.log("\\nTotal subsets:", result.length);
+`,
+  },
+  {
+    id: 'letter-combinations',
+    name: 'Letter Combinations of Phone Number',
+    category: 'backtracking',
+    difficulty: 'medium',
+    description: 'Generate letter combinations from phone digits',
+    code: `// Letter Combinations of a Phone Number
+function letterCombinations(digits) {
+  if (!digits) return [];
+
+  let mapping = {
+    '2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
+    '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'
+  };
+
+  let result = [];
+
+  function backtrack(index, current) {
+    if (index === digits.length) {
+      console.log("Combination:", current);
+      result.push(current);
+      return;
+    }
+
+    let letters = mapping[digits[index]];
+    for (let letter of letters) {
+      backtrack(index + 1, current + letter);
+    }
+  }
+
+  backtrack(0, '');
+  return result;
+}
+
+let digits = "23";
+console.log("Digits:", digits);
+console.log("2 -> abc, 3 -> def");
+console.log("");
+
+let result = letterCombinations(digits);
+console.log("\\nTotal combinations:", result.length);
+`,
+  },
+  {
+    id: 'palindrome-partitioning',
+    name: 'Palindrome Partitioning',
+    category: 'backtracking',
+    difficulty: 'medium',
+    description: 'Partition string into palindrome substrings',
+    code: `// Palindrome Partitioning
+function partition(s) {
+  let result = [];
+
+  function isPalindrome(str, left, right) {
+    while (left < right) {
+      if (str[left] !== str[right]) return false;
+      left++;
+      right--;
+    }
+    return true;
+  }
+
+  function backtrack(start, current) {
+    if (start === s.length) {
+      console.log("Partition:", current);
+      result.push([...current]);
+      return;
+    }
+
+    for (let end = start; end < s.length; end++) {
+      if (isPalindrome(s, start, end)) {
+        current.push(s.substring(start, end + 1));
+        backtrack(end + 1, current);
+        current.pop();
+      }
+    }
+  }
+
+  backtrack(0, []);
+  return result;
+}
+
+let s = "aab";
+console.log("String:", s);
+console.log("");
+
+let result = partition(s);
+console.log("\\nTotal partitions:", result.length);
+`,
+  },
+  // ==================== MORE HEAP ====================
+  {
+    id: 'merge-k-sorted-lists',
+    name: 'Merge K Sorted Lists',
+    category: 'heap',
+    difficulty: 'hard',
+    description: 'Merge k sorted linked lists into one',
+    code: `// Merge K Sorted Lists using Min Heap simulation
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function mergeKLists(lists) {
+  // Simple approach: collect all, sort, rebuild
+  let values = [];
+
+  for (let list of lists) {
+    let node = list;
+    while (node) {
+      values.push(node.val);
+      node = node.next;
+    }
+  }
+
+  if (values.length === 0) return null;
+
+  values.sort((a, b) => a - b);
+  console.log("Collected and sorted:", values);
+
+  let dummy = new ListNode(0);
+  let current = dummy;
+  for (let val of values) {
+    current.next = new ListNode(val);
+    current = current.next;
+  }
+
+  return dummy.next;
+}
+
+// Create lists: [1,4,5], [1,3,4], [2,6]
+function createList(arr) {
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  for (let val of arr) {
+    curr.next = new ListNode(val);
+    curr = curr.next;
+  }
+  return dummy.next;
+}
+
+let lists = [
+  createList([1, 4, 5]),
+  createList([1, 3, 4]),
+  createList([2, 6])
+];
+
+console.log("Lists: [1,4,5], [1,3,4], [2,6]");
+
+let result = mergeKLists(lists);
+
+let arr = [];
+while (result) {
+  arr.push(result.val);
+  result = result.next;
+}
+console.log("Merged:", arr.join(" -> "));
+`,
+  },
+  {
+    id: 'find-median-stream',
+    name: 'Find Median from Data Stream',
+    category: 'heap',
+    difficulty: 'hard',
+    description: 'Find median efficiently from streaming data',
+    code: `// Find Median from Data Stream
+// Simplified without actual heap - uses sorted array
+class MedianFinder {
+  constructor() {
+    this.nums = [];
+    console.log("MedianFinder initialized");
+  }
+
+  addNum(num) {
+    // Binary search insert to maintain sorted order
+    let left = 0, right = this.nums.length;
+    while (left < right) {
+      let mid = Math.floor((left + right) / 2);
+      if (this.nums[mid] < num) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+    this.nums.splice(left, 0, num);
+    console.log("Added:", num, "| Sorted:", this.nums);
+  }
+
+  findMedian() {
+    let n = this.nums.length;
+    let median;
+    if (n % 2 === 1) {
+      median = this.nums[Math.floor(n / 2)];
+    } else {
+      median = (this.nums[n/2 - 1] + this.nums[n/2]) / 2;
+    }
+    console.log("Median:", median);
+    return median;
+  }
+}
+
+let mf = new MedianFinder();
+mf.addNum(1);
+mf.findMedian();
+mf.addNum(2);
+mf.findMedian();
+mf.addNum(3);
+mf.findMedian();
+mf.addNum(4);
+mf.findMedian();
+mf.addNum(5);
+mf.findMedian();
+`,
+  },
+  // ==================== MORE INTERVALS ====================
+  {
+    id: 'insert-interval',
+    name: 'Insert Interval',
+    category: 'intervals',
+    difficulty: 'medium',
+    description: 'Insert and merge a new interval',
+    code: `// Insert Interval
+function insert(intervals, newInterval) {
+  let result = [];
+  let i = 0;
+  let n = intervals.length;
+
+  // Add all intervals before newInterval
+  while (i < n && intervals[i][1] < newInterval[0]) {
+    result.push(intervals[i]);
+    console.log("Before:", intervals[i]);
+    i++;
+  }
+
+  // Merge overlapping intervals
+  while (i < n && intervals[i][0] <= newInterval[1]) {
+    console.log("Merging:", intervals[i], "with", newInterval);
+    newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+    newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+    i++;
+  }
+  result.push(newInterval);
+  console.log("Merged interval:", newInterval);
+
+  // Add remaining intervals
+  while (i < n) {
+    result.push(intervals[i]);
+    console.log("After:", intervals[i]);
+    i++;
+  }
+
+  return result;
+}
+
+let intervals = [[1,3], [6,9]];
+let newInterval = [2,5];
+console.log("Intervals:", intervals);
+console.log("New interval:", newInterval);
+console.log("");
+
+let result = insert(intervals, newInterval);
+console.log("\\nResult:", result);
+`,
+  },
+  {
+    id: 'meeting-rooms-ii',
+    name: 'Meeting Rooms II',
+    category: 'intervals',
+    difficulty: 'medium',
+    description: 'Find minimum meeting rooms required',
+    code: `// Meeting Rooms II - Minimum rooms needed
+function minMeetingRooms(intervals) {
+  if (intervals.length === 0) return 0;
+
+  let starts = intervals.map(i => i[0]).sort((a, b) => a - b);
+  let ends = intervals.map(i => i[1]).sort((a, b) => a - b);
+
+  console.log("Starts:", starts);
+  console.log("Ends:", ends);
+
+  let rooms = 0;
+  let endPtr = 0;
+
+  for (let i = 0; i < intervals.length; i++) {
+    if (starts[i] < ends[endPtr]) {
+      rooms++;
+      console.log("Meeting at", starts[i], "- need new room. Total:", rooms);
+    } else {
+      console.log("Meeting at", starts[i], "- reusing room (ended at", ends[endPtr] + ")");
+      endPtr++;
+    }
+  }
+
+  return rooms;
+}
+
+let intervals = [[0,30], [5,10], [15,20]];
+console.log("Meetings:", intervals);
+console.log("");
+
+let result = minMeetingRooms(intervals);
+console.log("\\nMinimum rooms needed:", result);
+`,
+  },
+  {
+    id: 'non-overlapping-intervals',
+    name: 'Non-overlapping Intervals',
+    category: 'intervals',
+    difficulty: 'medium',
+    description: 'Minimum removals for non-overlapping intervals',
+    code: `// Non-overlapping Intervals
+function eraseOverlapIntervals(intervals) {
+  if (intervals.length <= 1) return 0;
+
+  intervals.sort((a, b) => a[1] - b[1]);
+  console.log("Sorted by end time:", intervals);
+
+  let count = 0;
+  let prevEnd = intervals[0][1];
+  console.log("Keep:", intervals[0]);
+
+  for (let i = 1; i < intervals.length; i++) {
+    if (intervals[i][0] < prevEnd) {
+      count++;
+      console.log("Remove:", intervals[i], "(overlaps)");
+    } else {
+      console.log("Keep:", intervals[i]);
+      prevEnd = intervals[i][1];
+    }
+  }
+
+  return count;
+}
+
+let intervals = [[1,2], [2,3], [3,4], [1,3]];
+console.log("Intervals:", intervals);
+console.log("");
+
+let result = eraseOverlapIntervals(intervals);
+console.log("\\nRemove", result, "interval(s)");
+`,
+  },
+  // ==================== MORE GREEDY ====================
+  {
+    id: 'jump-game',
+    name: 'Jump Game',
+    category: 'greedy',
+    difficulty: 'medium',
+    description: 'Check if you can reach the last index',
+    code: `// Jump Game
+function canJump(nums) {
+  let maxReach = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (i > maxReach) {
+      console.log("Stuck at index", i, "- max reach was", maxReach);
+      return false;
+    }
+
+    maxReach = Math.max(maxReach, i + nums[i]);
+    console.log("At index", i, "can jump", nums[i], "| Max reach:", maxReach);
+
+    if (maxReach >= nums.length - 1) {
+      console.log("Can reach the end!");
+      return true;
+    }
+  }
+
+  return true;
+}
+
+let nums = [2, 3, 1, 1, 4];
+console.log("Array:", nums);
+console.log("");
+
+let result = canJump(nums);
+console.log("\\nCan reach last index:", result);
+`,
+  },
+  {
+    id: 'jump-game-ii',
+    name: 'Jump Game II',
+    category: 'greedy',
+    difficulty: 'medium',
+    description: 'Minimum jumps to reach last index',
+    code: `// Jump Game II - Minimum jumps
+function jump(nums) {
+  let jumps = 0;
+  let currentEnd = 0;
+  let farthest = 0;
+
+  for (let i = 0; i < nums.length - 1; i++) {
+    farthest = Math.max(farthest, i + nums[i]);
+    console.log("At", i, "can reach", i + nums[i], "| Farthest:", farthest);
+
+    if (i === currentEnd) {
+      jumps++;
+      currentEnd = farthest;
+      console.log("Jump!", jumps, "| New boundary:", currentEnd);
+    }
+  }
+
+  return jumps;
+}
+
+let nums = [2, 3, 1, 1, 4];
+console.log("Array:", nums);
+console.log("");
+
+let result = jump(nums);
+console.log("\\nMinimum jumps:", result);
+`,
+  },
+  {
+    id: 'gas-station',
+    name: 'Gas Station',
+    category: 'greedy',
+    difficulty: 'medium',
+    description: 'Find starting gas station for circular trip',
+    code: `// Gas Station
+function canCompleteCircuit(gas, cost) {
+  let totalGas = 0, totalCost = 0;
+  let tank = 0, start = 0;
+
+  for (let i = 0; i < gas.length; i++) {
+    totalGas += gas[i];
+    totalCost += cost[i];
+    tank += gas[i] - cost[i];
+
+    console.log("Station", i, "| Gas:", gas[i], "Cost:", cost[i], "| Tank:", tank);
+
+    if (tank < 0) {
+      start = i + 1;
+      tank = 0;
+      console.log("Reset start to", start);
+    }
+  }
+
+  if (totalGas < totalCost) {
+    console.log("Not enough total gas");
+    return -1;
+  }
+
+  return start;
+}
+
+let gas = [1, 2, 3, 4, 5];
+let cost = [3, 4, 5, 1, 2];
+console.log("Gas:", gas);
+console.log("Cost:", cost);
+console.log("");
+
+let result = canCompleteCircuit(gas, cost);
+console.log("\\nStart from station:", result);
+`,
+  },
+  // ==================== MORE BIT MANIPULATION ====================
+  {
+    id: 'counting-bits',
+    name: 'Counting Bits',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Count 1-bits for numbers 0 to n',
+    code: `// Counting Bits
+function countBits(n) {
+  let result = [0];
+
+  for (let i = 1; i <= n; i++) {
+    // dp[i] = dp[i >> 1] + (i & 1)
+    let bits = result[i >> 1] + (i & 1);
+    result.push(bits);
+    console.log("Number", i, "binary:", i.toString(2).padStart(4, '0'), "| Bits:", bits);
+  }
+
+  return result;
+}
+
+let n = 5;
+console.log("Count bits from 0 to", n);
+console.log("");
+
+let result = countBits(n);
+console.log("\\nResult:", result);
+`,
+  },
+  {
+    id: 'missing-number',
+    name: 'Missing Number',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Find missing number using XOR',
+    code: `// Missing Number using XOR
+function missingNumber(nums) {
+  let xor = nums.length;
+  console.log("Start with n =", nums.length);
+
+  for (let i = 0; i < nums.length; i++) {
+    xor ^= i ^ nums[i];
+    console.log("XOR with index", i, "and value", nums[i], "| Result:", xor);
+  }
+
+  return xor;
+}
+
+let nums = [3, 0, 1];
+console.log("Array:", nums);
+console.log("Should contain 0-3");
+console.log("");
+
+let result = missingNumber(nums);
+console.log("\\nMissing number:", result);
+`,
+  },
+  {
+    id: 'sum-of-two-integers',
+    name: 'Sum of Two Integers',
+    category: 'bit-manipulation',
+    difficulty: 'medium',
+    description: 'Add two integers without + or -',
+    code: `// Sum of Two Integers without + or -
+function getSum(a, b) {
+  console.log("Adding", a, "and", b, "without + or -");
+
+  while (b !== 0) {
+    let carry = a & b;
+    a = a ^ b;
+    b = carry << 1;
+    console.log("XOR:", a, "| Carry:", carry, "| Shifted:", b);
+  }
+
+  return a;
+}
+
+let a = 7, b = 5;
+console.log("a =", a, "binary:", a.toString(2));
+console.log("b =", b, "binary:", b.toString(2));
+console.log("");
+
+let result = getSum(a, b);
+console.log("\\nSum:", result);
+`,
+  },
+  {
+    id: 'reverse-bits',
+    name: 'Reverse Bits',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Reverse bits of a 32-bit integer',
+    code: `// Reverse Bits
+function reverseBits(n) {
+  let result = 0;
+  console.log("Input:", n.toString(2).padStart(8, '0'));
+
+  for (let i = 0; i < 32; i++) {
+    let bit = (n >> i) & 1;
+    result = result | (bit << (31 - i));
+
+    if (i < 8 && bit === 1) {
+      console.log("Bit at position", i, "moved to position", 31 - i);
+    }
+  }
+
+  console.log("Output:", (result >>> 0).toString(2).padStart(32, '0'));
+  return result >>> 0;
+}
+
+let n = 43261596; // 00000010100101000001111010011100
+console.log("Input:", n);
+console.log("");
+
+let result = reverseBits(n);
+console.log("\\nReversed:", result);
+`,
+  },
+  // ==================== MORE ARRAYS & HASHING ====================
+  {
+    id: 'majority-element',
+    name: 'Majority Element',
+    category: 'arrays-hashing',
+    difficulty: 'easy',
+    description: 'Find element appearing more than n/2 times',
+    code: `// Majority Element - Boyer-Moore Voting
+function majorityElement(nums) {
+  let candidate = nums[0];
+  let count = 1;
+
+  for (let i = 1; i < nums.length; i++) {
+    if (count === 0) {
+      candidate = nums[i];
+      count = 1;
+      console.log("New candidate:", candidate);
+    } else if (nums[i] === candidate) {
+      count++;
+    } else {
+      count--;
+    }
+    console.log("Num:", nums[i], "| Candidate:", candidate, "| Count:", count);
+  }
+
+  return candidate;
+}
+
+let nums = [2, 2, 1, 1, 1, 2, 2];
+console.log("Array:", nums);
+console.log("");
+
+let result = majorityElement(nums);
+console.log("\\nMajority element:", result);
+`,
+  },
+  {
+    id: 'first-missing-positive',
+    name: 'First Missing Positive',
+    category: 'arrays-hashing',
+    difficulty: 'hard',
+    description: 'Find smallest missing positive integer',
+    code: `// First Missing Positive
+function firstMissingPositive(nums) {
+  let n = nums.length;
+
+  // Place each number in its correct position
+  for (let i = 0; i < n; i++) {
+    while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] !== nums[i]) {
+      let correctIdx = nums[i] - 1;
+      [nums[i], nums[correctIdx]] = [nums[correctIdx], nums[i]];
+      console.log("Swapped to get:", nums);
+    }
+  }
+
+  console.log("Final array:", nums);
+
+  // Find first missing
+  for (let i = 0; i < n; i++) {
+    if (nums[i] !== i + 1) {
+      console.log("Missing at index", i);
+      return i + 1;
+    }
+  }
+
+  return n + 1;
+}
+
+let nums = [3, 4, -1, 1];
+console.log("Array:", nums);
+console.log("");
+
+let result = firstMissingPositive(nums);
+console.log("First missing positive:", result);
+`,
+  },
+  {
+    id: 'longest-consecutive',
+    name: 'Longest Consecutive Sequence',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Find length of longest consecutive elements sequence',
+    code: `// Longest Consecutive Sequence
+function longestConsecutive(nums) {
+  let numSet = new Set(nums);
+  let longest = 0;
+
+  for (let num of numSet) {
+    // Only start counting from sequence start
+    if (!numSet.has(num - 1)) {
+      let currentNum = num;
+      let currentStreak = 1;
+
+      while (numSet.has(currentNum + 1)) {
+        currentNum++;
+        currentStreak++;
+      }
+
+      if (currentStreak > longest) {
+        console.log("Found sequence starting at", num, "length:", currentStreak);
+        longest = currentStreak;
+      }
+    }
+  }
+
+  return longest;
+}
+
+let nums = [100, 4, 200, 1, 3, 2];
+console.log("Array:", nums);
+console.log("");
+
+let result = longestConsecutive(nums);
+console.log("Longest consecutive:", result);
+`,
+  },
+  {
+    id: 'subarray-sum-k',
+    name: 'Subarray Sum Equals K',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Count subarrays with sum equal to k',
+    code: `// Subarray Sum Equals K
+function subarraySum(nums, k) {
+  let count = 0;
+  let prefixSum = 0;
+  let prefixMap = { 0: 1 };
+
+  for (let i = 0; i < nums.length; i++) {
+    prefixSum += nums[i];
+
+    if (prefixMap[prefixSum - k] !== undefined) {
+      count += prefixMap[prefixSum - k];
+      console.log("Found", prefixMap[prefixSum - k], "subarray(s) ending at index", i);
+    }
+
+    prefixMap[prefixSum] = (prefixMap[prefixSum] || 0) + 1;
+    console.log("Prefix sum:", prefixSum, "| Count:", count);
+  }
+
+  return count;
+}
+
+let nums = [1, 1, 1];
+let k = 2;
+console.log("Array:", nums);
+console.log("Target:", k);
+console.log("");
+
+let result = subarraySum(nums, k);
+console.log("\\nSubarrays with sum", k + ":", result);
+`,
+  },
+  {
+    id: 'rotate-array',
+    name: 'Rotate Array',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Rotate array to the right by k steps',
+    code: `// Rotate Array
+function rotate(nums, k) {
+  k = k % nums.length;
+
+  function reverse(start, end) {
+    while (start < end) {
+      [nums[start], nums[end]] = [nums[end], nums[start]];
+      start++;
+      end--;
+    }
+  }
+
+  console.log("Original:", nums);
+
+  reverse(0, nums.length - 1);
+  console.log("After full reverse:", nums);
+
+  reverse(0, k - 1);
+  console.log("After first k reverse:", nums);
+
+  reverse(k, nums.length - 1);
+  console.log("After remaining reverse:", nums);
+}
+
+let nums = [1, 2, 3, 4, 5, 6, 7];
+let k = 3;
+console.log("Rotate by:", k);
+console.log("");
+
+rotate(nums, k);
+console.log("\\nResult:", nums);
+`,
+  },
+  {
+    id: 'move-zeroes',
+    name: 'Move Zeroes',
+    category: 'arrays-hashing',
+    difficulty: 'easy',
+    description: 'Move all zeroes to end maintaining order',
+    code: `// Move Zeroes
+function moveZeroes(nums) {
+  let insertPos = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== 0) {
+      if (i !== insertPos) {
+        [nums[insertPos], nums[i]] = [nums[i], nums[insertPos]];
+        console.log("Swapped index", insertPos, "and", i, ":", nums);
+      }
+      insertPos++;
+    }
+  }
+}
+
+let nums = [0, 1, 0, 3, 12];
+console.log("Original:", nums);
+console.log("");
+
+moveZeroes(nums);
+console.log("\\nResult:", nums);
+`,
+  },
+  {
+    id: 'find-duplicate',
+    name: 'Find the Duplicate Number',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Find duplicate using Floyd cycle detection',
+    code: `// Find Duplicate - Floyd's Cycle Detection
+function findDuplicate(nums) {
+  let slow = nums[0];
+  let fast = nums[0];
+
+  // Find intersection
+  do {
+    slow = nums[slow];
+    fast = nums[nums[fast]];
+    console.log("Slow:", slow, "Fast:", fast);
+  } while (slow !== fast);
+
+  // Find cycle start
+  slow = nums[0];
+  while (slow !== fast) {
+    slow = nums[slow];
+    fast = nums[fast];
+    console.log("Finding start - Slow:", slow, "Fast:", fast);
+  }
+
+  return slow;
+}
+
+let nums = [1, 3, 4, 2, 2];
+console.log("Array:", nums);
+console.log("");
+
+let result = findDuplicate(nums);
+console.log("\\nDuplicate:", result);
+`,
+  },
+  // ==================== MORE TWO POINTERS ====================
+  {
+    id: 'trapping-rain-water',
+    name: 'Trapping Rain Water',
+    category: 'two-pointers',
+    difficulty: 'hard',
+    description: 'Calculate trapped rainwater between bars',
+    code: `// Trapping Rain Water
+function trap(height) {
+  let left = 0, right = height.length - 1;
+  let leftMax = 0, rightMax = 0;
+  let water = 0;
+
+  while (left < right) {
+    if (height[left] < height[right]) {
+      if (height[left] >= leftMax) {
+        leftMax = height[left];
+      } else {
+        water += leftMax - height[left];
+        console.log("Water at", left + ":", leftMax - height[left]);
+      }
+      left++;
+    } else {
+      if (height[right] >= rightMax) {
+        rightMax = height[right];
+      } else {
+        water += rightMax - height[right];
+        console.log("Water at", right + ":", rightMax - height[right]);
+      }
+      right--;
+    }
+  }
+
+  return water;
+}
+
+let height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1];
+console.log("Heights:", height);
+console.log("");
+
+let result = trap(height);
+console.log("\\nTotal water:", result);
+`,
+  },
+  {
+    id: 'sort-colors',
+    name: 'Sort Colors',
+    category: 'two-pointers',
+    difficulty: 'medium',
+    description: 'Dutch National Flag - sort 0s, 1s, and 2s',
+    code: `// Sort Colors - Dutch National Flag
+function sortColors(nums) {
+  let low = 0, mid = 0, high = nums.length - 1;
+
+  while (mid <= high) {
+    if (nums[mid] === 0) {
+      [nums[low], nums[mid]] = [nums[mid], nums[low]];
+      low++;
+      mid++;
+      console.log("Swap 0 to front:", nums);
+    } else if (nums[mid] === 1) {
+      mid++;
+    } else {
+      [nums[mid], nums[high]] = [nums[high], nums[mid]];
+      high--;
+      console.log("Swap 2 to back:", nums);
+    }
+  }
+}
+
+let nums = [2, 0, 2, 1, 1, 0];
+console.log("Original:", nums);
+console.log("");
+
+sortColors(nums);
+console.log("\\nSorted:", nums);
+`,
+  },
+  {
+    id: 'remove-duplicates-ii',
+    name: 'Remove Duplicates II',
+    category: 'two-pointers',
+    difficulty: 'medium',
+    description: 'Remove duplicates allowing at most 2 occurrences',
+    code: `// Remove Duplicates from Sorted Array II
+function removeDuplicates(nums) {
+  if (nums.length <= 2) return nums.length;
+
+  let writeIdx = 2;
+
+  for (let i = 2; i < nums.length; i++) {
+    if (nums[i] !== nums[writeIdx - 2]) {
+      nums[writeIdx] = nums[i];
+      console.log("Keeping", nums[i], "at position", writeIdx);
+      writeIdx++;
+    }
+  }
+
+  return writeIdx;
+}
+
+let nums = [1, 1, 1, 2, 2, 3];
+console.log("Original:", nums);
+console.log("");
+
+let k = removeDuplicates(nums);
+console.log("\\nLength:", k);
+console.log("Result:", nums.slice(0, k));
+`,
+  },
+  // ==================== MORE SLIDING WINDOW ====================
+  {
+    id: 'sliding-window-maximum',
+    name: 'Sliding Window Maximum',
+    category: 'sliding-window',
+    difficulty: 'hard',
+    description: 'Find maximum in each sliding window',
+    code: `// Sliding Window Maximum using Deque
+function maxSlidingWindow(nums, k) {
+  let result = [];
+  let deque = []; // Store indices
+
+  for (let i = 0; i < nums.length; i++) {
+    // Remove indices outside window
+    while (deque.length && deque[0] <= i - k) {
+      deque.shift();
+    }
+
+    // Remove smaller elements
+    while (deque.length && nums[deque[deque.length - 1]] < nums[i]) {
+      deque.pop();
+    }
+
+    deque.push(i);
+
+    if (i >= k - 1) {
+      result.push(nums[deque[0]]);
+      console.log("Window:", nums.slice(i - k + 1, i + 1), "Max:", nums[deque[0]]);
+    }
+  }
+
+  return result;
+}
+
+let nums = [1, 3, -1, -3, 5, 3, 6, 7];
+let k = 3;
+console.log("Array:", nums);
+console.log("Window size:", k);
+console.log("");
+
+let result = maxSlidingWindow(nums, k);
+console.log("\\nMaximums:", result);
+`,
+  },
+  {
+    id: 'permutation-in-string',
+    name: 'Permutation in String',
+    category: 'sliding-window',
+    difficulty: 'medium',
+    description: 'Check if s2 contains permutation of s1',
+    code: `// Permutation in String
+function checkInclusion(s1, s2) {
+  if (s1.length > s2.length) return false;
+
+  let count1 = new Array(26).fill(0);
+  let count2 = new Array(26).fill(0);
+
+  for (let i = 0; i < s1.length; i++) {
+    count1[s1.charCodeAt(i) - 97]++;
+    count2[s2.charCodeAt(i) - 97]++;
+  }
+
+  let matches = 0;
+  for (let i = 0; i < 26; i++) {
+    if (count1[i] === count2[i]) matches++;
+  }
+
+  for (let i = 0; i < s2.length - s1.length; i++) {
+    if (matches === 26) {
+      console.log("Found permutation at index", i);
+      return true;
+    }
+
+    let left = s2.charCodeAt(i) - 97;
+    let right = s2.charCodeAt(i + s1.length) - 97;
+
+    count2[right]++;
+    if (count2[right] === count1[right]) matches++;
+    else if (count2[right] === count1[right] + 1) matches--;
+
+    count2[left]--;
+    if (count2[left] === count1[left]) matches++;
+    else if (count2[left] === count1[left] - 1) matches--;
+  }
+
+  console.log("Matches:", matches === 26);
+  return matches === 26;
+}
+
+let s1 = "ab";
+let s2 = "eidbaooo";
+console.log("s1:", s1);
+console.log("s2:", s2);
+console.log("");
+
+let result = checkInclusion(s1, s2);
+console.log("Contains permutation:", result);
+`,
+  },
+  // ==================== MORE STACK ====================
+  {
+    id: 'largest-rectangle-histogram',
+    name: 'Largest Rectangle in Histogram',
+    category: 'stack',
+    difficulty: 'hard',
+    description: 'Find largest rectangle area in histogram',
+    code: `// Largest Rectangle in Histogram
+function largestRectangleArea(heights) {
+  let stack = [];
+  let maxArea = 0;
+  heights.push(0); // Sentinel
+
+  for (let i = 0; i < heights.length; i++) {
+    while (stack.length && heights[stack[stack.length - 1]] > heights[i]) {
+      let h = heights[stack.pop()];
+      let w = stack.length ? i - stack[stack.length - 1] - 1 : i;
+      let area = h * w;
+      maxArea = Math.max(maxArea, area);
+      console.log("Height:", h, "Width:", w, "Area:", area);
+    }
+    stack.push(i);
+  }
+
+  heights.pop();
+  return maxArea;
+}
+
+let heights = [2, 1, 5, 6, 2, 3];
+console.log("Heights:", heights);
+console.log("");
+
+let result = largestRectangleArea(heights);
+console.log("\\nMax area:", result);
+`,
+  },
+  {
+    id: 'daily-temperatures',
+    name: 'Daily Temperatures',
+    category: 'stack',
+    difficulty: 'medium',
+    description: 'Days until warmer temperature',
+    code: `// Daily Temperatures
+function dailyTemperatures(temperatures) {
+  let result = new Array(temperatures.length).fill(0);
+  let stack = [];
+
+  for (let i = 0; i < temperatures.length; i++) {
+    while (stack.length && temperatures[stack[stack.length - 1]] < temperatures[i]) {
+      let prevIdx = stack.pop();
+      result[prevIdx] = i - prevIdx;
+      console.log("Day", prevIdx, "waits", i - prevIdx, "days for warmer");
+    }
+    stack.push(i);
+  }
+
+  return result;
+}
+
+let temps = [73, 74, 75, 71, 69, 72, 76, 73];
+console.log("Temperatures:", temps);
+console.log("");
+
+let result = dailyTemperatures(temps);
+console.log("\\nDays to wait:", result);
+`,
+  },
+  {
+    id: 'next-greater-element',
+    name: 'Next Greater Element I',
+    category: 'stack',
+    difficulty: 'easy',
+    description: 'Find next greater element for each number',
+    code: `// Next Greater Element I
+function nextGreaterElement(nums1, nums2) {
+  let nextGreater = {};
+  let stack = [];
+
+  for (let num of nums2) {
+    while (stack.length && stack[stack.length - 1] < num) {
+      nextGreater[stack.pop()] = num;
+    }
+    stack.push(num);
+  }
+
+  console.log("Next greater map:", nextGreater);
+
+  return nums1.map(num => nextGreater[num] || -1);
+}
+
+let nums1 = [4, 1, 2];
+let nums2 = [1, 3, 4, 2];
+console.log("nums1:", nums1);
+console.log("nums2:", nums2);
+console.log("");
+
+let result = nextGreaterElement(nums1, nums2);
+console.log("Result:", result);
+`,
+  },
+  {
+    id: 'car-fleet',
+    name: 'Car Fleet',
+    category: 'stack',
+    difficulty: 'medium',
+    description: 'Count car fleets reaching target',
+    code: `// Car Fleet
+function carFleet(target, position, speed) {
+  let cars = position.map((p, i) => ({
+    pos: p,
+    time: (target - p) / speed[i]
+  }));
+
+  cars.sort((a, b) => b.pos - a.pos);
+  console.log("Cars sorted by position:");
+  cars.forEach(c => console.log("Pos:", c.pos, "Time:", c.time.toFixed(2)));
+
+  let fleets = 0;
+  let lastTime = 0;
+
+  for (let car of cars) {
+    if (car.time > lastTime) {
+      fleets++;
+      lastTime = car.time;
+      console.log("New fleet! Total:", fleets);
+    }
+  }
+
+  return fleets;
+}
+
+let target = 12;
+let position = [10, 8, 0, 5, 3];
+let speed = [2, 4, 1, 1, 3];
+console.log("Target:", target);
+console.log("Positions:", position);
+console.log("Speeds:", speed);
+console.log("");
+
+let result = carFleet(target, position, speed);
+console.log("\\nNumber of fleets:", result);
+`,
+  },
+  // ==================== MORE BINARY SEARCH ====================
+  {
+    id: 'search-rotated-array',
+    name: 'Search in Rotated Sorted Array',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Search in rotated sorted array',
+    code: `// Search in Rotated Sorted Array
+function search(nums, target) {
+  let left = 0, right = nums.length - 1;
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("Left:", left, "Mid:", mid, "Right:", right, "| nums[mid]:", nums[mid]);
+
+    if (nums[mid] === target) return mid;
+
+    if (nums[left] <= nums[mid]) {
+      // Left half is sorted
+      if (target >= nums[left] && target < nums[mid]) {
+        right = mid - 1;
+      } else {
+        left = mid + 1;
+      }
+    } else {
+      // Right half is sorted
+      if (target > nums[mid] && target <= nums[right]) {
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
+  }
+
+  return -1;
+}
+
+let nums = [4, 5, 6, 7, 0, 1, 2];
+let target = 0;
+console.log("Array:", nums);
+console.log("Target:", target);
+console.log("");
+
+let result = search(nums, target);
+console.log("\\nFound at index:", result);
+`,
+  },
+  {
+    id: 'find-min-rotated',
+    name: 'Find Minimum in Rotated Sorted Array',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Find minimum in rotated sorted array',
+    code: `// Find Minimum in Rotated Sorted Array
+function findMin(nums) {
+  let left = 0, right = nums.length - 1;
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("Left:", left, "Mid:", mid, "Right:", right);
+
+    if (nums[mid] > nums[right]) {
+      console.log("Min is in right half");
+      left = mid + 1;
+    } else {
+      console.log("Min is in left half (including mid)");
+      right = mid;
+    }
+  }
+
+  return nums[left];
+}
+
+let nums = [3, 4, 5, 1, 2];
+console.log("Array:", nums);
+console.log("");
+
+let result = findMin(nums);
+console.log("\\nMinimum:", result);
+`,
+  },
+  {
+    id: 'search-2d-matrix',
+    name: 'Search a 2D Matrix',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Search in row and column sorted matrix',
+    code: `// Search a 2D Matrix
+function searchMatrix(matrix, target) {
+  let m = matrix.length, n = matrix[0].length;
+  let left = 0, right = m * n - 1;
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    let row = Math.floor(mid / n);
+    let col = mid % n;
+    let val = matrix[row][col];
+
+    console.log("Index:", mid, "-> [" + row + "][" + col + "] =", val);
+
+    if (val === target) {
+      console.log("Found!");
+      return true;
+    } else if (val < target) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+
+  return false;
+}
+
+let matrix = [
+  [1, 3, 5, 7],
+  [10, 11, 16, 20],
+  [23, 30, 34, 60]
+];
+let target = 3;
+console.log("Matrix:");
+matrix.forEach(row => console.log(row));
+console.log("Target:", target);
+console.log("");
+
+let result = searchMatrix(matrix, target);
+console.log("Found:", result);
+`,
+  },
+  {
+    id: 'koko-bananas',
+    name: 'Koko Eating Bananas',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Minimum eating speed to finish in h hours',
+    code: `// Koko Eating Bananas
+function minEatingSpeed(piles, h) {
+  let left = 1;
+  let right = Math.max(...piles);
+
+  function hoursNeeded(speed) {
+    return piles.reduce((sum, p) => sum + Math.ceil(p / speed), 0);
+  }
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2);
+    let hours = hoursNeeded(mid);
+    console.log("Speed:", mid, "Hours needed:", hours);
+
+    if (hours <= h) {
+      right = mid;
+    } else {
+      left = mid + 1;
+    }
+  }
+
+  return left;
+}
+
+let piles = [3, 6, 7, 11];
+let h = 8;
+console.log("Piles:", piles);
+console.log("Hours:", h);
+console.log("");
+
+let result = minEatingSpeed(piles, h);
+console.log("\\nMinimum speed:", result);
+`,
+  },
+  // ==================== MORE LINKED LIST ====================
+  {
+    id: 'middle-linked-list',
+    name: 'Middle of Linked List',
+    category: 'linked-list',
+    difficulty: 'easy',
+    description: 'Find middle node of linked list',
+    code: `// Middle of Linked List
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function middleNode(head) {
+  let slow = head;
+  let fast = head;
+
+  while (fast !== null && fast.next !== null) {
+    slow = slow.next;
+    fast = fast.next.next;
+    console.log("Slow at:", slow.val, "| Fast at:", fast ? fast.val : "end");
+  }
+
+  return slow;
+}
+
+// Create: 1 -> 2 -> 3 -> 4 -> 5
+let head = new ListNode(1);
+head.next = new ListNode(2);
+head.next.next = new ListNode(3);
+head.next.next.next = new ListNode(4);
+head.next.next.next.next = new ListNode(5);
+
+console.log("List: 1 -> 2 -> 3 -> 4 -> 5");
+console.log("");
+
+let result = middleNode(head);
+console.log("\\nMiddle node:", result.val);
+`,
+  },
+  {
+    id: 'sort-list',
+    name: 'Sort List',
+    category: 'linked-list',
+    difficulty: 'medium',
+    description: 'Sort linked list in O(n log n) time',
+    code: `// Sort List - Merge Sort
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function sortList(head) {
+  if (!head || !head.next) return head;
+
+  // Find middle
+  let slow = head, fast = head.next;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+
+  let mid = slow.next;
+  slow.next = null;
+  console.log("Split into two halves");
+
+  // Sort halves
+  let left = sortList(head);
+  let right = sortList(mid);
+
+  // Merge
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  while (left && right) {
+    if (left.val < right.val) {
+      curr.next = left;
+      left = left.next;
+    } else {
+      curr.next = right;
+      right = right.next;
+    }
+    curr = curr.next;
+  }
+  curr.next = left || right;
+
+  return dummy.next;
+}
+
+let head = new ListNode(4);
+head.next = new ListNode(2);
+head.next.next = new ListNode(1);
+head.next.next.next = new ListNode(3);
+
+console.log("Original: 4 -> 2 -> 1 -> 3");
+console.log("");
+
+let sorted = sortList(head);
+
+let result = [];
+while (sorted) {
+  result.push(sorted.val);
+  sorted = sorted.next;
+}
+console.log("\\nSorted:", result.join(" -> "));
+`,
+  },
+  {
+    id: 'intersection-two-lists',
+    name: 'Intersection of Two Linked Lists',
+    category: 'linked-list',
+    difficulty: 'easy',
+    description: 'Find node where two linked lists intersect',
+    code: `// Intersection of Two Linked Lists
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function getIntersectionNode(headA, headB) {
+  if (!headA || !headB) return null;
+
+  let ptrA = headA;
+  let ptrB = headB;
+
+  while (ptrA !== ptrB) {
+    console.log("A:", ptrA ? ptrA.val : "null", "| B:", ptrB ? ptrB.val : "null");
+    ptrA = ptrA ? ptrA.next : headB;
+    ptrB = ptrB ? ptrB.next : headA;
+  }
+
+  return ptrA;
+}
+
+// Create intersection: 8 -> 4 -> 5
+let common = new ListNode(8);
+common.next = new ListNode(4);
+common.next.next = new ListNode(5);
+
+// List A: 4 -> 1 -> 8 -> 4 -> 5
+let headA = new ListNode(4);
+headA.next = new ListNode(1);
+headA.next.next = common;
+
+// List B: 5 -> 6 -> 1 -> 8 -> 4 -> 5
+let headB = new ListNode(5);
+headB.next = new ListNode(6);
+headB.next.next = new ListNode(1);
+headB.next.next.next = common;
+
+console.log("List A: 4 -> 1 -> 8 -> 4 -> 5");
+console.log("List B: 5 -> 6 -> 1 -> 8 -> 4 -> 5");
+console.log("Intersection at node 8");
+console.log("");
+
+let result = getIntersectionNode(headA, headB);
+console.log("\\nIntersection:", result ? result.val : null);
+`,
+  },
+  {
+    id: 'odd-even-linked-list',
+    name: 'Odd Even Linked List',
+    category: 'linked-list',
+    difficulty: 'medium',
+    description: 'Group odd and even positioned nodes',
+    code: `// Odd Even Linked List
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function oddEvenList(head) {
+  if (!head || !head.next) return head;
+
+  let odd = head;
+  let even = head.next;
+  let evenHead = even;
+
+  while (even && even.next) {
+    odd.next = even.next;
+    odd = odd.next;
+    even.next = odd.next;
+    even = even.next;
+    console.log("Odd list ends at:", odd.val);
+  }
+
+  odd.next = evenHead;
+  return head;
+}
+
+let head = new ListNode(1);
+head.next = new ListNode(2);
+head.next.next = new ListNode(3);
+head.next.next.next = new ListNode(4);
+head.next.next.next.next = new ListNode(5);
+
+console.log("Original: 1 -> 2 -> 3 -> 4 -> 5");
+console.log("");
+
+let result = oddEvenList(head);
+
+let arr = [];
+while (result) {
+  arr.push(result.val);
+  result = result.next;
+}
+console.log("\\nOdd-Even:", arr.join(" -> "));
+`,
+  },
+  // ==================== MORE STRING PROBLEMS ====================
+  {
+    id: 'reverse-string',
+    name: 'Reverse String',
+    category: 'strings',
+    difficulty: 'easy',
+    description: 'Reverse string in-place',
+    code: `// Reverse String
+function reverseString(s) {
+  let left = 0, right = s.length - 1;
+
+  while (left < right) {
+    [s[left], s[right]] = [s[right], s[left]];
+    console.log("Swapped", left, "and", right + ":", s.join(''));
+    left++;
+    right--;
+  }
+}
+
+let s = ["h", "e", "l", "l", "o"];
+console.log("Original:", s.join(''));
+console.log("");
+
+reverseString(s);
+console.log("\\nReversed:", s.join(''));
+`,
+  },
+  {
+    id: 'reverse-words',
+    name: 'Reverse Words in a String',
+    category: 'strings',
+    difficulty: 'medium',
+    description: 'Reverse order of words in string',
+    code: `// Reverse Words in a String
+function reverseWords(s) {
+  let words = s.trim().split(/\\s+/);
+  console.log("Words:", words);
+
+  let left = 0, right = words.length - 1;
+  while (left < right) {
+    [words[left], words[right]] = [words[right], words[left]];
+    left++;
+    right--;
+  }
+
+  return words.join(' ');
+}
+
+let s = "  the sky is blue  ";
+console.log("Original: '" + s + "'");
+console.log("");
+
+let result = reverseWords(s);
+console.log("Reversed:", result);
+`,
+  },
+  {
+    id: 'longest-common-prefix',
+    name: 'Longest Common Prefix',
+    category: 'strings',
+    difficulty: 'easy',
+    description: 'Find longest common prefix of strings',
+    code: `// Longest Common Prefix
+function longestCommonPrefix(strs) {
+  if (strs.length === 0) return "";
+
+  let prefix = strs[0];
+
+  for (let i = 1; i < strs.length; i++) {
+    while (strs[i].indexOf(prefix) !== 0) {
+      prefix = prefix.substring(0, prefix.length - 1);
+      console.log("Shortened prefix to:", prefix);
+      if (prefix === "") return "";
+    }
+    console.log("Matches with:", strs[i]);
+  }
+
+  return prefix;
+}
+
+let strs = ["flower", "flow", "flight"];
+console.log("Strings:", strs);
+console.log("");
+
+let result = longestCommonPrefix(strs);
+console.log("\\nLongest common prefix:", result);
+`,
+  },
+  {
+    id: 'string-to-integer',
+    name: 'String to Integer (atoi)',
+    category: 'strings',
+    difficulty: 'medium',
+    description: 'Implement atoi to convert string to integer',
+    code: `// String to Integer (atoi)
+function myAtoi(s) {
+  let i = 0;
+  let sign = 1;
+  let result = 0;
+  let INT_MAX = Math.pow(2, 31) - 1;
+  let INT_MIN = -Math.pow(2, 31);
+
+  // Skip whitespace
+  while (i < s.length && s[i] === ' ') i++;
+
+  // Check sign
+  if (i < s.length && (s[i] === '+' || s[i] === '-')) {
+    sign = s[i] === '-' ? -1 : 1;
+    console.log("Sign:", sign);
+    i++;
+  }
+
+  // Convert digits
+  while (i < s.length && s[i] >= '0' && s[i] <= '9') {
+    let digit = s[i].charCodeAt(0) - '0'.charCodeAt(0);
+    console.log("Digit:", digit, "| Current result:", result);
+
+    // Check overflow
+    if (result > Math.floor((INT_MAX - digit) / 10)) {
+      return sign === 1 ? INT_MAX : INT_MIN;
+    }
+
+    result = result * 10 + digit;
+    i++;
+  }
+
+  return sign * result;
+}
+
+let s = "   -42";
+console.log("Input:", s);
+console.log("");
+
+let result = myAtoi(s);
+console.log("\\nResult:", result);
+`,
+  },
+  {
+    id: 'zigzag-conversion',
+    name: 'Zigzag Conversion',
+    category: 'strings',
+    difficulty: 'medium',
+    description: 'Convert string to zigzag pattern',
+    code: `// Zigzag Conversion
+function convert(s, numRows) {
+  if (numRows === 1) return s;
+
+  let rows = new Array(numRows).fill('');
+  let currRow = 0;
+  let goingDown = false;
+
+  for (let c of s) {
+    rows[currRow] += c;
+    console.log("Row", currRow + ":", rows[currRow]);
+
+    if (currRow === 0 || currRow === numRows - 1) {
+      goingDown = !goingDown;
+    }
+
+    currRow += goingDown ? 1 : -1;
+  }
+
+  return rows.join('');
+}
+
+let s = "PAYPALISHIRING";
+let numRows = 3;
+console.log("String:", s);
+console.log("Rows:", numRows);
+console.log("");
+
+let result = convert(s, numRows);
+console.log("\\nZigzag:", result);
+`,
+  },
+  // ==================== MORE MATRIX ====================
+  {
+    id: 'rotate-image',
+    name: 'Rotate Image',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Rotate matrix 90 degrees clockwise',
+    code: `// Rotate Image 90 degrees clockwise
+function rotate(matrix) {
+  let n = matrix.length;
+
+  // Transpose
+  for (let i = 0; i < n; i++) {
+    for (let j = i; j < n; j++) {
+      [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
+    }
+  }
+  console.log("After transpose:");
+  matrix.forEach(row => console.log(row));
+
+  // Reverse rows
+  for (let i = 0; i < n; i++) {
+    matrix[i].reverse();
+  }
+  console.log("\\nAfter reverse:");
+  matrix.forEach(row => console.log(row));
+}
+
+let matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+];
+console.log("Original:");
+matrix.forEach(row => console.log(row));
+console.log("");
+
+rotate(matrix);
+`,
+  },
+  {
+    id: 'spiral-matrix',
+    name: 'Spiral Matrix',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Return elements in spiral order',
+    code: `// Spiral Matrix
+function spiralOrder(matrix) {
+  let result = [];
+  let top = 0, bottom = matrix.length - 1;
+  let left = 0, right = matrix[0].length - 1;
+
+  while (top <= bottom && left <= right) {
+    // Right
+    for (let i = left; i <= right; i++) {
+      result.push(matrix[top][i]);
+    }
+    top++;
+    console.log("After right:", result);
+
+    // Down
+    for (let i = top; i <= bottom; i++) {
+      result.push(matrix[i][right]);
+    }
+    right--;
+    console.log("After down:", result);
+
+    // Left
+    if (top <= bottom) {
+      for (let i = right; i >= left; i--) {
+        result.push(matrix[bottom][i]);
+      }
+      bottom--;
+      console.log("After left:", result);
+    }
+
+    // Up
+    if (left <= right) {
+      for (let i = bottom; i >= top; i--) {
+        result.push(matrix[i][left]);
+      }
+      left++;
+      console.log("After up:", result);
+    }
+  }
+
+  return result;
+}
+
+let matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+];
+console.log("Matrix:");
+matrix.forEach(row => console.log(row));
+console.log("");
+
+let result = spiralOrder(matrix);
+console.log("\\nSpiral:", result);
+`,
+  },
+  {
+    id: 'set-matrix-zeroes',
+    name: 'Set Matrix Zeroes',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Set row and column to zero if element is zero',
+    code: `// Set Matrix Zeroes
+function setZeroes(matrix) {
+  let m = matrix.length, n = matrix[0].length;
+  let firstRowZero = false, firstColZero = false;
+
+  // Check first row/col
+  for (let j = 0; j < n; j++) {
+    if (matrix[0][j] === 0) firstRowZero = true;
+  }
+  for (let i = 0; i < m; i++) {
+    if (matrix[i][0] === 0) firstColZero = true;
+  }
+
+  // Mark zeros
+  for (let i = 1; i < m; i++) {
+    for (let j = 1; j < n; j++) {
+      if (matrix[i][j] === 0) {
+        matrix[i][0] = 0;
+        matrix[0][j] = 0;
+        console.log("Mark row", i, "and col", j);
+      }
+    }
+  }
+
+  // Set zeros
+  for (let i = 1; i < m; i++) {
+    for (let j = 1; j < n; j++) {
+      if (matrix[i][0] === 0 || matrix[0][j] === 0) {
+        matrix[i][j] = 0;
+      }
+    }
+  }
+
+  // Handle first row/col
+  if (firstRowZero) {
+    for (let j = 0; j < n; j++) matrix[0][j] = 0;
+  }
+  if (firstColZero) {
+    for (let i = 0; i < m; i++) matrix[i][0] = 0;
+  }
+}
+
+let matrix = [
+  [1, 1, 1],
+  [1, 0, 1],
+  [1, 1, 1]
+];
+console.log("Original:");
+matrix.forEach(row => console.log(row));
+console.log("");
+
+setZeroes(matrix);
+
+console.log("After setting zeroes:");
+matrix.forEach(row => console.log(row));
+`,
+  },
+  // ==================== MORE DP ====================
+  {
+    id: 'decode-ways-ii',
+    name: 'House Robber II',
+    category: 'dynamic-programming',
+    difficulty: 'medium',
+    description: 'Rob houses in a circle',
+    code: `// House Robber II - Circular
+function rob(nums) {
+  if (nums.length === 1) return nums[0];
+
+  function robRange(start, end) {
+    let prev2 = 0, prev1 = 0;
+    for (let i = start; i <= end; i++) {
+      let curr = Math.max(prev1, prev2 + nums[i]);
+      console.log("House", i, "Value:", nums[i], "Max:", curr);
+      prev2 = prev1;
+      prev1 = curr;
+    }
+    return prev1;
+  }
+
+  console.log("Option 1: Rob houses 0 to n-2");
+  let opt1 = robRange(0, nums.length - 2);
+
+  console.log("\\nOption 2: Rob houses 1 to n-1");
+  let opt2 = robRange(1, nums.length - 1);
+
+  return Math.max(opt1, opt2);
+}
+
+let nums = [2, 3, 2];
+console.log("Houses:", nums);
+console.log("");
+
+let result = rob(nums);
+console.log("\\nMax money:", result);
+`,
+  },
+  {
+    id: 'decode-string',
+    name: 'Decode String',
+    category: 'dynamic-programming',
+    difficulty: 'medium',
+    description: 'Decode string with nested repetitions',
+    code: `// Decode String
+function decodeString(s) {
+  let stack = [];
+  let currNum = 0;
+  let currStr = '';
+
+  for (let char of s) {
+    if (char >= '0' && char <= '9') {
+      currNum = currNum * 10 + parseInt(char);
+    } else if (char === '[') {
+      stack.push([currStr, currNum]);
+      console.log("Push:", currStr, currNum);
+      currStr = '';
+      currNum = 0;
+    } else if (char === ']') {
+      let [prevStr, num] = stack.pop();
+      currStr = prevStr + currStr.repeat(num);
+      console.log("Decode:", currStr);
+    } else {
+      currStr += char;
+    }
+  }
+
+  return currStr;
+}
+
+let s = "3[a2[c]]";
+console.log("Encoded:", s);
+console.log("");
+
+let result = decodeString(s);
+console.log("\\nDecoded:", result);
+`,
+  },
+  {
+    id: 'maximal-square',
+    name: 'Maximal Square',
+    category: 'dynamic-programming',
+    difficulty: 'medium',
+    description: 'Find largest square of 1s in matrix',
+    code: `// Maximal Square
+function maximalSquare(matrix) {
+  let m = matrix.length, n = matrix[0].length;
+  let dp = Array(m + 1).fill(0).map(() => Array(n + 1).fill(0));
+  let maxSide = 0;
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (matrix[i-1][j-1] === '1') {
+        dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1;
+        maxSide = Math.max(maxSide, dp[i][j]);
+        console.log("At [" + (i-1) + "][" + (j-1) + "] side:", dp[i][j]);
+      }
+    }
+  }
+
+  return maxSide * maxSide;
+}
+
+let matrix = [
+  ['1', '0', '1', '0', '0'],
+  ['1', '0', '1', '1', '1'],
+  ['1', '1', '1', '1', '1'],
+  ['1', '0', '0', '1', '0']
+];
+console.log("Matrix:");
+matrix.forEach(row => console.log(row.join(' ')));
+console.log("");
+
+let result = maximalSquare(matrix);
+console.log("\\nMax square area:", result);
+`,
+  },
+  {
+    id: 'palindrome-partitioning-ii',
+    name: 'Palindrome Substrings DP',
+    category: 'dynamic-programming',
+    difficulty: 'medium',
+    description: 'DP approach for palindrome checks',
+    code: `// Palindrome DP - Check all substrings
+function longestPalindromeDP(s) {
+  let n = s.length;
+  let dp = Array(n).fill(false).map(() => Array(n).fill(false));
+  let start = 0, maxLen = 1;
+
+  // All single chars are palindromes
+  for (let i = 0; i < n; i++) dp[i][i] = true;
+
+  // Check length 2
+  for (let i = 0; i < n - 1; i++) {
+    if (s[i] === s[i + 1]) {
+      dp[i][i + 1] = true;
+      start = i;
+      maxLen = 2;
+    }
+  }
+
+  // Check length 3+
+  for (let len = 3; len <= n; len++) {
+    for (let i = 0; i <= n - len; i++) {
+      let j = i + len - 1;
+      if (s[i] === s[j] && dp[i + 1][j - 1]) {
+        dp[i][j] = true;
+        start = i;
+        maxLen = len;
+        console.log("Palindrome:", s.substring(i, j + 1));
+      }
+    }
+  }
+
+  return s.substring(start, start + maxLen);
+}
+
+let s = "babad";
+console.log("String:", s);
+console.log("");
+
+let result = longestPalindromeDP(s);
+console.log("\\nLongest palindrome:", result);
+`,
+  },
+  // ==================== MORE MATH ====================
+  {
+    id: 'happy-number',
+    name: 'Happy Number',
+    category: 'math',
+    difficulty: 'easy',
+    description: 'Determine if number is happy',
+    code: `// Happy Number
+function isHappy(n) {
+  let seen = new Set();
+
+  function getNext(num) {
+    let sum = 0;
+    while (num > 0) {
+      let digit = num % 10;
+      sum += digit * digit;
+      num = Math.floor(num / 10);
+    }
+    return sum;
+  }
+
+  while (n !== 1 && !seen.has(n)) {
+    seen.add(n);
+    n = getNext(n);
+    console.log("Next:", n);
+  }
+
+  return n === 1;
+}
+
+let n = 19;
+console.log("Number:", n);
+console.log("");
+
+let result = isHappy(n);
+console.log("\\nIs happy:", result);
+`,
+  },
+  {
+    id: 'plus-one',
+    name: 'Plus One',
+    category: 'math',
+    difficulty: 'easy',
+    description: 'Add one to number represented as array',
+    code: `// Plus One
+function plusOne(digits) {
+  for (let i = digits.length - 1; i >= 0; i--) {
+    if (digits[i] < 9) {
+      digits[i]++;
+      console.log("Incremented digit at", i);
+      return digits;
+    }
+    digits[i] = 0;
+    console.log("Set digit", i, "to 0, carry 1");
+  }
+
+  console.log("Need new digit at front");
+  return [1, ...digits];
+}
+
+let digits = [9, 9, 9];
+console.log("Digits:", digits);
+console.log("");
+
+let result = plusOne(digits);
+console.log("\\nResult:", result);
+`,
+  },
+  {
+    id: 'pow-x-n',
+    name: 'Pow(x, n)',
+    category: 'math',
+    difficulty: 'medium',
+    description: 'Implement power function',
+    code: `// Pow(x, n) - Fast exponentiation
+function myPow(x, n) {
+  if (n === 0) return 1;
+
+  if (n < 0) {
+    x = 1 / x;
+    n = -n;
+  }
+
+  let result = 1;
+  while (n > 0) {
+    if (n % 2 === 1) {
+      result *= x;
+      console.log("Multiply result by", x.toFixed(4), "| Result:", result.toFixed(4));
+    }
+    x *= x;
+    n = Math.floor(n / 2);
+    console.log("Square x:", x.toFixed(4), "| n:", n);
+  }
+
+  return result;
+}
+
+let x = 2.0;
+let n = 10;
+console.log("x:", x, "n:", n);
+console.log("");
+
+let result = myPow(x, n);
+console.log("\\nResult:", result);
+`,
+  },
+  {
+    id: 'sqrt-x',
+    name: 'Sqrt(x)',
+    category: 'math',
+    difficulty: 'easy',
+    description: 'Compute square root using binary search',
+    code: `// Sqrt(x) - Binary Search
+function mySqrt(x) {
+  if (x < 2) return x;
+
+  let left = 1, right = Math.floor(x / 2);
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    let square = mid * mid;
+    console.log("Mid:", mid, "Square:", square);
+
+    if (square === x) {
+      return mid;
+    } else if (square < x) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+
+  return right;
+}
+
+let x = 8;
+console.log("Find sqrt of:", x);
+console.log("");
+
+let result = mySqrt(x);
+console.log("\\nInteger sqrt:", result);
+`,
+  },
+  {
+    id: 'trailing-zeroes',
+    name: 'Factorial Trailing Zeroes',
+    category: 'math',
+    difficulty: 'medium',
+    description: 'Count trailing zeros in n!',
+    code: `// Factorial Trailing Zeroes
+function trailingZeroes(n) {
+  let count = 0;
+  let powerOf5 = 5;
+
+  while (powerOf5 <= n) {
+    let multiples = Math.floor(n / powerOf5);
+    count += multiples;
+    console.log("Multiples of", powerOf5 + ":", multiples);
+    powerOf5 *= 5;
+  }
+
+  return count;
+}
+
+let n = 25;
+console.log("n! where n =", n);
+console.log("Count multiples of 5:");
+console.log("");
+
+let result = trailingZeroes(n);
+console.log("\\nTrailing zeroes:", result);
+`,
+  },
+  // ==================== UNION FIND ====================
+  {
+    id: 'number-of-provinces',
+    name: 'Number of Provinces',
+    category: 'graphs',
+    difficulty: 'medium',
+    description: 'Count connected components using Union-Find',
+    code: `// Number of Provinces - Union Find
+class UnionFind {
+  constructor(n) {
+    this.parent = Array(n).fill(0).map((_, i) => i);
+    this.rank = Array(n).fill(0);
+  }
+
+  find(x) {
+    if (this.parent[x] !== x) {
+      this.parent[x] = this.find(this.parent[x]);
+    }
+    return this.parent[x];
+  }
+
+  union(x, y) {
+    let px = this.find(x);
+    let py = this.find(y);
+    if (px === py) return false;
+
+    if (this.rank[px] < this.rank[py]) {
+      this.parent[px] = py;
+    } else if (this.rank[px] > this.rank[py]) {
+      this.parent[py] = px;
+    } else {
+      this.parent[py] = px;
+      this.rank[px]++;
+    }
+    console.log("Union", x, "and", y);
+    return true;
+  }
+}
+
+function findCircleNum(isConnected) {
+  let n = isConnected.length;
+  let uf = new UnionFind(n);
+  let provinces = n;
+
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      if (isConnected[i][j] === 1) {
+        if (uf.union(i, j)) {
+          provinces--;
+        }
+      }
+    }
+  }
+
+  return provinces;
+}
+
+let isConnected = [
+  [1, 1, 0],
+  [1, 1, 0],
+  [0, 0, 1]
+];
+console.log("Connection matrix:");
+isConnected.forEach(row => console.log(row));
+console.log("");
+
+let result = findCircleNum(isConnected);
+console.log("\\nNumber of provinces:", result);
+`,
+  },
+  {
+    id: 'redundant-connection',
+    name: 'Redundant Connection',
+    category: 'graphs',
+    difficulty: 'medium',
+    description: 'Find edge that creates cycle in tree',
+    code: `// Redundant Connection - Union Find
+class UnionFind {
+  constructor(n) {
+    this.parent = Array(n + 1).fill(0).map((_, i) => i);
+  }
+
+  find(x) {
+    if (this.parent[x] !== x) {
+      this.parent[x] = this.find(this.parent[x]);
+    }
+    return this.parent[x];
+  }
+
+  union(x, y) {
+    let px = this.find(x);
+    let py = this.find(y);
+    if (px === py) return false;
+    this.parent[px] = py;
+    return true;
+  }
+}
+
+function findRedundantConnection(edges) {
+  let uf = new UnionFind(edges.length);
+
+  for (let [u, v] of edges) {
+    if (!uf.union(u, v)) {
+      console.log("Cycle found with edge:", [u, v]);
+      return [u, v];
+    }
+    console.log("Added edge:", [u, v]);
+  }
+
+  return [];
+}
+
+let edges = [[1, 2], [1, 3], [2, 3]];
+console.log("Edges:", edges);
+console.log("");
+
+let result = findRedundantConnection(edges);
+console.log("\\nRedundant edge:", result);
+`,
+  },
+  // ==================== MORE BINARY TREE ====================
+  {
+    id: 'diameter-binary-tree',
+    name: 'Diameter of Binary Tree',
+    category: 'trees',
+    difficulty: 'easy',
+    description: 'Find longest path between any two nodes',
+    code: `// Diameter of Binary Tree
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function diameterOfBinaryTree(root) {
+  let maxDiameter = 0;
+
+  function depth(node) {
+    if (!node) return 0;
+
+    let left = depth(node.left);
+    let right = depth(node.right);
+
+    maxDiameter = Math.max(maxDiameter, left + right);
+    console.log("Node:", node.val, "| Left:", left, "Right:", right, "Diameter:", left + right);
+
+    return Math.max(left, right) + 1;
+  }
+
+  depth(root);
+  return maxDiameter;
+}
+
+let root = new TreeNode(1);
+root.left = new TreeNode(2);
+root.right = new TreeNode(3);
+root.left.left = new TreeNode(4);
+root.left.right = new TreeNode(5);
+
+console.log("Tree:");
+console.log("    1");
+console.log("   / \\\\");
+console.log("  2   3");
+console.log(" / \\\\");
+console.log("4   5");
+console.log("");
+
+let result = diameterOfBinaryTree(root);
+console.log("\\nDiameter:", result);
+`,
+  },
+  {
+    id: 'symmetric-tree',
+    name: 'Symmetric Tree',
+    category: 'trees',
+    difficulty: 'easy',
+    description: 'Check if tree is mirror of itself',
+    code: `// Symmetric Tree
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function isSymmetric(root) {
+  function isMirror(t1, t2) {
+    if (!t1 && !t2) return true;
+    if (!t1 || !t2) return false;
+
+    console.log("Comparing:", t1.val, "and", t2.val);
+
+    return t1.val === t2.val &&
+           isMirror(t1.left, t2.right) &&
+           isMirror(t1.right, t2.left);
+  }
+
+  return isMirror(root, root);
+}
+
+let root = new TreeNode(1);
+root.left = new TreeNode(2);
+root.right = new TreeNode(2);
+root.left.left = new TreeNode(3);
+root.left.right = new TreeNode(4);
+root.right.left = new TreeNode(4);
+root.right.right = new TreeNode(3);
+
+console.log("Tree:");
+console.log("    1");
+console.log("   / \\\\");
+console.log("  2   2");
+console.log(" / \\\\ / \\\\");
+console.log("3  4 4  3");
+console.log("");
+
+let result = isSymmetric(root);
+console.log("\\nIs symmetric:", result);
+`,
+  },
+  {
+    id: 'flatten-binary-tree',
+    name: 'Flatten Binary Tree to Linked List',
+    category: 'trees',
+    difficulty: 'medium',
+    description: 'Flatten tree to linked list in-place',
+    code: `// Flatten Binary Tree to Linked List
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function flatten(root) {
+  let prev = null;
+
+  function dfs(node) {
+    if (!node) return;
+
+    dfs(node.right);
+    dfs(node.left);
+
+    node.right = prev;
+    node.left = null;
+    prev = node;
+    console.log("Processed:", node.val);
+  }
+
+  dfs(root);
+}
+
+let root = new TreeNode(1);
+root.left = new TreeNode(2);
+root.right = new TreeNode(5);
+root.left.left = new TreeNode(3);
+root.left.right = new TreeNode(4);
+root.right.right = new TreeNode(6);
+
+console.log("Tree: 1 -> (2 -> 3, 4), (5 -> 6)");
+console.log("");
+
+flatten(root);
+
+let result = [];
+while (root) {
+  result.push(root.val);
+  root = root.right;
+}
+console.log("\\nFlattened:", result.join(" -> "));
+`,
+  },
+  {
+    id: 'path-sum-ii',
+    name: 'Path Sum II',
+    category: 'trees',
+    difficulty: 'medium',
+    description: 'Find all root-to-leaf paths with target sum',
+    code: `// Path Sum II
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function pathSum(root, targetSum) {
+  let result = [];
+
+  function dfs(node, sum, path) {
+    if (!node) return;
+
+    path.push(node.val);
+    sum += node.val;
+
+    if (!node.left && !node.right && sum === targetSum) {
+      console.log("Found path:", path);
+      result.push([...path]);
+    }
+
+    dfs(node.left, sum, path);
+    dfs(node.right, sum, path);
+
+    path.pop();
+  }
+
+  dfs(root, 0, []);
+  return result;
+}
+
+let root = new TreeNode(5);
+root.left = new TreeNode(4);
+root.right = new TreeNode(8);
+root.left.left = new TreeNode(11);
+root.left.left.left = new TreeNode(7);
+root.left.left.right = new TreeNode(2);
+root.right.left = new TreeNode(13);
+root.right.right = new TreeNode(4);
+root.right.right.left = new TreeNode(5);
+root.right.right.right = new TreeNode(1);
+
+let targetSum = 22;
+console.log("Target sum:", targetSum);
+console.log("");
+
+let result = pathSum(root, targetSum);
+console.log("\\nPaths found:", result.length);
+`,
+  },
+  {
+    id: 'lowest-common-ancestor',
+    name: 'Lowest Common Ancestor',
+    category: 'trees',
+    difficulty: 'medium',
+    description: 'Find LCA of two nodes in binary tree',
+    code: `// Lowest Common Ancestor of Binary Tree
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function lowestCommonAncestor(root, p, q) {
+  if (!root || root === p || root === q) {
+    console.log("Base case at:", root ? root.val : null);
+    return root;
+  }
+
+  let left = lowestCommonAncestor(root.left, p, q);
+  let right = lowestCommonAncestor(root.right, p, q);
+
+  if (left && right) {
+    console.log("LCA found at:", root.val);
+    return root;
+  }
+
+  return left || right;
+}
+
+let root = new TreeNode(3);
+root.left = new TreeNode(5);
+root.right = new TreeNode(1);
+root.left.left = new TreeNode(6);
+root.left.right = new TreeNode(2);
+root.right.left = new TreeNode(0);
+root.right.right = new TreeNode(8);
+
+let p = root.left;       // Node 5
+let q = root.left.right; // Node 2
+
+console.log("Find LCA of", p.val, "and", q.val);
+console.log("");
+
+let result = lowestCommonAncestor(root, p, q);
+console.log("\\nLCA:", result.val);
 `,
   },
 ]
