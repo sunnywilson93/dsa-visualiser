@@ -82,25 +82,6 @@
   font-weight: 500;
 }
 
-.spacer {
-  flex: 1;
-}
-
-.githubLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  color: #888;
-  border-radius: 8px;
-  transition: all 0.2s;
-}
-
-.githubLink:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
-}
 
 /* Tablet */
 @media (max-width: 768px) {
