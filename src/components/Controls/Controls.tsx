@@ -8,6 +8,7 @@ import {
   RotateCcw,
   FastForward,
   Zap,
+  Bug,
 } from 'lucide-react'
 import { useExecutionStore, useExecutionProgress, useCurrentStep } from '@/store'
 import type { PlaybackSpeed } from '@/types'
@@ -108,9 +109,18 @@ export function Controls() {
     jumpToStep(step)
   }
 
-  const handleRun = () => {
+  const handleRun = async () => {
     if (status === 'idle') {
-      startExecution()
+      await startExecution()
+      // Jump to end immediately after execution
+      runToCompletion()
+    }
+  }
+
+  const handleDebug = async () => {
+    if (status === 'idle') {
+      await startExecution()
+      // Stay at step 0 for debugging
     }
   }
 
@@ -123,17 +133,30 @@ export function Controls() {
     <div className={styles.container}>
       {/* Main controls */}
       <div className={styles.mainControls}>
-        {/* Run button (only when idle) */}
+        {/* Run and Debug buttons (only when idle) */}
         {isIdle && (
-          <motion.button
-            className={`${styles.runButton}`}
-            onClick={handleRun}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Zap size={16} />
-            <span>Run Code</span>
-          </motion.button>
+          <div className={styles.startButtons}>
+            <motion.button
+              className={styles.runButton}
+              onClick={handleRun}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              title="Execute code and show result"
+            >
+              <Zap size={16} />
+              <span>Run</span>
+            </motion.button>
+            <motion.button
+              className={styles.debugButton}
+              onClick={handleDebug}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              title="Step through code line by line"
+            >
+              <Bug size={16} />
+              <span>Debug</span>
+            </motion.button>
+          </div>
         )}
 
         {/* Playback controls (when running) */}

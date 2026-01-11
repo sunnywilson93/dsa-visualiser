@@ -4,4 +4,5 @@ export {
   useCallStack,
   useCurrentScopes,
   useExecutionProgress,
+  useVisibleConsoleOutput,
 } from './executionStore'

@@ -286,3 +286,15 @@ export const useExecutionProgress = () => useExecutionStore(state => ({
   total: state.steps.length,
   percentage: state.steps.length > 0 ? (state.currentStep / (state.steps.length - 1)) * 100 : 0,
 }))
+
+// Returns console output visible at the current step
+export const useVisibleConsoleOutput = () => useExecutionStore(state => {
+  const { currentStep, steps, consoleOutput } = state
+  if (steps.length === 0) return []
+
+  const step = steps[currentStep]
+  if (!step) return []
+
+  // Only show console outputs that existed at this step
+  return consoleOutput.slice(0, step.consoleOutputCount)
+})

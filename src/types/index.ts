@@ -32,6 +32,7 @@ export interface ExecutionStep {
   description: string
   highlightedElements?: string[]
   consoleOutput?: string
+  consoleOutputCount: number // How many console outputs existed at this step
 }
 
 export type StepType =

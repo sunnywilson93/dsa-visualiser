@@ -7,7 +7,21 @@ export interface CodeExample {
   code: string
 }
 
+// Main 9 categories for the home page
 export const exampleCategories = [
+  { id: 'js-core', name: 'JavaScript Core', icon: '⚡', description: 'Closures, this, prototypes, hoisting, scope' },
+  { id: 'async-js', name: 'Async JavaScript', icon: '⏳', description: 'Promises, async/await, event loop patterns' },
+  { id: 'array-polyfills', name: 'Array Polyfills', icon: '🔧', description: 'Implement map, filter, reduce, flat' },
+  { id: 'utility-functions', name: 'Utility Functions', icon: '🛠️', description: 'Debounce, throttle, deep clone, memoize' },
+  { id: 'functional-js', name: 'Functional JS', icon: 'λ', description: 'Curry, compose, pipe, partial application' },
+  { id: 'dom-events', name: 'DOM & Events', icon: '🎯', description: 'Event emitter, delegation, pub/sub' },
+  { id: 'object-utils', name: 'Object Utilities', icon: '📦', description: 'Deep equal, merge, get/set nested props' },
+  { id: 'promise-polyfills', name: 'Promise Polyfills', icon: '🤝', description: 'Promise.all, race, allSettled, promisify' },
+  { id: 'dsa', name: 'DSA', icon: '🧠', description: 'Data structures & algorithms (176 problems)' },
+]
+
+// DSA subcategories for filtering within DSA page
+export const dsaSubcategories = [
   { id: 'arrays-hashing', name: 'Arrays & Hashing', icon: '📊' },
   { id: 'two-pointers', name: 'Two Pointers', icon: '👆' },
   { id: 'sliding-window', name: 'Sliding Window', icon: '🪟' },
@@ -28,6 +42,17 @@ export const exampleCategories = [
   { id: 'bit-manipulation', name: 'Bit Manipulation', icon: '🔢' },
   { id: 'math', name: 'Math & Geometry', icon: '➗' },
 ]
+
+// Helper to check if a category is a DSA subcategory
+export const isDsaSubcategory = (cat: string) => dsaSubcategories.some(s => s.id === cat)
+
+// Get examples by main category (maps DSA subcategories to 'dsa')
+export const getExamplesByCategory = (categoryId: string) => {
+  if (categoryId === 'dsa') {
+    return codeExamples.filter(e => isDsaSubcategory(e.category))
+  }
+  return codeExamples.filter(e => e.category === categoryId)
+}
 
 export const codeExamples: CodeExample[] = [
   // ==================== ARRAYS & HASHING ====================
@@ -6809,6 +6834,1487 @@ console.log("");
 
 let result = lowestCommonAncestor(root, p, q);
 console.log("\\nLCA:", result.val);
+`,
+  },
+
+  // ==================== JAVASCRIPT CORE ====================
+  {
+    id: 'closure-counter',
+    name: 'Closure Counter',
+    category: 'js-core',
+    difficulty: 'easy',
+    description: 'Understand closures with a counter factory',
+    code: `// Closure Counter - Understanding Closures
+
+function createCounter(initialValue) {
+  let count = initialValue;
+  console.log("Counter created with:", count);
+
+  return {
+    increment: function() {
+      count++;
+      console.log("After increment:", count);
+      return count;
+    },
+    decrement: function() {
+      count--;
+      console.log("After decrement:", count);
+      return count;
+    },
+    getValue: function() {
+      return count;
+    }
+  };
+}
+
+let counter1 = createCounter(0);
+let counter2 = createCounter(100);
+
+console.log("\\n--- Counter 1 ---");
+counter1.increment();
+counter1.increment();
+counter1.increment();
+
+console.log("\\n--- Counter 2 ---");
+counter2.decrement();
+counter2.decrement();
+
+console.log("\\n--- Final Values ---");
+console.log("Counter 1:", counter1.getValue());
+console.log("Counter 2:", counter2.getValue());
+`,
+  },
+  {
+    id: 'this-binding',
+    name: 'This Binding',
+    category: 'js-core',
+    difficulty: 'medium',
+    description: 'Understand how "this" works in different contexts',
+    code: `// This Binding - Understanding "this" keyword
+
+let user = {
+  name: "Alice",
+  greet: function() {
+    console.log("Hello, I am " + this.name);
+  }
+};
+
+console.log("=== Method call ===");
+user.greet();
+
+console.log("\\n=== Using bind() ===");
+let boundGreet = user.greet.bind(user);
+boundGreet();
+
+console.log("\\n=== Using call() ===");
+let bob = { name: "Bob" };
+user.greet.call(bob);
+
+console.log("\\n=== Using apply() ===");
+user.greet.apply({ name: "Charlie" });
+
+console.log("\\n=== Arrow in method ===");
+let obj = {
+  name: "Object",
+  arrowMethod: function() {
+    let arrow = () => console.log("Arrow this:", this.name);
+    arrow();
+  }
+};
+obj.arrowMethod();
+`,
+  },
+  {
+    id: 'prototype-chain',
+    name: 'Prototype Chain',
+    category: 'js-core',
+    difficulty: 'medium',
+    description: 'Understand prototypal inheritance',
+    code: `// Prototype Chain - Prototypal Inheritance
+
+function Animal(name) {
+  this.name = name;
+}
+
+Animal.prototype.speak = function() {
+  console.log(this.name + " makes a sound");
+};
+
+function Dog(name, breed) {
+  Animal.call(this, name);
+  this.breed = breed;
+}
+
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+
+Dog.prototype.bark = function() {
+  console.log(this.name + " barks!");
+};
+
+console.log("=== Creating instances ===");
+let animal = new Animal("Generic");
+let dog = new Dog("Buddy", "Golden Retriever");
+
+console.log("\\n=== Methods ===");
+animal.speak();
+dog.speak();
+dog.bark();
+
+console.log("\\n=== instanceof ===");
+console.log("dog instanceof Dog:", dog instanceof Dog);
+console.log("dog instanceof Animal:", dog instanceof Animal);
+`,
+  },
+  {
+    id: 'hoisting-demo',
+    name: 'Hoisting Demo',
+    category: 'js-core',
+    difficulty: 'easy',
+    description: 'Understand variable and function hoisting',
+    code: `// Hoisting Demo
+
+console.log("=== Function Hoisting ===");
+sayHello();
+
+function sayHello() {
+  console.log("Hello! Functions are hoisted.");
+}
+
+console.log("\\n=== var Hoisting ===");
+console.log("x before:", x);
+var x = 5;
+console.log("x after:", x);
+
+console.log("\\n=== let/const TDZ ===");
+// console.log(y); // ReferenceError
+let y = 10;
+console.log("y after:", y);
+
+console.log("\\n=== Loop scoping ===");
+for (var i = 0; i < 3; i++) {}
+console.log("var i after loop:", i);
+
+for (let j = 0; j < 3; j++) {}
+console.log("let j: not accessible");
+`,
+  },
+  {
+    id: 'scope-chain',
+    name: 'Scope Chain',
+    category: 'js-core',
+    difficulty: 'medium',
+    description: 'Understand lexical scope',
+    code: `// Scope Chain - Lexical Scoping
+
+let global = "global";
+
+function outer() {
+  let outerVar = "outer";
+
+  function inner() {
+    let innerVar = "inner";
+
+    console.log("inner:", innerVar);
+    console.log("outer:", outerVar);
+    console.log("global:", global);
+  }
+
+  inner();
+}
+
+outer();
+
+console.log("\\n=== Shadowing ===");
+let shadow = "global";
+
+function test() {
+  let shadow = "local";
+  console.log("Inside:", shadow);
+}
+
+test();
+console.log("Outside:", shadow);
+`,
+  },
+
+  // ==================== ASYNC JAVASCRIPT ====================
+  {
+    id: 'promise-chain',
+    name: 'Promise Chaining',
+    category: 'async-js',
+    difficulty: 'easy',
+    description: 'Sequential async with promises',
+    code: `// Promise Chaining
+
+function delay(ms, val) {
+  return new Promise(r => setTimeout(() => r(val), ms));
+}
+
+function fetchUser(id) {
+  console.log("Fetching user...");
+  return delay(100, { id, name: "User " + id });
+}
+
+function fetchPosts(user) {
+  console.log("Fetching posts for", user.name);
+  return delay(100, ["Post 1", "Post 2"]);
+}
+
+fetchUser(1)
+  .then(user => {
+    console.log("Got user:", user);
+    return fetchPosts(user);
+  })
+  .then(posts => {
+    console.log("Got posts:", posts);
+  })
+  .catch(err => console.log("Error:", err));
+`,
+  },
+  {
+    id: 'async-await-basics',
+    name: 'Async/Await Basics',
+    category: 'async-js',
+    difficulty: 'easy',
+    description: 'Modern async syntax',
+    code: `// Async/Await
+
+function delay(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+async function fetchData(id) {
+  console.log("Fetching", id);
+  await delay(100);
+  return { id, data: "Data " + id };
+}
+
+async function main() {
+  console.log("Starting...\\n");
+
+  try {
+    let d1 = await fetchData(1);
+    console.log("Got:", d1);
+
+    let d2 = await fetchData(2);
+    console.log("Got:", d2);
+
+    console.log("\\nDone!");
+  } catch (e) {
+    console.log("Error:", e);
+  }
+}
+
+main();
+`,
+  },
+  {
+    id: 'sequential-vs-parallel',
+    name: 'Sequential vs Parallel',
+    category: 'async-js',
+    difficulty: 'medium',
+    description: 'Compare async execution patterns',
+    code: `// Sequential vs Parallel
+
+function fetch(id) {
+  return new Promise(r => {
+    setTimeout(() => {
+      console.log("  Got " + id);
+      r(id);
+    }, 50 + id * 20);
+  });
+}
+
+async function sequential() {
+  console.log("=== Sequential ===");
+  for (let id of [1, 2, 3]) {
+    await fetch(id);
+  }
+  console.log("Done sequential");
+}
+
+async function parallel() {
+  console.log("\\n=== Parallel ===");
+  await Promise.all([1, 2, 3].map(fetch));
+  console.log("Done parallel");
+}
+
+async function main() {
+  await sequential();
+  await parallel();
+  console.log("\\nParallel is faster!");
+}
+
+main();
+`,
+  },
+
+  // ==================== ARRAY POLYFILLS ====================
+  {
+    id: 'implement-map',
+    name: 'Implement Array.map',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own map',
+    code: `// Implement Array.map
+
+Array.prototype.myMap = function(cb) {
+  let result = [];
+  for (let i = 0; i < this.length; i++) {
+    let mapped = cb(this[i], i, this);
+    result.push(mapped);
+    console.log(this[i], "->", mapped);
+  }
+  return result;
+};
+
+console.log("=== Double ===");
+let nums = [1, 2, 3, 4, 5];
+let doubled = nums.myMap(x => x * 2);
+console.log("Result:", doubled);
+
+console.log("\\n=== Extract ===");
+let users = [{ name: 'Alice' }, { name: 'Bob' }];
+console.log(users.myMap(u => u.name));
+`,
+  },
+  {
+    id: 'implement-filter',
+    name: 'Implement Array.filter',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own filter',
+    code: `// Implement Array.filter
+
+Array.prototype.myFilter = function(cb) {
+  let result = [];
+  for (let i = 0; i < this.length; i++) {
+    let keep = cb(this[i], i, this);
+    console.log(this[i], "->", keep ? "keep" : "skip");
+    if (keep) result.push(this[i]);
+  }
+  return result;
+};
+
+console.log("=== Evens ===");
+let nums = [1, 2, 3, 4, 5, 6];
+console.log(nums.myFilter(x => x % 2 === 0));
+
+console.log("\\n=== Truthy ===");
+let mixed = [0, 1, '', 'hi', null, true];
+console.log(mixed.myFilter(Boolean));
+`,
+  },
+  {
+    id: 'implement-reduce',
+    name: 'Implement Array.reduce',
+    category: 'array-polyfills',
+    difficulty: 'medium',
+    description: 'Build your own reduce',
+    code: `// Implement Array.reduce
+
+Array.prototype.myReduce = function(cb, init) {
+  let acc = init !== undefined ? init : this[0];
+  let start = init !== undefined ? 0 : 1;
+
+  console.log("Initial:", acc);
+
+  for (let i = start; i < this.length; i++) {
+    let prev = acc;
+    acc = cb(acc, this[i], i, this);
+    console.log(prev, "+", this[i], "=", acc);
+  }
+  return acc;
+};
+
+console.log("=== Sum ===");
+console.log([1,2,3,4,5].myReduce((a,b) => a+b, 0));
+
+console.log("\\n=== Max ===");
+console.log([3,7,2,9].myReduce((a,b) => b>a ? b : a));
+
+console.log("\\n=== Flatten ===");
+console.log([[1,2],[3,4]].myReduce((a,b) => a.concat(b), []));
+`,
+  },
+  {
+    id: 'implement-flat',
+    name: 'Implement Array.flat',
+    category: 'array-polyfills',
+    difficulty: 'medium',
+    description: 'Build your own flat',
+    code: `// Implement Array.flat
+
+Array.prototype.myFlat = function(depth = 1) {
+  function flatten(arr, d) {
+    let result = [];
+    for (let item of arr) {
+      if (Array.isArray(item) && d > 0) {
+        console.log("Flatten:", item);
+        result = result.concat(flatten(item, d - 1));
+      } else {
+        result.push(item);
+      }
+    }
+    return result;
+  }
+  return flatten(this, depth);
+};
+
+console.log("=== Depth 1 ===");
+console.log([1, [2, [3]]].myFlat());
+
+console.log("\\n=== Depth 2 ===");
+console.log([1, [2, [3, [4]]]].myFlat(2));
+
+console.log("\\n=== Infinity ===");
+console.log([1, [2, [3, [4]]]].myFlat(Infinity));
+`,
+  },
+  {
+    id: 'implement-foreach',
+    name: 'Implement Array.forEach',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own forEach',
+    code: `// Implement Array.forEach
+
+Array.prototype.myForEach = function(callback) {
+  for (let i = 0; i < this.length; i++) {
+    console.log("Index:", i, "Value:", this[i]);
+    callback(this[i], i, this);
+  }
+};
+
+let sum = 0;
+[1, 2, 3, 4, 5].myForEach(function(num) {
+  sum = sum + num;
+  console.log("  Running sum:", sum);
+});
+
+console.log("\\nFinal sum:", sum);
+`,
+  },
+  {
+    id: 'implement-find',
+    name: 'Implement Array.find',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own find',
+    code: `// Implement Array.find
+
+Array.prototype.myFind = function(callback) {
+  for (let i = 0; i < this.length; i++) {
+    console.log("Checking:", this[i]);
+    if (callback(this[i], i, this)) {
+      console.log("  Found!");
+      return this[i];
+    }
+  }
+  console.log("Not found");
+  return undefined;
+};
+
+let users = [
+  { name: "Alice", age: 25 },
+  { name: "Bob", age: 30 },
+  { name: "Carol", age: 35 }
+];
+
+console.log("Find age > 28:");
+let found = users.myFind(function(u) {
+  return u.age > 28;
+});
+console.log("Result:", found);
+
+console.log("\\nFind age > 100:");
+let notFound = users.myFind(function(u) {
+  return u.age > 100;
+});
+console.log("Result:", notFound);
+`,
+  },
+  {
+    id: 'implement-findindex',
+    name: 'Implement Array.findIndex',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own findIndex',
+    code: `// Implement Array.findIndex
+
+Array.prototype.myFindIndex = function(callback) {
+  for (let i = 0; i < this.length; i++) {
+    console.log("Index", i + ":", this[i]);
+    if (callback(this[i], i, this)) {
+      console.log("  Match at index", i);
+      return i;
+    }
+  }
+  console.log("No match found");
+  return -1;
+};
+
+let numbers = [10, 20, 30, 40, 50];
+
+console.log("Find index where num > 25:");
+let idx = numbers.myFindIndex(function(n) {
+  return n > 25;
+});
+console.log("Result:", idx);
+
+console.log("\\nFind index where num > 100:");
+let noIdx = numbers.myFindIndex(function(n) {
+  return n > 100;
+});
+console.log("Result:", noIdx);
+`,
+  },
+  {
+    id: 'implement-some',
+    name: 'Implement Array.some',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own some',
+    code: `// Implement Array.some
+
+Array.prototype.mySome = function(callback) {
+  for (let i = 0; i < this.length; i++) {
+    console.log("Test:", this[i]);
+    if (callback(this[i], i, this)) {
+      console.log("  Pass! Return true");
+      return true;
+    }
+    console.log("  Fail, continue...");
+  }
+  console.log("None passed");
+  return false;
+};
+
+let ages = [16, 17, 18, 19];
+
+console.log("Any adult (>= 18)?");
+let hasAdult = ages.mySome(function(age) {
+  return age >= 18;
+});
+console.log("Result:", hasAdult);
+
+console.log("\\nAny senior (>= 65)?");
+let hasSenior = ages.mySome(function(age) {
+  return age >= 65;
+});
+console.log("Result:", hasSenior);
+`,
+  },
+  {
+    id: 'implement-every',
+    name: 'Implement Array.every',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own every',
+    code: `// Implement Array.every
+
+Array.prototype.myEvery = function(callback) {
+  for (let i = 0; i < this.length; i++) {
+    console.log("Test:", this[i]);
+    if (!callback(this[i], i, this)) {
+      console.log("  Fail! Return false");
+      return false;
+    }
+    console.log("  Pass, continue...");
+  }
+  console.log("All passed!");
+  return true;
+};
+
+console.log("All positive?");
+let allPositive = [1, 2, 3, 4].myEvery(function(n) {
+  return n > 0;
+});
+console.log("Result:", allPositive);
+
+console.log("\\nAll even?");
+let allEven = [2, 4, 5, 8].myEvery(function(n) {
+  return n % 2 === 0;
+});
+console.log("Result:", allEven);
+`,
+  },
+  {
+    id: 'implement-includes',
+    name: 'Implement Array.includes',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own includes',
+    code: `// Implement Array.includes
+
+Array.prototype.myIncludes = function(search, fromIndex) {
+  let start = fromIndex || 0;
+  if (start < 0) {
+    start = this.length + start;
+  }
+
+  console.log("Search for:", search);
+  console.log("Start index:", start);
+
+  for (let i = start; i < this.length; i++) {
+    console.log("  Check [" + i + "]:", this[i]);
+    if (this[i] === search) {
+      console.log("  Found!");
+      return true;
+    }
+  }
+  console.log("Not found");
+  return false;
+};
+
+let arr = [1, 2, 3, 4, 5];
+
+console.log("Includes 3?");
+console.log("Result:", arr.myIncludes(3));
+
+console.log("\\nIncludes 3, from index 3?");
+console.log("Result:", arr.myIncludes(3, 3));
+
+console.log("\\nIncludes 6?");
+console.log("Result:", arr.myIncludes(6));
+`,
+  },
+  {
+    id: 'implement-indexof',
+    name: 'Implement Array.indexOf',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own indexOf',
+    code: `// Implement Array.indexOf
+
+Array.prototype.myIndexOf = function(search, fromIndex) {
+  let start = fromIndex || 0;
+  if (start < 0) {
+    start = this.length + start;
+  }
+
+  console.log("Search for:", search);
+
+  for (let i = start; i < this.length; i++) {
+    console.log("  [" + i + "]:", this[i]);
+    if (this[i] === search) {
+      console.log("  Match!");
+      return i;
+    }
+  }
+  console.log("Not found");
+  return -1;
+};
+
+let letters = ['a', 'b', 'c', 'b', 'd'];
+
+console.log("indexOf 'b':");
+console.log("Result:", letters.myIndexOf('b'));
+
+console.log("\\nindexOf 'b' from 2:");
+console.log("Result:", letters.myIndexOf('b', 2));
+
+console.log("\\nindexOf 'z':");
+console.log("Result:", letters.myIndexOf('z'));
+`,
+  },
+  {
+    id: 'implement-flatmap',
+    name: 'Implement Array.flatMap',
+    category: 'array-polyfills',
+    difficulty: 'medium',
+    description: 'Build your own flatMap',
+    code: `// Implement Array.flatMap
+// flatMap = map + flat(1)
+
+Array.prototype.myFlatMap = function(callback) {
+  let result = [];
+
+  for (let i = 0; i < this.length; i++) {
+    let mapped = callback(this[i], i, this);
+    console.log("Map [" + i + "]:", this[i], "->", mapped);
+
+    if (Array.isArray(mapped)) {
+      console.log("  Flatten:", mapped);
+      for (let item of mapped) {
+        result.push(item);
+      }
+    } else {
+      result.push(mapped);
+    }
+  }
+
+  return result;
+};
+
+console.log("Split words into chars:");
+let words = ["hi", "bye"];
+let chars = words.myFlatMap(function(w) {
+  return w.split('');
+});
+console.log("Result:", chars);
+
+console.log("\\nDouble each number:");
+let nums = [1, 2, 3];
+let doubled = nums.myFlatMap(function(n) {
+  return [n, n * 2];
+});
+console.log("Result:", doubled);
+`,
+  },
+  {
+    id: 'implement-concat',
+    name: 'Implement Array.concat',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own concat',
+    code: `// Implement Array.concat
+
+Array.prototype.myConcat = function(...args) {
+  let result = [];
+
+  // Copy original array
+  console.log("Copy original:", this);
+  for (let item of this) {
+    result.push(item);
+  }
+
+  // Process each argument
+  for (let arg of args) {
+    console.log("Concat:", arg);
+    if (Array.isArray(arg)) {
+      for (let item of arg) {
+        result.push(item);
+      }
+    } else {
+      result.push(arg);
+    }
+  }
+
+  return result;
+};
+
+let a = [1, 2];
+let b = [3, 4];
+let c = [5, 6];
+
+console.log("Concat arrays:");
+let merged = a.myConcat(b, c);
+console.log("Result:", merged);
+
+console.log("\\nConcat mixed:");
+let mixed = a.myConcat(99, [100, 101]);
+console.log("Result:", mixed);
+`,
+  },
+  {
+    id: 'implement-slice',
+    name: 'Implement Array.slice',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own slice',
+    code: `// Implement Array.slice
+
+Array.prototype.mySlice = function(start, end) {
+  let result = [];
+  let len = this.length;
+
+  // Handle defaults and negatives
+  let s = start === undefined ? 0 : start;
+  let e = end === undefined ? len : end;
+
+  if (s < 0) s = len + s;
+  if (e < 0) e = len + e;
+
+  console.log("Array:", this);
+  console.log("Slice from", s, "to", e);
+
+  for (let i = s; i < e && i < len; i++) {
+    console.log("  Copy [" + i + "]:", this[i]);
+    result.push(this[i]);
+  }
+
+  return result;
+};
+
+let arr = [0, 1, 2, 3, 4, 5];
+
+console.log("slice(2, 4):");
+console.log("Result:", arr.mySlice(2, 4));
+
+console.log("\\nslice(-3):");
+console.log("Result:", arr.mySlice(-3));
+
+console.log("\\nslice(1, -1):");
+console.log("Result:", arr.mySlice(1, -1));
+`,
+  },
+  {
+    id: 'implement-reverse',
+    name: 'Implement Array.reverse',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own reverse (in-place)',
+    code: `// Implement Array.reverse (in-place)
+
+Array.prototype.myReverse = function() {
+  let left = 0;
+  let right = this.length - 1;
+
+  console.log("Original:", this);
+
+  while (left < right) {
+    console.log("Swap [" + left + "] and [" + right + "]");
+
+    // Swap elements
+    let temp = this[left];
+    this[left] = this[right];
+    this[right] = temp;
+
+    console.log("  After:", this);
+
+    left = left + 1;
+    right = right - 1;
+  }
+
+  return this;
+};
+
+let nums = [1, 2, 3, 4, 5];
+console.log("Reverse numbers:");
+nums.myReverse();
+console.log("Final:", nums);
+
+console.log("\\nReverse chars:");
+let chars = ['a', 'b', 'c', 'd'];
+chars.myReverse();
+console.log("Final:", chars);
+`,
+  },
+  {
+    id: 'implement-join',
+    name: 'Implement Array.join',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own join',
+    code: `// Implement Array.join
+
+Array.prototype.myJoin = function(separator) {
+  let sep = separator === undefined ? ',' : separator;
+  let result = '';
+
+  console.log("Array:", this);
+  console.log("Separator:", JSON.stringify(sep));
+
+  for (let i = 0; i < this.length; i++) {
+    if (i > 0) {
+      result = result + sep;
+    }
+
+    if (this[i] !== null && this[i] !== undefined) {
+      result = result + this[i];
+    }
+
+    console.log("  After [" + i + "]:", JSON.stringify(result));
+  }
+
+  return result;
+};
+
+console.log("Default separator:");
+console.log("Result:", [1, 2, 3].myJoin());
+
+console.log("\\nCustom separator:");
+console.log("Result:", ['a', 'b', 'c'].myJoin(' - '));
+
+console.log("\\nWith null/undefined:");
+console.log("Result:", [1, null, 3, undefined, 5].myJoin());
+`,
+  },
+  {
+    id: 'implement-fill',
+    name: 'Implement Array.fill',
+    category: 'array-polyfills',
+    difficulty: 'easy',
+    description: 'Build your own fill',
+    code: `// Implement Array.fill
+
+Array.prototype.myFill = function(value, start, end) {
+  let len = this.length;
+  let s = start === undefined ? 0 : start;
+  let e = end === undefined ? len : end;
+
+  if (s < 0) s = len + s;
+  if (e < 0) e = len + e;
+
+  console.log("Fill with:", value);
+  console.log("From", s, "to", e);
+
+  for (let i = s; i < e && i < len; i++) {
+    console.log("  [" + i + "]:", this[i], "->", value);
+    this[i] = value;
+  }
+
+  return this;
+};
+
+let arr1 = [1, 2, 3, 4, 5];
+console.log("fill(0):");
+arr1.myFill(0);
+console.log("Result:", arr1);
+
+let arr2 = [1, 2, 3, 4, 5];
+console.log("\\nfill('x', 1, 4):");
+arr2.myFill('x', 1, 4);
+console.log("Result:", arr2);
+
+let arr3 = [1, 2, 3, 4, 5];
+console.log("\\nfill(9, -2):");
+arr3.myFill(9, -2);
+console.log("Result:", arr3);
+`,
+  },
+
+  // ==================== UTILITY FUNCTIONS ====================
+  {
+    id: 'implement-debounce',
+    name: 'Implement Debounce',
+    category: 'utility-functions',
+    difficulty: 'medium',
+    description: 'Delay until events stop',
+    code: `// Debounce - Wait for pause
+
+function debounce(fn, wait) {
+  let timeout;
+  return function(...args) {
+    if (timeout) {
+      console.log("  Clear previous");
+      clearTimeout(timeout);
+    }
+    console.log("  Set timeout " + wait + "ms");
+    timeout = setTimeout(() => {
+      console.log("  Execute!");
+      fn.apply(this, args);
+    }, wait);
+  };
+}
+
+function search(q) {
+  console.log(">>> Search:", q);
+}
+
+let debouncedSearch = debounce(search, 300);
+
+console.log("Typing...");
+debouncedSearch('h');
+debouncedSearch('he');
+debouncedSearch('hel');
+debouncedSearch('hello');
+
+console.log("\\nOnly 'hello' triggers after pause");
+`,
+  },
+  {
+    id: 'implement-throttle',
+    name: 'Implement Throttle',
+    category: 'utility-functions',
+    difficulty: 'medium',
+    description: 'Limit execution rate',
+    code: `// Throttle - Execute at most once per interval
+
+function throttle(fn, wait) {
+  let last = 0;
+  return function(...args) {
+    let now = Date.now();
+    if (now - last >= wait) {
+      last = now;
+      console.log("  Execute");
+      fn.apply(this, args);
+    } else {
+      console.log("  Skip (throttled)");
+    }
+  };
+}
+
+let count = 0;
+function handleScroll(pos) {
+  count++;
+  console.log(">>> Handler #" + count);
+}
+
+let throttled = throttle(handleScroll, 200);
+
+console.log("Rapid events:");
+for (let i = 0; i < 5; i++) {
+  throttled(i);
+}
+
+console.log("\\nThrottle limits rate");
+`,
+  },
+  {
+    id: 'implement-deep-clone',
+    name: 'Implement Deep Clone',
+    category: 'utility-functions',
+    difficulty: 'medium',
+    description: 'Deep copy objects',
+    code: `// Deep Clone
+
+function deepClone(obj, seen = new WeakMap()) {
+  if (obj === null || typeof obj !== 'object') return obj;
+  if (seen.has(obj)) return seen.get(obj);
+
+  if (Array.isArray(obj)) {
+    let clone = [];
+    seen.set(obj, clone);
+    obj.forEach((v, i) => clone[i] = deepClone(v, seen));
+    return clone;
+  }
+
+  let clone = {};
+  seen.set(obj, clone);
+  for (let k in obj) {
+    if (obj.hasOwnProperty(k)) {
+      clone[k] = deepClone(obj[k], seen);
+    }
+  }
+  return clone;
+}
+
+let orig = {
+  name: 'Alice',
+  addr: { city: 'NYC' },
+  tags: ['a', 'b']
+};
+
+let copy = deepClone(orig);
+copy.addr.city = 'LA';
+copy.tags.push('c');
+
+console.log("Original:", orig.addr.city, orig.tags);
+console.log("Copy:", copy.addr.city, copy.tags);
+`,
+  },
+  {
+    id: 'implement-memoize',
+    name: 'Implement Memoize',
+    category: 'utility-functions',
+    difficulty: 'medium',
+    description: 'Cache function results',
+    code: `// Memoize - Cache results
+
+function memoize(fn) {
+  let cache = new Map();
+  return function(...args) {
+    let key = JSON.stringify(args);
+    if (cache.has(key)) {
+      console.log("Cache HIT:", key);
+      return cache.get(key);
+    }
+    console.log("Cache MISS:", key);
+    let result = fn.apply(this, args);
+    cache.set(key, result);
+    return result;
+  };
+}
+
+let memoFib = memoize(function fib(n) {
+  if (n <= 1) return n;
+  return memoFib(n-1) + memoFib(n-2);
+});
+
+console.log("fib(10) =", memoFib(10));
+console.log("\\nAgain:");
+console.log("fib(10) =", memoFib(10));
+`,
+  },
+
+  // ==================== FUNCTIONAL JS ====================
+  {
+    id: 'implement-curry',
+    name: 'Implement Curry',
+    category: 'functional-js',
+    difficulty: 'medium',
+    description: 'Transform f(a,b,c) to f(a)(b)(c)',
+    code: `// Curry
+
+function curry(fn) {
+  return function curried(...args) {
+    if (args.length >= fn.length) {
+      return fn.apply(this, args);
+    }
+    return (...more) => curried(...args, ...more);
+  };
+}
+
+function add(a, b, c) {
+  return a + b + c;
+}
+
+let curried = curry(add);
+
+console.log("add(1,2,3):", curried(1,2,3));
+console.log("add(1)(2)(3):", curried(1)(2)(3));
+console.log("add(1,2)(3):", curried(1,2)(3));
+
+let mult = curry((a, b) => a * b);
+let double = mult(2);
+console.log("\\ndouble(5):", double(5));
+`,
+  },
+  {
+    id: 'implement-compose',
+    name: 'Implement Compose',
+    category: 'functional-js',
+    difficulty: 'medium',
+    description: 'Combine functions right-to-left',
+    code: `// Compose - f(g(h(x)))
+
+function compose(...fns) {
+  return (arg) => fns.reduceRight((r, f) => f(r), arg);
+}
+
+let addOne = x => x + 1;
+let double = x => x * 2;
+let square = x => x * x;
+
+let calc = compose(addOne, double, square);
+// square(3)=9, double(9)=18, addOne(18)=19
+
+console.log("compose(addOne, double, square)(3)");
+console.log("= addOne(double(square(3)))");
+console.log("= addOne(double(9))");
+console.log("= addOne(18)");
+console.log("=", calc(3));
+`,
+  },
+  {
+    id: 'implement-pipe',
+    name: 'Implement Pipe',
+    category: 'functional-js',
+    difficulty: 'medium',
+    description: 'Combine functions left-to-right',
+    code: `// Pipe - h(g(f(x)))
+
+function pipe(...fns) {
+  return (arg) => fns.reduce((r, f) => f(r), arg);
+}
+
+let addOne = x => x + 1;
+let double = x => x * 2;
+let square = x => x * x;
+
+let calc = pipe(addOne, double, square);
+// addOne(3)=4, double(4)=8, square(8)=64
+
+console.log("pipe(addOne, double, square)(3)");
+console.log("= square(double(addOne(3)))");
+console.log("= square(double(4))");
+console.log("= square(8)");
+console.log("=", calc(3));
+`,
+  },
+
+  // ==================== DOM & EVENTS ====================
+  {
+    id: 'event-emitter',
+    name: 'Event Emitter',
+    category: 'dom-events',
+    difficulty: 'medium',
+    description: 'Pub/sub pattern',
+    code: `// Event Emitter
+
+class EventEmitter {
+  constructor() {
+    this.events = {};
+  }
+
+  on(event, cb) {
+    if (!this.events[event]) this.events[event] = [];
+    this.events[event].push(cb);
+    console.log("Subscribed to", event);
+    return () => this.off(event, cb);
+  }
+
+  off(event, cb) {
+    if (!this.events[event]) return;
+    this.events[event] = this.events[event].filter(f => f !== cb);
+  }
+
+  emit(event, ...args) {
+    if (!this.events[event]) return;
+    console.log("Emit", event);
+    this.events[event].forEach(cb => cb(...args));
+  }
+}
+
+let ee = new EventEmitter();
+
+ee.on('msg', d => console.log("  Got:", d));
+let unsub = ee.on('alert', m => console.log("  Alert:", m));
+
+console.log("\\nEmitting:");
+ee.emit('msg', 'Hello');
+ee.emit('alert', 'Warning');
+
+unsub();
+console.log("\\nAfter unsub:");
+ee.emit('alert', 'No listeners');
+`,
+  },
+  {
+    id: 'event-delegation',
+    name: 'Event Delegation',
+    category: 'dom-events',
+    difficulty: 'easy',
+    description: 'Efficient event handling',
+    code: `// Event Delegation
+
+class MockList {
+  constructor() { this.handlers = []; }
+
+  on(type, fn) {
+    this.handlers.push({ type, fn });
+  }
+
+  click(target) {
+    console.log("Click:", target);
+    this.handlers.filter(h => h.type === 'click')
+      .forEach(h => h.fn({ target }));
+  }
+}
+
+let list = new MockList();
+
+list.on('click', e => {
+  if (e.target.action === 'delete') {
+    console.log("  Delete", e.target.id);
+  } else if (e.target.action === 'edit') {
+    console.log("  Edit", e.target.id);
+  }
+});
+
+list.click({ action: 'delete', id: 1 });
+list.click({ action: 'edit', id: 2 });
+
+console.log("\\nOne listener handles all!");
+`,
+  },
+
+  // ==================== OBJECT UTILITIES ====================
+  {
+    id: 'deep-equal',
+    name: 'Deep Equal',
+    category: 'object-utils',
+    difficulty: 'medium',
+    description: 'Compare objects deeply',
+    code: `// Deep Equal
+
+function deepEqual(a, b) {
+  if (a === b) return true;
+  if (!a || !b) return false;
+  if (typeof a !== typeof b) return false;
+  if (typeof a !== 'object') return false;
+
+  let keysA = Object.keys(a);
+  let keysB = Object.keys(b);
+  if (keysA.length !== keysB.length) return false;
+
+  for (let k of keysA) {
+    if (!deepEqual(a[k], b[k])) return false;
+  }
+  return true;
+}
+
+console.log("Equal nested:");
+console.log(deepEqual(
+  { a: 1, b: { c: 2 } },
+  { a: 1, b: { c: 2 } }
+));
+
+console.log("\\nDifferent:");
+console.log(deepEqual(
+  { a: 1, b: { c: 2 } },
+  { a: 1, b: { c: 3 } }
+));
+
+console.log("\\nArrays:");
+console.log(deepEqual([1, [2]], [1, [2]]));
+`,
+  },
+  {
+    id: 'deep-merge',
+    name: 'Deep Merge',
+    category: 'object-utils',
+    difficulty: 'medium',
+    description: 'Merge objects recursively',
+    code: `// Deep Merge
+
+function deepMerge(...objs) {
+  let result = {};
+  for (let obj of objs) {
+    for (let k in obj) {
+      let t = result[k], s = obj[k];
+      if (t && s && typeof t === 'object' && typeof s === 'object'
+          && !Array.isArray(t) && !Array.isArray(s)) {
+        result[k] = deepMerge(t, s);
+      } else if (Array.isArray(t) && Array.isArray(s)) {
+        result[k] = [...t, ...s];
+      } else {
+        result[k] = s;
+      }
+    }
+  }
+  return result;
+}
+
+let config1 = { server: { port: 3000 }, debug: false };
+let config2 = { server: { ssl: true }, debug: true };
+
+console.log("Merged:");
+console.log(deepMerge(config1, config2));
+`,
+  },
+  {
+    id: 'get-set-nested',
+    name: 'Get/Set Nested Property',
+    category: 'object-utils',
+    difficulty: 'easy',
+    description: 'Access deep properties safely',
+    code: `// Get/Set Nested Property
+
+function get(obj, path, def) {
+  let keys = path.replace(/\\[(\\d+)\\]/g, '.$1').split('.');
+  let r = obj;
+  for (let k of keys) {
+    if (r == null) return def;
+    r = r[k];
+  }
+  return r === undefined ? def : r;
+}
+
+function set(obj, path, val) {
+  let keys = path.replace(/\\[(\\d+)\\]/g, '.$1').split('.');
+  let cur = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (!cur[keys[i]]) cur[keys[i]] = {};
+    cur = cur[keys[i]];
+  }
+  cur[keys[keys.length - 1]] = val;
+  return obj;
+}
+
+let data = { user: { name: 'Alice', tags: ['a'] } };
+
+console.log("Get:");
+console.log(get(data, 'user.name'));
+console.log(get(data, 'user.tags[0]'));
+console.log(get(data, 'user.missing', 'default'));
+
+console.log("\\nSet:");
+let obj = {};
+set(obj, 'a.b.c', 42);
+console.log(obj);
+`,
+  },
+
+  // ==================== PROMISE POLYFILLS ====================
+  {
+    id: 'promise-all',
+    name: 'Implement Promise.all',
+    category: 'promise-polyfills',
+    difficulty: 'medium',
+    description: 'Parallel execution',
+    code: `// Promise.all
+
+function promiseAll(promises) {
+  return new Promise((resolve, reject) => {
+    let results = [];
+    let done = 0;
+    promises.forEach((p, i) => {
+      Promise.resolve(p).then(v => {
+        results[i] = v;
+        done++;
+        console.log("Done:", i, "->", v);
+        if (done === promises.length) resolve(results);
+      }).catch(reject);
+    });
+  });
+}
+
+function delay(ms, v) {
+  return new Promise(r => setTimeout(() => r(v), ms));
+}
+
+promiseAll([
+  delay(100, 'A'),
+  delay(50, 'B'),
+  delay(150, 'C')
+]).then(r => console.log("\\nAll:", r));
+`,
+  },
+  {
+    id: 'promise-race',
+    name: 'Implement Promise.race',
+    category: 'promise-polyfills',
+    difficulty: 'easy',
+    description: 'First to settle wins',
+    code: `// Promise.race
+
+function promiseRace(promises) {
+  return new Promise((resolve, reject) => {
+    promises.forEach(p => {
+      Promise.resolve(p).then(resolve).catch(reject);
+    });
+  });
+}
+
+function delay(ms, v) {
+  return new Promise(r => {
+    console.log("Start:", v, ms + "ms");
+    setTimeout(() => r(v), ms);
+  });
+}
+
+promiseRace([
+  delay(100, 'Slow'),
+  delay(50, 'Fast'),
+  delay(200, 'Slower')
+]).then(w => console.log("\\nWinner:", w));
+`,
+  },
+  {
+    id: 'promisify',
+    name: 'Implement Promisify',
+    category: 'promise-polyfills',
+    difficulty: 'medium',
+    description: 'Convert callbacks to promises',
+    code: `// Promisify
+
+function promisify(fn) {
+  return function(...args) {
+    return new Promise((resolve, reject) => {
+      fn(...args, (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
+    });
+  };
+}
+
+function readFile(name, cb) {
+  console.log("Reading:", name);
+  setTimeout(() => {
+    if (name === 'error') cb(new Error('Not found'));
+    else cb(null, 'Content of ' + name);
+  }, 100);
+}
+
+let readAsync = promisify(readFile);
+
+readAsync('test.txt').then(c => console.log("Got:", c));
+readAsync('error').catch(e => console.log("Error:", e.message));
 `,
   },
 ]

@@ -882,6 +882,7 @@ export class Interpreter {
       consoleOutput: this.state.consoleOutput.length > 0
         ? this.state.consoleOutput[this.state.consoleOutput.length - 1]
         : undefined,
+      consoleOutputCount: this.state.consoleOutput.length,
     }
 
     this.state.steps.push(step)

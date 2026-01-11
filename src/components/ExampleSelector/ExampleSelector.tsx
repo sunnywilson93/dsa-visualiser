@@ -65,12 +65,12 @@ export function ExampleSelector() {
       <button
         className={styles.trigger}
         onClick={() => setIsOpen(!isOpen)}
-        title="Load example code"
-        aria-label="Load example code"
+        title="Browse problems"
+        aria-label="Browse problems"
         aria-expanded={isOpen}
       >
         <Code size={16} />
-        <span className={styles.triggerText}>Examples</span>
+        <span className={styles.triggerText}>Problems</span>
         <span className={styles.count}>{codeExamples.length}</span>
         <ChevronDown
           size={14}

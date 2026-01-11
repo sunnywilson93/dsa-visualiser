@@ -16,13 +16,17 @@
   gap: var(--space-sm);
 }
 
-.runButton {
+.startButtons {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.runButton,
+.debugButton {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-lg);
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-  color: white;
   font-weight: 600;
   font-size: 14px;
   border-radius: var(--radius-md);
@@ -31,7 +35,22 @@
   transition: all var(--transition-fast);
 }
 
+.runButton {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
 .runButton:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.debugButton {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  color: white;
+}
+
+.debugButton:hover {
   filter: brightness(1.1);
   transform: translateY(-1px);
 }

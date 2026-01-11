@@ -1,14 +1,15 @@
 import { useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Terminal } from 'lucide-react'
-import { useExecutionStore } from '@/store'
+import { useExecutionStore, useVisibleConsoleOutput } from '@/store'
 import styles from './Console.module.css'
 
 export function Console() {
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  const consoleOutput = useExecutionStore(state => state.consoleOutput)
   const status = useExecutionStore(state => state.status)
+  // Use filtered output based on current step (progressive reveal)
+  const consoleOutput = useVisibleConsoleOutput()
 
   // Auto-scroll to bottom when new output appears
   useEffect(() => {
