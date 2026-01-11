@@ -7037,6 +7037,380 @@ test();
 console.log("Outside:", shadow);
 `,
   },
+  {
+    id: 'implement-call',
+    name: 'Implement call()',
+    category: 'js-core',
+    difficulty: 'medium',
+    description: 'BFE #61 - Implement Function.prototype.call',
+    code: `// Implement Function.prototype.call
+// call() invokes a function with a given 'this' and arguments
+
+Function.prototype.myCall = function(context, ...args) {
+  // Handle null/undefined context
+  context = context || globalThis;
+
+  // Create a unique property to avoid overwriting
+  let fnKey = Symbol('fn');
+
+  // Attach the function to context
+  context[fnKey] = this;
+
+  console.log("Context:", context);
+  console.log("Args:", args);
+
+  // Call with context
+  let result = context[fnKey](...args);
+
+  // Clean up
+  delete context[fnKey];
+
+  return result;
+};
+
+function greet(greeting, punctuation) {
+  return greeting + ", " + this.name + punctuation;
+}
+
+let person = { name: "Alice" };
+
+console.log("=== Testing myCall ===");
+let result = greet.myCall(person, "Hello", "!");
+console.log("Result:", result);
+
+console.log("\\n=== Compare with native call ===");
+let native = greet.call(person, "Hi", "?");
+console.log("Native:", native);
+`,
+  },
+  {
+    id: 'implement-apply',
+    name: 'Implement apply()',
+    category: 'js-core',
+    difficulty: 'medium',
+    description: 'Implement Function.prototype.apply',
+    code: `// Implement Function.prototype.apply
+// apply() is like call() but takes args as array
+
+Function.prototype.myApply = function(context, args) {
+  context = context || globalThis;
+  args = args || [];
+
+  let fnKey = Symbol('fn');
+  context[fnKey] = this;
+
+  console.log("Context:", context);
+  console.log("Args array:", args);
+
+  let result = context[fnKey](...args);
+  delete context[fnKey];
+
+  return result;
+};
+
+function introduce(age, city) {
+  return this.name + " is " + age + " from " + city;
+}
+
+let user = { name: "Bob" };
+
+console.log("=== Testing myApply ===");
+let result = introduce.myApply(user, [25, "NYC"]);
+console.log("Result:", result);
+
+console.log("\\n=== Math.max with apply ===");
+let nums = [3, 1, 4, 1, 5, 9];
+let max = Math.max.apply(null, nums);
+console.log("Max of", nums, "is", max);
+`,
+  },
+  {
+    id: 'implement-bind',
+    name: 'Implement bind()',
+    category: 'js-core',
+    difficulty: 'hard',
+    description: 'BFE #58 - Implement Function.prototype.bind',
+    code: `// Implement Function.prototype.bind
+// bind() returns a new function with bound 'this'
+
+Function.prototype.myBind = function(context, ...boundArgs) {
+  let originalFn = this;
+
+  return function(...callArgs) {
+    // Combine bound args with call args
+    let allArgs = [...boundArgs, ...callArgs];
+    console.log("Bound args:", boundArgs);
+    console.log("Call args:", callArgs);
+
+    return originalFn.apply(context, allArgs);
+  };
+};
+
+function multiply(a, b, c) {
+  return this.factor * a * b * c;
+}
+
+let obj = { factor: 2 };
+
+console.log("=== Partial Application ===");
+let double = multiply.myBind(obj, 1);
+console.log("double(3, 4):", double(3, 4));
+
+console.log("\\n=== Full Binding ===");
+let boundFn = multiply.myBind(obj, 2, 3, 4);
+console.log("boundFn():", boundFn());
+
+console.log("\\n=== Event Handler Pattern ===");
+let button = {
+  text: "Click me",
+  handleClick: function() {
+    console.log("Button:", this.text);
+  }
+};
+let handler = button.handleClick.myBind(button);
+handler();
+`,
+  },
+  {
+    id: 'implement-new',
+    name: 'Implement new Operator',
+    category: 'js-core',
+    difficulty: 'hard',
+    description: 'BFE #60 - Implement your own new operator',
+    code: `// Implement new Operator
+// new: 1) Create object, 2) Set prototype, 3) Call constructor, 4) Return
+
+function myNew(Constructor, ...args) {
+  console.log("Creating instance of:", Constructor.name);
+
+  // 1. Create new object with constructor's prototype
+  let obj = Object.create(Constructor.prototype);
+  console.log("Created object with prototype");
+
+  // 2. Call constructor with obj as 'this'
+  let result = Constructor.apply(obj, args);
+  console.log("Constructor returned:", result);
+
+  // 3. Return object (or constructor's return if it's an object)
+  if (result && typeof result === 'object') {
+    return result;
+  }
+  return obj;
+}
+
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+Person.prototype.greet = function() {
+  return "Hi, I'm " + this.name;
+};
+
+console.log("=== Using myNew ===");
+let p1 = myNew(Person, "Alice", 30);
+console.log("Instance:", p1);
+console.log("Greet:", p1.greet());
+
+console.log("\\n=== instanceof check ===");
+console.log("p1 instanceof Person:", p1 instanceof Person);
+`,
+  },
+  {
+    id: 'implement-object-create',
+    name: 'Implement Object.create',
+    category: 'js-core',
+    difficulty: 'medium',
+    description: 'BFE #94 - Implement Object.create',
+    code: `// Implement Object.create
+// Creates new object with specified prototype
+
+function myObjectCreate(proto, propertiesObject) {
+  if (proto === null) {
+    return Object.setPrototypeOf({}, null);
+  }
+
+  if (typeof proto !== 'object' && typeof proto !== 'function') {
+    throw new TypeError('Prototype must be an object or null');
+  }
+
+  // Create constructor with desired prototype
+  function F() {}
+  F.prototype = proto;
+
+  let obj = new F();
+
+  // Add properties if provided
+  if (propertiesObject) {
+    Object.defineProperties(obj, propertiesObject);
+  }
+
+  return obj;
+}
+
+let animal = {
+  speak: function() {
+    console.log(this.name + " makes a sound");
+  }
+};
+
+console.log("=== Creating with prototype ===");
+let dog = myObjectCreate(animal);
+dog.name = "Buddy";
+dog.speak();
+
+console.log("\\n=== With property descriptors ===");
+let cat = myObjectCreate(animal, {
+  name: { value: "Whiskers", writable: true },
+  meow: { value: function() { console.log("Meow!"); } }
+});
+cat.speak();
+cat.meow();
+
+console.log("\\n=== Prototype chain ===");
+console.log("dog's proto:", Object.getPrototypeOf(dog) === animal);
+`,
+  },
+  {
+    id: 'implement-instanceof',
+    name: 'Implement instanceof',
+    category: 'js-core',
+    difficulty: 'medium',
+    description: 'Implement the instanceof operator',
+    code: `// Implement instanceof
+// Checks if object's prototype chain contains Constructor.prototype
+
+function myInstanceof(obj, Constructor) {
+  if (obj === null || typeof obj !== 'object') {
+    return false;
+  }
+
+  let proto = Object.getPrototypeOf(obj);
+  let target = Constructor.prototype;
+
+  console.log("Checking prototype chain...");
+
+  while (proto !== null) {
+    console.log("Current proto:", proto.constructor?.name || 'Object');
+
+    if (proto === target) {
+      console.log("Match found!");
+      return true;
+    }
+    proto = Object.getPrototypeOf(proto);
+  }
+
+  console.log("No match in chain");
+  return false;
+}
+
+function Animal(name) { this.name = name; }
+function Dog(name) { Animal.call(this, name); }
+Dog.prototype = Object.create(Animal.prototype);
+
+let dog = new Dog("Buddy");
+
+console.log("=== Dog instanceof Dog ===");
+console.log(myInstanceof(dog, Dog));
+
+console.log("\\n=== Dog instanceof Animal ===");
+console.log(myInstanceof(dog, Animal));
+
+console.log("\\n=== Dog instanceof Array ===");
+console.log(myInstanceof(dog, Array));
+`,
+  },
+  {
+    id: 'typeof-vs-instanceof',
+    name: 'typeof vs instanceof',
+    category: 'js-core',
+    difficulty: 'easy',
+    description: 'Understand the difference between typeof and instanceof',
+    code: `// typeof vs instanceof
+// typeof: returns primitive type string
+// instanceof: checks prototype chain
+
+console.log("=== typeof examples ===");
+console.log("typeof 42:", typeof 42);
+console.log("typeof 'hello':", typeof "hello");
+console.log("typeof true:", typeof true);
+console.log("typeof undefined:", typeof undefined);
+console.log("typeof null:", typeof null); // Bug!
+console.log("typeof {}:", typeof {});
+console.log("typeof []:", typeof []);
+console.log("typeof function(){}:", typeof function(){});
+
+console.log("\\n=== instanceof examples ===");
+let arr = [1, 2, 3];
+let obj = { a: 1 };
+let date = new Date();
+
+console.log("[] instanceof Array:", arr instanceof Array);
+console.log("[] instanceof Object:", arr instanceof Object);
+console.log("{} instanceof Object:", obj instanceof Object);
+console.log("date instanceof Date:", date instanceof Date);
+
+console.log("\\n=== Gotchas ===");
+console.log("typeof null === 'object':", typeof null === 'object');
+console.log("typeof [] === 'object':", typeof [] === 'object');
+console.log("Array.isArray([]):", Array.isArray(arr));
+`,
+  },
+  {
+    id: 'execution-context',
+    name: 'Execution Context',
+    category: 'js-core',
+    difficulty: 'medium',
+    description: 'Understand JavaScript execution context',
+    code: `// Execution Context
+// Each function call creates a new execution context
+
+let globalVar = "I'm global";
+
+function outer() {
+  let outerVar = "I'm in outer";
+  console.log("Outer context created");
+  console.log("Can access globalVar:", globalVar);
+
+  function inner() {
+    let innerVar = "I'm in inner";
+    console.log("\\nInner context created");
+    console.log("Can access innerVar:", innerVar);
+    console.log("Can access outerVar:", outerVar);
+    console.log("Can access globalVar:", globalVar);
+  }
+
+  inner();
+  console.log("\\nBack to outer context");
+}
+
+console.log("=== Global Execution Context ===");
+console.log("globalVar:", globalVar);
+
+console.log("\\n=== Function Execution Context ===");
+outer();
+
+console.log("\\n=== Context Stack Demo ===");
+function first() {
+  console.log("first() pushed to stack");
+  second();
+  console.log("first() about to pop");
+}
+
+function second() {
+  console.log("second() pushed to stack");
+  third();
+  console.log("second() about to pop");
+}
+
+function third() {
+  console.log("third() pushed to stack");
+  console.log("third() about to pop");
+}
+
+first();
+`,
+  },
 
   // ==================== ASYNC JAVASCRIPT ====================
   {
