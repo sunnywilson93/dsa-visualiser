@@ -8691,4 +8691,429 @@ readAsync('test.txt').then(c => console.log("Got:", c));
 readAsync('error').catch(e => console.log("Error:", e.message));
 `,
   },
+  {
+    id: 'promise-allsettled',
+    name: 'Implement Promise.allSettled',
+    category: 'promise-polyfills',
+    difficulty: 'medium',
+    description: 'BFE #33 - Wait for all promises regardless of outcome',
+    code: `// Promise.allSettled
+// Returns array of results for ALL promises (fulfilled or rejected)
+
+function promiseAllSettled(promises) {
+  return new Promise((resolve) => {
+    let results = [];
+    let count = 0;
+
+    if (promises.length === 0) {
+      resolve([]);
+      return;
+    }
+
+    promises.forEach((p, i) => {
+      Promise.resolve(p)
+        .then(value => {
+          results[i] = { status: 'fulfilled', value };
+          console.log(i, "fulfilled:", value);
+        })
+        .catch(reason => {
+          results[i] = { status: 'rejected', reason };
+          console.log(i, "rejected:", reason);
+        })
+        .finally(() => {
+          count++;
+          if (count === promises.length) {
+            resolve(results);
+          }
+        });
+    });
+  });
+}
+
+function delay(ms, val, shouldFail = false) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      if (shouldFail) rej("Error: " + val);
+      else res(val);
+    }, ms);
+  });
+}
+
+console.log("=== Testing allSettled ===");
+promiseAllSettled([
+  delay(50, 'A'),
+  delay(100, 'B', true),  // This will reject
+  delay(75, 'C')
+]).then(results => {
+  console.log("\\nAll settled:");
+  results.forEach(r => console.log(r));
+});
+`,
+  },
+  {
+    id: 'promise-any',
+    name: 'Implement Promise.any',
+    category: 'promise-polyfills',
+    difficulty: 'medium',
+    description: 'BFE #34 - First fulfilled promise wins',
+    code: `// Promise.any
+// Resolves with first fulfilled promise, rejects only if ALL reject
+
+function promiseAny(promises) {
+  return new Promise((resolve, reject) => {
+    let errors = [];
+    let rejectedCount = 0;
+
+    if (promises.length === 0) {
+      reject(new AggregateError([], 'All promises rejected'));
+      return;
+    }
+
+    promises.forEach((p, i) => {
+      Promise.resolve(p)
+        .then(value => {
+          console.log(i, "fulfilled first!");
+          resolve(value);
+        })
+        .catch(err => {
+          errors[i] = err;
+          rejectedCount++;
+          console.log(i, "rejected:", err);
+
+          if (rejectedCount === promises.length) {
+            reject(new AggregateError(errors, 'All promises rejected'));
+          }
+        });
+    });
+  });
+}
+
+function delay(ms, val, shouldFail = false) {
+  return new Promise((res, rej) => {
+    console.log("Start:", val);
+    setTimeout(() => {
+      if (shouldFail) rej("Fail:" + val);
+      else res(val);
+    }, ms);
+  });
+}
+
+console.log("=== First success wins ===");
+promiseAny([
+  delay(100, 'Slow', true),
+  delay(50, 'Fast', true),
+  delay(75, 'Medium')
+]).then(v => console.log("\\nWinner:", v))
+  .catch(e => console.log("All failed"));
+`,
+  },
+  {
+    id: 'promise-finally',
+    name: 'Implement Promise.finally',
+    category: 'promise-polyfills',
+    difficulty: 'easy',
+    description: 'BFE #123 - Always runs after settled',
+    code: `// Promise.prototype.finally
+// Runs callback regardless of outcome, passes through result
+
+Promise.prototype.myFinally = function(callback) {
+  return this.then(
+    // On fulfill: run callback, then return original value
+    value => Promise.resolve(callback()).then(() => value),
+    // On reject: run callback, then re-throw
+    reason => Promise.resolve(callback()).then(() => { throw reason; })
+  );
+};
+
+function fetchData(shouldFail) {
+  return new Promise((resolve, reject) => {
+    console.log("Fetching data...");
+    setTimeout(() => {
+      if (shouldFail) reject(new Error("Network error"));
+      else resolve({ data: "Success!" });
+    }, 100);
+  });
+}
+
+console.log("=== Success case ===");
+fetchData(false)
+  .then(d => console.log("Data:", d))
+  .myFinally(() => console.log("Cleanup done!"));
+
+console.log("\\n=== Failure case ===");
+fetchData(true)
+  .then(d => console.log("Data:", d))
+  .catch(e => console.log("Error:", e.message))
+  .myFinally(() => console.log("Cleanup done!"));
+`,
+  },
+  {
+    id: 'promise-retry',
+    name: 'Auto-retry Promise',
+    category: 'promise-polyfills',
+    difficulty: 'medium',
+    description: 'BFE #64 - Retry failed promises automatically',
+    code: `// Auto-retry Promise on rejection
+// Retry a promise-returning function up to n times
+
+function retry(fn, retries = 3, delay = 100) {
+  return new Promise((resolve, reject) => {
+    let attempt = 1;
+
+    function tryOnce() {
+      console.log("Attempt", attempt, "of", retries);
+
+      fn()
+        .then(resolve)
+        .catch(err => {
+          console.log("Failed:", err.message);
+
+          if (attempt >= retries) {
+            reject(new Error("Max retries reached"));
+            return;
+          }
+
+          attempt++;
+          console.log("Retrying in", delay + "ms...");
+          setTimeout(tryOnce, delay);
+        });
+    }
+
+    tryOnce();
+  });
+}
+
+// Simulate flaky API (fails first 2 times)
+let callCount = 0;
+function flakyAPI() {
+  callCount++;
+  return new Promise((resolve, reject) => {
+    if (callCount < 3) {
+      reject(new Error("Server busy"));
+    } else {
+      resolve({ data: "Success on attempt " + callCount });
+    }
+  });
+}
+
+console.log("=== Retry Demo ===");
+retry(flakyAPI, 5, 50)
+  .then(r => console.log("\\nResult:", r))
+  .catch(e => console.log("\\nFailed:", e.message));
+`,
+  },
+  {
+    id: 'promise-timeout',
+    name: 'Promise with Timeout',
+    category: 'promise-polyfills',
+    difficulty: 'easy',
+    description: 'Reject if promise takes too long',
+    code: `// Promise with Timeout
+// Race between promise and timeout
+
+function withTimeout(promise, ms) {
+  let timeout = new Promise((_, reject) => {
+    setTimeout(() => {
+      reject(new Error("Timeout after " + ms + "ms"));
+    }, ms);
+  });
+
+  return Promise.race([promise, timeout]);
+}
+
+function slowAPI(delay) {
+  return new Promise(resolve => {
+    console.log("API call started, will take", delay + "ms");
+    setTimeout(() => resolve("API Response"), delay);
+  });
+}
+
+console.log("=== Fast enough ===");
+withTimeout(slowAPI(50), 100)
+  .then(r => console.log("Got:", r))
+  .catch(e => console.log("Error:", e.message));
+
+console.log("\\n=== Too slow ===");
+withTimeout(slowAPI(200), 100)
+  .then(r => console.log("Got:", r))
+  .catch(e => console.log("Error:", e.message));
+`,
+  },
+  {
+    id: 'promise-throttle',
+    name: 'Throttle Promises',
+    category: 'promise-polyfills',
+    difficulty: 'hard',
+    description: 'BFE #92 - Limit concurrent promise execution',
+    code: `// Throttle Promises
+// Run max N promises concurrently
+
+function throttlePromises(funcs, max) {
+  return new Promise((resolve) => {
+    let results = [];
+    let running = 0;
+    let index = 0;
+
+    function runNext() {
+      while (running < max && index < funcs.length) {
+        let i = index++;
+        running++;
+        console.log("Start task", i, "(running:", running + ")");
+
+        funcs[i]()
+          .then(result => {
+            results[i] = result;
+            console.log("Done task", i, "->", result);
+          })
+          .finally(() => {
+            running--;
+            if (index < funcs.length) {
+              runNext();
+            } else if (running === 0) {
+              resolve(results);
+            }
+          });
+      }
+    }
+
+    runNext();
+  });
+}
+
+function createTask(id, ms) {
+  return () => new Promise(r => setTimeout(() => r("Task" + id), ms));
+}
+
+let tasks = [
+  createTask(1, 100),
+  createTask(2, 50),
+  createTask(3, 150),
+  createTask(4, 75),
+  createTask(5, 60)
+];
+
+console.log("=== Max 2 concurrent ===");
+throttlePromises(tasks, 2).then(r => {
+  console.log("\\nAll done:", r);
+});
+`,
+  },
+  {
+    id: 'promise-sequence',
+    name: 'Sequence Async Tasks',
+    category: 'promise-polyfills',
+    difficulty: 'medium',
+    description: 'BFE #29 - Run promises sequentially',
+    code: `// Sequence - Run promises one after another
+// Each task waits for previous to complete
+
+function sequence(funcs) {
+  return funcs.reduce((promise, fn) => {
+    return promise.then(results => {
+      console.log("Starting next task...");
+      return fn().then(result => {
+        console.log("Got:", result);
+        return [...results, result];
+      });
+    });
+  }, Promise.resolve([]));
+}
+
+function createTask(id, ms) {
+  return () => new Promise(resolve => {
+    console.log("Task", id, "running for", ms + "ms");
+    setTimeout(() => resolve("Result" + id), ms);
+  });
+}
+
+let tasks = [
+  createTask(1, 100),
+  createTask(2, 50),
+  createTask(3, 75)
+];
+
+console.log("=== Sequential Execution ===");
+sequence(tasks).then(results => {
+  console.log("\\nAll results:", results);
+});
+`,
+  },
+  {
+    id: 'create-promise',
+    name: 'Create Your Own Promise',
+    category: 'promise-polyfills',
+    difficulty: 'hard',
+    description: 'BFE #67 - Implement Promise from scratch',
+    code: `// Create Your Own Promise (Simplified)
+// Implements basic then/catch chaining
+
+class MyPromise {
+  constructor(executor) {
+    this.state = 'pending';
+    this.value = undefined;
+    this.handlers = [];
+
+    const resolve = (value) => {
+      if (this.state !== 'pending') return;
+      this.state = 'fulfilled';
+      this.value = value;
+      console.log("Resolved:", value);
+      this.handlers.forEach(h => h.onFulfill(value));
+    };
+
+    const reject = (reason) => {
+      if (this.state !== 'pending') return;
+      this.state = 'rejected';
+      this.value = reason;
+      console.log("Rejected:", reason);
+      this.handlers.forEach(h => h.onReject(reason));
+    };
+
+    try {
+      executor(resolve, reject);
+    } catch (e) {
+      reject(e);
+    }
+  }
+
+  then(onFulfill, onReject) {
+    return new MyPromise((resolve, reject) => {
+      const handle = () => {
+        try {
+          if (this.state === 'fulfilled') {
+            let result = onFulfill ? onFulfill(this.value) : this.value;
+            resolve(result);
+          } else if (this.state === 'rejected') {
+            if (onReject) resolve(onReject(this.value));
+            else reject(this.value);
+          }
+        } catch (e) {
+          reject(e);
+        }
+      };
+
+      if (this.state === 'pending') {
+        this.handlers.push({ onFulfill: () => handle(), onReject: () => handle() });
+      } else {
+        setTimeout(handle, 0);
+      }
+    });
+  }
+
+  catch(onReject) {
+    return this.then(null, onReject);
+  }
+}
+
+console.log("=== Testing MyPromise ===");
+new MyPromise((resolve) => {
+  setTimeout(() => resolve(42), 100);
+})
+.then(v => {
+  console.log("First then:", v);
+  return v * 2;
+})
+.then(v => console.log("Second then:", v));
+`,
+  },
 ]
