@@ -8770,44 +8770,53 @@ console.log("Now evaluating:", flattenThunk(lazyCalc));
     category: 'dom-events',
     difficulty: 'medium',
     description: 'Pub/sub pattern',
-    code: `// Event Emitter
+    code: `// Event Emitter - Pub/Sub Pattern
 
-class EventEmitter {
-  constructor() {
-    this.events = {};
-  }
+function createEventEmitter() {
+  let events = {};
 
-  on(event, cb) {
-    if (!this.events[event]) this.events[event] = [];
-    this.events[event].push(cb);
-    console.log("Subscribed to", event);
-    return () => this.off(event, cb);
-  }
+  return {
+    on: function(event, cb) {
+      if (!events[event]) events[event] = [];
+      events[event].push(cb);
+      console.log("Subscribed to:", event);
+      // Return unsubscribe function
+      return function() {
+        events[event] = events[event].filter(function(f) {
+          return f !== cb;
+        });
+        console.log("Unsubscribed from:", event);
+      };
+    },
 
-  off(event, cb) {
-    if (!this.events[event]) return;
-    this.events[event] = this.events[event].filter(f => f !== cb);
-  }
-
-  emit(event, ...args) {
-    if (!this.events[event]) return;
-    console.log("Emit", event);
-    this.events[event].forEach(cb => cb(...args));
-  }
+    emit: function(event, data) {
+      console.log("\\nEmit:", event);
+      if (!events[event]) return;
+      for (let i = 0; i < events[event].length; i++) {
+        events[event][i](data);
+      }
+    }
+  };
 }
 
-let ee = new EventEmitter();
+let ee = createEventEmitter();
 
-ee.on('msg', d => console.log("  Got:", d));
-let unsub = ee.on('alert', m => console.log("  Alert:", m));
+// Subscribe to events
+ee.on('message', function(d) {
+  console.log("  Got message:", d);
+});
 
-console.log("\\nEmitting:");
-ee.emit('msg', 'Hello');
-ee.emit('alert', 'Warning');
+let unsub = ee.on('alert', function(m) {
+  console.log("  Alert:", m);
+});
 
+// Emit events
+ee.emit('message', 'Hello');
+ee.emit('alert', 'Warning!');
+
+// Unsubscribe and emit again
 unsub();
-console.log("\\nAfter unsub:");
-ee.emit('alert', 'No listeners');
+ee.emit('alert', 'No one listening');
 `,
   },
   {
@@ -8816,36 +8825,42 @@ ee.emit('alert', 'No listeners');
     category: 'dom-events',
     difficulty: 'easy',
     description: 'Efficient event handling',
-    code: `// Event Delegation
+    code: `// Event Delegation Pattern
+// One handler on parent manages all child events
 
-class MockList {
-  constructor() { this.handlers = []; }
+// Store our single handler
+let clickHandler = null;
 
-  on(type, fn) {
-    this.handlers.push({ type, fn });
-  }
+function onEvent(handler) {
+  clickHandler = handler;
+  console.log("Registered click handler");
+}
 
-  click(target) {
-    console.log("Click:", target);
-    this.handlers.filter(h => h.type === 'click')
-      .forEach(h => h.fn({ target }));
+function simulateClick(action, id) {
+  console.log("\\nClick event - action:", action, "id:", id);
+  if (clickHandler) {
+    clickHandler(action, id);
   }
 }
 
-let list = new MockList();
-
-list.on('click', e => {
-  if (e.target.action === 'delete') {
-    console.log("  Delete", e.target.id);
-  } else if (e.target.action === 'edit') {
-    console.log("  Edit", e.target.id);
+// Register ONE delegated handler
+onEvent(function(action, id) {
+  if (action === 'delete') {
+    console.log("  -> Deleting item", id);
+  } else if (action === 'edit') {
+    console.log("  -> Editing item", id);
+  } else {
+    console.log("  -> Unknown action:", action);
   }
 });
 
-list.click({ action: 'delete', id: 1 });
-list.click({ action: 'edit', id: 2 });
+// Simulate clicks on different items
+simulateClick('delete', 1);
+simulateClick('edit', 2);
+simulateClick('delete', 3);
+simulateClick('view', 4);
 
-console.log("\\nOne listener handles all!");
+console.log("\\nOne handler managed all events!");
 `,
   },
   {
@@ -8855,48 +8870,47 @@ console.log("\\nOne listener handles all!");
     difficulty: 'medium',
     description: 'jQuery-style method chaining - BFE #15',
     code: `// DOM Wrapper with method chaining
-// Like jQuery's $() but simplified
+// Like jQuery's $() - returns object with chainable methods
 
-class $ {
-  constructor(selector) {
-    // In real DOM: document.querySelectorAll(selector)
-    this.elements = typeof selector === 'string'
-      ? [{ tag: selector, style: {}, classes: [] }]
-      : [selector];
-    console.log("Selected:", selector);
-  }
+function $(selector) {
+  let element = { tag: selector, style: {}, classes: [] };
+  console.log("Selected:", selector);
 
-  css(prop, value) {
-    this.elements.forEach(el => {
-      el.style[prop] = value;
+  let wrapper = {
+    css: function(prop, value) {
+      element.style[prop] = value;
       console.log("  Set", prop, "=", value);
-    });
-    return this; // Enable chaining!
-  }
+      return wrapper; // Enable chaining!
+    },
 
-  addClass(name) {
-    this.elements.forEach(el => {
-      el.classes.push(name);
+    addClass: function(name) {
+      element.classes.push(name);
       console.log("  Added class:", name);
-    });
-    return this;
-  }
+      return wrapper;
+    },
 
-  removeClass(name) {
-    this.elements.forEach(el => {
-      el.classes = el.classes.filter(c => c !== name);
+    removeClass: function(name) {
+      element.classes = element.classes.filter(function(c) {
+        return c !== name;
+      });
       console.log("  Removed class:", name);
-    });
-    return this;
-  }
+      return wrapper;
+    },
 
-  getStyles() {
-    return this.elements[0].style;
-  }
+    getStyles: function() {
+      return element.style;
+    },
+
+    getClasses: function() {
+      return element.classes;
+    }
+  };
+
+  return wrapper;
 }
 
-// Test chaining
-let box = new $('div');
+// Test method chaining
+let box = $('div');
 
 box.css('color', 'red')
    .css('fontSize', '16px')
@@ -8905,6 +8919,7 @@ box.css('color', 'red')
    .removeClass('hidden');
 
 console.log("\\nFinal styles:", box.getStyles());
+console.log("Classes:", box.getClasses());
 `,
   },
   {
