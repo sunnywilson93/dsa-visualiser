@@ -23,6 +23,21 @@ import {
 const MAX_STEPS = 10000
 const MAX_CALL_DEPTH = 100
 
+// Control flow signals
+class BreakSignal extends Error {
+  constructor() {
+    super('break')
+    this.name = 'BreakSignal'
+  }
+}
+
+class ContinueSignal extends Error {
+  constructor() {
+    super('continue')
+    this.name = 'ContinueSignal'
+  }
+}
+
 interface InterpreterState {
   steps: ExecutionStep[]
   callStack: StackFrame[]
@@ -257,6 +272,10 @@ export class Interpreter {
         return this.executeLiteral(node)
       case 'ConditionalExpression':
         return this.executeConditionalExpression(node)
+      case 'BreakStatement':
+        return this.executeBreakStatement(node)
+      case 'ContinueStatement':
+        return this.executeContinueStatement(node)
       default:
         return createUndefined()
     }
@@ -329,6 +348,16 @@ export class Interpreter {
     return createUndefined()
   }
 
+  private executeBreakStatement(node: ASTNode): RuntimeValue {
+    this.recordStep(node, 'branch', 'Break statement')
+    throw new BreakSignal()
+  }
+
+  private executeContinueStatement(node: ASTNode): RuntimeValue {
+    this.recordStep(node, 'branch', 'Continue statement')
+    throw new ContinueSignal()
+  }
+
   private executeForStatement(node: ASTNode): RuntimeValue {
     // Create block scope for loop
     this.pushScope('block', 'for-loop')
@@ -342,8 +371,9 @@ export class Interpreter {
 
     let iterations = 0
     const maxIterations = 1000
+    let shouldBreak = false
 
-    while (iterations < maxIterations) {
+    while (iterations < maxIterations && !shouldBreak) {
       // Test condition
       if (node.test) {
         const testValue = this.executeNode(node.test as ASTNode)
@@ -355,15 +385,28 @@ export class Interpreter {
 
       this.recordStep(node, 'loop-iteration', `For loop iteration ${iterations + 1}`)
 
-      // Execute body
-      const body = node.body as ASTNode
-      if (body.type === 'BlockStatement') {
-        const statements = body.body as ASTNode[]
-        for (const stmt of statements) {
-          this.executeNode(stmt)
+      // Execute body with break/continue handling
+      try {
+        const body = node.body as ASTNode
+        if (body.type === 'BlockStatement') {
+          const statements = body.body as ASTNode[]
+          for (const stmt of statements) {
+            this.executeNode(stmt)
+          }
+        } else {
+          this.executeNode(body)
         }
-      } else {
-        this.executeNode(body)
+      } catch (e) {
+        if (e instanceof BreakSignal) {
+          this.recordStep(node, 'loop-end', 'For loop exited via break')
+          shouldBreak = true
+          continue
+        }
+        if (e instanceof ContinueSignal) {
+          // Continue to update and next iteration
+        } else {
+          throw e
+        }
       }
 
       // Update
@@ -388,8 +431,9 @@ export class Interpreter {
 
     let iterations = 0
     const maxIterations = 1000
+    let shouldBreak = false
 
-    while (iterations < maxIterations) {
+    while (iterations < maxIterations && !shouldBreak) {
       const testValue = this.executeNode(node.test as ASTNode)
       if (!isTruthy(testValue)) {
         this.recordStep(node, 'loop-end', 'While loop condition false, exiting')
@@ -398,7 +442,21 @@ export class Interpreter {
 
       this.recordStep(node, 'loop-iteration', `While loop iteration ${iterations + 1}`)
 
-      this.executeNode(node.body as ASTNode)
+      try {
+        this.executeNode(node.body as ASTNode)
+      } catch (e) {
+        if (e instanceof BreakSignal) {
+          this.recordStep(node, 'loop-end', 'While loop exited via break')
+          shouldBreak = true
+          continue
+        }
+        if (e instanceof ContinueSignal) {
+          // Continue to next iteration
+          iterations++
+          continue
+        }
+        throw e
+      }
       iterations++
     }
 
@@ -451,6 +509,28 @@ export class Interpreter {
       if (builtin) {
         const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
         return builtin(...args)
+      }
+    }
+
+    // Check for array methods
+    if (callee.type === 'MemberExpression') {
+      const obj = this.executeNode(callee.object as ASTNode)
+      const methodName = (callee.property as ASTNode).name
+
+      if (obj.type === 'array') {
+        const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
+        const result = this.executeArrayMethod(obj, methodName, args, node)
+        if (result !== null) {
+          return result
+        }
+      }
+
+      if (obj.type === 'primitive' && obj.dataType === 'string') {
+        const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
+        const result = this.executeStringMethod(obj.value as string, methodName, args, node)
+        if (result !== null) {
+          return result
+        }
       }
     }
 
@@ -833,6 +913,281 @@ export class Interpreter {
       return this.executeNode(node.consequent as ASTNode)
     } else {
       return this.executeNode(node.alternate as ASTNode)
+    }
+  }
+
+  // Array methods
+  private executeArrayMethod(
+    arr: RuntimeValue & { type: 'array'; elements: RuntimeValue[] },
+    method: string,
+    args: RuntimeValue[],
+    node: ASTNode
+  ): RuntimeValue | null {
+    switch (method) {
+      case 'push': {
+        for (const arg of args) {
+          arr.elements.push(cloneValue(arg))
+        }
+        const newLength = arr.elements.length
+        this.recordStep(node, 'array-modify', `Array.push(${args.map(a => formatValue(a)).join(', ')}) → length ${newLength}`)
+        return createPrimitive(newLength)
+      }
+
+      case 'pop': {
+        const popped = arr.elements.pop()
+        const result = popped ?? createUndefined()
+        this.recordStep(node, 'array-modify', `Array.pop() → ${formatValue(result)}`)
+        return result
+      }
+
+      case 'shift': {
+        const shifted = arr.elements.shift()
+        const result = shifted ?? createUndefined()
+        this.recordStep(node, 'array-modify', `Array.shift() → ${formatValue(result)}`)
+        return result
+      }
+
+      case 'unshift': {
+        for (let i = args.length - 1; i >= 0; i--) {
+          arr.elements.unshift(cloneValue(args[i]))
+        }
+        const newLength = arr.elements.length
+        this.recordStep(node, 'array-modify', `Array.unshift(${args.map(a => formatValue(a)).join(', ')}) → length ${newLength}`)
+        return createPrimitive(newLength)
+      }
+
+      case 'indexOf': {
+        const searchValue = args[0]
+        const fromIndex = args[1]?.type === 'primitive' ? (args[1].value as number) : 0
+        let result = -1
+        for (let i = fromIndex; i < arr.elements.length; i++) {
+          const el = arr.elements[i]
+          if (el.type === 'primitive' && searchValue.type === 'primitive' && el.value === searchValue.value) {
+            result = i
+            break
+          }
+        }
+        this.recordStep(node, 'array-access', `Array.indexOf(${formatValue(searchValue)}) → ${result}`)
+        return createPrimitive(result)
+      }
+
+      case 'includes': {
+        const searchValue = args[0]
+        let found = false
+        for (const el of arr.elements) {
+          if (el.type === 'primitive' && searchValue.type === 'primitive' && el.value === searchValue.value) {
+            found = true
+            break
+          }
+        }
+        this.recordStep(node, 'array-access', `Array.includes(${formatValue(searchValue)}) → ${found}`)
+        return createPrimitive(found)
+      }
+
+      case 'slice': {
+        const start = args[0]?.type === 'primitive' ? (args[0].value as number) : 0
+        const end = args[1]?.type === 'primitive' ? (args[1].value as number) : arr.elements.length
+        const sliced = arr.elements.slice(start, end).map(el => cloneValue(el))
+        const result = createArray(sliced)
+        this.recordStep(node, 'array-access', `Array.slice(${start}, ${end}) → ${formatValue(result)}`)
+        return result
+      }
+
+      case 'splice': {
+        const start = args[0]?.type === 'primitive' ? (args[0].value as number) : 0
+        const deleteCount = args[1]?.type === 'primitive' ? (args[1].value as number) : arr.elements.length - start
+        const insertItems = args.slice(2).map(a => cloneValue(a))
+        const removed = arr.elements.splice(start, deleteCount, ...insertItems)
+        const result = createArray(removed)
+        this.recordStep(node, 'array-modify', `Array.splice(${start}, ${deleteCount}) → ${formatValue(result)}`)
+        return result
+      }
+
+      case 'join': {
+        const separator = args[0]?.type === 'primitive' ? String(args[0].value) : ','
+        const joined = arr.elements.map(el => {
+          if (el.type === 'primitive') return String(el.value)
+          if (el.type === 'null') return 'null'
+          if (el.type === 'undefined') return ''
+          return formatValue(el)
+        }).join(separator)
+        this.recordStep(node, 'expression', `Array.join("${separator}") → "${joined}"`)
+        return createPrimitive(joined)
+      }
+
+      case 'reverse': {
+        arr.elements.reverse()
+        this.recordStep(node, 'array-modify', `Array.reverse() → ${formatValue(arr)}`)
+        return arr
+      }
+
+      case 'concat': {
+        const newElements = [...arr.elements.map(el => cloneValue(el))]
+        for (const arg of args) {
+          if (arg.type === 'array') {
+            for (const el of arg.elements) {
+              newElements.push(cloneValue(el))
+            }
+          } else {
+            newElements.push(cloneValue(arg))
+          }
+        }
+        const result = createArray(newElements)
+        this.recordStep(node, 'expression', `Array.concat() → ${formatValue(result)}`)
+        return result
+      }
+
+      case 'fill': {
+        const fillValue = args[0] ?? createUndefined()
+        const start = args[1]?.type === 'primitive' ? (args[1].value as number) : 0
+        const end = args[2]?.type === 'primitive' ? (args[2].value as number) : arr.elements.length
+        for (let i = start; i < end && i < arr.elements.length; i++) {
+          arr.elements[i] = cloneValue(fillValue)
+        }
+        this.recordStep(node, 'array-modify', `Array.fill(${formatValue(fillValue)}) → ${formatValue(arr)}`)
+        return arr
+      }
+
+      default:
+        return null
+    }
+  }
+
+  // String methods
+  private executeStringMethod(
+    s: string,
+    method: string,
+    args: RuntimeValue[],
+    node: ASTNode
+  ): RuntimeValue | null {
+
+    switch (method) {
+      case 'charAt': {
+        const index = args[0]?.type === 'primitive' ? (args[0].value as number) : 0
+        const result = s.charAt(index)
+        this.recordStep(node, 'expression', `"${s}".charAt(${index}) → "${result}"`)
+        return createPrimitive(result)
+      }
+
+      case 'charCodeAt': {
+        const index = args[0]?.type === 'primitive' ? (args[0].value as number) : 0
+        const result = s.charCodeAt(index)
+        this.recordStep(node, 'expression', `"${s}".charCodeAt(${index}) → ${result}`)
+        return createPrimitive(result)
+      }
+
+      case 'substring': {
+        const start = args[0]?.type === 'primitive' ? (args[0].value as number) : 0
+        const end = args[1]?.type === 'primitive' ? (args[1].value as number) : s.length
+        const result = s.substring(start, end)
+        this.recordStep(node, 'expression', `"${s}".substring(${start}, ${end}) → "${result}"`)
+        return createPrimitive(result)
+      }
+
+      case 'slice': {
+        const start = args[0]?.type === 'primitive' ? (args[0].value as number) : 0
+        const end = args[1]?.type === 'primitive' ? (args[1].value as number) : s.length
+        const result = s.slice(start, end)
+        this.recordStep(node, 'expression', `"${s}".slice(${start}, ${end}) → "${result}"`)
+        return createPrimitive(result)
+      }
+
+      case 'split': {
+        const separator = args[0]?.type === 'primitive' ? String(args[0].value) : ''
+        const parts = s.split(separator)
+        const elements = parts.map(p => createPrimitive(p))
+        const result = createArray(elements)
+        this.recordStep(node, 'expression', `"${s}".split("${separator}") → ${formatValue(result)}`)
+        return result
+      }
+
+      case 'indexOf': {
+        const searchStr = args[0]?.type === 'primitive' ? String(args[0].value) : ''
+        const fromIndex = args[1]?.type === 'primitive' ? (args[1].value as number) : 0
+        const result = s.indexOf(searchStr, fromIndex)
+        this.recordStep(node, 'expression', `"${s}".indexOf("${searchStr}") → ${result}`)
+        return createPrimitive(result)
+      }
+
+      case 'lastIndexOf': {
+        const searchStr = args[0]?.type === 'primitive' ? String(args[0].value) : ''
+        const result = s.lastIndexOf(searchStr)
+        this.recordStep(node, 'expression', `"${s}".lastIndexOf("${searchStr}") → ${result}`)
+        return createPrimitive(result)
+      }
+
+      case 'includes': {
+        const searchStr = args[0]?.type === 'primitive' ? String(args[0].value) : ''
+        const result = s.includes(searchStr)
+        this.recordStep(node, 'expression', `"${s}".includes("${searchStr}") → ${result}`)
+        return createPrimitive(result)
+      }
+
+      case 'startsWith': {
+        const searchStr = args[0]?.type === 'primitive' ? String(args[0].value) : ''
+        const result = s.startsWith(searchStr)
+        this.recordStep(node, 'expression', `"${s}".startsWith("${searchStr}") → ${result}`)
+        return createPrimitive(result)
+      }
+
+      case 'endsWith': {
+        const searchStr = args[0]?.type === 'primitive' ? String(args[0].value) : ''
+        const result = s.endsWith(searchStr)
+        this.recordStep(node, 'expression', `"${s}".endsWith("${searchStr}") → ${result}`)
+        return createPrimitive(result)
+      }
+
+      case 'toUpperCase': {
+        const result = s.toUpperCase()
+        this.recordStep(node, 'expression', `"${s}".toUpperCase() → "${result}"`)
+        return createPrimitive(result)
+      }
+
+      case 'toLowerCase': {
+        const result = s.toLowerCase()
+        this.recordStep(node, 'expression', `"${s}".toLowerCase() → "${result}"`)
+        return createPrimitive(result)
+      }
+
+      case 'trim': {
+        const result = s.trim()
+        this.recordStep(node, 'expression', `"${s}".trim() → "${result}"`)
+        return createPrimitive(result)
+      }
+
+      case 'repeat': {
+        const count = args[0]?.type === 'primitive' ? (args[0].value as number) : 0
+        const result = s.repeat(count)
+        this.recordStep(node, 'expression', `"${s}".repeat(${count}) → "${result}"`)
+        return createPrimitive(result)
+      }
+
+      case 'padStart': {
+        const targetLength = args[0]?.type === 'primitive' ? (args[0].value as number) : 0
+        const padStr = args[1]?.type === 'primitive' ? String(args[1].value) : ' '
+        const result = s.padStart(targetLength, padStr)
+        this.recordStep(node, 'expression', `"${s}".padStart(${targetLength}) → "${result}"`)
+        return createPrimitive(result)
+      }
+
+      case 'padEnd': {
+        const targetLength = args[0]?.type === 'primitive' ? (args[0].value as number) : 0
+        const padStr = args[1]?.type === 'primitive' ? String(args[1].value) : ' '
+        const result = s.padEnd(targetLength, padStr)
+        this.recordStep(node, 'expression', `"${s}".padEnd(${targetLength}) → "${result}"`)
+        return createPrimitive(result)
+      }
+
+      case 'replace': {
+        const searchStr = args[0]?.type === 'primitive' ? String(args[0].value) : ''
+        const replaceStr = args[1]?.type === 'primitive' ? String(args[1].value) : ''
+        const result = s.replace(searchStr, replaceStr)
+        this.recordStep(node, 'expression', `"${s}".replace("${searchStr}", "${replaceStr}") → "${result}"`)
+        return createPrimitive(result)
+      }
+
+      default:
+        return null
     }
   }
 

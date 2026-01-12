@@ -17,7 +17,7 @@ export const exampleCategories = [
   { id: 'dom-events', name: 'DOM & Events', icon: '🎯', description: 'Event emitter, delegation, pub/sub' },
   { id: 'object-utils', name: 'Object Utilities', icon: '📦', description: 'Deep equal, merge, get/set nested props' },
   { id: 'promise-polyfills', name: 'Promise Polyfills', icon: '🤝', description: 'Promise.all, race, allSettled, promisify' },
-  { id: 'dsa', name: 'DSA', icon: '🧠', description: 'Data structures & algorithms (176 problems)' },
+  { id: 'dsa', name: 'DSA', icon: '🧠', description: 'Data structures & algorithms (15 problems)' },
 ]
 
 // DSA subcategories for filtering within DSA page
@@ -3201,6 +3201,518 @@ new MyPromise((resolve) => {
   return v * 2;
 })
 .then(v => console.log("Second then:", v));
+`,
+  },
+
+  // ==================== BIT MANIPULATION ====================
+  {
+    id: 'single-number',
+    name: 'Single Number',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Find the element that appears only once when all others appear twice using XOR',
+    code: `// Single Number - XOR Solution
+// Key insight: a ^ a = 0 and a ^ 0 = a
+// XOR all elements, pairs cancel out
+
+function singleNumber(nums) {
+  let result = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    console.log("XOR:", result, "^", nums[i]);
+    result = result ^ nums[i];
+    console.log("Result:", result);
+  }
+
+  return result;
+}
+
+let nums = [4, 1, 2, 1, 2];
+console.log("Array:", nums);
+console.log("\\nFinding single number...\\n");
+let answer = singleNumber(nums);
+console.log("\\nSingle number:", answer);
+`,
+  },
+  {
+    id: 'number-of-1-bits',
+    name: 'Number of 1 Bits',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Count the number of set bits (1s) in a binary number (Hamming Weight)',
+    code: `// Number of 1 Bits (Hamming Weight)
+// Trick: n & (n-1) clears the lowest set bit
+
+function hammingWeight(n) {
+  let count = 0;
+
+  while (n !== 0) {
+    console.log("n =", n, "| Removing lowest 1 bit");
+    n = n & (n - 1);
+    count = count + 1;
+    console.log("After: n =", n, "| count =", count);
+  }
+
+  return count;
+}
+
+let num = 11; // Binary: 1011
+console.log("Number:", num, "(binary: 1011)");
+console.log("\\nCounting 1 bits...\\n");
+let bits = hammingWeight(num);
+console.log("\\nTotal 1 bits:", bits);
+`,
+  },
+  {
+    id: 'counting-bits',
+    name: 'Counting Bits',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Return array where ans[i] is the number of 1s in binary of i',
+    code: `// Counting Bits (0 to n)
+// DP: ans[i] = ans[i >> 1] + (i & 1)
+// i >> 1 is i/2, (i & 1) checks if odd
+
+function countBits(n) {
+  let ans = [0];
+
+  for (let i = 1; i <= n; i++) {
+    let half = i >> 1;
+    let isOdd = i & 1;
+    ans[i] = ans[half] + isOdd;
+    console.log("i=" + i + ": bits[" + half + "] + " + isOdd + " = " + ans[i]);
+  }
+
+  return ans;
+}
+
+let n = 5;
+console.log("Count bits from 0 to", n);
+console.log("");
+let result = countBits(n);
+console.log("\\nResult:", result);
+`,
+  },
+  {
+    id: 'reverse-bits',
+    name: 'Reverse Bits',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Reverse bits of a 32-bit unsigned integer',
+    code: `// Reverse Bits
+// Extract each bit, build result in reverse order
+
+function reverseBits(n) {
+  let result = 0;
+
+  for (let i = 0; i < 32; i++) {
+    let bit = n & 1;
+    result = (result << 1) | bit;
+    n = n >> 1;
+
+    if (i < 8) {
+      console.log("Bit", i + ":", bit, "| result:", result);
+    }
+  }
+
+  return result;
+}
+
+let num = 43261596;
+console.log("Original:", num);
+console.log("\\nReversing bits (showing first 8)...\\n");
+let reversed = reverseBits(num);
+console.log("\\n...\\nReversed:", reversed);
+`,
+  },
+  {
+    id: 'missing-number',
+    name: 'Missing Number',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Find the missing number in array [0, n] using XOR',
+    code: `// Missing Number - XOR Solution
+// XOR indices 0..n with all array values
+// Pairs cancel, leaving the missing number
+
+function missingNumber(nums) {
+  let xor = nums.length;
+  console.log("Start with n =", xor);
+
+  for (let i = 0; i < nums.length; i++) {
+    xor = xor ^ i ^ nums[i];
+    console.log("XOR with i=" + i + ", nums[i]=" + nums[i] + " => " + xor);
+  }
+
+  return xor;
+}
+
+let nums = [3, 0, 1];
+console.log("Array:", nums);
+console.log("Range: [0, 1, 2, 3]");
+console.log("\\nFinding missing...\\n");
+let missing = missingNumber(nums);
+console.log("\\nMissing number:", missing);
+`,
+  },
+  {
+    id: 'power-of-two',
+    name: 'Power of Two',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Check if a number is a power of two',
+    code: `// Power of Two
+// Power of 2 has exactly one 1 bit
+// n & (n-1) clears lowest bit, should give 0
+
+function isPowerOfTwo(n) {
+  if (n <= 0) {
+    console.log(n, "is not positive");
+    return false;
+  }
+
+  let check = n & (n - 1);
+  console.log("n =", n);
+  console.log("n - 1 =", n - 1);
+  console.log("n & (n-1) =", check);
+
+  return check === 0;
+}
+
+console.log("=== Test 16 ===");
+console.log("Is power of 2?", isPowerOfTwo(16));
+
+console.log("\\n=== Test 18 ===");
+console.log("Is power of 2?", isPowerOfTwo(18));
+
+console.log("\\n=== Test 1 ===");
+console.log("Is power of 2?", isPowerOfTwo(1));
+`,
+  },
+  {
+    id: 'sum-of-two-integers',
+    name: 'Sum of Two Integers',
+    category: 'bit-manipulation',
+    difficulty: 'medium',
+    description: 'Add two integers without using + or - operators',
+    code: `// Sum Without + or -
+// XOR gives sum without carry
+// AND << 1 gives the carry bits
+
+function getSum(a, b) {
+  console.log("Adding", a, "and", b);
+
+  while (b !== 0) {
+    let carry = (a & b) << 1;
+    a = a ^ b;
+    b = carry;
+    console.log("Sum:", a, "| Carry:", b);
+  }
+
+  return a;
+}
+
+console.log("=== Test 1: 5 + 3 ===");
+let sum1 = getSum(5, 3);
+console.log("Result:", sum1);
+
+console.log("\\n=== Test 2: 7 + 8 ===");
+let sum2 = getSum(7, 8);
+console.log("Result:", sum2);
+`,
+  },
+  {
+    id: 'single-number-ii',
+    name: 'Single Number II',
+    category: 'bit-manipulation',
+    difficulty: 'medium',
+    description: 'Find element appearing once when others appear 3 times',
+    code: `// Single Number II
+// Count bits at each position mod 3
+
+function singleNumber(nums) {
+  let result = 0;
+
+  for (let i = 0; i < 32; i++) {
+    let sum = 0;
+
+    for (let j = 0; j < nums.length; j++) {
+      sum = sum + ((nums[j] >> i) & 1);
+    }
+
+    let bit = sum % 3;
+    result = result | (bit << i);
+
+    if (sum > 0) {
+      console.log("Bit", i, ": sum=" + sum, "mod3=" + bit);
+    }
+  }
+
+  return result;
+}
+
+let nums = [2, 2, 3, 2];
+console.log("Array:", nums);
+console.log("\\nCounting bits mod 3...\\n");
+let answer = singleNumber(nums);
+console.log("\\nSingle number:", answer);
+`,
+  },
+  {
+    id: 'single-number-iii',
+    name: 'Single Number III',
+    category: 'bit-manipulation',
+    difficulty: 'medium',
+    description: 'Find two elements appearing once when others appear twice',
+    code: `// Single Number III
+// XOR all to get a^b, split by differing bit
+
+function singleNumber(nums) {
+  let xorAll = 0;
+  for (let i = 0; i < nums.length; i++) {
+    xorAll = xorAll ^ nums[i];
+  }
+  console.log("XOR of all:", xorAll);
+
+  // Find rightmost set bit
+  let rightBit = xorAll & (0 - xorAll);
+  console.log("Rightmost diff bit:", rightBit);
+
+  let a = 0;
+  let b = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if ((nums[i] & rightBit) !== 0) {
+      a = a ^ nums[i];
+    } else {
+      b = b ^ nums[i];
+    }
+  }
+
+  console.log("Group 1 result:", a);
+  console.log("Group 2 result:", b);
+
+  return [a, b];
+}
+
+let nums = [1, 2, 1, 3, 2, 5];
+console.log("Array:", nums);
+console.log("\\nSplitting by XOR...\\n");
+let result = singleNumber(nums);
+console.log("\\nTwo singles:", result);
+`,
+  },
+  {
+    id: 'bitwise-and-range',
+    name: 'Bitwise AND of Range',
+    category: 'bit-manipulation',
+    difficulty: 'medium',
+    description: 'Find bitwise AND of all numbers in range [left, right]',
+    code: `// Bitwise AND of Numbers Range
+// Find common prefix of left and right
+
+function rangeBitwiseAnd(left, right) {
+  let shift = 0;
+
+  console.log("Finding common prefix...");
+  console.log("Left:", left, "Right:", right);
+
+  while (left < right) {
+    left = left >> 1;
+    right = right >> 1;
+    shift = shift + 1;
+    console.log("Shift", shift, ": L=" + left, "R=" + right);
+  }
+
+  let result = left << shift;
+  console.log("\\nPrefix:", left, "shifted:", result);
+
+  return result;
+}
+
+console.log("=== Test: AND of [5, 7] ===");
+let r1 = rangeBitwiseAnd(5, 7);
+console.log("Result:", r1);
+`,
+  },
+  {
+    id: 'number-complement',
+    name: 'Number Complement',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Flip all bits in binary representation',
+    code: `// Number Complement
+// XOR with mask of all 1s (same bit length)
+
+function findComplement(num) {
+  console.log("Number:", num);
+
+  // Count bits
+  let bits = 0;
+  let temp = num;
+  while (temp > 0) {
+    bits = bits + 1;
+    temp = temp >> 1;
+  }
+  console.log("Bits needed:", bits);
+
+  // Create mask
+  let mask = (1 << bits) - 1;
+  console.log("Mask:", mask);
+
+  let result = num ^ mask;
+  console.log("num XOR mask:", result);
+
+  return result;
+}
+
+console.log("=== Test: 5 (101) ===");
+let c1 = findComplement(5);
+console.log("Complement:", c1, "(010 = 2)");
+
+console.log("\\n=== Test: 1 ===");
+let c2 = findComplement(1);
+console.log("Complement:", c2);
+`,
+  },
+  {
+    id: 'power-of-four',
+    name: 'Power of Four',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Check if a number is a power of four',
+    code: `// Power of Four
+// Must be power of 2 AND 1-bit at even position
+// Mask 0x55555555 = 01010101... (even positions)
+
+function isPowerOfFour(n) {
+  if (n <= 0) {
+    console.log(n, "is not positive");
+    return false;
+  }
+
+  let isPow2 = (n & (n - 1)) === 0;
+  console.log("n =", n);
+  console.log("Is power of 2?", isPow2);
+
+  if (!isPow2) return false;
+
+  // 1431655765 = 0x55555555
+  let mask = 1431655765;
+  let atEvenPos = (n & mask) !== 0;
+  console.log("Bit at even position?", atEvenPos);
+
+  return atEvenPos;
+}
+
+console.log("=== Test: 16 ===");
+console.log("Is power of 4?", isPowerOfFour(16));
+
+console.log("\\n=== Test: 8 ===");
+console.log("Is power of 4?", isPowerOfFour(8));
+`,
+  },
+  {
+    id: 'alternating-bits',
+    name: 'Alternating Bits',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Check if binary has alternating bits (101010...)',
+    code: `// Alternating Bits
+// n XOR (n >> 1) should be all 1s if alternating
+
+function hasAlternatingBits(n) {
+  console.log("Number:", n);
+
+  let xor = n ^ (n >> 1);
+  console.log("n XOR (n >> 1) =", xor);
+
+  // Check if all 1s: xor & (xor + 1) === 0
+  let check = xor & (xor + 1);
+  console.log("xor & (xor + 1) =", check);
+
+  return check === 0;
+}
+
+console.log("=== Test: 5 (101) ===");
+console.log("Alternating?", hasAlternatingBits(5));
+
+console.log("\\n=== Test: 7 (111) ===");
+console.log("Alternating?", hasAlternatingBits(7));
+
+console.log("\\n=== Test: 10 (1010) ===");
+console.log("Alternating?", hasAlternatingBits(10));
+`,
+  },
+  {
+    id: 'hamming-distance',
+    name: 'Hamming Distance',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Count differing bit positions between two numbers',
+    code: `// Hamming Distance
+// XOR gives 1s where bits differ
+// Count the 1s in XOR result
+
+function hammingDistance(x, y) {
+  console.log("x =", x, "y =", y);
+
+  let xor = x ^ y;
+  console.log("x XOR y =", xor);
+
+  let distance = 0;
+  while (xor !== 0) {
+    xor = xor & (xor - 1);
+    distance = distance + 1;
+  }
+
+  return distance;
+}
+
+console.log("=== Test: 1 vs 4 ===");
+let d1 = hammingDistance(1, 4);
+console.log("Distance:", d1);
+console.log("(001 vs 100 = 2 bits)");
+
+console.log("\\n=== Test: 3 vs 1 ===");
+let d2 = hammingDistance(3, 1);
+console.log("Distance:", d2);
+console.log("(11 vs 01 = 1 bit)");
+`,
+  },
+  {
+    id: 'maximum-xor',
+    name: 'Maximum XOR',
+    category: 'bit-manipulation',
+    difficulty: 'hard',
+    description: 'Find maximum XOR of any two numbers in array',
+    code: `// Maximum XOR of Two Numbers
+// Compare all pairs (optimal uses Trie)
+
+function findMaximumXOR(nums) {
+  if (nums.length < 2) return 0;
+
+  let maxXor = 0;
+  console.log("Finding max XOR pairs...\\n");
+
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      let xor = nums[i] ^ nums[j];
+      if (xor > maxXor) {
+        console.log(nums[i], "^", nums[j], "=", xor, "(new max!)");
+        maxXor = xor;
+      }
+    }
+  }
+
+  return maxXor;
+}
+
+let nums = [3, 10, 5, 25, 2, 8];
+console.log("Array:", nums);
+console.log("");
+let maxXor = findMaximumXOR(nums);
+console.log("\\nMaximum XOR:", maxXor);
 `,
   },
 ]
