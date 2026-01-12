@@ -598,6 +598,13 @@ export class Interpreter {
       case '*=': return createPrimitive(l * r)
       case '/=': return createPrimitive(l / r)
       case '%=': return createPrimitive(l % r)
+      case '**=': return createPrimitive(Math.pow(l, r))
+      case '^=': return createPrimitive(l ^ r)
+      case '&=': return createPrimitive(l & r)
+      case '|=': return createPrimitive(l | r)
+      case '<<=': return createPrimitive(l << r)
+      case '>>=': return createPrimitive(l >> r)
+      case '>>>=': return createPrimitive(l >>> r)
       default: return right
     }
   }
@@ -637,11 +644,14 @@ export class Interpreter {
       const r = right.value
 
       switch (op) {
+        // Arithmetic
         case '+': return createPrimitive((l as number) + (r as number))
         case '-': return createPrimitive((l as number) - (r as number))
         case '*': return createPrimitive((l as number) * (r as number))
         case '/': return createPrimitive((l as number) / (r as number))
         case '%': return createPrimitive((l as number) % (r as number))
+        case '**': return createPrimitive(Math.pow(l as number, r as number))
+        // Comparison
         case '<': return createPrimitive(l < r)
         case '>': return createPrimitive(l > r)
         case '<=': return createPrimitive(l <= r)
@@ -650,6 +660,13 @@ export class Interpreter {
         case '===': return createPrimitive(l === r)
         case '!=': return createPrimitive(l != r)
         case '!==': return createPrimitive(l !== r)
+        // Bitwise
+        case '^': return createPrimitive((l as number) ^ (r as number))
+        case '&': return createPrimitive((l as number) & (r as number))
+        case '|': return createPrimitive((l as number) | (r as number))
+        case '<<': return createPrimitive((l as number) << (r as number))
+        case '>>': return createPrimitive((l as number) >> (r as number))
+        case '>>>': return createPrimitive((l as number) >>> (r as number))
       }
     }
 
@@ -688,6 +705,12 @@ export class Interpreter {
           return arg
         }
         return createPrimitive(NaN)
+      case '~':
+        // Bitwise NOT
+        if (arg.type === 'primitive' && arg.dataType === 'number') {
+          return createPrimitive(~(arg.value as number))
+        }
+        return createPrimitive(~0)
       case 'typeof':
         switch (arg.type) {
           case 'primitive': return createPrimitive(arg.dataType)
