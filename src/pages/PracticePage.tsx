@@ -10,6 +10,7 @@ import { VisualizationPanel } from '@/components/Visualization'
 import { StepDescription } from '@/components/StepDescription'
 import { useExecutionStore } from '@/store'
 import { codeExamples, exampleCategories, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
+import { getConceptForProblem } from '@/data/algorithmConcepts'
 import styles from './PracticePage.module.css'
 
 export function PracticePage() {
@@ -30,6 +31,12 @@ export function PracticePage() {
   }
 
   const subcategoryName = getSubcategoryName()
+
+  // Check if problem has concept visualization
+  const { categoryConcept, insight } = problem
+    ? getConceptForProblem(problem.id, problem.category)
+    : { categoryConcept: null, insight: null }
+  const hasConcept = !!(categoryConcept && insight)
 
   useEffect(() => {
     if (problem) {
@@ -85,7 +92,10 @@ export function PracticePage() {
 
       <main className={styles.main}>
         <section className={styles.editorPanel}>
-          <CodeEditor readOnly />
+          <CodeEditor
+            readOnly
+            conceptLink={hasConcept ? `/${categoryId}/${problemId}/concept` : undefined}
+          />
         </section>
 
         <section className={styles.centerPanel}>
@@ -95,6 +105,7 @@ export function PracticePage() {
           <div className={styles.stepDescriptionWrapper}>
             <StepDescription />
           </div>
+
           <div className={styles.visualizationWrapper}>
             <VisualizationPanel />
           </div>

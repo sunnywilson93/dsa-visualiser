@@ -255,3 +255,52 @@ export interface ExecutionActions {
 }
 
 export type ExecutionStore = ExecutionState & ExecutionActions
+
+// ============================================================================
+// Concept Visualization Types
+// ============================================================================
+
+export type ConceptType =
+  | 'two-pointers-converge'    // ← array →
+  | 'two-pointers-same-dir'    // → → (slow/fast)
+  | 'two-pointers-partition'   // [0s | 1s | 2s]
+  | 'bit-manipulation'         // Binary grid operations
+  | 'sliding-window'           // Frame over array
+  | 'binary-search'            // Halving search space
+
+export interface ConceptStep {
+  id: number
+  title: string
+  description: string
+  visual: ConceptVisualState
+}
+
+export interface ConceptVisualState {
+  array?: (number | string)[]        // Numbers or characters (for string problems)
+  pointers?: Record<string, number>  // { left: 0, right: 4 }
+  highlights?: number[]              // Indices to highlight
+  binary?: BinaryConceptState
+  annotations?: string[]             // Text annotations on the visual
+  result?: number | string | boolean
+}
+
+export interface BinaryConceptState {
+  numbers: { label: string; value: number }[]
+  operator?: '&' | '|' | '^' | '<<' | '>>' | '~'
+  result?: number
+  activeBits?: number[]  // Which bit positions to highlight
+}
+
+export interface CategoryConcept {
+  id: string
+  title: string
+  description: string
+  type: ConceptType
+  steps: ConceptStep[]
+}
+
+export interface ProblemInsight {
+  keyInsight: string           // One-liner insight
+  pattern: ConceptType         // Which visualization pattern
+  customSteps?: ConceptStep[]  // Override category steps if needed
+}

@@ -1,15 +1,18 @@
 import { useRef, useEffect, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import Editor, { OnMount, Monaco } from '@monaco-editor/react'
 import type { editor } from 'monaco-editor'
+import { Lightbulb } from 'lucide-react'
 import { useExecutionStore, useCurrentStep } from '@/store'
 import styles from './CodeEditor.module.css'
 
 interface CodeEditorProps {
   className?: string
   readOnly?: boolean
+  conceptLink?: string
 }
 
-export function CodeEditor({ className, readOnly = false }: CodeEditorProps) {
+export function CodeEditor({ className, readOnly = false, conceptLink }: CodeEditorProps) {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
   const monacoRef = useRef<Monaco | null>(null)
   const decorationsRef = useRef<string[]>([])
@@ -134,13 +137,20 @@ export function CodeEditor({ className, readOnly = false }: CodeEditorProps) {
     <div className={`${styles.container} ${className ?? ''}`}>
       <div className={styles.header}>
         <span className={styles.title}>Code Editor</span>
-        <div className={styles.statusBadge}>
-          {status === 'idle' && 'Ready'}
-          {status === 'running' && 'Running'}
-          {status === 'paused' && 'Paused'}
-          {status === 'stepping' && 'Stepping'}
-          {status === 'completed' && 'Completed'}
-          {status === 'error' && 'Error'}
+        <div className={styles.headerRight}>
+          {conceptLink && (
+            <Link to={conceptLink} className={styles.conceptBtn} title="Learn the concept">
+              <Lightbulb size={14} />
+            </Link>
+          )}
+          <div className={styles.statusBadge}>
+            {status === 'idle' && 'Ready'}
+            {status === 'running' && 'Running'}
+            {status === 'paused' && 'Paused'}
+            {status === 'stepping' && 'Stepping'}
+            {status === 'completed' && 'Completed'}
+            {status === 'error' && 'Error'}
+          </div>
         </div>
       </div>
 

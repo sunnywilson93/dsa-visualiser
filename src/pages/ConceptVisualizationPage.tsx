@@ -1,0 +1,91 @@
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { ArrowLeft, Code } from 'lucide-react'
+import { ConceptPanel } from '@/components/ConceptPanel'
+import { codeExamples, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
+import { getConceptForProblem, getConceptSteps } from '@/data/algorithmConcepts'
+import styles from './ConceptVisualizationPage.module.css'
+
+export function ConceptVisualizationPage() {
+  const { categoryId, problemId } = useParams<{ categoryId: string; problemId: string }>()
+  const navigate = useNavigate()
+
+  const problem = codeExamples.find((p) => p.id === problemId)
+
+  const getSubcategoryName = () => {
+    if (!problem || !isDsaSubcategory(problem.category)) return null
+    const sub = dsaSubcategories.find((s) => s.id === problem.category)
+    return sub?.name
+  }
+
+  const subcategoryName = getSubcategoryName()
+
+  // Get concept data
+  const { categoryConcept, insight } = problem
+    ? getConceptForProblem(problem.id, problem.category)
+    : { categoryConcept: null, insight: null }
+
+  const conceptSteps = problem ? getConceptSteps(problem.id, problem.category) : []
+  const hasConcept = categoryConcept && insight && conceptSteps.length > 0
+
+  if (!problem || !hasConcept) {
+    return (
+      <div className={styles.notFound}>
+        <h2>Concept not found</h2>
+        <Link to="/" className={styles.backLink}>
+          <ArrowLeft size={16} /> Back to Home
+        </Link>
+      </div>
+    )
+  }
+
+  return (
+    <div className={styles.page}>
+      <header className={styles.header}>
+        <div className={styles.headerLeft}>
+          <button onClick={() => navigate(-1)} className={styles.backBtn}>
+            <ArrowLeft size={16} />
+          </button>
+          <div className={styles.problemInfo}>
+            <div className={styles.breadcrumb}>
+              <Link to="/" className={styles.breadcrumbLink}>Home</Link>
+              <span className={styles.breadcrumbSep}>/</span>
+              <Link to={`/${categoryId}`} className={styles.breadcrumbLink}>
+                DSA
+              </Link>
+              {subcategoryName && (
+                <>
+                  <span className={styles.breadcrumbSep}>/</span>
+                  <span className={styles.breadcrumbCurrent}>{subcategoryName}</span>
+                </>
+              )}
+            </div>
+            <h1 className={styles.title}>{problem.name}</h1>
+          </div>
+          <span className={`${styles.difficulty} ${styles[problem.difficulty]}`}>
+            {problem.difficulty}
+          </span>
+        </div>
+        <p className={styles.description}>{problem.description}</p>
+      </header>
+
+      <main className={styles.main}>
+        <div className={styles.conceptWrapper}>
+          <ConceptPanel
+            title={categoryConcept!.title}
+            keyInsight={insight!.keyInsight}
+            type={insight!.pattern}
+            steps={conceptSteps}
+          />
+        </div>
+
+        <Link
+          to={`/${categoryId}/${problemId}`}
+          className={styles.practiceLink}
+        >
+          <Code size={16} />
+          <span>Practice the Code</span>
+        </Link>
+      </main>
+    </div>
+  )
+}

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ScrollToTop } from '@/components/ScrollToTop'
-import { HomePage, CategoryPage, PracticePage, ConceptsPage, ConceptPage } from '@/pages'
+import { HomePage, CategoryPage, PracticePage, ConceptsPage, ConceptPage, ConceptVisualizationPage } from '@/pages'
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
         {/* Practice routes */}
         <Route path="/:categoryId" element={<CategoryPage />} />
         <Route path="/:categoryId/:problemId" element={<PracticePage />} />
+        <Route path="/:categoryId/:problemId/concept" element={<ConceptVisualizationPage />} />
       </Routes>
     </BrowserRouter>
   )
