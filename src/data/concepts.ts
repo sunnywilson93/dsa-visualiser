@@ -37,16 +37,72 @@ export const concepts: Concept[] = [
     ],
     examples: [
       // Beginner
-      { title: 'var Hoisting', code: 'console.log(x); var x = 5;', explanation: 'var declarations are hoisted, but not assignments' },
-      { title: 'Function Declaration', code: 'sayHi(); function sayHi() {}', explanation: 'Function declarations are fully hoisted' },
+      { title: 'var Hoisting', code: `console.log(x);  // undefined
+var x = 5;
+console.log(x);  // 5
+
+// JS interprets as:
+// var x;
+// console.log(x);
+// x = 5;`, explanation: 'var declarations are hoisted, but not assignments' },
+      { title: 'Function Declaration', code: `sayHi();  // "Hello!"
+
+function sayHi() {
+  console.log("Hello!");
+}
+
+// Works because function
+// declarations are fully hoisted`, explanation: 'Function declarations are fully hoisted' },
       // Intermediate
-      { title: 'let & TDZ', code: 'console.log(x); let x = 5;', explanation: 'let/const have Temporal Dead Zone' },
-      { title: 'var vs let', code: 'var x vs let x in loops', explanation: 'Different scoping behaviors' },
-      { title: 'Function Expressions', code: 'sayHi(); var sayHi = function() {}', explanation: 'Expressions are NOT hoisted like declarations' },
+      { title: 'let & TDZ', code: `console.log(x);  // ReferenceError!
+let x = 5;
+
+// let/const are hoisted but
+// remain in "Temporal Dead Zone"
+// until the declaration line`, explanation: 'let/const have Temporal Dead Zone' },
+      { title: 'var vs let in Loops', code: `// var - shared across iterations
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i));
+}
+// Output: 3, 3, 3
+
+// let - new binding each iteration
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i));
+}
+// Output: 0, 1, 2`, explanation: 'Different scoping behaviors' },
+      { title: 'Function Expressions', code: `sayHi();  // TypeError!
+
+var sayHi = function() {
+  console.log("Hello!");
+};
+
+// Only the variable declaration
+// is hoisted, not the function`, explanation: 'Expressions are NOT hoisted like declarations' },
       // Advanced
-      { title: 'Mixed Declarations', code: 'Complex var/let/function mix', explanation: 'Understanding declaration order' },
-      { title: 'var Redeclaration', code: 'var x = 1; var x = 2;', explanation: 'var allows redeclaration, let does not' },
-      { title: 'Block Scope', code: 'if/for block scoping', explanation: 'let/const are block-scoped' },
+      { title: 'Mixed Declarations', code: `console.log(a);  // undefined
+console.log(b);  // ReferenceError
+console.log(c);  // [Function: c]
+
+var a = 1;
+let b = 2;
+function c() {}`, explanation: 'Understanding declaration order' },
+      { title: 'var Redeclaration', code: `var x = 1;
+var x = 2;  // OK with var
+console.log(x);  // 2
+
+let y = 1;
+let y = 2;  // SyntaxError!
+// Cannot redeclare with let`, explanation: 'var allows redeclaration, let does not' },
+      { title: 'Block Scope', code: `if (true) {
+  var a = 1;   // function-scoped
+  let b = 2;   // block-scoped
+}
+console.log(a);  // 1
+console.log(b);  // ReferenceError!
+
+// let/const respect {} blocks
+// var ignores them`, explanation: 'let/const are block-scoped' },
     ],
     commonMistakes: [
       'Assuming let/const don\'t hoist (they do, but have TDZ)',
@@ -75,14 +131,95 @@ export const concepts: Concept[] = [
     ],
     examples: [
       // Beginner
-      { title: 'Basic Closure', code: 'function outer() { let x = 0; return function() { return x++; } }', explanation: 'Inner function remembers outer variables' },
-      { title: 'Counter Example', code: 'const counter = outer(); counter(); counter();', explanation: 'Each call uses the same closed-over variable' },
+      { title: 'Basic Closure', code: `function outer() {
+  let count = 0;
+
+  return function inner() {
+    count++;
+    return count;
+  };
+}
+
+const counter = outer();
+counter();  // 1
+counter();  // 2
+counter();  // 3`, explanation: 'Inner function remembers outer variables' },
+      { title: 'Counter Example', code: `function createCounter(start) {
+  let count = start;
+
+  return {
+    increment: () => ++count,
+    decrement: () => --count,
+    getValue: () => count
+  };
+}
+
+const counter = createCounter(10);
+counter.increment();  // 11
+counter.increment();  // 12
+counter.getValue();   // 12`, explanation: 'Each call uses the same closed-over variable' },
       // Intermediate
-      { title: 'Private Variables', code: 'function createAccount() { let balance = 0; return { deposit, withdraw } }', explanation: 'Closures enable data privacy' },
-      { title: 'Multiple Closures', code: 'const a = createCounter(0); const b = createCounter(100);', explanation: 'Each closure has its own independent state' },
+      { title: 'Private Variables', code: `function createAccount(initial) {
+  let balance = initial;  // private!
+
+  return {
+    deposit(amount) {
+      balance += amount;
+      return balance;
+    },
+    withdraw(amount) {
+      if (amount > balance) {
+        return "Insufficient funds";
+      }
+      balance -= amount;
+      return balance;
+    },
+    getBalance() {
+      return balance;
+    }
+  };
+}
+
+const account = createAccount(100);
+account.deposit(50);   // 150
+account.balance;       // undefined (private!)`, explanation: 'Closures enable data privacy' },
+      { title: 'Multiple Closures', code: `function createCounter(start) {
+  let count = start;
+  return () => count++;
+}
+
+const counterA = createCounter(0);
+const counterB = createCounter(100);
+
+counterA();  // 0
+counterA();  // 1
+counterB();  // 100
+counterB();  // 101
+
+// Each closure has independent state`, explanation: 'Each closure has its own independent state' },
       // Advanced
-      { title: 'Loop Closure Bug', code: 'for (var i = 0; i < 3; i++) { setTimeout(() => console.log(i)) }', explanation: 'Classic var loop closure problem' },
-      { title: 'Loop Fix with let', code: 'for (let i = 0; i < 3; i++) { setTimeout(() => console.log(i)) }', explanation: 'let creates new binding per iteration' },
+      { title: 'Loop Closure Bug', code: `// THE BUG: All callbacks share same i
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => {
+    console.log(i);
+  }, 100);
+}
+// Output: 3, 3, 3
+
+// Why? var is function-scoped
+// All 3 closures reference the
+// SAME i, which is 3 after loop`, explanation: 'Classic var loop closure problem' },
+      { title: 'Loop Fix with let', code: `// THE FIX: let creates new binding
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => {
+    console.log(i);
+  }, 100);
+}
+// Output: 0, 1, 2
+
+// Why? let is block-scoped
+// Each iteration gets its own i
+// Each closure captures different i`, explanation: 'let creates new binding per iteration' },
     ],
     commonMistakes: [
       'Loop variable capture - all callbacks share the same variable',
@@ -113,16 +250,109 @@ export const concepts: Concept[] = [
     ],
     examples: [
       // Beginner
-      { title: 'Object Method', code: 'person.greet(); // this = person', explanation: 'Implicit binding: object left of dot' },
-      { title: 'Standalone Function', code: 'showThis(); // this = window', explanation: 'Default binding: no object = global' },
+      { title: 'Object Method', code: `const person = {
+  name: "Alice",
+  greet() {
+    console.log("Hi, I'm " + this.name);
+  }
+};
+
+person.greet();
+// "Hi, I'm Alice"
+
+// this = object left of the dot`, explanation: 'Implicit binding: object left of dot' },
+      { title: 'Standalone Function', code: `function showThis() {
+  console.log(this);
+}
+
+showThis();
+// In browser: Window object
+// In strict mode: undefined
+
+// No object = default binding`, explanation: 'Default binding: no object = global' },
       // Intermediate
-      { title: 'call() / apply()', code: 'greet.call(bob, "Hi"); greet.apply(sue, ["Hi"]);', explanation: 'Explicit binding: first arg = this' },
-      { title: 'bind()', code: 'const boundGreet = greet.bind(person);', explanation: 'Hard binding: permanently set this' },
-      { title: 'Arrow Functions', code: 'const arrow = () => console.log(this);', explanation: 'Lexical this: inherits from enclosing scope' },
+      { title: 'call() / apply()', code: `function greet(greeting) {
+  console.log(greeting + ", " + this.name);
+}
+
+const bob = { name: "Bob" };
+const sue = { name: "Sue" };
+
+greet.call(bob, "Hello");
+// "Hello, Bob"
+
+greet.apply(sue, ["Hi"]);
+// "Hi, Sue"
+
+// First argument becomes 'this'`, explanation: 'Explicit binding: first arg = this' },
+      { title: 'bind()', code: `const person = {
+  name: "Alice",
+  greet() {
+    console.log("Hi, " + this.name);
+  }
+};
+
+const greet = person.greet;
+greet();  // undefined (lost binding!)
+
+const boundGreet = person.greet.bind(person);
+boundGreet();  // "Hi, Alice"
+
+// bind() permanently sets 'this'`, explanation: 'Hard binding: permanently set this' },
+      { title: 'Arrow Functions', code: `const person = {
+  name: "Alice",
+  regularFunc() {
+    console.log(this.name);  // "Alice"
+
+    const arrow = () => {
+      console.log(this.name);  // "Alice"
+    };
+    arrow();
+  }
+};
+
+// Arrow functions inherit 'this'
+// from their enclosing scope`, explanation: 'Lexical this: inherits from enclosing scope' },
       // Advanced
-      { title: 'new Keyword', code: 'const p = new Person("Alice");', explanation: 'Constructor binding: this = new instance' },
-      { title: 'Lost Binding', code: 'setTimeout(person.greet, 100);', explanation: 'Common bug: callback loses context' },
-      { title: 'Fixed with Arrow', code: 'setTimeout(() => person.greet(), 100);', explanation: 'Arrow function preserves this' },
+      { title: 'new Keyword', code: `function Person(name) {
+  this.name = name;
+  this.greet = function() {
+    console.log("Hi, " + this.name);
+  };
+}
+
+const alice = new Person("Alice");
+alice.greet();  // "Hi, Alice"
+
+// 'new' creates fresh object
+// and binds it to 'this'`, explanation: 'Constructor binding: this = new instance' },
+      { title: 'Lost Binding', code: `const person = {
+  name: "Alice",
+  greet() {
+    console.log("Hi, " + this.name);
+  }
+};
+
+// BUG: 'this' is lost in callback
+setTimeout(person.greet, 100);
+// "Hi, undefined"
+
+// The method is passed as plain
+// function, losing its context`, explanation: 'Common bug: callback loses context' },
+      { title: 'Fixed with Arrow', code: `const person = {
+  name: "Alice",
+  greet() {
+    console.log("Hi, " + this.name);
+  }
+};
+
+// FIX 1: Arrow function wrapper
+setTimeout(() => person.greet(), 100);
+// "Hi, Alice"
+
+// FIX 2: Use bind
+setTimeout(person.greet.bind(person), 100);
+// "Hi, Alice"`, explanation: 'Arrow function preserves this' },
     ],
     commonMistakes: [
       'Losing this when passing methods as callbacks',
@@ -153,16 +383,117 @@ export const concepts: Concept[] = [
     ],
     examples: [
       // Beginner
-      { title: 'Promise vs setTimeout', code: 'setTimeout(...); Promise.resolve().then(...);', explanation: 'Microtasks (Promise) run before macrotasks (setTimeout)' },
-      { title: 'Sync Code Flow', code: 'console.log("start"); fn(); console.log("end");', explanation: 'Synchronous code executes line by line on call stack' },
+      { title: 'Promise vs setTimeout', code: `console.log("1");
+
+setTimeout(() => {
+  console.log("2");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("3");
+});
+
+console.log("4");
+
+// Output: 1, 4, 3, 2
+// Microtasks before macrotasks!`, explanation: 'Microtasks (Promise) run before macrotasks (setTimeout)' },
+      { title: 'Sync Code Flow', code: `function greet() {
+  console.log("Hello");
+}
+
+console.log("Start");
+greet();
+console.log("End");
+
+// Output: Start, Hello, End
+// Synchronous = line by line`, explanation: 'Synchronous code executes line by line on call stack' },
       // Intermediate
-      { title: 'Chained Promises', code: '.then(() => ...).then(() => ...)', explanation: 'Each .then queues when previous resolves' },
-      { title: 'async/await', code: 'async function f() { await Promise.resolve(); }', explanation: 'await pauses function, queues continuation as microtask' },
-      { title: 'Nested setTimeout', code: 'setTimeout(() => { setTimeout(...) });', explanation: 'Nested creates new macrotask for next iteration' },
+      { title: 'Chained Promises', code: `Promise.resolve(1)
+  .then(x => {
+    console.log(x);  // 1
+    return x + 1;
+  })
+  .then(x => {
+    console.log(x);  // 2
+    return x + 1;
+  })
+  .then(x => {
+    console.log(x);  // 3
+  });
+
+// Each .then queues a microtask
+// when the previous resolves`, explanation: 'Each .then queues when previous resolves' },
+      { title: 'async/await', code: `async function example() {
+  console.log("1");
+
+  await Promise.resolve();
+  // Everything after await becomes
+  // a microtask
+
+  console.log("2");
+}
+
+console.log("A");
+example();
+console.log("B");
+
+// Output: A, 1, B, 2`, explanation: 'await pauses function, queues continuation as microtask' },
+      { title: 'Nested setTimeout', code: `setTimeout(() => {
+  console.log("First macrotask");
+
+  setTimeout(() => {
+    console.log("Second macrotask");
+  }, 0);
+
+}, 0);
+
+console.log("Sync");
+
+// Output: Sync, First, Second
+// Each setTimeout queues one
+// macrotask for next loop cycle`, explanation: 'Nested creates new macrotask for next iteration' },
       // Advanced
-      { title: 'Microtask in Macrotask', code: 'setTimeout(() => { Promise.resolve().then(...) });', explanation: 'Microtasks created during macrotask run before next macrotask' },
-      { title: 'queueMicrotask', code: 'queueMicrotask(() => { queueMicrotask(...) });', explanation: 'Direct microtask scheduling, can queue more microtasks' },
-      { title: 'Microtask Starvation', code: 'function recursive() { Promise.resolve().then(recursive) }', explanation: 'Infinite microtasks block all macrotasks forever!' },
+      { title: 'Microtask in Macrotask', code: `setTimeout(() => {
+  console.log("Macro 1");
+
+  Promise.resolve().then(() => {
+    console.log("Micro inside");
+  });
+
+  console.log("Macro 1 end");
+}, 0);
+
+setTimeout(() => {
+  console.log("Macro 2");
+}, 0);
+
+// Output: Macro 1, Macro 1 end,
+//         Micro inside, Macro 2`, explanation: 'Microtasks created during macrotask run before next macrotask' },
+      { title: 'queueMicrotask', code: `queueMicrotask(() => {
+  console.log("Microtask 1");
+
+  queueMicrotask(() => {
+    console.log("Microtask 2");
+  });
+});
+
+console.log("Sync");
+
+// Output: Sync, Microtask 1, Microtask 2
+// All microtasks drain before
+// any macrotask runs`, explanation: 'Direct microtask scheduling, can queue more microtasks' },
+      { title: 'Microtask Starvation', code: `// DANGER: This blocks forever!
+function recursive() {
+  Promise.resolve().then(recursive);
+}
+
+recursive();
+setTimeout(() => {
+  console.log("Never runs!");
+}, 0);
+
+// Microtasks keep adding more
+// macrotasks are STARVED`, explanation: 'Infinite microtasks block all macrotasks forever!' },
     ],
     commonMistakes: [
       'Thinking setTimeout(fn, 0) runs immediately',
@@ -192,16 +523,130 @@ export const concepts: Concept[] = [
     ],
     examples: [
       // Beginner
-      { title: 'Basic Prototype Chain', code: 'dog.__proto__ = Animal.prototype', explanation: 'JS walks up __proto__ links to find properties' },
-      { title: 'Simple Object Literal', code: 'const obj = {}; obj.__proto__ === Object.prototype', explanation: 'Object literals inherit from Object.prototype' },
+      { title: 'Basic Prototype Chain', code: `const animal = {
+  eats: true,
+  walk() {
+    console.log("Walking");
+  }
+};
+
+const dog = {
+  barks: true
+};
+
+dog.__proto__ = animal;
+
+dog.barks;  // true (own property)
+dog.eats;   // true (from prototype)
+dog.walk(); // "Walking" (from prototype)`, explanation: 'JS walks up __proto__ links to find properties' },
+      { title: 'Simple Object Literal', code: `const obj = { x: 1 };
+
+// All objects inherit from Object.prototype
+obj.__proto__ === Object.prototype  // true
+
+// That's why we can use:
+obj.toString();      // "[object Object]"
+obj.hasOwnProperty("x");  // true
+
+// These methods come from Object.prototype`, explanation: 'Object literals inherit from Object.prototype' },
       // Intermediate
-      { title: 'Object.create()', code: 'const child = Object.create(parent);', explanation: 'Create object with specific prototype' },
-      { title: 'Property Shadowing', code: 'child.toString overrides Object.prototype.toString', explanation: 'Child property hides parent property' },
-      { title: 'Constructor Function', code: 'new Person("Alice")', explanation: 'Instances inherit from Constructor.prototype' },
+      { title: 'Object.create()', code: `const parent = {
+  greet() {
+    console.log("Hello from " + this.name);
+  }
+};
+
+const child = Object.create(parent);
+child.name = "Child";
+
+child.greet();  // "Hello from Child"
+
+// Object.create() sets the prototype
+Object.getPrototypeOf(child) === parent  // true`, explanation: 'Create object with specific prototype' },
+      { title: 'Property Shadowing', code: `const parent = {
+  name: "Parent",
+  greet() {
+    return "Hi from " + this.name;
+  }
+};
+
+const child = Object.create(parent);
+child.name = "Child";  // shadows parent.name
+
+child.greet();  // "Hi from Child"
+
+// child.name shadows parent.name
+// but greet() is still from parent`, explanation: 'Child property hides parent property' },
+      { title: 'Constructor Function', code: `function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.greet = function() {
+  console.log("Hi, I'm " + this.name);
+};
+
+const alice = new Person("Alice");
+const bob = new Person("Bob");
+
+alice.greet();  // "Hi, I'm Alice"
+bob.greet();    // "Hi, I'm Bob"
+
+// Both share the same greet method!
+alice.greet === bob.greet  // true`, explanation: 'Instances inherit from Constructor.prototype' },
       // Advanced
-      { title: 'hasOwnProperty Check', code: 'obj.hasOwnProperty("x") vs "x" in obj', explanation: 'hasOwnProperty checks only object, "in" checks chain' },
-      { title: 'Object.create(null)', code: 'const dict = Object.create(null);', explanation: 'No prototype = no inherited methods, safe dictionaries' },
-      { title: 'Class Syntax (ES6)', code: 'class Animal { speak() {} }', explanation: 'Classes are syntactic sugar over prototypes' },
+      { title: 'hasOwnProperty Check', code: `const parent = { inherited: true };
+const child = Object.create(parent);
+child.own = true;
+
+// hasOwnProperty: only own properties
+child.hasOwnProperty("own");       // true
+child.hasOwnProperty("inherited"); // false
+
+// 'in' operator: checks entire chain
+"own" in child;        // true
+"inherited" in child;  // true
+
+// Useful for safe iteration
+for (let key in child) {
+  if (child.hasOwnProperty(key)) {
+    console.log(key);  // only "own"
+  }
+}`, explanation: 'hasOwnProperty checks only object, "in" checks chain' },
+      { title: 'Object.create(null)', code: `// Normal object has prototype
+const normal = {};
+normal.toString;  // [Function]
+
+// Null prototype = truly empty
+const dict = Object.create(null);
+dict.toString;    // undefined
+
+// Safe dictionary (no collisions)
+dict["hasOwnProperty"] = "safe!";
+dict.hasOwnProperty;  // "safe!"
+
+// With normal object this would
+// shadow the built-in method`, explanation: 'No prototype = no inherited methods, safe dictionaries' },
+      { title: 'Class Syntax (ES6)', code: `class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    console.log(this.name + " makes a sound");
+  }
+}
+
+class Dog extends Animal {
+  speak() {
+    console.log(this.name + " barks");
+  }
+}
+
+const dog = new Dog("Rex");
+dog.speak();  // "Rex barks"
+
+// Classes are syntactic sugar!
+// Under the hood: prototypes`, explanation: 'Classes are syntactic sugar over prototypes' },
     ],
     commonMistakes: [
       'Confusing __proto__ with .prototype',
