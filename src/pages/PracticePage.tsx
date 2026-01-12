@@ -85,7 +85,7 @@ export function PracticePage() {
 
       <main className={styles.main}>
         <section className={styles.editorPanel}>
-          <CodeEditor />
+          <CodeEditor readOnly />
         </section>
 
         <section className={styles.centerPanel}>

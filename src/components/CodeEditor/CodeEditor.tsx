@@ -6,9 +6,10 @@ import styles from './CodeEditor.module.css'
 
 interface CodeEditorProps {
   className?: string
+  readOnly?: boolean
 }
 
-export function CodeEditor({ className }: CodeEditorProps) {
+export function CodeEditor({ className, readOnly = false }: CodeEditorProps) {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
   const monacoRef = useRef<Monaco | null>(null)
   const decorationsRef = useRef<string[]>([])
@@ -127,7 +128,7 @@ export function CodeEditor({ className }: CodeEditorProps) {
     editor.revealLineInCenter(line)
   }, [currentStep, status])
 
-  const isReadOnly = status !== 'idle'
+  const isReadOnly = readOnly || status !== 'idle'
 
   return (
     <div className={`${styles.container} ${className ?? ''}`}>
