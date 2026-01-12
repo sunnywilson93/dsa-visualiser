@@ -7042,7 +7042,7 @@ console.log("Outside:", shadow);
     name: 'Implement call()',
     category: 'js-core',
     difficulty: 'medium',
-    description: 'BFE #61 - Implement Function.prototype.call',
+    description: 'Implement Function.prototype.call',
     code: `// Implement Function.prototype.call
 // call() invokes a function with a given 'this' and arguments
 
@@ -7129,7 +7129,7 @@ console.log("Max of", nums, "is", max);
     name: 'Implement bind()',
     category: 'js-core',
     difficulty: 'hard',
-    description: 'BFE #58 - Implement Function.prototype.bind',
+    description: 'Implement Function.prototype.bind',
     code: `// Implement Function.prototype.bind
 // bind() returns a new function with bound 'this'
 
@@ -7176,7 +7176,7 @@ handler();
     name: 'Implement new Operator',
     category: 'js-core',
     difficulty: 'hard',
-    description: 'BFE #60 - Implement your own new operator',
+    description: 'Implement your own new operator',
     code: `// Implement new Operator
 // new: 1) Create object, 2) Set prototype, 3) Call constructor, 4) Return
 
@@ -7221,7 +7221,7 @@ console.log("p1 instanceof Person:", p1 instanceof Person);
     name: 'Implement Object.create',
     category: 'js-core',
     difficulty: 'medium',
-    description: 'BFE #94 - Implement Object.create',
+    description: 'Implement Object.create',
     code: `// Implement Object.create
 // Creates new object with specified prototype
 
@@ -8308,7 +8308,7 @@ console.log("fib(10) =", memoFib(10));
     name: 'Implement _.once()',
     category: 'utility-functions',
     difficulty: 'easy',
-    description: 'Function that runs only once - BFE #46',
+    description: 'Function that runs only once',
     code: `// Implement _.once()
 // Returns a function that ignores subsequent calls
 
@@ -8350,7 +8350,7 @@ console.log("  Result:", initOnce());
     name: 'Implement memoizeOne()',
     category: 'utility-functions',
     difficulty: 'medium',
-    description: 'Cache only the last result - BFE #122',
+    description: 'Cache only the last result',
     code: `// memoizeOne - Only caches the latest result
 // Useful for expensive computations with same args
 
@@ -8392,7 +8392,7 @@ console.log("Call (1, 2):", memoized(1, 2)); // NOT cached!
     name: 'Implement promisify()',
     category: 'utility-functions',
     difficulty: 'medium',
-    description: 'Convert callback to Promise - BFE #159',
+    description: 'Convert callback to Promise',
     code: `// promisify - Convert callback-based fn to Promise
 // Node.js convention: callback(err, result)
 
@@ -8568,7 +8568,7 @@ console.log("=", calc(3));
     name: 'Curry with Placeholder',
     category: 'functional-js',
     difficulty: 'hard',
-    description: 'Curry with _ placeholder - BFE #2',
+    description: 'Curry with placeholder support',
     code: `// Curry with placeholder support
 // _ is placeholder to skip arguments
 
@@ -8624,7 +8624,7 @@ console.log("add(_,_,3)(1)(2):", curried(_, _, 3)(1)(2));
     name: 'Implement _.partial()',
     category: 'functional-js',
     difficulty: 'medium',
-    description: 'Partial application - BFE #139',
+    description: 'Partial application of functions',
     code: `// partial - Pre-fill some arguments
 // Unlike curry, returns function expecting rest
 
@@ -8674,7 +8674,7 @@ console.log(greet2nd('Bye', '!'));
     name: 'Implement Array.flat()',
     category: 'functional-js',
     difficulty: 'medium',
-    description: 'Flatten nested arrays - BFE #3',
+    description: 'Flatten nested arrays recursively',
     code: `// Implement Array.prototype.flat()
 
 function flat(arr, depth = 1) {
@@ -8721,7 +8721,7 @@ console.log(JSON.stringify(flatReduce([1, [2, [3]]], 2)));
     name: 'Flatten Thunk',
     category: 'functional-js',
     difficulty: 'hard',
-    description: 'Flatten nested lazy functions - BFE #54',
+    description: 'Flatten nested lazy functions',
     code: `// Flatten Thunk
 // Thunk = lazy function that delays computation
 
@@ -8868,7 +8868,7 @@ console.log("\\nOne handler managed all events!");
     name: 'DOM Wrapper with Chaining',
     category: 'dom-events',
     difficulty: 'medium',
-    description: 'jQuery-style method chaining - BFE #15',
+    description: 'jQuery-style method chaining',
     code: `// DOM Wrapper with method chaining
 // Like jQuery's $() - returns object with chainable methods
 
@@ -8927,7 +8927,7 @@ console.log("Classes:", box.getClasses());
     name: 'Find Node in DOM Trees',
     category: 'dom-events',
     difficulty: 'medium',
-    description: 'Find corresponding node - BFE #19',
+    description: 'Find corresponding node in cloned tree',
     code: `// Given same node in Tree A, find it in identical Tree B
 // Common in virtual DOM diffing
 
@@ -8995,7 +8995,7 @@ console.log("\\nFound in Tree B:", found.val);
     name: 'Get DOM Tree Height',
     category: 'dom-events',
     difficulty: 'easy',
-    description: 'Find max depth of DOM tree - BFE #58',
+    description: 'Find max depth of DOM tree',
     code: `// Get height/depth of a DOM tree
 // Height = longest path from root to leaf
 
@@ -9062,7 +9062,7 @@ console.log("Height (BFS):", getHeightBFS(dom));
     name: 'Get All DOM Tags',
     category: 'dom-events',
     difficulty: 'easy',
-    description: 'Collect unique tags in tree - BFE #68',
+    description: 'Collect unique tags in DOM tree',
     code: `// Get all unique tag names in a DOM tree
 
 function getAllTags(root) {
@@ -9249,7 +9249,7 @@ console.log(obj);
     name: 'Implement Object.assign()',
     category: 'object-utils',
     difficulty: 'easy',
-    description: 'Shallow copy properties - BFE #26',
+    description: 'Shallow copy object properties',
     code: `// Object.assign - Shallow copy properties
 
 function objectAssign(target, ...sources) {
@@ -9347,7 +9347,7 @@ console.log("Object.is(obj, obj):", objectIs(obj, obj));
     name: 'Implement Object.create()',
     category: 'object-utils',
     difficulty: 'medium',
-    description: 'Create with prototype - BFE #94',
+    description: 'Create object with prototype',
     code: `// Object.create - Create object with specified prototype
 
 function objectCreate(proto, propertiesObject) {
@@ -9565,7 +9565,7 @@ readAsync('error').catch(e => console.log("Error:", e.message));
     name: 'Implement Promise.allSettled',
     category: 'promise-polyfills',
     difficulty: 'medium',
-    description: 'BFE #33 - Wait for all promises regardless of outcome',
+    description: 'Wait for all promises regardless of outcome',
     code: `// Promise.allSettled
 // Returns array of results for ALL promises (fulfilled or rejected)
 
@@ -9624,7 +9624,7 @@ promiseAllSettled([
     name: 'Implement Promise.any',
     category: 'promise-polyfills',
     difficulty: 'medium',
-    description: 'BFE #34 - First fulfilled promise wins',
+    description: 'First fulfilled promise wins',
     code: `// Promise.any
 // Resolves with first fulfilled promise, rejects only if ALL reject
 
@@ -9681,7 +9681,7 @@ promiseAny([
     name: 'Implement Promise.finally',
     category: 'promise-polyfills',
     difficulty: 'easy',
-    description: 'BFE #123 - Always runs after settled',
+    description: 'Always runs after promise settled',
     code: `// Promise.prototype.finally
 // Runs callback regardless of outcome, passes through result
 
@@ -9721,7 +9721,7 @@ fetchData(true)
     name: 'Auto-retry Promise',
     category: 'promise-polyfills',
     difficulty: 'medium',
-    description: 'BFE #64 - Retry failed promises automatically',
+    description: 'Retry failed promises automatically',
     code: `// Auto-retry Promise on rejection
 // Retry a promise-returning function up to n times
 
@@ -9813,7 +9813,7 @@ withTimeout(slowAPI(200), 100)
     name: 'Throttle Promises',
     category: 'promise-polyfills',
     difficulty: 'hard',
-    description: 'BFE #92 - Limit concurrent promise execution',
+    description: 'Limit concurrent promise execution',
     code: `// Throttle Promises
 // Run max N promises concurrently
 
@@ -9872,7 +9872,7 @@ throttlePromises(tasks, 2).then(r => {
     name: 'Sequence Async Tasks',
     category: 'promise-polyfills',
     difficulty: 'medium',
-    description: 'BFE #29 - Run promises sequentially',
+    description: 'Run promises sequentially',
     code: `// Sequence - Run promises one after another
 // Each task waits for previous to complete
 
@@ -9912,7 +9912,7 @@ sequence(tasks).then(results => {
     name: 'Create Your Own Promise',
     category: 'promise-polyfills',
     difficulty: 'hard',
-    description: 'BFE #67 - Implement Promise from scratch',
+    description: 'Implement Promise from scratch',
     code: `// Create Your Own Promise (Simplified)
 // Implements basic then/catch chaining
 
