@@ -240,44 +240,48 @@ export const concepts: Concept[] = [
   console.log(n);
   countdown(n - 1);
 }`, explanation: 'Simple recursion with side effects' },
-      // Intermediate
+      // Intermediate - Branching Recursion
       { title: 'Fibonacci', code: `function fib(n) {
   if (n <= 1) return n;
   return fib(n - 1) + fib(n - 2);
-}`, explanation: 'Tree recursion: two recursive calls per invocation' },
-      { title: 'Sum Array', code: `function sum(arr, i = 0) {
-  if (i >= arr.length) return 0;
-  return arr[i] + sum(arr, i + 1);
-}`, explanation: 'Array recursion with index parameter' },
-      { title: 'Reverse String', code: `function reverse(s) {
-  if (!s) return "";
-  return reverse(s.slice(1)) + s[0];
-}`, explanation: 'String recursion: process first char, recurse on rest' },
-      // Advanced
-      { title: 'Flatten Array', code: `function flatten(arr) {
-  let result = [];
-  for (let item of arr) {
-    if (Array.isArray(item)) {
-      result.push(...flatten(item));
-    } else {
-      result.push(item);
-    }
+}`, explanation: 'Tree recursion: TWO recursive calls combine results' },
+      { title: 'Climbing Stairs', code: `function climbStairs(n) {
+  if (n <= 1) return 1;
+  return climbStairs(n - 1)
+       + climbStairs(n - 2);
+}`, explanation: 'Ways to climb: take 1 step OR 2 steps (branching)' },
+      { title: 'Max Tree Depth', code: `function maxDepth(node) {
+  if (!node) return 0;
+  let left = maxDepth(node.left);
+  let right = maxDepth(node.right);
+  return Math.max(left, right) + 1;
+}`, explanation: 'Compare TWO recursive results, take the max' },
+      // Advanced - Complex Branching
+      { title: 'Subsets', code: `function subsets(nums, i = 0, curr = []) {
+  if (i === nums.length) {
+    return [curr.slice()];
   }
-  return result;
-}`, explanation: 'Nested structure recursion' },
+  // Branch 1: exclude nums[i]
+  let without = subsets(nums, i + 1, curr);
+  // Branch 2: include nums[i]
+  curr.push(nums[i]);
+  let with_ = subsets(nums, i + 1, curr);
+  curr.pop();
+  return [...without, ...with_];
+}`, explanation: 'Include OR exclude each element - exponential branching' },
       { title: 'Memoization', code: `function fibMemo(n, memo = {}) {
   if (n in memo) return memo[n];
   if (n <= 1) return n;
   memo[n] = fibMemo(n - 1, memo)
           + fibMemo(n - 2, memo);
   return memo[n];
-}`, explanation: 'Cache results to avoid recalculation' },
+}`, explanation: 'Cache results to avoid recalculating branches' },
       { title: 'Tree DFS', code: `function dfs(node) {
   if (!node) return;
   console.log(node.val);
-  dfs(node.left);
-  dfs(node.right);
-}`, explanation: 'Tree traversal uses natural recursion' },
+  dfs(node.left);   // Branch 1
+  dfs(node.right);  // Branch 2
+}`, explanation: 'Visit node, then recurse on BOTH children' },
     ],
     commonMistakes: [
       'Forgetting the base case (causes infinite recursion / stack overflow)',
