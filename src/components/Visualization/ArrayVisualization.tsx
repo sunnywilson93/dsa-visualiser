@@ -16,6 +16,12 @@ interface ElementState {
   state: 'default' | 'comparing' | 'swapping' | 'sorted' | 'accessed'
 }
 
+interface Pointer {
+  name: string
+  index: number
+  type: 'primary' | 'secondary'
+}
+
 /**
  * Parse the step description to detect which indices are being operated on
  */
@@ -147,11 +153,95 @@ function resolveIndex(expr: string, step: ExecutionStep): number | null {
   return null
 }
 
+/**
+ * Detect pointer variables (i, j, left, right, etc.) that reference array indices
+ */
+function detectPointers(step: ExecutionStep, arrayLength: number): Pointer[] {
+  const pointers: Pointer[] = []
+  const seen = new Set<string>()
+
+  // Common pointer variable names
+  const pointerNames = ['i', 'j', 'k', 'l', 'left', 'right', 'start', 'end', 'low', 'high', 'mid', 'slow', 'fast', 'p1', 'p2']
+  const primaryPointers = new Set(['i', 'left', 'start', 'low', 'slow', 'p1'])
+
+  // Check all scopes for pointer variables
+  for (const scope of step.scopes) {
+    for (const [name, value] of Object.entries(scope.variables)) {
+      if (pointerNames.includes(name) && !seen.has(name)) {
+        if (value.type === 'primitive' && value.dataType === 'number') {
+          const idx = value.value as number
+          // Only include if it's a valid array index
+          if (idx >= 0 && idx < arrayLength) {
+            seen.add(name)
+            pointers.push({
+              name,
+              index: idx,
+              type: primaryPointers.has(name) ? 'primary' : 'secondary',
+            })
+          }
+        }
+      }
+    }
+  }
+
+  // Check call stack frame params/locals
+  for (const frame of step.callStack) {
+    for (const [name, value] of Object.entries(frame.params)) {
+      if (pointerNames.includes(name) && !seen.has(name)) {
+        if (value.type === 'primitive' && value.dataType === 'number') {
+          const idx = value.value as number
+          if (idx >= 0 && idx < arrayLength) {
+            seen.add(name)
+            pointers.push({
+              name,
+              index: idx,
+              type: primaryPointers.has(name) ? 'primary' : 'secondary',
+            })
+          }
+        }
+      }
+    }
+    for (const [name, value] of Object.entries(frame.locals)) {
+      if (pointerNames.includes(name) && !seen.has(name)) {
+        if (value.type === 'primitive' && value.dataType === 'number') {
+          const idx = value.value as number
+          if (idx >= 0 && idx < arrayLength) {
+            seen.add(name)
+            pointers.push({
+              name,
+              index: idx,
+              type: primaryPointers.has(name) ? 'primary' : 'secondary',
+            })
+          }
+        }
+      }
+    }
+  }
+
+  return pointers
+}
+
 export function ArrayVisualization({ array, step, varName }: ArrayVisualizationProps) {
   const highlights = useMemo(
     () => parseStepForHighlights(step, varName),
     [step, varName]
   )
+
+  const pointers = useMemo(
+    () => detectPointers(step, array.elements.length),
+    [step, array.elements.length]
+  )
+
+  // Group pointers by index for rendering
+  const pointersByIndex = useMemo(() => {
+    const map = new Map<number, Pointer[]>()
+    for (const ptr of pointers) {
+      const existing = map.get(ptr.index) || []
+      existing.push(ptr)
+      map.set(ptr.index, existing)
+    }
+    return map
+  }, [pointers])
 
   const elements: ElementState[] = array.elements.map((value, index) => {
     let state: ElementState['state'] = 'default'
@@ -195,6 +285,8 @@ export function ArrayVisualization({ array, step, varName }: ArrayVisualizationP
             ? (Math.abs(numericValue) / maxValue) * 100
             : 50
 
+          const elementPointers = pointersByIndex.get(index) || []
+
           return (
             <motion.div
               key={index}
@@ -211,6 +303,23 @@ export function ArrayVisualization({ array, step, varName }: ArrayVisualizationP
                 layout: { duration: 0.3 },
               }}
             >
+              {/* Pointer labels above element */}
+              {elementPointers.length > 0 && (
+                <div className={styles.pointers}>
+                  {elementPointers.map((ptr) => (
+                    <motion.span
+                      key={ptr.name}
+                      className={`${styles.pointer} ${styles[ptr.type]}`}
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      {ptr.name}
+                    </motion.span>
+                  ))}
+                </div>
+              )}
+
               {/* Bar visualization for numeric values */}
               {isNumeric && (
                 <motion.div

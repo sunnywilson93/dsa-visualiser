@@ -194,35 +194,3 @@
   background: var(--accent-blue);
   color: white;
 }
-
-/* Keyboard hints */
-.hints {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-lg);
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--border-secondary);
-}
-
-.hint {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
-.hint kbd {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 20px;
-  height: 18px;
-  padding: 0 4px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-primary);
-  border-radius: 3px;
-  color: var(--text-secondary);
-}

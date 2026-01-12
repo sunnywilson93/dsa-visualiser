@@ -1,8 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  padding: var(--space-md);
+  gap: var(--space-xs);
+  padding: var(--space-sm);
   background: var(--bg-tertiary);
   border-radius: var(--radius-md);
 }
@@ -10,9 +10,9 @@
 .header {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .varName {
@@ -27,11 +27,12 @@
 .arrayContainer {
   display: flex;
   align-items: flex-end;
-  gap: 4px;
-  min-height: 120px;
-  padding: var(--space-md) var(--space-sm);
+  gap: 3px;
+  min-height: 80px;
+  padding: var(--space-sm);
+  padding-top: 24px; /* Space for pointers */
   background: var(--bg-primary);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   overflow-x: auto;
 }
 
@@ -39,17 +40,51 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 40px;
+  min-width: 32px;
   flex: 1;
-  max-width: 60px;
+  max-width: 50px;
   position: relative;
+}
+
+/* Pointer labels */
+.pointers {
+  position: absolute;
+  top: -18px;
+  display: flex;
+  gap: 1px;
+  z-index: 10;
+}
+
+.pointer {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  padding: 1px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+  animation: pointerPulse 1.5s ease-in-out infinite;
+}
+
+.pointer.primary {
+  background: var(--accent-blue);
+  color: white;
+}
+
+.pointer.secondary {
+  background: var(--accent-purple);
+  color: white;
+}
+
+@keyframes pointerPulse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1px); }
 }
 
 .bar {
   width: 100%;
-  min-height: 8px;
+  min-height: 4px;
   background: var(--accent-blue);
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border-radius: 2px 2px 0 0;
   transition: background-color var(--transition-fast);
 }
 
@@ -71,15 +106,15 @@
 }
 
 .value {
-  padding: var(--space-xs) var(--space-sm);
+  padding: 2px 4px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--text-primary);
   background: var(--bg-secondary);
   border: 1px solid var(--border-primary);
-  border-radius: var(--radius-sm);
-  margin-top: 4px;
+  border-radius: 2px;
+  margin-top: 2px;
   transition: all var(--transition-fast);
 }
 
@@ -103,31 +138,31 @@
 
 .index {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 8px;
   color: var(--text-muted);
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 /* Legend */
 .legend {
   display: flex;
   justify-content: center;
-  gap: var(--space-lg);
-  padding-top: var(--space-sm);
+  gap: var(--space-md);
+  padding-top: var(--space-xs);
   border-top: 1px solid var(--border-secondary);
 }
 
 .legendItem {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
-  font-size: 11px;
+  gap: 4px;
+  font-size: 9px;
   color: var(--text-muted);
 }
 
 .legendDot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 2px;
   background: var(--bg-elevated);
 }

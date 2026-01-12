@@ -261,19 +261,6 @@ export function Controls() {
           </div>
         </div>
       )}
-
-      {/* Keyboard hints */}
-      <div className={styles.hints}>
-        <span className={styles.hint}>
-          <kbd>Space</kbd> {isIdle ? 'Run' : 'Play/Pause'}
-        </span>
-        <span className={styles.hint}>
-          <kbd>←</kbd><kbd>→</kbd> Step
-        </span>
-        <span className={styles.hint}>
-          <kbd>Esc</kbd> Reset
-        </span>
-      </div>
     </div>
   )
 }

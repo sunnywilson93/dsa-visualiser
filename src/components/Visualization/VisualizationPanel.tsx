@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import { useCurrentStep, useExecutionStore } from '@/store'
-import type { ArrayValue, RuntimeValue } from '@/types'
+import type { ArrayValue, RuntimeValue, ExecutionStep } from '@/types'
 import { ArrayVisualization } from './ArrayVisualization'
+import { BinaryVisualization } from './BinaryVisualization'
 import styles from './VisualizationPanel.module.css'
 
 interface DetectedArray {
@@ -46,6 +47,33 @@ function extractArrays(step: ReturnType<typeof useCurrentStep>): DetectedArray[]
   return arrays
 }
 
+/**
+ * Check if the current step involves a bitwise operation
+ */
+function isBitwiseOperation(step: ExecutionStep | undefined): boolean {
+  if (!step) return false
+
+  const desc = step.description
+
+  // Check for bitwise operators in the description
+  const bitwisePatterns = [
+    /\d+\s*\^\s*\d+/,      // XOR: 5 ^ 3
+    /\d+\s*&\s*\d+/,       // AND: 5 & 3 (but not &&)
+    /\d+\s*\|\s*\d+/,      // OR: 5 | 3 (but not ||)
+    /\d+\s*<<\s*\d+/,      // Left shift
+    /\d+\s*>>\s*\d+/,      // Right shift
+    /~\s*\w+/,             // NOT
+    /XOR|AND|OR/i,         // Explicit mentions
+  ]
+
+  // Make sure we're not matching && or ||
+  if (desc.includes('&&') || desc.includes('||')) {
+    return false
+  }
+
+  return bitwisePatterns.some(pattern => pattern.test(desc))
+}
+
 export function VisualizationPanel() {
   const currentStep = useCurrentStep()
   const status = useExecutionStore(state => state.status)
@@ -55,15 +83,26 @@ export function VisualizationPanel() {
     [currentStep]
   )
 
-  const isEmpty = status === 'idle' || arrays.length === 0
+  const showBitwise = useMemo(
+    () => isBitwiseOperation(currentStep),
+    [currentStep]
+  )
+
+  const hasContent = arrays.length > 0 || showBitwise
+  const isEmpty = status === 'idle' || !hasContent
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <span className={styles.title}>Data Structures</span>
-        {arrays.length > 0 && (
-          <span className={styles.badge}>{arrays.length} array{arrays.length !== 1 ? 's' : ''}</span>
-        )}
+        <span className={styles.title}>Visualization</span>
+        <div className={styles.badges}>
+          {arrays.length > 0 && (
+            <span className={styles.badge}>{arrays.length} array{arrays.length !== 1 ? 's' : ''}</span>
+          )}
+          {showBitwise && (
+            <span className={`${styles.badge} ${styles.bitwise}`}>Binary</span>
+          )}
+        </div>
       </div>
 
       <div className={styles.content}>
@@ -76,12 +115,18 @@ export function VisualizationPanel() {
 
         {isEmpty && status !== 'idle' && (
           <div className={styles.empty}>
-            <p>No arrays in current scope</p>
+            <p>No visualizations for current step</p>
           </div>
         )}
 
         {!isEmpty && currentStep && (
           <div className={styles.visualizations}>
+            {/* Binary visualization for bitwise operations */}
+            {showBitwise && (
+              <BinaryVisualization step={currentStep} />
+            )}
+
+            {/* Array visualizations */}
             {arrays.map(({ name, array }) => (
               <ArrayVisualization
                 key={array.id}
