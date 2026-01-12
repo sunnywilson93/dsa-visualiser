@@ -1,0 +1,254 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Property selector */
+.propSelector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.propLabel {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.propBtn {
+  padding: 0.35rem 0.6rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.propBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.propBtn.active {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+  border-color: rgba(102, 126, 234, 0.5);
+  color: #a5b4fc;
+}
+
+.resetBtn {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #666;
+  cursor: pointer;
+}
+
+.resetBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #888;
+}
+
+/* Heap container */
+.heapContainer {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.heapHeader {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #f59e0b;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.heap {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Heap objects */
+.heapObject {
+  width: 100%;
+  max-width: 280px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.heapObject.checking {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.heapObject.found {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+
+.objectHeader {
+  padding: 0.35rem 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #000;
+  text-align: center;
+}
+
+.objectContent {
+  padding: 0.5rem;
+}
+
+.nullValue {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #666;
+  font-style: italic;
+}
+
+.propsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.4rem;
+}
+
+.prop {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem 0.4rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  transition: background 0.2s;
+}
+
+.prop.foundProp {
+  background: rgba(16, 185, 129, 0.2);
+  outline: 1px solid rgba(16, 185, 129, 0.5);
+}
+
+.propName {
+  color: #888;
+}
+
+.propValue {
+  color: #10b981;
+}
+
+.protoRef {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.55rem;
+  color: #667eea;
+  padding-top: 0.3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.foundBadge {
+  position: absolute;
+  top: -8px;
+  right: 8px;
+  padding: 0.15rem 0.4rem;
+  background: #10b981;
+  border-radius: 4px;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #000;
+}
+
+/* Arrow */
+.arrow {
+  text-align: center;
+  font-size: 0.7rem;
+  padding: 0.15rem 0;
+  transition: color 0.2s;
+}
+
+/* Description */
+.description {
+  padding: 0.6rem 0.75rem;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.description.notFound {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
+.stepBadge {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  background: rgba(102, 126, 234, 0.3);
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  margin-right: 0.5rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.btnPrimary {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Insight */
+.insight {
+  padding: 0.5rem 0.75rem;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 8px;
+  font-size: 0.7rem;
+  color: #888;
+  text-align: center;
+}
+
+.insight strong {
+  color: #f59e0b;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .heapObject {
+    max-width: 100%;
+  }
+
+  .propSelector {
+    justify-content: center;
+  }
+}

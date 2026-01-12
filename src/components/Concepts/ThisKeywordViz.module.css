@@ -1,0 +1,252 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Rule selector */
+.ruleSelector {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.ruleBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.4rem 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 80px;
+}
+
+.ruleBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ruleBtn.active {
+  border-color: var(--rule-color);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.rulePriority {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #666;
+}
+
+.ruleBtn.active .rulePriority {
+  color: var(--rule-color);
+}
+
+.ruleName {
+  font-size: 0.6rem;
+  color: #888;
+  text-align: center;
+}
+
+.ruleBtn.active .ruleName {
+  color: #ccc;
+}
+
+/* Main grid */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* Panels */
+.codePanel,
+.ecPanel {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #888;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.badge {
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: #000;
+}
+
+/* Code panel */
+.code {
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.codeLine {
+  display: flex;
+  padding: 0.1rem 0.5rem;
+}
+
+.lineNum {
+  width: 1.5rem;
+  color: #555;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  user-select: none;
+}
+
+.lineCode {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  color: #ccc;
+}
+
+/* EC panel */
+.ecPanel .panelHeader {
+  color: #a78bfa;
+}
+
+.ecContent {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 120px;
+}
+
+.thisBinding {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.thisLabel {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.thisValue {
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid;
+  border-radius: 8px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.thisExplanation {
+  font-size: 0.75rem;
+  color: #888;
+  text-align: center;
+}
+
+/* Description */
+.description {
+  padding: 0.6rem 0.75rem;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.stepBadge {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  background: rgba(102, 126, 234, 0.3);
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  margin-right: 0.5rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.btnPrimary {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.btnSecondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Priority note */
+.priorityNote {
+  padding: 0.5rem 0.75rem;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 8px;
+  font-size: 0.7rem;
+  color: #888;
+  text-align: center;
+}
+
+.priorityNote strong {
+  color: #f59e0b;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .ruleSelector {
+    justify-content: center;
+  }
+
+  .ruleBtn {
+    min-width: 70px;
+    padding: 0.35rem 0.5rem;
+  }
+}

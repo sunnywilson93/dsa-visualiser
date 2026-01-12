@@ -7,6 +7,7 @@ import { Controls } from '@/components/Controls'
 import { Variables } from '@/components/Variables'
 import { Console } from '@/components/Console'
 import { VisualizationPanel } from '@/components/Visualization'
+import { StepDescription } from '@/components/StepDescription'
 import { useExecutionStore } from '@/store'
 import { codeExamples, exampleCategories, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
 import styles from './PracticePage.module.css'
@@ -90,6 +91,9 @@ export function PracticePage() {
         <section className={styles.centerPanel}>
           <div className={styles.controlsWrapper}>
             <Controls />
+          </div>
+          <div className={styles.stepDescriptionWrapper}>
+            <StepDescription />
           </div>
           <div className={styles.visualizationWrapper}>
             <VisualizationPanel />

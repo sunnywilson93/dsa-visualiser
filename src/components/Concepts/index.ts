@@ -1,0 +1,5 @@
+export { HoistingViz } from './HoistingViz'
+export { ClosuresViz } from './ClosuresViz'
+export { ThisKeywordViz } from './ThisKeywordViz'
+export { EventLoopViz } from './EventLoopViz'
+export { PrototypesViz } from './PrototypesViz'

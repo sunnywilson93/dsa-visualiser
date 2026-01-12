@@ -1,0 +1,400 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Code panel */
+.codePanel {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.codeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #888;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.phaseBadge {
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.code {
+  margin: 0;
+  padding: 0.5rem 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.codeLine {
+  display: flex;
+  padding: 0.1rem 0.5rem;
+  transition: background 0.2s;
+}
+
+.codeLine.activeLine {
+  background: rgba(102, 126, 234, 0.2);
+}
+
+.lineNum {
+  width: 1.5rem;
+  color: #555;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  user-select: none;
+}
+
+.lineCode {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: #ccc;
+}
+
+.activeLine .lineCode {
+  color: #a5b4fc;
+}
+
+/* Memory container */
+.memoryContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 120px;
+  gap: 0.75rem;
+}
+
+/* Sections */
+.stackSection,
+.heapSection,
+.outputSection {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.stackSection .sectionHeader {
+  color: #60a5fa;
+}
+
+.heapSection .sectionHeader {
+  color: #f59e0b;
+}
+
+.outputSection .sectionHeader {
+  color: #10b981;
+}
+
+.sectionIcon {
+  font-size: 0.8rem;
+}
+
+/* Call Stack with Execution Contexts */
+.stack {
+  padding: 0.5rem;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.executionContext {
+  background: rgba(96, 165, 250, 0.1);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.executionContext.globalEc {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.ecHeader {
+  padding: 0.35rem 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #60a5fa;
+  background: rgba(96, 165, 250, 0.15);
+}
+
+.globalEc .ecHeader {
+  color: #a78bfa;
+  background: rgba(139, 92, 246, 0.15);
+}
+
+.ecContent {
+  padding: 0.4rem 0.5rem;
+}
+
+.ecSection {
+  margin-bottom: 0.3rem;
+}
+
+.ecSection:last-child {
+  margin-bottom: 0;
+}
+
+.ecLabel {
+  display: block;
+  font-size: 0.55rem;
+  color: #666;
+  margin-bottom: 0.15rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ecVar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.15rem 0.3rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  margin-bottom: 0.15rem;
+}
+
+.ecVarName {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  color: #888;
+}
+
+.ecVarValue {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  color: #10b981;
+  font-weight: 500;
+}
+
+.ecRef {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  color: #667eea;
+}
+
+.ecEmpty {
+  font-size: 0.55rem;
+  color: #555;
+  font-style: italic;
+}
+
+.emptyHeap,
+.emptyOutput {
+  color: #555;
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Heap Memory */
+.heap {
+  padding: 0.5rem;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.heapBlock {
+  padding: 0.5rem;
+  border-radius: 6px;
+  position: relative;
+}
+
+.heapBlock.scopeBlock {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.heapBlock.functionBlock {
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.4);
+}
+
+.heapLabel {
+  font-size: 0.6rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.scopeBlock .heapLabel {
+  color: #f59e0b;
+}
+
+.functionBlock .heapLabel {
+  color: #667eea;
+}
+
+.heapVars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.heapVar {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+}
+
+.heapVarName {
+  color: #888;
+}
+
+.heapVarValue {
+  color: #10b981;
+  font-weight: 500;
+}
+
+.closureBadge {
+  position: absolute;
+  top: -6px;
+  right: 6px;
+  padding: 0.1rem 0.35rem;
+  background: #f59e0b;
+  border-radius: 3px;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #000;
+}
+
+/* Output */
+.output {
+  padding: 0.5rem;
+  min-height: 80px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: #10b981;
+}
+
+.outputLine {
+  padding: 0.15rem 0;
+}
+
+/* Description */
+.description {
+  padding: 0.6rem 0.75rem;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.stepBadge {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  background: rgba(102, 126, 234, 0.3);
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  margin-right: 0.5rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.btnPrimary {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.btnSecondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Insight */
+.insight {
+  padding: 0.6rem 0.75rem;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: #999;
+  line-height: 1.5;
+}
+
+.insight strong {
+  color: #f59e0b;
+}
+
+.insight em {
+  color: #60a5fa;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .memoryContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .outputSection {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .memoryContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .outputSection {
+    grid-column: span 1;
+  }
+}

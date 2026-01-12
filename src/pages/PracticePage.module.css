@@ -136,6 +136,10 @@
   flex-shrink: 0;
 }
 
+.stepDescriptionWrapper {
+  flex-shrink: 0;
+}
+
 .visualizationWrapper {
   flex: 2;
   min-height: 180px;
