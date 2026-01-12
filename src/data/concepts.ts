@@ -231,16 +231,53 @@ export const concepts: Concept[] = [
     ],
     examples: [
       // Beginner
-      { title: 'Factorial', code: 'function factorial(n) { if (n <= 1) return 1; return n * factorial(n-1); }', explanation: 'Classic recursion: multiply n by factorial of (n-1)' },
-      { title: 'Countdown', code: 'function countdown(n) { if (n <= 0) return; console.log(n); countdown(n-1); }', explanation: 'Simple recursion with side effects' },
+      { title: 'Factorial', code: `function factorial(n) {
+  if (n <= 1) return 1;
+  return n * factorial(n - 1);
+}`, explanation: 'Classic recursion: multiply n by factorial of (n-1)' },
+      { title: 'Countdown', code: `function countdown(n) {
+  if (n <= 0) return;
+  console.log(n);
+  countdown(n - 1);
+}`, explanation: 'Simple recursion with side effects' },
       // Intermediate
-      { title: 'Fibonacci', code: 'function fib(n) { if (n <= 1) return n; return fib(n-1) + fib(n-2); }', explanation: 'Tree recursion: two recursive calls per invocation' },
-      { title: 'Sum Array', code: 'function sum(arr, i=0) { if (i >= arr.length) return 0; return arr[i] + sum(arr, i+1); }', explanation: 'Array recursion with index parameter' },
-      { title: 'Reverse String', code: 'function reverse(s) { if (!s) return ""; return reverse(s.slice(1)) + s[0]; }', explanation: 'String recursion: process first char, recurse on rest' },
+      { title: 'Fibonacci', code: `function fib(n) {
+  if (n <= 1) return n;
+  return fib(n - 1) + fib(n - 2);
+}`, explanation: 'Tree recursion: two recursive calls per invocation' },
+      { title: 'Sum Array', code: `function sum(arr, i = 0) {
+  if (i >= arr.length) return 0;
+  return arr[i] + sum(arr, i + 1);
+}`, explanation: 'Array recursion with index parameter' },
+      { title: 'Reverse String', code: `function reverse(s) {
+  if (!s) return "";
+  return reverse(s.slice(1)) + s[0];
+}`, explanation: 'String recursion: process first char, recurse on rest' },
       // Advanced
-      { title: 'Flatten Array', code: 'function flatten(arr) { return arr.reduce((acc, item) => Array.isArray(item) ? [...acc, ...flatten(item)] : [...acc, item], []); }', explanation: 'Nested structure recursion' },
-      { title: 'Memoization', code: 'function fibMemo(n, memo={}) { if (n in memo) return memo[n]; if (n <= 1) return n; return memo[n] = fibMemo(n-1, memo) + fibMemo(n-2, memo); }', explanation: 'Cache results to avoid recalculation' },
-      { title: 'Tree DFS', code: 'function dfs(node) { if (!node) return; console.log(node.val); dfs(node.left); dfs(node.right); }', explanation: 'Tree traversal uses natural recursion' },
+      { title: 'Flatten Array', code: `function flatten(arr) {
+  let result = [];
+  for (let item of arr) {
+    if (Array.isArray(item)) {
+      result.push(...flatten(item));
+    } else {
+      result.push(item);
+    }
+  }
+  return result;
+}`, explanation: 'Nested structure recursion' },
+      { title: 'Memoization', code: `function fibMemo(n, memo = {}) {
+  if (n in memo) return memo[n];
+  if (n <= 1) return n;
+  memo[n] = fibMemo(n - 1, memo)
+          + fibMemo(n - 2, memo);
+  return memo[n];
+}`, explanation: 'Cache results to avoid recalculation' },
+      { title: 'Tree DFS', code: `function dfs(node) {
+  if (!node) return;
+  console.log(node.val);
+  dfs(node.left);
+  dfs(node.right);
+}`, explanation: 'Tree traversal uses natural recursion' },
     ],
     commonMistakes: [
       'Forgetting the base case (causes infinite recursion / stack overflow)',
