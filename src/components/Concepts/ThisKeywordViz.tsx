@@ -6,131 +6,240 @@ interface Step {
   description: string
   thisValue: string
   thisExplanation: string
+  highlightLine?: number
 }
 
-interface Rule {
+interface Example {
   id: string
-  name: string
+  title: string
+  bindingType: string
   color: string
   code: string[]
   steps: Step[]
-  priority: number
 }
 
-const rules: Rule[] = [
-  {
-    id: 'implicit',
-    name: 'Implicit Binding',
-    color: '#10b981',
-    priority: 3,
-    code: [
-      'const person = {',
-      '  name: "Alice",',
-      '  greet() {',
-      '    console.log(this.name);',
-      '  }',
-      '};',
-      '',
-      'person.greet();',
-    ],
-    steps: [
-      { description: 'person.greet() is called with object left of dot', thisValue: 'person', thisExplanation: 'Object before the dot becomes `this`' },
-      { description: 'Inside greet(), this.name resolves to person.name', thisValue: 'person', thisExplanation: 'this.name → "Alice"' },
-    ],
-  },
-  {
-    id: 'explicit',
-    name: 'Explicit Binding',
-    color: '#667eea',
-    priority: 2,
-    code: [
-      'function greet() {',
-      '  console.log(this.name);',
-      '}',
-      '',
-      'const bob = { name: "Bob" };',
-      '',
-      'greet.call(bob);',
-    ],
-    steps: [
-      { description: 'greet.call(bob) explicitly sets this to bob', thisValue: 'bob', thisExplanation: 'call/apply/bind lets you specify `this`' },
-      { description: 'this.name resolves to bob.name', thisValue: 'bob', thisExplanation: 'this.name → "Bob"' },
-    ],
-  },
-  {
-    id: 'new',
-    name: 'new Binding',
-    color: '#f59e0b',
-    priority: 1,
-    code: [
-      'function Person(name) {',
-      '  this.name = name;',
-      '  this.greet = function() {',
-      '    console.log(this.name);',
-      '  };',
-      '}',
-      '',
-      'const p = new Person("Carol");',
-    ],
-    steps: [
-      { description: 'new Person() creates a fresh empty object', thisValue: '{ }', thisExplanation: 'New object created automatically' },
-      { description: 'this.name = name assigns to the new object', thisValue: '{ name: "Carol" }', thisExplanation: 'Properties added to new object' },
-      { description: 'The new object is automatically returned', thisValue: '{ name, greet }', thisExplanation: 'p now references this object' },
-    ],
-  },
-  {
-    id: 'default',
-    name: 'Default Binding',
-    color: '#ef4444',
-    priority: 4,
-    code: [
-      'function showThis() {',
-      '  console.log(this);',
-      '}',
-      '',
-      'showThis();  // No object!',
-    ],
-    steps: [
-      { description: 'showThis() called without any object context', thisValue: 'window (global)', thisExplanation: 'Falls back to global object' },
-      { description: 'In strict mode, this would be undefined', thisValue: 'undefined', thisExplanation: '"use strict" → undefined' },
-    ],
-  },
-  {
-    id: 'arrow',
-    name: 'Arrow Function',
-    color: '#8b5cf6',
-    priority: 0,
-    code: [
-      'const person = {',
-      '  name: "Dave",',
-      '  greet: () => {',
-      '    console.log(this.name);',
-      '  }',
-      '};',
-      '',
-      'person.greet();',
-    ],
-    steps: [
-      { description: 'Arrow functions do NOT have their own this', thisValue: 'window (lexical)', thisExplanation: 'Inherits from enclosing scope' },
-      { description: 'this.name is undefined (not person.name!)', thisValue: 'window', thisExplanation: 'Arrow ignores the dot rule!' },
-    ],
-  },
-]
+type Level = 'beginner' | 'intermediate' | 'advanced'
+
+const levelInfo: Record<Level, { label: string; color: string }> = {
+  beginner: { label: 'Beginner', color: '#10b981' },
+  intermediate: { label: 'Intermediate', color: '#f59e0b' },
+  advanced: { label: 'Advanced', color: '#ef4444' }
+}
+
+const examples: Record<Level, Example[]> = {
+  beginner: [
+    {
+      id: 'implicit',
+      title: 'Object Method',
+      bindingType: 'Implicit Binding',
+      color: '#10b981',
+      code: [
+        'const person = {',
+        '  name: "Alice",',
+        '  greet() {',
+        '    console.log(this.name);',
+        '  }',
+        '};',
+        '',
+        'person.greet();  // "Alice"',
+      ],
+      steps: [
+        { description: 'person.greet() is called - look at what\'s LEFT of the dot', thisValue: 'person', thisExplanation: 'Rule: Object before dot = this', highlightLine: 7 },
+        { description: 'Inside greet(), this refers to person', thisValue: '{ name: "Alice", greet: fn }', thisExplanation: 'this.name → "Alice"', highlightLine: 3 },
+      ],
+    },
+    {
+      id: 'default',
+      title: 'Standalone Function',
+      bindingType: 'Default Binding',
+      color: '#ef4444',
+      code: [
+        'function showThis() {',
+        '  console.log(this);',
+        '}',
+        '',
+        'showThis();  // No object!',
+      ],
+      steps: [
+        { description: 'showThis() called without any object (no dot)', thisValue: 'window', thisExplanation: 'No object → falls back to global', highlightLine: 4 },
+        { description: 'In strict mode ("use strict"), this would be undefined', thisValue: 'undefined (strict)', thisExplanation: 'Strict mode prevents accidental global access', highlightLine: 1 },
+      ],
+    },
+  ],
+  intermediate: [
+    {
+      id: 'call-apply',
+      title: 'call() / apply()',
+      bindingType: 'Explicit Binding',
+      color: '#667eea',
+      code: [
+        'function greet(greeting) {',
+        '  console.log(greeting, this.name);',
+        '}',
+        '',
+        'const bob = { name: "Bob" };',
+        'const sue = { name: "Sue" };',
+        '',
+        'greet.call(bob, "Hello");',
+        'greet.apply(sue, ["Hi"]);',
+      ],
+      steps: [
+        { description: 'greet.call(bob, "Hello") - first arg becomes this', thisValue: 'bob', thisExplanation: 'call() sets this explicitly', highlightLine: 7 },
+        { description: 'Output: "Hello Bob" - this.name is bob.name', thisValue: '{ name: "Bob" }', thisExplanation: 'Overrides default binding', highlightLine: 1 },
+        { description: 'greet.apply(sue, ["Hi"]) - same but args in array', thisValue: 'sue', thisExplanation: 'apply() is call() with array args', highlightLine: 8 },
+      ],
+    },
+    {
+      id: 'bind',
+      title: 'bind()',
+      bindingType: 'Hard Binding',
+      color: '#8b5cf6',
+      code: [
+        'const person = {',
+        '  name: "Dave",',
+        '  greet() {',
+        '    console.log(this.name);',
+        '  }',
+        '};',
+        '',
+        'const greet = person.greet;',
+        'greet();  // undefined!',
+        '',
+        'const boundGreet = person.greet.bind(person);',
+        'boundGreet();  // "Dave"',
+      ],
+      steps: [
+        { description: 'Extracting method loses the object context', thisValue: 'window', thisExplanation: 'greet is just a function now', highlightLine: 7 },
+        { description: 'Calling extracted greet() - no object, default binding', thisValue: 'window', thisExplanation: 'this.name → undefined', highlightLine: 8 },
+        { description: 'bind() creates new function with this permanently set', thisValue: 'person', thisExplanation: 'bind() returns a bound function', highlightLine: 10 },
+        { description: 'boundGreet() always uses person as this', thisValue: '{ name: "Dave" }', thisExplanation: 'Cannot be overridden!', highlightLine: 11 },
+      ],
+    },
+    {
+      id: 'arrow',
+      title: 'Arrow Functions',
+      bindingType: 'Lexical this',
+      color: '#f59e0b',
+      code: [
+        'const person = {',
+        '  name: "Eve",',
+        '  greet: () => {',
+        '    console.log(this.name);',
+        '  },',
+        '  greetRegular() {',
+        '    console.log(this.name);',
+        '  }',
+        '};',
+        '',
+        'person.greet();     // undefined!',
+        'person.greetRegular(); // "Eve"',
+      ],
+      steps: [
+        { description: 'Arrow functions DON\'T have their own this', thisValue: 'window (lexical)', thisExplanation: 'Ignores the dot rule entirely', highlightLine: 2 },
+        { description: 'person.greet() - arrow looks UP to find this', thisValue: 'window', thisExplanation: 'Inherits from enclosing scope (global)', highlightLine: 10 },
+        { description: 'Regular method works normally - dot rule applies', thisValue: 'person', thisExplanation: 'greetRegular uses implicit binding', highlightLine: 11 },
+      ],
+    },
+  ],
+  advanced: [
+    {
+      id: 'new-binding',
+      title: 'new Keyword',
+      bindingType: 'Constructor Binding',
+      color: '#f59e0b',
+      code: [
+        'function Person(name) {',
+        '  // 1. Empty object created',
+        '  // 2. this = new object',
+        '  this.name = name;',
+        '  this.greet = function() {',
+        '    console.log(this.name);',
+        '  };',
+        '  // 3. Object returned',
+        '}',
+        '',
+        'const p = new Person("Carol");',
+      ],
+      steps: [
+        { description: 'new creates an empty object and sets it as this', thisValue: '{ }', thisExplanation: 'Fresh object created automatically', highlightLine: 10 },
+        { description: 'this.name = name adds property to new object', thisValue: '{ name: "Carol" }', thisExplanation: 'Building the new instance', highlightLine: 3 },
+        { description: 'this.greet adds method to the new object', thisValue: '{ name, greet }', thisExplanation: 'Method added to instance', highlightLine: 4 },
+        { description: 'The constructed object is returned and assigned to p', thisValue: 'p = { name, greet }', thisExplanation: 'new binding has highest priority', highlightLine: 10 },
+      ],
+    },
+    {
+      id: 'callback-lost',
+      title: 'Lost Binding',
+      bindingType: 'Common Bug',
+      color: '#ef4444',
+      code: [
+        'const user = {',
+        '  name: "Frank",',
+        '  fetchData() {',
+        '    setTimeout(function() {',
+        '      console.log(this.name);',
+        '    }, 100);',
+        '  }',
+        '};',
+        '',
+        'user.fetchData();  // undefined!',
+      ],
+      steps: [
+        { description: 'user.fetchData() is called - implicit binding', thisValue: 'user', thisExplanation: 'So far so good...', highlightLine: 9 },
+        { description: 'setTimeout receives the callback function', thisValue: 'user', thisExplanation: 'Callback is passed, not called yet', highlightLine: 3 },
+        { description: 'Later: callback invoked by setTimeout (no dot!)', thisValue: 'window', thisExplanation: 'Callback loses its context!', highlightLine: 4 },
+        { description: 'this.name is undefined - common source of bugs', thisValue: 'window', thisExplanation: 'Fix: use arrow fn or bind()', highlightLine: 4 },
+      ],
+    },
+    {
+      id: 'callback-fix',
+      title: 'Fixed with Arrow',
+      bindingType: 'Arrow Solution',
+      color: '#10b981',
+      code: [
+        'const user = {',
+        '  name: "Grace",',
+        '  fetchData() {',
+        '    setTimeout(() => {',
+        '      console.log(this.name);',
+        '    }, 100);',
+        '  }',
+        '};',
+        '',
+        'user.fetchData();  // "Grace"',
+      ],
+      steps: [
+        { description: 'user.fetchData() - implicit binding, this = user', thisValue: 'user', thisExplanation: 'Method called with dot notation', highlightLine: 9 },
+        { description: 'Arrow function created - captures this from fetchData', thisValue: 'user (captured)', thisExplanation: 'Arrow inherits enclosing this', highlightLine: 3 },
+        { description: 'Later: arrow callback runs, uses captured this', thisValue: 'user', thisExplanation: 'Arrow "remembers" the this value', highlightLine: 4 },
+        { description: 'this.name = "Grace" - problem solved!', thisValue: '{ name: "Grace" }', thisExplanation: 'Arrow fns are perfect for callbacks', highlightLine: 4 },
+      ],
+    },
+  ],
+}
 
 export function ThisKeywordViz() {
-  const [selectedId, setSelectedId] = useState('implicit')
+  const [level, setLevel] = useState<Level>('beginner')
+  const [exampleIndex, setExampleIndex] = useState(0)
   const [stepIndex, setStepIndex] = useState(0)
 
-  const rule = rules.find(r => r.id === selectedId)!
-  const currentStep = rule.steps[stepIndex]
+  const currentExamples = examples[level]
+  const currentExample = currentExamples[exampleIndex]
+  const currentStep = currentExample.steps[stepIndex]
 
-  const handleRuleChange = (id: string) => {
-    setSelectedId(id)
+  const handleLevelChange = (newLevel: Level) => {
+    setLevel(newLevel)
+    setExampleIndex(0)
+    setStepIndex(0)
+  }
+
+  const handleExampleChange = (index: number) => {
+    setExampleIndex(index)
     setStepIndex(0)
   }
 
   const handleNext = () => {
-    if (stepIndex < rule.steps.length - 1) setStepIndex(s => s + 1)
+    if (stepIndex < currentExample.steps.length - 1) setStepIndex(s => s + 1)
   }
 
   const handlePrev = () => {
@@ -139,17 +248,33 @@ export function ThisKeywordViz() {
 
   return (
     <div className={styles.container}>
-      {/* Rule selector */}
-      <div className={styles.ruleSelector}>
-        {rules.map(r => (
+      {/* Level selector */}
+      <div className={styles.levelSelector}>
+        {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
-            key={r.id}
-            className={`${styles.ruleBtn} ${selectedId === r.id ? styles.active : ''}`}
-            onClick={() => handleRuleChange(r.id)}
-            style={{ '--rule-color': r.color } as React.CSSProperties}
+            key={lvl}
+            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            onClick={() => handleLevelChange(lvl)}
+            style={{
+              borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
+              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+            }}
           >
-            <span className={styles.rulePriority}>#{r.priority}</span>
-            <span className={styles.ruleName}>{r.name}</span>
+            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }}></span>
+            {levelInfo[lvl].label}
+          </button>
+        ))}
+      </div>
+
+      {/* Example selector */}
+      <div className={styles.exampleSelector}>
+        {currentExamples.map((ex, i) => (
+          <button
+            key={ex.id}
+            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            onClick={() => handleExampleChange(i)}
+          >
+            {ex.title}
           </button>
         ))}
       </div>
@@ -158,13 +283,16 @@ export function ThisKeywordViz() {
       <div className={styles.mainGrid}>
         {/* Code panel */}
         <div className={styles.codePanel}>
-          <div className={styles.panelHeader} style={{ borderColor: rule.color }}>
+          <div className={styles.panelHeader} style={{ borderColor: currentExample.color }}>
             <span>Code</span>
-            <span className={styles.badge} style={{ background: rule.color }}>{rule.name}</span>
+            <span className={styles.badge} style={{ background: currentExample.color }}>{currentExample.bindingType}</span>
           </div>
           <pre className={styles.code}>
-            {rule.code.map((line, i) => (
-              <div key={i} className={styles.codeLine}>
+            {currentExample.code.map((line, i) => (
+              <div
+                key={i}
+                className={`${styles.codeLine} ${currentStep.highlightLine === i ? styles.activeLine : ''}`}
+              >
                 <span className={styles.lineNum}>{i + 1}</span>
                 <span className={styles.lineCode}>{line || ' '}</span>
               </div>
@@ -182,9 +310,9 @@ export function ThisKeywordViz() {
               <div className={styles.thisLabel}>this =</div>
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={currentStep.thisValue}
+                  key={`${level}-${exampleIndex}-${stepIndex}-${currentStep.thisValue}`}
                   className={styles.thisValue}
-                  style={{ borderColor: rule.color, color: rule.color }}
+                  style={{ borderColor: currentExample.color, color: currentExample.color }}
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.9, opacity: 0 }}
@@ -203,13 +331,13 @@ export function ThisKeywordViz() {
       {/* Step description */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={`${selectedId}-${stepIndex}`}
+          key={`${level}-${exampleIndex}-${stepIndex}`}
           className={styles.description}
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={styles.stepBadge}>Step {stepIndex + 1}/{rule.steps.length}</span>
+          <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentExample.steps.length}</span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>
@@ -222,11 +350,11 @@ export function ThisKeywordViz() {
         <motion.button
           className={styles.btnPrimary}
           onClick={handleNext}
-          disabled={stepIndex >= rule.steps.length - 1}
+          disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          {stepIndex >= rule.steps.length - 1 ? 'Done' : 'Next →'}
+          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
         </motion.button>
         <button className={styles.btnSecondary} onClick={() => setStepIndex(0)}>
           ↻ Reset
@@ -235,8 +363,8 @@ export function ThisKeywordViz() {
 
       {/* Priority note */}
       <div className={styles.priorityNote}>
-        <strong>Binding Priority:</strong> new (#1) → explicit (#2) → implicit (#3) → default (#4).
-        Arrow functions (#0) don't have their own `this` at all.
+        <strong>Binding Priority:</strong> new → explicit (call/apply/bind) → implicit (dot) → default (global).
+        Arrow functions inherit this lexically from enclosing scope.
       </div>
     </div>
   )

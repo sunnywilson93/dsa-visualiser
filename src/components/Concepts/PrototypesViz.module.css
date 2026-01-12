@@ -4,6 +4,74 @@
   gap: 1rem;
 }
 
+/* Level Selector */
+.levelSelector {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+}
+
+.levelBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.levelBtn:hover {
+  color: #ccc;
+}
+
+.levelBtn.activeLevel {
+  color: #fff;
+}
+
+.levelDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Example Selector */
+.exampleSelector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.exampleBtn {
+  padding: 0.4rem 0.8rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.exampleBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.exampleBtn.active {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+  border-color: rgba(102, 126, 234, 0.5);
+  color: #a5b4fc;
+}
+
 /* Property selector */
 .propSelector {
   display: flex;

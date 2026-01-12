@@ -4,7 +4,44 @@
   gap: 1rem;
 }
 
-/* Selector */
+/* Level Selector */
+.levelSelector {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+}
+
+.levelBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.levelBtn:hover {
+  color: #ccc;
+}
+
+.levelBtn.activeLevel {
+  color: #fff;
+}
+
+.levelDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Example Selector */
 .selector {
   display: flex;
   gap: 0.5rem;
