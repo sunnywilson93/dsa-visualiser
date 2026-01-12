@@ -17,7 +17,7 @@ export const exampleCategories = [
   { id: 'dom-events', name: 'DOM & Events', icon: '🎯', description: 'Event emitter, delegation, pub/sub' },
   { id: 'object-utils', name: 'Object Utilities', icon: '📦', description: 'Deep equal, merge, get/set nested props' },
   { id: 'promise-polyfills', name: 'Promise Polyfills', icon: '🤝', description: 'Promise.all, race, allSettled, promisify' },
-  { id: 'dsa', name: 'DSA', icon: '🧠', description: 'Data structures & algorithms (15 problems)' },
+  { id: 'dsa', name: 'DSA', icon: '🧠', description: 'Data structures & algorithms (30 problems)' },
 ]
 
 // DSA subcategories for filtering within DSA page
@@ -3713,6 +3713,766 @@ console.log("Array:", nums);
 console.log("");
 let maxXor = findMaximumXOR(nums);
 console.log("\\nMaximum XOR:", maxXor);
+`,
+  },
+
+  // ==================== TWO POINTERS ====================
+  {
+    id: 'two-sum-ii',
+    name: 'Two Sum II (Sorted)',
+    category: 'two-pointers',
+    difficulty: 'easy',
+    description: 'Find two numbers in a sorted array that add up to target',
+    code: `// Two Sum II - Sorted Array
+// Use two pointers: if sum < target, move left up
+// If sum > target, move right down
+
+function twoSum(nums, target) {
+  let left = 0;
+  let right = nums.length - 1;
+
+  console.log("Finding two numbers that sum to", target);
+  console.log("Array:", nums);
+  console.log("");
+
+  while (left < right) {
+    let sum = nums[left] + nums[right];
+    console.log("left:", left, "right:", right);
+    console.log(nums[left], "+", nums[right], "=", sum);
+
+    if (sum === target) {
+      console.log("Found! Indices:", left, right);
+      return [left, right];
+    } else if (sum < target) {
+      console.log("Sum too small, move left pointer right");
+      left++;
+    } else {
+      console.log("Sum too big, move right pointer left");
+      right--;
+    }
+    console.log("");
+  }
+
+  return [];
+}
+
+let nums = [2, 7, 11, 15];
+let target = 9;
+let result = twoSum(nums, target);
+console.log("Result:", result);
+`,
+  },
+  {
+    id: 'valid-palindrome',
+    name: 'Valid Palindrome',
+    category: 'two-pointers',
+    difficulty: 'easy',
+    description: 'Check if string is palindrome (ignoring non-alphanumeric)',
+    code: `// Valid Palindrome
+// Compare characters from both ends moving inward
+
+function isPalindrome(s) {
+  // Clean string: lowercase, alphanumeric only
+  let clean = "";
+  for (let i = 0; i < s.length; i++) {
+    let c = s.charAt(i).toLowerCase();
+    if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')) {
+      clean = clean + c;
+    }
+  }
+
+  console.log("Original:", s);
+  console.log("Cleaned:", clean);
+  console.log("");
+
+  let left = 0;
+  let right = clean.length - 1;
+
+  while (left < right) {
+    console.log("left:", left, "right:", right);
+    console.log("Comparing:", clean.charAt(left), "vs", clean.charAt(right));
+
+    if (clean.charAt(left) !== clean.charAt(right)) {
+      console.log("Mismatch! Not a palindrome");
+      return false;
+    }
+
+    console.log("Match!");
+    left++;
+    right--;
+    console.log("");
+  }
+
+  console.log("All characters matched - it's a palindrome!");
+  return true;
+}
+
+let s = "A man, a plan, a canal: Panama";
+console.log("Is palindrome:", isPalindrome(s));
+`,
+  },
+  {
+    id: 'reverse-string',
+    name: 'Reverse String',
+    category: 'two-pointers',
+    difficulty: 'easy',
+    description: 'Reverse array of characters in-place using two pointers',
+    code: `// Reverse String In-Place
+// Swap characters from both ends moving inward
+
+function reverseString(s) {
+  console.log("Original:", s);
+  console.log("");
+
+  let left = 0;
+  let right = s.length - 1;
+
+  while (left < right) {
+    console.log("left:", left, "right:", right);
+    console.log("Swapping", s[left], "and", s[right]);
+
+    // Swap
+    let temp = s[left];
+    s[left] = s[right];
+    s[right] = temp;
+
+    console.log("After swap:", s);
+    console.log("");
+
+    left++;
+    right--;
+  }
+
+  console.log("Reversed:", s);
+  return s;
+}
+
+let chars = ["h", "e", "l", "l", "o"];
+reverseString(chars);
+`,
+  },
+  {
+    id: 'remove-duplicates-sorted',
+    name: 'Remove Duplicates (Sorted)',
+    category: 'two-pointers',
+    difficulty: 'easy',
+    description: 'Remove duplicates from sorted array in-place, return new length',
+    code: `// Remove Duplicates from Sorted Array
+// Use slow pointer for unique elements position
+// Fast pointer scans through array
+
+function removeDuplicates(nums) {
+  if (nums.length === 0) return 0;
+
+  console.log("Original:", nums);
+  console.log("");
+
+  let slow = 0; // Position to place next unique
+
+  for (let fast = 1; fast < nums.length; fast++) {
+    console.log("slow:", slow, "fast:", fast);
+    console.log("nums[slow]:", nums[slow], "nums[fast]:", nums[fast]);
+
+    if (nums[fast] !== nums[slow]) {
+      slow++;
+      nums[slow] = nums[fast];
+      console.log("Found new unique! Moved to position", slow);
+      console.log("Array now:", nums);
+    } else {
+      console.log("Duplicate, skip");
+    }
+    console.log("");
+  }
+
+  let newLength = slow + 1;
+  console.log("New length:", newLength);
+  console.log("Unique elements:", nums.slice(0, newLength));
+  return newLength;
+}
+
+let nums = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4];
+removeDuplicates(nums);
+`,
+  },
+  {
+    id: 'move-zeroes',
+    name: 'Move Zeroes',
+    category: 'two-pointers',
+    difficulty: 'easy',
+    description: 'Move all zeroes to end while maintaining order of non-zero elements',
+    code: `// Move Zeroes to End
+// Slow pointer tracks position for non-zero
+// Fast pointer finds non-zero elements
+
+function moveZeroes(nums) {
+  console.log("Original:", nums);
+  console.log("");
+
+  let slow = 0; // Position to place next non-zero
+
+  for (let fast = 0; fast < nums.length; fast++) {
+    console.log("slow:", slow, "fast:", fast);
+    console.log("nums[fast]:", nums[fast]);
+
+    if (nums[fast] !== 0) {
+      // Swap non-zero to slow position
+      let temp = nums[slow];
+      nums[slow] = nums[fast];
+      nums[fast] = temp;
+      console.log("Non-zero found! Swapped to position", slow);
+      console.log("Array:", nums);
+      slow++;
+    } else {
+      console.log("Zero, skip");
+    }
+    console.log("");
+  }
+
+  console.log("Final:", nums);
+  return nums;
+}
+
+let nums = [0, 1, 0, 3, 12];
+moveZeroes(nums);
+`,
+  },
+  {
+    id: 'squares-sorted-array',
+    name: 'Squares of Sorted Array',
+    category: 'two-pointers',
+    difficulty: 'easy',
+    description: 'Return squares of sorted array in sorted order (handles negatives)',
+    code: `// Squares of a Sorted Array
+// Two pointers from both ends (largest squares at edges)
+// Fill result array from the end
+
+function sortedSquares(nums) {
+  console.log("Input:", nums);
+  console.log("");
+
+  let n = nums.length;
+  let result = [];
+  for (let i = 0; i < n; i++) result.push(0);
+
+  let left = 0;
+  let right = n - 1;
+  let pos = n - 1; // Fill from end
+
+  while (left <= right) {
+    let leftSq = nums[left] * nums[left];
+    let rightSq = nums[right] * nums[right];
+
+    console.log("left:", left, "right:", right);
+    console.log(nums[left], "^2 =", leftSq, ",", nums[right], "^2 =", rightSq);
+
+    if (leftSq > rightSq) {
+      result[pos] = leftSq;
+      console.log("Left square larger, place", leftSq, "at position", pos);
+      left++;
+    } else {
+      result[pos] = rightSq;
+      console.log("Right square larger/equal, place", rightSq, "at position", pos);
+      right--;
+    }
+
+    console.log("Result so far:", result);
+    console.log("");
+    pos--;
+  }
+
+  console.log("Final:", result);
+  return result;
+}
+
+let nums = [-4, -1, 0, 3, 10];
+sortedSquares(nums);
+`,
+  },
+  {
+    id: 'container-with-most-water',
+    name: 'Container With Most Water',
+    category: 'two-pointers',
+    difficulty: 'medium',
+    description: 'Find two lines that form container holding most water',
+    code: `// Container With Most Water
+// Area = min(height[l], height[r]) * (r - l)
+// Move the shorter line inward to potentially find larger area
+
+function maxArea(height) {
+  console.log("Heights:", height);
+  console.log("");
+
+  let left = 0;
+  let right = height.length - 1;
+  let maxWater = 0;
+
+  while (left < right) {
+    let h = height[left] < height[right] ? height[left] : height[right];
+    let width = right - left;
+    let area = h * width;
+
+    console.log("left:", left, "right:", right);
+    console.log("Heights:", height[left], "and", height[right]);
+    console.log("Area = min(" + height[left] + "," + height[right] + ") *", width, "=", area);
+
+    if (area > maxWater) {
+      maxWater = area;
+      console.log("New max water:", maxWater);
+    }
+
+    // Move shorter side inward
+    if (height[left] < height[right]) {
+      console.log("Left shorter, move left");
+      left++;
+    } else {
+      console.log("Right shorter/equal, move right");
+      right--;
+    }
+    console.log("");
+  }
+
+  console.log("Maximum water:", maxWater);
+  return maxWater;
+}
+
+let height = [1, 8, 6, 2, 5, 4, 8, 3, 7];
+maxArea(height);
+`,
+  },
+  {
+    id: 'three-sum',
+    name: '3Sum',
+    category: 'two-pointers',
+    difficulty: 'medium',
+    description: 'Find all unique triplets that sum to zero',
+    code: `// 3Sum - Find triplets summing to zero
+// Sort array, fix one element, use two pointers for other two
+// Skip duplicates to avoid duplicate triplets
+
+function threeSum(nums) {
+  // Simple bubble sort for visualization
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = 0; j < nums.length - 1; j++) {
+      if (nums[j] > nums[j + 1]) {
+        let temp = nums[j];
+        nums[j] = nums[j + 1];
+        nums[j + 1] = temp;
+      }
+    }
+  }
+
+  console.log("Sorted:", nums);
+  console.log("");
+
+  let result = [];
+
+  for (let i = 0; i < nums.length - 2; i++) {
+    // Skip duplicates for first element
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
+
+    console.log("Fixed i:", i, "value:", nums[i]);
+
+    let left = i + 1;
+    let right = nums.length - 1;
+
+    while (left < right) {
+      let sum = nums[i] + nums[left] + nums[right];
+      console.log("  left:", left, "right:", right);
+      console.log(" ", nums[i], "+", nums[left], "+", nums[right], "=", sum);
+
+      if (sum === 0) {
+        console.log("  Found triplet!");
+        result.push([nums[i], nums[left], nums[right]]);
+        left++;
+        right--;
+        // Skip duplicates
+        while (left < right && nums[left] === nums[left - 1]) left++;
+        while (left < right && nums[right] === nums[right + 1]) right--;
+      } else if (sum < 0) {
+        left++;
+      } else {
+        right--;
+      }
+    }
+    console.log("");
+  }
+
+  console.log("Triplets found:", result.length);
+  return result;
+}
+
+let nums = [-1, 0, 1, 2, -1, -4];
+threeSum(nums);
+`,
+  },
+  {
+    id: 'sort-colors',
+    name: 'Sort Colors (Dutch Flag)',
+    category: 'two-pointers',
+    difficulty: 'medium',
+    description: 'Sort array of 0s, 1s, 2s in-place using three pointers',
+    code: `// Sort Colors - Dutch National Flag
+// Three pointers: low (0s), mid (current), high (2s)
+// 0s go to left, 2s go to right, 1s stay in middle
+
+function sortColors(nums) {
+  console.log("Original:", nums);
+  console.log("0=red, 1=white, 2=blue");
+  console.log("");
+
+  let low = 0;   // Boundary for 0s
+  let mid = 0;   // Current element
+  let high = nums.length - 1; // Boundary for 2s
+
+  while (mid <= high) {
+    console.log("low:", low, "mid:", mid, "high:", high);
+    console.log("Current element:", nums[mid]);
+
+    if (nums[mid] === 0) {
+      // Swap with low, both advance
+      let temp = nums[low];
+      nums[low] = nums[mid];
+      nums[mid] = temp;
+      console.log("Found 0, swap to low position");
+      low++;
+      mid++;
+    } else if (nums[mid] === 1) {
+      // 1 is in correct position
+      console.log("Found 1, already in place");
+      mid++;
+    } else {
+      // Swap with high, only high decreases
+      let temp = nums[high];
+      nums[high] = nums[mid];
+      nums[mid] = temp;
+      console.log("Found 2, swap to high position");
+      high--;
+    }
+
+    console.log("Array:", nums);
+    console.log("");
+  }
+
+  console.log("Sorted:", nums);
+  return nums;
+}
+
+let nums = [2, 0, 2, 1, 1, 0];
+sortColors(nums);
+`,
+  },
+  {
+    id: 'remove-element',
+    name: 'Remove Element',
+    category: 'two-pointers',
+    difficulty: 'easy',
+    description: 'Remove all instances of value in-place, return new length',
+    code: `// Remove Element In-Place
+// Slow pointer for valid elements
+// Fast pointer scans all elements
+
+function removeElement(nums, val) {
+  console.log("Array:", nums);
+  console.log("Remove value:", val);
+  console.log("");
+
+  let slow = 0;
+
+  for (let fast = 0; fast < nums.length; fast++) {
+    console.log("slow:", slow, "fast:", fast);
+    console.log("nums[fast]:", nums[fast]);
+
+    if (nums[fast] !== val) {
+      nums[slow] = nums[fast];
+      console.log("Keep element, copy to position", slow);
+      slow++;
+    } else {
+      console.log("Skip, it's the target value");
+    }
+    console.log("Array:", nums);
+    console.log("");
+  }
+
+  console.log("New length:", slow);
+  console.log("Valid elements:", nums.slice(0, slow));
+  return slow;
+}
+
+let nums = [3, 2, 2, 3];
+let val = 3;
+removeElement(nums, val);
+`,
+  },
+  {
+    id: 'is-subsequence',
+    name: 'Is Subsequence',
+    category: 'two-pointers',
+    difficulty: 'easy',
+    description: 'Check if s is a subsequence of t',
+    code: `// Is Subsequence
+// Two pointers: one for s, one for t
+// Move s pointer only when characters match
+
+function isSubsequence(s, t) {
+  console.log("s:", s);
+  console.log("t:", t);
+  console.log("Check if s is subsequence of t");
+  console.log("");
+
+  let i = 0; // Pointer for s
+  let j = 0; // Pointer for t
+
+  while (i < s.length && j < t.length) {
+    console.log("i:", i, "j:", j);
+    console.log("s[i]:", s.charAt(i), "t[j]:", t.charAt(j));
+
+    if (s.charAt(i) === t.charAt(j)) {
+      console.log("Match! Advance both pointers");
+      i++;
+    } else {
+      console.log("No match, advance j only");
+    }
+    j++;
+    console.log("");
+  }
+
+  let result = i === s.length;
+  console.log("Matched", i, "of", s.length, "characters");
+  console.log("Is subsequence:", result);
+  return result;
+}
+
+let s = "abc";
+let t = "ahbgdc";
+isSubsequence(s, t);
+`,
+  },
+  {
+    id: 'merge-sorted-array',
+    name: 'Merge Sorted Array',
+    category: 'two-pointers',
+    difficulty: 'easy',
+    description: 'Merge two sorted arrays into first array in-place',
+    code: `// Merge Sorted Array In-Place
+// Start from the end to avoid overwriting
+// Three pointers: end of nums1 elements, end of nums2, insert position
+
+function merge(nums1, m, nums2, n) {
+  console.log("nums1:", nums1, "(first", m, "are valid)");
+  console.log("nums2:", nums2);
+  console.log("");
+
+  let p1 = m - 1;     // End of nums1 elements
+  let p2 = n - 1;     // End of nums2
+  let pos = m + n - 1; // Insert position
+
+  while (p2 >= 0) {
+    console.log("p1:", p1, "p2:", p2, "pos:", pos);
+
+    if (p1 >= 0 && nums1[p1] > nums2[p2]) {
+      console.log(nums1[p1], ">", nums2[p2], "- take from nums1");
+      nums1[pos] = nums1[p1];
+      p1--;
+    } else {
+      console.log(p1 < 0 ? "nums1 exhausted" : nums2[p2] + " >= " + nums1[p1], "- take from nums2");
+      nums1[pos] = nums2[p2];
+      p2--;
+    }
+
+    console.log("nums1:", nums1);
+    console.log("");
+    pos--;
+  }
+
+  console.log("Merged:", nums1);
+  return nums1;
+}
+
+let nums1 = [1, 2, 3, 0, 0, 0];
+let m = 3;
+let nums2 = [2, 5, 6];
+let n = 3;
+merge(nums1, m, nums2, n);
+`,
+  },
+  {
+    id: 'partition-labels',
+    name: 'Partition Labels',
+    category: 'two-pointers',
+    difficulty: 'medium',
+    description: 'Partition string so each letter appears in at most one part',
+    code: `// Partition Labels
+// Find last occurrence of each character
+// Extend partition end until all chars within are fully contained
+
+function partitionLabels(s) {
+  console.log("String:", s);
+  console.log("");
+
+  // Find last index of each character
+  let lastIndex = {};
+  for (let i = 0; i < s.length; i++) {
+    lastIndex[s.charAt(i)] = i;
+  }
+  console.log("Last occurrence of each char:", lastIndex);
+  console.log("");
+
+  let result = [];
+  let start = 0;
+  let end = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    let char = s.charAt(i);
+    let charLast = lastIndex[char];
+
+    console.log("i:", i, "char:", char, "lastIndex:", charLast);
+
+    if (charLast > end) {
+      end = charLast;
+      console.log("Extend partition end to", end);
+    }
+
+    if (i === end) {
+      let partSize = end - start + 1;
+      result.push(partSize);
+      console.log("Partition complete! Size:", partSize);
+      console.log("Partition:", s.substring(start, end + 1));
+      start = i + 1;
+      console.log("");
+    }
+  }
+
+  console.log("Partition sizes:", result);
+  return result;
+}
+
+let s = "ababcbacadefegdehijhklij";
+partitionLabels(s);
+`,
+  },
+  {
+    id: 'trapping-rain-water',
+    name: 'Trapping Rain Water',
+    category: 'two-pointers',
+    difficulty: 'hard',
+    description: 'Calculate how much rain water can be trapped between bars',
+    code: `// Trapping Rain Water
+// Water at position = min(maxLeft, maxRight) - height
+// Two pointers track max height from each side
+
+function trap(height) {
+  console.log("Heights:", height);
+  console.log("");
+
+  let left = 0;
+  let right = height.length - 1;
+  let leftMax = 0;
+  let rightMax = 0;
+  let water = 0;
+
+  while (left < right) {
+    console.log("left:", left, "right:", right);
+    console.log("leftMax:", leftMax, "rightMax:", rightMax);
+
+    if (height[left] < height[right]) {
+      if (height[left] >= leftMax) {
+        leftMax = height[left];
+        console.log("New leftMax:", leftMax);
+      } else {
+        let trapped = leftMax - height[left];
+        water = water + trapped;
+        console.log("Trap", trapped, "units at position", left);
+      }
+      left++;
+    } else {
+      if (height[right] >= rightMax) {
+        rightMax = height[right];
+        console.log("New rightMax:", rightMax);
+      } else {
+        let trapped = rightMax - height[right];
+        water = water + trapped;
+        console.log("Trap", trapped, "units at position", right);
+      }
+      right--;
+    }
+
+    console.log("Total water so far:", water);
+    console.log("");
+  }
+
+  console.log("Total trapped water:", water);
+  return water;
+}
+
+let height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1];
+trap(height);
+`,
+  },
+  {
+    id: 'three-sum-closest',
+    name: '3Sum Closest',
+    category: 'two-pointers',
+    difficulty: 'medium',
+    description: 'Find three integers whose sum is closest to target',
+    code: `// 3Sum Closest
+// Similar to 3Sum but track closest sum to target
+
+function threeSumClosest(nums, target) {
+  // Simple sort
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = 0; j < nums.length - 1; j++) {
+      if (nums[j] > nums[j + 1]) {
+        let temp = nums[j];
+        nums[j] = nums[j + 1];
+        nums[j + 1] = temp;
+      }
+    }
+  }
+
+  console.log("Sorted:", nums);
+  console.log("Target:", target);
+  console.log("");
+
+  let closest = nums[0] + nums[1] + nums[2];
+
+  for (let i = 0; i < nums.length - 2; i++) {
+    console.log("Fixed i:", i, "value:", nums[i]);
+
+    let left = i + 1;
+    let right = nums.length - 1;
+
+    while (left < right) {
+      let sum = nums[i] + nums[left] + nums[right];
+      console.log("  left:", left, "right:", right);
+      console.log(" ", nums[i], "+", nums[left], "+", nums[right], "=", sum);
+
+      let currDiff = sum > target ? sum - target : target - sum;
+      let closestDiff = closest > target ? closest - target : target - closest;
+
+      if (currDiff < closestDiff) {
+        closest = sum;
+        console.log("  New closest:", closest, "(diff:", currDiff + ")");
+      }
+
+      if (sum === target) {
+        console.log("  Exact match!");
+        return sum;
+      } else if (sum < target) {
+        left++;
+      } else {
+        right--;
+      }
+    }
+    console.log("");
+  }
+
+  console.log("Closest sum:", closest);
+  return closest;
+}
+
+let nums = [-1, 2, 1, -4];
+let target = 1;
+threeSumClosest(nums, target);
 `,
   },
 ]
