@@ -214,6 +214,47 @@ export const concepts: Concept[] = [
       'Know how ES6 classes relate to prototypes',
     ],
   },
+  {
+    id: 'recursion',
+    title: 'Recursion',
+    icon: '🔁',
+    category: 'core',
+    difficulty: 'intermediate',
+    description: 'Recursion is when a function calls itself to solve smaller instances of the same problem. Every recursive function needs a base case (stopping condition) and a recursive case. Understanding the call stack is key to mastering recursion.',
+    shortDescription: 'Functions that call themselves',
+    keyPoints: [
+      'A recursive function calls itself with a smaller/simpler input',
+      'Every recursion needs a BASE CASE to stop (or you get infinite recursion)',
+      'The call stack grows with each recursive call, then unwinds as functions return',
+      'Recursion can be converted to iteration (and vice versa)',
+      'Memoization can optimize recursive functions with overlapping subproblems',
+    ],
+    examples: [
+      // Beginner
+      { title: 'Factorial', code: 'function factorial(n) { if (n <= 1) return 1; return n * factorial(n-1); }', explanation: 'Classic recursion: multiply n by factorial of (n-1)' },
+      { title: 'Countdown', code: 'function countdown(n) { if (n <= 0) return; console.log(n); countdown(n-1); }', explanation: 'Simple recursion with side effects' },
+      // Intermediate
+      { title: 'Fibonacci', code: 'function fib(n) { if (n <= 1) return n; return fib(n-1) + fib(n-2); }', explanation: 'Tree recursion: two recursive calls per invocation' },
+      { title: 'Sum Array', code: 'function sum(arr, i=0) { if (i >= arr.length) return 0; return arr[i] + sum(arr, i+1); }', explanation: 'Array recursion with index parameter' },
+      { title: 'Reverse String', code: 'function reverse(s) { if (!s) return ""; return reverse(s.slice(1)) + s[0]; }', explanation: 'String recursion: process first char, recurse on rest' },
+      // Advanced
+      { title: 'Flatten Array', code: 'function flatten(arr) { return arr.reduce((acc, item) => Array.isArray(item) ? [...acc, ...flatten(item)] : [...acc, item], []); }', explanation: 'Nested structure recursion' },
+      { title: 'Memoization', code: 'function fibMemo(n, memo={}) { if (n in memo) return memo[n]; if (n <= 1) return n; return memo[n] = fibMemo(n-1, memo) + fibMemo(n-2, memo); }', explanation: 'Cache results to avoid recalculation' },
+      { title: 'Tree DFS', code: 'function dfs(node) { if (!node) return; console.log(node.val); dfs(node.left); dfs(node.right); }', explanation: 'Tree traversal uses natural recursion' },
+    ],
+    commonMistakes: [
+      'Forgetting the base case (causes infinite recursion / stack overflow)',
+      'Base case that is never reached',
+      'Not reducing the problem size in recursive call',
+      'Using recursion when simple iteration would be clearer',
+    ],
+    interviewTips: [
+      'Always identify the base case first',
+      'Trace through with a small example on paper',
+      'Know when to use memoization (overlapping subproblems)',
+      'Be able to convert between recursion and iteration',
+    ],
+  },
 ]
 
 export const conceptCategories = [

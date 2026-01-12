@@ -11,6 +11,7 @@ import { ClosuresViz } from '@/components/Concepts/ClosuresViz'
 import { ThisKeywordViz } from '@/components/Concepts/ThisKeywordViz'
 import { EventLoopViz } from '@/components/Concepts/EventLoopViz'
 import { PrototypesViz } from '@/components/Concepts/PrototypesViz'
+import { RecursionViz } from '@/components/Concepts/RecursionViz'
 
 const visualizations: Record<string, React.ComponentType> = {
   'hoisting': HoistingViz,
@@ -18,6 +19,7 @@ const visualizations: Record<string, React.ComponentType> = {
   'this-keyword': ThisKeywordViz,
   'event-loop': EventLoopViz,
   'prototypes': PrototypesViz,
+  'recursion': RecursionViz,
 }
 
 const difficultyColors = {
