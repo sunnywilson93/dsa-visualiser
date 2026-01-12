@@ -182,16 +182,16 @@ export function formatValue(value: RuntimeValue, compact = false): string {
       return 'undefined'
 
     case 'array':
-      if (compact && value.elements.length > 3) {
-        const preview = value.elements.slice(0, 3).map(e => formatValue(e, true)).join(', ')
+      if (compact && value.elements.length > 10) {
+        const preview = value.elements.slice(0, 10).map(e => formatValue(e, true)).join(', ')
         return `[${preview}, ...]`
       }
       return `[${value.elements.map(e => formatValue(e, true)).join(', ')}]`
 
     case 'object':
       const entries = Object.entries(value.properties)
-      if (compact && entries.length > 2) {
-        const preview = entries.slice(0, 2).map(([k, v]) => `${k}: ${formatValue(v, true)}`).join(', ')
+      if (compact && entries.length > 5) {
+        const preview = entries.slice(0, 5).map(([k, v]) => `${k}: ${formatValue(v, true)}`).join(', ')
         return `{${preview}, ...}`
       }
       return `{${entries.map(([k, v]) => `${k}: ${formatValue(v, true)}`).join(', ')}}`

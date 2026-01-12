@@ -8303,6 +8303,180 @@ console.log("\\nAgain:");
 console.log("fib(10) =", memoFib(10));
 `,
   },
+  {
+    id: 'implement-once',
+    name: 'Implement _.once()',
+    category: 'utility-functions',
+    difficulty: 'easy',
+    description: 'Function that runs only once - BFE #46',
+    code: `// Implement _.once()
+// Returns a function that ignores subsequent calls
+
+function once(fn) {
+  let called = false;
+  let result;
+  return function(...args) {
+    if (called) {
+      console.log("  Already called, returning cached");
+      return result;
+    }
+    called = true;
+    console.log("  First call, executing...");
+    result = fn.apply(this, args);
+    return result;
+  };
+}
+
+// Test
+function init() {
+  console.log("  >>> Initializing...");
+  return { ready: true };
+}
+
+let initOnce = once(init);
+
+console.log("Call 1:");
+console.log("  Result:", initOnce());
+
+console.log("\\nCall 2:");
+console.log("  Result:", initOnce());
+
+console.log("\\nCall 3:");
+console.log("  Result:", initOnce());
+`,
+  },
+  {
+    id: 'implement-memoize-one',
+    name: 'Implement memoizeOne()',
+    category: 'utility-functions',
+    difficulty: 'medium',
+    description: 'Cache only the last result - BFE #122',
+    code: `// memoizeOne - Only caches the latest result
+// Useful for expensive computations with same args
+
+function memoizeOne(fn) {
+  let lastArgs = null;
+  let lastResult;
+
+  return function(...args) {
+    // Check if args are same as last call
+    if (lastArgs && args.length === lastArgs.length &&
+        args.every((arg, i) => arg === lastArgs[i])) {
+      console.log("  Cache HIT (same args)");
+      return lastResult;
+    }
+
+    console.log("  Cache MISS (new args)");
+    lastArgs = args;
+    lastResult = fn.apply(this, args);
+    return lastResult;
+  };
+}
+
+// Test
+function expensive(a, b) {
+  console.log("  Computing", a, "+", b);
+  return a + b;
+}
+
+let memoized = memoizeOne(expensive);
+
+console.log("Call (1, 2):", memoized(1, 2));
+console.log("Call (1, 2):", memoized(1, 2)); // cached
+console.log("Call (3, 4):", memoized(3, 4)); // new args
+console.log("Call (1, 2):", memoized(1, 2)); // NOT cached!
+`,
+  },
+  {
+    id: 'implement-promisify',
+    name: 'Implement promisify()',
+    category: 'utility-functions',
+    difficulty: 'medium',
+    description: 'Convert callback to Promise - BFE #159',
+    code: `// promisify - Convert callback-based fn to Promise
+// Node.js convention: callback(err, result)
+
+function promisify(fn) {
+  return function(...args) {
+    return new Promise((resolve, reject) => {
+      fn.call(this, ...args, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  };
+}
+
+// Simulate callback-style async function
+function readFile(name, callback) {
+  console.log("Reading file:", name);
+  setTimeout(() => {
+    if (name === 'error.txt') {
+      callback(new Error('File not found'));
+    } else {
+      callback(null, 'File content: ' + name);
+    }
+  }, 100);
+}
+
+// Convert to Promise-based
+let readFileAsync = promisify(readFile);
+
+console.log("Using promisified function:");
+readFileAsync('data.txt')
+  .then(data => console.log("Success:", data))
+  .catch(err => console.log("Error:", err.message));
+`,
+  },
+  {
+    id: 'implement-sleep',
+    name: 'Implement sleep()',
+    category: 'utility-functions',
+    difficulty: 'easy',
+    description: 'Promise-based delay',
+    code: `// sleep - Promise-based delay utility
+
+function sleep(ms) {
+  return new Promise(resolve => {
+    console.log("Sleeping for " + ms + "ms...");
+    setTimeout(resolve, ms);
+  });
+}
+
+// Test sequential delays
+async function demo() {
+  console.log("Start:", Date.now() % 10000);
+
+  await sleep(100);
+  console.log("After 100ms:", Date.now() % 10000);
+
+  await sleep(200);
+  console.log("After 200ms:", Date.now() % 10000);
+
+  console.log("Done!");
+}
+
+demo();
+
+// Common use: retry with delay
+async function fetchWithRetry(url, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    console.log("Attempt", i + 1);
+    try {
+      // return await fetch(url);
+      if (i < 2) throw new Error("Failed");
+      return "Success!";
+    } catch (e) {
+      if (i === retries - 1) throw e;
+      await sleep(100 * (i + 1)); // exponential backoff
+    }
+  }
+}
+`,
+  },
 
   // ==================== FUNCTIONAL JS ====================
   {
@@ -8389,6 +8563,205 @@ console.log("= square(8)");
 console.log("=", calc(3));
 `,
   },
+  {
+    id: 'implement-curry-placeholder',
+    name: 'Curry with Placeholder',
+    category: 'functional-js',
+    difficulty: 'hard',
+    description: 'Curry with _ placeholder - BFE #2',
+    code: `// Curry with placeholder support
+// _ is placeholder to skip arguments
+
+const _ = Symbol('placeholder');
+
+function curry(fn) {
+  return function curried(...args) {
+    // Check if we have enough real arguments
+    let complete = args.length >= fn.length &&
+      args.slice(0, fn.length).every(a => a !== _);
+
+    if (complete) {
+      return fn.apply(this, args);
+    }
+
+    return function(...more) {
+      // Replace placeholders with new args
+      let merged = [];
+      let moreIdx = 0;
+
+      for (let arg of args) {
+        if (arg === _ && moreIdx < more.length) {
+          merged.push(more[moreIdx++]);
+        } else {
+          merged.push(arg);
+        }
+      }
+      // Append remaining args
+      while (moreIdx < more.length) {
+        merged.push(more[moreIdx++]);
+      }
+
+      return curried(...merged);
+    };
+  };
+}
+
+// Test
+function add(a, b, c) {
+  return a + b + c;
+}
+
+let curried = curry(add);
+
+console.log("add(1,2,3):", curried(1, 2, 3));
+console.log("add(1)(2)(3):", curried(1)(2)(3));
+console.log("add(_,2)(1,3):", curried(_, 2)(1, 3));
+console.log("add(_,_,3)(1)(2):", curried(_, _, 3)(1)(2));
+`,
+  },
+  {
+    id: 'implement-partial',
+    name: 'Implement _.partial()',
+    category: 'functional-js',
+    difficulty: 'medium',
+    description: 'Partial application - BFE #139',
+    code: `// partial - Pre-fill some arguments
+// Unlike curry, returns function expecting rest
+
+function partial(fn, ...presetArgs) {
+  return function(...laterArgs) {
+    return fn(...presetArgs, ...laterArgs);
+  };
+}
+
+// Test
+function greet(greeting, name, punct) {
+  return greeting + ', ' + name + punct;
+}
+
+console.log("Original:");
+console.log(greet('Hello', 'Alice', '!'));
+
+let sayHello = partial(greet, 'Hello');
+console.log("\\nsayHello('Bob', '?'):");
+console.log(sayHello('Bob', '?'));
+
+let greetAlice = partial(greet, 'Hi', 'Alice');
+console.log("\\ngreetAlice('.'):");
+console.log(greetAlice('.'));
+
+// With placeholder support
+const _ = Symbol('_');
+
+function partialWithPlaceholder(fn, ...presetArgs) {
+  return function(...laterArgs) {
+    let args = [];
+    let laterIdx = 0;
+    for (let arg of presetArgs) {
+      args.push(arg === _ ? laterArgs[laterIdx++] : arg);
+    }
+    return fn(...args, ...laterArgs.slice(laterIdx));
+  };
+}
+
+let greet2nd = partialWithPlaceholder(greet, _, 'World');
+console.log("\\ngreet(_, 'World')('Bye', '!'):");
+console.log(greet2nd('Bye', '!'));
+`,
+  },
+  {
+    id: 'implement-flat',
+    name: 'Implement Array.flat()',
+    category: 'functional-js',
+    difficulty: 'medium',
+    description: 'Flatten nested arrays - BFE #3',
+    code: `// Implement Array.prototype.flat()
+
+function flat(arr, depth = 1) {
+  let result = [];
+
+  for (let item of arr) {
+    if (Array.isArray(item) && depth > 0) {
+      result.push(...flat(item, depth - 1));
+    } else {
+      result.push(item);
+    }
+  }
+
+  return result;
+}
+
+// Test cases
+let nested = [1, [2, [3, [4]]]];
+
+console.log("Original:", JSON.stringify(nested));
+console.log("\\nflat(arr, 1):", JSON.stringify(flat(nested, 1)));
+console.log("flat(arr, 2):", JSON.stringify(flat(nested, 2)));
+console.log("flat(arr, Infinity):", JSON.stringify(flat(nested, Infinity)));
+
+// Edge cases
+console.log("\\nEdge cases:");
+console.log("Empty:", JSON.stringify(flat([[]])));
+console.log("Mixed:", JSON.stringify(flat([1, [2, , 3]])));
+
+// Using reduce
+function flatReduce(arr, d = 1) {
+  return d > 0
+    ? arr.reduce((acc, v) =>
+        acc.concat(Array.isArray(v) ? flatReduce(v, d-1) : v), [])
+    : arr.slice();
+}
+
+console.log("\\nReduce version:");
+console.log(JSON.stringify(flatReduce([1, [2, [3]]], 2)));
+`,
+  },
+  {
+    id: 'implement-flatten-thunk',
+    name: 'Flatten Thunk',
+    category: 'functional-js',
+    difficulty: 'hard',
+    description: 'Flatten nested lazy functions - BFE #54',
+    code: `// Flatten Thunk
+// Thunk = lazy function that delays computation
+
+function flattenThunk(thunk) {
+  // Keep calling until not a function
+  while (typeof thunk === 'function') {
+    console.log("  Unwrapping thunk...");
+    thunk = thunk();
+  }
+  return thunk;
+}
+
+// Test
+let lazy = () => () => () => 42;
+
+console.log("Nested thunk:", lazy.toString().slice(0, 30) + "...");
+console.log("Result:", flattenThunk(lazy));
+
+// Recursive version
+function flattenThunkRecursive(thunk) {
+  if (typeof thunk !== 'function') return thunk;
+  return flattenThunkRecursive(thunk());
+}
+
+console.log("\\nRecursive:", flattenThunkRecursive(() => () => 'hello'));
+
+// Real use case: lazy evaluation
+function createLazy(value) {
+  console.log("Creating lazy with:", value);
+  return () => {
+    console.log("Evaluating...");
+    return value * 2;
+  };
+}
+
+let lazyCalc = createLazy(21);
+console.log("\\nLazy created, not yet evaluated");
+console.log("Now evaluating:", flattenThunk(lazyCalc));
+`,
+  },
 
   // ==================== DOM & EVENTS ====================
   {
@@ -8473,6 +8846,270 @@ list.click({ action: 'delete', id: 1 });
 list.click({ action: 'edit', id: 2 });
 
 console.log("\\nOne listener handles all!");
+`,
+  },
+  {
+    id: 'dom-wrapper-chaining',
+    name: 'DOM Wrapper with Chaining',
+    category: 'dom-events',
+    difficulty: 'medium',
+    description: 'jQuery-style method chaining - BFE #15',
+    code: `// DOM Wrapper with method chaining
+// Like jQuery's $() but simplified
+
+class $ {
+  constructor(selector) {
+    // In real DOM: document.querySelectorAll(selector)
+    this.elements = typeof selector === 'string'
+      ? [{ tag: selector, style: {}, classes: [] }]
+      : [selector];
+    console.log("Selected:", selector);
+  }
+
+  css(prop, value) {
+    this.elements.forEach(el => {
+      el.style[prop] = value;
+      console.log("  Set", prop, "=", value);
+    });
+    return this; // Enable chaining!
+  }
+
+  addClass(name) {
+    this.elements.forEach(el => {
+      el.classes.push(name);
+      console.log("  Added class:", name);
+    });
+    return this;
+  }
+
+  removeClass(name) {
+    this.elements.forEach(el => {
+      el.classes = el.classes.filter(c => c !== name);
+      console.log("  Removed class:", name);
+    });
+    return this;
+  }
+
+  getStyles() {
+    return this.elements[0].style;
+  }
+}
+
+// Test chaining
+let box = new $('div');
+
+box.css('color', 'red')
+   .css('fontSize', '16px')
+   .addClass('active')
+   .addClass('visible')
+   .removeClass('hidden');
+
+console.log("\\nFinal styles:", box.getStyles());
+`,
+  },
+  {
+    id: 'find-node-in-tree',
+    name: 'Find Node in DOM Trees',
+    category: 'dom-events',
+    difficulty: 'medium',
+    description: 'Find corresponding node - BFE #19',
+    code: `// Given same node in Tree A, find it in identical Tree B
+// Common in virtual DOM diffing
+
+function findCorrespondingNode(rootA, rootB, target) {
+  // Track path from root to target in A
+  let path = [];
+  let current = target;
+
+  while (current !== rootA && current !== null) {
+    let parent = current.parent;
+    if (!parent) break;
+    let idx = parent.children.indexOf(current);
+    path.unshift(idx);
+    current = parent;
+  }
+
+  console.log("Path from root:", path);
+
+  // Follow same path in B
+  let result = rootB;
+  for (let idx of path) {
+    result = result.children[idx];
+    console.log("  Navigate to child", idx);
+  }
+
+  return result;
+}
+
+// Create two identical trees
+function createTree() {
+  return {
+    val: 'root',
+    children: [
+      { val: 'A', children: [], parent: null },
+      {
+        val: 'B',
+        children: [
+          { val: 'B1', children: [], parent: null },
+          { val: 'B2', children: [], parent: null }
+        ],
+        parent: null
+      }
+    ]
+  };
+}
+
+let treeA = createTree();
+let treeB = createTree();
+
+// Set parent refs
+treeA.children.forEach(c => { c.parent = treeA; });
+treeA.children[1].children.forEach(c => { c.parent = treeA.children[1]; });
+treeB.children.forEach(c => { c.parent = treeB; });
+treeB.children[1].children.forEach(c => { c.parent = treeB.children[1]; });
+
+let targetA = treeA.children[1].children[0]; // B1
+console.log("Finding node:", targetA.val);
+
+let found = findCorrespondingNode(treeA, treeB, targetA);
+console.log("\\nFound in Tree B:", found.val);
+`,
+  },
+  {
+    id: 'dom-tree-height',
+    name: 'Get DOM Tree Height',
+    category: 'dom-events',
+    difficulty: 'easy',
+    description: 'Find max depth of DOM tree - BFE #58',
+    code: `// Get height/depth of a DOM tree
+// Height = longest path from root to leaf
+
+function getTreeHeight(node) {
+  if (!node) return 0;
+  if (!node.children || node.children.length === 0) {
+    return 1;
+  }
+
+  let maxChildHeight = 0;
+  for (let child of node.children) {
+    maxChildHeight = Math.max(maxChildHeight, getTreeHeight(child));
+  }
+
+  return 1 + maxChildHeight;
+}
+
+// Test with mock DOM
+let dom = {
+  tag: 'html',
+  children: [
+    { tag: 'head', children: [
+      { tag: 'title', children: [] }
+    ]},
+    { tag: 'body', children: [
+      { tag: 'div', children: [
+        { tag: 'p', children: [
+          { tag: 'span', children: [] }
+        ]}
+      ]},
+      { tag: 'footer', children: [] }
+    ]}
+  ]
+};
+
+console.log("DOM Structure:");
+console.log("html > head > title");
+console.log("     > body > div > p > span");
+console.log("           > footer");
+
+console.log("\\nTree Height:", getTreeHeight(dom));
+
+// BFS alternative
+function getHeightBFS(root) {
+  if (!root) return 0;
+  let queue = [{ node: root, depth: 1 }];
+  let maxDepth = 0;
+
+  while (queue.length) {
+    let { node, depth } = queue.shift();
+    maxDepth = Math.max(maxDepth, depth);
+    for (let c of (node.children || [])) {
+      queue.push({ node: c, depth: depth + 1 });
+    }
+  }
+  return maxDepth;
+}
+
+console.log("Height (BFS):", getHeightBFS(dom));
+`,
+  },
+  {
+    id: 'get-dom-tags',
+    name: 'Get All DOM Tags',
+    category: 'dom-events',
+    difficulty: 'easy',
+    description: 'Collect unique tags in tree - BFE #68',
+    code: `// Get all unique tag names in a DOM tree
+
+function getAllTags(root) {
+  let tags = new Set();
+
+  function traverse(node) {
+    if (!node) return;
+    if (node.tag) tags.add(node.tag.toLowerCase());
+
+    for (let child of (node.children || [])) {
+      traverse(child);
+    }
+  }
+
+  traverse(root);
+  return [...tags].sort();
+}
+
+// Test
+let page = {
+  tag: 'HTML',
+  children: [
+    { tag: 'HEAD', children: [
+      { tag: 'TITLE', children: [] },
+      { tag: 'META', children: [] }
+    ]},
+    { tag: 'BODY', children: [
+      { tag: 'DIV', children: [
+        { tag: 'H1', children: [] },
+        { tag: 'P', children: [
+          { tag: 'SPAN', children: [] },
+          { tag: 'A', children: [] }
+        ]},
+        { tag: 'DIV', children: [
+          { tag: 'IMG', children: [] }
+        ]}
+      ]},
+      { tag: 'FOOTER', children: [
+        { tag: 'P', children: [] }
+      ]}
+    ]}
+  ]
+};
+
+console.log("All unique tags:");
+console.log(getAllTags(page));
+
+// Count occurrences
+function countTags(root) {
+  let counts = {};
+  function traverse(node) {
+    if (!node) return;
+    let tag = (node.tag || '').toLowerCase();
+    if (tag) counts[tag] = (counts[tag] || 0) + 1;
+    (node.children || []).forEach(traverse);
+  }
+  traverse(root);
+  return counts;
+}
+
+console.log("\\nTag counts:");
+console.log(countTags(page));
 `,
   },
 
@@ -8590,6 +9227,223 @@ console.log("\\nSet:");
 let obj = {};
 set(obj, 'a.b.c', 42);
 console.log(obj);
+`,
+  },
+  {
+    id: 'implement-object-assign',
+    name: 'Implement Object.assign()',
+    category: 'object-utils',
+    difficulty: 'easy',
+    description: 'Shallow copy properties - BFE #26',
+    code: `// Object.assign - Shallow copy properties
+
+function objectAssign(target, ...sources) {
+  if (target == null) {
+    throw new TypeError('Cannot convert to object');
+  }
+
+  let to = Object(target);
+
+  for (let source of sources) {
+    if (source == null) continue;
+
+    // Copy own enumerable properties
+    for (let key of Object.keys(source)) {
+      to[key] = source[key];
+      console.log("  Copy:", key, "=", source[key]);
+    }
+
+    // Copy symbol properties
+    for (let sym of Object.getOwnPropertySymbols(source)) {
+      if (Object.prototype.propertyIsEnumerable.call(source, sym)) {
+        to[sym] = source[sym];
+      }
+    }
+  }
+
+  return to;
+}
+
+// Test
+let defaults = { theme: 'light', fontSize: 14 };
+let user = { theme: 'dark', name: 'Alice' };
+
+console.log("Merging...");
+let config = objectAssign({}, defaults, user);
+
+console.log("\\nResult:", config);
+console.log("Original defaults unchanged:", defaults);
+
+// Note: shallow copy!
+let nested = { a: { b: 1 } };
+let copy = objectAssign({}, nested);
+copy.a.b = 999;
+console.log("\\nShallow! Original changed:", nested.a.b);
+`,
+  },
+  {
+    id: 'implement-object-is',
+    name: 'Implement Object.is()',
+    category: 'object-utils',
+    difficulty: 'easy',
+    description: 'Strict equality with edge cases',
+    code: `// Object.is - Same-value equality
+// Unlike ===, handles NaN and -0/+0
+
+function objectIs(a, b) {
+  // Handle NaN: NaN === NaN is false, but Object.is(NaN, NaN) is true
+  if (Number.isNaN(a) && Number.isNaN(b)) {
+    return true;
+  }
+
+  // Handle -0/+0: -0 === +0 is true, but Object.is(-0, +0) is false
+  if (a === 0 && b === 0) {
+    return 1/a === 1/b; // 1/-0 = -Infinity, 1/+0 = Infinity
+  }
+
+  // All other cases, use strict equality
+  return a === b;
+}
+
+// Test cases
+console.log("=== vs Object.is()");
+console.log("-------------------");
+
+console.log("\\nNaN comparison:");
+console.log("NaN === NaN:", NaN === NaN);
+console.log("Object.is(NaN, NaN):", objectIs(NaN, NaN));
+
+console.log("\\n-0 vs +0:");
+console.log("-0 === +0:", -0 === +0);
+console.log("Object.is(-0, +0):", objectIs(-0, +0));
+console.log("Object.is(-0, -0):", objectIs(-0, -0));
+
+console.log("\\nRegular cases:");
+console.log("Object.is(1, 1):", objectIs(1, 1));
+console.log("Object.is('a', 'a'):", objectIs('a', 'a'));
+console.log("Object.is({}, {}):", objectIs({}, {}));
+
+let obj = {};
+console.log("Object.is(obj, obj):", objectIs(obj, obj));
+`,
+  },
+  {
+    id: 'implement-object-create',
+    name: 'Implement Object.create()',
+    category: 'object-utils',
+    difficulty: 'medium',
+    description: 'Create with prototype - BFE #94',
+    code: `// Object.create - Create object with specified prototype
+
+function objectCreate(proto, propertiesObject) {
+  if (proto !== null && typeof proto !== 'object') {
+    throw new TypeError('Object prototype may only be Object or null');
+  }
+
+  // Create empty constructor
+  function F() {}
+  F.prototype = proto;
+  let obj = new F();
+
+  // Add properties if provided
+  if (propertiesObject !== undefined) {
+    Object.defineProperties(obj, propertiesObject);
+  }
+
+  // Handle null prototype
+  if (proto === null) {
+    obj.__proto__ = null;
+  }
+
+  return obj;
+}
+
+// Test 1: Basic inheritance
+let animal = {
+  speak() { console.log(this.name, "makes sound"); }
+};
+
+let dog = objectCreate(animal);
+dog.name = "Rex";
+console.log("Dog prototype:", Object.getPrototypeOf(dog) === animal);
+dog.speak();
+
+// Test 2: With property descriptors
+let cat = objectCreate(animal, {
+  name: { value: 'Whiskers', writable: true },
+  meow: { value: function() { console.log(this.name, "meows"); } }
+});
+
+console.log("\\nCat:");
+cat.speak();
+cat.meow();
+
+// Test 3: null prototype (no inherited methods)
+let bare = objectCreate(null);
+bare.x = 1;
+console.log("\\nNull prototype:");
+console.log("Has toString?", 'toString' in bare);
+console.log("Value:", bare.x);
+`,
+  },
+  {
+    id: 'implement-object-freeze',
+    name: 'Shallow vs Deep Freeze',
+    category: 'object-utils',
+    difficulty: 'medium',
+    description: 'Make objects immutable',
+    code: `// Object.freeze is shallow - nested objects still mutable
+// Let's implement deep freeze
+
+function deepFreeze(obj) {
+  if (obj === null || typeof obj !== 'object') {
+    return obj;
+  }
+
+  // Freeze the object itself
+  Object.freeze(obj);
+  console.log("Froze:", Object.keys(obj).slice(0, 3).join(', '));
+
+  // Recursively freeze all properties
+  for (let key of Object.keys(obj)) {
+    let value = obj[key];
+    if (value !== null && typeof value === 'object') {
+      deepFreeze(value);
+    }
+  }
+
+  return obj;
+}
+
+// Test shallow freeze
+let config = {
+  api: { url: 'http://api.com', timeout: 5000 },
+  debug: true
+};
+
+Object.freeze(config);
+config.debug = false; // Fails silently (or throws in strict)
+console.log("After shallow freeze:");
+console.log("config.debug:", config.debug); // Still true
+
+// But nested still mutable!
+config.api.timeout = 9999;
+console.log("config.api.timeout:", config.api.timeout); // 9999!
+
+// Now deep freeze
+console.log("\\nDeep freezing...");
+let config2 = {
+  api: { url: 'http://api.com', timeout: 5000 },
+  debug: true
+};
+
+deepFreeze(config2);
+config2.api.timeout = 1; // Won't work
+console.log("\\nAfter deep freeze:");
+console.log("config2.api.timeout:", config2.api.timeout); // Still 5000
+
+// Check frozen status
+console.log("\\nIs frozen?", Object.isFrozen(config2.api));
 `,
   },
 

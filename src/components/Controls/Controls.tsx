@@ -8,7 +8,7 @@ import {
   RotateCcw,
   FastForward,
   Zap,
-  Bug,
+  Eye,
 } from 'lucide-react'
 import { useExecutionStore, useExecutionProgress, useCurrentStep } from '@/store'
 import type { PlaybackSpeed } from '@/types'
@@ -117,10 +117,10 @@ export function Controls() {
     }
   }
 
-  const handleDebug = async () => {
+  const handleVisualize = async () => {
     if (status === 'idle') {
       await startExecution()
-      // Stay at step 0 for debugging
+      // Stay at step 0 for visualization
     }
   }
 
@@ -147,14 +147,14 @@ export function Controls() {
               <span>Run</span>
             </motion.button>
             <motion.button
-              className={styles.debugButton}
-              onClick={handleDebug}
+              className={styles.visualizeButton}
+              onClick={handleVisualize}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               title="Step through code line by line"
             >
-              <Bug size={16} />
-              <span>Debug</span>
+              <Eye size={16} />
+              <span>Visualize</span>
             </motion.button>
           </div>
         )}

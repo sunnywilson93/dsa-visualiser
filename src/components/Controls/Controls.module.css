@@ -22,7 +22,7 @@
 }
 
 .runButton,
-.debugButton {
+.visualizeButton {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
@@ -45,12 +45,12 @@
   transform: translateY(-1px);
 }
 
-.debugButton {
+.visualizeButton {
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   color: white;
 }
 
-.debugButton:hover {
+.visualizeButton:hover {
   filter: brightness(1.1);
   transform: translateY(-1px);
 }
