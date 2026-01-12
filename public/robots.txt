@@ -1,0 +1,11 @@
+# robots.txt for JS Interview Prep
+# https://jsinterview.dev
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://jsinterview.dev/sitemap.xml
+
+# Crawl-delay (optional, be nice to crawlers)
+Crawl-delay: 1

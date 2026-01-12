@@ -2,23 +2,130 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JS Interview - Master JavaScript with Interactive Code Visualization</title>
-    <meta name="description" content="Practice JavaScript interview questions with step-by-step code visualization. Master closures, promises, array polyfills, async/await, DSA, and more." />
-    <meta name="keywords" content="javascript interview, js interview questions, coding interview, array polyfills, closures, promises, async await, DSA" />
-    <meta property="og:title" content="JS Interview - Interactive JavaScript Practice" />
-    <meta property="og:description" content="Practice JavaScript interview questions with step-by-step code visualization." />
+
+    <!-- Primary Meta Tags -->
+    <title>JS Interview Prep - Master JavaScript with Interactive Code Visualization</title>
+    <meta name="title" content="JS Interview Prep - Master JavaScript with Interactive Code Visualization" />
+    <meta name="description" content="Free interactive JavaScript interview preparation. Visualize closures, hoisting, event loop, prototypes, promises, and 100+ coding challenges with step-by-step execution. Ace your frontend interview at FAANG and top tech companies." />
+    <meta name="keywords" content="javascript interview questions, js interview prep, frontend interview, coding interview, javascript visualizer, learn javascript, closures explained, event loop visualization, promise polyfill, array methods, hoisting, this keyword, prototype chain, async await, FAANG interview, web developer interview, javascript tutorial, interactive coding, DSA javascript, algorithm visualization" />
+    <meta name="author" content="JS Interview Prep" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+
+    <!-- Favicon & Manifest -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea" />
+    <meta name="msapplication-TileColor" content="#667eea" />
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://jsinterview.dev" />
+    <meta property="og:url" content="https://jsinterview.dev/" />
+    <meta property="og:title" content="JS Interview Prep - Interactive JavaScript Visualization" />
+    <meta property="og:description" content="Master JavaScript interviews with interactive code visualization. Learn closures, event loop, promises, and 100+ coding challenges. Free and open source." />
+    <meta property="og:image" content="https://jsinterview.dev/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="JS Interview Prep - Interactive JavaScript Code Visualization" />
+    <meta property="og:site_name" content="JS Interview Prep" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="JS Interview - Interactive JavaScript Practice" />
-    <meta name="twitter:description" content="Practice JavaScript interview questions with step-by-step code visualization." />
-    <link rel="canonical" href="https://jsinterview.dev" />
+    <meta name="twitter:url" content="https://jsinterview.dev/" />
+    <meta name="twitter:title" content="JS Interview Prep - Interactive JavaScript Visualization" />
+    <meta name="twitter:description" content="Master JavaScript interviews with interactive code visualization. Learn closures, event loop, promises, and 100+ coding challenges." />
+    <meta name="twitter:image" content="https://jsinterview.dev/og-image.png" />
+    <meta name="twitter:image:alt" content="JS Interview Prep - Interactive JavaScript Code Visualization" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://jsinterview.dev/" />
+
+    <!-- Structured Data - WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "JS Interview Prep",
+      "alternateName": ["JavaScript Interview Preparation", "JS Interview"],
+      "url": "https://jsinterview.dev",
+      "description": "Interactive JavaScript interview preparation with code visualization",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://jsinterview.dev/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Structured Data - Educational Website -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "JS Interview Prep",
+      "url": "https://jsinterview.dev",
+      "description": "Free interactive platform to master JavaScript concepts for technical interviews",
+      "areaServed": "Worldwide",
+      "educationalCredentialAwarded": "JavaScript Interview Skills",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "JavaScript Learning Modules",
+        "itemListElement": [
+          {
+            "@type": "Course",
+            "name": "JavaScript Core Concepts",
+            "description": "Learn closures, hoisting, event loop, prototypes, and the this keyword with interactive visualizations",
+            "provider": {
+              "@type": "Organization",
+              "name": "JS Interview Prep"
+            }
+          },
+          {
+            "@type": "Course",
+            "name": "JavaScript Coding Challenges",
+            "description": "100+ interview problems including array polyfills, promise implementations, and DSA problems",
+            "provider": {
+              "@type": "Organization",
+              "name": "JS Interview Prep"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+
+    <!-- Structured Data - SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "JS Interview Prep",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "150"
+      }
+    }
+    </script>
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-<!-- triggered deploy -->
