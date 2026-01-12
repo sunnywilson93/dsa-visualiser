@@ -93,7 +93,7 @@ export function TwoPointersConcept({ step, type }: TwoPointersConceptProps) {
               <motion.div
                 className={`${styles.element} ${isHighlighted ? styles.highlighted : ''} ${hasPointer ? styles.hasPointer : ''}`}
                 animate={{
-                  scale: isHighlighted ? 1.1 : 1,
+                  scale: isHighlighted ? 1.05 : 1,
                   boxShadow: isHighlighted
                     ? '0 0 12px rgba(96, 165, 250, 0.5)'
                     : '0 1px 2px rgba(0, 0, 0, 0.1)',

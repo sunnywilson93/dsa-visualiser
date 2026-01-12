@@ -25,8 +25,11 @@
 .arrayContainer {
   display: flex;
   align-items: flex-end;
-  gap: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3px;
   padding: var(--space-sm);
+  max-width: 100%;
 }
 
 .elementWrapper {
@@ -72,8 +75,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 36px;
-  height: 36px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 4px;
   background: var(--bg-secondary);
   border: 2px solid var(--border-primary);
   border-radius: var(--radius-sm);
@@ -90,7 +94,7 @@
 }
 
 .value {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   font-family: var(--font-mono);
   color: var(--text-primary);
