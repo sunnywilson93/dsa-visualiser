@@ -302,11 +302,13 @@
   }
 
   .visualizationWrapper {
-    display: none;
+    min-height: 120px;
+    flex: none;
   }
 
   .consoleWrapper {
     min-height: 80px;
+    flex: none;
   }
 
   .inspectorPanel {

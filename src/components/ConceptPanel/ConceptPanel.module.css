@@ -237,3 +237,46 @@
   background: var(--accent-blue);
   color: white;
 }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--space-sm);
+  }
+
+  .insightText {
+    font-size: 11px;
+  }
+
+  .visualizationArea {
+    min-height: 140px;
+  }
+
+  .visualization {
+    min-height: 80px;
+    padding: var(--space-xs);
+  }
+
+  .controls {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .playbackControls {
+    order: 1;
+  }
+
+  .progress {
+    order: 3;
+    width: 100%;
+    flex: none;
+  }
+
+  .speedControl {
+    order: 2;
+  }
+
+  .speedLabel {
+    display: none;
+  }
+}
