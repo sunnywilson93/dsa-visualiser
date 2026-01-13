@@ -17,7 +17,7 @@ export const exampleCategories = [
   { id: 'dom-events', name: 'DOM & Events', icon: '🎯', description: 'Event emitter, delegation, pub/sub' },
   { id: 'object-utils', name: 'Object Utilities', icon: '📦', description: 'Deep equal, merge, get/set nested props' },
   { id: 'promise-polyfills', name: 'Promise Polyfills', icon: '🤝', description: 'Promise.all, race, allSettled, promisify' },
-  { id: 'dsa', name: 'DSA', icon: '🧠', description: 'Data structures & algorithms (30 problems)' },
+  { id: 'dsa', name: 'DSA', icon: '🧠', description: 'Data structures & algorithms (35 problems)' },
 ]
 
 // DSA subcategories for filtering within DSA page
@@ -4473,6 +4473,280 @@ function threeSumClosest(nums, target) {
 let nums = [-1, 2, 1, -4];
 let target = 1;
 threeSumClosest(nums, target);
+`,
+  },
+
+  // ==================== SLIDING WINDOW ====================
+  {
+    id: 'best-time-to-buy-sell-stock',
+    name: 'Best Time to Buy and Sell Stock',
+    category: 'sliding-window',
+    difficulty: 'easy',
+    description: 'Find maximum profit from buying and selling stock once',
+    code: `// Best Time to Buy and Sell Stock
+// Track minimum price seen so far and maximum profit possible
+
+function maxProfit(prices) {
+  console.log("Stock prices:", prices);
+  console.log("");
+
+  let minPrice = prices[0];
+  let maxProfit = 0;
+
+  console.log("Starting: minPrice =", minPrice, ", maxProfit =", maxProfit);
+  console.log("");
+
+  for (let i = 1; i < prices.length; i++) {
+    let price = prices[i];
+    console.log("Day", i, ": price =", price);
+
+    // Could we make profit selling today?
+    let profit = price - minPrice;
+    console.log("  Profit if sell today:", profit, "(", price, "-", minPrice, ")");
+
+    if (profit > maxProfit) {
+      maxProfit = profit;
+      console.log("  New max profit:", maxProfit);
+    }
+
+    // Update minimum price seen
+    if (price < minPrice) {
+      minPrice = price;
+      console.log("  New min price:", minPrice);
+    }
+    console.log("");
+  }
+
+  console.log("Maximum profit:", maxProfit);
+  return maxProfit;
+}
+
+let prices = [7, 1, 5, 3, 6, 4];
+maxProfit(prices);
+`,
+  },
+  {
+    id: 'longest-substring-without-repeating',
+    name: 'Longest Substring Without Repeating Characters',
+    category: 'sliding-window',
+    difficulty: 'medium',
+    description: 'Find length of longest substring without repeating characters',
+    code: `// Longest Substring Without Repeating Characters
+// Use sliding window with a Set to track characters
+
+function lengthOfLongestSubstring(s) {
+  console.log("String:", s);
+  console.log("");
+
+  let charSet = new Set();
+  let left = 0;
+  let maxLength = 0;
+
+  for (let right = 0; right < s.length; right++) {
+    let char = s[right];
+    console.log("right =", right, ", char =", char);
+
+    // Shrink window from left until no duplicate
+    while (charSet.has(char)) {
+      console.log("  Duplicate found! Removing", s[left], "from window");
+      charSet.delete(s[left]);
+      left++;
+    }
+
+    // Add current character to window
+    charSet.add(char);
+    console.log("  Window: [", left, ",", right, "] =", s.substring(left, right + 1));
+
+    // Update max length
+    let windowLen = right - left + 1;
+    if (windowLen > maxLength) {
+      maxLength = windowLen;
+      console.log("  New max length:", maxLength);
+    }
+    console.log("");
+  }
+
+  console.log("Longest substring length:", maxLength);
+  return maxLength;
+}
+
+lengthOfLongestSubstring("abcabcbb");
+`,
+  },
+  {
+    id: 'max-consecutive-ones-iii',
+    name: 'Max Consecutive Ones III',
+    category: 'sliding-window',
+    difficulty: 'medium',
+    description: 'Find longest sequence of 1s if you can flip at most k 0s',
+    code: `// Max Consecutive Ones III
+// Sliding window: expand right, shrink left when zeros exceed k
+
+function longestOnes(nums, k) {
+  console.log("Array:", nums);
+  console.log("Can flip", k, "zeros");
+  console.log("");
+
+  let left = 0;
+  let zeros = 0;
+  let maxLen = 0;
+
+  for (let right = 0; right < nums.length; right++) {
+    console.log("right =", right, ", nums[right] =", nums[right]);
+
+    if (nums[right] === 0) {
+      zeros++;
+      console.log("  Found zero, zeros count:", zeros);
+    }
+
+    // Shrink window if too many zeros
+    while (zeros > k) {
+      console.log("  Too many zeros! Shrinking from left");
+      if (nums[left] === 0) {
+        zeros--;
+      }
+      left++;
+      console.log("  left =", left, ", zeros =", zeros);
+    }
+
+    let windowLen = right - left + 1;
+    console.log("  Window: [", left, ",", right, "], length:", windowLen);
+
+    if (windowLen > maxLen) {
+      maxLen = windowLen;
+      console.log("  New max length:", maxLen);
+    }
+    console.log("");
+  }
+
+  console.log("Maximum consecutive ones:", maxLen);
+  return maxLen;
+}
+
+longestOnes([1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], 2);
+`,
+  },
+  {
+    id: 'minimum-window-substring',
+    name: 'Minimum Window Substring',
+    category: 'sliding-window',
+    difficulty: 'hard',
+    description: 'Find smallest window in s containing all characters of t',
+    code: `// Minimum Window Substring
+// Expand window to include all chars, then shrink to find minimum
+
+function minWindow(s, t) {
+  console.log("String s:", s);
+  console.log("Pattern t:", t);
+  console.log("");
+
+  if (t.length > s.length) return "";
+
+  // Count characters needed
+  let need = {};
+  for (let c of t) {
+    need[c] = (need[c] || 0) + 1;
+  }
+  console.log("Need:", JSON.stringify(need));
+
+  let have = {};
+  let required = Object.keys(need).length;
+  let formed = 0;
+  let left = 0;
+  let minLen = Infinity;
+  let result = "";
+
+  for (let right = 0; right < s.length; right++) {
+    let char = s[right];
+    have[char] = (have[char] || 0) + 1;
+    console.log("right =", right, ", char =", char);
+
+    // Check if current char satisfies requirement
+    if (need[char] && have[char] === need[char]) {
+      formed++;
+      console.log("  Formed:", formed, "/", required);
+    }
+
+    // Try to shrink window
+    while (formed === required) {
+      let windowLen = right - left + 1;
+      console.log("  Valid window: [", left, ",", right, "] =", s.substring(left, right + 1));
+
+      if (windowLen < minLen) {
+        minLen = windowLen;
+        result = s.substring(left, right + 1);
+        console.log("  New minimum:", result);
+      }
+
+      // Remove leftmost char
+      let leftChar = s[left];
+      have[leftChar]--;
+      if (need[leftChar] && have[leftChar] < need[leftChar]) {
+        formed--;
+      }
+      left++;
+    }
+    console.log("");
+  }
+
+  console.log("Minimum window:", result || "Not found");
+  return result;
+}
+
+minWindow("ADOBECODEBANC", "ABC");
+`,
+  },
+  {
+    id: 'sliding-window-maximum',
+    name: 'Sliding Window Maximum',
+    category: 'sliding-window',
+    difficulty: 'hard',
+    description: 'Find maximum element in each sliding window of size k',
+    code: `// Sliding Window Maximum
+// Use a deque (array) to track indices of potential maximums
+
+function maxSlidingWindow(nums, k) {
+  console.log("Array:", nums);
+  console.log("Window size:", k);
+  console.log("");
+
+  let result = [];
+  let deque = []; // Store indices, front has max
+
+  for (let i = 0; i < nums.length; i++) {
+    console.log("i =", i, ", nums[i] =", nums[i]);
+
+    // Remove indices outside window
+    while (deque.length > 0 && deque[0] <= i - k) {
+      console.log("  Removing", deque[0], "- outside window");
+      deque.shift();
+    }
+
+    // Remove smaller elements from back
+    while (deque.length > 0 && nums[deque[deque.length - 1]] < nums[i]) {
+      console.log("  Removing index", deque[deque.length - 1], "- smaller than current");
+      deque.pop();
+    }
+
+    deque.push(i);
+    console.log("  Deque indices:", deque);
+    console.log("  Deque values:", deque.map(idx => nums[idx]));
+
+    // Add to result once we have a full window
+    if (i >= k - 1) {
+      let maxVal = nums[deque[0]];
+      result.push(maxVal);
+      console.log("  Window max:", maxVal);
+      console.log("  Result so far:", result);
+    }
+    console.log("");
+  }
+
+  console.log("Final result:", result);
+  return result;
+}
+
+maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3);
 `,
   },
 ]
