@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getConceptById, concepts } from '@/data/concepts'
 import ConceptPageClient from './ConceptPageClient'
+import { StructuredData } from '@/components/StructuredData'
 
 interface Props {
   params: { conceptId: string }
@@ -36,6 +37,115 @@ export async function generateStaticParams() {
   }))
 }
 
-export default function ConceptPage() {
-  return <ConceptPageClient />
+function generateFAQSchema(concept: NonNullable<ReturnType<typeof getConceptById>>) {
+  const faqs: { question: string; answer: string }[] = []
+
+  faqs.push({
+    question: `What is ${concept.title} in JavaScript?`,
+    answer: concept.description,
+  })
+
+  faqs.push({
+    question: `What are the key points to understand about ${concept.title}?`,
+    answer: concept.keyPoints.join('. '),
+  })
+
+  if (concept.commonMistakes && concept.commonMistakes.length > 0) {
+    faqs.push({
+      question: `What are common mistakes with ${concept.title}?`,
+      answer: concept.commonMistakes.join('. '),
+    })
+  }
+
+  if (concept.interviewTips && concept.interviewTips.length > 0) {
+    faqs.push({
+      question: `What are the interview tips for ${concept.title}?`,
+      answer: concept.interviewTips.join('. '),
+    })
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  }
+}
+
+function generateBreadcrumbSchema(concept: NonNullable<ReturnType<typeof getConceptById>>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://jsinterview.dev',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Concepts',
+        item: 'https://jsinterview.dev/concepts',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: concept.title,
+        item: `https://jsinterview.dev/concepts/${concept.id}`,
+      },
+    ],
+  }
+}
+
+function generateArticleSchema(concept: NonNullable<ReturnType<typeof getConceptById>>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: `${concept.title} - JavaScript Concept Explained`,
+    description: concept.description,
+    author: {
+      '@type': 'Organization',
+      name: 'JS Interview Prep',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'JS Interview Prep',
+      url: 'https://jsinterview.dev',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://jsinterview.dev/concepts/${concept.id}`,
+    },
+    articleSection: 'JavaScript Tutorials',
+    keywords: `${concept.title}, JavaScript, interview preparation, coding`,
+  }
+}
+
+export default function ConceptPage({ params }: Props) {
+  const concept = getConceptById(params.conceptId)
+
+  if (!concept) {
+    return <ConceptPageClient />
+  }
+
+  const faqSchema = generateFAQSchema(concept)
+  const breadcrumbSchema = generateBreadcrumbSchema(concept)
+  const articleSchema = generateArticleSchema(concept)
+
+  return (
+    <>
+      <StructuredData data={faqSchema} />
+      <StructuredData data={breadcrumbSchema} />
+      <StructuredData data={articleSchema} />
+      <ConceptPageClient />
+    </>
+  )
 }

@@ -1467,10 +1467,33 @@ export const conceptCategories = [
   { id: 'browser', name: 'Browser', icon: '🌐', description: 'Frontend rendering' },
 ]
 
+// Related concepts mapping for internal linking (SEO)
+const relatedConceptsMap: Record<string, string[]> = {
+  'hoisting': ['closures', 'this-keyword', 'memory-model'],
+  'closures': ['hoisting', 'this-keyword', 'memory-model', 'recursion'],
+  'this-keyword': ['closures', 'prototypes', 'event-loop'],
+  'event-loop': ['this-keyword', 'nodejs-event-loop', 'web-workers'],
+  'prototypes': ['this-keyword', 'closures', 'memory-model'],
+  'recursion': ['closures', 'memory-model', 'event-loop'],
+  'memory-model': ['hoisting', 'closures', 'v8-engine', 'streams-buffers'],
+  'v8-engine': ['memory-model', 'event-loop', 'nodejs-event-loop'],
+  'nodejs-event-loop': ['event-loop', 'v8-engine', 'streams-buffers', 'web-workers'],
+  'streams-buffers': ['memory-model', 'nodejs-event-loop'],
+  'critical-render-path': ['event-loop', 'web-workers', 'memory-model'],
+  'web-workers': ['event-loop', 'nodejs-event-loop', 'critical-render-path'],
+}
+
 export function getConceptById(id: string): Concept | undefined {
   return concepts.find(c => c.id === id)
 }
 
 export function getConceptsByCategory(category: string): Concept[] {
   return concepts.filter(c => c.category === category)
+}
+
+export function getRelatedConcepts(id: string): Concept[] {
+  const relatedIds = relatedConceptsMap[id] || []
+  return relatedIds
+    .map(relatedId => concepts.find(c => c.id === relatedId))
+    .filter((c): c is Concept => c !== undefined)
 }

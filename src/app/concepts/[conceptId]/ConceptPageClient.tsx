@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Lightbulb, AlertTriangle, Award } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
-import { getConceptById } from '@/data/concepts'
+import { getConceptById, getRelatedConcepts } from '@/data/concepts'
 
 // Visualization components
 import { HoistingViz } from '@/components/Concepts/HoistingViz'
@@ -187,6 +187,35 @@ export default function ConceptPageClient() {
             </ul>
           </section>
         )}
+
+        {/* Related Concepts - Internal Linking for SEO */}
+        {(() => {
+          const relatedConcepts = getRelatedConcepts(concept.id)
+          if (relatedConcepts.length === 0) return null
+          return (
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>
+                <span className={styles.sectionIcon}>🔗</span>
+                Related Concepts
+              </h2>
+              <div className={styles.relatedConcepts}>
+                {relatedConcepts.map((related) => (
+                  <Link
+                    key={related.id}
+                    href={`/concepts/${related.id}`}
+                    className={styles.relatedCard}
+                  >
+                    <span className={styles.relatedIcon}>{related.icon}</span>
+                    <div className={styles.relatedInfo}>
+                      <h3 className={styles.relatedTitle}>{related.title}</h3>
+                      <p className={styles.relatedDesc}>{related.shortDescription}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )
+        })()}
       </main>
     </div>
   )
