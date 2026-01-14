@@ -1,15 +1,15 @@
-import { Link } from 'react-router-dom'
-import { NavBar } from '@/components'
+import Link from 'next/link'
+import { NavBar } from '@/components/NavBar'
 import { exampleCategories, getExamplesByCategory } from '@/data/examples'
 import { concepts } from '@/data/concepts'
-import styles from './HomePage.module.css'
+import styles from './page.module.css'
 
 // JS implementation categories (exclude DSA - it gets its own section)
 const jsCategories = exampleCategories.filter(c => c.id !== 'dsa')
 const dsaCategory = exampleCategories.find(c => c.id === 'dsa')!
 const dsaProblems = getExamplesByCategory('dsa')
 
-export function HomePage() {
+export default function HomePage() {
   return (
     <div className={styles.container}>
       <NavBar />
@@ -34,7 +34,7 @@ export function HomePage() {
                 What interviewers ask you to <strong>explain</strong>
               </p>
             </div>
-            <Link to="/concepts" className={styles.viewAllLink}>
+            <Link href="/concepts" className={styles.viewAllLink}>
               View All →
             </Link>
           </div>
@@ -43,7 +43,7 @@ export function HomePage() {
             {concepts.map((concept) => (
               <Link
                 key={concept.id}
-                to={`/concepts/${concept.id}`}
+                href={`/concepts/${concept.id}`}
                 className={styles.conceptCard}
               >
                 <span className={styles.conceptIcon}>{concept.icon}</span>
@@ -79,7 +79,7 @@ export function HomePage() {
               return (
                 <Link
                   key={category.id}
-                  to={`/${category.id}`}
+                  href={`/${category.id}`}
                   className={styles.buildCard}
                 >
                   <span className={styles.buildIcon}>{category.icon}</span>
@@ -108,7 +108,7 @@ export function HomePage() {
             </div>
           </div>
 
-          <Link to="/dsa" className={styles.dsaBanner}>
+          <Link href="/dsa" className={styles.dsaBanner}>
             <div className={styles.dsaContent}>
               <div className={styles.dsaLeft}>
                 <span className={styles.dsaIcon}>{dsaCategory.icon}</span>

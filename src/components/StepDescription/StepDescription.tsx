@@ -1,3 +1,5 @@
+'use client'
+
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCurrentStep, useExecutionStore, useExecutionProgress } from '@/store'
 import type { StepType } from '@/types'

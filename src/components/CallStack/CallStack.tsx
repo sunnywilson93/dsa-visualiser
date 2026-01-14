@@ -1,3 +1,5 @@
+'use client'
+
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCallStack, useExecutionStore } from '@/store'
 import { formatValue } from '@/engine'

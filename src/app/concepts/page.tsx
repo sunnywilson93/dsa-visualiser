@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom'
+'use client'
+
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { NavBar } from '@/components/NavBar'
 import { concepts, conceptCategories } from '@/data/concepts'
-import styles from './ConceptsPage.module.css'
+import styles from './page.module.css'
 
 const difficultyColors = {
   beginner: '#10b981',
@@ -10,7 +12,7 @@ const difficultyColors = {
   advanced: '#ef4444',
 }
 
-export function ConceptsPage() {
+export default function ConceptsPage() {
   return (
     <div className={styles.page}>
       <NavBar breadcrumbs={[{ label: 'Concepts' }]} />
@@ -21,7 +23,7 @@ export function ConceptsPage() {
           <p className={styles.subtitle}>
             Visual, interactive explanations of core JS concepts.
             <br />
-            Understand the "why" before practicing the "how".
+            Understand the &quot;why&quot; before practicing the &quot;how&quot;.
           </p>
         </header>
 
@@ -45,7 +47,7 @@ export function ConceptsPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <Link to={`/concepts/${concept.id}`} className={styles.card}>
+                    <Link href={`/concepts/${concept.id}`} className={styles.card}>
                       <div className={styles.cardHeader}>
                         <span className={styles.cardIcon}>{concept.icon}</span>
                         <span

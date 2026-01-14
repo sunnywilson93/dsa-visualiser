@@ -1,7 +1,10 @@
+'use client'
+
 import { useEffect } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { ArrowLeft } from 'lucide-react'
-import { CodeEditor } from '@/components/CodeEditor'
 import { CallStack } from '@/components/CallStack'
 import { Controls } from '@/components/Controls'
 import { Variables } from '@/components/Variables'
@@ -11,11 +14,20 @@ import { StepDescription } from '@/components/StepDescription'
 import { useExecutionStore } from '@/store'
 import { codeExamples, exampleCategories, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
 import { getConceptForProblem } from '@/data/algorithmConcepts'
-import styles from './PracticePage.module.css'
+import styles from './page.module.css'
 
-export function PracticePage() {
-  const { categoryId, problemId } = useParams<{ categoryId: string; problemId: string }>()
-  const navigate = useNavigate()
+// Dynamic import for Monaco editor (heavy, browser-only)
+const CodeEditor = dynamic(
+  () => import('@/components/CodeEditor').then(mod => mod.CodeEditor),
+  { ssr: false, loading: () => <div className={styles.editorLoading}>Loading editor...</div> }
+)
+
+export default function PracticePageClient() {
+  const params = useParams()
+  const router = useRouter()
+  const categoryId = params.categoryId as string
+  const problemId = params.problemId as string
+
   const setCode = useExecutionStore((state) => state.setCode)
   const reset = useExecutionStore((state) => state.reset)
 
@@ -49,7 +61,7 @@ export function PracticePage() {
     return (
       <div className={styles.notFound}>
         <h2>Problem not found</h2>
-        <Link to="/" className={styles.backLink}>
+        <Link href="/" className={styles.backLink}>
           <ArrowLeft size={16} /> Back to Home
         </Link>
       </div>
@@ -60,16 +72,16 @@ export function PracticePage() {
     <div className={styles.app}>
       <header className={styles.header}>
         <div className={styles.headerLeft}>
-          <button onClick={() => navigate(-1)} className={styles.backBtn}>
+          <button onClick={() => router.back()} className={styles.backBtn}>
             <ArrowLeft size={16} />
           </button>
           <div className={styles.problemInfo}>
             <div className={styles.breadcrumb}>
-              <Link to="/" className={styles.breadcrumbLink}>Home</Link>
+              <Link href="/" className={styles.breadcrumbLink}>Home</Link>
               <span className={styles.breadcrumbSep}>/</span>
               {mainCategory && (
                 <>
-                  <Link to={`/${mainCategory.id}`} className={styles.breadcrumbLink}>
+                  <Link href={`/${mainCategory.id}`} className={styles.breadcrumbLink}>
                     {mainCategory.name}
                   </Link>
                   {subcategoryName && (

@@ -1,9 +1,11 @@
-import { useParams, useNavigate, Link } from 'react-router-dom'
+'use client'
+
+import { useParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Lightbulb, AlertTriangle, Award } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { getConceptById } from '@/data/concepts'
-import styles from './ConceptPage.module.css'
 
 // Visualization components
 import { HoistingViz } from '@/components/Concepts/HoistingViz'
@@ -18,6 +20,8 @@ import { NodeEventLoopViz } from '@/components/Concepts/NodeEventLoopViz'
 import { StreamsBuffersViz } from '@/components/Concepts/StreamsBuffersViz'
 import { CriticalRenderPathViz } from '@/components/Concepts/CriticalRenderPathViz'
 import { WebWorkersViz } from '@/components/Concepts/WebWorkersViz'
+
+import styles from './page.module.css'
 
 const visualizations: Record<string, React.ComponentType> = {
   'hoisting': HoistingViz,
@@ -40,9 +44,10 @@ const difficultyColors = {
   advanced: '#ef4444',
 }
 
-export function ConceptPage() {
-  const { conceptId } = useParams<{ conceptId: string }>()
-  const navigate = useNavigate()
+export default function ConceptPageClient() {
+  const params = useParams()
+  const router = useRouter()
+  const conceptId = params.conceptId as string
 
   const concept = conceptId ? getConceptById(conceptId) : undefined
 
@@ -52,7 +57,7 @@ export function ConceptPage() {
         <NavBar />
         <div className={styles.notFound}>
           <h1>Concept not found</h1>
-          <Link to="/concepts">Back to Concepts</Link>
+          <Link href="/concepts">Back to Concepts</Link>
         </div>
       </div>
     )
@@ -72,7 +77,7 @@ export function ConceptPage() {
       <main className={styles.main}>
         {/* Header */}
         <header className={styles.header}>
-          <button className={styles.backBtn} onClick={() => navigate('/concepts')}>
+          <button className={styles.backBtn} onClick={() => router.push('/concepts')}>
             <ArrowLeft size={18} />
             <span>All Concepts</span>
           </button>

@@ -1,5 +1,7 @@
+'use client'
+
 import { useRef, useEffect, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import Editor, { OnMount, Monaco } from '@monaco-editor/react'
 import type { editor } from 'monaco-editor'
 import { Lightbulb } from 'lucide-react'
@@ -139,7 +141,7 @@ export function CodeEditor({ className, readOnly = false, conceptLink }: CodeEdi
         <span className={styles.title}>Code Editor</span>
         <div className={styles.headerRight}>
           {conceptLink && (
-            <Link to={conceptLink} className={styles.conceptBtn} title="Learn the concept">
+            <Link href={conceptLink} className={styles.conceptBtn} title="Learn the concept">
               <Lightbulb size={14} />
             </Link>
           )}

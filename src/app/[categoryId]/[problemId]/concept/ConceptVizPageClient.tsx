@@ -1,13 +1,18 @@
-import { useParams, Link, useNavigate } from 'react-router-dom'
+'use client'
+
+import { useParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { ArrowLeft, Code } from 'lucide-react'
 import { ConceptPanel } from '@/components/ConceptPanel'
 import { codeExamples, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
 import { getConceptForProblem, getConceptSteps } from '@/data/algorithmConcepts'
-import styles from './ConceptVisualizationPage.module.css'
+import styles from './page.module.css'
 
-export function ConceptVisualizationPage() {
-  const { categoryId, problemId } = useParams<{ categoryId: string; problemId: string }>()
-  const navigate = useNavigate()
+export default function ConceptVizPageClient() {
+  const params = useParams()
+  const router = useRouter()
+  const categoryId = params.categoryId as string
+  const problemId = params.problemId as string
 
   const problem = codeExamples.find((p) => p.id === problemId)
 
@@ -31,7 +36,7 @@ export function ConceptVisualizationPage() {
     return (
       <div className={styles.notFound}>
         <h2>Concept not found</h2>
-        <Link to="/" className={styles.backLink}>
+        <Link href="/" className={styles.backLink}>
           <ArrowLeft size={16} /> Back to Home
         </Link>
       </div>
@@ -42,14 +47,14 @@ export function ConceptVisualizationPage() {
     <div className={styles.page}>
       <header className={styles.header}>
         <div className={styles.headerLeft}>
-          <button onClick={() => navigate(-1)} className={styles.backBtn}>
+          <button onClick={() => router.back()} className={styles.backBtn}>
             <ArrowLeft size={16} />
           </button>
           <div className={styles.problemInfo}>
             <div className={styles.breadcrumb}>
-              <Link to="/" className={styles.breadcrumbLink}>Home</Link>
+              <Link href="/" className={styles.breadcrumbLink}>Home</Link>
               <span className={styles.breadcrumbSep}>/</span>
-              <Link to={`/${categoryId}`} className={styles.breadcrumbLink}>
+              <Link href={`/${categoryId}`} className={styles.breadcrumbLink}>
                 DSA
               </Link>
               {subcategoryName && (
@@ -79,7 +84,7 @@ export function ConceptVisualizationPage() {
         </div>
 
         <Link
-          to={`/${categoryId}/${problemId}`}
+          href={`/${categoryId}/${problemId}`}
           className={styles.practiceLink}
         >
           <Code size={16} />

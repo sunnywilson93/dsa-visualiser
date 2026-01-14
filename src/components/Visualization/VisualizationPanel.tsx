@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo } from 'react'
 import { useCurrentStep, useExecutionStore } from '@/store'
 import type { ArrayValue, RuntimeValue, ExecutionStep } from '@/types'

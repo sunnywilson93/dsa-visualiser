@@ -1,20 +1,24 @@
+'use client'
+
 import { useState, useMemo } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Search } from 'lucide-react'
-import { NavBar } from '@/components'
+import { NavBar } from '@/components/NavBar'
 import {
   exampleCategories,
   dsaSubcategories,
   getExamplesByCategory,
   type CodeExample,
 } from '@/data/examples'
-import styles from './CategoryPage.module.css'
+import styles from './page.module.css'
 
 type Difficulty = 'all' | 'easy' | 'medium' | 'hard'
 
-export function CategoryPage() {
-  const { categoryId } = useParams<{ categoryId: string }>()
-  const navigate = useNavigate()
+export default function CategoryPageClient() {
+  const params = useParams()
+  const router = useRouter()
+  const categoryId = params.categoryId as string
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('all')
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null)
@@ -54,7 +58,7 @@ export function CategoryPage() {
   }, [allProblems, selectedSubcategory, selectedDifficulty, searchQuery])
 
   const handleSelectProblem = (problem: CodeExample) => {
-    navigate(`/${categoryId}/${problem.id}`)
+    router.push(`/${categoryId}/${problem.id}`)
   }
 
   if (!category) {
@@ -63,7 +67,7 @@ export function CategoryPage() {
         <NavBar />
         <div className={styles.notFound}>
           <h2>Category not found</h2>
-          <Link to="/" className={styles.backLink}>
+          <Link href="/" className={styles.backLink}>
             Back to Home
           </Link>
         </div>

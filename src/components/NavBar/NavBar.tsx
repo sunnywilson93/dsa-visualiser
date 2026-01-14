@@ -1,4 +1,7 @@
-import { Link, useLocation } from 'react-router-dom'
+'use client'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Home, ChevronRight } from 'lucide-react'
 import styles from './NavBar.module.css'
 
@@ -12,27 +15,27 @@ interface NavBarProps {
 }
 
 export function NavBar({ breadcrumbs }: NavBarProps) {
-  const location = useLocation()
-  const isHome = location.pathname === '/'
+  const pathname = usePathname()
+  const isHome = pathname === '/'
 
   return (
     <nav className={styles.nav}>
       <div className={styles.container}>
-        <Link to="/" className={styles.logo}>
+        <Link href="/" className={styles.logo}>
           <span className={styles.logoIcon}>JS</span>
           <span className={styles.logoText}>JS Interview</span>
         </Link>
 
         {!isHome && breadcrumbs && breadcrumbs.length > 0 && (
           <div className={styles.breadcrumbs}>
-            <Link to="/" className={styles.breadcrumbLink}>
+            <Link href="/" className={styles.breadcrumbLink}>
               <Home size={14} />
             </Link>
             {breadcrumbs.map((crumb, index) => (
               <span key={index} className={styles.breadcrumbItem}>
                 <ChevronRight size={14} className={styles.separator} />
                 {crumb.path ? (
-                  <Link to={crumb.path} className={styles.breadcrumbLink}>
+                  <Link href={crumb.path} className={styles.breadcrumbLink}>
                     {crumb.label}
                   </Link>
                 ) : (
