@@ -5,13 +5,19 @@ import { NavBar } from '@/components/NavBar'
 import { getConceptById } from '@/data/concepts'
 import styles from './ConceptPage.module.css'
 
-// Visualization components (we'll add these)
+// Visualization components
 import { HoistingViz } from '@/components/Concepts/HoistingViz'
 import { ClosuresViz } from '@/components/Concepts/ClosuresViz'
 import { ThisKeywordViz } from '@/components/Concepts/ThisKeywordViz'
 import { EventLoopViz } from '@/components/Concepts/EventLoopViz'
 import { PrototypesViz } from '@/components/Concepts/PrototypesViz'
 import { RecursionViz } from '@/components/Concepts/RecursionViz'
+import { MemoryModelViz } from '@/components/Concepts/MemoryModelViz'
+import { V8EngineViz } from '@/components/Concepts/V8EngineViz'
+import { NodeEventLoopViz } from '@/components/Concepts/NodeEventLoopViz'
+import { StreamsBuffersViz } from '@/components/Concepts/StreamsBuffersViz'
+import { CriticalRenderPathViz } from '@/components/Concepts/CriticalRenderPathViz'
+import { WebWorkersViz } from '@/components/Concepts/WebWorkersViz'
 
 const visualizations: Record<string, React.ComponentType> = {
   'hoisting': HoistingViz,
@@ -20,6 +26,12 @@ const visualizations: Record<string, React.ComponentType> = {
   'event-loop': EventLoopViz,
   'prototypes': PrototypesViz,
   'recursion': RecursionViz,
+  'memory-model': MemoryModelViz,
+  'v8-engine': V8EngineViz,
+  'nodejs-event-loop': NodeEventLoopViz,
+  'streams-buffers': StreamsBuffersViz,
+  'critical-render-path': CriticalRenderPathViz,
+  'web-workers': WebWorkersViz,
 }
 
 const difficultyColors = {

@@ -1,0 +1,364 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Level Selector */
+.levelSelector {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+}
+
+.levelBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.levelBtn:hover {
+  color: #ccc;
+}
+
+.levelBtn.activeLevel {
+  color: #fff;
+}
+
+.levelDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Example Selector */
+.exampleSelector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.exampleBtn {
+  padding: 0.4rem 0.8rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.exampleBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.exampleBtn.active {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+  border-color: rgba(102, 126, 234, 0.5);
+  color: #a5b4fc;
+}
+
+/* Code panel */
+.codePanel {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #888;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.phaseBadge {
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.code {
+  margin: 0;
+  padding: 0.5rem 0;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.codeLine {
+  display: flex;
+  padding: 0.1rem 0.5rem;
+  transition: background 0.2s;
+}
+
+.codeLine.activeLine {
+  background: rgba(102, 126, 234, 0.2);
+}
+
+.lineNum {
+  width: 1.5rem;
+  color: #555;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  user-select: none;
+}
+
+.lineCode {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  color: #ccc;
+}
+
+.activeLine .lineCode {
+  color: #a5b4fc;
+}
+
+/* Memory Grid */
+.memoryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 0.75rem;
+}
+
+.memorySection {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sectionHeader {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #000;
+  text-align: center;
+}
+
+.sectionContent {
+  padding: 0.5rem;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.emptySection {
+  color: #555;
+  font-size: 0.65rem;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+/* Stack Items */
+.stackItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0.5rem;
+  background: rgba(102, 126, 234, 0.15);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+}
+
+.stackItem.reference {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.varName {
+  color: #a5b4fc;
+}
+
+.varValue {
+  color: #10b981;
+}
+
+.stackItem.reference .varValue {
+  color: #fcd34d;
+}
+
+/* Heap Objects */
+.heapObject {
+  padding: 0.4rem 0.5rem;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 6px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.55rem;
+}
+
+.heapObject.marked {
+  border-color: rgba(139, 92, 246, 0.6);
+  background: rgba(139, 92, 246, 0.15);
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.3);
+}
+
+.heapObject.unmarked {
+  border-color: rgba(239, 68, 68, 0.6);
+  background: rgba(239, 68, 68, 0.1);
+  opacity: 0.7;
+}
+
+.objectLabel {
+  font-weight: 600;
+  color: #fcd34d;
+  margin-bottom: 0.25rem;
+}
+
+.objectProps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.prop {
+  color: #ccc;
+}
+
+.prop span:first-child {
+  color: #a5b4fc;
+}
+
+.prop span:last-child {
+  color: #10b981;
+}
+
+.arrayElements {
+  color: #c4b5fd;
+  font-size: 0.6rem;
+}
+
+.funcLabel {
+  color: #f472b6;
+  font-style: italic;
+}
+
+/* Output */
+.output {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 6px;
+}
+
+.outputLabel {
+  color: #888;
+  font-size: 0.65rem;
+}
+
+.outputItem {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: #10b981;
+}
+
+/* Description */
+.description {
+  padding: 0.6rem 0.75rem;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.stepBadge {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  background: rgba(102, 126, 234, 0.3);
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  margin-right: 0.5rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.btnPrimary {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.btnSecondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Insight */
+.insight {
+  padding: 0.5rem 0.75rem;
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 8px;
+  font-size: 0.7rem;
+  color: #888;
+  text-align: center;
+}
+
+.insight strong {
+  color: #8b5cf6;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .memoryGrid {
+    grid-template-columns: 1fr;
+  }
+}

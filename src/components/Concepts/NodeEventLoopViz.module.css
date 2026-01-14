@@ -1,0 +1,341 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.levelSelector {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.levelBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.levelBtn:hover { color: #ccc; }
+.levelBtn.activeLevel { color: #fff; }
+.levelDot { width: 8px; height: 8px; border-radius: 50%; }
+
+.exampleSelector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.exampleBtn {
+  padding: 0.4rem 0.8rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.exampleBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.exampleBtn.active {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+  border-color: rgba(102, 126, 234, 0.5);
+  color: #a5b4fc;
+}
+
+.codePanel {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #888;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.phaseBadge {
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.code {
+  margin: 0;
+  padding: 0.5rem 0;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+.codeLine {
+  display: flex;
+  padding: 0.1rem 0.5rem;
+  transition: background 0.2s;
+}
+
+.codeLine.activeLine {
+  background: rgba(102, 126, 234, 0.2);
+}
+
+.lineNum {
+  width: 1.5rem;
+  color: #555;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  user-select: none;
+}
+
+.lineCode {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  color: #ccc;
+}
+
+.activeLine .lineCode { color: #a5b4fc; }
+
+/* Priority Queues */
+.priorityQueues {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.priorityQueue {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.priorityQueue.hasItems {
+  border-color: rgba(139, 92, 246, 0.4);
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.queueHeader {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.15);
+  text-align: center;
+}
+
+.queueContent {
+  padding: 0.4rem;
+  min-height: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.emptyQueue {
+  color: #555;
+  font-size: 0.6rem;
+  width: 100%;
+  text-align: center;
+}
+
+.queueItem {
+  padding: 0.2rem 0.4rem;
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.55rem;
+  color: #c4b5fd;
+}
+
+/* Event Loop Phases */
+.phasesContainer {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.phase {
+  flex: 1;
+  min-width: 70px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.phase.activePhase {
+  border-color: rgba(16, 185, 129, 0.6);
+  background: rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+}
+
+.phaseName {
+  padding: 0.3rem;
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: #666;
+  background: rgba(255, 255, 255, 0.05);
+  text-align: center;
+}
+
+.activePhase .phaseName {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.15);
+}
+
+.phaseContent {
+  padding: 0.4rem;
+  min-height: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.emptyPhase {
+  color: #444;
+  font-size: 0.6rem;
+  text-align: center;
+}
+
+.phaseItem {
+  padding: 0.2rem 0.3rem;
+  background: rgba(102, 126, 234, 0.15);
+  border-radius: 3px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.5rem;
+  color: #a5b4fc;
+  text-align: center;
+}
+
+/* Output */
+.output {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.4rem 0.6rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 6px;
+}
+
+.outputLabel {
+  color: #888;
+  font-size: 0.65rem;
+}
+
+.outputItem {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: #10b981;
+}
+
+/* Description */
+.description {
+  padding: 0.6rem 0.75rem;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.stepBadge {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  background: rgba(102, 126, 234, 0.3);
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  margin-right: 0.5rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.btnPrimary {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.btnSecondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Insight */
+.insight {
+  padding: 0.5rem 0.75rem;
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 8px;
+  font-size: 0.7rem;
+  color: #888;
+  text-align: center;
+}
+
+.insight strong { color: #8b5cf6; }
+
+@media (max-width: 640px) {
+  .phasesContainer { flex-direction: column; }
+  .phase { min-width: auto; }
+  .priorityQueues { grid-template-columns: 1fr; }
+}
