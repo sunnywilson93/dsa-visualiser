@@ -1,7 +1,8 @@
 export interface CodeExample {
   id: string
   name: string
-  category: string
+  category: string  // Primary category (for backward compatibility)
+  categories?: string[]  // All categories this problem belongs to
   difficulty: 'easy' | 'medium' | 'hard'
   description: string
   code: string
@@ -17,7 +18,7 @@ export const exampleCategories = [
   { id: 'dom-events', name: 'DOM & Events', icon: '🎯', description: 'Event emitter, delegation, pub/sub' },
   { id: 'object-utils', name: 'Object Utilities', icon: '📦', description: 'Deep equal, merge, get/set nested props' },
   { id: 'promise-polyfills', name: 'Promise Polyfills', icon: '🤝', description: 'Promise.all, race, allSettled, promisify' },
-  { id: 'dsa', name: 'DSA', icon: '🧠', description: 'Data structures & algorithms (30 problems)' },
+  { id: 'dsa', name: 'DSA', icon: '🧠', description: 'Data structures & algorithms' },
 ]
 
 // DSA subcategories for filtering within DSA page
@@ -43,15 +44,35 @@ export const dsaSubcategories = [
   { id: 'math', name: 'Math & Geometry', icon: '➗' },
 ]
 
+// Helper to get all categories for a problem
+const getAllCategories = (example: CodeExample): string[] => {
+  return example.categories || [example.category]
+}
+
 // Helper to check if a category is a DSA subcategory
 export const isDsaSubcategory = (cat: string) => dsaSubcategories.some(s => s.id === cat)
 
-// Get examples by main category (maps DSA subcategories to 'dsa')
+// Check if example belongs to a DSA subcategory
+const isDsaExample = (example: CodeExample): boolean => {
+  return getAllCategories(example).some(cat => isDsaSubcategory(cat))
+}
+
+// Get examples by category (problem appears in all its categories)
 export const getExamplesByCategory = (categoryId: string) => {
   if (categoryId === 'dsa') {
-    return codeExamples.filter(e => isDsaSubcategory(e.category))
+    return codeExamples.filter(e => isDsaExample(e))
   }
-  return codeExamples.filter(e => e.category === categoryId)
+  return codeExamples.filter(e => getAllCategories(e).includes(categoryId))
+}
+
+// Get unique problem count for DSA (no double counting)
+export const getUniqueDsaProblemCount = (): number => {
+  return codeExamples.filter(e => isDsaExample(e)).length
+}
+
+// Get problem count by subcategory
+export const getProblemCountByCategory = (categoryId: string): number => {
+  return getExamplesByCategory(categoryId).length
 }
 
 export const codeExamples: CodeExample[] = [
@@ -3721,6 +3742,7 @@ console.log("\\nMaximum XOR:", maxXor);
     id: 'two-sum-ii',
     name: 'Two Sum II (Sorted)',
     category: 'two-pointers',
+    categories: ['two-pointers', 'arrays-hashing', 'binary-search'],
     difficulty: 'easy',
     description: 'Find two numbers in a sorted array that add up to target',
     code: `// Two Sum II - Sorted Array
@@ -3992,6 +4014,7 @@ sortedSquares(nums);
     id: 'container-with-most-water',
     name: 'Container With Most Water',
     category: 'two-pointers',
+    categories: ['two-pointers', 'arrays-hashing'],
     difficulty: 'medium',
     description: 'Find two lines that form container holding most water',
     code: `// Container With Most Water
@@ -4043,6 +4066,7 @@ maxArea(height);
     id: 'three-sum',
     name: '3Sum',
     category: 'two-pointers',
+    categories: ['two-pointers', 'arrays-hashing', 'sorting'],
     difficulty: 'medium',
     description: 'Find all unique triplets that sum to zero',
     code: `// 3Sum - Find triplets summing to zero
@@ -4354,6 +4378,7 @@ partitionLabels(s);
     id: 'trapping-rain-water',
     name: 'Trapping Rain Water',
     category: 'two-pointers',
+    categories: ['two-pointers', 'arrays-hashing', 'stack', 'dynamic-programming'],
     difficulty: 'hard',
     description: 'Calculate how much rain water can be trapped between bars',
     code: `// Trapping Rain Water
