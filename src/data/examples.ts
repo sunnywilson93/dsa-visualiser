@@ -4475,4 +4475,456 @@ let target = 1;
 threeSumClosest(nums, target);
 `,
   },
+
+  // ==================== ARRAYS & HASHING ====================
+  {
+    id: 'two-sum',
+    name: 'Two Sum',
+    category: 'arrays-hashing',
+    difficulty: 'easy',
+    description: 'Find two numbers that add up to target using hash map',
+    code: `// Two Sum - Hash Map Approach
+// Store each number's index in a map
+// For each number, check if (target - num) exists
+
+function twoSum(nums, target) {
+  let map = new Map();
+
+  console.log("Finding two numbers that sum to", target);
+  console.log("Array:", nums);
+  console.log("");
+
+  for (let i = 0; i < nums.length; i++) {
+    let complement = target - nums[i];
+
+    console.log("Index", i + ":", nums[i]);
+    console.log("Need complement:", complement);
+
+    if (map.has(complement)) {
+      console.log("Found!", complement, "at index", map.get(complement));
+      return [map.get(complement), i];
+    }
+
+    map.set(nums[i], i);
+    console.log("Added to map:", nums[i], "->", i);
+    console.log("Map:", Object.fromEntries(map));
+    console.log("");
+  }
+
+  return [];
+}
+
+let nums = [2, 7, 11, 15];
+let target = 9;
+let result = twoSum(nums, target);
+console.log("Result:", result);
+`,
+  },
+  {
+    id: 'contains-duplicate',
+    name: 'Contains Duplicate',
+    category: 'arrays-hashing',
+    difficulty: 'easy',
+    description: 'Check if array contains any duplicate values using Set',
+    code: `// Contains Duplicate - Set Approach
+// Add each element to a Set
+// If element already exists, we found a duplicate
+
+function containsDuplicate(nums) {
+  let seen = new Set();
+
+  console.log("Checking for duplicates in:", nums);
+  console.log("");
+
+  for (let i = 0; i < nums.length; i++) {
+    console.log("Checking:", nums[i]);
+
+    if (seen.has(nums[i])) {
+      console.log("Duplicate found!", nums[i]);
+      return true;
+    }
+
+    seen.add(nums[i]);
+    console.log("Added to set. Set size:", seen.size);
+    console.log("");
+  }
+
+  console.log("No duplicates found");
+  return false;
+}
+
+console.log("--- Test 1 ---");
+containsDuplicate([1, 2, 3, 1]);
+
+console.log("\\n--- Test 2 ---");
+containsDuplicate([1, 2, 3, 4]);
+`,
+  },
+  {
+    id: 'valid-anagram',
+    name: 'Valid Anagram',
+    category: 'arrays-hashing',
+    difficulty: 'easy',
+    description: 'Check if two strings are anagrams using character frequency',
+    code: `// Valid Anagram - Frequency Count
+// Count character frequencies in both strings
+// Compare the frequency maps
+
+function isAnagram(s, t) {
+  if (s.length !== t.length) {
+    console.log("Different lengths - not anagram");
+    return false;
+  }
+
+  console.log("Comparing:", s, "vs", t);
+  console.log("");
+
+  let count = new Map();
+
+  // Count characters in first string
+  for (let char of s) {
+    count.set(char, (count.get(char) || 0) + 1);
+  }
+  console.log("Frequency of s:", Object.fromEntries(count));
+
+  // Subtract characters from second string
+  for (let char of t) {
+    if (!count.has(char) || count.get(char) === 0) {
+      console.log("Character", char, "not found or exhausted");
+      return false;
+    }
+    count.set(char, count.get(char) - 1);
+    console.log("After", char + ":", Object.fromEntries(count));
+  }
+
+  console.log("\\nAll characters matched - valid anagram!");
+  return true;
+}
+
+console.log("--- Test 1 ---");
+isAnagram("anagram", "nagaram");
+
+console.log("\\n--- Test 2 ---");
+isAnagram("rat", "car");
+`,
+  },
+  {
+    id: 'group-anagrams',
+    name: 'Group Anagrams',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Group strings that are anagrams of each other',
+    code: `// Group Anagrams
+// Sort each string to create a key
+// Group strings with the same sorted key
+
+function groupAnagrams(strs) {
+  let map = new Map();
+
+  console.log("Grouping anagrams:", strs);
+  console.log("");
+
+  for (let str of strs) {
+    // Sort string to create key
+    let key = str.split('').sort().join('');
+
+    console.log("String:", str, "-> Key:", key);
+
+    if (!map.has(key)) {
+      map.set(key, []);
+    }
+    map.get(key).push(str);
+
+    console.log("Groups so far:", Object.fromEntries(map));
+    console.log("");
+  }
+
+  let result = Array.from(map.values());
+  console.log("Final groups:", result);
+  return result;
+}
+
+let strs = ["eat", "tea", "tan", "ate", "nat", "bat"];
+groupAnagrams(strs);
+`,
+  },
+  {
+    id: 'top-k-frequent',
+    name: 'Top K Frequent Elements',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Find the k most frequent elements using bucket sort',
+    code: `// Top K Frequent Elements - Bucket Sort
+// Count frequencies, then use bucket sort
+// Bucket index = frequency, value = elements
+
+function topKFrequent(nums, k) {
+  console.log("Finding top", k, "frequent in:", nums);
+  console.log("");
+
+  // Step 1: Count frequencies
+  let freq = new Map();
+  for (let num of nums) {
+    freq.set(num, (freq.get(num) || 0) + 1);
+  }
+  console.log("Frequencies:", Object.fromEntries(freq));
+
+  // Step 2: Create buckets (index = frequency)
+  let buckets = new Array(nums.length + 1).fill(null).map(() => []);
+
+  for (let [num, count] of freq) {
+    buckets[count].push(num);
+    console.log("Bucket", count + ":", buckets[count]);
+  }
+
+  // Step 3: Collect top k from highest buckets
+  let result = [];
+  console.log("\\nCollecting top", k, "from buckets:");
+
+  for (let i = buckets.length - 1; i >= 0 && result.length < k; i--) {
+    if (buckets[i].length > 0) {
+      console.log("Bucket", i + ":", buckets[i]);
+      result.push(...buckets[i]);
+    }
+  }
+
+  result = result.slice(0, k);
+  console.log("\\nResult:", result);
+  return result;
+}
+
+let nums = [1, 1, 1, 2, 2, 3];
+topKFrequent(nums, 2);
+`,
+  },
+  {
+    id: 'product-except-self',
+    name: 'Product of Array Except Self',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Calculate product of all elements except self without division',
+    code: `// Product of Array Except Self
+// Use prefix and suffix products
+// result[i] = prefix[i] * suffix[i]
+
+function productExceptSelf(nums) {
+  let n = nums.length;
+  let result = new Array(n).fill(1);
+
+  console.log("Input:", nums);
+  console.log("");
+
+  // Calculate prefix products
+  console.log("--- Prefix Products ---");
+  let prefix = 1;
+  for (let i = 0; i < n; i++) {
+    result[i] = prefix;
+    console.log("result[" + i + "] = prefix", prefix);
+    prefix *= nums[i];
+    console.log("prefix *= nums[" + i + "] =", prefix);
+  }
+  console.log("After prefix:", result);
+
+  // Calculate suffix products and multiply
+  console.log("\\n--- Suffix Products ---");
+  let suffix = 1;
+  for (let i = n - 1; i >= 0; i--) {
+    result[i] *= suffix;
+    console.log("result[" + i + "] *= suffix", suffix, "=", result[i]);
+    suffix *= nums[i];
+    console.log("suffix *= nums[" + i + "] =", suffix);
+  }
+
+  console.log("\\nFinal result:", result);
+  return result;
+}
+
+let nums = [1, 2, 3, 4];
+productExceptSelf(nums);
+`,
+  },
+  {
+    id: 'longest-consecutive',
+    name: 'Longest Consecutive Sequence',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Find length of longest consecutive sequence in O(n)',
+    code: `// Longest Consecutive Sequence
+// Use Set for O(1) lookup
+// Only start counting from sequence beginnings
+
+function longestConsecutive(nums) {
+  if (nums.length === 0) return 0;
+
+  let numSet = new Set(nums);
+  let longest = 0;
+
+  console.log("Array:", nums);
+  console.log("Set:", [...numSet]);
+  console.log("");
+
+  for (let num of numSet) {
+    // Only start if num-1 doesn't exist (sequence start)
+    if (!numSet.has(num - 1)) {
+      console.log("Starting sequence at:", num);
+
+      let currentNum = num;
+      let currentStreak = 1;
+
+      while (numSet.has(currentNum + 1)) {
+        currentNum++;
+        currentStreak++;
+        console.log("  Found:", currentNum, "streak:", currentStreak);
+      }
+
+      longest = Math.max(longest, currentStreak);
+      console.log("  Sequence length:", currentStreak);
+      console.log("  Longest so far:", longest);
+      console.log("");
+    }
+  }
+
+  console.log("Longest consecutive:", longest);
+  return longest;
+}
+
+let nums = [100, 4, 200, 1, 3, 2];
+longestConsecutive(nums);
+`,
+  },
+  {
+    id: 'best-time-buy-sell',
+    name: 'Best Time to Buy and Sell Stock',
+    category: 'arrays-hashing',
+    difficulty: 'easy',
+    description: 'Find maximum profit from one buy and one sell',
+    code: `// Best Time to Buy and Sell Stock
+// Track minimum price seen so far
+// Calculate profit at each step
+
+function maxProfit(prices) {
+  let minPrice = Infinity;
+  let maxProfit = 0;
+
+  console.log("Prices:", prices);
+  console.log("");
+
+  for (let i = 0; i < prices.length; i++) {
+    let price = prices[i];
+    console.log("Day", i + ":", "price =", price);
+
+    if (price < minPrice) {
+      minPrice = price;
+      console.log("  New minimum price:", minPrice);
+    }
+
+    let profit = price - minPrice;
+    console.log("  Profit if sell today:", profit);
+
+    if (profit > maxProfit) {
+      maxProfit = profit;
+      console.log("  New max profit!", maxProfit);
+    }
+    console.log("");
+  }
+
+  console.log("Maximum profit:", maxProfit);
+  return maxProfit;
+}
+
+let prices = [7, 1, 5, 3, 6, 4];
+maxProfit(prices);
+`,
+  },
+  {
+    id: 'maximum-subarray',
+    name: 'Maximum Subarray (Kadane)',
+    category: 'arrays-hashing',
+    difficulty: 'medium',
+    description: 'Find contiguous subarray with largest sum using Kadane algorithm',
+    code: `// Maximum Subarray - Kadane's Algorithm
+// At each position: extend current subarray or start new
+// currentSum = max(nums[i], currentSum + nums[i])
+
+function maxSubArray(nums) {
+  let currentSum = nums[0];
+  let maxSum = nums[0];
+
+  console.log("Array:", nums);
+  console.log("Starting with:", nums[0]);
+  console.log("");
+
+  for (let i = 1; i < nums.length; i++) {
+    console.log("Index", i + ":", nums[i]);
+    console.log("  Current sum before:", currentSum);
+
+    // Decide: start fresh or extend?
+    if (currentSum + nums[i] > nums[i]) {
+      currentSum = currentSum + nums[i];
+      console.log("  Extend subarray:", currentSum);
+    } else {
+      currentSum = nums[i];
+      console.log("  Start new subarray:", currentSum);
+    }
+
+    if (currentSum > maxSum) {
+      maxSum = currentSum;
+      console.log("  New max sum!", maxSum);
+    }
+    console.log("");
+  }
+
+  console.log("Maximum subarray sum:", maxSum);
+  return maxSum;
+}
+
+let nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
+maxSubArray(nums);
+`,
+  },
+  {
+    id: 'majority-element',
+    name: 'Majority Element',
+    category: 'arrays-hashing',
+    difficulty: 'easy',
+    description: 'Find element appearing more than n/2 times using Boyer-Moore',
+    code: `// Majority Element - Boyer-Moore Voting
+// Maintain a candidate and count
+// If count = 0, pick new candidate
+
+function majorityElement(nums) {
+  let candidate = null;
+  let count = 0;
+
+  console.log("Array:", nums);
+  console.log("Looking for element appearing >", nums.length / 2, "times");
+  console.log("");
+
+  for (let i = 0; i < nums.length; i++) {
+    let num = nums[i];
+    console.log("Index", i + ":", num);
+
+    if (count === 0) {
+      candidate = num;
+      console.log("  New candidate:", candidate);
+    }
+
+    if (num === candidate) {
+      count++;
+      console.log("  Match! Count:", count);
+    } else {
+      count--;
+      console.log("  Different. Count:", count);
+    }
+    console.log("");
+  }
+
+  console.log("Majority element:", candidate);
+  return candidate;
+}
+
+let nums = [2, 2, 1, 1, 1, 2, 2];
+majorityElement(nums);
+`,
+  },
 ]
