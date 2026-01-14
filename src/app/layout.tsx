@@ -4,6 +4,9 @@ import { Analytics } from '@/components/Analytics'
 import '@/index.css'
 
 export const metadata: Metadata = {
+  verification: {
+    google: 'VrYpJpsVJz7IC1u0x6Cwe02I9vd2zk8-k5qgqudMOBw',
+  },
   title: 'JS Interview Prep - Master JavaScript with Interactive Code Visualization',
   description: 'Free interactive JavaScript interview preparation. Visualize closures, hoisting, event loop, prototypes, promises, and 100+ coding challenges with step-by-step execution. Ace your frontend interview at FAANG and top tech companies.',
   keywords: 'javascript interview questions, js interview prep, frontend interview, coding interview, javascript visualizer, learn javascript, closures explained, event loop visualization, promise polyfill, array methods, hoisting, this keyword, prototype chain, async await, FAANG interview, web developer interview, javascript tutorial, interactive coding, DSA javascript, algorithm visualization',
