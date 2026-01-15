@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, Lightbulb, AlertTriangle, Award, Clock } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { getDSAConceptById, getRelatedDSAConcepts } from '@/data/dsaConcepts'
-import { HashTableViz, StackViz, BigOViz, ArrayViz } from '@/components/DSAConcepts'
+import { HashTableViz, StackViz, BigOViz, ArrayViz, QueueViz, LinkedListViz } from '@/components/DSAConcepts'
 import styles from '../../[conceptId]/page.module.css'
 import localStyles from './page.module.css'
 
@@ -16,6 +16,8 @@ const visualizations: Record<string, React.ComponentType> = {
   'arrays': ArrayViz,
   'hash-tables': HashTableViz,
   'stacks': StackViz,
+  'queues': QueueViz,
+  'linked-lists': LinkedListViz,
 }
 
 const difficultyColors = {
