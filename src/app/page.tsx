@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { NavBar } from '@/components/NavBar'
+import { ExpandableGrid } from '@/components/ExpandableGrid'
 import { exampleCategories, getExamplesByCategory } from '@/data/examples'
 import { concepts } from '@/data/concepts'
+import { dsaConcepts } from '@/data/dsaConcepts'
 import styles from './page.module.css'
 
 // JS implementation categories (exclude DSA - it gets its own section)
@@ -22,7 +24,7 @@ export default function HomePage() {
       </header>
 
       <main className={styles.main}>
-        {/* Section 1: UNDERSTAND - JavaScript Concepts */}
+        {/* Section 1: UNDERSTAND - Concepts */}
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
             <div>
@@ -39,23 +41,45 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className={styles.conceptsGrid}>
-            {concepts.map((concept) => (
-              <Link
-                key={concept.id}
-                href={`/concepts/${concept.id}`}
-                className={styles.conceptCard}
-              >
-                <span className={styles.conceptIcon}>{concept.icon}</span>
-                <div className={styles.conceptContent}>
-                  <h3 className={styles.conceptTitle}>{concept.title}</h3>
-                  <p className={styles.conceptDescription}>
-                    {concept.shortDescription}
-                  </p>
-                </div>
-                <span className={styles.conceptBadge}>{concept.difficulty}</span>
-              </Link>
-            ))}
+          {/* Two concept category cards */}
+          <div className={styles.conceptCategoryGrid}>
+            <Link href="/concepts/dsa" className={styles.conceptCategoryCard}>
+              <div className={styles.conceptCategoryHeader}>
+                <span className={styles.conceptCategoryIcon}>🏗️</span>
+                <span className={styles.conceptCategoryBadge}>{dsaConcepts.length} topics</span>
+              </div>
+              <h3 className={styles.conceptCategoryTitle}>DSA Fundamentals</h3>
+              <p className={styles.conceptCategoryDescription}>
+                Big O, Arrays, Hash Tables, Stacks, Queues, Linked Lists
+              </p>
+              <div className={styles.conceptCategoryTopics}>
+                {dsaConcepts.slice(0, 4).map(c => (
+                  <span key={c.id} className={styles.topicTag}>{c.title}</span>
+                ))}
+                {dsaConcepts.length > 4 && (
+                  <span className={styles.topicMore}>+{dsaConcepts.length - 4}</span>
+                )}
+              </div>
+            </Link>
+
+            <Link href="/concepts" className={styles.conceptCategoryCard}>
+              <div className={styles.conceptCategoryHeader}>
+                <span className={styles.conceptCategoryIcon}>⚡</span>
+                <span className={styles.conceptCategoryBadge}>{concepts.length} topics</span>
+              </div>
+              <h3 className={styles.conceptCategoryTitle}>JavaScript Deep Dive</h3>
+              <p className={styles.conceptCategoryDescription}>
+                Closures, Event Loop, Prototypes, This, V8 Engine
+              </p>
+              <div className={styles.conceptCategoryTopics}>
+                {concepts.slice(0, 4).map(c => (
+                  <span key={c.id} className={styles.topicTag}>{c.title}</span>
+                ))}
+                {concepts.length > 4 && (
+                  <span className={styles.topicMore}>+{concepts.length - 4}</span>
+                )}
+              </div>
+            </Link>
           </div>
         </section>
 
@@ -73,7 +97,11 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className={styles.buildGrid}>
+          <ExpandableGrid
+            className={styles.buildGrid}
+            collapsedClassName={styles.buildGridCollapsed}
+            showAllText={`Show All (${jsCategories.length})`}
+          >
             {jsCategories.map((category) => {
               const problems = getExamplesByCategory(category.id)
               return (
@@ -91,7 +119,7 @@ export default function HomePage() {
                 </Link>
               )
             })}
-          </div>
+          </ExpandableGrid>
         </section>
 
         {/* Section 3: SOLVE - Data Structures & Algorithms */}

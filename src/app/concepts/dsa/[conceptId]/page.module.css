@@ -1,0 +1,100 @@
+/* DSA-specific styles */
+
+/* Complexity Table */
+.complexityTable {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.complexityTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.complexityTable th,
+.complexityTable td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.complexityTable th {
+  background: rgba(102, 126, 234, 0.15);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.complexityTable td {
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.complexityTable tr:last-child td {
+  border-bottom: none;
+}
+
+.complexityTable tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.complexityCell {
+  color: #10b981 !important;
+  font-family: 'Fira Code', monospace;
+  font-weight: 500;
+}
+
+.complexityCellWorse {
+  color: #f59e0b !important;
+  font-family: 'Fira Code', monospace;
+  font-weight: 500;
+}
+
+.complexityCellBest {
+  color: #10b981 !important;
+  font-family: 'Fira Code', monospace;
+  font-weight: 500;
+}
+
+/* Related Problems */
+.relatedProblems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.problemLink {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 20px;
+  color: #667eea;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.problemLink:hover {
+  background: rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .complexityTable th,
+  .complexityTable td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .problemLink {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}

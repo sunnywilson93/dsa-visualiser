@@ -97,6 +97,10 @@
   gap: 1rem;
 }
 
+.conceptsGridCollapsed {
+  max-height: 180px; /* Show only 1 row */
+}
+
 .conceptCard {
   display: flex;
   flex-direction: column;
@@ -151,11 +155,98 @@
   color: #a5b4fc;
 }
 
+/* Concept Category Cards - Section 1 (new) */
+.conceptCategoryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.conceptCategoryCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+.conceptCategoryCard:hover {
+  background: rgba(102, 126, 234, 0.08);
+  border-color: rgba(102, 126, 234, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+}
+
+.conceptCategoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.conceptCategoryIcon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.conceptCategoryBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  background: rgba(102, 126, 234, 0.15);
+  border-radius: 20px;
+  color: #a5b4fc;
+}
+
+.conceptCategoryTitle {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.conceptCategoryDescription {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.conceptCategoryTopics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.topicTag {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.6rem;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+  color: #a5b4fc;
+}
+
+.topicMore {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.6rem;
+  color: #666;
+}
+
 /* Build Grid - Section 2 */
 .buildGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
+}
+
+.buildGridCollapsed {
+  max-height: 72px; /* Show only 1 row */
 }
 
 .buildCard {
@@ -343,8 +434,16 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
+  .conceptsGridCollapsed {
+    max-height: 180px;
+  }
+
   .buildGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .buildGridCollapsed {
+    max-height: 72px;
   }
 
   .dsaContent {
@@ -378,9 +477,26 @@
     font-size: 1.25rem;
   }
 
+  .conceptCategoryGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .conceptCategoryCard {
+    padding: 1.25rem;
+  }
+
+  .conceptCategoryTitle {
+    font-size: 1.15rem;
+  }
+
   .conceptsGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
+  }
+
+  .conceptsGridCollapsed {
+    max-height: 155px;
   }
 
   .conceptCard {
@@ -397,6 +513,10 @@
 
   .buildGrid {
     grid-template-columns: 1fr;
+  }
+
+  .buildGridCollapsed {
+    max-height: 65px;
   }
 
   .dsaBanner {
@@ -421,6 +541,10 @@
     grid-template-columns: 1fr;
   }
 
+  .conceptsGridCollapsed {
+    max-height: 85px;
+  }
+
   .conceptCard {
     flex-direction: row;
     text-align: left;
@@ -435,5 +559,9 @@
 
   .conceptCard {
     position: relative;
+  }
+
+  .buildGridCollapsed {
+    max-height: 65px;
   }
 }
