@@ -280,8 +280,27 @@ export interface ConceptVisualState {
   pointers?: Record<string, number>  // { left: 0, right: 4 }
   highlights?: number[]              // Indices to highlight
   binary?: BinaryConceptState
+  hashMap?: HashMapVisualState
   annotations?: string[]             // Text annotations on the visual
   result?: number | string | boolean
+}
+
+export interface HashMapEntry {
+  key: string
+  value: number
+  isNew?: boolean
+  isLookup?: boolean
+  isDecrement?: boolean
+}
+
+export interface HashMapVisualState {
+  entries: HashMapEntry[]
+  currentIndex?: number
+  secondArray?: (number | string)[]
+  secondArrayIndex?: number
+  phase?: string
+  lookupKey?: string
+  lookupResult?: 'found' | 'not-found'
 }
 
 export interface BinaryConceptState {
