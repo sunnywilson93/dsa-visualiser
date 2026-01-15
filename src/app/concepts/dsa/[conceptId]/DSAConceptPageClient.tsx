@@ -6,13 +6,14 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, Lightbulb, AlertTriangle, Award, Clock } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { getDSAConceptById, getRelatedDSAConcepts } from '@/data/dsaConcepts'
-import { HashTableViz, StackViz, BigOViz } from '@/components/DSAConcepts'
+import { HashTableViz, StackViz, BigOViz, ArrayViz } from '@/components/DSAConcepts'
 import styles from '../../[conceptId]/page.module.css'
 import localStyles from './page.module.css'
 
 // Map concept IDs to their visualization components
 const visualizations: Record<string, React.ComponentType> = {
   'big-o-notation': BigOViz,
+  'arrays': ArrayViz,
   'hash-tables': HashTableViz,
   'stacks': StackViz,
 }

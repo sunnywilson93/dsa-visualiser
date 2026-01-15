@@ -1,0 +1,274 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Example selector */
+.exampleSelector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.exampleBtn {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.exampleBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.exampleBtn.active {
+  background: rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.4);
+  color: #a5b4fc;
+}
+
+/* Memory visualization */
+.memorySection {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.memoryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.memoryLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.formula {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: #60a5fa;
+  background: rgba(96, 165, 250, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.memoryBlocks {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.memoryBlock {
+  flex-shrink: 0;
+  width: 70px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.memoryBlock.highlighted {
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+}
+
+.blockAddress {
+  padding: 0.35rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  color: #888;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.blockValue {
+  padding: 0.75rem 0.5rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+}
+
+.gap {
+  font-size: 0.7rem;
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.blockIndex {
+  padding: 0.35rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: #667eea;
+  text-align: center;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+/* Pointer animation */
+.pointerRow {
+  position: relative;
+  height: 30px;
+  margin-top: 0.5rem;
+}
+
+.pointer {
+  position: absolute;
+  font-size: 0.7rem;
+  color: #f59e0b;
+  font-weight: 600;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+/* Output */
+.output {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid #10b981;
+  border-radius: 8px;
+}
+
+.outputLabel {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.outputValue {
+  font-family: 'Fira Code', monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #10b981;
+}
+
+/* Step description */
+.description {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border-left: 3px solid #667eea;
+}
+
+.actionBadge {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  color: white;
+}
+
+.stepText {
+  font-size: 0.9rem;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.stepCounter {
+  font-size: 0.8rem;
+  color: #666;
+  min-width: 50px;
+  text-align: center;
+}
+
+.btnPrimary {
+  padding: 0.6rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.btnSecondary:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Insight */
+.insight {
+  padding: 0.75rem 1rem;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.insight strong {
+  color: #a5b4fc;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .memoryBlock {
+    width: 60px;
+  }
+
+  .blockValue {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  .blockAddress {
+    font-size: 0.55rem;
+  }
+}
