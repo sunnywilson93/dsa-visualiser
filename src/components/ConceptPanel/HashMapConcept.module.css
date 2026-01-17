@@ -1,0 +1,295 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.annotations {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.annotation {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 2px 8px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+}
+
+/* Array Section */
+.arraySection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.sectionLabel {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.arrayContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.elementWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.pointerPlaceholder {
+  height: 24px;
+}
+
+.currentPointer {
+  position: relative;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: white;
+  padding: 2px 8px;
+  background: var(--accent-blue);
+  border-radius: 4px;
+}
+
+.pointerArrow {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--accent-blue);
+}
+
+.element {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.element.current {
+  border-color: var(--accent-blue);
+  background: rgba(96, 165, 250, 0.1);
+}
+
+.element.highlighted {
+  background: rgba(16, 185, 128, 0.2);
+  border-color: var(--accent-green);
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+}
+
+.index {
+  font-size: 9px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+/* Hash Map Section */
+.hashMapSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+.hashMapContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 50px;
+}
+
+.emptyMap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-secondary);
+  border: 1px dashed var(--border-secondary);
+  border-radius: var(--radius-md);
+}
+
+.emptyText {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.entriesGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.entry.newEntry {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: var(--accent-purple);
+}
+
+.entry.lookupEntry {
+  background: rgba(251, 191, 36, 0.15);
+  border-color: var(--accent-yellow);
+}
+
+.entryKey {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--accent-cyan);
+}
+
+.entryArrow {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.entryValue {
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+/* Lookup Status */
+.lookupStatus {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.lookupLabel {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.lookupKey {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--accent-yellow);
+  padding: 2px 8px;
+  background: rgba(251, 191, 36, 0.1);
+  border-radius: 4px;
+}
+
+.lookupFound {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-green);
+  padding: 2px 8px;
+  background: rgba(16, 185, 128, 0.15);
+  border-radius: 4px;
+}
+
+.lookupNotFound {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Result */
+.result {
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(16, 185, 128, 0.1);
+  border: 1px solid rgba(16, 185, 128, 0.3);
+  border-radius: var(--radius-md);
+}
+
+.resultValue {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--accent-green);
+}
+
+/* Dual Array Layout (for anagram-like problems) */
+.dualArraySection {
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.activeLabel {
+  color: var(--accent-blue);
+}
+
+.element.dimmed {
+  opacity: 0.4;
+}
+
+.element.currentCheck {
+  border-color: var(--accent-purple);
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.checkPointer {
+  background: var(--accent-purple) !important;
+}
+
+.checkPointer .pointerArrow {
+  border-top-color: var(--accent-purple) !important;
+}
+
+/* Decrement Entry Styling */
+.entry.decrementEntry {
+  background: rgba(251, 146, 60, 0.15);
+  border-color: var(--accent-orange, #fb923c);
+}
+
+.decrementValue {
+  color: var(--accent-orange, #fb923c);
+}
+
+.zeroValue {
+  color: var(--accent-green);
+  font-weight: 700;
+}

@@ -9,6 +9,7 @@ import { getConceptById, getRelatedConcepts } from '@/data/concepts'
 
 // Visualization components
 import { HoistingViz } from '@/components/Concepts/HoistingViz'
+import { TypeCoercionViz } from '@/components/Concepts/TypeCoercionViz'
 import { ClosuresViz } from '@/components/Concepts/ClosuresViz'
 import { ThisKeywordViz } from '@/components/Concepts/ThisKeywordViz'
 import { EventLoopViz } from '@/components/Concepts/EventLoopViz'
@@ -25,6 +26,7 @@ import styles from './page.module.css'
 
 const visualizations: Record<string, React.ComponentType> = {
   'hoisting': HoistingViz,
+  'type-coercion': TypeCoercionViz,
   'closures': ClosuresViz,
   'this-keyword': ThisKeywordViz,
   'event-loop': EventLoopViz,
@@ -44,7 +46,7 @@ const difficultyColors = {
   advanced: '#ef4444',
 }
 
-export default function ConceptPageClient() {
+export default function ConceptPageClient(): JSX.Element {
   const params = useParams()
   const router = useRouter()
   const conceptId = params.conceptId as string

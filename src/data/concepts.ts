@@ -116,6 +116,78 @@ console.log(b);  // ReferenceError!
     ],
   },
   {
+    id: 'type-coercion',
+    title: 'Data Types & Coercion',
+    icon: '🧪',
+    category: 'fundamentals',
+    difficulty: 'beginner',
+    description: 'JavaScript has a small set of primitives and automatic type conversion rules. Understanding coercion helps you predict equality checks, arithmetic, and truthiness in conditionals.',
+    shortDescription: 'How JS converts values between types',
+    keyPoints: [
+      'Seven primitives: string, number, boolean, null, undefined, symbol, bigint',
+      'typeof null is "object" (legacy quirk)',
+      'Loose equality (==) coerces types, strict (===) does not',
+      '+ concatenates when either operand is a string',
+      'Other math operators convert operands to numbers',
+      'Truthy/falsy rules drive conditionals and &&/||',
+    ],
+    examples: [
+      {
+        title: 'Loose vs strict equality',
+        code: `'0' == 0           // true
+0 == false         // true
+null == undefined  // true
+
+'0' === 0          // false
+0 === false        // false
+null === undefined // false`,
+        explanation: 'Loose equality coerces types, strict equality does not',
+      },
+      {
+        title: 'The plus operator',
+        code: `'5' + 1     // "51"
+5 + '1'     // "51"
+true + '1'  // "true1"
+
+5 + 1       // 6
+true + 1    // 2 (true -> 1)`,
+        explanation: '+ concatenates when a string is involved, otherwise adds numbers',
+      },
+      {
+        title: 'Numeric operators',
+        code: `'5' - 1     // 4
+'5' * '2'   // 10
+'five' - 1  // NaN`,
+        explanation: 'Math operators other than + convert operands to numbers',
+      },
+      {
+        title: 'Truthiness',
+        code: `Boolean(0)    // false
+Boolean('')   // false
+Boolean('0')  // true
+Boolean([])   // true`,
+        explanation: 'Conditionals use truthiness, not strict booleans',
+      },
+      {
+        title: 'typeof quirks',
+        code: `typeof null       // "object"
+typeof undefined  // "undefined"`,
+        explanation: 'typeof null is a long-standing JavaScript quirk',
+      },
+    ],
+    commonMistakes: [
+      'Using == and expecting no type conversion',
+      'Assuming empty strings are truthy',
+      'Forgetting that null and undefined only equal each other with ==',
+      'Assuming typeof null returns "null"',
+    ],
+    interviewTips: [
+      'Explain the difference between == and === with examples',
+      'Know the falsy values: false, 0, "", null, undefined, NaN',
+      'Be ready to reason about + with strings and numbers',
+    ],
+  },
+  {
     id: 'closures',
     title: 'Closures',
     icon: '🎒',
@@ -1470,6 +1542,7 @@ export const conceptCategories = [
 // Related concepts mapping for internal linking (SEO)
 const relatedConceptsMap: Record<string, string[]> = {
   'hoisting': ['closures', 'this-keyword', 'memory-model'],
+  'type-coercion': ['hoisting', 'closures', 'this-keyword'],
   'closures': ['hoisting', 'this-keyword', 'memory-model', 'recursion'],
   'this-keyword': ['closures', 'prototypes', 'event-loop'],
   'event-loop': ['this-keyword', 'nodejs-event-loop', 'web-workers'],
