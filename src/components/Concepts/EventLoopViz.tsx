@@ -10,6 +10,7 @@ interface Step {
   macroQueue: string[]
   output: string[]
   phase: 'sync' | 'micro' | 'macro' | 'idle'
+  activeWebApi?: string
 }
 
 interface Example {
@@ -27,6 +28,18 @@ const levelInfo: Record<Level, { label: string; color: string }> = {
   intermediate: { label: 'Intermediate', color: '#f59e0b' },
   advanced: { label: 'Advanced', color: '#ef4444' }
 }
+
+const webApis = [
+  { name: 'fetch', highlight: false },
+  { name: 'setTimeout', highlight: true },
+  { name: 'URL', highlight: false },
+  { name: 'localStorage', highlight: false },
+  { name: 'sessionStorage', highlight: false },
+  { name: 'HTMLDivElement', highlight: false },
+  { name: 'document', highlight: false },
+  { name: 'indexedDB', highlight: false },
+  { name: 'XMLHttpRequest', highlight: false },
+]
 
 const examples: Record<Level, Example[]> = {
   beginner: [
@@ -72,6 +85,7 @@ const examples: Record<Level, Example[]> = {
           macroQueue: ['timeout cb'],
           output: ['1'],
           phase: 'sync',
+          activeWebApi: 'setTimeout',
         },
         {
           description: 'Promise.then() registers callback in microtask queue',
@@ -470,6 +484,7 @@ const examples: Record<Level, Example[]> = {
           macroQueue: ['outer cb'],
           output: ['start'],
           phase: 'sync',
+          activeWebApi: 'setTimeout',
         },
         {
           description: "console.log('end') runs",
@@ -506,6 +521,7 @@ const examples: Record<Level, Example[]> = {
           macroQueue: ['inner cb'],
           output: ['start', 'end', 'outer'],
           phase: 'macro',
+          activeWebApi: 'setTimeout',
         },
         {
           description: 'Outer callback done. Check microtasks (empty), then next macrotask.',
@@ -585,6 +601,7 @@ const examples: Record<Level, Example[]> = {
           macroQueue: ['timeout cb'],
           output: ['start'],
           phase: 'sync',
+          activeWebApi: 'setTimeout',
         },
         {
           description: 'Promise.then() queues microtask',
@@ -833,6 +850,7 @@ const examples: Record<Level, Example[]> = {
           macroQueue: ['macro cb'],
           output: ['start'],
           phase: 'sync',
+          activeWebApi: 'setTimeout',
         },
         {
           description: 'recursive() called, queues microtask via Promise.then()',
@@ -954,6 +972,12 @@ export function EventLoopViz() {
     }
   }
 
+  const getEventLoopClass = () => {
+    if (currentStep.phase === 'idle') return styles.idle
+    if (currentStep.phase === 'micro' || currentStep.phase === 'macro') return styles.active
+    return ''
+  }
+
   return (
     <div className={styles.container}>
       {/* Level selector */}
@@ -987,10 +1011,122 @@ export function EventLoopViz() {
         ))}
       </div>
 
+      {/* Main Visualization Grid */}
+      <div className={styles.vizContainer}>
+        {/* Call Stack */}
+        <div className={`${styles.neonBox} ${styles.callStackBox}`}>
+          <div className={styles.neonBoxHeader}>Call Stack</div>
+          <div className={styles.neonBoxInner}>
+            <AnimatePresence mode="popLayout">
+              {currentStep.callStack.length === 0 ? (
+                <div className={styles.emptyStack}>(empty)</div>
+              ) : (
+                currentStep.callStack.slice().reverse().map((item, i) => (
+                  <motion.div
+                    key={item + i}
+                    className={styles.stackItem}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    layout
+                  >
+                    {item}
+                  </motion.div>
+                ))
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Web APIs */}
+        <div className={`${styles.neonBox} ${styles.webApisBox}`}>
+          <div className={styles.neonBoxHeader}>Web APIs</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.webApisGrid}>
+              {webApis.map((api) => (
+                <div
+                  key={api.name}
+                  className={`${styles.webApiItem} ${
+                    currentStep.activeWebApi === api.name ? styles.active : ''
+                  } ${api.highlight ? styles.highlight : ''}`}
+                >
+                  {api.name}
+                </div>
+              ))}
+              <div className={styles.manyMore}>Many more...</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Event Loop */}
+        <div className={`${styles.neonBox} ${styles.eventLoopBox}`}>
+          <div className={styles.neonBoxHeader}>Event Loop</div>
+          <div className={styles.neonBoxInner}>
+            <div className={`${styles.eventLoopIcon} ${getEventLoopClass()}`}>
+              🔄
+            </div>
+          </div>
+        </div>
+
+        {/* Task Queue (Macrotasks) */}
+        <div className={`${styles.neonBox} ${styles.taskQueueBox}`}>
+          <div className={styles.neonBoxHeader}>Task Queue</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.queueContent}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.macroQueue.length === 0 ? (
+                  <div className={styles.emptyQueue}>(empty)</div>
+                ) : (
+                  currentStep.macroQueue.map((item, i) => (
+                    <motion.div
+                      key={item + i}
+                      className={styles.macroItem}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      layout
+                    >
+                      {item}
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+
+        {/* Microtask Queue */}
+        <div className={`${styles.neonBox} ${styles.microtaskBox}`}>
+          <div className={styles.neonBoxHeader}>Microtask Queue</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.queueContent}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.microQueue.length === 0 ? (
+                  <div className={styles.emptyQueue}>(empty)</div>
+                ) : (
+                  currentStep.microQueue.map((item, i) => (
+                    <motion.div
+                      key={item + i}
+                      className={styles.microItem}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      layout
+                    >
+                      {item}
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Code panel */}
       <div className={styles.codePanel}>
         <div className={styles.panelHeader}>
-          <span>Code</span>
+          <span className={styles.panelHeaderLeft}>Code</span>
           <span className={styles.phaseBadge} style={{ background: getPhaseColor(currentStep.phase) }}>
             {currentStep.phase === 'sync' ? 'Sync' :
              currentStep.phase === 'micro' ? 'Microtask' :
@@ -1011,110 +1147,24 @@ export function EventLoopViz() {
         </pre>
       </div>
 
-      {/* Queues visualization */}
-      <div className={styles.queuesGrid}>
-        {/* Call Stack */}
-        <div className={styles.queue}>
-          <div className={styles.queueHeader} style={{ background: '#667eea' }}>
-            Call Stack
-          </div>
-          <div className={styles.queueContent}>
-            <AnimatePresence mode="popLayout">
-              {currentStep.callStack.length === 0 ? (
-                <div className={styles.emptyQueue}>(empty)</div>
-              ) : (
-                currentStep.callStack.slice().reverse().map((item, i) => (
-                  <motion.div
-                    key={item + i}
-                    className={styles.stackItem}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    layout
-                  >
-                    {item}
-                  </motion.div>
-                ))
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Microtask Queue */}
-        <div className={styles.queue}>
-          <div className={styles.queueHeader} style={{ background: '#8b5cf6' }}>
-            Microtasks
-          </div>
-          <div className={styles.queueContent}>
-            <AnimatePresence mode="popLayout">
-              {currentStep.microQueue.length === 0 ? (
-                <div className={styles.emptyQueue}>(empty)</div>
-              ) : (
-                currentStep.microQueue.map((item, i) => (
-                  <motion.div
-                    key={item + i}
-                    className={styles.microItem}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    layout
-                  >
-                    {item}
-                  </motion.div>
-                ))
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Macrotask Queue */}
-        <div className={styles.queue}>
-          <div className={styles.queueHeader} style={{ background: '#f59e0b' }}>
-            Macrotasks
-          </div>
-          <div className={styles.queueContent}>
-            <AnimatePresence mode="popLayout">
-              {currentStep.macroQueue.length === 0 ? (
-                <div className={styles.emptyQueue}>(empty)</div>
-              ) : (
-                currentStep.macroQueue.map((item, i) => (
-                  <motion.div
-                    key={item + i}
-                    className={styles.macroItem}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    layout
-                  >
-                    {item}
-                  </motion.div>
-                ))
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Output */}
-        <div className={styles.queue}>
-          <div className={styles.queueHeader} style={{ background: '#10b981' }}>
-            Output
-          </div>
-          <div className={styles.queueContent}>
-            {currentStep.output.length === 0 ? (
-              <div className={styles.emptyQueue}>—</div>
-            ) : (
-              currentStep.output.map((item, i) => (
-                <motion.div
-                  key={i}
-                  className={styles.outputItem}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  {item}
-                </motion.div>
-              ))
-            )}
-          </div>
+      {/* Output Section */}
+      <div className={styles.outputSection}>
+        <div className={styles.outputHeader}>Output</div>
+        <div className={styles.outputContent}>
+          {currentStep.output.length === 0 ? (
+            <span className={styles.outputEmpty}>—</span>
+          ) : (
+            currentStep.output.map((item, i) => (
+              <motion.div
+                key={i}
+                className={styles.outputItem}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                {item}
+              </motion.div>
+            ))
+          )}
         </div>
       </div>
 
