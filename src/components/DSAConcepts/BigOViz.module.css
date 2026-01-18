@@ -4,6 +4,45 @@
   gap: 1.25rem;
 }
 
+/* Scale toggle */
+.scaleToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.scaleLabel {
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scaleBtn {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.scaleBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ccc;
+}
+
+.scaleBtn.active {
+  background: rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.5);
+  color: #a5b4fc;
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.2);
+}
+
 /* Complexity toggles */
 .toggles {
   display: flex;
@@ -234,6 +273,12 @@
 
 .insight strong {
   color: #a5b4fc;
+}
+
+.insightNote {
+  font-size: 0.8rem;
+  color: #888;
+  font-style: italic;
 }
 
 /* Mobile */

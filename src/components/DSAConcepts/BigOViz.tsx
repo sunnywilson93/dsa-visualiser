@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import styles from './BigOViz.module.css'
 
@@ -62,9 +62,10 @@ const CHART_WIDTH = 400
 export function BigOViz() {
   const [inputSize, setInputSize] = useState(10)
   const [activeComplexities, setActiveComplexities] = useState<Set<string>>(
-    new Set(['o1', 'on', 'on2'])
+    new Set(['o1', 'ologn', 'on', 'onlogn', 'on2'])
   )
   const [isAnimating, setIsAnimating] = useState(false)
+  const [useLogScale, setUseLogScale] = useState(true)
 
   const toggleComplexity = (id: string) => {
     setActiveComplexities(prev => {
@@ -92,33 +93,62 @@ export function BigOViz() {
     }, 80)
   }
 
-  // Calculate max value for scaling
-  const maxValue = Math.max(
-    ...complexities
-      .filter(c => activeComplexities.has(c.id))
-      .map(c => c.calculate(inputSize))
-  )
-
   // Generate points for each complexity
   const generatePoints = (complexity: Complexity) => {
     const points: string[] = []
     const numPoints = 50
-    const xStep = CHART_WIDTH / numPoints
 
-    // Find max for scaling this specific run
-    const localMax = complexity.calculate(50)
-    const scaleFactor = MAX_HEIGHT / (localMax || 1)
+    // Get all values at n=50 for the active complexities to determine scale
+    const activeValues = complexities
+      .filter(c => activeComplexities.has(c.id))
+      .map(c => c.calculate(50))
+
+    const maxValue = Math.max(...activeValues)
+    const minValue = Math.min(...activeValues.filter(v => v > 0))
 
     for (let i = 1; i <= Math.min(inputSize, numPoints); i++) {
       const x = (i / numPoints) * CHART_WIDTH
-      const y = MAX_HEIGHT - (complexity.calculate(i) * scaleFactor)
-      points.push(`${x},${Math.max(0, y)}`)
+      const value = complexity.calculate(i)
+
+      let y: number
+      if (useLogScale) {
+        // Log scale: map log(value) to chart height
+        // This spreads out the curves so all are visible
+        const logMax = Math.log(maxValue + 1)
+        const logMin = Math.log(minValue > 0 ? minValue : 1)
+        const logValue = Math.log(value + 1)
+        const normalizedLog = (logValue - logMin) / (logMax - logMin || 1)
+        y = MAX_HEIGHT - (normalizedLog * MAX_HEIGHT * 0.9) - 10 // Leave some padding
+      } else {
+        // Linear scale: direct mapping
+        const scaleFactor = MAX_HEIGHT / (maxValue || 1)
+        y = MAX_HEIGHT - (value * scaleFactor)
+      }
+
+      points.push(`${x},${Math.max(5, Math.min(MAX_HEIGHT - 5, y))}`)
     }
     return points.join(' ')
   }
 
   return (
     <div className={styles.container}>
+      {/* Scale toggle */}
+      <div className={styles.scaleToggle}>
+        <span className={styles.scaleLabel}>Y-Axis Scale:</span>
+        <button
+          className={`${styles.scaleBtn} ${useLogScale ? styles.active : ''}`}
+          onClick={() => setUseLogScale(true)}
+        >
+          Log
+        </button>
+        <button
+          className={`${styles.scaleBtn} ${!useLogScale ? styles.active : ''}`}
+          onClick={() => setUseLogScale(false)}
+        >
+          Linear
+        </button>
+      </div>
+
       {/* Complexity toggles */}
       <div className={styles.toggles}>
         {complexities.map(c => (
@@ -141,7 +171,7 @@ export function BigOViz() {
       {/* Chart */}
       <div className={styles.chartContainer}>
         <div className={styles.chartLabels}>
-          <span>Operations</span>
+          <span>Operations {useLogScale && '(log scale)'}</span>
         </div>
         <svg className={styles.chart} viewBox={`0 0 ${CHART_WIDTH} ${MAX_HEIGHT}`}>
           {/* Grid lines */}
@@ -155,7 +185,7 @@ export function BigOViz() {
           {/* Complexity curves */}
           {complexities.filter(c => activeComplexities.has(c.id)).map(c => (
             <motion.polyline
-              key={c.id}
+              key={`${c.id}-${useLogScale}`}
               points={generatePoints(c)}
               fill="none"
               stroke={c.color}
@@ -246,6 +276,7 @@ export function BigOViz() {
       <div className={styles.insight}>
         <strong>Key Insight:</strong> As n grows, the difference between complexities becomes dramatic.
         At n=50: O(1)=1, O(n)=50, but O(n²)=2,500 operations!
+        {useLogScale && <span className={styles.insightNote}> (Switch to Linear scale to see the true magnitude difference)</span>}
       </div>
     </div>
   )
