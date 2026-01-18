@@ -363,6 +363,14 @@
   cursor: not-allowed;
 }
 
+.btnDone {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.btnDone:hover {
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
 .btnSecondary {
   padding: 0.5rem 0.75rem;
   font-size: 0.7rem;
@@ -395,6 +403,63 @@
 }
 
 .insight strong { color: #8b5cf6; }
+
+/* Progress Bar */
+.progressContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.progressBar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+.progressText {
+  font-size: 0.65rem;
+  color: #666;
+  white-space: nowrap;
+}
+
+/* Keyboard Hint */
+.keyboardHint {
+  text-align: center;
+  font-size: 0.6rem;
+  color: #555;
+}
+
+.keyboardHint span {
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+/* Action color overrides for queue items */
+.queueItem {
+  padding: 0.2rem 0.5rem;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.55rem;
+  transition: all 0.2s;
+}
+
+/* Focus indicators for keyboard navigation */
+.btnPrimary:focus-visible,
+.btnSecondary:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
 
 @media (max-width: 640px) {
   .phasesContainer { flex-direction: column; }

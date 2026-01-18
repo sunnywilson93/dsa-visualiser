@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Code } from 'lucide-react'
 import { ConceptPanel } from '@/components/ConceptPanel'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { codeExamples, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
 import { getConceptForProblem, getConceptSteps } from '@/data/algorithmConcepts'
 import styles from './page.module.css'
@@ -75,12 +76,14 @@ export default function ConceptVizPageClient() {
 
       <main className={styles.main}>
         <div className={styles.conceptWrapper}>
-          <ConceptPanel
-            title={categoryConcept!.title}
-            keyInsight={insight!.keyInsight}
-            type={insight!.pattern}
-            steps={conceptSteps}
-          />
+          <ErrorBoundary>
+            <ConceptPanel
+              title={categoryConcept!.title}
+              keyInsight={insight!.keyInsight}
+              type={insight!.pattern}
+              steps={conceptSteps}
+            />
+          </ErrorBoundary>
         </div>
 
         <Link

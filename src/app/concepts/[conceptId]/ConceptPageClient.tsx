@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Lightbulb, AlertTriangle, Award } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { getConceptById, getRelatedConcepts } from '@/data/concepts'
 
 // Visualization components
@@ -106,7 +107,9 @@ export default function ConceptPageClient(): JSX.Element {
           </h2>
           <div className={styles.vizContainer}>
             {Visualization ? (
-              <Visualization />
+              <ErrorBoundary>
+                <Visualization />
+              </ErrorBoundary>
             ) : (
               <div className={styles.vizPlaceholder}>
                 Visualization coming soon

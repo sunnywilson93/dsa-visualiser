@@ -1,6 +1,35 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from './NodeEventLoopViz.module.css'
+
+// Action type colors for visual distinction
+const actionColors: Record<string, { bg: string; border: string; text: string }> = {
+  setTimeout: { bg: 'rgba(249, 115, 22, 0.2)', border: 'rgba(249, 115, 22, 0.5)', text: '#fb923c' },
+  setInterval: { bg: 'rgba(249, 115, 22, 0.2)', border: 'rgba(249, 115, 22, 0.5)', text: '#fb923c' },
+  timeout: { bg: 'rgba(249, 115, 22, 0.2)', border: 'rgba(249, 115, 22, 0.5)', text: '#fb923c' },
+  setImmediate: { bg: 'rgba(59, 130, 246, 0.2)', border: 'rgba(59, 130, 246, 0.5)', text: '#60a5fa' },
+  immediate: { bg: 'rgba(59, 130, 246, 0.2)', border: 'rgba(59, 130, 246, 0.5)', text: '#60a5fa' },
+  Promise: { bg: 'rgba(236, 72, 153, 0.2)', border: 'rgba(236, 72, 153, 0.5)', text: '#f472b6' },
+  promise: { bg: 'rgba(236, 72, 153, 0.2)', border: 'rgba(236, 72, 153, 0.5)', text: '#f472b6' },
+  nextTick: { bg: 'rgba(168, 85, 247, 0.2)', border: 'rgba(168, 85, 247, 0.5)', text: '#c084fc' },
+  recurse: { bg: 'rgba(168, 85, 247, 0.2)', border: 'rgba(168, 85, 247, 0.5)', text: '#c084fc' },
+  io: { bg: 'rgba(6, 182, 212, 0.2)', border: 'rgba(6, 182, 212, 0.5)', text: '#22d3ee' },
+  file: { bg: 'rgba(6, 182, 212, 0.2)', border: 'rgba(6, 182, 212, 0.5)', text: '#22d3ee' },
+  network: { bg: 'rgba(6, 182, 212, 0.2)', border: 'rgba(6, 182, 212, 0.5)', text: '#22d3ee' },
+  close: { bg: 'rgba(100, 116, 139, 0.2)', border: 'rgba(100, 116, 139, 0.5)', text: '#94a3b8' },
+  socket: { bg: 'rgba(100, 116, 139, 0.2)', border: 'rgba(100, 116, 139, 0.5)', text: '#94a3b8' },
+}
+
+function getActionColor(item: string): { bg: string; border: string; text: string } {
+  const lowerItem = item.toLowerCase()
+  for (const [key, colors] of Object.entries(actionColors)) {
+    if (lowerItem.includes(key.toLowerCase())) {
+      return colors
+    }
+  }
+  // Default color
+  return { bg: 'rgba(139, 92, 246, 0.2)', border: 'rgba(139, 92, 246, 0.3)', text: '#c4b5fd' }
+}
 
 interface PhaseQueue {
   name: string
@@ -619,15 +648,40 @@ export function NodeEventLoopViz() {
     setStepIndex(0)
   }
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (stepIndex < currentExample.steps.length - 1) setStepIndex(s => s + 1)
-  }
+  }, [stepIndex, currentExample.steps.length])
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     if (stepIndex > 0) setStepIndex(s => s - 1)
-  }
+  }, [stepIndex])
 
-  const handleReset = () => setStepIndex(0)
+  const handleReset = useCallback(() => setStepIndex(0), [])
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if user is typing in an input
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
+
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault()
+        handleNext()
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        handlePrev()
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault()
+        handleReset()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [handleNext, handlePrev, handleReset])
+
+  const isLastStep = stepIndex >= currentExample.steps.length - 1
+  const progressPercent = ((stepIndex + 1) / currentExample.steps.length) * 100
 
   return (
     <div className={styles.container}>
@@ -694,17 +748,25 @@ export function NodeEventLoopViz() {
                 {currentStep.nextTickQueue.length === 0 ? (
                   <div className={styles.emptyQueue}>(empty)</div>
                 ) : (
-                  currentStep.nextTickQueue.map((item, i) => (
-                    <motion.div
-                      key={item + i}
-                      className={styles.queueItem}
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -10 }}
-                    >
-                      {item}
-                    </motion.div>
-                  ))
+                  currentStep.nextTickQueue.map((item, i) => {
+                    const colors = getActionColor(item)
+                    return (
+                      <motion.div
+                        key={item + i}
+                        className={styles.queueItem}
+                        initial={{ opacity: 0, x: 10, scale: 0.9 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        exit={{ opacity: 0, x: -10, scale: 0.9 }}
+                        style={{
+                          background: colors.bg,
+                          borderColor: colors.border,
+                          color: colors.text,
+                        }}
+                      >
+                        {item}
+                      </motion.div>
+                    )
+                  })
                 )}
               </AnimatePresence>
             </div>
@@ -719,17 +781,25 @@ export function NodeEventLoopViz() {
                 {currentStep.promiseQueue.length === 0 ? (
                   <div className={styles.emptyQueue}>(empty)</div>
                 ) : (
-                  currentStep.promiseQueue.map((item, i) => (
-                    <motion.div
-                      key={item + i}
-                      className={styles.queueItem}
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -10 }}
-                    >
-                      {item}
-                    </motion.div>
-                  ))
+                  currentStep.promiseQueue.map((item, i) => {
+                    const colors = getActionColor(item)
+                    return (
+                      <motion.div
+                        key={item + i}
+                        className={styles.queueItem}
+                        initial={{ opacity: 0, x: 10, scale: 0.9 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        exit={{ opacity: 0, x: -10, scale: 0.9 }}
+                        style={{
+                          background: colors.bg,
+                          borderColor: colors.border,
+                          color: colors.text,
+                        }}
+                      >
+                        {item}
+                      </motion.div>
+                    )
+                  })
                 )}
               </AnimatePresence>
             </div>
@@ -743,21 +813,47 @@ export function NodeEventLoopViz() {
         <div className={styles.neonBoxInner}>
           <div className={styles.phasesContainer}>
             {currentStep.phases.map((phase) => (
-              <div
+              <motion.div
                 key={phase.name}
                 className={`${styles.phase} ${phase.active ? styles.activePhase : ''}`}
+                animate={{
+                  scale: phase.active ? 1.02 : 1,
+                  boxShadow: phase.active
+                    ? '0 0 20px rgba(16, 185, 129, 0.3)'
+                    : '0 0 0px rgba(0, 0, 0, 0)',
+                }}
+                transition={{ duration: 0.3 }}
               >
                 <div className={styles.phaseName}>{phase.name}</div>
                 <div className={styles.phaseContent}>
-                  {phase.items.length === 0 ? (
-                    <span className={styles.emptyPhase}>-</span>
-                  ) : (
-                    phase.items.map((item, i) => (
-                      <div key={i} className={styles.phaseItem}>{item}</div>
-                    ))
-                  )}
+                  <AnimatePresence mode="popLayout">
+                    {phase.items.length === 0 ? (
+                      <span className={styles.emptyPhase}>-</span>
+                    ) : (
+                      phase.items.map((item, i) => {
+                        const colors = getActionColor(item)
+                        return (
+                          <motion.div
+                            key={item + i}
+                            className={styles.phaseItem}
+                            initial={{ opacity: 0, y: 5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            style={{
+                              background: colors.bg,
+                              borderColor: colors.border,
+                              color: colors.text,
+                              border: `1px solid ${colors.border}`,
+                            }}
+                          >
+                            {item}
+                          </motion.div>
+                        )
+                      })
+                    )}
+                  </AnimatePresence>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -792,23 +888,46 @@ export function NodeEventLoopViz() {
         </motion.div>
       </AnimatePresence>
 
+      {/* Progress Bar */}
+      <div className={styles.progressContainer}>
+        <div className={styles.progressBar}>
+          <motion.div
+            className={styles.progressFill}
+            initial={{ width: 0 }}
+            animate={{ width: `${progressPercent}%` }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+          />
+        </div>
+        <span className={styles.progressText}>
+          Step {stepIndex + 1} / {currentExample.steps.length}
+        </span>
+      </div>
+
       {/* Controls */}
       <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
-          Prev
+        <button
+          className={styles.btnSecondary}
+          onClick={handlePrev}
+          disabled={stepIndex === 0}
+        >
+          ← Prev
         </button>
         <motion.button
-          className={styles.btnPrimary}
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
+          className={`${styles.btnPrimary} ${isLastStep ? styles.btnDone : ''}`}
+          onClick={isLastStep ? handleReset : handleNext}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next'}
+          {isLastStep ? '✓ Done' : 'Next →'}
         </motion.button>
         <button className={styles.btnSecondary} onClick={handleReset}>
           Reset
         </button>
+      </div>
+
+      {/* Keyboard hint */}
+      <div className={styles.keyboardHint}>
+        <span>Use ← → keys to navigate, R to reset</span>
       </div>
 
       {/* Key insight */}
