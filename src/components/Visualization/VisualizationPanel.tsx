@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
+import { BarChart3 } from 'lucide-react'
 import { useCurrentStep, useExecutionStore } from '@/store'
 import type { ArrayValue, RuntimeValue, ExecutionStep } from '@/types'
 import { ArrayVisualization } from './ArrayVisualization'
@@ -110,7 +111,9 @@ export function VisualizationPanel() {
       <div className={styles.content}>
         {isEmpty && status === 'idle' && (
           <div className={styles.empty}>
-            <div className={styles.emptyIcon}>📊</div>
+            <div className={styles.emptyIcon}>
+              <BarChart3 size={32} />
+            </div>
             <p>Run code to visualize data structures</p>
           </div>
         )}

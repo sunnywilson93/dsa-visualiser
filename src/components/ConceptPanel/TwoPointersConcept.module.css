@@ -4,6 +4,7 @@
   align-items: center;
   gap: var(--space-sm);
   width: 100%;
+  color: #f5f7ff;
 }
 
 .annotations {
@@ -16,10 +17,11 @@
 .annotation {
   font-size: 11px;
   font-weight: 500;
-  color: var(--text-secondary);
-  padding: 2px 8px;
-  background: var(--bg-secondary);
-  border-radius: var(--radius-sm);
+  color: #c4b5fd;
+  padding: 3px 10px;
+  background: rgba(130, 100, 255, 0.15);
+  border: 1px solid rgba(130, 100, 255, 0.3);
+  border-radius: 999px;
 }
 
 .arrayContainer {
@@ -55,8 +57,9 @@
   font-family: var(--font-mono);
   color: white;
   padding: 2px 6px;
-  border-radius: 3px;
+  border-radius: 4px;
   white-space: nowrap;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
 .pointerArrow {
@@ -78,32 +81,34 @@
   min-width: 28px;
   height: 28px;
   padding: 0 4px;
-  background: var(--bg-secondary);
-  border: 2px solid var(--border-primary);
-  border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
+  background: #2a2a3e;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  transition: all 0.2s;
 }
 
 .element.highlighted {
-  background: rgba(96, 165, 250, 0.15);
-  border-color: var(--accent-blue);
+  background: rgba(96, 165, 250, 0.2);
+  border-color: #60a5fa;
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
 }
 
 .element.hasPointer {
-  border-color: var(--accent-blue);
+  border-color: #60a5fa;
+  box-shadow: 0 0 6px rgba(96, 165, 250, 0.25);
 }
 
 .value {
   font-size: 13px;
   font-weight: 600;
   font-family: var(--font-mono);
-  color: var(--text-primary);
+  color: #f5f7ff;
 }
 
 .index {
   font-size: 9px;
   font-family: var(--font-mono);
-  color: var(--text-muted);
+  color: #6b7280;
 }
 
 .directionIndicator {
@@ -116,12 +121,13 @@
 .arrow {
   font-size: 16px;
   font-weight: bold;
+  filter: drop-shadow(0 0 4px currentColor);
 }
 
 .directionText {
   font-size: 10px;
   font-weight: 500;
-  color: var(--text-muted);
+  color: #6b7280;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -129,16 +135,17 @@
 .result {
   font-size: 12px;
   font-weight: 500;
-  color: var(--text-secondary);
+  color: #9ca3af;
   margin-top: var(--space-sm);
   padding: var(--space-xs) var(--space-sm);
-  background: rgba(16, 185, 128, 0.1);
-  border: 1px solid rgba(16, 185, 128, 0.3);
-  border-radius: var(--radius-sm);
+  background: rgba(16, 185, 128, 0.15);
+  border: 1px solid rgba(16, 185, 128, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(16, 185, 128, 0.2);
 }
 
 .resultValue {
   font-family: var(--font-mono);
   font-weight: 600;
-  color: var(--accent-green);
+  color: #10b981;
 }

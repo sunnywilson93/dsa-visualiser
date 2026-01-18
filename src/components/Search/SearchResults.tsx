@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Search } from 'lucide-react'
 import type { SearchResult } from '@/lib/search'
 import { ConceptIcon } from '@/components/Icons'
 import styles from './SearchResults.module.css'
@@ -100,7 +101,9 @@ export function SearchResultsList({
   if (results.length === 0) {
     return (
       <div className={styles.empty}>
-        <span className={styles.emptyIcon}>🔍</span>
+        <span className={styles.emptyIcon}>
+          <Search size={24} />
+        </span>
         <p>{emptyMessage}</p>
       </div>
     )

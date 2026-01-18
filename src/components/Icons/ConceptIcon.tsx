@@ -32,10 +32,14 @@ import {
   Compass,
   Box,
   // Build categories (exampleCategories)
-  Wrench,
-  Package,
-  Sigma,
-  Brain,
+  Braces,
+  Timer,
+  List,
+  FunctionSquare,
+  MousePointer2,
+  FileJson,
+  GitMerge,
+  BrainCircuit,
   // DSA subcategories
   BarChart3,
   Search,
@@ -94,15 +98,15 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'patterns': Puzzle,
 
   // Build categories (exampleCategories from examples.ts)
-  'js-core': Zap,                   // JavaScript Core - lightning fast execution
-  'async-js': Clock,                // Async JavaScript - timing/async patterns
-  'array-polyfills': Wrench,        // Array Polyfills - building tools
-  'utility-functions': Settings,    // Utility Functions - configuration/tools
-  'functional-js': Sigma,           // Functional JS - mathematical/lambda
-  'dom-events': Target,             // DOM & Events - targeting elements
-  'object-utils': Package,          // Object Utilities - packaged data
-  'promise-polyfills': Clock,       // Promise Polyfills - async timing
-  'dsa': Brain,                     // DSA - algorithmic thinking
+  'js-core': Braces,                // JavaScript Core - code syntax { }
+  'async-js': Timer,                // Async JavaScript - async timing
+  'array-polyfills': List,          // Array Polyfills - list/array structure
+  'utility-functions': FunctionSquare, // Utility Functions - function blocks
+  'functional-js': FunctionSquare,  // Functional JS - lambda/functions
+  'dom-events': MousePointer2,      // DOM & Events - pointer/click events
+  'object-utils': FileJson,         // Object Utilities - JSON/object structure
+  'promise-polyfills': GitMerge,    // Promise Polyfills - merging async flows
+  'dsa': BrainCircuit,              // DSA - algorithmic/circuit thinking
 
   // DSA subcategories (dsaSubcategories from examples.ts)
   'arrays-hashing': BarChart3,      // Arrays & Hashing - data visualization

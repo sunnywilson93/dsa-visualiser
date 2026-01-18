@@ -101,43 +101,48 @@ export function ConceptPanel({
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.titleRow}>
-          <Lightbulb size={16} className={styles.icon} />
-          <h3 className={styles.title}>{title}</h3>
+      <div className={styles.containerInner}>
+        <div className={styles.header}>
+          <div className={styles.titleRow}>
+            <Lightbulb size={16} className={styles.icon} />
+            <h3 className={styles.title}>{title}</h3>
+          </div>
         </div>
-      </div>
 
-      <div className={styles.insightBox}>
-        <span className={styles.insightLabel}>Key Insight</span>
-        <p className={styles.insightText}>{keyInsight}</p>
-      </div>
+        <div className={styles.insightBox}>
+          <div className={styles.insightBoxInner}>
+            <span className={styles.insightLabel}>Key Insight</span>
+            <p className={styles.insightText}>{keyInsight}</p>
+          </div>
+        </div>
 
-      <div className={styles.visualizationArea}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStep}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className={styles.stepContent}
-          >
-            <div className={styles.stepHeader}>
-              <span className={styles.stepNumber}>Step {currentStep + 1}</span>
-              <span className={styles.stepTitle}>{step.title}</span>
-            </div>
+        <div className={styles.visualizationArea}>
+          <div className={styles.visualizationAreaInner}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentStep}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className={styles.stepContent}
+              >
+                <div className={styles.stepHeader}>
+                  <span className={styles.stepNumber}>Step {currentStep + 1}</span>
+                  <span className={styles.stepTitle}>{step.title}</span>
+                </div>
 
-            <div className={styles.visualization}>
-              {renderVisualization()}
-            </div>
+                <div className={styles.visualization}>
+                  {renderVisualization()}
+                </div>
 
-            <p className={styles.stepDescription}>{step.description}</p>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+                <p className={styles.stepDescription}>{step.description}</p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
 
-      <div className={styles.controls}>
+        <div className={styles.controls}>
         <div className={styles.playbackControls}>
           <button
             className={styles.controlBtn}
@@ -203,6 +208,7 @@ export function ConceptPanel({
               </button>
             ))}
           </div>
+        </div>
         </div>
       </div>
     </div>

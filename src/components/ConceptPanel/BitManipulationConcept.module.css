@@ -7,21 +7,23 @@
   --label-width: 60px;
   --decimal-width: 40px;
   --equals-width: 12px;
+  color: #f5f7ff;
 }
 
 .empty {
-  color: var(--text-muted);
+  color: #6b7280;
   font-size: 12px;
 }
 
 .operatorBadge {
   font-size: 10px;
   font-weight: 600;
-  padding: 2px 8px;
-  background: var(--accent-purple);
+  padding: 3px 10px;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
   color: white;
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   letter-spacing: 0.5px;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
 }
 
 .visualization {
@@ -29,8 +31,9 @@
   flex-direction: column;
   gap: 4px;
   padding: var(--space-sm);
-  background: var(--bg-primary);
-  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
 }
 
 .bitRow {
@@ -48,7 +51,7 @@
 .label {
   width: var(--label-width);
   font-size: 10px;
-  color: var(--accent-cyan);
+  color: #22d3ee;
   font-weight: 500;
   text-align: right;
   overflow: hidden;
@@ -59,13 +62,13 @@
 .decimal {
   width: var(--decimal-width);
   font-size: 11px;
-  color: var(--text-primary);
+  color: #f5f7ff;
   font-weight: 600;
   text-align: right;
 }
 
 .equals {
-  color: var(--text-muted);
+  color: #6b7280;
   font-size: 10px;
   text-align: center;
 }
@@ -83,42 +86,44 @@
   height: 22px;
   font-size: 12px;
   font-weight: 600;
-  border-radius: 3px;
-  transition: all var(--transition-fast);
+  border-radius: 4px;
+  transition: all 0.2s;
 }
 
 .bit.zero {
-  background: var(--bg-secondary);
-  color: var(--text-muted);
-  border: 1px solid var(--border-primary);
+  background: #2a2a3e;
+  color: #6b7280;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .bit.one {
-  background: rgba(96, 165, 250, 0.2);
-  color: var(--accent-blue);
-  border: 1px solid var(--accent-blue);
+  background: rgba(96, 165, 250, 0.25);
+  color: #60a5fa;
+  border: 1px solid rgba(96, 165, 250, 0.5);
+  box-shadow: 0 0 4px rgba(96, 165, 250, 0.2);
 }
 
 .bit.active {
-  transform: scale(1.05);
-  box-shadow: 0 0 8px rgba(96, 165, 250, 0.4);
+  transform: scale(1.08);
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.5);
 }
 
 .bit.highlighted {
-  background: rgba(251, 191, 36, 0.2);
-  color: var(--accent-yellow);
-  border-color: var(--accent-yellow);
+  background: rgba(251, 191, 36, 0.25);
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, 0.5);
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
 }
 
 .bit.resultBit {
-  background: rgba(16, 185, 128, 0.2);
-  color: var(--accent-green);
-  border-color: var(--accent-green);
+  background: rgba(16, 185, 128, 0.25);
+  color: #10b981;
+  border-color: rgba(16, 185, 128, 0.5);
 }
 
 .bit.resultBit.one {
-  background: rgba(16, 185, 128, 0.3);
-  box-shadow: 0 0 6px rgba(16, 185, 128, 0.4);
+  background: rgba(16, 185, 128, 0.35);
+  box-shadow: 0 0 8px rgba(16, 185, 128, 0.5);
 }
 
 .operatorRow {
@@ -131,15 +136,17 @@
 .operatorSymbol {
   font-size: 12px;
   font-weight: 700;
-  color: var(--accent-purple);
+  color: #c4b5fd;
   grid-column: 2;
   justify-self: end;
+  text-shadow: 0 0 6px rgba(196, 181, 253, 0.4);
 }
 
 .divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+  background: linear-gradient(90deg, transparent, #10b981, transparent);
   margin: 4px 0;
+  box-shadow: 0 0 4px rgba(16, 185, 128, 0.4);
 }
 
 .bitPositions {
@@ -163,12 +170,13 @@
   text-align: center;
   font-size: 8px;
   font-family: var(--font-mono);
-  color: var(--text-muted);
+  color: #4b5563;
 }
 
 .bitPosition.activeBitPos {
-  color: var(--accent-blue);
+  color: #60a5fa;
   font-weight: 600;
+  text-shadow: 0 0 4px rgba(96, 165, 250, 0.4);
 }
 
 .annotations {
@@ -181,18 +189,20 @@
 .annotation {
   font-size: 10px;
   font-weight: 500;
-  color: var(--text-secondary);
-  padding: 2px 8px;
-  background: var(--bg-secondary);
-  border-radius: var(--radius-sm);
+  color: #c4b5fd;
+  padding: 3px 10px;
+  background: rgba(130, 100, 255, 0.15);
+  border: 1px solid rgba(130, 100, 255, 0.3);
+  border-radius: 999px;
 }
 
 .resultDisplay {
   font-size: 12px;
   font-weight: 600;
-  color: var(--accent-green);
+  color: #10b981;
   padding: var(--space-xs) var(--space-sm);
-  background: rgba(16, 185, 128, 0.1);
-  border: 1px solid rgba(16, 185, 128, 0.3);
-  border-radius: var(--radius-sm);
+  background: rgba(16, 185, 128, 0.15);
+  border: 1px solid rgba(16, 185, 128, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(16, 185, 128, 0.2);
 }

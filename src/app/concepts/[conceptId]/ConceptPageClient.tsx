@@ -3,9 +3,10 @@
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Lightbulb, AlertTriangle, Award } from 'lucide-react'
+import { ArrowLeft, Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2 } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
+import { ConceptIcon } from '@/components/Icons'
 import { getConceptById, getRelatedConcepts } from '@/data/concepts'
 
 // Visualization components
@@ -86,7 +87,9 @@ export default function ConceptPageClient(): JSX.Element {
           </button>
 
           <div className={styles.titleRow}>
-            <span className={styles.icon}>{concept.icon}</span>
+            <span className={styles.icon}>
+              <ConceptIcon conceptId={concept.id} size={32} />
+            </span>
             <h1 className={styles.title}>{concept.title}</h1>
             <span
               className={styles.difficulty}
@@ -102,7 +105,7 @@ export default function ConceptPageClient(): JSX.Element {
         {/* Interactive Visualization */}
         <section className={styles.vizSection}>
           <h2 className={styles.sectionTitle}>
-            <span className={styles.sectionIcon}>🎮</span>
+            <Gamepad2 size={20} className={styles.sectionIconSvg} />
             Interactive Visualization
           </h2>
           <div className={styles.vizContainer}>
@@ -141,7 +144,7 @@ export default function ConceptPageClient(): JSX.Element {
         {/* Code Examples */}
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>
-            <span className={styles.sectionIcon}>💻</span>
+            <Code2 size={20} className={styles.sectionIconSvg} />
             Code Examples
           </h2>
           <div className={styles.examples}>
@@ -200,7 +203,7 @@ export default function ConceptPageClient(): JSX.Element {
           return (
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>
-                <span className={styles.sectionIcon}>🔗</span>
+                <Link2 size={20} className={styles.sectionIconSvg} />
                 Related Concepts
               </h2>
               <div className={styles.relatedConcepts}>
@@ -210,7 +213,9 @@ export default function ConceptPageClient(): JSX.Element {
                     href={`/concepts/${related.id}`}
                     className={styles.relatedCard}
                   >
-                    <span className={styles.relatedIcon}>{related.icon}</span>
+                    <span className={styles.relatedIcon}>
+                      <ConceptIcon conceptId={related.id} size={24} />
+                    </span>
                     <div className={styles.relatedInfo}>
                       <h3 className={styles.relatedTitle}>{related.title}</h3>
                       <p className={styles.relatedDesc}>{related.shortDescription}</p>

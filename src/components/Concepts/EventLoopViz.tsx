@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { RefreshCw } from 'lucide-react'
 import styles from './EventLoopViz.module.css'
 
 interface Step {
@@ -1063,7 +1064,7 @@ export function EventLoopViz() {
           <div className={styles.neonBoxHeader}>Event Loop</div>
           <div className={styles.neonBoxInner}>
             <div className={`${styles.eventLoopIcon} ${getEventLoopClass()}`}>
-              🔄
+              <RefreshCw size={28} />
             </div>
           </div>
         </div>
