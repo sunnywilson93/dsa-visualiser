@@ -2,8 +2,10 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { Search } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { SearchResultsList, usePageSearch, PageSearchControls } from '@/components/Search'
+import { ConceptIcon } from '@/components/Icons'
 import { dsaConcepts, dsaConceptCategories } from '@/data/dsaConcepts'
 import styles from '../page.module.css'
 
@@ -44,7 +46,9 @@ export default function DSAConceptsPage() {
         {hasActiveFilters ? (
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>
-              <span className={styles.sectionIcon}>🔍</span>
+              <span className={styles.sectionIcon}>
+                <Search size={20} />
+              </span>
               Search Results
               <span className={styles.sectionDescription}>
                 {search.results.length} {search.results.length === 1 ? 'concept' : 'concepts'} found
@@ -66,7 +70,9 @@ export default function DSAConceptsPage() {
               return (
                 <section key={category.id} className={styles.section}>
                   <h2 className={styles.sectionTitle}>
-                    <span className={styles.sectionIcon}>{category.icon}</span>
+                    <span className={styles.sectionIcon}>
+                      <ConceptIcon conceptId={category.id} size={20} />
+                    </span>
                     {category.name}
                     <span className={styles.sectionDescription}>{category.description}</span>
                   </h2>
@@ -82,7 +88,9 @@ export default function DSAConceptsPage() {
                         <Link href={`/concepts/dsa/${concept.id}`} className={styles.card}>
                           <div className={styles.cardInner}>
                             <div className={styles.cardHeader}>
-                              <span className={styles.cardIcon}>{concept.icon}</span>
+                              <span className={styles.cardIcon}>
+                                <ConceptIcon conceptId={concept.id} size={28} />
+                              </span>
                               <span
                                 className={styles.difficulty}
                                 style={{ background: difficultyColors[concept.difficulty] }}

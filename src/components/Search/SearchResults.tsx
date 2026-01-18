@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import type { SearchResult } from '@/lib/search'
+import { ConceptIcon } from '@/components/Icons'
 import styles from './SearchResults.module.css'
 
 const difficultyColors = {
@@ -49,7 +50,9 @@ export function SearchResultItem({ result, onClick, compact = false }: SearchRes
         className={styles.itemCompact}
         onClick={onClick}
       >
-        <span className={styles.icon}>{item.icon}</span>
+        <span className={styles.icon}>
+          <ConceptIcon conceptId={item.id} size={18} />
+        </span>
         <span className={styles.title}>{item.title}</span>
         {badges}
       </Link>
@@ -63,7 +66,9 @@ export function SearchResultItem({ result, onClick, compact = false }: SearchRes
       className={styles.item}
       onClick={onClick}
     >
-      <span className={styles.icon}>{item.icon}</span>
+      <span className={styles.icon}>
+        <ConceptIcon conceptId={item.id} size={22} />
+      </span>
       <div className={styles.content}>
         <div className={styles.titleRow}>
           <span className={styles.title}>{item.title}</span>

@@ -2,10 +2,12 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { Search, BookOpen, Box, Zap } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { SearchResultsList } from '@/components/Search'
 import { usePageSearch } from '@/components/Search'
 import { PageSearchControls } from '@/components/Search/PageSearchControls'
+import { ConceptIcon } from '@/components/Icons'
 import { concepts, conceptCategories } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
 import styles from './page.module.css'
@@ -45,7 +47,9 @@ export default function ConceptsPage() {
         {hasActiveFilters ? (
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>
-              <span className={styles.sectionIcon}>🔍</span>
+              <span className={styles.sectionIcon}>
+                <Search size={20} />
+              </span>
               Search Results
               <span className={styles.sectionDescription}>
                 {search.results.length} {search.results.length === 1 ? 'concept' : 'concepts'} found
@@ -63,7 +67,9 @@ export default function ConceptsPage() {
             {/* DSA & JS Concept Categories */}
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>
-                <span className={styles.sectionIcon}>📚</span>
+                <span className={styles.sectionIcon}>
+                  <BookOpen size={20} />
+                </span>
                 Choose Your Path
               </h2>
               <div className={styles.grid}>
@@ -75,7 +81,9 @@ export default function ConceptsPage() {
                   <Link href="/concepts/dsa" className={styles.card}>
                     <div className={styles.cardInner}>
                       <div className={styles.cardHeader}>
-                        <span className={styles.cardIcon}>🏗️</span>
+                        <span className={styles.cardIcon}>
+                          <Box size={28} />
+                        </span>
                         <span
                           className={styles.difficulty}
                           style={{ background: '#667eea' }}
@@ -102,7 +110,9 @@ export default function ConceptsPage() {
                   <Link href="#js-concepts" className={styles.card}>
                     <div className={styles.cardInner}>
                       <div className={styles.cardHeader}>
-                        <span className={styles.cardIcon}>⚡</span>
+                        <span className={styles.cardIcon}>
+                          <Zap size={28} />
+                        </span>
                         <span
                           className={styles.difficulty}
                           style={{ background: '#f59e0b' }}
@@ -134,7 +144,9 @@ export default function ConceptsPage() {
               return (
                 <section key={category.id} className={styles.section}>
                   <h2 className={styles.sectionTitle}>
-                    <span className={styles.sectionIcon}>{category.icon}</span>
+                    <span className={styles.sectionIcon}>
+                      <ConceptIcon conceptId={category.id} size={20} />
+                    </span>
                     {category.name}
                     <span className={styles.sectionDescription}>{category.description}</span>
                   </h2>
@@ -150,7 +162,9 @@ export default function ConceptsPage() {
                         <Link href={`/concepts/${concept.id}`} className={styles.card}>
                           <div className={styles.cardInner}>
                             <div className={styles.cardHeader}>
-                              <span className={styles.cardIcon}>{concept.icon}</span>
+                              <span className={styles.cardIcon}>
+                                <ConceptIcon conceptId={concept.id} size={28} />
+                              </span>
                               <span
                                 className={styles.difficulty}
                                 style={{ background: difficultyColors[concept.difficulty] }}

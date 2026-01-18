@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { NavBar } from '@/components/NavBar'
 import { ExpandableGrid } from '@/components/ExpandableGrid'
+import { ConceptIcon } from '@/components/Icons'
 import { exampleCategories, getExamplesByCategory } from '@/data/examples'
 import { concepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
@@ -45,7 +46,9 @@ export default function HomePage() {
           <div className={styles.conceptCategoryGrid}>
             <Link href="/concepts/dsa" className={styles.conceptCategoryCard}>
               <div className={styles.conceptCategoryHeader}>
-                <span className={styles.conceptCategoryIcon}>🏗️</span>
+                <span className={styles.conceptCategoryIcon}>
+                  <ConceptIcon conceptId="data-structures" size={28} />
+                </span>
                 <span className={styles.conceptCategoryBadge}>{dsaConcepts.length} topics</span>
               </div>
               <h3 className={styles.conceptCategoryTitle}>DSA Fundamentals</h3>
@@ -64,7 +67,9 @@ export default function HomePage() {
 
             <Link href="/concepts" className={styles.conceptCategoryCard}>
               <div className={styles.conceptCategoryHeader}>
-                <span className={styles.conceptCategoryIcon}>⚡</span>
+                <span className={styles.conceptCategoryIcon}>
+                  <ConceptIcon conceptId="js-core" size={28} />
+                </span>
                 <span className={styles.conceptCategoryBadge}>{concepts.length} topics</span>
               </div>
               <h3 className={styles.conceptCategoryTitle}>JavaScript Deep Dive</h3>
@@ -110,7 +115,9 @@ export default function HomePage() {
                   href={`/${category.id}`}
                   className={styles.buildCard}
                 >
-                  <span className={styles.buildIcon}>{category.icon}</span>
+                  <span className={styles.buildIcon}>
+                    <ConceptIcon conceptId={category.id} size={24} />
+                  </span>
                   <div className={styles.buildContent}>
                     <h3 className={styles.buildTitle}>{category.name}</h3>
                     <p className={styles.buildDescription}>{category.description}</p>
@@ -139,7 +146,9 @@ export default function HomePage() {
           <Link href="/dsa" className={styles.dsaBanner}>
             <div className={styles.dsaContent}>
               <div className={styles.dsaLeft}>
-                <span className={styles.dsaIcon}>{dsaCategory.icon}</span>
+                <span className={styles.dsaIcon}>
+                  <ConceptIcon conceptId="dsa" size={32} />
+                </span>
                 <div>
                   <h3 className={styles.dsaTitle}>Data Structures & Algorithms</h3>
                   <p className={styles.dsaDescription}>
