@@ -6,13 +6,22 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, Lightbulb, AlertTriangle, Award, Clock } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { getDSAConceptById, getRelatedDSAConcepts } from '@/data/dsaConcepts'
-import { HashTableViz, StackViz, BigOViz, ArrayViz, QueueViz, LinkedListViz } from '@/components/DSAConcepts'
+import {
+  HashTableViz,
+  StackViz,
+  BigOViz,
+  ArrayViz,
+  QueueViz,
+  LinkedListViz,
+  BinarySystemViz,
+} from '@/components/DSAConcepts'
 import styles from '../../[conceptId]/page.module.css'
 import localStyles from './page.module.css'
 
 // Map concept IDs to their visualization components
 const visualizations: Record<string, React.ComponentType> = {
   'big-o-notation': BigOViz,
+  'binary-system': BinarySystemViz,
   'arrays': ArrayViz,
   'hash-tables': HashTableViz,
   'stacks': StackViz,
@@ -26,7 +35,7 @@ const difficultyColors = {
   advanced: '#ef4444',
 }
 
-export default function DSAConceptPageClient() {
+export default function DSAConceptPageClient(): JSX.Element {
   const params = useParams()
   const router = useRouter()
   const conceptId = params.conceptId as string
@@ -222,11 +231,11 @@ export default function DSAConceptPageClient() {
             </h2>
             <div className={localStyles.relatedProblems}>
               {concept.relatedProblems.map((problemId) => (
-                <Link
-                  key={problemId}
-                  href={`/arrays-hashing/${problemId}`}
-                  className={localStyles.problemLink}
-                >
+                  <Link
+                    key={problemId}
+                    href={`/dsa/${problemId}`}
+                    className={localStyles.problemLink}
+                  >
                   {problemId.split('-').map(word =>
                     word.charAt(0).toUpperCase() + word.slice(1)
                   ).join(' ')}

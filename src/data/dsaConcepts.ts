@@ -176,6 +176,87 @@ function reverseCopy(arr) {
       'Mention trade-offs: "I can do O(n) time with O(n) space, or O(n²) time with O(1) space"',
     ],
   },
+  {
+    id: 'binary-system',
+    title: 'Binary System & Bit Manipulation',
+    icon: '🔢',
+    category: 'foundations',
+    difficulty: 'beginner',
+    description: 'Computers store everything as bits. Understanding binary representation, signed numbers, and bitwise operations lets you reason about memory, speed, and many interview tricks like XOR cancellation or power-of-two checks.',
+    shortDescription: 'Base-2 representation and bitwise operations',
+    keyPoints: [
+      'Binary is base-2: each bit is a power of two (1, 2, 4, 8, ...)',
+      'A byte is 8 bits; unsigned 8-bit range is 0-255',
+      'Signed integers typically use two\'s complement (highest bit is the sign)',
+      'Bitwise ops (& | ^ ~) operate per-bit, not per-number',
+      'Shifts (<< >> >>>) move bits; in JS, bitwise ops use 32-bit signed integers',
+      'Bit masks let you set, clear, toggle, or test specific bits quickly',
+    ],
+    examples: [
+      {
+        title: 'Decimal to Binary (manual)',
+        code: `function toBinary(n) {
+  let bits = ''
+  let value = n
+
+  while (value > 0) {
+    bits = (value & 1) + bits
+    value = value >> 1
+  }
+
+  return bits || '0'
+}
+
+const n = 13
+console.log(n, '->', toBinary(n)) // 1101`,
+        explanation: 'Repeatedly divide by 2 and record remainders (LSB first)'
+      },
+      {
+        title: 'Bitwise AND / OR / XOR',
+        code: `const a = 12 // 1100
+const b = 10 // 1010
+
+console.log(a & b) // 8  (1000)
+console.log(a | b) // 14 (1110)
+console.log(a ^ b) // 6  (0110)`,
+        explanation: 'Each operator combines bits independently'
+      },
+      {
+        title: 'Bit Masks (set, clear, toggle, test)',
+        code: `const READ = 1 << 0  // 0001
+const WRITE = 1 << 1 // 0010
+const EXEC = 1 << 2  // 0100
+
+let perms = 0
+perms = perms | READ   // set READ
+perms = perms | EXEC   // set EXEC
+
+const canWrite = (perms & WRITE) !== 0
+perms = perms ^ EXEC   // toggle EXEC`,
+        explanation: 'Masks make flag operations O(1) and very compact'
+      },
+    ],
+    commonMistakes: [
+      'Forgetting JS bitwise ops are 32-bit signed (values may overflow)',
+      'Confusing XOR (^) with OR (|)',
+      'Using >> instead of >>> when you need zero-fill right shift',
+      'Shifting by more than 31 bits (JS masks the shift count)',
+    ],
+    interviewTips: [
+      'Use n & (n - 1) to clear the lowest set bit',
+      'XOR cancels pairs: a ^ a = 0, a ^ 0 = a',
+      'Bitmask enumeration: 0..(1 << n) - 1 can represent subsets',
+      'Mention two\'s complement when negatives appear in bit problems',
+    ],
+    relatedProblems: [
+      'single-number',
+      'number-of-1-bits',
+      'counting-bits',
+      'power-of-two',
+      'bitwise-and-range',
+      'maximum-xor',
+    ],
+  },
 
   // ============================================================================
   // DATA STRUCTURES
@@ -1112,7 +1193,8 @@ export const dsaConceptCategories = [
 
 // Related concepts mapping
 const relatedDSAConceptsMap: Record<string, string[]> = {
-  'big-o-notation': ['arrays', 'hash-tables', 'linked-lists'],
+  'big-o-notation': ['binary-system', 'arrays', 'hash-tables', 'linked-lists'],
+  'binary-system': ['big-o-notation', 'arrays', 'hash-tables'],
   'arrays': ['big-o-notation', 'hash-tables', 'stacks', 'queues'],
   'hash-tables': ['big-o-notation', 'arrays'],
   'stacks': ['arrays', 'queues', 'linked-lists'],

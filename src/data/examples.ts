@@ -3736,6 +3736,158 @@ let maxXor = findMaximumXOR(nums);
 console.log("\\nMaximum XOR:", maxXor);
 `,
   },
+  {
+    id: 'gray-code',
+    name: 'Gray Code',
+    category: 'bit-manipulation',
+    difficulty: 'medium',
+    description: 'Generate Gray code sequence where adjacent values differ by one bit',
+    code: `// Gray Code
+// Formula: gray(i) = i ^ (i >> 1)
+
+function grayCode(n) {
+  const result = []
+  const total = 1 << n
+
+  for (let i = 0; i < total; i++) {
+    const gray = i ^ (i >> 1)
+    console.log('i =', i, 'gray =', gray)
+    result.push(gray)
+  }
+
+  return result
+}
+
+const n = 3
+console.log('Gray code for n =', n)
+console.log(grayCode(n))
+`,
+  },
+  {
+    id: 'subsets',
+    name: 'Subsets',
+    category: 'bit-manipulation',
+    difficulty: 'medium',
+    description: 'Generate all subsets using a bitmask from 0..(2^n - 1)',
+    code: `// Subsets using bitmask enumeration
+
+function subsets(nums) {
+  const result = []
+  const total = 1 << nums.length
+
+  for (let mask = 0; mask < total; mask++) {
+    const subset = []
+    for (let i = 0; i < nums.length; i++) {
+      if (mask & (1 << i)) {
+        subset.push(nums[i])
+      }
+    }
+    console.log(mask.toString(2).padStart(nums.length, '0'), '->', subset)
+    result.push(subset)
+  }
+
+  return result
+}
+
+const nums = [1, 2, 3]
+subsets(nums)
+`,
+  },
+  {
+    id: 'sort-integers-by-1-bits',
+    name: 'Sort Integers by 1 Bits',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Sort by popcount (number of 1 bits), then by value',
+    code: `// Sort Integers by 1 Bits
+// popcount: count of set bits
+
+function popcount(n) {
+  let count = 0
+  let value = n
+
+  while (value > 0) {
+    value = value & (value - 1)
+    count = count + 1
+  }
+
+  return count
+}
+
+function sortByBits(arr) {
+  return arr.slice().sort((a, b) => {
+    const countA = popcount(a)
+    const countB = popcount(b)
+    if (countA === countB) return a - b
+    return countA - countB
+  })
+}
+
+const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+console.log(sortByBits(arr))
+`,
+  },
+  {
+    id: 'minimum-bit-flips',
+    name: 'Minimum Bit Flips',
+    category: 'bit-manipulation',
+    difficulty: 'easy',
+    description: 'Find how many bits differ between start and goal',
+    code: `// Minimum Bit Flips to Convert Number
+// XOR highlights different bits, then count 1s
+
+function minBitFlips(start, goal) {
+  let xor = start ^ goal
+  let flips = 0
+
+  while (xor > 0) {
+    xor = xor & (xor - 1)
+    flips = flips + 1
+  }
+
+  return flips
+}
+
+const start = 10 // 1010
+const goal = 7   // 0111
+console.log('Flips:', minBitFlips(start, goal))
+`,
+  },
+  {
+    id: 'minimum-flips-a-or-b',
+    name: 'Minimum Flips A OR B',
+    category: 'bit-manipulation',
+    difficulty: 'medium',
+    description: 'Minimum flips to make (a | b) equal to c',
+    code: `// Minimum Flips to Make a OR b Equal to c
+
+function minFlips(a, b, c) {
+  let flips = 0
+
+  while (a > 0 || b > 0 || c > 0) {
+    const bitA = a & 1
+    const bitB = b & 1
+    const bitC = c & 1
+
+    if (bitC === 0) {
+      flips = flips + bitA + bitB
+    } else {
+      if ((bitA | bitB) === 0) {
+        flips = flips + 1
+      }
+    }
+
+    a = a >> 1
+    b = b >> 1
+    c = c >> 1
+  }
+
+  return flips
+}
+
+console.log('Flips:', minFlips(2, 6, 5)) // 2
+`,
+  },
 
   // ==================== TWO POINTERS ====================
   {

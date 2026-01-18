@@ -4,6 +4,9 @@
   align-items: center;
   gap: var(--space-sm);
   width: 100%;
+  --label-width: 60px;
+  --decimal-width: 40px;
+  --equals-width: 12px;
 }
 
 .empty {
@@ -31,9 +34,10 @@
 }
 
 .bitRow {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--label-width) var(--decimal-width) var(--equals-width) auto;
+  column-gap: var(--space-sm);
   align-items: center;
-  gap: var(--space-sm);
   font-family: var(--font-mono);
 }
 
@@ -42,7 +46,7 @@
 }
 
 .label {
-  min-width: 50px;
+  width: var(--label-width);
   font-size: 10px;
   color: var(--accent-cyan);
   font-weight: 500;
@@ -53,7 +57,7 @@
 }
 
 .decimal {
-  min-width: 32px;
+  width: var(--decimal-width);
   font-size: 11px;
   color: var(--text-primary);
   font-weight: 600;
@@ -63,6 +67,7 @@
 .equals {
   color: var(--text-muted);
   font-size: 10px;
+  text-align: center;
 }
 
 .bits {
@@ -117,18 +122,18 @@
 }
 
 .operatorRow {
-  display: flex;
-  padding-left: 50px;
-  margin-left: var(--space-sm);
+  display: grid;
+  grid-template-columns: var(--label-width) var(--decimal-width) var(--equals-width) auto;
+  column-gap: var(--space-sm);
+  align-items: center;
 }
 
 .operatorSymbol {
   font-size: 12px;
   font-weight: 700;
   color: var(--accent-purple);
-  min-width: 32px;
-  text-align: right;
-  padding-right: var(--space-sm);
+  grid-column: 2;
+  justify-self: end;
 }
 
 .divider {
@@ -138,13 +143,19 @@
 }
 
 .bitPositions {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--label-width) var(--decimal-width) var(--equals-width) auto;
+  column-gap: var(--space-sm);
   align-items: center;
-  gap: var(--space-sm);
 }
 
 .bitPositionsSpacer {
-  min-width: calc(50px + 32px + var(--space-sm) + 10px + var(--space-sm));
+  grid-column: 1 / 4;
+}
+
+.bitPositionsRow {
+  display: flex;
+  gap: 2px;
 }
 
 .bitPosition {
@@ -153,7 +164,6 @@
   font-size: 8px;
   font-family: var(--font-mono);
   color: var(--text-muted);
-  margin-right: 2px;
 }
 
 .bitPosition.activeBitPos {

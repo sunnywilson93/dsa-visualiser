@@ -108,14 +108,16 @@ export function BitManipulationConcept({ step }: BitManipulationConceptProps) {
       {/* Bit position labels */}
       <div className={styles.bitPositions}>
         <div className={styles.bitPositionsSpacer} />
-        {Array.from({ length: bits }, (_, i) => bits - 1 - i).map((pos) => (
-          <span
-            key={pos}
-            className={`${styles.bitPosition} ${activeBits.includes(pos) ? styles.activeBitPos : ''}`}
-          >
-            {pos}
-          </span>
-        ))}
+        <div className={styles.bitPositionsRow}>
+          {Array.from({ length: bits }, (_, i) => bits - 1 - i).map((pos) => (
+            <span
+              key={pos}
+              className={`${styles.bitPosition} ${activeBits.includes(pos) ? styles.activeBitPos : ''}`}
+            >
+              {pos}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* Annotations */}
