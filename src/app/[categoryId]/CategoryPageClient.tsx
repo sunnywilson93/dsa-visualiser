@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Search } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
+import { ConceptIcon } from '@/components/Icons'
 import {
   exampleCategories,
   dsaSubcategories,
@@ -80,7 +81,9 @@ export default function CategoryPageClient() {
       <NavBar breadcrumbs={[{ label: category.name }]} />
 
       <header className={styles.header}>
-        <span className={styles.icon}>{category.icon}</span>
+        <span className={styles.icon}>
+          <ConceptIcon conceptId={category.id} size={32} />
+        </span>
         <div>
           <h1 className={styles.title}>{category.name}</h1>
           <p className={styles.subtitle}>{category.description}</p>
@@ -130,7 +133,7 @@ export default function CategoryPageClient() {
               }`}
               onClick={() => setSelectedSubcategory(sub.id)}
             >
-              <span>{sub.icon}</span>
+              <ConceptIcon conceptId={sub.id} size={16} />
               <span>{sub.name}</span>
             </button>
           ))}

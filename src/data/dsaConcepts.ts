@@ -15,7 +15,6 @@ export interface ComplexityInfo {
 export interface DSAConcept {
   id: string
   title: string
-  icon: string
   category: 'foundations' | 'data-structures' | 'algorithms' | 'patterns'
   difficulty: 'beginner' | 'intermediate' | 'advanced'
   description: string
@@ -39,7 +38,6 @@ export const dsaConcepts: DSAConcept[] = [
   {
     id: 'big-o-notation',
     title: 'Big O Notation',
-    icon: '📈',
     category: 'foundations',
     difficulty: 'beginner',
     description: 'Big O notation describes how an algorithm\'s runtime or space requirements grow as the input size increases. It\'s the language we use to talk about efficiency and is essential for comparing algorithms and making informed decisions about which approach to use.',
@@ -179,7 +177,6 @@ function reverseCopy(arr) {
   {
     id: 'binary-system',
     title: 'Binary System & Bit Manipulation',
-    icon: '🔢',
     category: 'foundations',
     difficulty: 'beginner',
     description: 'Computers store everything as bits. Understanding binary representation, signed numbers, and bitwise operations lets you reason about memory, speed, and many interview tricks like XOR cancellation or power-of-two checks.',
@@ -264,7 +261,6 @@ perms = perms ^ EXEC   // toggle EXEC`,
   {
     id: 'arrays',
     title: 'Arrays',
-    icon: '📦',
     category: 'data-structures',
     difficulty: 'beginner',
     description: 'Arrays store elements in contiguous memory locations, allowing O(1) access by index. They\'re the most fundamental data structure and the building block for many others. Understanding when arrays excel and when they struggle is crucial for algorithm design.',
@@ -412,7 +408,6 @@ arr.includes(x)  // O(n) - search`,
   {
     id: 'hash-tables',
     title: 'Hash Tables',
-    icon: '🗂️',
     category: 'data-structures',
     difficulty: 'beginner',
     description: 'Hash tables (also called hash maps or dictionaries) store key-value pairs with O(1) average lookup, insert, and delete. They use a hash function to convert keys into array indices. In JavaScript, both Objects and Maps are implemented as hash tables.',
@@ -590,7 +585,6 @@ obj[1] = 'becomes string "1"'
   {
     id: 'stacks',
     title: 'Stacks',
-    icon: '📚',
     category: 'data-structures',
     difficulty: 'beginner',
     description: 'A stack is a Last-In-First-Out (LIFO) data structure. Think of a stack of plates - you add to the top and remove from the top. Stacks are used for function calls, undo operations, parsing expressions, and many algorithms.',
@@ -791,7 +785,6 @@ evalRPN(['2', '3', '+', '4', '*'])  // (2+3)*4 = 20`,
   {
     id: 'queues',
     title: 'Queues',
-    icon: '🚶‍♂️',
     category: 'data-structures',
     difficulty: 'beginner',
     description: 'A queue is a First-In-First-Out (FIFO) data structure. Think of a line at a store - first person in line is first served. Queues are essential for BFS, scheduling, buffering, and any scenario where order of arrival matters.',
@@ -1011,7 +1004,6 @@ queue.shift()  // 1 (first added)
   {
     id: 'linked-lists',
     title: 'Linked Lists',
-    icon: '🔗',
     category: 'data-structures',
     difficulty: 'beginner',
     description: 'A linked list is a sequence of nodes where each node contains data and a pointer to the next node. Unlike arrays, linked lists don\'t require contiguous memory, making insertions and deletions efficient. However, they sacrifice random access.',
@@ -1185,10 +1177,10 @@ while (current !== null) {
 ]
 
 export const dsaConceptCategories = [
-  { id: 'foundations', name: 'Foundations', icon: '📐', description: 'Core concepts every developer needs' },
-  { id: 'data-structures', name: 'Data Structures', icon: '📦', description: 'Building blocks for algorithms' },
-  { id: 'algorithms', name: 'Algorithms', icon: '⚡', description: 'Common algorithm techniques' },
-  { id: 'patterns', name: 'Patterns', icon: '🧩', description: 'Reusable problem-solving patterns' },
+  { id: 'foundations', name: 'Foundations', description: 'Core concepts every developer needs' },
+  { id: 'data-structures', name: 'Data Structures', description: 'Building blocks for algorithms' },
+  { id: 'algorithms', name: 'Algorithms', description: 'Common algorithm techniques' },
+  { id: 'patterns', name: 'Patterns', description: 'Reusable problem-solving patterns' },
 ]
 
 // Related concepts mapping

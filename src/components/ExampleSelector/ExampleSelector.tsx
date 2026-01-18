@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Code, Search } from 'lucide-react'
 import { useExecutionStore } from '@/store'
+import { ConceptIcon } from '@/components/Icons'
 import { codeExamples, exampleCategories, type CodeExample } from '@/data/examples'
 import styles from './ExampleSelector.module.css'
 
@@ -126,7 +127,7 @@ export function ExampleSelector() {
                   className={`${styles.categoryBtn} ${selectedCategory === cat.id ? styles.active : ''}`}
                   onClick={() => setSelectedCategory(cat.id)}
                 >
-                  <span>{cat.icon}</span>
+                  <ConceptIcon conceptId={cat.id} size={16} />
                   <span>{cat.name}</span>
                   <span className={styles.catCount}>({categoryCount[cat.id] || 0})</span>
                 </button>

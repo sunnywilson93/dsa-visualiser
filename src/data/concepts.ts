@@ -9,7 +9,6 @@ export interface ConceptExample {
 export interface Concept {
   id: string
   title: string
-  icon: string
   category: 'fundamentals' | 'core' | 'advanced' | 'runtime' | 'backend' | 'browser'
   difficulty: 'beginner' | 'intermediate' | 'advanced'
   description: string
@@ -24,7 +23,6 @@ export const concepts: Concept[] = [
   {
     id: 'hoisting',
     title: 'Hoisting',
-    icon: '🎈',
     category: 'fundamentals',
     difficulty: 'beginner',
     description: 'Hoisting is JavaScript\'s default behavior of moving declarations to the top of their scope before code execution. Understanding hoisting helps you predict how variables and functions behave before they\'re defined in your code.',
@@ -118,7 +116,6 @@ console.log(b);  // ReferenceError!
   {
     id: 'type-coercion',
     title: 'Data Types & Coercion',
-    icon: '🧪',
     category: 'fundamentals',
     difficulty: 'beginner',
     description: 'JavaScript has a small set of primitives and automatic type conversion rules. Understanding coercion helps you predict equality checks, arithmetic, and truthiness in conditionals.',
@@ -190,7 +187,6 @@ typeof undefined  // "undefined"`,
   {
     id: 'closures',
     title: 'Closures',
-    icon: '🎒',
     category: 'core',
     difficulty: 'intermediate',
     description: 'A closure is a function that remembers the variables from its outer scope even after the outer function has returned. Think of it as a function carrying a "backpack" of variables wherever it goes.',
@@ -307,7 +303,6 @@ for (let i = 0; i < 3; i++) {
   {
     id: 'this-keyword',
     title: 'The "this" Keyword',
-    icon: '👆',
     category: 'core',
     difficulty: 'intermediate',
     description: 'The `this` keyword refers to the object that is executing the current function. Its value is determined by HOW a function is called, not where it\'s defined. There are 4 main rules that determine what `this` refers to.',
@@ -440,7 +435,6 @@ setTimeout(person.greet.bind(person), 100);
   {
     id: 'event-loop',
     title: 'Event Loop',
-    icon: '🔄',
     category: 'advanced',
     difficulty: 'advanced',
     description: 'The Event Loop is how JavaScript handles asynchronous operations despite being single-threaded. It continuously checks if the call stack is empty, then moves callbacks from the task queues to the stack for execution.',
@@ -581,7 +575,6 @@ setTimeout(() => {
   {
     id: 'prototypes',
     title: 'Prototypes',
-    icon: '🔗',
     category: 'core',
     difficulty: 'intermediate',
     description: 'Prototypes are JavaScript\'s mechanism for inheritance. Every object has a hidden [[Prototype]] link to another object. When you access a property, JS looks up the prototype chain until it finds it or reaches null.',
@@ -734,7 +727,6 @@ dog.speak();  // "Rex barks"
   {
     id: 'recursion',
     title: 'Recursion',
-    icon: '🔁',
     category: 'core',
     difficulty: 'intermediate',
     description: 'Recursion is when a function calls itself to solve smaller instances of the same problem. Every recursive function needs a base case (stopping condition) and a recursive case. Understanding the call stack is key to mastering recursion.',
@@ -817,7 +809,6 @@ dog.speak();  // "Rex barks"
   {
     id: 'memory-model',
     title: 'Memory Model',
-    icon: '🧠',
     category: 'runtime',
     difficulty: 'intermediate',
     description: 'JavaScript uses two memory regions: the Stack for primitives and function calls, and the Heap for objects and dynamic data. Understanding this helps you predict performance, avoid memory leaks, and understand how garbage collection works.',
@@ -910,7 +901,6 @@ const counter = createCounter();
   {
     id: 'v8-engine',
     title: 'V8 Engine',
-    icon: '🚀',
     category: 'runtime',
     difficulty: 'advanced',
     description: 'V8 is the JavaScript engine powering Chrome and Node.js. It compiles JavaScript to machine code using a two-tier approach: Ignition (interpreter) for quick startup, and TurboFan (JIT compiler) for hot code optimization.',
@@ -1026,7 +1016,6 @@ user.email = undefined;  // Better
   {
     id: 'nodejs-event-loop',
     title: 'Node.js Event Loop',
-    icon: '♻️',
     category: 'backend',
     difficulty: 'advanced',
     description: 'Node.js uses libuv to implement its event loop, which has 6 distinct phases. Understanding these phases helps you predict execution order and avoid blocking the server.',
@@ -1136,7 +1125,6 @@ setImmediate(() => {
   {
     id: 'streams-buffers',
     title: 'Streams & Buffers',
-    icon: '🌊',
     category: 'backend',
     difficulty: 'intermediate',
     description: 'Streams let you process data piece by piece instead of loading everything into memory. Buffers hold binary data. Together they enable efficient handling of files, network requests, and real-time data.',
@@ -1255,7 +1243,6 @@ http.createServer((req, res) => {
   {
     id: 'critical-render-path',
     title: 'Critical Render Path',
-    icon: '🎨',
     category: 'browser',
     difficulty: 'intermediate',
     description: 'The Critical Render Path is the sequence of steps the browser takes to convert HTML, CSS, and JavaScript into pixels on screen. Optimizing it is key to fast page loads and smooth interactions.',
@@ -1387,7 +1374,6 @@ element.style.opacity = "0.5";
   {
     id: 'web-workers',
     title: 'Web Workers',
-    icon: '👷',
     category: 'browser',
     difficulty: 'advanced',
     description: 'Web Workers enable multi-threading in JavaScript by running scripts in background threads. This keeps the main thread free for UI updates, preventing the page from freezing during heavy computations.',
@@ -1531,12 +1517,12 @@ self.addEventListener("install", (e) => {
 ]
 
 export const conceptCategories = [
-  { id: 'fundamentals', name: 'Fundamentals', icon: '🟢', description: 'Core JS basics' },
-  { id: 'core', name: 'Core Mechanics', icon: '🟡', description: 'How JS really works' },
-  { id: 'advanced', name: 'Advanced', icon: '🔴', description: 'Deep dive topics' },
-  { id: 'runtime', name: 'Runtime Internals', icon: '⚙️', description: 'How JS engines work' },
-  { id: 'backend', name: 'Node.js', icon: '🟢', description: 'Server-side JavaScript' },
-  { id: 'browser', name: 'Browser', icon: '🌐', description: 'Frontend rendering' },
+  { id: 'fundamentals', name: 'Fundamentals', description: 'Core JS basics' },
+  { id: 'core', name: 'Core Mechanics', description: 'How JS really works' },
+  { id: 'advanced', name: 'Advanced', description: 'Deep dive topics' },
+  { id: 'runtime', name: 'Runtime Internals', description: 'How JS engines work' },
+  { id: 'backend', name: 'Node.js', description: 'Server-side JavaScript' },
+  { id: 'browser', name: 'Browser', description: 'Frontend rendering' },
 ]
 
 // Related concepts mapping for internal linking (SEO)

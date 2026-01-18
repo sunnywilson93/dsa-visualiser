@@ -9,7 +9,6 @@ function normalizeJSConcepts(): SearchableItem[] {
   return concepts.map(c => ({
     id: c.id,
     title: c.title,
-    icon: c.icon,
     category: c.category,
     difficulty: c.difficulty,
     description: c.description,
@@ -25,7 +24,6 @@ function normalizeDSAConcepts(): SearchableItem[] {
   return dsaConcepts.map(c => ({
     id: c.id,
     title: c.title,
-    icon: c.icon,
     category: c.category,
     difficulty: c.difficulty,
     description: c.description,
@@ -51,14 +49,12 @@ export function getAllCategories(): CategoryOption[] {
   const jsCategories = conceptCategories.map(c => ({
     id: c.id,
     name: c.name,
-    icon: c.icon,
     source: 'js' as ConceptSource,
   }))
 
   const dsaCategories = dsaConceptCategories.map(c => ({
     id: c.id,
     name: c.name,
-    icon: c.icon,
     source: 'dsa' as ConceptSource,
   }))
 

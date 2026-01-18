@@ -7,7 +7,6 @@ export type Difficulty = 'beginner' | 'intermediate' | 'advanced'
 export interface SearchableItem {
   id: string
   title: string
-  icon: string
   category: string
   difficulty: Difficulty
   description: string
@@ -36,6 +35,5 @@ export interface SearchResult {
 export interface CategoryOption {
   id: string
   name: string
-  icon: string
   source: ConceptSource
 }
