@@ -705,115 +705,112 @@ export function ClosuresViz() {
 
       {/* Memory visualization */}
       <div className={styles.memoryContainer}>
-        {/* Call Stack */}
-        <div className={styles.stackSection}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionIcon}>📚</span>
-            Call Stack
-          </div>
-          <div className={styles.stack}>
-            <AnimatePresence mode="popLayout">
-              {currentStep.callStack.slice().reverse().map((ec) => (
-                <motion.div
-                  key={ec.id}
-                  className={`${styles.executionContext} ${ec.id === 'global' ? styles.globalEc : ''}`}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  layout
-                >
-                  <div className={styles.ecHeader}>{ec.name}</div>
-                  <div className={styles.ecContent}>
-                    <div className={styles.ecSection}>
-                      <span className={styles.ecLabel}>Variables:</span>
-                      {ec.variables.length > 0 ? (
-                        ec.variables.map(v => (
-                          <div key={v.name} className={styles.ecVar}>
-                            <span className={styles.ecVarName}>{v.name}</span>
-                            <span className={styles.ecVarValue}>{v.value}</span>
-                          </div>
-                        ))
-                      ) : (
-                        <span className={styles.ecEmpty}>(none)</span>
+        {/* Call Stack - Neon Box */}
+        <div className={`${styles.neonBox} ${styles.callStackBox}`}>
+          <div className={styles.neonBoxHeader}>Call Stack</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.stack}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.callStack.slice().reverse().map((ec) => (
+                  <motion.div
+                    key={ec.id}
+                    className={`${styles.executionContext} ${ec.id === 'global' ? styles.globalEc : ''}`}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    layout
+                  >
+                    <div className={styles.ecHeader}>{ec.name}</div>
+                    <div className={styles.ecContent}>
+                      <div className={styles.ecSection}>
+                        <span className={styles.ecLabel}>Variables:</span>
+                        {ec.variables.length > 0 ? (
+                          ec.variables.map(v => (
+                            <div key={v.name} className={styles.ecVar}>
+                              <span className={styles.ecVarName}>{v.name}</span>
+                              <span className={styles.ecVarValue}>{v.value}</span>
+                            </div>
+                          ))
+                        ) : (
+                          <span className={styles.ecEmpty}>(none)</span>
+                        )}
+                      </div>
+                      {ec.outerRef && (
+                        <div className={styles.ecSection}>
+                          <span className={styles.ecLabel}>Outer:</span>
+                          <span className={styles.ecRef}>→ {ec.outerRef}</span>
+                        </div>
                       )}
                     </div>
-                    {ec.outerRef && (
-                      <div className={styles.ecSection}>
-                        <span className={styles.ecLabel}>Outer:</span>
-                        <span className={styles.ecRef}>→ {ec.outerRef}</span>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
 
-        {/* Heap Memory */}
-        <div className={styles.heapSection}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionIcon}>🗄️</span>
-            Heap Memory
+        {/* Heap Memory - Neon Box */}
+        <div className={`${styles.neonBox} ${styles.heapBox}`}>
+          <div className={styles.neonBoxHeader}>Heap Memory</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.heap}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.heap.length === 0 ? (
+                  <motion.div key="empty" className={styles.emptyHeap} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    (empty)
+                  </motion.div>
+                ) : (
+                  currentStep.heap.map((obj) => (
+                    <motion.div
+                      key={obj.id}
+                      className={`${styles.heapBlock} ${obj.type === 'scope' ? styles.scopeBlock : styles.functionBlock}`}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      layout
+                    >
+                      <div className={styles.heapLabel}>{obj.label}</div>
+                      <div className={styles.heapVars}>
+                        {obj.vars.map((v) => (
+                          <div key={v.name} className={styles.heapVar}>
+                            <span className={styles.heapVarName}>{v.name}:</span>
+                            <motion.span
+                              key={v.value}
+                              className={styles.heapVarValue}
+                              initial={{ scale: 1.2, color: '#f59e0b' }}
+                              animate={{ scale: 1, color: v.name === '[[Scope]]' ? '#667eea' : '#10b981' }}
+                            >
+                              {v.value}
+                            </motion.span>
+                          </div>
+                        ))}
+                      </div>
+                      {obj.label.includes('CLOSED') && (
+                        <div className={styles.closureBadge}>Closure!</div>
+                      )}
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
+            </div>
           </div>
-          <div className={styles.heap}>
-            <AnimatePresence mode="popLayout">
-              {currentStep.heap.length === 0 ? (
-                <motion.div key="empty" className={styles.emptyHeap} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  (empty)
-                </motion.div>
+        </div>
+
+        {/* Output - Neon Box */}
+        <div className={`${styles.neonBox} ${styles.outputBox}`}>
+          <div className={styles.neonBoxHeader}>Output</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.output}>
+              {currentStep.output.length === 0 ? (
+                <span className={styles.emptyOutput}>—</span>
               ) : (
-                currentStep.heap.map((obj) => (
-                  <motion.div
-                    key={obj.id}
-                    className={`${styles.heapBlock} ${obj.type === 'scope' ? styles.scopeBlock : styles.functionBlock}`}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    layout
-                  >
-                    <div className={styles.heapLabel}>{obj.label}</div>
-                    <div className={styles.heapVars}>
-                      {obj.vars.map((v) => (
-                        <div key={v.name} className={styles.heapVar}>
-                          <span className={styles.heapVarName}>{v.name}:</span>
-                          <motion.span
-                            key={v.value}
-                            className={styles.heapVarValue}
-                            initial={{ scale: 1.2, color: '#f59e0b' }}
-                            animate={{ scale: 1, color: v.name === '[[Scope]]' ? '#667eea' : '#10b981' }}
-                          >
-                            {v.value}
-                          </motion.span>
-                        </div>
-                      ))}
-                    </div>
-                    {obj.label.includes('CLOSED') && (
-                      <div className={styles.closureBadge}>Closure!</div>
-                    )}
+                currentStep.output.map((o, i) => (
+                  <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className={styles.outputLine}>
+                    {o}
                   </motion.div>
                 ))
               )}
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Output */}
-        <div className={styles.outputSection}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionIcon}>📤</span>
-            Output
-          </div>
-          <div className={styles.output}>
-            {currentStep.output.length === 0 ? (
-              <span className={styles.emptyOutput}>—</span>
-            ) : (
-              currentStep.output.map((o, i) => (
-                <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className={styles.outputLine}>
-                  {o}
-                </motion.div>
-              ))
-            )}
+            </div>
           </div>
         </div>
       </div>

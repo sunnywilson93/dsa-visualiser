@@ -300,12 +300,10 @@ export function ThisKeywordViz() {
           </pre>
         </div>
 
-        {/* Execution Context */}
-        <div className={styles.ecPanel}>
-          <div className={styles.panelHeader}>
-            <span>Execution Context</span>
-          </div>
-          <div className={styles.ecContent}>
+        {/* Execution Context - Neon Box */}
+        <div className={`${styles.neonBox} ${styles.contextBox}`}>
+          <div className={styles.neonBoxHeader}>Execution Context</div>
+          <div className={styles.neonBoxInner}>
             <div className={styles.thisBinding}>
               <div className={styles.thisLabel}>this =</div>
               <AnimatePresence mode="wait">

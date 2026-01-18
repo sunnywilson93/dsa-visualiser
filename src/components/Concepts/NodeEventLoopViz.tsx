@@ -684,83 +684,97 @@ export function NodeEventLoopViz() {
         </pre>
       </div>
 
-      {/* Priority Queues */}
+      {/* Priority Queues - Neon Boxes */}
       <div className={styles.priorityQueues}>
-        <div className={`${styles.priorityQueue} ${currentStep.nextTickQueue.length > 0 ? styles.hasItems : ''}`}>
-          <div className={styles.queueHeader}>process.nextTick</div>
-          <div className={styles.queueContent}>
-            <AnimatePresence mode="popLayout">
-              {currentStep.nextTickQueue.length === 0 ? (
-                <div className={styles.emptyQueue}>(empty)</div>
-              ) : (
-                currentStep.nextTickQueue.map((item, i) => (
-                  <motion.div
-                    key={item + i}
-                    className={styles.queueItem}
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
-                  >
-                    {item}
-                  </motion.div>
-                ))
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-
-        <div className={`${styles.priorityQueue} ${currentStep.promiseQueue.length > 0 ? styles.hasItems : ''}`}>
-          <div className={styles.queueHeader}>Promise Queue</div>
-          <div className={styles.queueContent}>
-            <AnimatePresence mode="popLayout">
-              {currentStep.promiseQueue.length === 0 ? (
-                <div className={styles.emptyQueue}>(empty)</div>
-              ) : (
-                currentStep.promiseQueue.map((item, i) => (
-                  <motion.div
-                    key={item + i}
-                    className={styles.queueItem}
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
-                  >
-                    {item}
-                  </motion.div>
-                ))
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-      </div>
-
-      {/* Event Loop Phases */}
-      <div className={styles.phasesContainer}>
-        {currentStep.phases.map((phase) => (
-          <div
-            key={phase.name}
-            className={`${styles.phase} ${phase.active ? styles.activePhase : ''}`}
-          >
-            <div className={styles.phaseName}>{phase.name}</div>
-            <div className={styles.phaseContent}>
-              {phase.items.length === 0 ? (
-                <span className={styles.emptyPhase}>-</span>
-              ) : (
-                phase.items.map((item, i) => (
-                  <div key={i} className={styles.phaseItem}>{item}</div>
-                ))
-              )}
+        <div className={`${styles.neonBox} ${styles.nextTickBox}`}>
+          <div className={styles.neonBoxHeader}>process.nextTick</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.queueContent}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.nextTickQueue.length === 0 ? (
+                  <div className={styles.emptyQueue}>(empty)</div>
+                ) : (
+                  currentStep.nextTickQueue.map((item, i) => (
+                    <motion.div
+                      key={item + i}
+                      className={styles.queueItem}
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
+                    >
+                      {item}
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
             </div>
           </div>
-        ))}
+        </div>
+
+        <div className={`${styles.neonBox} ${styles.promiseBox}`}>
+          <div className={styles.neonBoxHeader}>Promise Queue</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.queueContent}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.promiseQueue.length === 0 ? (
+                  <div className={styles.emptyQueue}>(empty)</div>
+                ) : (
+                  currentStep.promiseQueue.map((item, i) => (
+                    <motion.div
+                      key={item + i}
+                      className={styles.queueItem}
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
+                    >
+                      {item}
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Output */}
+      {/* Event Loop Phases - Neon Box */}
+      <div className={`${styles.neonBox} ${styles.phasesBox}`}>
+        <div className={styles.neonBoxHeader}>Event Loop Phases</div>
+        <div className={styles.neonBoxInner}>
+          <div className={styles.phasesContainer}>
+            {currentStep.phases.map((phase) => (
+              <div
+                key={phase.name}
+                className={`${styles.phase} ${phase.active ? styles.activePhase : ''}`}
+              >
+                <div className={styles.phaseName}>{phase.name}</div>
+                <div className={styles.phaseContent}>
+                  {phase.items.length === 0 ? (
+                    <span className={styles.emptyPhase}>-</span>
+                  ) : (
+                    phase.items.map((item, i) => (
+                      <div key={i} className={styles.phaseItem}>{item}</div>
+                    ))
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={styles.output}>
-          <span className={styles.outputLabel}>Output:</span>
-          {currentStep.output.map((item, i) => (
-            <span key={i} className={styles.outputItem}>{item}</span>
-          ))}
+        <div className={`${styles.neonBox} ${styles.outputBox}`}>
+          <div className={styles.neonBoxHeader}>Console Output</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.output}>
+              <span className={styles.outputLabel}>Output:</span>
+              {currentStep.output.map((item, i) => (
+                <span key={i} className={styles.outputItem}>{item}</span>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 

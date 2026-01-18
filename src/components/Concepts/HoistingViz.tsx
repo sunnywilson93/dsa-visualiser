@@ -521,53 +521,48 @@ export function HoistingViz() {
           </pre>
         </div>
 
-        {/* Memory panel */}
-        <div className={styles.memoryPanel}>
-          <div className={styles.panelHeader}>
-            <span>Global Execution Context</span>
-          </div>
-          <div className={styles.ecContent}>
-            <div className={styles.ecSection}>
-              <div className={styles.ecLabel}>Variable Environment</div>
-              <div className={styles.variables}>
-                <AnimatePresence mode="popLayout">
-                  {currentStep.variables.map(v => (
-                    <motion.div
-                      key={v.name}
-                      className={styles.variable}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      style={{ borderColor: getStatusColor(v.status) }}
-                      layout
+        {/* Variables panel - Neon Box */}
+        <div className={`${styles.neonBox} ${styles.variablesBox}`}>
+          <div className={styles.neonBoxHeader}>Variable Environment</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.variables}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.variables.map(v => (
+                  <motion.div
+                    key={v.name}
+                    className={styles.variable}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    style={{ borderColor: getStatusColor(v.status) }}
+                    layout
+                  >
+                    <span className={styles.varName}>{v.name}</span>
+                    <motion.span
+                      key={v.value}
+                      className={styles.varValue}
+                      style={{ color: getStatusColor(v.status) }}
+                      initial={{ scale: 1.2 }}
+                      animate={{ scale: 1 }}
                     >
-                      <span className={styles.varName}>{v.name}</span>
-                      <motion.span
-                        key={v.value}
-                        className={styles.varValue}
-                        style={{ color: getStatusColor(v.status) }}
-                        initial={{ scale: 1.2 }}
-                        animate={{ scale: 1 }}
-                      >
-                        {v.value}
-                      </motion.span>
-                      <span
-                        className={styles.varStatus}
-                        style={{ background: getStatusColor(v.status) }}
-                      >
-                        {v.status === 'tdz' ? 'TDZ' : v.status}
-                      </span>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </div>
+                      {v.value}
+                    </motion.span>
+                    <span
+                      className={styles.varStatus}
+                      style={{ background: getStatusColor(v.status) }}
+                    >
+                      {v.status === 'tdz' ? 'TDZ' : v.status}
+                    </span>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           </div>
         </div>
 
-        {/* Output panel */}
-        <div className={styles.outputPanel}>
-          <div className={styles.panelHeader}>Output</div>
-          <div className={styles.output}>
+        {/* Output panel - Neon Box */}
+        <div className={`${styles.neonBox} ${styles.outputBox}`}>
+          <div className={styles.neonBoxHeader}>Output</div>
+          <div className={styles.neonBoxInner}>
             {currentStep.output.map((line, i) => (
               <motion.div
                 key={i}

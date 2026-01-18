@@ -806,86 +806,88 @@ export function MemoryModelViz() {
 
       {/* Memory visualization */}
       <div className={styles.memoryGrid}>
-        {/* Stack */}
-        <div className={styles.memorySection}>
-          <div className={styles.sectionHeader} style={{ background: '#667eea' }}>
-            Stack
-          </div>
-          <div className={styles.sectionContent}>
-            <AnimatePresence mode="popLayout">
-              {currentStep.stack.length === 0 ? (
-                <div className={styles.emptySection}>(empty)</div>
-              ) : (
-                currentStep.stack.slice().reverse().map((item, i) => (
-                  <motion.div
-                    key={item.name + i}
-                    className={`${styles.stackItem} ${item.isReference ? styles.reference : ''}`}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    layout
-                  >
-                    <span className={styles.varName}>{item.name}</span>
-                    <span className={styles.varValue}>{item.value}</span>
-                  </motion.div>
-                ))
-              )}
-            </AnimatePresence>
+        {/* Stack - Neon Box */}
+        <div className={`${styles.neonBox} ${styles.stackBox}`}>
+          <div className={styles.neonBoxHeader}>Stack</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.sectionContent}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.stack.length === 0 ? (
+                  <div className={styles.emptySection}>(empty)</div>
+                ) : (
+                  currentStep.stack.slice().reverse().map((item, i) => (
+                    <motion.div
+                      key={item.name + i}
+                      className={`${styles.stackItem} ${item.isReference ? styles.reference : ''}`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      layout
+                    >
+                      <span className={styles.varName}>{item.name}</span>
+                      <span className={styles.varValue}>{item.value}</span>
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
 
-        {/* Heap */}
-        <div className={styles.memorySection}>
-          <div className={styles.sectionHeader} style={{ background: '#f59e0b' }}>
-            Heap
-          </div>
-          <div className={styles.sectionContent}>
-            <AnimatePresence mode="popLayout">
-              {currentStep.heap.length === 0 ? (
-                <div className={styles.emptySection}>(empty)</div>
-              ) : (
-                currentStep.heap.map((obj) => (
-                  <motion.div
-                    key={obj.id}
-                    className={`${styles.heapObject} ${obj.marked === false ? styles.unmarked : ''} ${obj.marked === true ? styles.marked : ''}`}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    layout
-                  >
-                    <div className={styles.objectLabel}>{obj.label}</div>
-                    {obj.type === 'object' && obj.properties && (
-                      <div className={styles.objectProps}>
-                        {Object.entries(obj.properties).map(([key, val]) => (
-                          <div key={key} className={styles.prop}>
-                            <span>{key}:</span> <span>{val}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    {obj.type === 'array' && obj.elements && (
-                      <div className={styles.arrayElements}>
-                        [{obj.elements.join(', ')}]
-                      </div>
-                    )}
-                    {obj.type === 'function' && (
-                      <div className={styles.funcLabel}>fn</div>
-                    )}
-                  </motion.div>
-                ))
-              )}
-            </AnimatePresence>
+        {/* Heap - Neon Box */}
+        <div className={`${styles.neonBox} ${styles.heapBox}`}>
+          <div className={styles.neonBoxHeader}>Heap</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.sectionContent}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.heap.length === 0 ? (
+                  <div className={styles.emptySection}>(empty)</div>
+                ) : (
+                  currentStep.heap.map((obj) => (
+                    <motion.div
+                      key={obj.id}
+                      className={`${styles.heapObject} ${obj.marked === false ? styles.unmarked : ''} ${obj.marked === true ? styles.marked : ''}`}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      layout
+                    >
+                      <div className={styles.objectLabel}>{obj.label}</div>
+                      {obj.type === 'object' && obj.properties && (
+                        <div className={styles.objectProps}>
+                          {Object.entries(obj.properties).map(([key, val]) => (
+                            <div key={key} className={styles.prop}>
+                              <span>{key}:</span> <span>{val}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {obj.type === 'array' && obj.elements && (
+                        <div className={styles.arrayElements}>
+                          [{obj.elements.join(', ')}]
+                        </div>
+                      )}
+                      {obj.type === 'function' && (
+                        <div className={styles.funcLabel}>fn</div>
+                      )}
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Output */}
+      {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={styles.output}>
-          <span className={styles.outputLabel}>Output:</span>
-          {currentStep.output.map((item, i) => (
-            <span key={i} className={styles.outputItem}>{item}</span>
-          ))}
+        <div className={`${styles.neonBox} ${styles.outputBox}`}>
+          <div className={styles.neonBoxHeader}>Output</div>
+          <div className={styles.neonBoxInner}>
+            {currentStep.output.map((item, i) => (
+              <span key={i} className={styles.outputItem}>{item}</span>
+            ))}
+          </div>
         </div>
       )}
 

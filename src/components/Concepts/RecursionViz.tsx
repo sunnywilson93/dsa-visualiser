@@ -395,54 +395,55 @@ export function RecursionViz() {
           </pre>
         </div>
 
-        {/* Call Stack */}
-        <div className={styles.stackPanel}>
-          <div className={styles.panelHeader}>
-            <span>Call Stack</span>
-            <span className={styles.stackCount}>{currentStep.stack.length} frames</span>
-          </div>
-          <div className={styles.stack}>
-            <AnimatePresence mode="popLayout">
-              {currentStep.stack.length === 0 ? (
-                <div className={styles.emptyStack}>Stack empty</div>
-              ) : (
-                currentStep.stack.slice().reverse().map((frame, i) => (
-                  <motion.div
-                    key={`${frame.fn}-${frame.args}-${i}`}
-                    className={styles.stackFrame}
-                    style={{ borderLeftColor: getStatusColor(frame.status) }}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                    layout
-                  >
-                    <div className={styles.frameFn}>{frame.fn}({frame.args})</div>
-                    {frame.returnValue && (
-                      <div className={styles.frameReturn}>
-                        → {frame.returnValue}
-                      </div>
-                    )}
-                    <div
-                      className={styles.frameStatus}
-                      style={{ color: getStatusColor(frame.status) }}
+        {/* Call Stack - Neon Box */}
+        <div className={`${styles.neonBox} ${styles.stackBox}`}>
+          <div className={styles.neonBoxHeader}>Call Stack ({currentStep.stack.length})</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.stack}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.stack.length === 0 ? (
+                  <div className={styles.emptyStack}>Stack empty</div>
+                ) : (
+                  currentStep.stack.slice().reverse().map((frame, i) => (
+                    <motion.div
+                      key={`${frame.fn}-${frame.args}-${i}`}
+                      className={styles.stackFrame}
+                      style={{ borderLeftColor: getStatusColor(frame.status) }}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      layout
                     >
-                      {frame.status}
-                    </div>
-                  </motion.div>
-                ))
-              )}
-            </AnimatePresence>
+                      <div className={styles.frameFn}>{frame.fn}({frame.args})</div>
+                      {frame.returnValue && (
+                        <div className={styles.frameReturn}>
+                          → {frame.returnValue}
+                        </div>
+                      )}
+                      <div
+                        className={styles.frameStatus}
+                        style={{ color: getStatusColor(frame.status) }}
+                      >
+                        {frame.status}
+                      </div>
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Output */}
+      {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={styles.output}>
-          <span className={styles.outputLabel}>Output:</span>
-          {currentStep.output.map((o, i) => (
-            <span key={i} className={styles.outputItem}>{o}</span>
-          ))}
+        <div className={`${styles.neonBox} ${styles.outputBox}`}>
+          <div className={styles.neonBoxHeader}>Output</div>
+          <div className={styles.neonBoxInner}>
+            {currentStep.output.map((o, i) => (
+              <span key={i} className={styles.outputItem}>{o}</span>
+            ))}
+          </div>
         </div>
       )}
 

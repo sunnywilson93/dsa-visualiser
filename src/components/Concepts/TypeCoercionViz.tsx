@@ -253,34 +253,41 @@ export function TypeCoercionViz(): JSX.Element {
       </div>
 
       <div className={styles.resultGrid}>
-        <div className={styles.equationCard}>
-          <div className={styles.equationLine}>
-            <span className={styles.valueChip}>{leftOption.label}</span>
-            <span className={styles.operatorChip}>{operator}</span>
-            <span className={styles.valueChip}>{rightOption.label}</span>
-            <span className={styles.equals}>=</span>
-            <span className={styles.resultValue}>{evaluation.display}</span>
-          </div>
-          <div className={styles.typeRow}>
-            <span className={styles.typeBadge}>{evaluation.leftType}</span>
-            <span className={styles.typeBadge}>{evaluation.rightType}</span>
-            <span className={styles.typeBadgeAccent}>{evaluation.typeLabel}</span>
-          </div>
-          {showTruthiness && (
-            <div className={styles.truthinessRow}>
-              <span>Left is {evaluation.leftTruthy ? 'truthy' : 'falsy'}</span>
-              <span>Right is {evaluation.rightTruthy ? 'truthy' : 'falsy'}</span>
+        {/* Result - Neon Box */}
+        <div className={`${styles.neonBox} ${styles.equationBox}`}>
+          <div className={styles.neonBoxHeader}>Result</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.equationLine}>
+              <span className={styles.valueChip}>{leftOption.label}</span>
+              <span className={styles.operatorChip}>{operator}</span>
+              <span className={styles.valueChip}>{rightOption.label}</span>
+              <span className={styles.equals}>=</span>
+              <span className={styles.resultValue}>{evaluation.display}</span>
             </div>
-          )}
+            <div className={styles.typeRow}>
+              <span className={styles.typeBadge}>{evaluation.leftType}</span>
+              <span className={styles.typeBadge}>{evaluation.rightType}</span>
+              <span className={styles.typeBadgeAccent}>{evaluation.typeLabel}</span>
+            </div>
+            {showTruthiness && (
+              <div className={styles.truthinessRow}>
+                <span>Left is {evaluation.leftTruthy ? 'truthy' : 'falsy'}</span>
+                <span>Right is {evaluation.rightTruthy ? 'truthy' : 'falsy'}</span>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className={styles.explainCard}>
-          <div className={styles.explainTitle}>What JS does</div>
-          <ul className={styles.explainList}>
-            {evaluation.explanation.map((note: string, index: number) => (
-              <li key={index}>{note}</li>
-            ))}
-          </ul>
+        {/* Explanation - Neon Box */}
+        <div className={`${styles.neonBox} ${styles.explainBox}`}>
+          <div className={styles.neonBoxHeader}>What JS Does</div>
+          <div className={styles.neonBoxInner}>
+            <ul className={styles.explainList}>
+              {evaluation.explanation.map((note: string, index: number) => (
+                <li key={index}>{note}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -10,6 +10,10 @@
   gap: 0.5rem;
   justify-content: center;
   margin-bottom: 0.25rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.35rem;
 }
 
 .levelBtn {
@@ -19,20 +23,24 @@
   padding: 0.4rem 0.8rem;
   font-size: 0.75rem;
   font-weight: 500;
-  background: transparent;
-  border: 2px solid transparent;
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
   color: #888;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .levelBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
   color: #ccc;
 }
 
 .levelBtn.activeLevel {
-  color: #fff;
+  background: rgba(130, 100, 255, 0.18);
+  border-color: rgba(130, 100, 255, 0.7);
+  color: #f5f7ff;
+  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
 }
 
 .levelDot {
@@ -47,15 +55,19 @@
   gap: 0.5rem;
   flex-wrap: wrap;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.35rem;
 }
 
 .exampleBtn {
   padding: 0.4rem 0.8rem;
   font-family: 'Fira Code', monospace;
   font-size: 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
   color: #888;
   cursor: pointer;
   transition: all 0.2s;
@@ -67,82 +79,57 @@
 }
 
 .exampleBtn.active {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
-  border-color: rgba(102, 126, 234, 0.5);
-  color: #a5b4fc;
+  background: rgba(130, 100, 255, 0.18);
+  border-color: rgba(130, 100, 255, 0.7);
+  color: #f5f7ff;
+  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
 }
 
-/* Code Line Highlight */
-.codeLine.activeLine {
-  background: rgba(102, 126, 234, 0.2);
+/* ============================================
+   NEON BOX BASE STYLES
+   ============================================ */
+.neonBox {
+  position: relative;
+  border-radius: 12px;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--neon-start), var(--neon-end));
 }
 
-.activeLine .lineCode {
-  color: #a5b4fc;
+.neonBoxInner {
+  background: #1a1a2e;
+  border-radius: 10px;
+  min-height: 100px;
+  padding: 0.75rem;
+  padding-top: 1.5rem;
 }
 
-/* Rule selector (legacy - keep for compatibility) */
-.ruleSelector {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-}
-
-.ruleBtn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
-  padding: 0.4rem 0.6rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-  min-width: 80px;
-}
-
-.ruleBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.ruleBtn.active {
-  border-color: var(--rule-color);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.rulePriority {
-  font-size: 0.55rem;
-  font-weight: 700;
-  color: #666;
-}
-
-.ruleBtn.active .rulePriority {
-  color: var(--rule-color);
-}
-
-.ruleName {
-  font-size: 0.6rem;
-  color: #888;
-  text-align: center;
-}
-
-.ruleBtn.active .ruleName {
-  color: #ccc;
+.neonBoxHeader {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.35rem 1rem;
+  background: #4a4a5a;
+  border-radius: 0 0 8px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  z-index: 1;
 }
 
 /* Main grid */
 .mainGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
-/* Panels */
-.codePanel,
-.ecPanel {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
+/* Code Panel */
+.codePanel {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -150,17 +137,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.4rem 0.6rem;
-  font-size: 0.65rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: #888;
   background: rgba(255, 255, 255, 0.05);
 }
 
 .badge {
-  padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  font-size: 0.55rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.6rem;
   font-weight: 600;
   color: #000;
 }
@@ -169,11 +156,18 @@
 .code {
   margin: 0;
   padding: 0.5rem 0;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .codeLine {
   display: flex;
   padding: 0.1rem 0.5rem;
+  transition: background 0.2s;
+}
+
+.codeLine.activeLine {
+  background: rgba(102, 126, 234, 0.2);
 }
 
 .lineNum {
@@ -190,18 +184,23 @@
   color: #ccc;
 }
 
-/* EC panel */
-.ecPanel .panelHeader {
-  color: #a78bfa;
+.activeLine .lineCode {
+  color: #a5b4fc;
 }
 
-.ecContent {
-  padding: 0.75rem;
+/* Context Panel - Neon Box Blue/Purple */
+.contextBox {
+  --neon-start: #3b82f6;
+  --neon-end: #8b5cf6;
+}
+
+.contextBox .neonBoxInner {
+  min-height: 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
-  min-height: 120px;
 }
 
 .thisBinding {
@@ -235,8 +234,8 @@
 /* Description */
 .description {
   padding: 0.6rem 0.75rem;
-  background: rgba(102, 126, 234, 0.1);
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   font-size: 0.8rem;
   color: #ccc;
@@ -316,14 +315,5 @@
 @media (max-width: 640px) {
   .mainGrid {
     grid-template-columns: 1fr;
-  }
-
-  .ruleSelector {
-    justify-content: center;
-  }
-
-  .ruleBtn {
-    min-width: 70px;
-    padding: 0.35rem 0.5rem;
   }
 }

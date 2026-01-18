@@ -598,63 +598,78 @@ export function CriticalRenderPathViz() {
         </pre>
       </div>
 
-      {/* Pipeline visualization */}
-      <div className={styles.pipelineContainer}>
-        {currentStep.pipeline.map((stage) => (
-          <motion.div
-            key={stage.name}
-            className={`${styles.pipelineStage} ${styles[stage.status]} ${stage.blocking ? styles.blocking : ''}`}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
-            <div className={styles.stageName}>{stage.name}</div>
-            {stage.blocking && <div className={styles.blockingBadge}>BLOCKING</div>}
-          </motion.div>
-        ))}
+      {/* Pipeline visualization - Neon Box */}
+      <div className={`${styles.neonBox} ${styles.pipelineBox}`}>
+        <div className={styles.neonBoxHeader}>Render Pipeline</div>
+        <div className={styles.neonBoxInner}>
+          <div className={styles.pipelineContainer}>
+            {currentStep.pipeline.map((stage) => (
+              <motion.div
+                key={stage.name}
+                className={`${styles.pipelineStage} ${styles[stage.status]} ${stage.blocking ? styles.blocking : ''}`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                <div className={styles.stageName}>{stage.name}</div>
+                {stage.blocking && <div className={styles.blockingBadge}>BLOCKING</div>}
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* Trees */}
-      <div className={styles.treesContainer}>
-        {currentStep.domTree.length > 0 && (
-          <div className={styles.tree}>
-            <div className={styles.treeHeader}>DOM Tree</div>
-            <div className={styles.treeContent}>
-              {currentStep.domTree.map((node, i) => (
-                <div key={i} className={styles.treeNode}>{node}</div>
-              ))}
+      {/* Trees - Neon Box */}
+      {(currentStep.domTree.length > 0 || currentStep.cssomTree.length > 0 || currentStep.renderTree.length > 0) && (
+        <div className={`${styles.neonBox} ${styles.treesBox}`}>
+          <div className={styles.neonBoxHeader}>DOM & Render Trees</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.treesContainer}>
+              {currentStep.domTree.length > 0 && (
+                <div className={styles.tree}>
+                  <div className={styles.treeHeader}>DOM Tree</div>
+                  <div className={styles.treeContent}>
+                    {currentStep.domTree.map((node, i) => (
+                      <div key={i} className={styles.treeNode}>{node}</div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {currentStep.cssomTree.length > 0 && (
+                <div className={styles.tree}>
+                  <div className={styles.treeHeader}>CSSOM</div>
+                  <div className={styles.treeContent}>
+                    {currentStep.cssomTree.map((rule, i) => (
+                      <div key={i} className={styles.treeNode}>{rule}</div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {currentStep.renderTree.length > 0 && (
+                <div className={styles.tree}>
+                  <div className={styles.treeHeader}>Render Tree</div>
+                  <div className={styles.treeContent}>
+                    {currentStep.renderTree.map((node, i) => (
+                      <div key={i} className={styles.treeNode}>{node}</div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {currentStep.cssomTree.length > 0 && (
-          <div className={styles.tree}>
-            <div className={styles.treeHeader}>CSSOM</div>
-            <div className={styles.treeContent}>
-              {currentStep.cssomTree.map((rule, i) => (
-                <div key={i} className={styles.treeNode}>{rule}</div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {currentStep.renderTree.length > 0 && (
-          <div className={styles.tree}>
-            <div className={styles.treeHeader}>Render Tree</div>
-            <div className={styles.treeContent}>
-              {currentStep.renderTree.map((node, i) => (
-                <div key={i} className={styles.treeNode}>{node}</div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Output */}
+      {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={styles.output}>
-          {currentStep.output.map((item, i) => (
-            <span key={i} className={styles.outputItem}>{item}</span>
-          ))}
+        <div className={`${styles.neonBox} ${styles.outputBox}`}>
+          <div className={styles.neonBoxHeader}>Console Output</div>
+          <div className={styles.neonBoxInner}>
+            {currentStep.output.map((item, i) => (
+              <span key={i} className={styles.outputItem}>{item}</span>
+            ))}
+          </div>
         </div>
       )}
 

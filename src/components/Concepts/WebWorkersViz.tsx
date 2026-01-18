@@ -575,138 +575,150 @@ export function WebWorkersViz() {
         </pre>
       </div>
 
-      {/* Thread Visualization */}
-      <div className={styles.threadsContainer}>
-        {/* Main Thread */}
-        <div className={styles.thread}>
-          <div className={styles.threadHeader}>
-            <span>{currentStep.mainThread.name}</span>
-            <span
-              className={styles.statusBadge}
-              style={{ background: getStatusColor(currentStep.mainThread.status) }}
-            >
-              {currentStep.mainThread.status}
-            </span>
-          </div>
-          <div className={styles.threadContent}>
-            <AnimatePresence mode="wait">
-              {currentStep.mainThread.currentTask && (
-                <motion.div
-                  key={currentStep.mainThread.currentTask}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className={styles.task}
+      {/* Thread Visualization - Neon Box */}
+      <div className={`${styles.neonBox} ${styles.threadsBox}`}>
+        <div className={styles.neonBoxHeader}>Threads</div>
+        <div className={styles.neonBoxInner}>
+          <div className={styles.threadsContainer}>
+            {/* Main Thread */}
+            <div className={styles.thread}>
+              <div className={styles.threadHeader}>
+                <span>{currentStep.mainThread.name}</span>
+                <span
+                  className={styles.statusBadge}
+                  style={{ background: getStatusColor(currentStep.mainThread.status) }}
                 >
-                  {currentStep.mainThread.currentTask}
-                  {currentStep.mainThread.progress !== undefined && (
-                    <div className={styles.progressBar}>
-                      <motion.div
-                        className={styles.progressFill}
-                        initial={{ width: 0 }}
-                        animate={{ width: `${currentStep.mainThread.progress}%` }}
-                      />
-                    </div>
+                  {currentStep.mainThread.status}
+                </span>
+              </div>
+              <div className={styles.threadContent}>
+                <AnimatePresence mode="wait">
+                  {currentStep.mainThread.currentTask && (
+                    <motion.div
+                      key={currentStep.mainThread.currentTask}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className={styles.task}
+                    >
+                      {currentStep.mainThread.currentTask}
+                      {currentStep.mainThread.progress !== undefined && (
+                        <div className={styles.progressBar}>
+                          <motion.div
+                            className={styles.progressFill}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${currentStep.mainThread.progress}%` }}
+                          />
+                        </div>
+                      )}
+                    </motion.div>
                   )}
-                </motion.div>
-              )}
-            </AnimatePresence>
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* Message Arrows */}
+            {currentStep.messages.length > 0 && (
+              <div className={styles.messagesChannel}>
+                <AnimatePresence>
+                  {currentStep.messages.map((msg) => (
+                    <motion.div
+                      key={msg.id}
+                      initial={{ opacity: 0, x: msg.from === 'main' ? -20 : 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className={`${styles.message} ${styles[msg.from]}`}
+                    >
+                      <span className={styles.messageArrow}>
+                        {msg.from === 'main' ? '→' : '←'}
+                      </span>
+                      <span className={styles.messageData}>{msg.data}</span>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            )}
+
+            {/* Worker Thread */}
+            {currentStep.workerThread && (
+              <div className={styles.thread}>
+                <div className={styles.threadHeader}>
+                  <span>{currentStep.workerThread.name}</span>
+                  <span
+                    className={styles.statusBadge}
+                    style={{ background: getStatusColor(currentStep.workerThread.status) }}
+                  >
+                    {currentStep.workerThread.status}
+                  </span>
+                </div>
+                <div className={styles.threadContent}>
+                  <AnimatePresence mode="wait">
+                    {currentStep.workerThread.currentTask && (
+                      <motion.div
+                        key={currentStep.workerThread.currentTask}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className={styles.task}
+                      >
+                        {currentStep.workerThread.currentTask}
+                        {currentStep.workerThread.progress !== undefined && (
+                          <div className={styles.progressBar}>
+                            <motion.div
+                              className={styles.progressFill}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${currentStep.workerThread.progress}%` }}
+                            />
+                          </div>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-
-        {/* Message Arrows */}
-        {currentStep.messages.length > 0 && (
-          <div className={styles.messagesChannel}>
-            <AnimatePresence>
-              {currentStep.messages.map((msg) => (
-                <motion.div
-                  key={msg.id}
-                  initial={{ opacity: 0, x: msg.from === 'main' ? -20 : 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className={`${styles.message} ${styles[msg.from]}`}
-                >
-                  <span className={styles.messageArrow}>
-                    {msg.from === 'main' ? '→' : '←'}
-                  </span>
-                  <span className={styles.messageData}>{msg.data}</span>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        )}
-
-        {/* Worker Thread */}
-        {currentStep.workerThread && (
-          <div className={styles.thread}>
-            <div className={styles.threadHeader}>
-              <span>{currentStep.workerThread.name}</span>
-              <span
-                className={styles.statusBadge}
-                style={{ background: getStatusColor(currentStep.workerThread.status) }}
-              >
-                {currentStep.workerThread.status}
-              </span>
-            </div>
-            <div className={styles.threadContent}>
-              <AnimatePresence mode="wait">
-                {currentStep.workerThread.currentTask && (
-                  <motion.div
-                    key={currentStep.workerThread.currentTask}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className={styles.task}
-                  >
-                    {currentStep.workerThread.currentTask}
-                    {currentStep.workerThread.progress !== undefined && (
-                      <div className={styles.progressBar}>
-                        <motion.div
-                          className={styles.progressFill}
-                          initial={{ width: 0 }}
-                          animate={{ width: `${currentStep.workerThread.progress}%` }}
-                        />
-                      </div>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* Shared Buffer (for advanced examples) */}
+      {/* Shared Buffer - Neon Box (for advanced examples) */}
       {currentStep.sharedBuffer && (
-        <div className={styles.sharedBuffer}>
-          <div className={styles.bufferHeader}>SharedArrayBuffer</div>
-          <div className={styles.bufferContent}>
-            {currentStep.sharedBuffer.map((val, idx) => (
-              <motion.div
-                key={idx}
-                className={styles.bufferCell}
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 0.3 }}
-              >
-                <span className={styles.cellIndex}>[{idx}]</span>
-                <span className={styles.cellValue}>{val}</span>
-              </motion.div>
-            ))}
+        <div className={`${styles.neonBox} ${styles.sharedBufferBox}`}>
+          <div className={styles.neonBoxHeader}>SharedArrayBuffer</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.bufferContent}>
+              {currentStep.sharedBuffer.map((val, idx) => (
+                <motion.div
+                  key={idx}
+                  className={styles.bufferCell}
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <span className={styles.cellIndex}>[{idx}]</span>
+                  <span className={styles.cellValue}>{val}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Output */}
+      {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <motion.div
-          className={styles.output}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          <span className={styles.outputLabel}>Console:</span>
-          {currentStep.output.map((item, idx) => (
-            <span key={idx} className={styles.outputItem}>{item}</span>
-          ))}
-        </motion.div>
+        <div className={`${styles.neonBox} ${styles.outputBox}`}>
+          <div className={styles.neonBoxHeader}>Console Output</div>
+          <div className={styles.neonBoxInner}>
+            <motion.div
+              className={styles.output}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <span className={styles.outputLabel}>Console:</span>
+              {currentStep.output.map((item, idx) => (
+                <span key={idx} className={styles.outputItem}>{item}</span>
+              ))}
+            </motion.div>
+          </div>
+        </div>
       )}
 
       {/* Description */}

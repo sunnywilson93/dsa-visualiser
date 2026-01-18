@@ -539,69 +539,82 @@ export function StreamsBuffersViz() {
         </pre>
       </div>
 
-      {/* Streams visualization */}
+      {/* Streams visualization - Neon Box */}
       {currentStep.streams.length > 0 && (
-        <div className={styles.streamsContainer}>
-          {currentStep.streams.map((stream) => (
-            <motion.div
-              key={stream.name}
-              className={`${styles.stream} ${styles[stream.type]} ${stream.flowing ? styles.flowing : ''} ${stream.paused ? styles.paused : ''}`}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className={styles.streamHeader}>
-                {stream.name}
-                <span className={styles.streamType}>{stream.type}</span>
-              </div>
-              <div className={styles.streamContent}>
-                <AnimatePresence mode="popLayout">
-                  {stream.chunks.map((chunk, j) => (
-                    <motion.div
-                      key={chunk + j}
-                      className={styles.chunk}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8, x: 20 }}
-                    >
-                      {chunk}
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </div>
-              {stream.flowing && <div className={styles.flowIndicator}>▶</div>}
-              {stream.paused && <div className={styles.pausedIndicator}>⏸</div>}
-            </motion.div>
-          ))}
+        <div className={`${styles.neonBox} ${styles.streamsBox}`}>
+          <div className={styles.neonBoxHeader}>Stream Pipeline</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.streamsContainer}>
+              {currentStep.streams.map((stream) => (
+                <motion.div
+                  key={stream.name}
+                  className={`${styles.stream} ${styles[stream.type]} ${stream.flowing ? styles.flowing : ''} ${stream.paused ? styles.paused : ''}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  <div className={styles.streamHeader}>
+                    {stream.name}
+                    <span className={styles.streamType}>{stream.type}</span>
+                  </div>
+                  <div className={styles.streamContent}>
+                    <AnimatePresence mode="popLayout">
+                      {stream.chunks.map((chunk, j) => (
+                        <motion.div
+                          key={chunk + j}
+                          className={styles.chunk}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.8, x: 20 }}
+                        >
+                          {chunk}
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+                  </div>
+                  {stream.flowing && <div className={styles.flowIndicator}>▶</div>}
+                  {stream.paused && <div className={styles.pausedIndicator}>⏸</div>}
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
-      {/* Buffer visualization */}
+      {/* Buffer visualization - Neon Box */}
       {currentStep.buffer.length > 0 && (
-        <div className={styles.bufferContainer}>
-          <div className={styles.bufferHeader}>
-            Internal Buffer ({currentStep.buffer.length}/{currentStep.bufferMax}KB)
-          </div>
-          <div className={styles.bufferBar}>
-            <div
-              className={`${styles.bufferFill} ${currentStep.backpressure ? styles.full : ''}`}
-              style={{ width: `${(currentStep.buffer.length / currentStep.bufferMax) * 100}%` }}
-            />
-          </div>
-          <div className={styles.bufferContent}>
-            {currentStep.buffer.map((item, i) => (
-              <span key={i} className={styles.bufferItem}>{item}</span>
-            ))}
+        <div className={`${styles.neonBox} ${styles.bufferBox}`}>
+          <div className={styles.neonBoxHeader}>Internal Buffer</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.bufferHeader}>
+              ({currentStep.buffer.length}/{currentStep.bufferMax}KB)
+            </div>
+            <div className={styles.bufferBar}>
+              <div
+                className={`${styles.bufferFill} ${currentStep.backpressure ? styles.full : ''}`}
+                style={{ width: `${(currentStep.buffer.length / currentStep.bufferMax) * 100}%` }}
+              />
+            </div>
+            <div className={styles.bufferContent}>
+              {currentStep.buffer.map((item, i) => (
+                <span key={i} className={styles.bufferItem}>{item}</span>
+              ))}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Output */}
+      {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={styles.output}>
-          <span className={styles.outputLabel}>Output:</span>
-          {currentStep.output.map((item, i) => (
-            <span key={i} className={styles.outputItem}>{item}</span>
-          ))}
+        <div className={`${styles.neonBox} ${styles.outputBox}`}>
+          <div className={styles.neonBoxHeader}>Console Output</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.output}>
+              <span className={styles.outputLabel}>Output:</span>
+              {currentStep.output.map((item, i) => (
+                <span key={i} className={styles.outputItem}>{item}</span>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 

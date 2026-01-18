@@ -670,10 +670,11 @@ export function PrototypesViz() {
         )}
       </div>
 
-      {/* Heap visualization */}
-      <div className={styles.heapContainer}>
-        <div className={styles.heapHeader}>Heap Memory (Prototype Chain)</div>
-        <div className={styles.heap}>
+      {/* Heap visualization - Neon Box */}
+      <div className={`${styles.neonBox} ${styles.heapBox}`}>
+        <div className={styles.neonBoxHeader}>Prototype Chain</div>
+        <div className={styles.neonBoxInner}>
+          <div className={styles.heap}>
           {currentExample.heap.map((obj, index) => (
             <div key={obj.id}>
               <motion.div
@@ -737,6 +738,7 @@ export function PrototypesViz() {
               )}
             </div>
           ))}
+          </div>
         </div>
       </div>
 

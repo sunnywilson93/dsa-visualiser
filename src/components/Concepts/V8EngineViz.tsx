@@ -662,48 +662,65 @@ export function V8EngineViz() {
         </pre>
       </div>
 
-      {/* Pipeline visualization */}
-      <div className={styles.pipelineContainer}>
-        <AnimatePresence mode="popLayout">
-          {currentStep.pipeline.map((stage, i) => (
-            <motion.div
-              key={stage.name + i}
-              className={`${styles.pipelineStage} ${stage.active ? styles.active : ''} ${stage.optimized ? styles.optimized : ''}`}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              layout
-            >
-              <div className={styles.stageName}>{stage.name}</div>
-              <div className={styles.stageContent}>{stage.content}</div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+      {/* Pipeline visualization - Neon Box */}
+      <div className={`${styles.neonBox} ${styles.pipelineBox}`}>
+        <div className={styles.neonBoxHeader}>V8 Pipeline</div>
+        <div className={styles.neonBoxInner}>
+          <div className={styles.pipelineContainer}>
+            <AnimatePresence mode="popLayout">
+              {currentStep.pipeline.map((stage, i) => (
+                <motion.div
+                  key={stage.name + i}
+                  className={`${styles.pipelineStage} ${stage.active ? styles.active : ''} ${stage.optimized ? styles.optimized : ''}`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  layout
+                >
+                  <div className={styles.stageName}>{stage.name}</div>
+                  <div className={styles.stageContent}>{stage.content}</div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
 
-      {/* Call count & hidden class info */}
-      <div className={styles.infoRow}>
-        {currentStep.callCount !== undefined && (
-          <div className={styles.infoBox}>
-            <span className={styles.infoLabel}>Call Count:</span>
-            <span className={styles.infoValue}>{currentStep.callCount.toLocaleString()}</span>
+      {/* Call count & hidden class info - Neon Box */}
+      {(currentStep.callCount !== undefined || currentStep.hiddenClass) && (
+        <div className={`${styles.neonBox} ${styles.infoBox}`}>
+          <div className={styles.neonBoxHeader}>Runtime Info</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.infoRow}>
+              {currentStep.callCount !== undefined && (
+                <div className={styles.infoItem}>
+                  <span className={styles.infoLabel}>Call Count:</span>
+                  <span className={styles.infoValue}>{currentStep.callCount.toLocaleString()}</span>
+                </div>
+              )}
+              {currentStep.hiddenClass && (
+                <div className={styles.infoItem}>
+                  <span className={styles.infoLabel}>Hidden Class:</span>
+                  <span className={styles.infoValue}>{currentStep.hiddenClass}</span>
+                </div>
+              )}
+            </div>
           </div>
-        )}
-        {currentStep.hiddenClass && (
-          <div className={styles.infoBox}>
-            <span className={styles.infoLabel}>Hidden Class:</span>
-            <span className={styles.infoValue}>{currentStep.hiddenClass}</span>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* Output */}
+      {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={styles.output}>
-          <span className={styles.outputLabel}>Output:</span>
-          {currentStep.output.map((item, i) => (
-            <span key={i} className={styles.outputItem}>{item}</span>
-          ))}
+        <div className={`${styles.neonBox} ${styles.outputBox}`}>
+          <div className={styles.neonBoxHeader}>Console Output</div>
+          <div className={styles.neonBoxInner}>
+            <div className={styles.output}>
+              <span className={styles.outputLabel}>Output:</span>
+              {currentStep.output.map((item, i) => (
+                <span key={i} className={styles.outputItem}>{item}</span>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
