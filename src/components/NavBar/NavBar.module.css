@@ -48,6 +48,13 @@
   background-clip: text;
 }
 
+.searchWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 400px;
+}
+
 .breadcrumbs {
   display: flex;
   align-items: center;
@@ -93,6 +100,10 @@
     display: none;
   }
 
+  .searchWrapper {
+    max-width: 280px;
+  }
+
   .breadcrumbs {
     font-size: 0.8rem;
   }
@@ -100,6 +111,10 @@
 
 /* Mobile */
 @media (max-width: 480px) {
+  .searchWrapper {
+    max-width: 180px;
+  }
+
   .breadcrumbCurrent {
     max-width: 120px;
     overflow: hidden;

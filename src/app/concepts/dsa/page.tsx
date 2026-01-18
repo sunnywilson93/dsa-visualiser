@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { NavBar } from '@/components/NavBar'
+import { SearchResultsList, usePageSearch, PageSearchControls } from '@/components/Search'
 import { dsaConcepts, dsaConceptCategories } from '@/data/dsaConcepts'
 import styles from '../page.module.css'
 
@@ -13,6 +14,9 @@ const difficultyColors = {
 }
 
 export default function DSAConceptsPage() {
+  const search = usePageSearch('dsa')
+  const hasActiveFilters = search.isSearching || search.filters.difficulty !== 'all'
+
   return (
     <div className={styles.page}>
       <NavBar breadcrumbs={[
@@ -30,53 +34,82 @@ export default function DSAConceptsPage() {
           </p>
         </header>
 
-        {dsaConceptCategories.map((category) => {
-          const categoryConcepts = dsaConcepts.filter(c => c.category === category.id)
-          if (categoryConcepts.length === 0) return null
+        {/* Page-level search */}
+        <PageSearchControls
+          search={search}
+          placeholder="Search DSA concepts..."
+        />
 
-          return (
-            <section key={category.id} className={styles.section}>
-              <h2 className={styles.sectionTitle}>
-                <span className={styles.sectionIcon}>{category.icon}</span>
-                {category.name}
-                <span className={styles.sectionDescription}>{category.description}</span>
-              </h2>
+        {/* Show filtered results when searching/filtering */}
+        {hasActiveFilters ? (
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>
+              <span className={styles.sectionIcon}>🔍</span>
+              Search Results
+              <span className={styles.sectionDescription}>
+                {search.results.length} {search.results.length === 1 ? 'concept' : 'concepts'} found
+              </span>
+            </h2>
+            <div className={styles.searchResults}>
+              <SearchResultsList
+                results={search.results}
+                emptyMessage="No DSA concepts match your search criteria"
+              />
+            </div>
+          </section>
+        ) : (
+          <>
+            {dsaConceptCategories.map((category) => {
+              const categoryConcepts = dsaConcepts.filter(c => c.category === category.id)
+              if (categoryConcepts.length === 0) return null
 
-              <div className={styles.grid}>
-                {categoryConcepts.map((concept, index) => (
-                  <motion.div
-                    key={concept.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <Link href={`/concepts/dsa/${concept.id}`} className={styles.card}>
-                      <div className={styles.cardHeader}>
-                        <span className={styles.cardIcon}>{concept.icon}</span>
-                        <span
-                          className={styles.difficulty}
-                          style={{ background: difficultyColors[concept.difficulty] }}
-                        >
-                          {concept.difficulty}
-                        </span>
-                      </div>
-                      <h3 className={styles.cardTitle}>{concept.title}</h3>
-                      <p className={styles.cardDescription}>{concept.shortDescription}</p>
-                      <div className={styles.cardFooter}>
-                        <span className={styles.keyPoints}>
-                          {concept.keyPoints.length} key points
-                        </span>
-                        <span className={styles.examples}>
-                          {concept.examples.length} examples
-                        </span>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </section>
-          )
-        })}
+              return (
+                <section key={category.id} className={styles.section}>
+                  <h2 className={styles.sectionTitle}>
+                    <span className={styles.sectionIcon}>{category.icon}</span>
+                    {category.name}
+                    <span className={styles.sectionDescription}>{category.description}</span>
+                  </h2>
+
+                  <div className={styles.grid}>
+                    {categoryConcepts.map((concept, index) => (
+                      <motion.div
+                        key={concept.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                      >
+                        <Link href={`/concepts/dsa/${concept.id}`} className={styles.card}>
+                          <div className={styles.cardInner}>
+                            <div className={styles.cardHeader}>
+                              <span className={styles.cardIcon}>{concept.icon}</span>
+                              <span
+                                className={styles.difficulty}
+                                style={{ background: difficultyColors[concept.difficulty] }}
+                              >
+                                {concept.difficulty}
+                              </span>
+                            </div>
+                            <h3 className={styles.cardTitle}>{concept.title}</h3>
+                            <p className={styles.cardDescription}>{concept.shortDescription}</p>
+                            <div className={styles.cardFooter}>
+                              <span className={styles.keyPoints}>
+                                {concept.keyPoints.length} key points
+                              </span>
+                              <span className={styles.examples}>
+                                {concept.examples.length} examples
+                              </span>
+                            </div>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </div>
+                </section>
+              )
+            })}
+          </>
+        )}
       </main>
 
       <footer className={styles.footer}>

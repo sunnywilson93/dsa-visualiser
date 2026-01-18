@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Home, ChevronRight } from 'lucide-react'
+import { GlobalSearch } from '@/components/Search'
 import styles from './NavBar.module.css'
 
 interface Breadcrumb {
@@ -25,6 +26,10 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
           <span className={styles.logoIcon}>JS</span>
           <span className={styles.logoText}>JS Interview</span>
         </Link>
+
+        <div className={styles.searchWrapper}>
+          <GlobalSearch />
+        </div>
 
         {!isHome && breadcrumbs && breadcrumbs.length > 0 && (
           <div className={styles.breadcrumbs}>
