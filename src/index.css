@@ -17,6 +17,11 @@
   --accent-cyan: #39c5cf;
   --accent-orange: #db6d28;
 
+  /* Difficulty levels */
+  --difficulty-1: #10b981;
+  --difficulty-2: #f59e0b;
+  --difficulty-3: #ef4444;
+
   --border-primary: #30363d;
   --border-secondary: #21262d;
 

@@ -167,6 +167,22 @@
   flex-shrink: 0;
 }
 
+.difficultyChip {
+  padding: 0.375rem 0.5rem;
+}
+
+.allDots {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.allDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
 .resultCount {
   font-size: 0.8rem;
   color: #9ca3af;

@@ -2,13 +2,14 @@
 
 import { Search, X, Filter } from 'lucide-react'
 import type { Difficulty } from '@/lib/search'
+import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import styles from './PageSearch.module.css'
 
-const difficulties: { value: Difficulty | 'all'; label: string; color?: string }[] = [
-  { value: 'all', label: 'All Levels' },
-  { value: 'beginner', label: 'Beginner', color: '#10b981' },
-  { value: 'intermediate', label: 'Intermediate', color: '#f59e0b' },
-  { value: 'advanced', label: 'Advanced', color: '#ef4444' },
+const difficulties: { value: Difficulty | 'all'; level?: Difficulty }[] = [
+  { value: 'all' },
+  { value: 'beginner', level: 'beginner' },
+  { value: 'intermediate', level: 'intermediate' },
+  { value: 'advanced', level: 'advanced' },
 ]
 
 // Type for the search hook return value
@@ -83,22 +84,25 @@ export function PageSearchControls({
       <div className={styles.filtersRow}>
         <div className={styles.filterGroup}>
           <Filter size={14} className={styles.filterIcon} />
-          <span className={styles.filterLabel}>Difficulty:</span>
+          <span className={styles.filterLabel}>Level:</span>
           <div className={styles.chips}>
             {difficulties.map((diff) => (
               <button
                 key={diff.value}
                 type="button"
                 onClick={() => setDifficulty(diff.value)}
-                className={`${styles.chip} ${filters.difficulty === diff.value ? styles.chipActive : ''}`}
-                style={
-                  filters.difficulty === diff.value && diff.color
-                    ? { '--chip-color': diff.color } as React.CSSProperties
-                    : undefined
-                }
+                className={`${styles.chip} ${styles.difficultyChip} ${filters.difficulty === diff.value ? styles.chipActive : ''}`}
+                title={diff.value}
               >
-                {diff.color && <span className={styles.chipDot} style={{ backgroundColor: diff.color }} />}
-                {diff.label}
+                {diff.level ? (
+                  <DifficultyIndicator level={diff.level} size="sm" />
+                ) : (
+                  <span className={styles.allDots}>
+                    <span className={styles.allDot} style={{ background: 'var(--difficulty-1)' }} />
+                    <span className={styles.allDot} style={{ background: 'var(--difficulty-2)' }} />
+                    <span className={styles.allDot} style={{ background: 'var(--difficulty-3)' }} />
+                  </span>
+                )}
               </button>
             ))}
           </div>

@@ -3,9 +3,10 @@
 import { useState, useMemo } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Search } from 'lucide-react'
+import { Search, Clock, BookOpen } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { ConceptIcon } from '@/components/Icons'
+import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import {
   exampleCategories,
   dsaSubcategories,
@@ -15,6 +16,17 @@ import {
 import styles from './page.module.css'
 
 type Difficulty = 'all' | 'easy' | 'medium' | 'hard'
+
+// Map subcategories to related DSA concepts
+const subcategoryToConcept: Record<string, { id: string; name: string }> = {
+  'bit-manipulation': { id: 'binary-system', name: 'Binary & Bit Manipulation' },
+  'arrays-hashing': { id: 'hash-tables', name: 'Hash Tables' },
+  'stack': { id: 'stacks', name: 'Stacks' },
+  'linked-list': { id: 'linked-lists', name: 'Linked Lists' },
+  'trees': { id: 'trees', name: 'Trees' },
+  'heap': { id: 'heaps', name: 'Heaps' },
+  'graphs': { id: 'graphs', name: 'Graphs' },
+}
 
 export default function CategoryPageClient() {
   const params = useParams()
@@ -32,13 +44,14 @@ export default function CategoryPageClient() {
     return getExamplesByCategory(categoryId)
   }, [categoryId])
 
-  const filteredProblems = useMemo(() => {
-    let problems = allProblems
+  // Problems for selected subcategory (before search/difficulty filters)
+  const subcategoryProblems = useMemo(() => {
+    if (!selectedSubcategory) return allProblems
+    return allProblems.filter((p) => p.category === selectedSubcategory)
+  }, [allProblems, selectedSubcategory])
 
-    // Filter by subcategory (for DSA)
-    if (selectedSubcategory) {
-      problems = problems.filter((p) => p.category === selectedSubcategory)
-    }
+  const filteredProblems = useMemo(() => {
+    let problems = subcategoryProblems
 
     // Filter by difficulty
     if (selectedDifficulty !== 'all') {
@@ -56,7 +69,10 @@ export default function CategoryPageClient() {
     }
 
     return problems
-  }, [allProblems, selectedSubcategory, selectedDifficulty, searchQuery])
+  }, [subcategoryProblems, selectedDifficulty, searchQuery])
+
+  // Check if subcategory has no problems at all (Coming Soon)
+  const isComingSoon = selectedSubcategory && subcategoryProblems.length === 0
 
   const handleSelectProblem = (problem: CodeExample) => {
     router.push(`/${categoryId}/${problem.id}`)
@@ -103,15 +119,27 @@ export default function CategoryPageClient() {
         </div>
 
         <div className={styles.difficultyFilter}>
-          {(['all', 'easy', 'medium', 'hard'] as const).map((diff) => (
+          <button
+            className={`${styles.difficultyBtn} ${selectedDifficulty === 'all' ? styles.active : ''}`}
+            onClick={() => setSelectedDifficulty('all')}
+            title="All difficulties"
+          >
+            <span className={styles.filterDots}>
+              <span className={styles.filterDot} style={{ background: 'var(--difficulty-1)' }} />
+              <span className={styles.filterDot} style={{ background: 'var(--difficulty-2)' }} />
+              <span className={styles.filterDot} style={{ background: 'var(--difficulty-3)' }} />
+            </span>
+          </button>
+          {(['easy', 'medium', 'hard'] as const).map((diff) => (
             <button
               key={diff}
               className={`${styles.difficultyBtn} ${styles[diff]} ${
                 selectedDifficulty === diff ? styles.active : ''
               }`}
               onClick={() => setSelectedDifficulty(diff)}
+              title={diff}
             >
-              {diff === 'all' ? 'All' : diff.charAt(0).toUpperCase() + diff.slice(1)}
+              <DifficultyIndicator level={diff} size="sm" />
             </button>
           ))}
         </div>
@@ -140,13 +168,40 @@ export default function CategoryPageClient() {
         </div>
       )}
 
-      <main className={styles.main}>
-        <div className={styles.problemCount}>
-          {filteredProblems.length} problem{filteredProblems.length !== 1 ? 's' : ''}
+      {selectedSubcategory && subcategoryToConcept[selectedSubcategory] && (
+        <div className={styles.conceptLinkWrapper}>
+          <Link
+            href={`/concepts/dsa/${subcategoryToConcept[selectedSubcategory].id}`}
+            className={styles.conceptLink}
+          >
+            <BookOpen size={14} />
+            <span>Learn {subcategoryToConcept[selectedSubcategory].name}</span>
+            <span className={styles.conceptLinkArrow}>→</span>
+          </Link>
         </div>
+      )}
 
-        {filteredProblems.length === 0 ? (
-          <div className={styles.empty}>No problems found</div>
+      <main className={styles.main}>
+        {!isComingSoon && filteredProblems.length > 0 && (
+          <div className={styles.problemCount}>
+            {filteredProblems.length} problem{filteredProblems.length !== 1 ? 's' : ''}
+          </div>
+        )}
+
+        {isComingSoon ? (
+          <div className={styles.comingSoon}>
+            <div className={styles.comingSoonIcon}>
+              <Clock size={48} strokeWidth={1.5} />
+            </div>
+            <h3 className={styles.comingSoonTitle}>Coming Soon</h3>
+            <p className={styles.comingSoonText}>
+              We&apos;re working on adding {dsaSubcategories.find(s => s.id === selectedSubcategory)?.name || 'these'} problems.
+              <br />
+              Check back soon!
+            </p>
+          </div>
+        ) : filteredProblems.length === 0 ? (
+          <div className={styles.empty}>No problems match your filters</div>
         ) : (
           <div className={styles.problemGrid}>
             {filteredProblems.map((problem) => (
@@ -157,11 +212,7 @@ export default function CategoryPageClient() {
               >
                 <div className={styles.problemHeader}>
                   <span className={styles.problemName}>{problem.name}</span>
-                  <span
-                    className={`${styles.difficultyBadge} ${styles[problem.difficulty]}`}
-                  >
-                    {problem.difficulty}
-                  </span>
+                  <DifficultyIndicator level={problem.difficulty} size="sm" />
                 </div>
                 <p className={styles.problemDesc}>{problem.description}</p>
               </button>

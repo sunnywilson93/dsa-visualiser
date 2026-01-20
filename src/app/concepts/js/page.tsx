@@ -4,40 +4,38 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Search } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
-import { SearchResultsList, usePageSearch, PageSearchControls } from '@/components/Search'
+import { SearchResultsList } from '@/components/Search'
+import { usePageSearch } from '@/components/Search'
+import { PageSearchControls } from '@/components/Search/PageSearchControls'
 import { ConceptIcon } from '@/components/Icons'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
-import { dsaConcepts, dsaConceptCategories } from '@/data/dsaConcepts'
+import { concepts, conceptCategories } from '@/data/concepts'
 import styles from '../page.module.css'
 
-export default function DSAConceptsPage() {
-  const search = usePageSearch('dsa')
+export default function JSConceptsPage() {
+  const search = usePageSearch('js')
   const hasActiveFilters = search.isSearching || search.filters.difficulty !== 'all'
 
   return (
     <div className={styles.page}>
       <NavBar breadcrumbs={[
         { label: 'Concepts', path: '/concepts' },
-        { label: 'DSA' }
+        { label: 'JavaScript' }
       ]} />
 
       <main className={styles.main}>
         <header className={styles.header}>
-          <h1 className={styles.title}>DSA Concepts</h1>
+          <h1 className={styles.title}>JavaScript Concepts</h1>
           <p className={styles.subtitle}>
-            Master the fundamentals of Data Structures &amp; Algorithms.
-            <br />
-            Build a strong foundation before tackling patterns and problems.
+            Core JS mechanics: Closures, Event Loop, Prototypes, This keyword, and runtime internals.
           </p>
         </header>
 
-        {/* Page-level search */}
         <PageSearchControls
           search={search}
-          placeholder="Search DSA concepts..."
+          placeholder="Search JavaScript concepts..."
         />
 
-        {/* Show filtered results when searching/filtering */}
         {hasActiveFilters ? (
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>
@@ -52,14 +50,14 @@ export default function DSAConceptsPage() {
             <div className={styles.searchResults}>
               <SearchResultsList
                 results={search.results}
-                emptyMessage="No DSA concepts match your search criteria"
+                emptyMessage="No JavaScript concepts match your search criteria"
               />
             </div>
           </section>
         ) : (
           <>
-            {dsaConceptCategories.map((category) => {
-              const categoryConcepts = dsaConcepts.filter(c => c.category === category.id)
+            {conceptCategories.map((category) => {
+              const categoryConcepts = concepts.filter(c => c.category === category.id)
               if (categoryConcepts.length === 0) return null
 
               return (
@@ -80,7 +78,7 @@ export default function DSAConceptsPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
                       >
-                        <Link href={`/concepts/dsa/${concept.id}`} className={styles.card}>
+                        <Link href={`/concepts/${concept.id}`} className={styles.card}>
                           <div className={styles.cardInner}>
                             <div className={styles.cardHeader}>
                               <span className={styles.cardIcon}>
@@ -111,7 +109,7 @@ export default function DSAConceptsPage() {
       </main>
 
       <footer className={styles.footer}>
-        <p>Patterns &amp; advanced concepts coming soon!</p>
+        <p>More concepts coming soon!</p>
       </footer>
     </div>
   )

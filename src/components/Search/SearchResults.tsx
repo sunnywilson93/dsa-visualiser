@@ -4,13 +4,8 @@ import Link from 'next/link'
 import { Search } from 'lucide-react'
 import type { SearchResult } from '@/lib/search'
 import { ConceptIcon } from '@/components/Icons'
+import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import styles from './SearchResults.module.css'
-
-const difficultyColors = {
-  beginner: '#10b981',
-  intermediate: '#f59e0b',
-  advanced: '#ef4444',
-}
 
 const sourceLabels = {
   js: 'JS',
@@ -34,12 +29,7 @@ export function SearchResultItem({ result, onClick, compact = false }: SearchRes
       >
         {sourceLabels[item.source]}
       </span>
-      <span
-        className={styles.difficultyBadge}
-        style={{ backgroundColor: difficultyColors[item.difficulty] }}
-      >
-        {item.difficulty}
-      </span>
+      <DifficultyIndicator level={item.difficulty} size="sm" />
     </div>
   )
 

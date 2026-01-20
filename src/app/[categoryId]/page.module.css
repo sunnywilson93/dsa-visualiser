@@ -85,14 +85,16 @@
 }
 
 .difficultyBtn {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 6px;
   border: 1px solid transparent;
   background: rgba(255, 255, 255, 0.05);
   color: #888;
-  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .difficultyBtn:hover {
@@ -100,27 +102,35 @@
 }
 
 .difficultyBtn.active {
-  border-color: currentColor;
-}
-
-.difficultyBtn.all.active {
-  color: #fff;
   background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .difficultyBtn.easy.active {
-  color: #4ade80;
-  background: rgba(74, 222, 128, 0.1);
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
 }
 
 .difficultyBtn.medium.active {
-  color: #fbbf24;
-  background: rgba(251, 191, 36, 0.1);
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
 }
 
 .difficultyBtn.hard.active {
-  color: #f87171;
-  background: rgba(248, 113, 113, 0.1);
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.filterDots {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.filterDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
 }
 
 .subcategories {
@@ -156,6 +166,42 @@
   color: #667eea;
 }
 
+.conceptLinkWrapper {
+  padding: 0.75rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.conceptLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.25);
+  border-radius: 6px;
+  color: #a5b4fc;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.conceptLink:hover {
+  background: rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.4);
+  color: #c4b5fd;
+}
+
+.conceptLinkArrow {
+  opacity: 0.6;
+  transition: transform 0.2s;
+}
+
+.conceptLink:hover .conceptLinkArrow {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
 .main {
   flex: 1;
   padding: 1.5rem 2rem 2rem;
@@ -171,6 +217,37 @@
   text-align: center;
   padding: 3rem;
   color: #666;
+}
+
+.comingSoon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+  border: 1px dashed rgba(168, 85, 247, 0.3);
+  border-radius: 16px;
+}
+
+.comingSoonIcon {
+  color: rgba(168, 85, 247, 0.6);
+  margin-bottom: 1rem;
+}
+
+.comingSoonTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #c4b5fd;
+  margin: 0 0 0.5rem;
+}
+
+.comingSoonText {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin: 0;
+  line-height: 1.6;
 }
 
 .problemGrid {

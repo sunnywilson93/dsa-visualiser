@@ -44,6 +44,27 @@ export default function HomePage() {
 
           {/* Two concept category cards */}
           <div className={styles.conceptCategoryGrid}>
+            <Link href="/concepts/js" className={styles.conceptCategoryCard}>
+              <div className={styles.conceptCategoryHeader}>
+                <span className={styles.conceptCategoryIcon}>
+                  <ConceptIcon conceptId="js-core" size={28} />
+                </span>
+                <span className={styles.conceptCategoryBadge}>{concepts.length} topics</span>
+              </div>
+              <h3 className={styles.conceptCategoryTitle}>JavaScript Deep Dive</h3>
+              <p className={styles.conceptCategoryDescription}>
+                Closures, Event Loop, Prototypes, This, V8 Engine
+              </p>
+              <div className={styles.conceptCategoryTopics}>
+                {concepts.slice(0, 4).map(c => (
+                  <span key={c.id} className={styles.topicTag}>{c.title}</span>
+                ))}
+                {concepts.length > 4 && (
+                  <span className={styles.topicMore}>+{concepts.length - 4}</span>
+                )}
+              </div>
+            </Link>
+
             <Link href="/concepts/dsa" className={styles.conceptCategoryCard}>
               <div className={styles.conceptCategoryHeader}>
                 <span className={styles.conceptCategoryIcon}>
@@ -61,27 +82,6 @@ export default function HomePage() {
                 ))}
                 {dsaConcepts.length > 4 && (
                   <span className={styles.topicMore}>+{dsaConcepts.length - 4}</span>
-                )}
-              </div>
-            </Link>
-
-            <Link href="/concepts" className={styles.conceptCategoryCard}>
-              <div className={styles.conceptCategoryHeader}>
-                <span className={styles.conceptCategoryIcon}>
-                  <ConceptIcon conceptId="js-core" size={28} />
-                </span>
-                <span className={styles.conceptCategoryBadge}>{concepts.length} topics</span>
-              </div>
-              <h3 className={styles.conceptCategoryTitle}>JavaScript Deep Dive</h3>
-              <p className={styles.conceptCategoryDescription}>
-                Closures, Event Loop, Prototypes, This, V8 Engine
-              </p>
-              <div className={styles.conceptCategoryTopics}>
-                {concepts.slice(0, 4).map(c => (
-                  <span key={c.id} className={styles.topicTag}>{c.title}</span>
-                ))}
-                {concepts.length > 4 && (
-                  <span className={styles.topicMore}>+{concepts.length - 4}</span>
                 )}
               </div>
             </Link>

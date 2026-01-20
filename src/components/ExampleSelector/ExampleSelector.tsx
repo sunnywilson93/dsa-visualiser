@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Code, Search } from 'lucide-react'
 import { useExecutionStore } from '@/store'
 import { ConceptIcon } from '@/components/Icons'
+import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import { codeExamples, exampleCategories, type CodeExample } from '@/data/examples'
 import styles from './ExampleSelector.module.css'
 
@@ -102,13 +103,25 @@ export function ExampleSelector() {
 
             {/* Difficulty filter */}
             <div className={styles.difficultyFilter}>
-              {(['all', 'easy', 'medium', 'hard'] as const).map(diff => (
+              <button
+                className={`${styles.difficultyBtn} ${selectedDifficulty === 'all' ? styles.active : ''}`}
+                onClick={() => setSelectedDifficulty('all')}
+                title="All difficulties"
+              >
+                <span className={styles.filterDots}>
+                  <span className={styles.filterDot} style={{ background: 'var(--difficulty-1)' }} />
+                  <span className={styles.filterDot} style={{ background: 'var(--difficulty-2)' }} />
+                  <span className={styles.filterDot} style={{ background: 'var(--difficulty-3)' }} />
+                </span>
+              </button>
+              {(['easy', 'medium', 'hard'] as const).map(diff => (
                 <button
                   key={diff}
                   className={`${styles.difficultyBtn} ${styles[diff]} ${selectedDifficulty === diff ? styles.active : ''}`}
                   onClick={() => setSelectedDifficulty(diff)}
+                  title={diff}
                 >
-                  {diff === 'all' ? 'All' : diff.charAt(0).toUpperCase() + diff.slice(1)}
+                  <DifficultyIndicator level={diff} size="sm" />
                 </button>
               ))}
             </div>
@@ -147,9 +160,7 @@ export function ExampleSelector() {
                   >
                     <div className={styles.exampleHeader}>
                       <span className={styles.exampleName}>{example.name}</span>
-                      <span className={`${styles.difficultyBadge} ${styles[example.difficulty]}`}>
-                        {example.difficulty}
-                      </span>
+                      <DifficultyIndicator level={example.difficulty} size="sm" />
                     </div>
                     <div className={styles.exampleDesc}>{example.description}</div>
                   </button>

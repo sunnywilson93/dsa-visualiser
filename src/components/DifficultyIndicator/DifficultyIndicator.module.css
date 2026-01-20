@@ -1,0 +1,62 @@
+.container {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.dot {
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.filled {
+  /* Color set via inline style */
+}
+
+.empty {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Size variants */
+.sm .dot {
+  width: 5px;
+  height: 5px;
+}
+
+.sm .dots {
+  gap: 2px;
+}
+
+.md .dot {
+  width: 7px;
+  height: 7px;
+}
+
+.lg .dot {
+  width: 9px;
+  height: 9px;
+}
+
+.lg .dots {
+  gap: 4px;
+}
+
+.label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.sm .label {
+  font-size: 0.55rem;
+}
+
+.lg .label {
+  font-size: 0.75rem;
+}

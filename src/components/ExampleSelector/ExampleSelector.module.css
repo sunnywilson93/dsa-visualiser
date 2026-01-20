@@ -121,41 +121,47 @@
   background: var(--bg-tertiary);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-sm);
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
-  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .difficultyBtn:hover {
   background: var(--bg-elevated);
-  color: var(--text-secondary);
 }
 
-.difficultyBtn.active.all {
-  background: var(--accent-blue);
-  border-color: var(--accent-blue);
-  color: white;
+.difficultyBtn.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .difficultyBtn.active.easy {
-  background: #10b981;
-  border-color: #10b981;
-  color: white;
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.3);
 }
 
 .difficultyBtn.active.medium {
-  background: #f59e0b;
-  border-color: #f59e0b;
-  color: white;
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.3);
 }
 
 .difficultyBtn.active.hard {
-  background: #ef4444;
-  border-color: #ef4444;
-  color: white;
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.filterDots {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.filterDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
 }
 
 /* Categories */
