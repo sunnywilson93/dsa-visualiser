@@ -1,12 +1,10 @@
 'use client'
 
-import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { Search } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { SearchResultsList, usePageSearch, PageSearchControls } from '@/components/Search'
 import { ConceptIcon } from '@/components/Icons'
-import { DifficultyIndicator } from '@/components/DifficultyIndicator'
+import { ConceptCarousel } from '@/components/ConceptCarousel'
 import { dsaConcepts, dsaConceptCategories } from '@/data/dsaConcepts'
 import styles from '../page.module.css'
 
@@ -72,37 +70,7 @@ export default function DSAConceptsPage() {
                     <span className={styles.sectionDescription}>{category.description}</span>
                   </h2>
 
-                  <div className={styles.grid}>
-                    {categoryConcepts.map((concept, index) => (
-                      <motion.div
-                        key={concept.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                      >
-                        <Link href={`/concepts/dsa/${concept.id}`} className={styles.card}>
-                          <div className={styles.cardInner}>
-                            <div className={styles.cardHeader}>
-                              <span className={styles.cardIcon}>
-                                <ConceptIcon conceptId={concept.id} size={28} />
-                              </span>
-                              <DifficultyIndicator level={concept.difficulty} size="md" />
-                            </div>
-                            <h3 className={styles.cardTitle}>{concept.title}</h3>
-                            <p className={styles.cardDescription}>{concept.shortDescription}</p>
-                            <div className={styles.cardFooter}>
-                              <span className={styles.keyPoints}>
-                                {concept.keyPoints.length} key points
-                              </span>
-                              <span className={styles.examples}>
-                                {concept.examples.length} examples
-                              </span>
-                            </div>
-                          </div>
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </div>
+                  <ConceptCarousel concepts={categoryConcepts} basePath="/concepts/dsa" />
                 </section>
               )
             })}

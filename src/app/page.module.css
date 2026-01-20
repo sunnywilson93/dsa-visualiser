@@ -13,11 +13,12 @@
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin: 0 0 0.5rem;
+  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.3));
 }
 
 .subtitle {
@@ -62,7 +63,7 @@
   justify-content: center;
   width: 28px;
   height: 28px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
   border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 700;
@@ -76,18 +77,18 @@
 }
 
 .sectionDescription strong {
-  color: #a5b4fc;
+  color: #c4b5fd;
 }
 
 .viewAllLink {
   font-size: 0.875rem;
-  color: #667eea;
+  color: #a855f7;
   text-decoration: none;
   padding: 0.5rem 0;
 }
 
 .viewAllLink:hover {
-  color: #a5b4fc;
+  color: #c4b5fd;
 }
 
 /* Concepts Grid - Section 1 */
@@ -117,10 +118,10 @@
 }
 
 .conceptCard:hover {
-  background: rgba(102, 126, 234, 0.1);
-  border-color: rgba(102, 126, 234, 0.4);
+  background: rgba(168, 85, 247, 0.1);
+  border-color: rgba(168, 85, 247, 0.4);
   transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2), 0 0 40px rgba(236, 72, 153, 0.1);
 }
 
 .conceptIcon {
@@ -150,9 +151,9 @@
   font-size: 0.65rem;
   text-transform: uppercase;
   padding: 0.2rem 0.5rem;
-  background: rgba(102, 126, 234, 0.15);
+  background: rgba(168, 85, 247, 0.15);
   border-radius: 4px;
-  color: #a5b4fc;
+  color: #c4b5fd;
 }
 
 /* Concept Category Cards - Section 1 (new) */
@@ -176,10 +177,10 @@
 }
 
 .conceptCategoryCard:hover {
-  background: rgba(102, 126, 234, 0.08);
-  border-color: rgba(102, 126, 234, 0.4);
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.4);
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2), 0 0 40px rgba(236, 72, 153, 0.1);
 }
 
 .conceptCategoryHeader {
@@ -192,16 +193,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #a5b4fc;
+  color: #c4b5fd;
 }
 
 .conceptCategoryBadge {
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.3rem 0.75rem;
-  background: rgba(102, 126, 234, 0.15);
+  background: rgba(168, 85, 247, 0.15);
   border-radius: 20px;
-  color: #a5b4fc;
+  color: #c4b5fd;
 }
 
 .conceptCategoryTitle {
@@ -228,10 +229,10 @@
 .topicTag {
   font-size: 0.7rem;
   padding: 0.25rem 0.6rem;
-  background: rgba(102, 126, 234, 0.1);
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.2);
   border-radius: 12px;
-  color: #a5b4fc;
+  color: #c4b5fd;
 }
 
 .topicMore {
@@ -265,9 +266,10 @@
 }
 
 .buildCard:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(102, 126, 234, 0.3);
+  background: rgba(168, 85, 247, 0.06);
+  border-color: rgba(168, 85, 247, 0.3);
   transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
 }
 
 .buildIcon {
@@ -275,7 +277,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #a5b4fc;
+  color: #c4b5fd;
 }
 
 .buildContent {
@@ -308,8 +310,8 @@
   flex-shrink: 0;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.1);
+  color: #c4b5fd;
+  background: rgba(168, 85, 247, 0.1);
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
 }
@@ -317,8 +319,8 @@
 /* DSA Banner - Section 3 */
 .dsaBanner {
   display: block;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+  border: 1px solid rgba(168, 85, 247, 0.3);
   border-radius: 16px;
   padding: 1.5rem;
   text-decoration: none;
@@ -327,10 +329,10 @@
 }
 
 .dsaBanner:hover {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
-  border-color: rgba(139, 92, 246, 0.5);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%);
+  border-color: rgba(168, 85, 247, 0.5);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.25), 0 0 50px rgba(236, 72, 153, 0.15);
 }
 
 .dsaContent {
@@ -379,7 +381,7 @@
   display: block;
   font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -403,8 +405,8 @@
 .dsaTopic {
   font-size: 0.75rem;
   padding: 0.35rem 0.75rem;
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.3);
   border-radius: 20px;
   color: #c4b5fd;
 }
@@ -418,7 +420,7 @@
 .dsaCta {
   display: inline-block;
   padding: 0.6rem 1.5rem;
-  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
   border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 600;

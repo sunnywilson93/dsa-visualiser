@@ -6,11 +6,19 @@ import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { ConceptIcon } from '@/components/Icons'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
-import type { Concept } from '@/data/concepts'
 import styles from './ConceptCarousel.module.css'
 
+interface CarouselConcept {
+  id: string
+  title: string
+  difficulty: 'beginner' | 'intermediate' | 'advanced'
+  shortDescription: string
+  keyPoints: string[]
+  examples: { title: string; code: string; explanation: string }[]
+}
+
 interface ConceptCarouselProps {
-  concepts: Concept[]
+  concepts: CarouselConcept[]
   basePath?: string
 }
 
