@@ -42,6 +42,7 @@ const visualizations: Record<string, React.ComponentType> = {
   'module-evolution': dynamic(() => import('@/components/Concepts/ModuleEvolutionViz').then(m => m.ModuleEvolutionViz)),
   'async-evolution': dynamic(() => import('@/components/Concepts/AsyncEvolutionViz').then(m => m.AsyncEvolutionViz)),
   'state-evolution': dynamic(() => import('@/components/Concepts/StateEvolutionViz').then(m => m.StateEvolutionViz)),
+  'build-tools-evolution': dynamic(() => import('@/components/Concepts/BuildToolsEvolutionViz').then(m => m.BuildToolsEvolutionViz)),
 }
 
 const difficultyColors = {

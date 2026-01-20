@@ -2811,6 +2811,85 @@ const todos = useTodoStore((s) => s.todos);`,
       'Know the difference between local, global, and server state',
     ],
   },
+  {
+    id: 'build-tools-evolution',
+    title: 'Evolution of Build Tools',
+    category: 'advanced',
+    difficulty: 'intermediate',
+    description: 'JavaScript build tools have evolved from nothing to complex bundlers to lightning-fast native ESM tools. Understanding this history explains why we have Vite today and why it\'s so much faster than Webpack.',
+    shortDescription: 'From script tags to Vite',
+    keyPoints: [
+      'No Build (1995): Script tags, manual ordering, FTP deploy',
+      'Task Runners (2012): Grunt/Gulp automated concatenation and minification',
+      'Module Bundlers (2014): Webpack enabled import/export in browsers',
+      'Zero-Config (2017): CRA/Parcel hid complexity but were still slow',
+      'Native ESM (2019): Vite/esbuild skip bundling in dev for 100x speed',
+    ],
+    examples: [
+      {
+        title: 'Era 1: No Build Step',
+        code: `<!-- Just include scripts in order -->
+<script src="lib/jquery.min.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/app.js"></script>
+
+<!-- Deploy: FTP to server -->`,
+        explanation: 'Simple but manual. No modules, no optimization.',
+      },
+      {
+        title: 'Era 2: Task Runners (Grunt/Gulp)',
+        code: `// Gruntfile.js
+grunt.initConfig({
+  concat: { src: ['src/**/*.js'], dest: 'dist/bundle.js' },
+  uglify: { src: 'dist/bundle.js', dest: 'dist/bundle.min.js' }
+});
+grunt.registerTask('build', ['concat', 'uglify']);`,
+        explanation: 'Automated tasks but no module system.',
+      },
+      {
+        title: 'Era 3: Webpack',
+        code: `// webpack.config.js
+module.exports = {
+  entry: './src/index.js',
+  output: { filename: '[name].[contenthash].js' },
+  module: {
+    rules: [
+      { test: /\\.js$/, use: 'babel-loader' },
+      { test: /\\.css$/, use: ['style-loader', 'css-loader'] }
+    ]
+  }
+};`,
+        explanation: 'Modules work! But config is complex and builds are slow.',
+      },
+      {
+        title: 'Era 4: Vite (Native ESM)',
+        code: `// vite.config.js - That's it!
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()]
+});
+
+// Dev: No bundling, native ES modules
+// Build: Rollup for production`,
+        explanation: 'No bundling in dev = instant startup and HMR.',
+      },
+    ],
+    commonMistakes: [
+      'Ejecting from CRA without understanding Webpack',
+      'Not using code splitting for large apps',
+      'Ignoring bundle size until production',
+      'Using Webpack for new projects when Vite works',
+    ],
+    interviewTips: [
+      'Explain why Vite is faster than Webpack in development',
+      'Know the difference between dev and production builds',
+      'Understand tree-shaking and how it reduces bundle size',
+      'Be ready to discuss code splitting strategies',
+      'Know what problems esbuild solves (100x faster transforms)',
+    ],
+  },
 ]
 
 export const conceptCategories = [
