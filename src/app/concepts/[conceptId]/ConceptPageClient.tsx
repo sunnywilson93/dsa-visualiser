@@ -34,6 +34,7 @@ import { StreamsBuffersViz } from '@/components/Concepts/StreamsBuffersViz'
 import { CriticalRenderPathViz } from '@/components/Concepts/CriticalRenderPathViz'
 import { WebWorkersViz } from '@/components/Concepts/WebWorkersViz'
 import { WebEvolutionViz } from '@/components/Concepts/WebEvolutionViz'
+import { ModuleEvolutionViz } from '@/components/Concepts/ModuleEvolutionViz'
 
 import styles from './page.module.css'
 
@@ -63,6 +64,7 @@ const visualizations: Record<string, React.ComponentType> = {
   'critical-render-path': CriticalRenderPathViz,
   'web-workers': WebWorkersViz,
   'web-evolution': WebEvolutionViz,
+  'module-evolution': ModuleEvolutionViz,
 }
 
 const difficultyColors = {

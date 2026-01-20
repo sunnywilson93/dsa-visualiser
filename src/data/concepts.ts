@@ -2473,6 +2473,136 @@ function LikeButton() {
       'Be ready to recommend an approach for a given use case',
     ],
   },
+  {
+    id: 'module-evolution',
+    title: 'Evolution of JS Modules',
+    category: 'core',
+    difficulty: 'intermediate',
+    description: 'JavaScript started with no module system. Over 20 years, we went from global scripts to ES Modules. Understanding this history explains why you see require(), define(), and import in different codebases.',
+    shortDescription: 'From globals to ES Modules',
+    keyPoints: [
+      'Global Scripts (1995): No modules, everything global, order-dependent',
+      'IIFE Pattern (2009): Closures for encapsulation, still manual ordering',
+      'CommonJS (2009): Node.js require/exports, synchronous, server-focused',
+      'AMD (2011): Async loading for browsers, verbose callback syntax',
+      'UMD (2013): Universal wrapper for AMD + CommonJS + global',
+      'ES Modules (2015): Official standard, static imports, tree-shaking',
+    ],
+    examples: [
+      {
+        title: 'Era 1: Global Scripts (1995-2009)',
+        code: `<!-- Everything global, order matters! -->
+<script src="jquery.js"></script>
+<script src="utils.js"></script>
+<script src="app.js"></script>
+
+// utils.js
+var Utils = {};
+Utils.formatDate = function(d) { return d.toISOString(); };
+
+// app.js - Hope Utils loaded first!
+console.log(Utils.formatDate(new Date()));
+
+// Problem: Name collisions, load order, no encapsulation`,
+        explanation: 'Every script shared the global scope. Load order mattered, and name collisions were common.',
+      },
+      {
+        title: 'Era 2: IIFE Pattern (2009-2012)',
+        code: `// Module Pattern using IIFE + Closure
+var MyModule = (function() {
+  // Private (hidden in closure)
+  var counter = 0;
+
+  // Public API
+  return {
+    increment: function() { counter++; },
+    getCount: function() { return counter; }
+  };
+})();
+
+MyModule.increment();  // Works
+MyModule.counter;      // undefined (private!)`,
+        explanation: 'IIFEs created private scope via closures, but you still had one global per module.',
+      },
+      {
+        title: 'Era 3: CommonJS (Node.js)',
+        code: `// math.js - Export
+function add(a, b) { return a + b; }
+module.exports = { add };
+
+// app.js - Import
+const { add } = require('./math');
+console.log(add(2, 3)); // 5
+
+// Synchronous: require() blocks until file loads
+// Designed for servers with fast file system access`,
+        explanation: 'Node.js introduced CommonJS - the first real module system. Synchronous loading worked for servers.',
+      },
+      {
+        title: 'Era 4: AMD (Browser Async)',
+        code: `// RequireJS - async loading for browsers
+define('app', ['jquery', 'utils'], function($, utils) {
+  // Dependencies load asynchronously
+  // Then this callback executes
+  return {
+    init: function() {
+      $('#app').text(utils.formatDate());
+    }
+  };
+});
+
+// Verbose, but enabled lazy loading`,
+        explanation: 'AMD solved async loading for browsers, but the callback syntax was verbose.',
+      },
+      {
+        title: 'Era 5: UMD (Universal)',
+        code: `// UMD: Works in AMD, CommonJS, AND browsers
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['dep'], factory);           // AMD
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('dep')); // CJS
+  } else {
+    root.MyLib = factory(root.Dep);     // Global
+  }
+}(this, function(dep) {
+  return { /* module */ };
+}));`,
+        explanation: 'UMD wrapped modules to work everywhere. Complex but necessary for library authors.',
+      },
+      {
+        title: 'Era 6: ES Modules (The Standard)',
+        code: `// math.js - Named exports
+export function add(a, b) { return a + b; }
+export const PI = 3.14;
+
+// Default export
+export default class Calculator {}
+
+// app.js - Import
+import Calculator, { add, PI } from './math.js';
+
+// Dynamic import (code splitting!)
+const heavy = await import('./heavy.js');
+
+// Static analysis enables tree-shaking!`,
+        explanation: 'ES Modules are the official standard - static, tree-shakeable, and natively supported.',
+      },
+    ],
+    commonMistakes: [
+      'Mixing require() and import in the same file (different systems!)',
+      'Forgetting .js extension in browser ES modules',
+      'Not understanding "type": "module" in package.json',
+      'Thinking require() works in browsers without a bundler',
+    ],
+    interviewTips: [
+      'Explain why CommonJS is synchronous (designed for Node file system)',
+      'Know why ES Modules enable tree-shaking (static analysis)',
+      'Understand the dual package hazard when publishing libraries',
+      'Be ready to explain require.cache and module resolution',
+      'Know the difference: CJS copies values, ESM binds live references',
+    ],
+  },
 ]
 
 export const conceptCategories = [
