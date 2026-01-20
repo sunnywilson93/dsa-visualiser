@@ -1,0 +1,296 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tabSelector {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.35rem;
+}
+
+.tabBtn {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tabBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.tabBtn.active {
+  background: rgba(130, 100, 255, 0.18);
+  border-color: rgba(130, 100, 255, 0.7);
+  color: #f5f7ff;
+  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sliderRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.sliderLabel {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: #a5b4fc;
+  min-width: 80px;
+}
+
+.slider {
+  flex: 1;
+  height: 6px;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.codeCard {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.code {
+  margin: 0;
+  padding: 0.75rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+}
+
+.codeLine {
+  padding: 0.15rem 0.5rem;
+  color: #888;
+  transition: all 0.2s;
+}
+
+.codeLine.activeLine {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.outputBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+}
+
+.outputLabel {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.outputValue {
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #10b981;
+}
+
+/* Ternary visualization */
+.ternaryViz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+
+.ternaryPart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.ternaryLabel {
+  font-size: 0.6rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.ternaryPart code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: #888;
+  padding: 0.35rem 0.6rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.ternaryTrue {
+  color: #10b981 !important;
+  background: rgba(16, 185, 129, 0.15) !important;
+}
+
+.ternaryFalse {
+  color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.15) !important;
+}
+
+.ternaryActive {
+  color: #a5b4fc !important;
+  background: rgba(102, 126, 234, 0.2) !important;
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+}
+
+.ternarySymbol {
+  font-size: 1.5rem;
+  color: #555;
+  font-weight: 600;
+}
+
+/* Truthy/Falsy */
+.intro {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+  margin: 0;
+}
+
+.falsyGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+
+.falsyItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.falsyItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.falsyItem.active {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.falsyItem code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: #ccc;
+}
+
+.falsyResult {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.falsyResult code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: #a5b4fc;
+}
+
+.arrow {
+  color: #555;
+}
+
+.falsyTag {
+  padding: 0.3rem 0.6rem;
+  background: rgba(239, 68, 68, 0.15);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #ef4444;
+}
+
+.truthyTag {
+  padding: 0.3rem 0.6rem;
+  background: rgba(16, 185, 129, 0.15);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #10b981;
+}
+
+.legend {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  color: #888;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+@media (max-width: 640px) {
+  .falsyGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .ternaryViz {
+    flex-direction: column;
+  }
+
+  .ternarySymbol {
+    display: none;
+  }
+}

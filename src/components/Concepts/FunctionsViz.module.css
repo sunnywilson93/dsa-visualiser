@@ -1,0 +1,266 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.typeSelector {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.typeBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.typeBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.typeBtn.active {
+  color: #fff;
+}
+
+.typeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.toggleRow {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.35rem;
+}
+
+.toggleBtn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toggleBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.toggleBtn.active {
+  background: rgba(130, 100, 255, 0.18);
+  border-color: rgba(130, 100, 255, 0.7);
+  color: #f5f7ff;
+}
+
+.content, .callContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.codeCard {
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.code {
+  margin: 0;
+  padding: 1rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: #ccc;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.codeLine {
+  padding: 0.1rem 0;
+  transition: background 0.2s;
+}
+
+.codeLine.activeLine {
+  background: rgba(102, 126, 234, 0.2);
+  color: #a5b4fc;
+}
+
+.features {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.featuresTitle {
+  font-size: 0.75rem;
+  color: #888;
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.featureList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #ccc;
+}
+
+.featureIcon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.6rem;
+  color: #fff;
+}
+
+.badges {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.badgeGreen {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.badgeRed {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.badgeBlue {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+
+.badgePurple {
+  background: rgba(139, 92, 246, 0.15);
+  color: #8b5cf6;
+}
+
+.description {
+  padding: 0.6rem 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.stepBadge {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  background: rgba(102, 126, 234, 0.3);
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  margin-right: 0.5rem;
+}
+
+.outputBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+}
+
+.outputLabel {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.outputValue {
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #10b981;
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.btnPrimary {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #888;
+  cursor: pointer;
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.btnSecondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

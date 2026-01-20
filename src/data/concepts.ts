@@ -9,7 +9,7 @@ export interface ConceptExample {
 export interface Concept {
   id: string
   title: string
-  category: 'fundamentals' | 'core' | 'advanced' | 'runtime' | 'backend' | 'browser'
+  category: 'philosophy' | 'basics' | 'fundamentals' | 'core' | 'advanced' | 'runtime' | 'backend' | 'browser'
   difficulty: 'beginner' | 'intermediate' | 'advanced'
   description: string
   shortDescription: string
@@ -20,6 +20,787 @@ export interface Concept {
 }
 
 export const concepts: Concept[] = [
+  // Philosophy
+  {
+    id: 'js-philosophy',
+    title: 'Philosophy of JavaScript',
+    category: 'philosophy',
+    difficulty: 'beginner',
+    description: 'JavaScript was created in 10 days in 1995 by Brendan Eich. Understanding its design philosophy helps you embrace its quirks instead of fighting them. JS prioritizes flexibility, backwards compatibility, and "just works" behavior.',
+    shortDescription: 'Why JS is the way it is',
+    keyPoints: [
+      'Created in 10 days for Netscape browser (1995)',
+      'Multi-paradigm: supports OOP, functional, and procedural styles',
+      'Dynamic typing: types are checked at runtime, not compile time',
+      'Prototype-based inheritance (not class-based like Java)',
+      'First-class functions: functions are values you can pass around',
+      '"Fail silently" design: prefers undefined over throwing errors',
+      'Backwards compatible: old code must always work',
+    ],
+    examples: [
+      {
+        title: 'Dynamic Typing',
+        code: `let x = 42;        // x is a number
+x = "hello";       // now x is a string
+x = { name: "JS" } // now x is an object
+
+// No errors! Types can change freely`,
+        explanation: 'Variables can hold any type and change types freely',
+      },
+      {
+        title: 'First-Class Functions',
+        code: `// Functions are values!
+const greet = function(name) {
+  return "Hello, " + name;
+};
+
+// Pass functions as arguments
+const names = ["Alice", "Bob"];
+const greetings = names.map(greet);
+// ["Hello, Alice", "Hello, Bob"]`,
+        explanation: 'Functions can be stored in variables, passed as arguments, returned from other functions',
+      },
+      {
+        title: 'Multi-Paradigm',
+        code: `// Procedural
+for (let i = 0; i < 3; i++) {
+  console.log(i);
+}
+
+// Functional
+[0, 1, 2].forEach(i => console.log(i));
+
+// Object-Oriented
+class Counter {
+  constructor() { this.count = 0; }
+  increment() { this.count++; }
+}`,
+        explanation: 'JS lets you mix programming styles freely',
+      },
+      {
+        title: 'Fail Silently',
+        code: `const obj = {};
+console.log(obj.missing);     // undefined (no error!)
+console.log(obj.a.b);         // TypeError (only crashes on null/undefined access)
+
+// Accessing array out of bounds
+const arr = [1, 2, 3];
+console.log(arr[100]);        // undefined (no error!)`,
+        explanation: 'JS prefers returning undefined over throwing errors',
+      },
+    ],
+    commonMistakes: [
+      'Fighting dynamic typing instead of embracing it',
+      'Not understanding that JS was designed for the web',
+      'Expecting JS to behave like statically-typed languages',
+    ],
+    interviewTips: [
+      'Know the history: Brendan Eich, 10 days, Netscape',
+      'Explain why backwards compatibility matters for the web',
+      'Discuss how JS evolved: ES5 → ES6 → modern JS',
+    ],
+  },
+  // Basics
+  {
+    id: 'variables',
+    title: 'Variables',
+    category: 'basics',
+    difficulty: 'beginner',
+    description: 'Variables are containers that store data values. JavaScript has three ways to declare variables: var (old), let (modern), and const (constant). Understanding their differences is fundamental to writing good JavaScript.',
+    shortDescription: 'var, let, and const explained',
+    keyPoints: [
+      'var: function-scoped, can be redeclared, hoisted with undefined',
+      'let: block-scoped, cannot be redeclared, hoisted but in TDZ',
+      'const: block-scoped, cannot be reassigned, must be initialized',
+      'Use const by default, let when you need to reassign',
+      'Avoid var in modern JavaScript',
+    ],
+    examples: [
+      {
+        title: 'Declaring Variables',
+        code: `var oldWay = "I'm old school";
+let modern = "I can change";
+const fixed = "I stay the same";
+
+modern = "See, I changed!";  // OK
+// fixed = "Try to change me"; // Error!`,
+        explanation: 'var is the old way, let allows reassignment, const is constant',
+      },
+      {
+        title: 'const with Objects',
+        code: `const person = { name: "Alice" };
+
+// This WORKS! We're changing the object, not the binding
+person.name = "Bob";
+person.age = 25;
+
+// This FAILS! Can't reassign the variable
+// person = { name: "Charlie" }; // Error!`,
+        explanation: 'const prevents reassignment, not mutation of objects',
+      },
+      {
+        title: 'Block Scope',
+        code: `if (true) {
+  var x = 1;   // Function scoped
+  let y = 2;   // Block scoped
+  const z = 3; // Block scoped
+}
+
+console.log(x); // 1 (var leaks out!)
+// console.log(y); // Error: y is not defined
+// console.log(z); // Error: z is not defined`,
+        explanation: 'let and const respect { } blocks, var does not',
+      },
+    ],
+    commonMistakes: [
+      'Using var in modern code (prefer let/const)',
+      'Thinking const makes objects immutable (it doesn\'t)',
+      'Not initializing const (const x; is invalid)',
+    ],
+    interviewTips: [
+      'Know the difference between var, let, and const',
+      'Explain scope differences (function vs block)',
+      'Default to const, use let only when needed',
+    ],
+  },
+  {
+    id: 'data-types',
+    title: 'Data Types',
+    category: 'basics',
+    difficulty: 'beginner',
+    description: 'JavaScript has 7 primitive types and 1 object type. Primitives are immutable values stored by value, while objects are mutable and stored by reference. Knowing your types prevents bugs!',
+    shortDescription: 'Primitives vs Objects',
+    keyPoints: [
+      '7 primitives: string, number, boolean, null, undefined, symbol, bigint',
+      'Objects: everything else (arrays, functions, dates, etc.)',
+      'typeof returns the type as a string',
+      'Primitives are copied by value, objects by reference',
+      'null and undefined both mean "no value" but are different',
+    ],
+    examples: [
+      {
+        title: 'Primitive Types',
+        code: `// String
+let name = "Alice";
+
+// Number (integers and floats)
+let age = 25;
+let price = 19.99;
+
+// Boolean
+let isActive = true;
+
+// null (intentionally empty)
+let data = null;
+
+// undefined (not yet assigned)
+let x;
+console.log(x); // undefined`,
+        explanation: 'The 5 most common primitive types',
+      },
+      {
+        title: 'typeof Operator',
+        code: `typeof "hello"    // "string"
+typeof 42         // "number"
+typeof true       // "boolean"
+typeof undefined  // "undefined"
+typeof null       // "object" (bug!)
+typeof {}         // "object"
+typeof []         // "object"
+typeof function(){} // "function"`,
+        explanation: 'typeof null being "object" is a famous JavaScript bug',
+      },
+      {
+        title: 'Value vs Reference',
+        code: `// Primitives: copied by value
+let a = 10;
+let b = a;
+b = 20;
+console.log(a); // 10 (unchanged!)
+
+// Objects: copied by reference
+let obj1 = { x: 10 };
+let obj2 = obj1;
+obj2.x = 20;
+console.log(obj1.x); // 20 (changed!)`,
+        explanation: 'Changing obj2 affects obj1 because they point to the same object',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting typeof null returns "object"',
+      'Comparing objects with === (compares references, not values)',
+      'Confusing null and undefined',
+    ],
+    interviewTips: [
+      'List all 7 primitives confidently',
+      'Explain the typeof null quirk',
+      'Show value vs reference with a simple example',
+    ],
+  },
+  {
+    id: 'operators',
+    title: 'Operators',
+    category: 'basics',
+    difficulty: 'beginner',
+    description: 'Operators perform operations on values. JavaScript has arithmetic (+, -, *, /), comparison (==, ===, <, >), logical (&&, ||, !), and assignment (=, +=, -=) operators. Master these to write expressive code.',
+    shortDescription: 'Arithmetic, comparison, and logical',
+    keyPoints: [
+      'Arithmetic: + - * / % ** (exponentiation)',
+      'Comparison: == (loose) vs === (strict)',
+      'Logical: && (and) || (or) ! (not)',
+      '&& returns first falsy or last value, || returns first truthy or last value',
+      'Nullish coalescing: ?? returns right side only if left is null/undefined',
+    ],
+    examples: [
+      {
+        title: 'Arithmetic Operators',
+        code: `let a = 10, b = 3;
+
+a + b   // 13 (addition)
+a - b   // 7  (subtraction)
+a * b   // 30 (multiplication)
+a / b   // 3.333... (division)
+a % b   // 1  (remainder)
+a ** b  // 1000 (exponentiation: 10³)`,
+        explanation: 'Basic math operators work as expected',
+      },
+      {
+        title: 'Comparison: == vs ===',
+        code: `// Loose equality (==) converts types
+"5" == 5       // true (string becomes number)
+0 == false     // true (both become 0)
+null == undefined // true (special case)
+
+// Strict equality (===) no conversion
+"5" === 5      // false (different types)
+0 === false    // false (different types)
+
+// ALWAYS use === !`,
+        explanation: '=== is safer because it doesn\'t do type coercion',
+      },
+      {
+        title: 'Logical Operators',
+        code: `// && returns first falsy OR last value
+true && "hello"   // "hello"
+false && "hello"  // false
+0 && "hello"      // 0
+
+// || returns first truthy OR last value
+false || "hello"  // "hello"
+"" || "default"   // "default"
+"hi" || "default" // "hi"
+
+// ?? returns right only if left is null/undefined
+null ?? "default"  // "default"
+0 ?? "default"     // 0 (0 is not null!)`,
+        explanation: '&& and || return actual values, not just true/false',
+      },
+    ],
+    commonMistakes: [
+      'Using == instead of === (causes type coercion bugs)',
+      'Forgetting && and || return actual values, not booleans',
+      'Confusing || with ?? (|| checks falsy, ?? checks null/undefined)',
+    ],
+    interviewTips: [
+      'Always explain why === is preferred over ==',
+      'Know the short-circuit behavior of && and ||',
+      'Demonstrate nullish coalescing with 0 vs null',
+    ],
+  },
+  {
+    id: 'functions',
+    title: 'Functions',
+    category: 'basics',
+    difficulty: 'beginner',
+    description: 'Functions are reusable blocks of code. JavaScript has three ways to create them: function declarations, function expressions, and arrow functions. Functions are "first-class" in JS, meaning they\'re values you can pass around.',
+    shortDescription: 'Declarations, expressions, and arrows',
+    keyPoints: [
+      'Function declarations are hoisted (can call before definition)',
+      'Function expressions are NOT hoisted',
+      'Arrow functions have shorter syntax and no own "this"',
+      'Functions can return values or undefined by default',
+      'Parameters can have default values',
+    ],
+    examples: [
+      {
+        title: 'Function Declaration',
+        code: `// Can call before definition (hoisting!)
+greet("Alice"); // "Hello, Alice"
+
+function greet(name) {
+  return "Hello, " + name;
+}
+
+// Parameters and return
+function add(a, b) {
+  return a + b;  // returns the sum
+}
+add(2, 3); // 5`,
+        explanation: 'Function declarations are hoisted to the top',
+      },
+      {
+        title: 'Function Expression',
+        code: `// Stored in a variable
+const greet = function(name) {
+  return "Hello, " + name;
+};
+
+// NOT hoisted - can't call before this line
+greet("Bob"); // "Hello, Bob"
+
+// Can be anonymous or named
+const factorial = function fact(n) {
+  return n <= 1 ? 1 : n * fact(n - 1);
+};`,
+        explanation: 'Function expressions are NOT hoisted',
+      },
+      {
+        title: 'Arrow Functions',
+        code: `// Full syntax
+const add = (a, b) => {
+  return a + b;
+};
+
+// Short syntax (implicit return)
+const add2 = (a, b) => a + b;
+
+// Single parameter (no parens needed)
+const double = x => x * 2;
+
+// No parameters
+const sayHi = () => "Hello!";
+
+// Arrow functions have no own 'this'`,
+        explanation: 'Arrow functions are concise and inherit this from parent scope',
+      },
+      {
+        title: 'Default Parameters',
+        code: `function greet(name = "World") {
+  return "Hello, " + name;
+}
+
+greet();        // "Hello, World"
+greet("Alice"); // "Hello, Alice"
+
+// Works with arrow functions too
+const greet2 = (name = "World") => "Hello, " + name;`,
+        explanation: 'Default values are used when argument is undefined',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting to return a value (function returns undefined)',
+      'Using arrow functions when you need your own "this"',
+      'Not understanding hoisting differences between declaration and expression',
+    ],
+    interviewTips: [
+      'Know when to use each function type',
+      'Explain the "this" difference with arrow functions',
+      'Be able to convert between function syntaxes',
+    ],
+  },
+  {
+    id: 'conditionals',
+    title: 'Conditionals',
+    category: 'basics',
+    difficulty: 'beginner',
+    description: 'Conditionals let your code make decisions. JavaScript has if/else, switch, and the ternary operator (?:). Understanding truthiness is key: JS converts values to booleans in conditions.',
+    shortDescription: 'if, switch, and ternary',
+    keyPoints: [
+      'if/else: most common, can chain with else if',
+      'switch: compare one value against many cases',
+      'Ternary: condition ? valueIfTrue : valueIfFalse',
+      'Falsy values: false, 0, "", null, undefined, NaN',
+      'Everything else is truthy (including [], {}, "0")',
+    ],
+    examples: [
+      {
+        title: 'if/else Statement',
+        code: `const age = 18;
+
+if (age >= 21) {
+  console.log("Can drink");
+} else if (age >= 18) {
+  console.log("Can vote");
+} else {
+  console.log("Too young");
+}
+// Output: "Can vote"`,
+        explanation: 'Conditions are checked top to bottom, first true wins',
+      },
+      {
+        title: 'Ternary Operator',
+        code: `const age = 20;
+
+// condition ? ifTrue : ifFalse
+const status = age >= 18 ? "adult" : "minor";
+// status = "adult"
+
+// Nested ternary (use sparingly!)
+const drink = age >= 21 ? "beer" : age >= 18 ? "coffee" : "juice";`,
+        explanation: 'Ternary is great for simple conditional assignments',
+      },
+      {
+        title: 'switch Statement',
+        code: `const day = "Monday";
+
+switch (day) {
+  case "Monday":
+  case "Tuesday":
+    console.log("Work day");
+    break;  // Important! Without break, falls through
+  case "Saturday":
+  case "Sunday":
+    console.log("Weekend!");
+    break;
+  default:
+    console.log("Midweek");
+}`,
+        explanation: 'switch uses strict equality (===) and needs break',
+      },
+      {
+        title: 'Truthiness',
+        code: `// Falsy values (evaluate to false)
+if (false) {}
+if (0) {}
+if ("") {}
+if (null) {}
+if (undefined) {}
+if (NaN) {}
+
+// Truthy (everything else!)
+if ("0") {}     // true! Non-empty string
+if ([]) {}      // true! Empty array
+if ({}) {}      // true! Empty object`,
+        explanation: 'Only 6 values are falsy, everything else is truthy',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting break in switch (causes fall-through)',
+      'Thinking [] or {} are falsy (they\'re truthy!)',
+      'Using == instead of === in conditions',
+    ],
+    interviewTips: [
+      'Know all 6 falsy values by heart',
+      'Explain why [] and {} are truthy',
+      'Show when to use ternary vs if/else',
+    ],
+  },
+  {
+    id: 'loops',
+    title: 'Loops',
+    category: 'basics',
+    difficulty: 'beginner',
+    description: 'Loops repeat code until a condition is met. JavaScript has for, while, do-while, for...of (arrays), and for...in (objects). Choose the right loop for your use case!',
+    shortDescription: 'for, while, and for...of',
+    keyPoints: [
+      'for: when you know how many iterations',
+      'while: when you don\'t know how many iterations',
+      'for...of: iterate over array VALUES',
+      'for...in: iterate over object KEYS',
+      'break: exit loop early, continue: skip to next iteration',
+    ],
+    examples: [
+      {
+        title: 'for Loop',
+        code: `// Classic for loop
+for (let i = 0; i < 5; i++) {
+  console.log(i);  // 0, 1, 2, 3, 4
+}
+
+// Looping through array
+const fruits = ["apple", "banana", "cherry"];
+for (let i = 0; i < fruits.length; i++) {
+  console.log(fruits[i]);
+}`,
+        explanation: 'for(init; condition; increment) - most versatile loop',
+      },
+      {
+        title: 'while Loop',
+        code: `// while: check condition first
+let count = 0;
+while (count < 3) {
+  console.log(count);
+  count++;
+}
+// 0, 1, 2
+
+// do-while: runs at least once
+let x = 10;
+do {
+  console.log(x);  // runs once even though x >= 3
+} while (x < 3);`,
+        explanation: 'while checks before running, do-while runs then checks',
+      },
+      {
+        title: 'for...of (Arrays)',
+        code: `const colors = ["red", "green", "blue"];
+
+// Iterate over VALUES
+for (const color of colors) {
+  console.log(color);
+}
+// "red", "green", "blue"
+
+// Works with strings too!
+for (const char of "Hello") {
+  console.log(char);  // "H", "e", "l", "l", "o"
+}`,
+        explanation: 'for...of gives you values directly (best for arrays)',
+      },
+      {
+        title: 'for...in (Objects)',
+        code: `const person = { name: "Alice", age: 25 };
+
+// Iterate over KEYS
+for (const key in person) {
+  console.log(key, person[key]);
+}
+// "name" "Alice"
+// "age" 25
+
+// Warning: for...in on arrays gives indices as strings!
+const arr = ["a", "b"];
+for (const i in arr) {
+  console.log(typeof i);  // "string" not "number"!
+}`,
+        explanation: 'for...in iterates over keys (use for objects, not arrays)',
+      },
+      {
+        title: 'break and continue',
+        code: `// break: exit loop completely
+for (let i = 0; i < 10; i++) {
+  if (i === 5) break;
+  console.log(i);
+}
+// 0, 1, 2, 3, 4 (stops at 5)
+
+// continue: skip to next iteration
+for (let i = 0; i < 5; i++) {
+  if (i === 2) continue;
+  console.log(i);
+}
+// 0, 1, 3, 4 (skips 2)`,
+        explanation: 'break exits the loop, continue skips current iteration',
+      },
+    ],
+    commonMistakes: [
+      'Using for...in on arrays (use for...of instead)',
+      'Infinite loops: forgetting to update the counter',
+      'Off-by-one errors: < vs <= in conditions',
+    ],
+    interviewTips: [
+      'Know when to use for...of vs for...in',
+      'Explain why for...in gives string indices',
+      'Show how to exit a loop early with break',
+    ],
+  },
+  {
+    id: 'arrays-basics',
+    title: 'Arrays',
+    category: 'basics',
+    difficulty: 'beginner',
+    description: 'Arrays are ordered lists of values. They can hold any type and grow dynamically. JavaScript arrays come with powerful built-in methods like push, pop, map, filter, and reduce.',
+    shortDescription: 'Lists of values and array methods',
+    keyPoints: [
+      'Arrays are zero-indexed (first element is at index 0)',
+      'Arrays can hold mixed types',
+      'length property gives the count of elements',
+      'Mutating methods: push, pop, shift, unshift, splice',
+      'Non-mutating methods: map, filter, slice, concat',
+    ],
+    examples: [
+      {
+        title: 'Creating Arrays',
+        code: `// Array literal (preferred)
+const fruits = ["apple", "banana", "cherry"];
+
+// Array constructor (rare)
+const numbers = new Array(1, 2, 3);
+
+// Empty array
+const empty = [];
+
+// Mixed types (valid but unusual)
+const mixed = [1, "hello", true, null];`,
+        explanation: 'Use array literals [] for creating arrays',
+      },
+      {
+        title: 'Accessing Elements',
+        code: `const fruits = ["apple", "banana", "cherry"];
+
+fruits[0]          // "apple" (first)
+fruits[2]          // "cherry" (third)
+fruits[10]         // undefined (no error!)
+fruits.length      // 3
+fruits[fruits.length - 1]  // "cherry" (last)
+
+// Modifying
+fruits[1] = "orange";
+// ["apple", "orange", "cherry"]`,
+        explanation: 'Access by index, use .length for size',
+      },
+      {
+        title: 'Adding/Removing Elements',
+        code: `const arr = [1, 2, 3];
+
+// Add to end
+arr.push(4);       // [1, 2, 3, 4]
+
+// Remove from end
+arr.pop();         // [1, 2, 3]
+
+// Add to beginning
+arr.unshift(0);    // [0, 1, 2, 3]
+
+// Remove from beginning
+arr.shift();       // [1, 2, 3]
+
+// All these MUTATE the original array!`,
+        explanation: 'push/pop for end, shift/unshift for beginning',
+      },
+      {
+        title: 'map, filter, reduce',
+        code: `const nums = [1, 2, 3, 4, 5];
+
+// map: transform each element
+nums.map(n => n * 2);    // [2, 4, 6, 8, 10]
+
+// filter: keep elements that pass test
+nums.filter(n => n > 2); // [3, 4, 5]
+
+// reduce: combine into single value
+nums.reduce((sum, n) => sum + n, 0);  // 15
+
+// These return NEW arrays (don't mutate)`,
+        explanation: 'map transforms, filter selects, reduce combines',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting arrays are zero-indexed',
+      'Confusing methods that mutate vs return new arrays',
+      'Using delete on arrays (creates holes, use splice)',
+    ],
+    interviewTips: [
+      'Know which methods mutate vs return new arrays',
+      'Be comfortable with map, filter, reduce',
+      'Explain time complexity: push/pop O(1), shift/unshift O(n)',
+    ],
+  },
+  {
+    id: 'objects-basics',
+    title: 'Objects',
+    category: 'basics',
+    difficulty: 'beginner',
+    description: 'Objects are collections of key-value pairs. They\'re the most important data structure in JavaScript - even arrays and functions are objects! Learn to create, access, and manipulate objects.',
+    shortDescription: 'Key-value pairs and dot notation',
+    keyPoints: [
+      'Objects store data as key-value pairs (properties)',
+      'Keys are strings (or Symbols), values can be anything',
+      'Dot notation: obj.key vs Bracket notation: obj["key"]',
+      'Objects are passed by reference, not copied',
+      'Object.keys(), Object.values(), Object.entries() for iteration',
+    ],
+    examples: [
+      {
+        title: 'Creating Objects',
+        code: `// Object literal (most common)
+const person = {
+  name: "Alice",
+  age: 25,
+  isStudent: true
+};
+
+// Empty object
+const empty = {};
+
+// Shorthand property names
+const name = "Bob";
+const age = 30;
+const bob = { name, age };
+// Same as { name: name, age: age }`,
+        explanation: 'Object literals {} are the standard way to create objects',
+      },
+      {
+        title: 'Accessing Properties',
+        code: `const person = { name: "Alice", age: 25 };
+
+// Dot notation (preferred)
+person.name      // "Alice"
+person.age       // 25
+
+// Bracket notation (for dynamic keys)
+person["name"]   // "Alice"
+const key = "age";
+person[key]      // 25
+
+// Missing properties return undefined
+person.job       // undefined (no error!)`,
+        explanation: 'Use dot notation when you know the key, brackets for dynamic keys',
+      },
+      {
+        title: 'Modifying Objects',
+        code: `const person = { name: "Alice" };
+
+// Add properties
+person.age = 25;
+person["job"] = "Developer";
+
+// Update properties
+person.name = "Alicia";
+
+// Delete properties
+delete person.job;
+
+// Object is: { name: "Alicia", age: 25 }`,
+        explanation: 'Objects are mutable - you can add/change/delete properties',
+      },
+      {
+        title: 'Object Methods',
+        code: `const person = { name: "Alice", age: 25 };
+
+// Get all keys
+Object.keys(person);    // ["name", "age"]
+
+// Get all values
+Object.values(person);  // ["Alice", 25]
+
+// Get key-value pairs
+Object.entries(person); // [["name", "Alice"], ["age", 25]]
+
+// Check if key exists
+"name" in person;       // true
+person.hasOwnProperty("name"); // true`,
+        explanation: 'Object static methods help iterate and inspect objects',
+      },
+      {
+        title: 'Destructuring',
+        code: `const person = { name: "Alice", age: 25, city: "NYC" };
+
+// Extract properties into variables
+const { name, age } = person;
+console.log(name); // "Alice"
+
+// Rename while destructuring
+const { name: userName } = person;
+console.log(userName); // "Alice"
+
+// Default values
+const { job = "Unknown" } = person;
+console.log(job); // "Unknown"`,
+        explanation: 'Destructuring extracts properties into variables',
+      },
+    ],
+    commonMistakes: [
+      'Using dot notation with variables (use brackets)',
+      'Forgetting objects are passed by reference',
+      'Not checking if a property exists before using it',
+    ],
+    interviewTips: [
+      'Know dot vs bracket notation differences',
+      'Explain object reference behavior with an example',
+      'Be comfortable with destructuring syntax',
+    ],
+  },
   {
     id: 'hoisting',
     title: 'Hoisting',
@@ -1517,6 +2298,8 @@ self.addEventListener("install", (e) => {
 ]
 
 export const conceptCategories = [
+  { id: 'philosophy', name: 'Philosophy', description: 'Why JS is the way it is' },
+  { id: 'basics', name: 'Beginner Basics', description: 'Your first steps in JS' },
   { id: 'fundamentals', name: 'Fundamentals', description: 'Core JS basics' },
   { id: 'core', name: 'Core Mechanics', description: 'How JS really works' },
   { id: 'advanced', name: 'Advanced', description: 'Deep dive topics' },
@@ -1527,17 +2310,33 @@ export const conceptCategories = [
 
 // Related concepts mapping for internal linking (SEO)
 const relatedConceptsMap: Record<string, string[]> = {
-  'hoisting': ['closures', 'this-keyword', 'memory-model'],
-  'type-coercion': ['hoisting', 'closures', 'this-keyword'],
-  'closures': ['hoisting', 'this-keyword', 'memory-model', 'recursion'],
-  'this-keyword': ['closures', 'prototypes', 'event-loop'],
+  // Philosophy & Basics
+  'js-philosophy': ['variables', 'data-types', 'functions'],
+  'variables': ['data-types', 'hoisting', 'js-philosophy'],
+  'data-types': ['variables', 'operators', 'type-coercion'],
+  'operators': ['data-types', 'conditionals', 'type-coercion'],
+  'functions': ['variables', 'closures', 'this-keyword'],
+  'conditionals': ['operators', 'loops', 'type-coercion'],
+  'loops': ['conditionals', 'arrays-basics', 'functions'],
+  'arrays-basics': ['loops', 'objects-basics', 'functions'],
+  'objects-basics': ['arrays-basics', 'prototypes', 'this-keyword'],
+  // Fundamentals
+  'hoisting': ['variables', 'closures', 'this-keyword', 'memory-model'],
+  'type-coercion': ['data-types', 'operators', 'hoisting'],
+  // Core
+  'closures': ['functions', 'hoisting', 'this-keyword', 'memory-model', 'recursion'],
+  'this-keyword': ['functions', 'objects-basics', 'closures', 'prototypes'],
+  'prototypes': ['objects-basics', 'this-keyword', 'closures', 'memory-model'],
+  'recursion': ['functions', 'closures', 'memory-model', 'event-loop'],
+  // Advanced
   'event-loop': ['this-keyword', 'nodejs-event-loop', 'web-workers'],
-  'prototypes': ['this-keyword', 'closures', 'memory-model'],
-  'recursion': ['closures', 'memory-model', 'event-loop'],
+  // Runtime
   'memory-model': ['hoisting', 'closures', 'v8-engine', 'streams-buffers'],
   'v8-engine': ['memory-model', 'event-loop', 'nodejs-event-loop'],
+  // Backend
   'nodejs-event-loop': ['event-loop', 'v8-engine', 'streams-buffers', 'web-workers'],
   'streams-buffers': ['memory-model', 'nodejs-event-loop'],
+  // Browser
   'critical-render-path': ['event-loop', 'web-workers', 'memory-model'],
   'web-workers': ['event-loop', 'nodejs-event-loop', 'critical-render-path'],
 }

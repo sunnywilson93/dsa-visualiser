@@ -9,7 +9,17 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ConceptIcon } from '@/components/Icons'
 import { getConceptById, getRelatedConcepts } from '@/data/concepts'
 
-// Visualization components
+// Visualization components - Beginner
+import { JSPhilosophyViz } from '@/components/Concepts/JSPhilosophyViz'
+import { VariablesViz } from '@/components/Concepts/VariablesViz'
+import { DataTypesViz } from '@/components/Concepts/DataTypesViz'
+import { OperatorsViz } from '@/components/Concepts/OperatorsViz'
+import { FunctionsViz } from '@/components/Concepts/FunctionsViz'
+import { ConditionalsViz } from '@/components/Concepts/ConditionalsViz'
+import { LoopsViz } from '@/components/Concepts/LoopsViz'
+import { ArraysBasicsViz } from '@/components/Concepts/ArraysBasicsViz'
+import { ObjectsBasicsViz } from '@/components/Concepts/ObjectsBasicsViz'
+// Visualization components - Intermediate/Advanced
 import { HoistingViz } from '@/components/Concepts/HoistingViz'
 import { TypeCoercionViz } from '@/components/Concepts/TypeCoercionViz'
 import { ClosuresViz } from '@/components/Concepts/ClosuresViz'
@@ -27,6 +37,17 @@ import { WebWorkersViz } from '@/components/Concepts/WebWorkersViz'
 import styles from './page.module.css'
 
 const visualizations: Record<string, React.ComponentType> = {
+  // Beginner
+  'js-philosophy': JSPhilosophyViz,
+  'variables': VariablesViz,
+  'data-types': DataTypesViz,
+  'operators': OperatorsViz,
+  'functions': FunctionsViz,
+  'conditionals': ConditionalsViz,
+  'loops': LoopsViz,
+  'arrays-basics': ArraysBasicsViz,
+  'objects-basics': ObjectsBasicsViz,
+  // Intermediate/Advanced
   'hoisting': HoistingViz,
   'type-coercion': TypeCoercionViz,
   'closures': ClosuresViz,

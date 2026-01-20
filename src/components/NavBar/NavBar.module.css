@@ -48,11 +48,11 @@
   background-clip: text;
 }
 
-.searchWrapper {
+.middle {
   flex: 1;
   display: flex;
-  justify-content: center;
-  max-width: 400px;
+  align-items: center;
+  min-width: 0;
 }
 
 .breadcrumbs {
@@ -60,6 +60,11 @@
   align-items: center;
   gap: 0.25rem;
   font-size: 0.875rem;
+}
+
+.searchWrapper {
+  flex-shrink: 0;
+  width: 280px;
 }
 
 .breadcrumbItem {
@@ -101,7 +106,7 @@
   }
 
   .searchWrapper {
-    max-width: 280px;
+    width: 220px;
   }
 
   .breadcrumbs {
@@ -112,11 +117,11 @@
 /* Mobile */
 @media (max-width: 480px) {
   .searchWrapper {
-    max-width: 180px;
+    width: 160px;
   }
 
   .breadcrumbCurrent {
-    max-width: 120px;
+    max-width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

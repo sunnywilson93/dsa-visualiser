@@ -1,0 +1,294 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Tab Selector */
+.tabSelector {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.35rem;
+}
+
+.tabBtn {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tabBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.tabBtn.active {
+  background: rgba(130, 100, 255, 0.18);
+  border-color: rgba(130, 100, 255, 0.7);
+  color: #f5f7ff;
+  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
+}
+
+/* Timeline */
+.timelineContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  background: linear-gradient(to bottom, #f59e0b, #10b981, #3b82f6, #8b5cf6, #ec4899);
+  border-radius: 2px;
+}
+
+.timelineEvent {
+  position: relative;
+  padding: 0.75rem 0;
+}
+
+.timelineDot {
+  position: absolute;
+  left: -1.65rem;
+  top: 1rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.timelineContent {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.timelineYear {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.timelineTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0.25rem 0;
+}
+
+.timelineDesc {
+  font-size: 0.75rem;
+  color: #888;
+  margin: 0;
+}
+
+/* Paradigms */
+.paradigmsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.paradigmSelector {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.paradigmBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.paradigmBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.paradigmBtn.active {
+  color: #fff;
+}
+
+.paradigmDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.paradigmContent {
+  display: flex;
+  justify-content: center;
+}
+
+.paradigmCard {
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid;
+  border-radius: 12px;
+  padding: 1rem;
+  max-width: 400px;
+  width: 100%;
+}
+
+.paradigmCard h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.paradigmCard p {
+  font-size: 0.75rem;
+  color: #888;
+  margin: 0 0 0.75rem;
+}
+
+.paradigmCode {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin: 0;
+  overflow-x: auto;
+}
+
+.paradigmCode code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: #ccc;
+  white-space: pre;
+}
+
+/* Principles */
+.principlesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.principleGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.principleCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.principleCard:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.principleCard.active {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.principleIcon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.principleTitle {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #ccc;
+  text-align: center;
+}
+
+.principleDetail {
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.principleDetail h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.principleDetail p {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin: 0 0 0.75rem;
+}
+
+.principleExample {
+  display: block;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: #10b981;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+/* Insight box */
+.insight {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: #f59e0b;
+}
+
+.insightIcon {
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .principleGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tabSelector {
+    flex-wrap: wrap;
+  }
+}

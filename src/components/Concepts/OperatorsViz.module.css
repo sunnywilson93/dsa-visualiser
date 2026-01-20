@@ -1,0 +1,141 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tabSelector {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.35rem;
+}
+
+.tabBtn {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tabBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.tabBtn.active {
+  background: rgba(130, 100, 255, 0.18);
+  border-color: rgba(130, 100, 255, 0.7);
+  color: #f5f7ff;
+  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.opList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.opItem {
+  padding: 0.6rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.opItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.opItem.active {
+  background: rgba(130, 100, 255, 0.15);
+  border-color: rgba(130, 100, 255, 0.5);
+}
+
+.opExpression {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: #ccc;
+}
+
+.resultCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  border-radius: 12px;
+}
+
+.expression {
+  font-family: 'Fira Code', monospace;
+  font-size: 1.25rem;
+  color: #a5b4fc;
+}
+
+.equals {
+  font-size: 1.5rem;
+  color: #555;
+}
+
+.result {
+  font-family: 'Fira Code', monospace;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #10b981;
+}
+
+.resultTrue {
+  color: #10b981;
+}
+
+.resultFalse {
+  color: #ef4444;
+}
+
+.explanation {
+  font-size: 0.8rem;
+  color: #888;
+  margin: 0.5rem 0 0;
+}
+
+.tip {
+  padding: 0.75rem 1rem;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: #f59e0b;
+  text-align: center;
+}
+
+.tip code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+}
+
+@media (max-width: 640px) {
+  .opList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

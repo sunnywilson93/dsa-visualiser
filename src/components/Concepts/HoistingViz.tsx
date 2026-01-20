@@ -606,7 +606,7 @@ export function HoistingViz() {
       {/* Controls */}
       <div className={styles.controls}>
         <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
-          ← Prev
+          Prev
         </button>
         <motion.button
           className={styles.btnPrimary}
@@ -615,10 +615,10 @@ export function HoistingViz() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
+          Next
         </motion.button>
         <button className={styles.btnSecondary} onClick={handleReset}>
-          ↻ Reset
+          Reset
         </button>
       </div>
 

@@ -1,0 +1,212 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loopSelector {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.loopBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.loopBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.loopBtn.active {
+  color: #fff;
+}
+
+.loopDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+  grid-template-areas:
+    "code viz"
+    "output output";
+}
+
+.codePanel {
+  grid-area: code;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.vizPanel {
+  grid-area: viz;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.outputPanel {
+  grid-area: output;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.panelHeader {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #888;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.code {
+  margin: 0;
+  padding: 0.75rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  color: #ccc;
+  white-space: pre;
+  overflow-x: auto;
+  min-height: 120px;
+}
+
+.itemsRow {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  min-width: 70px;
+  transition: all 0.2s;
+}
+
+.item.active {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.itemIndex {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  color: #666;
+}
+
+.itemKey {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  color: #a5b4fc;
+}
+
+.itemValue {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: #10b981;
+}
+
+.outputContent {
+  padding: 0.75rem;
+  min-height: 60px;
+}
+
+.outputLine {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: #10b981;
+  padding: 0.15rem 0;
+}
+
+.placeholder {
+  font-size: 0.75rem;
+  color: #555;
+}
+
+.bestFor {
+  padding: 0.6rem 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.bestForLabel {
+  font-weight: 600;
+  color: #888;
+  margin-right: 0.5rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+}
+
+.runBtn {
+  padding: 0.6rem 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.runBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.warning {
+  padding: 0.75rem 1rem;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: #f59e0b;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "code"
+      "viz"
+      "output";
+  }
+}

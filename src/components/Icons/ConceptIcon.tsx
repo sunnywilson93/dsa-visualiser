@@ -9,7 +9,17 @@ import {
   Layers,
   ArrowRightLeft,
   GitBranch,
-  // JS Concepts
+  // JS Concepts - Beginner Basics
+  Lightbulb,
+  Variable,
+  Boxes,
+  Plus,
+  FunctionSquare,
+  GitFork,
+  Repeat,
+  ListOrdered,
+  Package,
+  // JS Concepts - Existing
   ArrowUp,
   Shuffle,
   Lock,
@@ -31,11 +41,12 @@ import {
   Zap,
   Compass,
   Box,
+  Sparkles,
+  BookOpen,
   // Build categories (exampleCategories)
   Braces,
   Timer,
   List,
-  FunctionSquare,
   MousePointer2,
   FileJson,
   GitMerge,
@@ -68,7 +79,18 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'queues': ArrowRightLeft,         // Flow in/out (FIFO)
   'linked-lists': GitBranch,        // Connected nodes
 
-  // JS Concepts
+  // JS Concepts - Philosophy & Basics
+  'js-philosophy': Lightbulb,       // Philosophy/ideas
+  'variables': Variable,            // Variable symbol
+  'data-types': Boxes,              // Different type boxes
+  'operators': Plus,                // Math/operators
+  'functions': FunctionSquare,      // Function block
+  'conditionals': GitFork,          // Branching/decisions
+  'loops': Repeat,                  // Repeat/iteration
+  'arrays-basics': ListOrdered,     // Ordered list
+  'objects-basics': Package,        // Package/object container
+
+  // JS Concepts - Fundamentals
   'hoisting': ArrowUp,              // Variables "hoisted" up
   'type-coercion': Shuffle,         // Type conversion/shuffling
   'closures': Lock,                 // Enclosed/captured scope
@@ -84,6 +106,8 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'web-workers': Network,           // Parallel threads
 
   // Categories - JS
+  'philosophy': Sparkles,
+  'basics': BookOpen,
   'fundamentals': CircleDot,
   'core': Settings,
   'advanced': Zap,
