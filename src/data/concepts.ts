@@ -2295,6 +2295,184 @@ self.addEventListener("install", (e) => {
       'Explain Service Workers and their use cases (PWA, offline)',
     ],
   },
+  {
+    id: 'web-evolution',
+    title: 'Evolution of Web Rendering',
+    category: 'browser',
+    difficulty: 'intermediate',
+    description: 'The web has evolved through multiple paradigm shifts, each solving previous problems while creating new ones. From static HTML to SPAs to SSR/SSG, understanding this evolution helps you choose the right approach for your projects.',
+    shortDescription: 'From static HTML to modern SSR/SSG',
+    keyPoints: [
+      'Static HTML (1990s): Simple but no interactivity',
+      'CGI/PHP Era: Dynamic content but full page reloads',
+      'AJAX (2005): Partial updates without reload, but complex state',
+      'SPA Era (2010s): App-like UX but poor SEO & slow initial load',
+      'SSR Revival: Fast initial load + SEO but server costs',
+      'SSG: Pre-built pages, fast & cheap but not dynamic',
+      'Modern Hybrid (ISR, RSC): Best of both worlds',
+    ],
+    examples: [
+      {
+        title: 'Era 1: Static HTML (1990s)',
+        code: `<!-- The entire web was just documents -->
+<html>
+  <body>
+    <h1>Welcome to my page!</h1>
+    <p>Last updated: January 1995</p>
+    <a href="page2.html">Next Page</a>
+  </body>
+</html>
+
+// Solved: Share documents globally
+// Created: No interactivity, manual updates`,
+        explanation: 'The web started as linked documents. Every change required editing HTML files and uploading them to a server.',
+      },
+      {
+        title: 'Era 2: Server-Side Scripting (CGI/PHP)',
+        code: `// PHP generates HTML on each request
+// <?php
+//   $user = $_SESSION['user'];
+//   $posts = db_query("SELECT * FROM posts");
+// ?>
+
+// Server builds complete HTML per request
+// User sees: <h1>Welcome, John</h1>
+
+// Solved: Dynamic, personalized content
+// Created: Full page reload on every action`,
+        explanation: 'Server generates fresh HTML for each request. Dynamic but every click reloads the entire page.',
+      },
+      {
+        title: 'Era 3: AJAX Revolution (2005)',
+        code: `// XMLHttpRequest enabled partial page updates
+const xhr = new XMLHttpRequest();
+xhr.open('GET', '/api/posts');
+xhr.onload = function() {
+  const posts = JSON.parse(xhr.response);
+  // Update only part of the page
+  renderPosts(posts);
+};
+xhr.send();
+
+// Later: jQuery made it easier
+// $.get('/api/posts', renderPosts);
+
+// Solved: No full page reloads
+// Created: Callback soup, state management chaos`,
+        explanation: 'AJAX allowed updating parts of the page without reload. But managing state across many callbacks became messy.',
+      },
+      {
+        title: 'Era 4: Single Page Apps (2010s)',
+        code: `// React/Vue/Angular - Component-based SPA
+function App() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/posts')
+      .then(res => res.json())
+      .then(setPosts);
+  }, []);
+
+  return (
+    <div>
+      {posts.map(post => (
+        <Post key={post.id} data={post} />
+      ))}
+    </div>
+  );
+}
+
+// Client downloads JS bundle, renders everything
+// Solved: Organized code, app-like UX
+// Created: Blank page until JS loads (bad SEO)`,
+        explanation: 'SPAs feel like native apps but search engines see a blank page, and users wait for large JS bundles to download.',
+      },
+      {
+        title: 'Era 5: SSR Returns (Next.js, Nuxt)',
+        code: `// Server renders HTML, then "hydrates" with JS
+// pages/posts.js (Next.js)
+
+export async function getServerSideProps() {
+  const posts = await db.posts.findMany();
+  return { props: { posts } };
+}
+
+export default function Posts({ posts }) {
+  return (
+    <div>
+      {posts.map(post => <Post key={post.id} data={post} />)}
+    </div>
+  );
+}
+
+// Server sends complete HTML (fast, good SEO)
+// Then JS loads and makes it interactive
+// Solved: SEO, fast initial paint
+// Created: Server costs, TTFB latency`,
+        explanation: 'SSR renders HTML on the server for each request. Great for SEO and initial load, but requires running servers.',
+      },
+      {
+        title: 'Era 6: Static Site Generation (SSG)',
+        code: `// Generate HTML at BUILD time, not request time
+// pages/posts.js (Next.js SSG)
+
+export async function getStaticProps() {
+  const posts = await db.posts.findMany();
+  return {
+    props: { posts },
+    revalidate: 3600 // Rebuild every hour (ISR)
+  };
+}
+
+// At build: generates /posts.html
+// At runtime: serves static file (instant!)
+
+// Solved: No server needed, instant loads
+// Created: Not for real-time data, long builds`,
+        explanation: 'SSG pre-builds pages at deploy time. Perfect for blogs, docs, marketing sites. ISR adds periodic rebuilds.',
+      },
+      {
+        title: 'Era 7: Modern Hybrid (RSC, Islands)',
+        code: `// React Server Components (Next.js 13+)
+// Mix server and client components
+
+// SERVER component (no JS sent to client)
+async function PostList() {
+  const posts = await db.posts.findMany();
+  return (
+    <div>
+      {posts.map(post => <PostCard post={post} />)}
+      <LikeButton /> {/* Client component */}
+    </div>
+  );
+}
+
+// CLIENT component - only this ships JS
+'use client'
+function LikeButton() {
+  const [liked, setLiked] = useState(false);
+  return <button onClick={() => setLiked(true)}>Like</button>;
+}
+
+// Solved: Less JS shipped, best of both
+// Created: New mental model, still evolving`,
+        explanation: 'Server Components run on the server with zero client JS. Mix with client components only where needed for interactivity.',
+      },
+    ],
+    commonMistakes: [
+      'Using SPA for content sites that need SEO',
+      'Using SSR when SSG would suffice (unnecessary server costs)',
+      'Over-hydrating: shipping JS for static content',
+      'Not considering Time to First Byte (TTFB) in architecture',
+    ],
+    interviewTips: [
+      'Know the trade-offs: SEO vs interactivity vs cost vs complexity',
+      'Explain when to use SSG vs SSR vs CSR (client-side rendering)',
+      'Discuss hydration and why it matters for performance',
+      'Mention modern patterns: Islands Architecture, React Server Components',
+      'Be ready to recommend an approach for a given use case',
+    ],
+  },
 ]
 
 export const conceptCategories = [
