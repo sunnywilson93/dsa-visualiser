@@ -1,0 +1,246 @@
+.carouselContainer {
+  position: relative;
+}
+
+/* Navigation buttons - overlay on edges */
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-60%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(15, 15, 26, 0.9);
+  color: #c4b5fd;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+  opacity: 0;
+}
+
+.carouselContainer:hover .navButton {
+  opacity: 1;
+}
+
+.navButton:hover:not(:disabled) {
+  background: rgba(168, 85, 247, 0.6);
+  color: #fff;
+  transform: translateY(-60%) scale(1.1);
+}
+
+.navButton:disabled {
+  opacity: 0 !important;
+  cursor: not-allowed;
+}
+
+.navLeft {
+  left: 8px;
+}
+
+.navRight {
+  right: 8px;
+}
+
+/* Scroll container */
+.scrollContainer {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 1rem 0.5rem 1.5rem;
+  margin: 0 -0.5rem;
+
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card wrapper - larger cards, fewer visible */
+.cardWrapper {
+  flex: 0 0 340px;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.cardWrapper.active {
+  transform: scale(1.02);
+}
+
+.cardWrapper:not(.active) {
+  opacity: 0.75;
+}
+
+/* Card styling */
+.card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15));
+  border-radius: 16px;
+  padding: 2px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  display: block;
+  height: 100%;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.4));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.cardWrapper.active .card::before {
+  opacity: 1;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 24px rgba(168, 85, 247, 0.35),
+    0 0 48px rgba(236, 72, 153, 0.2);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.cardInner {
+  background: #1a1a2e;
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+  min-height: 200px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardIcon {
+  font-size: 2rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+}
+
+.cardTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #f5f7ff;
+  margin: 0.25rem 0 0;
+}
+
+.cardDescription {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin: 0;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.cardFooter {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat {
+  font-size: 0.75rem;
+  color: #c4b5fd;
+  font-weight: 500;
+}
+
+/* Progress dots */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(168, 85, 247, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.dot:hover {
+  background: rgba(168, 85, 247, 0.5);
+}
+
+.dotActive {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  width: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cardWrapper {
+    flex: 0 0 300px;
+  }
+
+  .navButton {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardWrapper {
+    flex: 0 0 calc(100vw - 2rem);
+  }
+
+  .navButton {
+    display: none;
+  }
+
+  .cardInner {
+    padding: 1.25rem;
+    min-height: 180px;
+  }
+
+  .cardTitle {
+    font-size: 1.1rem;
+  }
+
+  .cardDescription {
+    font-size: 0.8rem;
+  }
+
+  .dots {
+    margin-top: 0.75rem;
+  }
+}

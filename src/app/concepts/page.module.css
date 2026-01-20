@@ -48,9 +48,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   color: #f5f7ff;
-  margin: 0 0 1.25rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+  margin: 0 0 1rem;
 }
 
 .sectionIcon {
