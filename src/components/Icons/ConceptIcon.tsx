@@ -10,6 +10,7 @@ import {
   ArrowRightLeft,
   GitBranch,
   // JS Concepts
+  Variable,
   ArrowUp,
   Shuffle,
   Lock,
@@ -69,6 +70,7 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'linked-lists': GitBranch,        // Connected nodes
 
   // JS Concepts
+  'dynamic-typing': Variable,       // Dynamic variable types
   'hoisting': ArrowUp,              // Variables "hoisted" up
   'type-coercion': Shuffle,         // Type conversion/shuffling
   'closures': Lock,                 // Enclosed/captured scope

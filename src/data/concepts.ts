@@ -21,6 +21,152 @@ export interface Concept {
 
 export const concepts: Concept[] = [
   {
+    id: 'dynamic-typing',
+    title: 'Dynamic Typing Philosophy',
+    category: 'fundamentals',
+    difficulty: 'beginner',
+    description: 'JavaScript is dynamically typed: variables can hold any type and types are determined at runtime, not compile time. This design philosophy prioritizes flexibility and rapid prototyping over compile-time safety, reflecting JavaScript\'s origins as a scripting language for the web.',
+    shortDescription: 'Why JS lets variables change types',
+    keyPoints: [
+      'Variables have no fixed type - they can hold any value at any time',
+      'Types are checked at runtime, not compile time (no type declarations required)',
+      'Duck typing: "If it walks like a duck and quacks like a duck, it\'s a duck"',
+      'Designed for flexibility: quickly prototype without boilerplate',
+      'Trade-off: more runtime errors, but faster development cycle',
+      'TypeScript adds optional static typing on top of JavaScript',
+    ],
+    examples: [
+      {
+        title: 'Variables Can Change Type',
+        code: `let value = 42;        // number
+console.log(typeof value);  // "number"
+
+value = "hello";       // now a string!
+console.log(typeof value);  // "string"
+
+value = { x: 1 };      // now an object!
+console.log(typeof value);  // "object"
+
+// In static languages like Java:
+// int value = 42;
+// value = "hello";  // Compile error!`,
+        explanation: 'Unlike statically typed languages, JS variables can hold any type',
+      },
+      {
+        title: 'No Type Declarations',
+        code: `// JavaScript - no types needed
+function add(a, b) {
+  return a + b;
+}
+
+add(2, 3);        // 5
+add("Hi", "!");   // "Hi!"
+add(2, "3");      // "23" (coercion!)
+
+// TypeScript - optional types
+function addTyped(a: number, b: number): number {
+  return a + b;
+}`,
+        explanation: 'Functions accept any type - flexibility vs safety trade-off',
+      },
+      {
+        title: 'Duck Typing',
+        code: `// If it has .length and .map, treat it like an array
+function processItems(collection) {
+  console.log("Length:", collection.length);
+  return collection.map(x => x * 2);
+}
+
+processItems([1, 2, 3]);  // Works!
+
+// Custom object with array-like interface
+const arrayLike = {
+  0: 10, 1: 20, 2: 30,
+  length: 3,
+  map: function(fn) {
+    return [fn(this[0]), fn(this[1]), fn(this[2])];
+  }
+};
+processItems(arrayLike);  // Also works!`,
+        explanation: 'JS cares about what objects CAN DO, not what they ARE',
+      },
+      {
+        title: 'Runtime Type Checking',
+        code: `function divide(a, b) {
+  // Manual runtime check
+  if (typeof a !== 'number' || typeof b !== 'number') {
+    throw new TypeError('Arguments must be numbers');
+  }
+  if (b === 0) {
+    throw new Error('Cannot divide by zero');
+  }
+  return a / b;
+}
+
+divide(10, 2);    // 5
+divide("10", 2);  // TypeError!
+
+// Static languages catch this at compile time
+// JS catches it when the code actually runs`,
+        explanation: 'Developers must add runtime checks for type safety',
+      },
+      {
+        title: 'Brendan Eich\'s Design',
+        code: `// Created in 10 days (1995) for Netscape
+// Goal: Simple scripting for web pages
+
+// Dynamic typing was intentional:
+// 1. Easy for beginners (no type annotations)
+// 2. Fast prototyping (just write code)
+// 3. Flexible DOM manipulation
+// 4. Inspired by Scheme (dynamic) + Java (syntax)
+
+document.getElementById("btn").onclick = function() {
+  // No need to declare types
+  // Just grab elements and manipulate them
+  this.textContent = "Clicked!";
+};`,
+        explanation: 'Dynamic typing was a deliberate choice for web scripting',
+      },
+      {
+        title: 'The Trade-off',
+        code: `// PROS of dynamic typing:
+// - Faster to write, less boilerplate
+// - More flexible APIs
+// - Easy metaprogramming
+
+// CONS of dynamic typing:
+// - Errors caught at runtime, not compile time
+// - Harder to refactor large codebases
+// - IDE support is limited without types
+
+// Modern solution: TypeScript
+interface User {
+  name: string;
+  age: number;
+}
+
+function greet(user: User): string {
+  return \`Hello, \${user.name}!\`;
+}
+// Compile-time error if wrong type passed`,
+        explanation: 'TypeScript adds static typing as an optional layer',
+      },
+    ],
+    commonMistakes: [
+      'Assuming a variable will always hold the expected type',
+      'Not validating function arguments at runtime',
+      'Confusing undefined (uninitialized) with null (intentional absence)',
+      'Forgetting that typeof null returns "object" (historical bug)',
+    ],
+    interviewTips: [
+      'Explain the difference between static and dynamic typing',
+      'Know why JavaScript chose dynamic typing (web scripting, rapid prototyping)',
+      'Discuss trade-offs: flexibility vs safety',
+      'Mention TypeScript as the modern solution for type safety',
+    ],
+  },
+  {
     id: 'hoisting',
     title: 'Hoisting',
     category: 'fundamentals',
@@ -1527,8 +1673,9 @@ export const conceptCategories = [
 
 // Related concepts mapping for internal linking (SEO)
 const relatedConceptsMap: Record<string, string[]> = {
-  'hoisting': ['closures', 'this-keyword', 'memory-model'],
-  'type-coercion': ['hoisting', 'closures', 'this-keyword'],
+  'dynamic-typing': ['type-coercion', 'hoisting', 'prototypes'],
+  'hoisting': ['dynamic-typing', 'closures', 'this-keyword', 'memory-model'],
+  'type-coercion': ['dynamic-typing', 'hoisting', 'closures', 'this-keyword'],
   'closures': ['hoisting', 'this-keyword', 'memory-model', 'recursion'],
   'this-keyword': ['closures', 'prototypes', 'event-loop'],
   'event-loop': ['this-keyword', 'nodejs-event-loop', 'web-workers'],

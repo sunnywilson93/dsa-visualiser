@@ -10,6 +10,7 @@ import { ConceptIcon } from '@/components/Icons'
 import { getConceptById, getRelatedConcepts } from '@/data/concepts'
 
 // Visualization components
+import { DynamicTypingViz } from '@/components/Concepts/DynamicTypingViz'
 import { HoistingViz } from '@/components/Concepts/HoistingViz'
 import { TypeCoercionViz } from '@/components/Concepts/TypeCoercionViz'
 import { ClosuresViz } from '@/components/Concepts/ClosuresViz'
@@ -27,6 +28,7 @@ import { WebWorkersViz } from '@/components/Concepts/WebWorkersViz'
 import styles from './page.module.css'
 
 const visualizations: Record<string, React.ComponentType> = {
+  'dynamic-typing': DynamicTypingViz,
   'hoisting': HoistingViz,
   'type-coercion': TypeCoercionViz,
   'closures': ClosuresViz,
