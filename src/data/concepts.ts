@@ -2603,6 +2603,214 @@ const heavy = await import('./heavy.js');
       'Know the difference: CJS copies values, ESM binds live references',
     ],
   },
+  {
+    id: 'async-evolution',
+    title: 'Evolution of Async Patterns',
+    category: 'core',
+    difficulty: 'intermediate',
+    description: 'JavaScript is single-threaded but handles async operations elegantly. From callbacks to async/await, each pattern solved problems while creating new ones. Understanding this evolution helps you write better async code.',
+    shortDescription: 'From callbacks to async/await',
+    keyPoints: [
+      'Callbacks (1995): Pass a function to run later - simple but leads to nesting',
+      'Callback Hell (2008): Deep nesting creates unreadable "pyramid of doom"',
+      'Promises (2012): Chainable .then() flattens code, unified error handling',
+      'Generators (2015): Pausable functions, paved the way for async/await',
+      'Async/Await (2017): Sync-looking code, native try/catch, clear winner',
+      'Modern Patterns: Promise.allSettled, AbortController, async iterators',
+    ],
+    examples: [
+      {
+        title: 'Era 1: Callbacks',
+        code: `// Pass a function to be called later
+function fetchUser(id, callback) {
+  setTimeout(() => {
+    callback(null, { id, name: 'Alice' });
+  }, 1000);
+}
+
+fetchUser(1, function(err, user) {
+  if (err) return console.error(err);
+  console.log(user.name);
+});`,
+        explanation: 'Callbacks are the original async pattern. Simple, but hard to compose.',
+      },
+      {
+        title: 'Era 2: Callback Hell',
+        code: `// The "Pyramid of Doom"
+getUser(id, function(err, user) {
+  getOrders(user.id, function(err, orders) {
+    getDetails(orders[0].id, function(err, details) {
+      // 3 levels deep... keeps going
+    });
+  });
+});`,
+        explanation: 'Sequential async ops create deeply nested, unreadable code.',
+      },
+      {
+        title: 'Era 3: Promises',
+        code: `// Chain instead of nest
+fetchUser(1)
+  .then(user => getOrders(user.id))
+  .then(orders => getDetails(orders[0].id))
+  .catch(err => console.error(err));
+
+// Parallel execution
+Promise.all([fetchA(), fetchB(), fetchC()])
+  .then(([a, b, c]) => console.log(a, b, c));`,
+        explanation: 'Promises flatten the pyramid with .then() chains.',
+      },
+      {
+        title: 'Era 4: Async/Await',
+        code: `async function loadOrder(userId) {
+  try {
+    const user = await fetchUser(userId);
+    const orders = await getOrders(user.id);
+    const details = await getDetails(orders[0].id);
+    return { user, orders, details };
+  } catch (err) {
+    console.error('Failed:', err);
+  }
+}`,
+        explanation: 'Async/await makes async code look synchronous. The clear winner.',
+      },
+      {
+        title: 'Modern: Promise.allSettled',
+        code: `// Don't fail on first error
+const results = await Promise.allSettled([
+  fetchUser(1),   // succeeds
+  fetchUser(-1),  // fails
+  fetchUser(2)    // succeeds
+]);
+// All results returned, even failures`,
+        explanation: 'Promise.allSettled handles partial failures gracefully.',
+      },
+      {
+        title: 'Modern: AbortController',
+        code: `const controller = new AbortController();
+
+fetch('/api/data', { signal: controller.signal })
+  .then(r => r.json())
+  .catch(err => {
+    if (err.name === 'AbortError') {
+      console.log('Fetch cancelled');
+    }
+  });
+
+// Cancel the request
+controller.abort();`,
+        explanation: 'AbortController lets you cancel in-flight async operations.',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting await (Promise returned instead of value)',
+      'Using await in a loop when Promise.all would parallelize',
+      'Not handling Promise rejections (unhandled rejection)',
+      'Mixing .then() and await inconsistently',
+    ],
+    interviewTips: [
+      'Explain why async/await is just syntax sugar over Promises',
+      'Know when to use Promise.all vs Promise.allSettled vs Promise.race',
+      'Understand the event loop and how async fits in',
+      'Be ready to convert callback code to Promises to async/await',
+      'Know how to handle errors in async/await (try/catch vs .catch())',
+    ],
+  },
+  {
+    id: 'state-evolution',
+    title: 'Evolution of State Management',
+    category: 'advanced',
+    difficulty: 'intermediate',
+    description: 'Frontend state management has evolved dramatically. From jQuery DOM manipulation to Redux to modern solutions like Zustand, each era solved problems while creating new ones. Understanding this history helps you choose the right tool.',
+    shortDescription: 'From jQuery to Zustand',
+    keyPoints: [
+      'jQuery DOM (2006): State lived in the DOM, read/write directly',
+      'MVC/Backbone (2010): Separated models from views, event-driven',
+      'Two-Way Binding (2012): Angular 1.x magic, but hard to debug',
+      'Flux (2014): Unidirectional flow, actions → dispatcher → store',
+      'Redux (2015): Single store, pure reducers, time-travel debugging',
+      'Hooks + Context (2018): Built-in React, simpler but re-render issues',
+      'Modern (2020+): Zustand, Jotai - minimal API, fine-grained updates',
+    ],
+    examples: [
+      {
+        title: 'Era 1: jQuery DOM',
+        code: `// State = the DOM itself
+$('#add-btn').click(function() {
+  var count = parseInt($('#counter').text());
+  $('#counter').text(count + 1);
+});
+// No structure, state scattered everywhere`,
+        explanation: 'The DOM was the state. Simple but led to spaghetti code.',
+      },
+      {
+        title: 'Era 2: MVC / Backbone',
+        code: `var Todo = Backbone.Model.extend({
+  defaults: { title: '', completed: false }
+});
+
+var TodoView = Backbone.View.extend({
+  initialize: function() {
+    this.listenTo(this.model, 'change', this.render);
+  }
+});`,
+        explanation: 'Models as source of truth, views subscribe to changes.',
+      },
+      {
+        title: 'Era 3: Redux',
+        code: `function todoReducer(state = [], action) {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return [...state, { text: action.text }];
+    default:
+      return state;
+  }
+}
+
+store.dispatch({ type: 'ADD_TODO', text: 'Learn Redux' });`,
+        explanation: 'Single store, pure reducers, predictable but verbose.',
+      },
+      {
+        title: 'Era 4: Context + Hooks',
+        code: `const TodoContext = createContext();
+
+function TodoProvider({ children }) {
+  const [todos, dispatch] = useReducer(reducer, []);
+  return (
+    <TodoContext.Provider value={{ todos, dispatch }}>
+      {children}
+    </TodoContext.Provider>
+  );
+}`,
+        explanation: 'Built into React, no external library needed.',
+      },
+      {
+        title: 'Era 5: Zustand (Modern)',
+        code: `const useTodoStore = create((set) => ({
+  todos: [],
+  addTodo: (text) => set((state) => ({
+    todos: [...state.todos, { text }]
+  })),
+}));
+
+// In component - just use the hook!
+const todos = useTodoStore((s) => s.todos);`,
+        explanation: 'Minimal API, fine-grained updates, no provider needed.',
+      },
+    ],
+    commonMistakes: [
+      'Using Redux for simple apps (overkill)',
+      'Storing derived state instead of computing it',
+      'Not splitting Context to avoid unnecessary re-renders',
+      'Mutating state directly instead of returning new objects',
+    ],
+    interviewTips: [
+      'Explain trade-offs between different state solutions',
+      'Know when Context is enough vs when you need Zustand/Redux',
+      'Understand why immutability matters for React rendering',
+      'Be ready to discuss fine-grained vs coarse-grained reactivity',
+      'Know the difference between local, global, and server state',
+    ],
+  },
 ]
 
 export const conceptCategories = [

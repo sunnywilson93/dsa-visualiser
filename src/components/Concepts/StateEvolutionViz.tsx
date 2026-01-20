@@ -1,0 +1,530 @@
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Check, AlertTriangle, ArrowRight } from 'lucide-react'
+import styles from './StateEvolutionViz.module.css'
+
+interface Era {
+  id: string
+  name: string
+  years: string
+  color: string
+  technologies: string[]
+  code: string
+  solved: string[]
+  created: string[]
+  description: string
+}
+
+const eras: Era[] = [
+  {
+    id: 'jquery-dom',
+    name: 'jQuery DOM',
+    years: '2006-2012',
+    color: '#6b7280',
+    technologies: ['jQuery', 'DOM manipulation', 'Event handlers'],
+    code: `// State = the DOM itself
+// Read state from DOM, write state to DOM
+
+$('#add-btn').click(function() {
+  // Read current count from DOM
+  var count = parseInt($('#counter').text());
+
+  // Update DOM directly
+  $('#counter').text(count + 1);
+
+  // Conditional UI updates
+  if (count + 1 > 10) {
+    $('#warning').show();
+  }
+});
+
+// State is scattered across DOM elements
+// No single source of truth
+// Hard to track what changed and why`,
+    solved: [
+      'Made DOM manipulation easy',
+      'Cross-browser compatibility',
+      'Simple for small apps',
+    ],
+    created: [
+      'State scattered across DOM',
+      'No structure or patterns',
+      'Spaghetti code at scale',
+      'Hard to test or debug',
+    ],
+    description: 'The DOM was the state. Read from elements, write to elements. Simple but chaotic.',
+  },
+  {
+    id: 'mvc',
+    name: 'MVC / Backbone',
+    years: '2010-2014',
+    color: '#8b5cf6',
+    technologies: ['Backbone.js', 'Models', 'Views', 'Collections'],
+    code: `// Backbone.js - Separate Models from Views
+var Todo = Backbone.Model.extend({
+  defaults: { title: '', completed: false }
+});
+
+var TodoList = Backbone.Collection.extend({
+  model: Todo
+});
+
+var TodoView = Backbone.View.extend({
+  template: _.template($('#todo-template').html()),
+
+  events: {
+    'click .toggle': 'toggleComplete'
+  },
+
+  initialize: function() {
+    // Re-render when model changes
+    this.listenTo(this.model, 'change', this.render);
+  },
+
+  toggleComplete: function() {
+    this.model.set('completed', !this.model.get('completed'));
+  },
+
+  render: function() {
+    this.$el.html(this.template(this.model.toJSON()));
+    return this;
+  }
+});`,
+    solved: [
+      'Separated data from presentation',
+      'Models as source of truth',
+      'Event-driven updates',
+    ],
+    created: [
+      'Boilerplate heavy',
+      'Views still manage their own state',
+      'Complex data flow to trace',
+    ],
+    description: 'MVC brought structure. Models held data, Views rendered it, but syncing was manual.',
+  },
+  {
+    id: 'two-way',
+    name: 'Two-Way Binding',
+    years: '2012-2016',
+    color: '#f59e0b',
+    technologies: ['Angular 1.x', 'Knockout', 'ng-model'],
+    code: `<!-- Angular 1.x - Two-way data binding -->
+<div ng-controller="TodoCtrl">
+  <input ng-model="newTodo" placeholder="Add todo">
+  <button ng-click="addTodo()">Add</button>
+
+  <ul>
+    <li ng-repeat="todo in todos">
+      <input type="checkbox" ng-model="todo.completed">
+      <span ng-class="{done: todo.completed}">
+        {{todo.title}}
+      </span>
+    </li>
+  </ul>
+
+  <p>{{remaining()}} items left</p>
+</div>
+
+<script>
+app.controller('TodoCtrl', function($scope) {
+  $scope.todos = [];
+  $scope.newTodo = '';
+
+  $scope.addTodo = function() {
+    $scope.todos.push({ title: $scope.newTodo, completed: false });
+    $scope.newTodo = ''; // Auto-updates input!
+  };
+});
+</script>`,
+    solved: [
+      'Automatic UI sync (magical!)',
+      'Less boilerplate code',
+      'Declarative templates',
+    ],
+    created: [
+      'Hard to track what changed what',
+      'Performance issues (digest cycles)',
+      'Unpredictable update order',
+    ],
+    description: 'Two-way binding felt magical - change data, UI updates. But debugging was a nightmare.',
+  },
+  {
+    id: 'flux',
+    name: 'Flux Architecture',
+    years: '2014-2016',
+    color: '#3b82f6',
+    technologies: ['Flux', 'Dispatcher', 'Stores', 'Actions'],
+    code: `// Flux: Unidirectional data flow
+// Action -> Dispatcher -> Store -> View
+
+// Actions - describe what happened
+var TodoActions = {
+  addTodo: function(text) {
+    AppDispatcher.dispatch({
+      type: 'ADD_TODO',
+      text: text
+    });
+  }
+};
+
+// Store - holds state, handles actions
+var TodoStore = {
+  todos: [],
+
+  handleAction: function(action) {
+    switch (action.type) {
+      case 'ADD_TODO':
+        this.todos.push({ text: action.text, completed: false });
+        this.emit('change');
+        break;
+    }
+  }
+};
+
+// Register store with dispatcher
+AppDispatcher.register(TodoStore.handleAction.bind(TodoStore));
+
+// View subscribes to store
+TodoStore.on('change', function() {
+  renderTodos(TodoStore.todos);
+});`,
+    solved: [
+      'Predictable data flow',
+      'Actions are traceable',
+      'Easier debugging',
+    ],
+    created: [
+      'Lots of boilerplate',
+      'Multiple stores to coordinate',
+      'Verbose action creation',
+    ],
+    description: 'Facebook\'s Flux introduced unidirectional flow: Actions → Dispatcher → Store → View.',
+  },
+  {
+    id: 'redux',
+    name: 'Redux',
+    years: '2015-2020',
+    color: '#764abc',
+    technologies: ['Redux', 'Single store', 'Reducers', 'Middleware'],
+    code: `// Redux: Single store, pure reducers
+const initialState = { todos: [], filter: 'all' };
+
+// Reducer - pure function (state, action) => newState
+function todoReducer(state = initialState, action) {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return {
+        ...state,
+        todos: [...state.todos, {
+          id: Date.now(),
+          text: action.text,
+          completed: false
+        }]
+      };
+    case 'TOGGLE_TODO':
+      return {
+        ...state,
+        todos: state.todos.map(todo =>
+          todo.id === action.id
+            ? { ...todo, completed: !todo.completed }
+            : todo
+        )
+      };
+    default:
+      return state;
+  }
+}
+
+// Create store
+const store = createStore(todoReducer);
+
+// Dispatch actions
+store.dispatch({ type: 'ADD_TODO', text: 'Learn Redux' });
+
+// Subscribe to changes
+store.subscribe(() => console.log(store.getState()));`,
+    solved: [
+      'Single source of truth',
+      'Time-travel debugging',
+      'Predictable state updates',
+      'Great dev tools',
+    ],
+    created: [
+      'Massive boilerplate',
+      'Steep learning curve',
+      'Action/reducer ceremony',
+      'Overkill for simple apps',
+    ],
+    description: 'Redux simplified Flux to one store with pure reducer functions. Powerful but verbose.',
+  },
+  {
+    id: 'hooks-context',
+    name: 'Hooks + Context',
+    years: '2018-2021',
+    color: '#61dafb',
+    technologies: ['React Hooks', 'Context API', 'useReducer'],
+    code: `// React Context + Hooks - built-in state management
+const TodoContext = createContext();
+
+function TodoProvider({ children }) {
+  const [todos, dispatch] = useReducer(todoReducer, []);
+
+  return (
+    <TodoContext.Provider value={{ todos, dispatch }}>
+      {children}
+    </TodoContext.Provider>
+  );
+}
+
+// Custom hook for clean API
+function useTodos() {
+  const context = useContext(TodoContext);
+  if (!context) throw new Error('Must be in TodoProvider');
+  return context;
+}
+
+// Component usage - no Redux needed!
+function TodoList() {
+  const { todos, dispatch } = useTodos();
+
+  return (
+    <ul>
+      {todos.map(todo => (
+        <li key={todo.id} onClick={() =>
+          dispatch({ type: 'TOGGLE', id: todo.id })
+        }>
+          {todo.text}
+        </li>
+      ))}
+    </ul>
+  );
+}`,
+    solved: [
+      'No external library needed',
+      'Simpler mental model',
+      'Composable with hooks',
+    ],
+    created: [
+      'Context re-renders all consumers',
+      'Not optimized for frequent updates',
+      'Can lead to "provider hell"',
+    ],
+    description: 'React\'s built-in solution. Simple and sufficient for many apps, but has re-render issues.',
+  },
+  {
+    id: 'modern',
+    name: 'Modern Solutions',
+    years: '2020-Present',
+    color: '#10b981',
+    technologies: ['Zustand', 'Jotai', 'Signals', 'Fine-grained'],
+    code: `// Zustand - minimal, hook-based store
+import { create } from 'zustand';
+
+const useTodoStore = create((set) => ({
+  todos: [],
+
+  addTodo: (text) => set((state) => ({
+    todos: [...state.todos, { id: Date.now(), text, completed: false }]
+  })),
+
+  toggleTodo: (id) => set((state) => ({
+    todos: state.todos.map(todo =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    )
+  })),
+}));
+
+// Component - just use the hook!
+function TodoList() {
+  const todos = useTodoStore((state) => state.todos);
+  const toggleTodo = useTodoStore((state) => state.toggleTodo);
+
+  return todos.map(todo => (
+    <li key={todo.id} onClick={() => toggleTodo(todo.id)}>
+      {todo.text}
+    </li>
+  ));
+}
+
+// Only re-renders when selected state changes!
+// No providers, no boilerplate, just works.`,
+    solved: [
+      'Minimal boilerplate',
+      'Fine-grained reactivity',
+      'No provider wrapper needed',
+      'Great TypeScript support',
+    ],
+    created: [
+      'Many competing solutions',
+      'Ecosystem fragmentation',
+      'Choosing is hard',
+    ],
+    description: 'Modern libraries like Zustand offer simplicity with fine-grained updates. Less is more.',
+  },
+]
+
+export function StateEvolutionViz() {
+  const [activeEra, setActiveEra] = useState(0)
+  const era = eras[activeEra]
+
+  const handlePrev = () => {
+    if (activeEra > 0) setActiveEra(activeEra - 1)
+  }
+
+  const handleNext = () => {
+    if (activeEra < eras.length - 1) setActiveEra(activeEra + 1)
+  }
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.timeline}>
+        {eras.map((e, i) => (
+          <button
+            key={e.id}
+            className={`${styles.timelineNode} ${i === activeEra ? styles.active : ''} ${i < activeEra ? styles.past : ''}`}
+            onClick={() => setActiveEra(i)}
+            style={{ '--era-color': e.color } as React.CSSProperties}
+          >
+            <span className={styles.nodeYear}>{e.years.split('-')[0]}</span>
+            <span className={styles.nodeDot} />
+            <span className={styles.nodeLabel}>{e.name}</span>
+          </button>
+        ))}
+        <div className={styles.timelineLine} />
+        <motion.div
+          className={styles.timelineProgress}
+          initial={false}
+          animate={{ width: `${(activeEra / (eras.length - 1)) * 100}%` }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={era.id}
+          className={styles.eraHeader}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          style={{ '--era-color': era.color } as React.CSSProperties}
+        >
+          <div className={styles.eraTitle}>
+            <span className={styles.eraNumber}>{activeEra + 1}</span>
+            <h3>{era.name}</h3>
+            <span className={styles.eraYears}>{era.years}</span>
+          </div>
+          <p className={styles.eraDescription}>{era.description}</p>
+          <div className={styles.techTags}>
+            {era.technologies.map(tech => (
+              <span key={tech} className={styles.techTag}>{tech}</span>
+            ))}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`code-${era.id}`}
+          className={styles.codePanel}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <div className={styles.codePanelHeader}>
+            <span>Example Code</span>
+          </div>
+          <pre className={styles.code}>
+            <code>{era.code}</code>
+          </pre>
+        </motion.div>
+      </AnimatePresence>
+
+      <div className={styles.impactGrid}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`solved-${era.id}`}
+            className={styles.impactCard}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+          >
+            <div className={styles.impactHeader}>
+              <Check size={16} className={styles.solvedIcon} />
+              <span>Problems Solved</span>
+            </div>
+            <ul className={styles.impactList}>
+              {era.solved.map((item, i) => (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  {item}
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        </AnimatePresence>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`created-${era.id}`}
+            className={`${styles.impactCard} ${styles.createdCard}`}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+          >
+            <div className={styles.impactHeader}>
+              <AlertTriangle size={16} className={styles.createdIcon} />
+              <span>New Challenges</span>
+            </div>
+            <ul className={styles.impactList}>
+              {era.created.map((item, i) => (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  {item}
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {activeEra < eras.length - 1 && (
+        <div className={styles.nextHint}>
+          <ArrowRight size={14} />
+          <span>These challenges led to: <strong>{eras[activeEra + 1].name}</strong></span>
+        </div>
+      )}
+
+      <div className={styles.controls}>
+        <button
+          className={styles.btnSecondary}
+          onClick={handlePrev}
+          disabled={activeEra === 0}
+        >
+          Previous Era
+        </button>
+        <span className={styles.stepIndicator}>
+          {activeEra + 1} / {eras.length}
+        </span>
+        <button
+          className={styles.btnPrimary}
+          onClick={handleNext}
+          disabled={activeEra === eras.length - 1}
+        >
+          Next Era
+        </button>
+      </div>
+
+      <div className={styles.insight}>
+        <strong>Key Insight:</strong> The trend is toward simplicity. Modern solutions like Zustand prove you don&apos;t need complexity for predictable state.
+      </div>
+    </div>
+  )
+}

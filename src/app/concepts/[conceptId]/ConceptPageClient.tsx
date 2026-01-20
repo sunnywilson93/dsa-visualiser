@@ -2,6 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2 } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
@@ -9,62 +10,38 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ConceptIcon } from '@/components/Icons'
 import { getConceptById, getRelatedConcepts } from '@/data/concepts'
 
-// Visualization components - Beginner
-import { JSPhilosophyViz } from '@/components/Concepts/JSPhilosophyViz'
-import { VariablesViz } from '@/components/Concepts/VariablesViz'
-import { DataTypesViz } from '@/components/Concepts/DataTypesViz'
-import { OperatorsViz } from '@/components/Concepts/OperatorsViz'
-import { FunctionsViz } from '@/components/Concepts/FunctionsViz'
-import { ConditionalsViz } from '@/components/Concepts/ConditionalsViz'
-import { LoopsViz } from '@/components/Concepts/LoopsViz'
-import { ArraysBasicsViz } from '@/components/Concepts/ArraysBasicsViz'
-import { ObjectsBasicsViz } from '@/components/Concepts/ObjectsBasicsViz'
-// Visualization components - Intermediate/Advanced
-import { HoistingViz } from '@/components/Concepts/HoistingViz'
-import { TypeCoercionViz } from '@/components/Concepts/TypeCoercionViz'
-import { ClosuresViz } from '@/components/Concepts/ClosuresViz'
-import { ThisKeywordViz } from '@/components/Concepts/ThisKeywordViz'
-import { EventLoopViz } from '@/components/Concepts/EventLoopViz'
-import { PrototypesViz } from '@/components/Concepts/PrototypesViz'
-import { RecursionViz } from '@/components/Concepts/RecursionViz'
-import { MemoryModelViz } from '@/components/Concepts/MemoryModelViz'
-import { V8EngineViz } from '@/components/Concepts/V8EngineViz'
-import { NodeEventLoopViz } from '@/components/Concepts/NodeEventLoopViz'
-import { StreamsBuffersViz } from '@/components/Concepts/StreamsBuffersViz'
-import { CriticalRenderPathViz } from '@/components/Concepts/CriticalRenderPathViz'
-import { WebWorkersViz } from '@/components/Concepts/WebWorkersViz'
-import { WebEvolutionViz } from '@/components/Concepts/WebEvolutionViz'
-import { ModuleEvolutionViz } from '@/components/Concepts/ModuleEvolutionViz'
-
 import styles from './page.module.css'
 
+// Lazy load visualizations - each loads only when its concept page is visited
 const visualizations: Record<string, React.ComponentType> = {
   // Beginner
-  'js-philosophy': JSPhilosophyViz,
-  'variables': VariablesViz,
-  'data-types': DataTypesViz,
-  'operators': OperatorsViz,
-  'functions': FunctionsViz,
-  'conditionals': ConditionalsViz,
-  'loops': LoopsViz,
-  'arrays-basics': ArraysBasicsViz,
-  'objects-basics': ObjectsBasicsViz,
+  'js-philosophy': dynamic(() => import('@/components/Concepts/JSPhilosophyViz').then(m => m.JSPhilosophyViz)),
+  'variables': dynamic(() => import('@/components/Concepts/VariablesViz').then(m => m.VariablesViz)),
+  'data-types': dynamic(() => import('@/components/Concepts/DataTypesViz').then(m => m.DataTypesViz)),
+  'operators': dynamic(() => import('@/components/Concepts/OperatorsViz').then(m => m.OperatorsViz)),
+  'functions': dynamic(() => import('@/components/Concepts/FunctionsViz').then(m => m.FunctionsViz)),
+  'conditionals': dynamic(() => import('@/components/Concepts/ConditionalsViz').then(m => m.ConditionalsViz)),
+  'loops': dynamic(() => import('@/components/Concepts/LoopsViz').then(m => m.LoopsViz)),
+  'arrays-basics': dynamic(() => import('@/components/Concepts/ArraysBasicsViz').then(m => m.ArraysBasicsViz)),
+  'objects-basics': dynamic(() => import('@/components/Concepts/ObjectsBasicsViz').then(m => m.ObjectsBasicsViz)),
   // Intermediate/Advanced
-  'hoisting': HoistingViz,
-  'type-coercion': TypeCoercionViz,
-  'closures': ClosuresViz,
-  'this-keyword': ThisKeywordViz,
-  'event-loop': EventLoopViz,
-  'prototypes': PrototypesViz,
-  'recursion': RecursionViz,
-  'memory-model': MemoryModelViz,
-  'v8-engine': V8EngineViz,
-  'nodejs-event-loop': NodeEventLoopViz,
-  'streams-buffers': StreamsBuffersViz,
-  'critical-render-path': CriticalRenderPathViz,
-  'web-workers': WebWorkersViz,
-  'web-evolution': WebEvolutionViz,
-  'module-evolution': ModuleEvolutionViz,
+  'hoisting': dynamic(() => import('@/components/Concepts/HoistingViz').then(m => m.HoistingViz)),
+  'type-coercion': dynamic(() => import('@/components/Concepts/TypeCoercionViz').then(m => m.TypeCoercionViz)),
+  'closures': dynamic(() => import('@/components/Concepts/ClosuresViz').then(m => m.ClosuresViz)),
+  'this-keyword': dynamic(() => import('@/components/Concepts/ThisKeywordViz').then(m => m.ThisKeywordViz)),
+  'event-loop': dynamic(() => import('@/components/Concepts/EventLoopViz').then(m => m.EventLoopViz)),
+  'prototypes': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
+  'recursion': dynamic(() => import('@/components/Concepts/RecursionViz').then(m => m.RecursionViz)),
+  'memory-model': dynamic(() => import('@/components/Concepts/MemoryModelViz').then(m => m.MemoryModelViz)),
+  'v8-engine': dynamic(() => import('@/components/Concepts/V8EngineViz').then(m => m.V8EngineViz)),
+  'nodejs-event-loop': dynamic(() => import('@/components/Concepts/NodeEventLoopViz').then(m => m.NodeEventLoopViz)),
+  'streams-buffers': dynamic(() => import('@/components/Concepts/StreamsBuffersViz').then(m => m.StreamsBuffersViz)),
+  'critical-render-path': dynamic(() => import('@/components/Concepts/CriticalRenderPathViz').then(m => m.CriticalRenderPathViz)),
+  'web-workers': dynamic(() => import('@/components/Concepts/WebWorkersViz').then(m => m.WebWorkersViz)),
+  'web-evolution': dynamic(() => import('@/components/Concepts/WebEvolutionViz').then(m => m.WebEvolutionViz)),
+  'module-evolution': dynamic(() => import('@/components/Concepts/ModuleEvolutionViz').then(m => m.ModuleEvolutionViz)),
+  'async-evolution': dynamic(() => import('@/components/Concepts/AsyncEvolutionViz').then(m => m.AsyncEvolutionViz)),
+  'state-evolution': dynamic(() => import('@/components/Concepts/StateEvolutionViz').then(m => m.StateEvolutionViz)),
 }
 
 const difficultyColors = {
