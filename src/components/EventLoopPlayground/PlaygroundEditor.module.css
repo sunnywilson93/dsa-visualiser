@@ -1,0 +1,106 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background: var(--js-viz-surface);
+  border: 1px solid var(--js-viz-border);
+  border-radius: var(--js-viz-radius);
+  overflow: hidden;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--js-viz-border);
+}
+
+.title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--js-viz-text);
+  background: var(--js-viz-pill-bg);
+  border: 1px solid var(--js-viz-pill-border);
+  border-radius: 999px;
+}
+
+.analyzeBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.analyzeBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.analyzeBtn:active {
+  transform: translateY(0);
+}
+
+.editorWrapper {
+  flex: 1;
+  min-height: 0;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--js-viz-muted);
+  font-size: 0.8rem;
+}
+
+.errorPanel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(239, 68, 68, 0.1);
+  border-top: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  font-size: 0.75rem;
+}
+
+.errorIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+/* Monaco editor line decorations */
+.currentLine {
+  background: rgba(102, 126, 234, 0.2) !important;
+}
+
+.currentLineGlyph {
+  background: #667eea;
+  border-radius: 2px;
+  margin-left: 3px;
+}

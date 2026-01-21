@@ -1,0 +1,285 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+/* ============================================
+   MAIN VISUALIZATION LAYOUT
+   ============================================ */
+
+.vizContainer {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  grid-template-rows: auto auto auto;
+  gap: 0.75rem;
+  grid-template-areas:
+    "callstack webapis"
+    "eventloop taskqueue"
+    "microtask microtask";
+}
+
+/* Neon Box Base */
+.neonBox {
+  position: relative;
+  border-radius: 10px;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--neon-start), var(--neon-end));
+}
+
+.neonBoxInner {
+  background: #1a1a2e;
+  border-radius: 8px;
+  min-height: 100px;
+  padding: 0.6rem;
+  padding-top: 1.25rem;
+}
+
+.neonBoxHeader {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.25rem 0.75rem;
+  background: #4a4a5a;
+  border-radius: 0 0 6px 6px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* Call Stack */
+.callStackBox {
+  grid-area: callstack;
+  --neon-start: #f97316;
+  --neon-end: #fbbf24;
+}
+
+.callStackBox .neonBoxInner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-height: 140px;
+}
+
+.stackItem {
+  padding: 0.4rem 0.6rem;
+  background: rgba(102, 126, 234, 0.15);
+  border: 1px solid rgba(102, 126, 234, 0.4);
+  border-radius: 5px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  color: #a5b4fc;
+  text-align: center;
+}
+
+.emptyStack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  color: #555;
+  font-size: 0.7rem;
+}
+
+/* Web APIs */
+.webApisBox {
+  grid-area: webapis;
+  --neon-start: #a855f7;
+  --neon-end: #ec4899;
+}
+
+.webApisBox .neonBoxInner {
+  min-height: 140px;
+}
+
+.webApisGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  padding: 0.4rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+}
+
+.webApiItem {
+  padding: 0.35rem;
+  background: #2a2a3e;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.55rem;
+  color: #9ca3af;
+  text-align: center;
+}
+
+.webApiItem.active {
+  background: rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  color: #c4b5fd;
+}
+
+.webApiItem.highlight {
+  color: #10b981;
+}
+
+.manyMore {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #666;
+  font-size: 0.6rem;
+  padding: 0.2rem;
+}
+
+/* Event Loop Indicator */
+.eventLoopBox {
+  grid-area: eventloop;
+  --neon-start: #64748b;
+  --neon-end: #94a3b8;
+}
+
+.eventLoopBox .neonBoxInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+  gap: 0.4rem;
+}
+
+.eventLoopIcon {
+  color: #38bdf8;
+  animation: spin 3s linear infinite;
+}
+
+.eventLoopIcon.active {
+  animation: spin 1s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
+}
+
+.eventLoopIcon.idle {
+  animation: none;
+  color: #555;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Task Queue (Macrotasks) */
+.taskQueueBox {
+  grid-area: taskqueue;
+  --neon-start: #ec4899;
+  --neon-end: #f43f5e;
+}
+
+.taskQueueBox .neonBoxInner {
+  min-height: 80px;
+}
+
+.queueContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.macroItem {
+  padding: 0.4rem 0.6rem;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 5px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  color: #fcd34d;
+  text-align: center;
+}
+
+.emptyQueue {
+  color: #555;
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 0.75rem;
+}
+
+/* Microtask Queue */
+.microtaskBox {
+  grid-area: microtask;
+  --neon-start: #10b981;
+  --neon-end: #06b6d4;
+}
+
+.microtaskBox .neonBoxInner {
+  min-height: 60px;
+}
+
+.microItem {
+  padding: 0.4rem 0.6rem;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 5px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  color: #c4b5fd;
+  text-align: center;
+}
+
+/* Output Section */
+.outputSection {
+  background: var(--js-viz-surface);
+  border: 1px solid var(--js-viz-border);
+  border-radius: var(--js-viz-radius);
+  padding: 0.6rem;
+  flex-shrink: 0;
+}
+
+.outputHeader {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--js-viz-text);
+  background: var(--js-viz-pill-bg);
+  border: 1px solid var(--js-viz-pill-border);
+  border-radius: 999px;
+}
+
+.outputContent {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: #10b981;
+  min-height: 1.2rem;
+}
+
+.outputItem {
+  padding: 0.1rem 0;
+}
+
+.outputEmpty {
+  color: #555;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .vizContainer {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "callstack"
+      "webapis"
+      "eventloop"
+      "taskqueue"
+      "microtask";
+  }
+
+  .webApisGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

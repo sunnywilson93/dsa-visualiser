@@ -51,9 +51,14 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
           )}
         </div>
 
-        {/* Right: Global action (search) */}
-        <div className={styles.searchWrapper}>
-          <GlobalSearch />
+        {/* Right: Nav links + search */}
+        <div className={styles.rightSection}>
+          <Link href="/playground/event-loop" className={styles.navLink}>
+            Playground
+          </Link>
+          <div className={styles.searchWrapper}>
+            <GlobalSearch />
+          </div>
         </div>
       </div>
     </nav>
