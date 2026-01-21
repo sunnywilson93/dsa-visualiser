@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, Code, Search } from 'lucide-react'
+import { ChevronDown, Code, Search, X } from 'lucide-react'
 import { useExecutionStore } from '@/store'
 import { ConceptIcon } from '@/components/Icons'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
@@ -89,8 +89,8 @@ export function ExampleSelector() {
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.15 }}
           >
-            {/* Search */}
-            <div className={styles.searchContainer}>
+            {/* Search bar with filters */}
+            <div className={styles.searchBar}>
               <Search size={14} className={styles.searchIcon} />
               <input
                 type="text"
@@ -98,32 +98,42 @@ export function ExampleSelector() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className={styles.searchInput}
+                aria-label="Search problems"
               />
-            </div>
 
-            {/* Difficulty filter */}
-            <div className={styles.difficultyFilter}>
-              <button
-                className={`${styles.difficultyBtn} ${selectedDifficulty === 'all' ? styles.active : ''}`}
-                onClick={() => setSelectedDifficulty('all')}
-                title="All difficulties"
-              >
-                <span className={styles.filterDots}>
-                  <span className={styles.filterDot} style={{ background: 'var(--difficulty-1)' }} />
-                  <span className={styles.filterDot} style={{ background: 'var(--difficulty-2)' }} />
-                  <span className={styles.filterDot} style={{ background: 'var(--difficulty-3)' }} />
-                </span>
-              </button>
-              {(['easy', 'medium', 'hard'] as const).map(diff => (
+              <div className={styles.divider} />
+
+              <div className={styles.filterChips}>
+                {(['all', 'easy', 'medium', 'hard'] as const).map(diff => (
+                  <button
+                    key={diff}
+                    type="button"
+                    className={`${styles.chip} ${selectedDifficulty === diff ? styles.chipActive : ''}`}
+                    onClick={() => setSelectedDifficulty(diff)}
+                    data-difficulty={diff}
+                  >
+                    {diff === 'all' ? 'All' : diff.charAt(0).toUpperCase() + diff.slice(1)}
+                  </button>
+                ))}
+              </div>
+
+              {(searchQuery || selectedDifficulty !== 'all') && (
+                <span className={styles.resultCount}>{filteredExamples.length}</span>
+              )}
+
+              {(searchQuery || selectedDifficulty !== 'all') && (
                 <button
-                  key={diff}
-                  className={`${styles.difficultyBtn} ${styles[diff]} ${selectedDifficulty === diff ? styles.active : ''}`}
-                  onClick={() => setSelectedDifficulty(diff)}
-                  title={diff}
+                  type="button"
+                  className={styles.clearButton}
+                  onClick={() => {
+                    setSearchQuery('')
+                    setSelectedDifficulty('all')
+                  }}
+                  aria-label="Clear filters"
                 >
-                  <DifficultyIndicator level={diff} size="sm" />
+                  <X size={14} />
                 </button>
-              ))}
+              )}
             </div>
 
             {/* Categories */}

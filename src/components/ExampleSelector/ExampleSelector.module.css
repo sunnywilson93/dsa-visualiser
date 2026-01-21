@@ -73,27 +73,28 @@
   }
 }
 
-/* Search */
-.searchContainer {
-  position: relative;
-  padding: var(--space-sm);
+/* Search bar */
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
   border-bottom: 1px solid var(--border-primary);
+  background: var(--bg-tertiary);
 }
 
 .searchIcon {
-  position: absolute;
-  left: var(--space-md);
-  top: 50%;
-  transform: translateY(-50%);
   color: var(--text-muted);
+  flex-shrink: 0;
 }
 
 .searchInput {
-  width: 100%;
-  padding: var(--space-sm) var(--space-sm) var(--space-sm) 32px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-primary);
-  border-radius: var(--radius-md);
+  flex: 1;
+  min-width: 80px;
+  padding: var(--space-xs) 0;
+  background: transparent;
+  border: none;
+  outline: none;
   color: var(--text-primary);
   font-size: 13px;
 }
@@ -102,66 +103,87 @@
   color: var(--text-muted);
 }
 
-.searchInput:focus {
-  outline: none;
-  border-color: var(--accent-blue);
+.divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border-primary);
+  flex-shrink: 0;
 }
 
-/* Difficulty filter */
-.difficultyFilter {
-  display: flex;
-  gap: var(--space-xs);
-  padding: var(--space-sm);
-  border-bottom: 1px solid var(--border-primary);
-}
-
-.difficultyBtn {
-  flex: 1;
-  padding: 6px 8px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-primary);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.difficultyBtn:hover {
-  background: var(--bg-elevated);
-}
-
-.difficultyBtn.active {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.difficultyBtn.active.easy {
-  background: rgba(16, 185, 129, 0.15);
-  border-color: rgba(16, 185, 129, 0.3);
-}
-
-.difficultyBtn.active.medium {
-  background: rgba(245, 158, 11, 0.15);
-  border-color: rgba(245, 158, 11, 0.3);
-}
-
-.difficultyBtn.active.hard {
-  background: rgba(239, 68, 68, 0.15);
-  border-color: rgba(239, 68, 68, 0.3);
-}
-
-.filterDots {
+.filterChips {
   display: flex;
   align-items: center;
   gap: 2px;
+  flex-shrink: 0;
 }
 
-.filterDot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
+.chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: var(--font-medium);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.chip:hover {
+  background: var(--neon-purple-5);
+  color: var(--text-secondary);
+}
+
+.chip.chipActive {
+  background: var(--neon-purple-20);
+  color: var(--neon-purple-light);
+}
+
+.chip[data-difficulty="easy"].chipActive {
+  background: var(--difficulty-easy-bg);
+  color: var(--difficulty-easy);
+}
+
+.chip[data-difficulty="medium"].chipActive {
+  background: var(--difficulty-medium-bg);
+  color: var(--difficulty-medium);
+}
+
+.chip[data-difficulty="hard"].chipActive {
+  background: var(--difficulty-hard-bg);
+  color: var(--difficulty-hard);
+}
+
+.resultCount {
+  font-size: 10px;
+  font-weight: var(--font-medium);
+  color: var(--text-muted);
+  background: var(--neon-purple-10);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.clearButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.clearButton:hover {
+  color: var(--difficulty-hard);
+  background: var(--difficulty-hard-bg);
 }
 
 /* Categories */
@@ -297,12 +319,44 @@
     display: none;
   }
 
-  .searchContainer {
-    padding: var(--space-md);
+  .searchBar {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    padding: var(--space-sm);
   }
 
-  .difficultyFilter {
-    padding: var(--space-md);
+  .searchInput {
+    order: 1;
+    flex: 1 1 60%;
+    min-width: 100px;
+  }
+
+  .searchIcon {
+    order: 0;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .filterChips {
+    order: 3;
+    flex: 1 1 100%;
+    margin-top: var(--space-xs);
+    justify-content: flex-start;
+  }
+
+  .resultCount {
+    order: 4;
+  }
+
+  .clearButton {
+    order: 2;
+  }
+
+  .chip {
+    font-size: 10px;
+    padding: 3px 6px;
   }
 
   .categories {

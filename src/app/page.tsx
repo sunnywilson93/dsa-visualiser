@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { NavBar } from '@/components/NavBar'
-import { ExpandableGrid } from '@/components/ExpandableGrid'
+import { CategoryCarousel } from '@/components/CategoryCarousel'
 import { ConceptIcon } from '@/components/Icons'
+import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import { exampleCategories, getExamplesByCategory } from '@/data/examples'
 import { concepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
@@ -102,31 +103,43 @@ export default function HomePage() {
             </div>
           </div>
 
-          <ExpandableGrid
-            className={styles.buildGrid}
-            collapsedClassName={styles.buildGridCollapsed}
-            showAllText={`Show All (${jsCategories.length})`}
-          >
+          <CategoryCarousel>
             {jsCategories.map((category) => {
               const problems = getExamplesByCategory(category.id)
+              const easyCount = problems.filter(p => p.difficulty === 'easy').length
+              const mediumCount = problems.filter(p => p.difficulty === 'medium').length
+              const hardCount = problems.filter(p => p.difficulty === 'hard').length
               return (
                 <Link
                   key={category.id}
                   href={`/${category.id}`}
                   className={styles.buildCard}
                 >
-                  <span className={styles.buildIcon}>
-                    <ConceptIcon conceptId={category.id} size={24} />
-                  </span>
-                  <div className={styles.buildContent}>
+                  <div className={styles.buildCardInner}>
+                    <div className={styles.buildCardHeader}>
+                      <span className={styles.buildIcon}>
+                        <ConceptIcon conceptId={category.id} size={32} />
+                      </span>
+                      <DifficultyIndicator
+                        level={hardCount > 0 ? 'hard' : mediumCount > 0 ? 'medium' : 'easy'}
+                        size="md"
+                      />
+                    </div>
                     <h3 className={styles.buildTitle}>{category.name}</h3>
                     <p className={styles.buildDescription}>{category.description}</p>
+                    <div className={styles.buildCardFooter}>
+                      <span className={styles.buildStat}>{problems.length} problems</span>
+                      <span className={styles.buildStat}>
+                        {easyCount > 0 && `${easyCount} easy`}
+                        {mediumCount > 0 && ` · ${mediumCount} med`}
+                        {hardCount > 0 && ` · ${hardCount} hard`}
+                      </span>
+                    </div>
                   </div>
-                  <span className={styles.buildCount}>{problems.length}</span>
                 </Link>
               )
             })}
-          </ExpandableGrid>
+          </CategoryCarousel>
         </section>
 
         {/* Section 3: SOLVE - Data Structures & Algorithms */}

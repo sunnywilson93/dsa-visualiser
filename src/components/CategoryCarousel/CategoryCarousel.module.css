@@ -1,0 +1,143 @@
+.carouselContainer {
+  position: relative;
+}
+
+/* Navigation buttons */
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(15, 15, 26, 0.9);
+  color: var(--neon-purple-light);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+}
+
+.carouselContainer:hover .navButton {
+  opacity: 1;
+}
+
+.navButton:hover:not(:disabled) {
+  background: rgba(168, 85, 247, 0.6);
+  color: var(--text-bright);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.navButton:disabled {
+  opacity: 0 !important;
+  cursor: not-allowed;
+}
+
+.navLeft {
+  left: -12px;
+}
+
+.navRight {
+  right: -12px;
+}
+
+/* Scroll container */
+.scrollContainer {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 1rem 0.5rem 1.5rem;
+  margin: 0 -0.5rem;
+
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card wrapper - match ConceptCarousel sizing */
+.cardWrapper {
+  flex: 0 0 340px;
+  scroll-snap-align: start;
+  transition: transform var(--transition-slow), opacity var(--transition-slow);
+}
+
+.cardWrapper.active {
+  transform: scale(1.02);
+}
+
+.cardWrapper:not(.active) {
+  opacity: 0.75;
+}
+
+/* Allow hover effects to overflow */
+.cardWrapper > * {
+  transition: all var(--transition-normal);
+}
+
+/* Progress dots */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: 0.75rem;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: none;
+  background: var(--neon-purple-30);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  padding: 0;
+}
+
+.dot:hover {
+  background: var(--neon-purple-50);
+}
+
+.dotActive {
+  background: var(--gradient-neon);
+  width: 18px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 6px var(--neon-purple-50);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cardWrapper {
+    flex: 0 0 300px;
+  }
+
+  .navButton {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardWrapper {
+    flex: 0 0 calc(100vw - 2rem);
+  }
+
+  .navButton {
+    display: none;
+  }
+
+  .scrollContainer {
+    padding: 0.5rem 0 1rem;
+    margin: 0;
+  }
+}
