@@ -108,7 +108,8 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
             key={concept.id}
             className={`${styles.cardWrapper} ${index === activeIndex ? styles.active : ''}`}
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
             transition={{ delay: index * 0.05 }}
           >
             <Link href={`${basePath}/${concept.id}`} className={styles.card}>

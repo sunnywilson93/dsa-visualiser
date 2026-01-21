@@ -26,7 +26,8 @@ export default function ConceptsPage() {
         <div className={styles.grid}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: 0 }}
           >
             <Link href="/concepts/js" className={styles.card}>
@@ -51,7 +52,8 @@ export default function ConceptsPage() {
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.05 }}
           >
             <Link href="/concepts/dsa" className={styles.card}>
