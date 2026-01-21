@@ -17,6 +17,7 @@ export interface Concept {
   examples: ConceptExample[]
   commonMistakes?: string[]
   interviewTips?: string[]
+  relatedProblems?: string[]  // IDs of problems from examples.ts that this concept helps solve
 }
 
 export const concepts: Concept[] = [
@@ -3059,6 +3060,20 @@ const data = await retry(
       'Write a promisify function',
       'Implement retry with exponential backoff',
     ],
+    relatedProblems: [
+      'promise-all',
+      'promise-race',
+      'promisify',
+      'promise-allsettled',
+      'promise-any',
+      'promise-finally',
+      'promise-retry',
+      'promise-timeout',
+      'promise-throttle',
+      'promise-sequence',
+      'create-promise',
+      'promise-chain',
+    ],
   },
   {
     id: 'function-composition',
@@ -3229,6 +3244,14 @@ await app.handle({ path: '/api' });`,
       'Implement pipe() and compose() - know the difference',
       'Explain when to use currying vs partial application',
       'Write a middleware system from scratch',
+    ],
+    relatedProblems: [
+      'implement-curry',
+      'implement-compose',
+      'implement-pipe',
+      'implement-curry-placeholder',
+      'implement-partial',
+      'implement-once',
     ],
   },
   {
@@ -3429,6 +3452,10 @@ function SearchComponent() {
       'Implement throttle from scratch',
       'Explain when to use debounce vs throttle with examples',
       'Know how leading and trailing edge options work',
+    ],
+    relatedProblems: [
+      'implement-debounce',
+      'implement-throttle',
     ],
   },
   {
@@ -3646,6 +3673,10 @@ const fib = memoize((n) => {
       'Know how useMemo and useCallback work in React',
       'Discuss cache invalidation strategies',
     ],
+    relatedProblems: [
+      'implement-memoize',
+      'implement-memoize-one',
+    ],
   },
 ]
 
@@ -3711,4 +3742,9 @@ export function getRelatedConcepts(id: string): Concept[] {
   return relatedIds
     .map(relatedId => concepts.find(c => c.id === relatedId))
     .filter((c): c is Concept => c !== undefined)
+}
+
+export function getRelatedProblems(id: string): string[] {
+  const concept = getConceptById(id)
+  return concept?.relatedProblems || []
 }

@@ -4,11 +4,12 @@ import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2 } from 'lucide-react'
+import { ArrowLeft, Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2, Hammer } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ConceptIcon } from '@/components/Icons'
-import { getConceptById, getRelatedConcepts } from '@/data/concepts'
+import { getConceptById, getRelatedConcepts, getRelatedProblems } from '@/data/concepts'
+import { codeExamples } from '@/data/examples'
 
 import styles from './page.module.css'
 
@@ -203,6 +204,43 @@ export default function ConceptPageClient(): JSX.Element {
             </ul>
           </section>
         )}
+
+        {/* Practice Problems - Link to problems this concept helps solve */}
+        {(() => {
+          const problemIds = getRelatedProblems(concept.id)
+          const problems = problemIds
+            .map(id => codeExamples.find(e => e.id === id))
+            .filter((p): p is typeof codeExamples[0] => p !== undefined)
+          if (problems.length === 0) return null
+          return (
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>
+                <Hammer size={20} className={styles.sectionIconSvg} />
+                Practice Problems
+              </h2>
+              <p className={styles.sectionSubtitle}>
+                Apply this concept by solving these {problems.length} problems
+              </p>
+              <div className={styles.problemsGrid}>
+                {problems.map((problem) => (
+                  <Link
+                    key={problem.id}
+                    href={`/${problem.category}/${problem.id}`}
+                    className={styles.problemCard}
+                  >
+                    <div className={styles.problemHeader}>
+                      <h3 className={styles.problemTitle}>{problem.name}</h3>
+                      <span className={`${styles.problemDifficulty} ${styles[problem.difficulty]}`}>
+                        {problem.difficulty}
+                      </span>
+                    </div>
+                    <p className={styles.problemDesc}>{problem.description}</p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )
+        })()}
 
         {/* Related Concepts - Internal Linking for SEO */}
         {(() => {

@@ -236,6 +236,9 @@ export class Interpreter {
         return this.executeVariableDeclaration(node)
       case 'FunctionDeclaration':
         return this.executeFunctionDeclaration(node)
+      case 'FunctionExpression':
+      case 'ArrowFunctionExpression':
+        return this.executeFunctionExpression(node)
       case 'ExpressionStatement':
         return this.executeExpressionStatement(node)
       case 'ReturnStatement':
@@ -310,6 +313,36 @@ export class Interpreter {
       this.recordStep(node, 'declaration', `Function ${node.id.name} declared`)
     }
     return createUndefined()
+  }
+
+  private executeFunctionExpression(node: ASTNode): RuntimeValue {
+    // Create a function value for function expressions and arrow functions
+    const name = node.id?.name || '<anonymous>'
+    const params = (node.params || []).map((p: ASTNode) => {
+      // Handle different parameter types
+      if (p.type === 'Identifier') return p.name!
+      if (p.type === 'RestElement' && p.argument?.name) return p.argument.name
+      return ''
+    }).filter(Boolean)
+
+    // For arrow functions with expression body, wrap in a return statement
+    let body = node.body as ASTNode
+    if (node.type === 'ArrowFunctionExpression' && body.type !== 'BlockStatement') {
+      // Expression body - we'll handle it during execution
+      body = {
+        type: 'BlockStatement',
+        body: [{
+          type: 'ReturnStatement',
+          argument: body,
+          start: body.start,
+          end: body.end,
+        }],
+        start: body.start,
+        end: body.end,
+      } as ASTNode
+    }
+
+    return createFunction(name, params, body, [...this.state.scopes])
   }
 
   private executeExpressionStatement(node: ASTNode): RuntimeValue {
@@ -571,6 +604,10 @@ export class Interpreter {
       `Call ${func.name}(${args.map((a: RuntimeValue) => formatValue(a)).join(', ')})`
     )
 
+    // Save current scopes and restore closure scopes
+    const savedScopes = this.state.scopes
+    this.state.scopes = [...func.closure]
+
     // Create function scope with parameters
     this.pushScope('function', func.name)
     for (const [name, value] of Object.entries(frame.params)) {
@@ -595,8 +632,9 @@ export class Interpreter {
       result = this.executeNode(body)
     }
 
-    // Pop function scope
+    // Pop function scope and restore original scopes
     this.popScope()
+    this.state.scopes = savedScopes
 
     // Pop stack frame
     this.state.callStack.pop()

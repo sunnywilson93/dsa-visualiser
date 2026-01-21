@@ -258,6 +258,81 @@
   color: var(--difficulty-1);
 }
 
+/* Section subtitle */
+.sectionSubtitle {
+  font-size: var(--text-base);
+  color: var(--gray-500);
+  margin: -0.5rem 0 1rem;
+}
+
+/* Practice Problems */
+.problemsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+.problemCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.problemCard:hover {
+  background: rgba(102, 126, 234, 0.1);
+  border-color: rgba(102, 126, 234, 0.3);
+  transform: translateY(-2px);
+}
+
+.problemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.problemTitle {
+  font-size: 0.95rem;
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
+  margin: 0;
+}
+
+.problemDifficulty {
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  color: white;
+}
+
+.problemDifficulty.easy {
+  background: #10b981;
+}
+
+.problemDifficulty.medium {
+  background: #f59e0b;
+}
+
+.problemDifficulty.hard {
+  background: #ef4444;
+}
+
+.problemDesc {
+  font-size: var(--text-sm);
+  color: var(--gray-500);
+  margin: 0;
+  line-height: 1.4;
+}
+
 /* Related Concepts */
 .relatedConcepts {
   display: grid;
