@@ -1,12 +1,15 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Search, Clock, BookOpen, X } from 'lucide-react'
+import { Clock, BookOpen } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { ConceptIcon } from '@/components/Icons'
-import { ProblemCard } from '@/components/ProblemCard'
+import {
+  ProblemListingLayout,
+  type CategoryInfo,
+} from '@/components/ProblemListingLayout'
 import {
   exampleCategories,
   dsaSubcategories,
@@ -15,9 +18,6 @@ import {
 } from '@/data/examples'
 import styles from './page.module.css'
 
-type Difficulty = 'all' | 'easy' | 'medium' | 'hard'
-
-// Map subcategories to related DSA concepts
 const subcategoryToConcept: Record<string, { id: string; name: string }> = {
   'bit-manipulation': { id: 'binary-system', name: 'Binary & Bit Manipulation' },
   'arrays-hashing': { id: 'hash-tables', name: 'Hash Tables' },
@@ -28,7 +28,6 @@ const subcategoryToConcept: Record<string, { id: string; name: string }> = {
   'graphs': { id: 'graphs', name: 'Graphs' },
 }
 
-// Build category lookup maps
 const dsaSubcategoryMap = new Map(dsaSubcategories.map((s) => [s.id, s]))
 const categoryMap = new Map(exampleCategories.map((c) => [c.id, c]))
 
@@ -36,8 +35,6 @@ export default function CategoryPageClient() {
   const params = useParams()
   const router = useRouter()
   const categoryId = params.categoryId as string
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('all')
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null)
 
   const category = exampleCategories.find((c) => c.id === categoryId)
@@ -48,39 +45,38 @@ export default function CategoryPageClient() {
     return getExamplesByCategory(categoryId)
   }, [categoryId])
 
-  // Problems for selected subcategory (before search/difficulty filters)
   const subcategoryProblems = useMemo(() => {
     if (!selectedSubcategory) return allProblems
     return allProblems.filter((p) => p.category === selectedSubcategory)
   }, [allProblems, selectedSubcategory])
 
-  const filteredProblems = useMemo(() => {
-    let problems = subcategoryProblems
-
-    // Filter by difficulty
-    if (selectedDifficulty !== 'all') {
-      problems = problems.filter((p) => p.difficulty === selectedDifficulty)
-    }
-
-    // Filter by search
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase()
-      problems = problems.filter(
-        (p) =>
-          p.name.toLowerCase().includes(query) ||
-          p.description.toLowerCase().includes(query)
-      )
-    }
-
-    return problems
-  }, [subcategoryProblems, selectedDifficulty, searchQuery])
-
-  // Check if subcategory has no problems at all (Coming Soon)
   const isComingSoon = selectedSubcategory && subcategoryProblems.length === 0
 
-  const handleSelectProblem = (problem: CodeExample) => {
-    router.push(`/${categoryId}/${problem.id}`)
-  }
+  const getCategoryForProblem = useCallback((problem: CodeExample): CategoryInfo => {
+    const subcat = dsaSubcategoryMap.get(problem.category)
+    const mainCat = categoryMap.get(problem.category)
+    if (subcat) return { id: subcat.id, name: subcat.name }
+    if (mainCat) return { id: mainCat.id, name: mainCat.name }
+    return { id: problem.category, name: problem.category }
+  }, [])
+
+  const handleProblemClick = useCallback(
+    (problem: CodeExample) => {
+      router.push(`/${categoryId}/${problem.id}`)
+    },
+    [categoryId, router]
+  )
+
+  const handleCategoryClick = useCallback(
+    (_problem: CodeExample, category: CategoryInfo) => {
+      if (isDsa) {
+        setSelectedSubcategory((current) =>
+          current === category.id ? null : category.id
+        )
+      }
+    },
+    [isDsa]
+  )
 
   if (!category) {
     return (
@@ -96,88 +92,26 @@ export default function CategoryPageClient() {
     )
   }
 
-  return (
-    <div className={styles.container}>
-      <NavBar breadcrumbs={[{ label: category.name }]} />
-
-      <header className={styles.header}>
-        <span className={styles.icon}>
-          <ConceptIcon conceptId={category.id} size={32} />
-        </span>
-        <div>
-          <h1 className={styles.title}>{category.name}</h1>
-          <p className={styles.subtitle}>{category.description}</p>
-        </div>
-      </header>
-
-      <div className={styles.searchBar}>
-        <Search size={18} className={styles.searchIcon} />
-        <input
-          type="text"
-          placeholder="Search problems..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className={styles.searchInput}
-          aria-label="Search problems"
-        />
-
-        <div className={styles.divider} />
-
-        <div className={styles.filterChips}>
-          {(['all', 'easy', 'medium', 'hard'] as const).map((diff) => (
-            <button
-              key={diff}
-              type="button"
-              className={`${styles.chip} ${selectedDifficulty === diff ? styles.chipActive : ''}`}
-              onClick={() => setSelectedDifficulty(diff)}
-              data-difficulty={diff}
-            >
-              {diff === 'all' ? 'All' : diff.charAt(0).toUpperCase() + diff.slice(1)}
-            </button>
-          ))}
-        </div>
-
-        {(searchQuery || selectedDifficulty !== 'all') && (
-          <span className={styles.resultCount}>{filteredProblems.length}</span>
-        )}
-
-        {(searchQuery || selectedDifficulty !== 'all') && (
+  const renderDsaSubcategories = isDsa ? (
+    <>
+      <div className={styles.subcategories}>
+        <button
+          className={`${styles.subcatBtn} ${!selectedSubcategory ? styles.active : ''}`}
+          onClick={() => setSelectedSubcategory(null)}
+        >
+          All Topics
+        </button>
+        {dsaSubcategories.map((sub) => (
           <button
-            type="button"
-            className={styles.clearButton}
-            onClick={() => {
-              setSearchQuery('')
-              setSelectedDifficulty('all')
-            }}
-            aria-label="Clear filters"
+            key={sub.id}
+            className={`${styles.subcatBtn} ${selectedSubcategory === sub.id ? styles.active : ''}`}
+            onClick={() => setSelectedSubcategory(sub.id)}
           >
-            <X size={16} />
+            <ConceptIcon conceptId={sub.id} size={16} />
+            <span>{sub.name}</span>
           </button>
-        )}
+        ))}
       </div>
-
-      {isDsa && (
-        <div className={styles.subcategories}>
-          <button
-            className={`${styles.subcatBtn} ${!selectedSubcategory ? styles.active : ''}`}
-            onClick={() => setSelectedSubcategory(null)}
-          >
-            All Topics
-          </button>
-          {dsaSubcategories.map((sub) => (
-            <button
-              key={sub.id}
-              className={`${styles.subcatBtn} ${
-                selectedSubcategory === sub.id ? styles.active : ''
-              }`}
-              onClick={() => setSelectedSubcategory(sub.id)}
-            >
-              <ConceptIcon conceptId={sub.id} size={16} />
-              <span>{sub.name}</span>
-            </button>
-          ))}
-        </div>
-      )}
 
       {selectedSubcategory && subcategoryToConcept[selectedSubcategory] && (
         <div className={styles.conceptLinkWrapper}>
@@ -191,58 +125,39 @@ export default function CategoryPageClient() {
           </Link>
         </div>
       )}
+    </>
+  ) : null
 
-      <main className={styles.main}>
-        {!isComingSoon && filteredProblems.length > 0 && (
-          <div className={styles.problemCount}>
-            {filteredProblems.length} problem{filteredProblems.length !== 1 ? 's' : ''}
-          </div>
-        )}
-
-        {isComingSoon ? (
-          <div className={styles.comingSoon}>
-            <div className={styles.comingSoonIcon}>
-              <Clock size={48} strokeWidth={1.5} />
-            </div>
-            <h3 className={styles.comingSoonTitle}>Coming Soon</h3>
-            <p className={styles.comingSoonText}>
-              We&apos;re working on adding {dsaSubcategories.find(s => s.id === selectedSubcategory)?.name || 'these'} problems.
-              <br />
-              Check back soon!
-            </p>
-          </div>
-        ) : filteredProblems.length === 0 ? (
-          <div className={styles.empty}>No problems match your filters</div>
-        ) : (
-          <div className={styles.problemGrid}>
-            {filteredProblems.map((problem) => {
-              const subcat = dsaSubcategoryMap.get(problem.category)
-              const mainCat = categoryMap.get(problem.category)
-              const problemCategory = subcat
-                ? { id: subcat.id, name: subcat.name }
-                : mainCat
-                  ? { id: mainCat.id, name: mainCat.name }
-                  : { id: problem.category, name: problem.category }
-
-              return (
-                <ProblemCard
-                  key={problem.id}
-                  problem={problem}
-                  onClick={() => handleSelectProblem(problem)}
-                  category={problemCategory}
-                  onCategoryClick={
-                    isDsa && subcat
-                      ? () => setSelectedSubcategory(
-                          selectedSubcategory === subcat.id ? null : subcat.id
-                        )
-                      : undefined
-                  }
-                />
-              )
-            })}
-          </div>
-        )}
-      </main>
+  const comingSoonState = isComingSoon ? (
+    <div className={styles.comingSoon}>
+      <div className={styles.comingSoonIcon}>
+        <Clock size={48} strokeWidth={1.5} />
+      </div>
+      <h3 className={styles.comingSoonTitle}>Coming Soon</h3>
+      <p className={styles.comingSoonText}>
+        We&apos;re working on adding{' '}
+        {dsaSubcategories.find((s) => s.id === selectedSubcategory)?.name || 'these'}{' '}
+        problems.
+        <br />
+        Check back soon!
+      </p>
     </div>
+  ) : undefined
+
+  return (
+    <ProblemListingLayout
+      config={{
+        title: category.name,
+        subtitle: category.description,
+        iconId: category.id,
+        breadcrumbs: [{ label: category.name }],
+      }}
+      problems={subcategoryProblems}
+      getCategoryForProblem={getCategoryForProblem}
+      onProblemClick={handleProblemClick}
+      onCategoryClick={isDsa ? handleCategoryClick : undefined}
+      renderBeforeGrid={renderDsaSubcategories}
+      emptyState={comingSoonState}
+    />
   )
 }

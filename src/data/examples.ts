@@ -75,9 +75,15 @@ export const getProblemCountByCategory = (categoryId: string): number => {
   return getExamplesByCategory(categoryId).length
 }
 
-// Get all JavaScript examples (non-DSA problems)
+// Get all JavaScript examples (non-DSA problems), deduplicated by ID
 export const getAllJsExamples = (): CodeExample[] => {
-  return codeExamples.filter(e => !isDsaExample(e))
+  const jsExamples = codeExamples.filter(e => !isDsaExample(e))
+  const seen = new Set<string>()
+  return jsExamples.filter(e => {
+    if (seen.has(e.id)) return false
+    seen.add(e.id)
+    return true
+  })
 }
 
 export const codeExamples: CodeExample[] = [
