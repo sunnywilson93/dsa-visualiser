@@ -3,7 +3,7 @@ import { NavBar } from '@/components/NavBar'
 import { CategoryCarousel } from '@/components/CategoryCarousel'
 import { ConceptIcon } from '@/components/Icons'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
-import { exampleCategories, getExamplesByCategory } from '@/data/examples'
+import { exampleCategories, getExamplesByCategory, getAllJsExamples } from '@/data/examples'
 import { concepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
 import styles from './page.module.css'
@@ -12,6 +12,7 @@ import styles from './page.module.css'
 const jsCategories = exampleCategories.filter(c => c.id !== 'dsa')
 const dsaCategory = exampleCategories.find(c => c.id === 'dsa')!
 const dsaProblems = getExamplesByCategory('dsa')
+const allJsProblems = getAllJsExamples()
 
 export default function HomePage() {
   return (
@@ -101,6 +102,9 @@ export default function HomePage() {
                 What interviewers ask you to <strong>implement</strong>
               </p>
             </div>
+            <Link href="/js-problems" className={styles.viewAllLink}>
+              All {allJsProblems.length} Problems →
+            </Link>
           </div>
 
           <CategoryCarousel>

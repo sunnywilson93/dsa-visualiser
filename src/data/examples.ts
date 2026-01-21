@@ -75,6 +75,11 @@ export const getProblemCountByCategory = (categoryId: string): number => {
   return getExamplesByCategory(categoryId).length
 }
 
+// Get all JavaScript examples (non-DSA problems)
+export const getAllJsExamples = (): CodeExample[] => {
+  return codeExamples.filter(e => !isDsaExample(e))
+}
+
 export const codeExamples: CodeExample[] = [
   // ==================== JAVASCRIPT CORE ====================
   {

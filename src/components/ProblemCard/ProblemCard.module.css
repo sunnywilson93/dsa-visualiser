@@ -1,0 +1,111 @@
+.card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--neon-purple-50);
+  outline-offset: 2px;
+}
+
+.link {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  text-decoration: none;
+  color: inherit;
+  z-index: 1;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--neon-purple-50);
+  outline-offset: 2px;
+}
+
+.content {
+  position: relative;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin-bottom: 0.5rem;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: 0.5rem;
+}
+
+.category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--neon-purple-light);
+  background: var(--neon-purple-10);
+  border: 1px solid var(--neon-purple-20);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-md);
+}
+
+.categoryButton {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  appearance: none;
+  font: inherit;
+}
+
+.categoryButton:hover {
+  background: var(--neon-purple-20);
+  border-color: var(--neon-purple-30);
+}
+
+.name {
+  font-weight: var(--font-medium);
+  color: var(--color-white);
+  font-size: 0.95rem;
+}
+
+.description {
+  color: var(--gray-500);
+  font-size: var(--text-base);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .card {
+    padding: 0.875rem;
+  }
+
+  .name {
+    font-size: var(--text-base);
+  }
+
+  .description {
+    font-size: var(--text-sm);
+  }
+}

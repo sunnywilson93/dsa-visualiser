@@ -37,14 +37,14 @@
 
 /* Sections */
 .section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 
 .sectionHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .sectionTitle {
@@ -160,14 +160,14 @@
 .conceptCategoryGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
+  gap: var(--space-lg);
 }
 
 .conceptCategoryCard {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  padding: var(--space-xl);
+  padding: 1.5rem;
   background: var(--surface-card);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-2xl);
@@ -282,7 +282,7 @@
 .buildCardInner {
   background: var(--bg-page-secondary);
   border-radius: 14px;
-  padding: var(--space-xl);
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
@@ -337,7 +337,7 @@
   background: var(--gradient-neon-subtle);
   border: 1px solid var(--neon-purple-30);
   border-radius: var(--radius-2xl);
-  padding: var(--space-xl);
+  padding: 1.5rem;
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-normal);
@@ -501,6 +501,15 @@
     padding: 1.25rem;
   }
 
+  .buildCardInner {
+    padding: 1.25rem;
+    min-height: 180px;
+  }
+
+  .dsaBanner {
+    padding: 1.25rem;
+  }
+
   .conceptCategoryTitle {
     font-size: 1.15rem;
   }
@@ -526,21 +535,12 @@
     font-size: var(--text-base);
   }
 
-  .buildCardInner {
-    padding: 1.25rem;
-    min-height: 180px;
-  }
-
   .buildTitle {
     font-size: 1.1rem;
   }
 
   .buildDescription {
     font-size: var(--text-base);
-  }
-
-  .dsaBanner {
-    padding: var(--space-lg);
   }
 
   .dsaTitle {

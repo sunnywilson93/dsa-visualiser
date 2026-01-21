@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Search, Clock, BookOpen, X } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { ConceptIcon } from '@/components/Icons'
-import { DifficultyIndicator } from '@/components/DifficultyIndicator'
+import { ProblemCard } from '@/components/ProblemCard'
 import {
   exampleCategories,
   dsaSubcategories,
@@ -27,6 +27,10 @@ const subcategoryToConcept: Record<string, { id: string; name: string }> = {
   'heap': { id: 'heaps', name: 'Heaps' },
   'graphs': { id: 'graphs', name: 'Graphs' },
 }
+
+// Build category lookup maps
+const dsaSubcategoryMap = new Map(dsaSubcategories.map((s) => [s.id, s]))
+const categoryMap = new Map(exampleCategories.map((c) => [c.id, c]))
 
 export default function CategoryPageClient() {
   const params = useParams()
@@ -211,19 +215,31 @@ export default function CategoryPageClient() {
           <div className={styles.empty}>No problems match your filters</div>
         ) : (
           <div className={styles.problemGrid}>
-            {filteredProblems.map((problem) => (
-              <button
-                key={problem.id}
-                className={styles.problemCard}
-                onClick={() => handleSelectProblem(problem)}
-              >
-                <div className={styles.problemHeader}>
-                  <span className={styles.problemName}>{problem.name}</span>
-                  <DifficultyIndicator level={problem.difficulty} size="sm" />
-                </div>
-                <p className={styles.problemDesc}>{problem.description}</p>
-              </button>
-            ))}
+            {filteredProblems.map((problem) => {
+              const subcat = dsaSubcategoryMap.get(problem.category)
+              const mainCat = categoryMap.get(problem.category)
+              const problemCategory = subcat
+                ? { id: subcat.id, name: subcat.name }
+                : mainCat
+                  ? { id: mainCat.id, name: mainCat.name }
+                  : { id: problem.category, name: problem.category }
+
+              return (
+                <ProblemCard
+                  key={problem.id}
+                  problem={problem}
+                  onClick={() => handleSelectProblem(problem)}
+                  category={problemCategory}
+                  onCategoryClick={
+                    isDsa && subcat
+                      ? () => setSelectedSubcategory(
+                          selectedSubcategory === subcat.id ? null : subcat.id
+                        )
+                      : undefined
+                  }
+                />
+              )
+            })}
           </div>
         )}
       </main>
