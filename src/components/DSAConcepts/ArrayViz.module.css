@@ -7,25 +7,25 @@
 /* Example selector */
 .exampleSelector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   flex-wrap: wrap;
 }
 
 .exampleBtn {
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: #888;
+  border-radius: var(--radius-md);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .exampleBtn:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .exampleBtn.active {
@@ -37,8 +37,8 @@
 /* Memory visualization */
 .memorySection {
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  padding: 1rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
 }
 
 .memoryHeader {
@@ -47,29 +47,29 @@
   align-items: center;
   margin-bottom: 1rem;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--space-sm);
 }
 
 .memoryLabel {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #888;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .formula {
   font-family: 'Fira Code', monospace;
-  font-size: 0.8rem;
+  font-size: var(--text-base);
   color: #60a5fa;
   background: rgba(96, 165, 250, 0.1);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
 }
 
 .memoryBlocks {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   overflow-x: auto;
   padding-bottom: 0.5rem;
 }
@@ -79,7 +79,7 @@
   width: 70px;
   background: rgba(0, 0, 0, 0.3);
   border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all 0.2s;
 }
@@ -91,8 +91,8 @@
 .blockAddress {
   padding: 0.35rem;
   font-family: 'Fira Code', monospace;
-  font-size: 0.6rem;
-  color: #888;
+  font-size: var(--text-2xs);
+  color: var(--gray-500);
   text-align: center;
   background: rgba(255, 255, 255, 0.03);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -101,22 +101,22 @@
 .blockValue {
   padding: 0.75rem 0.5rem;
   font-family: 'Fira Code', monospace;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #fff;
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-white);
   text-align: center;
 }
 
 .gap {
-  font-size: 0.7rem;
-  color: #ef4444;
-  font-weight: 600;
+  font-size: var(--text-xs);
+  color: var(--accent-red);
+  font-weight: var(--font-semibold);
 }
 
 .blockIndex {
   padding: 0.35rem;
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   color: #667eea;
   text-align: center;
   background: rgba(102, 126, 234, 0.1);
@@ -131,9 +131,9 @@
 
 .pointer {
   position: absolute;
-  font-size: 0.7rem;
-  color: #f59e0b;
-  font-weight: 600;
+  font-size: var(--text-xs);
+  color: var(--difficulty-2);
+  font-weight: var(--font-semibold);
   text-align: center;
   transform: translateX(-50%);
 }
@@ -142,50 +142,50 @@
 .output {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
   background: rgba(0, 0, 0, 0.3);
   border: 2px solid #10b981;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
 }
 
 .outputLabel {
-  font-size: 0.8rem;
-  color: #888;
+  font-size: var(--text-base);
+  color: var(--gray-500);
 }
 
 .outputValue {
   font-family: 'Fira Code', monospace;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #10b981;
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--difficulty-1);
 }
 
 /* Step description */
 .description {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border-left: 3px solid #667eea;
 }
 
 .actionBadge {
   flex-shrink: 0;
-  font-size: 0.65rem;
-  font-weight: 600;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   color: white;
 }
 
 .stepText {
-  font-size: 0.9rem;
-  color: #ccc;
+  font-size: var(--text-base);
+  color: var(--gray-300);
   line-height: 1.5;
 }
 
@@ -194,23 +194,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: var(--space-md);
 }
 
 .stepCounter {
-  font-size: 0.8rem;
-  color: #666;
+  font-size: var(--text-base);
+  color: var(--gray-700);
   min-width: 50px;
   text-align: center;
 }
 
 .btnPrimary {
   padding: 0.6rem 1.25rem;
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   color: white;
   cursor: pointer;
   transition: opacity 0.2s;
@@ -222,19 +222,19 @@
 }
 
 .btnSecondary {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.8rem;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-base);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: #888;
+  border-radius: var(--radius-md);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btnSecondary:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .btnSecondary:disabled {
@@ -244,12 +244,12 @@
 
 /* Insight */
 .insight {
-  padding: 0.75rem 1rem;
+  padding: var(--space-md) var(--space-lg);
   background: rgba(102, 126, 234, 0.1);
   border: 1px solid rgba(102, 126, 234, 0.2);
-  border-radius: 8px;
-  font-size: 0.85rem;
-  color: #ccc;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  color: var(--gray-300);
   line-height: 1.5;
 }
 
@@ -264,8 +264,8 @@
   }
 
   .blockValue {
-    font-size: 1rem;
-    padding: 0.5rem;
+    font-size: var(--text-md);
+    padding: var(--space-sm);
   }
 
   .blockAddress {

@@ -17,7 +17,7 @@
 
 .varName {
   color: var(--accent-cyan);
-  font-weight: 600;
+  font-weight: var(--font-semibold);
 }
 
 .length {
@@ -58,7 +58,7 @@
 .pointer {
   font-family: var(--font-mono);
   font-size: 9px;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   padding: 1px 4px;
   border-radius: 2px;
   white-space: nowrap;
@@ -109,7 +109,7 @@
   padding: 2px 4px;
   font-family: var(--font-mono);
   font-size: 10px;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   color: var(--text-primary);
   background: var(--bg-secondary);
   border: 1px solid var(--border-primary);

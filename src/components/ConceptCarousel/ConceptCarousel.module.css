@@ -49,7 +49,7 @@
 /* Scroll container */
 .scrollContainer {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-lg);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -84,7 +84,7 @@
 .card {
   position: relative;
   background: linear-gradient(135deg, var(--neon-purple-15), var(--neon-pink-15));
-  border-radius: 16px;
+  border-radius: var(--radius-2xl);
   padding: 2px;
   text-decoration: none;
   color: inherit;
@@ -97,7 +97,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 16px;
+  border-radius: var(--radius-2xl);
   padding: 2px;
   background: linear-gradient(135deg, var(--neon-purple-40), rgba(236, 72, 153, 0.4));
   -webkit-mask:
@@ -125,10 +125,10 @@
 .cardInner {
   background: var(--bg-page-secondary);
   border-radius: 14px;
-  padding: 1.5rem;
+  padding: var(--space-xl);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-md);
   height: 100%;
   min-height: 200px;
 }
@@ -140,20 +140,20 @@
 }
 
 .cardIcon {
-  font-size: 2rem;
+  font-size: var(--text-3xl);
   line-height: 1;
   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
 }
 
 .cardTitle {
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   color: var(--text-bright);
   margin: 0.25rem 0 0;
 }
 
 .cardDescription {
-  font-size: 0.85rem;
+  font-size: var(--text-base);
   color: var(--text-secondary);
   margin: 0;
   line-height: 1.5;
@@ -162,23 +162,23 @@
 
 .cardFooter {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-lg);
   margin-top: auto;
   padding-top: 0.75rem;
   border-top: 1px solid var(--border-card);
 }
 
 .stat {
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   color: var(--neon-purple-light);
-  font-weight: 500;
+  font-weight: var(--font-medium);
 }
 
 /* Progress dots */
 .dots {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   margin-top: 1rem;
 }
 
@@ -235,7 +235,7 @@
   }
 
   .cardDescription {
-    font-size: 0.8rem;
+    font-size: var(--text-base);
   }
 
   .dots {

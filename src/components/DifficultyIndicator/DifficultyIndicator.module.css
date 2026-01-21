@@ -48,8 +48,8 @@
 }
 
 .label {
-  font-size: 0.65rem;
-  font-weight: 700;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-bold);
   letter-spacing: 0.5px;
 }
 
@@ -58,5 +58,5 @@
 }
 
 .lg .label {
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
 }

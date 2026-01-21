@@ -1,18 +1,18 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-lg);
 }
 
 /* Level Selector */
 .levelSelector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   justify-content: center;
   margin-bottom: 0.25rem;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.35rem;
 }
 
@@ -21,25 +21,25 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.4rem 0.8rem;
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  color: #888;
+  border-radius: var(--radius-full);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .levelBtn:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #ccc;
+  color: var(--gray-300);
 }
 
 .levelBtn.activeLevel {
   background: rgba(130, 100, 255, 0.18);
   border-color: rgba(130, 100, 255, 0.7);
-  color: #f5f7ff;
+  color: var(--text-bright);
   box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
 }
 
@@ -52,36 +52,36 @@
 /* Example Selector */
 .exampleSelector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.35rem;
 }
 
 .exampleBtn {
   padding: 0.4rem 0.8rem;
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  color: #888;
+  border-radius: var(--radius-full);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .exampleBtn:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #ccc;
+  color: var(--gray-300);
 }
 
 .exampleBtn.active {
   background: rgba(130, 100, 255, 0.18);
   border-color: rgba(130, 100, 255, 0.7);
-  color: #f5f7ff;
+  color: var(--text-bright);
   box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
 }
 
@@ -89,53 +89,53 @@
 .propSelector {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .propLabel {
-  font-size: 0.75rem;
-  color: #888;
+  font-size: var(--text-sm);
+  color: var(--gray-500);
 }
 
 .propBtn {
   padding: 0.4rem 0.7rem;
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  color: #888;
+  border-radius: var(--radius-full);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .propBtn:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #ccc;
+  color: var(--gray-300);
 }
 
 .propBtn.active {
   background: rgba(130, 100, 255, 0.18);
   border-color: rgba(130, 100, 255, 0.7);
-  color: #f5f7ff;
+  color: var(--text-bright);
   box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
 }
 
 .resetBtn {
   padding: 0.35rem 0.6rem;
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  color: #666;
+  border-radius: var(--radius-full);
+  color: var(--gray-700);
   cursor: pointer;
 }
 
 .resetBtn:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: #888;
+  color: var(--gray-500);
 }
 
 /* ============================================
@@ -143,16 +143,16 @@
    ============================================ */
 .neonBox {
   position: relative;
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   padding: 3px;
   background: linear-gradient(135deg, var(--neon-start), var(--neon-end));
 }
 
 .neonBoxInner {
-  background: #1a1a2e;
-  border-radius: 10px;
+  background: var(--bg-page-secondary);
+  border-radius: var(--radius-lg);
   min-height: 100px;
-  padding: 0.75rem;
+  padding: var(--space-md);
   padding-top: 1.5rem;
 }
 
@@ -164,24 +164,24 @@
   padding: 0.35rem 1rem;
   background: #4a4a5a;
   border-radius: 0 0 8px 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
   white-space: nowrap;
   z-index: 1;
 }
 
 /* Heap container - Neon Box Purple/Pink */
 .heapBox {
-  --neon-start: #a855f7;
-  --neon-end: #ec4899;
+  --neon-start: var(--neon-purple);
+  --neon-end: var(--neon-pink);
 }
 
 .heap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--space-xs);
 }
 
 /* Heap objects */
@@ -190,7 +190,7 @@
   max-width: 280px;
   background: rgba(0, 0, 0, 0.3);
   border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all 0.2s;
   position: relative;
@@ -206,27 +206,27 @@
 
 .objectHeader {
   padding: 0.35rem 0.5rem;
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: #000;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-black);
   text-align: center;
 }
 
 .objectContent {
-  padding: 0.5rem;
+  padding: var(--space-sm);
 }
 
 .nullValue {
   text-align: center;
-  font-size: 0.7rem;
-  color: #666;
+  font-size: var(--text-xs);
+  color: var(--gray-700);
   font-style: italic;
 }
 
 .propsSection {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--space-xs);
   margin-bottom: 0.4rem;
 }
 
@@ -235,9 +235,9 @@
   justify-content: space-between;
   padding: 0.2rem 0.4rem;
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   font-family: 'Fira Code', monospace;
-  font-size: 0.6rem;
+  font-size: var(--text-2xs);
   transition: background 0.2s;
 }
 
@@ -247,11 +247,11 @@
 }
 
 .propName {
-  color: #888;
+  color: var(--gray-500);
 }
 
 .propValue {
-  color: #10b981;
+  color: var(--difficulty-1);
 }
 
 .protoRef {
@@ -267,17 +267,17 @@
   top: -8px;
   right: 8px;
   padding: 0.15rem 0.4rem;
-  background: #10b981;
-  border-radius: 4px;
+  background: var(--difficulty-1);
+  border-radius: var(--radius-sm);
   font-size: 0.55rem;
-  font-weight: 700;
-  color: #000;
+  font-weight: var(--font-bold);
+  color: var(--color-black);
 }
 
 /* Arrow */
 .arrow {
   text-align: center;
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   padding: 0.15rem 0;
   transition: color 0.2s;
 }
@@ -287,9 +287,9 @@
   padding: 0.6rem 0.75rem;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  font-size: 0.8rem;
-  color: #ccc;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  color: var(--gray-300);
   text-align: center;
 }
 
@@ -303,9 +303,9 @@
   display: inline-block;
   padding: 0.15rem 0.4rem;
   background: rgba(102, 126, 234, 0.3);
-  border-radius: 4px;
-  font-size: 0.6rem;
-  font-weight: 600;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
   color: #a5b4fc;
   margin-right: 0.5rem;
 }
@@ -313,17 +313,17 @@
 /* Controls */
 .controls {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   justify-content: center;
 }
 
 .btnPrimary {
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   color: white;
   cursor: pointer;
 }
@@ -335,17 +335,17 @@
 
 /* Insight */
 .insight {
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-sm) var(--space-md);
   background: rgba(245, 158, 11, 0.08);
   border: 1px solid rgba(245, 158, 11, 0.2);
-  border-radius: 8px;
-  font-size: 0.7rem;
-  color: #888;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-xs);
+  color: var(--gray-500);
   text-align: center;
 }
 
 .insight strong {
-  color: #f59e0b;
+  color: var(--difficulty-2);
 }
 
 /* Responsive */

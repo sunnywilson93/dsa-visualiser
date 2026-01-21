@@ -1,18 +1,18 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-lg);
 }
 
 /* Level Selector */
 .levelSelector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   justify-content: center;
   margin-bottom: 0.25rem;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.35rem;
 }
 
@@ -21,25 +21,25 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.4rem 0.8rem;
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  color: #888;
+  border-radius: var(--radius-full);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .levelBtn:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #ccc;
+  color: var(--gray-300);
 }
 
 .levelBtn.activeLevel {
   background: rgba(130, 100, 255, 0.18);
   border-color: rgba(130, 100, 255, 0.7);
-  color: #f5f7ff;
+  color: var(--text-bright);
   box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
 }
 
@@ -48,36 +48,36 @@
 /* Example Selector */
 .exampleSelector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.35rem;
 }
 
 .exampleBtn {
   padding: 0.4rem 0.8rem;
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  color: #888;
+  border-radius: var(--radius-full);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .exampleBtn:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #ccc;
+  color: var(--gray-300);
 }
 
 .exampleBtn.active {
   background: rgba(130, 100, 255, 0.18);
   border-color: rgba(130, 100, 255, 0.7);
-  color: #f5f7ff;
+  color: var(--text-bright);
   box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
 }
 
@@ -86,16 +86,16 @@
    ============================================ */
 .neonBox {
   position: relative;
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   padding: 3px;
   background: linear-gradient(135deg, var(--neon-start), var(--neon-end));
 }
 
 .neonBoxInner {
-  background: #1a1a2e;
-  border-radius: 10px;
+  background: var(--bg-page-secondary);
+  border-radius: var(--radius-lg);
   min-height: 60px;
-  padding: 0.75rem;
+  padding: var(--space-md);
   padding-top: 1.5rem;
 }
 
@@ -107,9 +107,9 @@
   padding: 0.35rem 1rem;
   background: #4a4a5a;
   border-radius: 0 0 8px 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
   white-space: nowrap;
   z-index: 1;
 }
@@ -118,7 +118,7 @@
 .codePanel {
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
@@ -126,20 +126,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #888;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--gray-500);
   background: rgba(255, 255, 255, 0.05);
 }
 
 .backpressureBadge {
   padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  font-size: 0.6rem;
-  font-weight: 600;
-  color: #fff;
-  background: #ef4444;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
+  background: var(--accent-red);
   animation: pulse 1s infinite;
 }
 
@@ -162,8 +162,8 @@
 }
 
 .codeLine.activeLine { background: rgba(102, 126, 234, 0.2); }
-.lineNum { width: 1.5rem; color: #555; font-family: 'Fira Code', monospace; font-size: 0.6rem; }
-.lineCode { font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #ccc; }
+.lineNum { width: 1.5rem; color: var(--gray-800); font-family: 'Fira Code', monospace; font-size: var(--text-2xs); }
+.lineCode { font-family: 'Fira Code', monospace; font-size: var(--text-2xs); color: var(--gray-300); }
 .activeLine .lineCode { color: #a5b4fc; }
 
 /* Streams - Neon Box */
@@ -174,7 +174,7 @@
 
 .streamsContainer {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
@@ -185,7 +185,7 @@
   min-width: 100px;
   max-width: 150px;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   border: 2px solid rgba(255, 255, 255, 0.1);
   position: relative;
@@ -199,9 +199,9 @@
 
 .streamHeader {
   padding: 0.3rem 0.5rem;
-  font-size: 0.6rem;
-  font-weight: 600;
-  color: #ccc;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  color: var(--gray-300);
   background: rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-between;
@@ -209,7 +209,7 @@
 
 .streamType {
   font-size: 0.5rem;
-  color: #888;
+  color: var(--gray-500);
   font-weight: 400;
 }
 
@@ -218,13 +218,13 @@
   min-height: 50px;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
+  gap: var(--space-xs);
 }
 
 .chunk {
   padding: 0.2rem 0.4rem;
   background: rgba(59, 130, 246, 0.2);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   font-family: 'Fira Code', monospace;
   font-size: 0.55rem;
   color: #93c5fd;
@@ -234,16 +234,16 @@
   position: absolute;
   right: 4px;
   bottom: 4px;
-  color: #10b981;
-  font-size: 0.7rem;
+  color: var(--difficulty-1);
+  font-size: var(--text-xs);
 }
 
 .pausedIndicator {
   position: absolute;
   right: 4px;
   bottom: 4px;
-  color: #ef4444;
-  font-size: 0.7rem;
+  color: var(--accent-red);
+  font-size: var(--text-xs);
 }
 
 /* Buffer - Neon Box */
@@ -253,8 +253,8 @@
 }
 
 .bufferHeader {
-  font-size: 0.65rem;
-  color: #888;
+  font-size: var(--text-2xs);
+  color: var(--gray-500);
   margin-bottom: 0.4rem;
   text-align: center;
 }
@@ -262,7 +262,7 @@
 .bufferBar {
   height: 8px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
   margin-bottom: 0.4rem;
 }
@@ -279,7 +279,7 @@
 
 .bufferContent {
   display: flex;
-  gap: 0.25rem;
+  gap: var(--space-xs);
   flex-wrap: wrap;
 }
 
@@ -289,40 +289,40 @@
   border-radius: 3px;
   font-family: 'Fira Code', monospace;
   font-size: 0.55rem;
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
 }
 
 /* Output - Neon Box */
 .outputBox {
-  --neon-start: #10b981;
+  --neon-start: var(--difficulty-1);
   --neon-end: #06b6d4;
 }
 
 .outputBox .neonBoxInner {
   min-height: 50px;
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   align-items: center;
 }
 
 .output {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   align-items: center;
   flex-wrap: wrap;
 }
 
-.outputLabel { color: #888; font-size: 0.65rem; }
-.outputItem { font-family: 'Fira Code', monospace; font-size: 0.7rem; color: #10b981; }
+.outputLabel { color: var(--gray-500); font-size: var(--text-2xs); }
+.outputItem { font-family: 'Fira Code', monospace; font-size: var(--text-xs); color: var(--difficulty-1); }
 
 /* Description */
 .description {
   padding: 0.6rem 0.75rem;
   background: rgba(102, 126, 234, 0.1);
   border: 1px solid rgba(102, 126, 234, 0.2);
-  border-radius: 8px;
-  font-size: 0.8rem;
-  color: #ccc;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  color: var(--gray-300);
   text-align: center;
 }
 
@@ -330,23 +330,23 @@
   display: inline-block;
   padding: 0.15rem 0.4rem;
   background: rgba(102, 126, 234, 0.3);
-  border-radius: 4px;
-  font-size: 0.6rem;
-  font-weight: 600;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
   color: #a5b4fc;
   margin-right: 0.5rem;
 }
 
 /* Controls */
-.controls { display: flex; gap: 0.5rem; justify-content: center; }
+.controls { display: flex; gap: var(--space-sm); justify-content: center; }
 
 .btnPrimary {
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   color: white;
   cursor: pointer;
 }
@@ -354,26 +354,26 @@
 .btnPrimary:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .btnSecondary {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.7rem;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-xs);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: #888;
+  border-radius: var(--radius-md);
+  color: var(--gray-500);
   cursor: pointer;
 }
 
-.btnSecondary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.btnSecondary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.1); color: var(--color-white); }
 .btnSecondary:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* Insight */
 .insight {
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-sm) var(--space-md);
   background: rgba(139, 92, 246, 0.08);
   border: 1px solid rgba(139, 92, 246, 0.2);
-  border-radius: 8px;
-  font-size: 0.7rem;
-  color: #888;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-xs);
+  color: var(--gray-500);
   text-align: center;
 }
 

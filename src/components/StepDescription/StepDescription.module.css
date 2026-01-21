@@ -1,14 +1,14 @@
 .container {
-  padding: 0.75rem;
+  padding: var(--space-md);
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .idle {
   text-align: center;
-  color: #666;
-  font-size: 0.8rem;
+  color: var(--gray-700);
+  font-size: var(--text-base);
 }
 
 .idle kbd {
@@ -16,22 +16,22 @@
   padding: 0.15rem 0.4rem;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: #888;
+  font-size: var(--text-xs);
+  color: var(--gray-500);
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-sm);
 }
 
 .badges {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   flex-wrap: wrap;
 }
 
@@ -39,34 +39,34 @@
   padding: 0.2rem 0.5rem;
   background: rgba(102, 126, 234, 0.2);
   border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 4px;
-  font-size: 0.65rem;
-  font-weight: 600;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
   color: #a5b4fc;
 }
 
 .typeBadge {
   padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: #000;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-black);
 }
 
 .lineBadge {
   padding: 0.2rem 0.5rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  font-size: 0.65rem;
-  font-weight: 500;
-  color: #666;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-medium);
+  color: var(--gray-700);
   font-family: var(--font-mono);
 }
 
 .description {
-  font-size: 0.85rem;
-  color: #ccc;
+  font-size: var(--text-base);
+  color: var(--gray-300);
   line-height: 1.4;
 }
 

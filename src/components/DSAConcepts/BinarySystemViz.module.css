@@ -6,25 +6,25 @@
 
 .exampleSelector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   flex-wrap: wrap;
 }
 
 .exampleBtn {
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: #888;
+  border-radius: var(--radius-md);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .exampleBtn:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .exampleBtn.active {
@@ -37,55 +37,55 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--space-lg);
   flex-wrap: wrap;
 }
 
 .stepCount {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #888;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .stepTitle {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
+  font-size: var(--text-md);
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
 }
 
 .visualizationPanel {
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  padding: 1rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
 }
 
 .description {
-  padding: 0.75rem 1rem;
+  padding: var(--space-md) var(--space-lg);
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border-left: 3px solid #667eea;
 }
 
 .stepText {
-  font-size: 0.9rem;
-  color: #ccc;
+  font-size: var(--text-base);
+  color: var(--gray-300);
   line-height: 1.5;
 }
 
 .insightBox {
   background: rgba(102, 126, 234, 0.12);
   border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   padding: 0.9rem 1rem;
 }
 
 .insightLabel {
   display: inline-block;
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: #a5b4fc;
@@ -94,7 +94,7 @@
 
 .insightText {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: var(--text-base);
   color: #d1d5db;
   line-height: 1.5;
 }
@@ -103,24 +103,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: var(--space-md);
   flex-wrap: wrap;
 }
 
 .stepCounter {
-  font-size: 0.8rem;
-  color: #666;
+  font-size: var(--text-base);
+  color: var(--gray-700);
   min-width: 60px;
   text-align: center;
 }
 
 .btnPrimary {
   padding: 0.6rem 1.25rem;
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   color: white;
   cursor: pointer;
   transition: opacity 0.2s;
@@ -132,12 +132,12 @@
 }
 
 .btnSecondary {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.8rem;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-base);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: #888;
+  border-radius: var(--radius-md);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }

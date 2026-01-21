@@ -7,25 +7,25 @@
 /* Example selector */
 .exampleSelector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   flex-wrap: wrap;
 }
 
 .exampleBtn {
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: #888;
+  border-radius: var(--radius-md);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .exampleBtn:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .exampleBtn.active {
@@ -44,23 +44,23 @@
 
 .listContainer {
   background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  padding: 1rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
 }
 
 .listHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1rem;
+  gap: var(--space-lg);
   flex-wrap: wrap;
   margin-bottom: 1rem;
 }
 
 .listLabel {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #888;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -76,10 +76,10 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.2rem 0.55rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.3);
-  font-size: 0.65rem;
+  font-size: var(--text-2xs);
   color: #aaa;
 }
 
@@ -90,14 +90,14 @@
 }
 
 .pointerName {
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
 
 .pointerValue {
-  color: #fff;
-  font-weight: 600;
+  color: var(--color-white);
+  font-weight: var(--font-semibold);
 }
 
 .listRow {
@@ -105,10 +105,10 @@
   align-items: center;
   gap: 0.6rem;
   flex-wrap: wrap;
-  padding: 0.75rem;
+  padding: var(--space-md);
   background: rgba(0, 0, 0, 0.3);
   border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   min-height: 160px;
 }
 
@@ -127,7 +127,7 @@
 
 .pointerTags {
   display: flex;
-  gap: 0.25rem;
+  gap: var(--space-xs);
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -136,7 +136,7 @@
   font-size: 0.55rem;
   padding: 0.1rem 0.35rem;
   border: 1px solid;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -145,7 +145,7 @@
   display: flex;
   align-items: stretch;
   border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   background: rgba(0, 0, 0, 0.3);
   min-width: 140px;
   overflow: hidden;
@@ -160,8 +160,8 @@
   padding: 0.6rem 0.9rem;
   font-family: 'Fira Code', monospace;
   font-size: 1.2rem;
-  font-weight: 700;
-  color: #fff;
+  font-weight: var(--font-bold);
+  color: var(--color-white);
   text-align: center;
 }
 
@@ -187,7 +187,7 @@
 
 .nextValue {
   font-family: 'Fira Code', monospace;
-  font-size: 0.85rem;
+  font-size: var(--text-base);
   color: #e2e8f0;
 }
 
@@ -209,10 +209,10 @@
 }
 
 .nullTerminator {
-  font-size: 0.7rem;
-  color: #666;
+  font-size: var(--text-xs);
+  color: var(--gray-700);
   border: 1px dashed rgba(255, 255, 255, 0.2);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.2rem 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.4px;
@@ -220,14 +220,14 @@
 
 .detachedSection {
   margin-top: 1rem;
-  padding: 0.75rem;
+  padding: var(--space-md);
   background: rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border: 1px dashed rgba(255, 255, 255, 0.1);
 }
 
 .detachedLabel {
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   color: #777;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -237,21 +237,21 @@
 .detachedRow {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-md);
 }
 
 /* Output section */
 .outputSection {
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  padding: 1rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
   min-width: 120px;
 }
 
 .outputLabel {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #888;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 0.5rem;
@@ -266,40 +266,40 @@
 
 .outputValue {
   font-family: 'Fira Code', monospace;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
 }
 
 .outputEmpty {
   color: #444;
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
 }
 
 /* Step description */
 .description {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border-left: 3px solid #667eea;
 }
 
 .actionBadge {
   flex-shrink: 0;
-  font-size: 0.65rem;
-  font-weight: 600;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   color: white;
 }
 
 .stepText {
-  font-size: 0.9rem;
-  color: #ccc;
+  font-size: var(--text-base);
+  color: var(--gray-300);
   line-height: 1.5;
 }
 
@@ -308,23 +308,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: var(--space-md);
 }
 
 .stepCounter {
-  font-size: 0.8rem;
-  color: #666;
+  font-size: var(--text-base);
+  color: var(--gray-700);
   min-width: 50px;
   text-align: center;
 }
 
 .btnPrimary {
   padding: 0.6rem 1.25rem;
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   color: white;
   cursor: pointer;
   transition: opacity 0.2s;
@@ -336,19 +336,19 @@
 }
 
 .btnSecondary {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.8rem;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-base);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: #888;
+  border-radius: var(--radius-md);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btnSecondary:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .btnSecondary:disabled {
@@ -358,12 +358,12 @@
 
 /* Insight */
 .insight {
-  padding: 0.75rem 1rem;
+  padding: var(--space-md) var(--space-lg);
   background: rgba(102, 126, 234, 0.1);
   border: 1px solid rgba(102, 126, 234, 0.2);
-  border-radius: 8px;
-  font-size: 0.85rem;
-  color: #ccc;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  color: var(--gray-300);
   line-height: 1.5;
 }
 
@@ -386,7 +386,7 @@
   }
 
   .nodeValue {
-    font-size: 1rem;
+    font-size: var(--text-md);
   }
 
   .pointerLegend {

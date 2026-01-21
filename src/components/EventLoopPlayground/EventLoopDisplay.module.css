@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-lg);
   height: 100%;
 }
 
@@ -13,7 +13,7 @@
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   grid-template-rows: auto auto auto;
-  gap: 0.75rem;
+  gap: var(--space-md);
   grid-template-areas:
     "callstack webapis"
     "eventloop taskqueue"
@@ -23,14 +23,14 @@
 /* Neon Box Base */
 .neonBox {
   position: relative;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   padding: 2px;
   background: linear-gradient(135deg, var(--neon-start), var(--neon-end));
 }
 
 .neonBoxInner {
-  background: #1a1a2e;
-  border-radius: 8px;
+  background: var(--bg-page-secondary);
+  border-radius: var(--radius-lg);
   min-height: 100px;
   padding: 0.6rem;
   padding-top: 1.25rem;
@@ -44,9 +44,9 @@
   padding: 0.25rem 0.75rem;
   background: #4a4a5a;
   border-radius: 0 0 6px 6px;
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: #fff;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
   white-space: nowrap;
   z-index: 1;
 }
@@ -71,7 +71,7 @@
   border: 1px solid rgba(102, 126, 234, 0.4);
   border-radius: 5px;
   font-family: 'Fira Code', monospace;
-  font-size: 0.6rem;
+  font-size: var(--text-2xs);
   color: #a5b4fc;
   text-align: center;
 }
@@ -81,15 +81,15 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  color: #555;
-  font-size: 0.7rem;
+  color: var(--gray-800);
+  font-size: var(--text-xs);
 }
 
 /* Web APIs */
 .webApisBox {
   grid-area: webapis;
-  --neon-start: #a855f7;
-  --neon-end: #ec4899;
+  --neon-start: var(--neon-purple);
+  --neon-end: var(--neon-pink);
 }
 
 .webApisBox .neonBoxInner {
@@ -103,34 +103,34 @@
   padding: 0.4rem;
   background: rgba(0, 0, 0, 0.3);
   border: 1px dashed rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
 }
 
 .webApiItem {
   padding: 0.35rem;
   background: #2a2a3e;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   font-family: 'Fira Code', monospace;
   font-size: 0.55rem;
-  color: #9ca3af;
+  color: var(--gray-400);
   text-align: center;
 }
 
 .webApiItem.active {
   background: rgba(168, 85, 247, 0.2);
   border: 1px solid rgba(168, 85, 247, 0.5);
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
 }
 
 .webApiItem.highlight {
-  color: #10b981;
+  color: var(--difficulty-1);
 }
 
 .manyMore {
   grid-column: 1 / -1;
   text-align: center;
-  color: #666;
-  font-size: 0.6rem;
+  color: var(--gray-700);
+  font-size: var(--text-2xs);
   padding: 0.2rem;
 }
 
@@ -162,7 +162,7 @@
 
 .eventLoopIcon.idle {
   animation: none;
-  color: #555;
+  color: var(--gray-800);
 }
 
 @keyframes spin {
@@ -173,7 +173,7 @@
 /* Task Queue (Macrotasks) */
 .taskQueueBox {
   grid-area: taskqueue;
-  --neon-start: #ec4899;
+  --neon-start: var(--neon-pink);
   --neon-end: #f43f5e;
 }
 
@@ -193,22 +193,22 @@
   border: 1px solid rgba(245, 158, 11, 0.4);
   border-radius: 5px;
   font-family: 'Fira Code', monospace;
-  font-size: 0.6rem;
+  font-size: var(--text-2xs);
   color: #fcd34d;
   text-align: center;
 }
 
 .emptyQueue {
-  color: #555;
-  font-size: 0.7rem;
+  color: var(--gray-800);
+  font-size: var(--text-xs);
   text-align: center;
-  padding: 0.75rem;
+  padding: var(--space-md);
 }
 
 /* Microtask Queue */
 .microtaskBox {
   grid-area: microtask;
-  --neon-start: #10b981;
+  --neon-start: var(--difficulty-1);
   --neon-end: #06b6d4;
 }
 
@@ -222,8 +222,8 @@
   border: 1px solid rgba(139, 92, 246, 0.4);
   border-radius: 5px;
   font-family: 'Fira Code', monospace;
-  font-size: 0.6rem;
-  color: #c4b5fd;
+  font-size: var(--text-2xs);
+  color: var(--neon-purple-light);
   text-align: center;
 }
 
@@ -243,19 +243,19 @@
   padding: 0.25rem 0.6rem;
   margin-bottom: 0.4rem;
   font-size: 0.55rem;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--js-viz-text);
   background: var(--js-viz-pill-bg);
   border: 1px solid var(--js-viz-pill-border);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
 }
 
 .outputContent {
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
-  color: #10b981;
+  font-size: var(--text-xs);
+  color: var(--difficulty-1);
   min-height: 1.2rem;
 }
 
@@ -264,7 +264,7 @@
 }
 
 .outputEmpty {
-  color: #555;
+  color: var(--gray-800);
 }
 
 /* Responsive */

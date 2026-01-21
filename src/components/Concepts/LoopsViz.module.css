@@ -1,12 +1,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-lg);
 }
 
 .loopSelector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -15,25 +15,25 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.5rem 1rem;
+  padding: var(--space-sm) var(--space-lg);
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
   background: rgba(255, 255, 255, 0.04);
   border: 2px solid transparent;
-  border-radius: 8px;
-  color: #888;
+  border-radius: var(--radius-lg);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .loopBtn:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #ccc;
+  color: var(--gray-300);
 }
 
 .loopBtn.active {
-  color: #fff;
+  color: var(--color-white);
 }
 
 .loopDot {
@@ -46,7 +46,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
-  gap: 1rem;
+  gap: var(--space-lg);
   grid-template-areas:
     "code viz"
     "output output";
@@ -56,7 +56,7 @@
   grid-area: code;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
@@ -64,7 +64,7 @@
   grid-area: viz;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
@@ -72,24 +72,24 @@
   grid-area: output;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
 .panelHeader {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #888;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--gray-500);
   background: rgba(255, 255, 255, 0.05);
 }
 
 .code {
   margin: 0;
-  padding: 0.75rem;
+  padding: var(--space-md);
   font-family: 'Fira Code', monospace;
-  font-size: 0.65rem;
-  color: #ccc;
+  font-size: var(--text-2xs);
+  color: var(--gray-300);
   white-space: pre;
   overflow-x: auto;
   min-height: 120px;
@@ -97,8 +97,8 @@
 
 .itemsRow {
   display: flex;
-  gap: 0.5rem;
-  padding: 0.75rem;
+  gap: var(--space-sm);
+  padding: var(--space-md);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -107,11 +107,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.5rem 0.75rem;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
   background: rgba(0, 0, 0, 0.3);
   border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   min-width: 70px;
   transition: all 0.2s;
 }
@@ -122,52 +122,52 @@
 
 .itemIndex {
   font-family: 'Fira Code', monospace;
-  font-size: 0.6rem;
-  color: #666;
+  font-size: var(--text-2xs);
+  color: var(--gray-700);
 }
 
 .itemKey {
   font-family: 'Fira Code', monospace;
-  font-size: 0.65rem;
+  font-size: var(--text-2xs);
   color: #a5b4fc;
 }
 
 .itemValue {
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
-  color: #10b981;
+  font-size: var(--text-sm);
+  color: var(--difficulty-1);
 }
 
 .outputContent {
-  padding: 0.75rem;
+  padding: var(--space-md);
   min-height: 60px;
 }
 
 .outputLine {
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
-  color: #10b981;
+  font-size: var(--text-sm);
+  color: var(--difficulty-1);
   padding: 0.15rem 0;
 }
 
 .placeholder {
-  font-size: 0.75rem;
-  color: #555;
+  font-size: var(--text-sm);
+  color: var(--gray-800);
 }
 
 .bestFor {
   padding: 0.6rem 0.75rem;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  font-size: 0.8rem;
-  color: #ccc;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  color: var(--gray-300);
   text-align: center;
 }
 
 .bestForLabel {
-  font-weight: 600;
-  color: #888;
+  font-weight: var(--font-semibold);
+  color: var(--gray-500);
   margin-right: 0.5rem;
 }
 
@@ -178,10 +178,10 @@
 
 .runBtn {
   padding: 0.6rem 1.5rem;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   color: white;
   cursor: pointer;
 }
@@ -192,12 +192,12 @@
 }
 
 .warning {
-  padding: 0.75rem 1rem;
+  padding: var(--space-md) var(--space-lg);
   background: rgba(245, 158, 11, 0.1);
   border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: 8px;
-  font-size: 0.75rem;
-  color: #f59e0b;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  color: var(--difficulty-2);
   text-align: center;
 }
 

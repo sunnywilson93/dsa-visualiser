@@ -8,12 +8,12 @@
 /* Level Selector */
 .levelSelector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   justify-content: center;
   margin-bottom: 0.25rem;
   background: var(--js-viz-surface-2);
   border: 1px solid var(--js-viz-border);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.35rem;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 }
@@ -23,11 +23,11 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.4rem 0.8rem;
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--js-viz-border);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   color: var(--js-viz-muted);
   cursor: pointer;
   transition: all 0.2s;
@@ -41,7 +41,7 @@
 .levelBtn.activeLevel {
   background: rgba(130, 100, 255, 0.18);
   border-color: rgba(130, 100, 255, 0.7);
-  color: #f5f7ff;
+  color: var(--text-bright);
   box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
 }
 
@@ -54,12 +54,12 @@
 /* Example Selector */
 .exampleSelector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
   background: var(--js-viz-surface-2);
   border: 1px solid var(--js-viz-border);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.35rem;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 }
@@ -67,10 +67,10 @@
 .exampleBtn {
   padding: 0.4rem 0.8rem;
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--js-viz-border);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   color: var(--js-viz-muted);
   cursor: pointer;
   transition: all 0.2s;
@@ -84,7 +84,7 @@
 .exampleBtn.active {
   background: rgba(130, 100, 255, 0.18);
   border-color: rgba(130, 100, 255, 0.7);
-  color: #f5f7ff;
+  color: var(--text-bright);
   box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
 }
 
@@ -96,7 +96,7 @@
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   grid-template-rows: auto auto auto;
-  gap: 1rem;
+  gap: var(--space-lg);
   grid-template-areas:
     "callstack webapis"
     "eventloop taskqueue"
@@ -106,16 +106,16 @@
 /* Neon Box Base */
 .neonBox {
   position: relative;
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   padding: 3px;
   background: linear-gradient(135deg, var(--neon-start), var(--neon-end));
 }
 
 .neonBoxInner {
-  background: #1a1a2e;
-  border-radius: 10px;
+  background: var(--bg-page-secondary);
+  border-radius: var(--radius-lg);
   min-height: 140px;
-  padding: 0.75rem;
+  padding: var(--space-md);
   padding-top: 1.5rem;
 }
 
@@ -127,9 +127,9 @@
   padding: 0.35rem 1rem;
   background: #4a4a5a;
   border-radius: 0 0 8px 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
   white-space: nowrap;
   z-index: 1;
 }
@@ -149,12 +149,12 @@
 }
 
 .stackItem {
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-sm) var(--space-md);
   background: rgba(102, 126, 234, 0.15);
   border: 1px solid rgba(102, 126, 234, 0.4);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   color: #a5b4fc;
   text-align: center;
 }
@@ -164,15 +164,15 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  color: #555;
-  font-size: 0.75rem;
+  color: var(--gray-800);
+  font-size: var(--text-sm);
 }
 
 /* Web APIs */
 .webApisBox {
   grid-area: webapis;
-  --neon-start: #a855f7;
-  --neon-end: #ec4899;
+  --neon-start: var(--neon-purple);
+  --neon-end: var(--neon-pink);
 }
 
 .webApisBox .neonBoxInner {
@@ -182,39 +182,39 @@
 .webApisGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  padding: 0.5rem;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
   background: rgba(0, 0, 0, 0.3);
   border: 1px dashed rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
 }
 
 .webApiItem {
-  padding: 0.5rem;
+  padding: var(--space-sm);
   background: #2a2a3e;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-family: 'Fira Code', monospace;
-  font-size: 0.65rem;
-  color: #9ca3af;
+  font-size: var(--text-2xs);
+  color: var(--gray-400);
   text-align: center;
 }
 
 .webApiItem.active {
   background: rgba(168, 85, 247, 0.2);
   border: 1px solid rgba(168, 85, 247, 0.5);
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
 }
 
 .webApiItem.highlight {
-  color: #10b981;
+  color: var(--difficulty-1);
 }
 
 .manyMore {
   grid-column: 1 / -1;
   text-align: center;
-  color: #666;
-  font-size: 0.7rem;
-  padding: 0.25rem;
+  color: var(--gray-700);
+  font-size: var(--text-xs);
+  padding: var(--space-xs);
 }
 
 /* Event Loop Indicator */
@@ -230,7 +230,7 @@
   align-items: center;
   justify-content: center;
   min-height: 120px;
-  gap: 0.5rem;
+  gap: var(--space-sm);
 }
 
 .eventLoopIcon {
@@ -246,7 +246,7 @@
 
 .eventLoopIcon.idle {
   animation: none;
-  color: #555;
+  color: var(--gray-800);
 }
 
 @keyframes spin {
@@ -257,7 +257,7 @@
 /* Task Queue (Macrotasks) */
 .taskQueueBox {
   grid-area: taskqueue;
-  --neon-start: #ec4899;
+  --neon-start: var(--neon-pink);
   --neon-end: #f43f5e;
 }
 
@@ -272,27 +272,27 @@
 }
 
 .macroItem {
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-sm) var(--space-md);
   background: rgba(245, 158, 11, 0.15);
   border: 1px solid rgba(245, 158, 11, 0.4);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   color: #fcd34d;
   text-align: center;
 }
 
 .emptyQueue {
-  color: #555;
-  font-size: 0.75rem;
+  color: var(--gray-800);
+  font-size: var(--text-sm);
   text-align: center;
-  padding: 1rem;
+  padding: var(--space-lg);
 }
 
 /* Microtask Queue */
 .microtaskBox {
   grid-area: microtask;
-  --neon-start: #10b981;
+  --neon-start: var(--difficulty-1);
   --neon-end: #06b6d4;
 }
 
@@ -301,13 +301,13 @@
 }
 
 .microItem {
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-sm) var(--space-md);
   background: rgba(139, 92, 246, 0.15);
   border: 1px solid rgba(139, 92, 246, 0.4);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
-  color: #c4b5fd;
+  font-size: var(--text-xs);
+  color: var(--neon-purple-light);
   text-align: center;
 }
 
@@ -324,7 +324,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-sm) var(--space-md);
   background: rgba(255, 255, 255, 0.03);
 }
 
@@ -333,22 +333,22 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.3rem 0.7rem;
-  font-size: 0.6rem;
-  font-weight: 600;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--js-viz-text);
   background: var(--js-viz-pill-bg);
   border: 1px solid var(--js-viz-pill-border);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
 }
 
 .phaseBadge {
   padding: 0.2rem 0.5rem;
-  border-radius: 999px;
-  font-size: 0.6rem;
-  font-weight: 600;
-  color: #000;
+  border-radius: var(--radius-full);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-black);
 }
 
 .code {
@@ -370,16 +370,16 @@
 
 .lineNum {
   width: 1.5rem;
-  color: #555;
+  color: var(--gray-800);
   font-family: 'Fira Code', monospace;
-  font-size: 0.6rem;
+  font-size: var(--text-2xs);
   user-select: none;
 }
 
 .lineCode {
   font-family: 'Fira Code', monospace;
-  font-size: 0.65rem;
-  color: #ccc;
+  font-size: var(--text-2xs);
+  color: var(--gray-300);
 }
 
 .activeLine .lineCode {
@@ -391,7 +391,7 @@
   background: var(--js-viz-surface);
   border: 1px solid var(--js-viz-border);
   border-radius: var(--js-viz-radius);
-  padding: 0.75rem;
+  padding: var(--space-md);
 }
 
 .outputHeader {
@@ -400,20 +400,20 @@
   gap: 0.35rem;
   padding: 0.3rem 0.7rem;
   margin-bottom: 0.5rem;
-  font-size: 0.6rem;
-  font-weight: 600;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--js-viz-text);
   background: var(--js-viz-pill-bg);
   border: 1px solid var(--js-viz-pill-border);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
 }
 
 .outputContent {
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
-  color: #10b981;
+  font-size: var(--text-sm);
+  color: var(--difficulty-1);
   min-height: 1.5rem;
 }
 
@@ -422,7 +422,7 @@
 }
 
 .outputEmpty {
-  color: #555;
+  color: var(--gray-800);
 }
 
 /* Description */
@@ -430,8 +430,8 @@
   padding: 0.6rem 0.75rem;
   background: var(--js-viz-surface-2);
   border: 1px solid var(--js-viz-border);
-  border-radius: 8px;
-  font-size: 0.8rem;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
   color: var(--js-viz-muted);
   text-align: center;
 }
@@ -440,9 +440,9 @@
   display: inline-block;
   padding: 0.15rem 0.4rem;
   background: rgba(102, 126, 234, 0.3);
-  border-radius: 4px;
-  font-size: 0.6rem;
-  font-weight: 600;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
   color: #a5b4fc;
   margin-right: 0.5rem;
 }
@@ -450,17 +450,17 @@
 /* Controls */
 .controls {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   justify-content: center;
 }
 
 .btnPrimary {
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   color: white;
   cursor: pointer;
 }
@@ -471,18 +471,18 @@
 }
 
 .btnSecondary {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.7rem;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-xs);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: #888;
+  border-radius: var(--radius-md);
+  color: var(--gray-500);
   cursor: pointer;
 }
 
 .btnSecondary:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .btnSecondary:disabled {
@@ -492,12 +492,12 @@
 
 /* Insight */
 .insight {
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-sm) var(--space-md);
   background: rgba(139, 92, 246, 0.08);
   border: 1px solid rgba(139, 92, 246, 0.2);
-  border-radius: 8px;
-  font-size: 0.7rem;
-  color: #888;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-xs);
+  color: var(--gray-500);
   text-align: center;
 }
 

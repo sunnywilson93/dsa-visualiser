@@ -1,53 +1,53 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-lg);
 }
 
 .tabSelector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   justify-content: center;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.35rem;
 }
 
 .tabBtn {
-  padding: 0.5rem 1rem;
-  font-size: 0.75rem;
-  font-weight: 500;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  color: #888;
+  border-radius: var(--radius-full);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .tabBtn:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #ccc;
+  color: var(--gray-300);
 }
 
 .tabBtn.active {
   background: rgba(130, 100, 255, 0.18);
   border-color: rgba(130, 100, 255, 0.7);
-  color: #f5f7ff;
+  color: var(--text-bright);
   box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
 }
 
 .typesContainer {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-lg);
 }
 
 .typeGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 0.5rem;
+  gap: var(--space-sm);
 }
 
 .typeCard {
@@ -55,10 +55,10 @@
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.75rem;
+  padding: var(--space-md);
   background: rgba(0, 0, 0, 0.3);
   border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -78,34 +78,34 @@
 }
 
 .typeName {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #ccc;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--gray-300);
 }
 
 .typeDetail {
   background: rgba(0, 0, 0, 0.4);
   border: 2px solid;
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
 }
 
 .typeDetail h3 {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: var(--text-md);
+  font-weight: var(--font-semibold);
   margin: 0 0 0.75rem;
 }
 
 .detailRow {
   display: flex;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   margin-bottom: 0.5rem;
 }
 
 .detailLabel {
-  font-size: 0.7rem;
-  color: #666;
+  font-size: var(--text-xs);
+  color: var(--gray-700);
   min-width: 70px;
 }
 
@@ -117,36 +117,36 @@
 
 .example {
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
-  color: #10b981;
+  font-size: var(--text-xs);
+  color: var(--difficulty-1);
   background: rgba(16, 185, 129, 0.1);
   padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 .typeofValue {
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   color: #a5b4fc;
 }
 
 .noteBox {
   margin-top: 0.75rem;
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-sm) var(--space-md);
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: 6px;
-  font-size: 0.75rem;
-  color: #ef4444;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--accent-red);
 }
 
 .insight {
-  padding: 0.75rem 1rem;
+  padding: var(--space-md) var(--space-lg);
   background: rgba(245, 158, 11, 0.1);
   border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: 8px;
-  font-size: 0.75rem;
-  color: #f59e0b;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  color: var(--difficulty-2);
   text-align: center;
 }
 
@@ -154,41 +154,41 @@
 .compareContainer {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-lg);
 }
 
 .compareCard {
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
 }
 
 .compareTitle {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #fff;
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
   margin: 0 0 0.75rem;
   text-align: center;
 }
 
 .compareCode {
   background: rgba(0, 0, 0, 0.4);
-  border-radius: 8px;
-  padding: 0.75rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
   margin: 0 0 0.75rem;
   overflow-x: auto;
 }
 
 .compareCode code {
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
-  color: #ccc;
+  font-size: var(--text-xs);
+  color: var(--gray-300);
   white-space: pre;
 }
 
 .compareExplanation {
-  font-size: 0.8rem;
+  font-size: var(--text-base);
   color: #aaa;
   text-align: center;
   margin: 0 0 1rem;
@@ -201,7 +201,7 @@
 
 .memoryBoxes {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   align-items: center;
 }
 
@@ -209,49 +209,49 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.5rem 1rem;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
   background: rgba(0, 0, 0, 0.3);
   border: 2px solid;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
 }
 
 .memoryLabel {
-  font-size: 0.65rem;
-  color: #888;
+  font-size: var(--text-2xs);
+  color: var(--gray-500);
 }
 
 .memoryValue {
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
-  color: #10b981;
+  font-size: var(--text-sm);
+  color: var(--difficulty-1);
 }
 
 .memoryArrow {
-  font-size: 1rem;
-  color: #888;
+  font-size: var(--text-md);
+  color: var(--gray-500);
 }
 
 .controls {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   justify-content: center;
   align-items: center;
 }
 
 .stepIndicator {
-  font-size: 0.75rem;
-  color: #888;
+  font-size: var(--text-sm);
+  color: var(--gray-500);
   padding: 0 1rem;
 }
 
 .btnPrimary {
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   color: white;
   cursor: pointer;
 }
@@ -262,18 +262,18 @@
 }
 
 .btnSecondary {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.7rem;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-xs);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: #888;
+  border-radius: var(--radius-md);
+  color: var(--gray-500);
   cursor: pointer;
 }
 
 .btnSecondary:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .btnSecondary:disabled {

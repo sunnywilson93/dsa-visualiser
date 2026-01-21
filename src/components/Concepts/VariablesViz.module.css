@@ -1,41 +1,41 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-lg);
 }
 
 /* Example Selector */
 .selector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.35rem;
 }
 
 .selectorBtn {
   padding: 0.4rem 0.8rem;
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  color: #888;
+  border-radius: var(--radius-full);
+  color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .selectorBtn:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #ccc;
+  color: var(--gray-300);
 }
 
 .selectorBtn.active {
   background: rgba(130, 100, 255, 0.18);
   border-color: rgba(130, 100, 255, 0.7);
-  color: #f5f7ff;
+  color: var(--text-bright);
   box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
 }
 
@@ -44,7 +44,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
-  gap: 1rem;
+  gap: var(--space-lg);
   grid-template-areas:
     "code variables"
     "output output";
@@ -55,15 +55,15 @@
   grid-area: code;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
 .panelHeader {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #888;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--gray-500);
   background: rgba(255, 255, 255, 0.05);
 }
 
@@ -86,16 +86,16 @@
 
 .lineNum {
   width: 1.5rem;
-  color: #555;
+  color: var(--gray-800);
   font-family: 'Fira Code', monospace;
-  font-size: 0.65rem;
+  font-size: var(--text-2xs);
   user-select: none;
 }
 
 .lineCode {
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
-  color: #ccc;
+  font-size: var(--text-xs);
+  color: var(--gray-300);
 }
 
 .activeLine .lineCode {
@@ -106,20 +106,20 @@
 .neonBox {
   grid-area: variables;
   position: relative;
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   padding: 3px;
   background: linear-gradient(135deg, #3b82f6, #8b5cf6);
 }
 
 .neonBoxInner {
-  background: #1a1a2e;
-  border-radius: 10px;
+  background: var(--bg-page-secondary);
+  border-radius: var(--radius-lg);
   min-height: 180px;
-  padding: 0.75rem;
+  padding: var(--space-md);
   padding-top: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-sm);
 }
 
 .neonBoxHeader {
@@ -130,9 +130,9 @@
   padding: 0.35rem 1rem;
   background: #4a4a5a;
   border-radius: 0 0 8px 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
   white-space: nowrap;
   z-index: 1;
 }
@@ -140,43 +140,43 @@
 .variable {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   padding: 0.5rem 0.6rem;
   background: rgba(0, 0, 0, 0.3);
   border-left: 3px solid;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
 }
 
 .varKeyword {
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
   min-width: 40px;
 }
 
 .varName {
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   color: #a5b4fc;
 }
 
 .varEquals {
-  color: #666;
-  font-size: 0.75rem;
+  color: var(--gray-700);
+  font-size: var(--text-sm);
 }
 
 .varValue {
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #10b981;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--difficulty-1);
 }
 
 /* Output Panel */
 .outputBox {
   grid-area: output;
   position: relative;
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   padding: 3px;
   background: linear-gradient(135deg, #10b981, #06b6d4);
 }
@@ -187,20 +187,20 @@
 
 .outputLine {
   font-family: 'Fira Code', monospace;
-  font-size: 0.8rem;
-  color: #10b981;
+  font-size: var(--text-base);
+  color: var(--difficulty-1);
   padding: 0.2rem 0;
 }
 
 .errorLine {
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
-  color: #ef4444;
+  font-size: var(--text-xs);
+  color: var(--accent-red);
 }
 
 .placeholder {
-  color: #555;
-  font-size: 0.75rem;
+  color: var(--gray-800);
+  font-size: var(--text-sm);
 }
 
 /* Description */
@@ -208,9 +208,9 @@
   padding: 0.6rem 0.75rem;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  font-size: 0.8rem;
-  color: #ccc;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  color: var(--gray-300);
   text-align: center;
 }
 
@@ -218,9 +218,9 @@
   display: inline-block;
   padding: 0.15rem 0.4rem;
   background: rgba(102, 126, 234, 0.3);
-  border-radius: 4px;
-  font-size: 0.6rem;
-  font-weight: 600;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
   color: #a5b4fc;
   margin-right: 0.5rem;
 }
@@ -228,17 +228,17 @@
 /* Controls */
 .controls {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   justify-content: center;
 }
 
 .btnPrimary {
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   color: white;
   cursor: pointer;
 }
@@ -249,18 +249,18 @@
 }
 
 .btnSecondary {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.7rem;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-xs);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: #888;
+  border-radius: var(--radius-md);
+  color: var(--gray-500);
   cursor: pointer;
 }
 
 .btnSecondary:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .btnSecondary:disabled {
@@ -271,7 +271,7 @@
 /* Legend */
 .legend {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-lg);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -280,8 +280,8 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.7rem;
-  color: #888;
+  font-size: var(--text-xs);
+  color: var(--gray-500);
 }
 
 .legendDot {

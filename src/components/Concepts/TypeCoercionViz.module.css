@@ -9,14 +9,14 @@
 }
 
 .title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
+  font-size: var(--text-md);
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
   margin: 0 0 0.25rem;
 }
 
 .subtitle {
-  font-size: 0.8rem;
+  font-size: var(--text-base);
   color: #9aa0a6;
   margin: 0;
 }
@@ -26,16 +26,16 @@
    ============================================ */
 .neonBox {
   position: relative;
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   padding: 3px;
   background: linear-gradient(135deg, var(--neon-start), var(--neon-end));
 }
 
 .neonBoxInner {
-  background: #1a1a2e;
-  border-radius: 10px;
+  background: var(--bg-page-secondary);
+  border-radius: var(--radius-lg);
   min-height: 100px;
-  padding: 0.75rem;
+  padding: var(--space-md);
   padding-top: 1.5rem;
 }
 
@@ -47,9 +47,9 @@
   padding: 0.35rem 1rem;
   background: #4a4a5a;
   border-radius: 0 0 8px 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
   white-space: nowrap;
   z-index: 1;
 }
@@ -64,8 +64,8 @@
 .controlGroup {
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 0.75rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-md);
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -73,8 +73,8 @@
 }
 
 .groupTitle {
-  font-size: 0.65rem;
-  font-weight: 600;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #7b8088;
@@ -95,7 +95,7 @@
 .optionBtn {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   padding: 0.45rem 0.4rem;
   cursor: pointer;
   display: flex;
@@ -117,13 +117,13 @@
 }
 
 .optionLabel {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
   color: #f1f3f4;
 }
 
 .optionType {
-  font-size: 0.65rem;
+  font-size: var(--text-2xs);
   color: #8b8f97;
 }
 
@@ -131,12 +131,12 @@
 .resultGrid {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: 1rem;
+  gap: var(--space-lg);
 }
 
 /* Equation Card - Neon Box Green/Cyan */
 .equationBox {
-  --neon-start: #10b981;
+  --neon-start: var(--difficulty-1);
   --neon-end: #06b6d4;
 }
 
@@ -153,21 +153,21 @@
   align-items: center;
   gap: 0.4rem;
   font-family: 'Fira Code', monospace;
-  font-size: 0.9rem;
-  color: #fff;
+  font-size: var(--text-base);
+  color: var(--color-white);
 }
 
 .valueChip {
-  padding: 0.25rem 0.5rem;
+  padding: var(--space-xs) var(--space-sm);
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
 }
 
 .operatorChip {
-  padding: 0.25rem 0.5rem;
+  padding: var(--space-xs) var(--space-sm);
   background: rgba(118, 75, 162, 0.35);
-  border-radius: 8px;
-  font-weight: 700;
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-bold);
 }
 
 .equals {
@@ -175,9 +175,9 @@
 }
 
 .resultValue {
-  font-weight: 700;
-  color: #10b981;
-  font-size: 1rem;
+  font-weight: var(--font-bold);
+  color: var(--difficulty-1);
+  font-size: var(--text-md);
 }
 
 .typeRow {
@@ -188,8 +188,8 @@
 
 .typeBadge {
   padding: 0.15rem 0.5rem;
-  border-radius: 999px;
-  font-size: 0.6rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-2xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   background: rgba(255, 255, 255, 0.05);
@@ -198,19 +198,19 @@
 
 .typeBadgeAccent {
   padding: 0.15rem 0.5rem;
-  border-radius: 999px;
-  font-size: 0.6rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-2xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   background: rgba(16, 185, 129, 0.4);
-  color: #10b981;
+  color: var(--difficulty-1);
 }
 
 .truthinessRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  font-size: 0.7rem;
+  gap: var(--space-md);
+  font-size: var(--text-xs);
   color: #b0b4bb;
 }
 
@@ -228,7 +228,7 @@
   margin: 0;
   padding-left: 1rem;
   color: #b3b7bd;
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   line-height: 1.6;
   display: flex;
   flex-direction: column;

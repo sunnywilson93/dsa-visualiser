@@ -10,7 +10,7 @@
 .container {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-lg);
   max-width: 1400px;
   margin: 0 auto;
   padding: 0.75rem 2rem;
@@ -33,15 +33,15 @@
   height: 32px;
   background: var(--gradient-neon);
   border-radius: var(--radius-lg);
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--color-white);
   letter-spacing: -0.5px;
 }
 
 .logoText {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
   background: var(--gradient-neon);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -58,24 +58,24 @@
 .breadcrumbs {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.875rem;
+  gap: var(--space-xs);
+  font-size: var(--text-base);
 }
 
 .rightSection {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-lg);
   flex-shrink: 0;
 }
 
 .navLink {
   padding: 0.4rem 0.75rem;
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
   color: var(--text-secondary);
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   transition: all 0.2s;
 }
 
@@ -92,7 +92,7 @@
 .breadcrumbItem {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--space-xs);
 }
 
 .breadcrumbLink {
@@ -113,7 +113,7 @@
 
 .breadcrumbCurrent {
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: var(--font-medium);
 }
 
 
@@ -132,7 +132,7 @@
   }
 
   .breadcrumbs {
-    font-size: 0.8rem;
+    font-size: var(--text-base);
   }
 }
 

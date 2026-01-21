@@ -14,6 +14,22 @@
   --text-muted: #6e7681;
   --text-bright: #f5f7ff;
 
+  /* Core colors */
+  --color-white: #fff;
+  --color-black: #000;
+
+  /* Gray scale */
+  --gray-400: #9ca3af;
+  --gray-500: #888;
+  --gray-600: #6e7681;
+  --gray-700: #666;
+  --gray-800: #555;
+  --gray-900: #333;
+
+  /* Light grays (for borders, subtle text) */
+  --gray-200: #e5e7eb;
+  --gray-300: #ccc;
+
   --accent-blue: #58a6ff;
   --accent-green: #3fb950;
   --accent-yellow: #d29922;
@@ -26,7 +42,7 @@
   --neon-purple: #a855f7;
   --neon-pink: #ec4899;
   --neon-purple-light: #c4b5fd;
-  --neon-purple-dim: #888;
+  --neon-purple-dim: var(--gray-500);
 
   /* Neon transparent variants */
   --neon-purple-5: rgba(168, 85, 247, 0.05);
@@ -97,6 +113,8 @@
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 999px;
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -108,9 +126,33 @@
   --transition-normal: 250ms ease;
   --transition-slow: 350ms ease;
 
-  /* Font */
+  /* Font families */
   --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', monospace;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+
+  /* Typography scale */
+  --text-2xs: 0.625rem;
+  --text-xs: 0.7rem;
+  --text-sm: 0.75rem;
+  --text-base: 0.85rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+
+  /* Font weights */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.4;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.6;
 }
 
 * {
@@ -154,7 +196,7 @@ body {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   line-height: 1.25;
 }
 
@@ -218,7 +260,7 @@ button:disabled {
   background: var(--bg-tertiary);
   border-bottom: 1px solid var(--border-primary);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-secondary);
@@ -266,7 +308,7 @@ button:disabled {
   align-items: center;
   padding: 2px 8px;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: var(--font-medium);
   border-radius: var(--radius-sm);
   background: var(--bg-elevated);
   color: var(--text-secondary);

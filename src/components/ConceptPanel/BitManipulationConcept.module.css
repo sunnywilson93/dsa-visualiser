@@ -7,7 +7,7 @@
   --label-width: 60px;
   --decimal-width: 40px;
   --equals-width: 12px;
-  color: #f5f7ff;
+  color: var(--text-bright);
 }
 
 .empty {
@@ -17,11 +17,11 @@
 
 .operatorBadge {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   padding: 3px 10px;
   background: linear-gradient(135deg, #a855f7, #ec4899);
   color: white;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   letter-spacing: 0.5px;
   box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
 }
@@ -33,7 +33,7 @@
   padding: var(--space-sm);
   background: rgba(0, 0, 0, 0.3);
   border: 1px dashed rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
 }
 
 .bitRow {
@@ -52,7 +52,7 @@
   width: var(--label-width);
   font-size: 10px;
   color: #22d3ee;
-  font-weight: 500;
+  font-weight: var(--font-medium);
   text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -62,8 +62,8 @@
 .decimal {
   width: var(--decimal-width);
   font-size: 11px;
-  color: #f5f7ff;
-  font-weight: 600;
+  color: var(--text-bright);
+  font-weight: var(--font-semibold);
   text-align: right;
 }
 
@@ -85,8 +85,8 @@
   width: 20px;
   height: 22px;
   font-size: 12px;
-  font-weight: 600;
-  border-radius: 4px;
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-sm);
   transition: all 0.2s;
 }
 
@@ -117,7 +117,7 @@
 
 .bit.resultBit {
   background: rgba(16, 185, 128, 0.25);
-  color: #10b981;
+  color: var(--difficulty-1);
   border-color: rgba(16, 185, 128, 0.5);
 }
 
@@ -135,8 +135,8 @@
 
 .operatorSymbol {
   font-size: 12px;
-  font-weight: 700;
-  color: #c4b5fd;
+  font-weight: var(--font-bold);
+  color: var(--neon-purple-light);
   grid-column: 2;
   justify-self: end;
   text-shadow: 0 0 6px rgba(196, 181, 253, 0.4);
@@ -175,7 +175,7 @@
 
 .bitPosition.activeBitPos {
   color: #60a5fa;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   text-shadow: 0 0 4px rgba(96, 165, 250, 0.4);
 }
 
@@ -188,21 +188,21 @@
 
 .annotation {
   font-size: 10px;
-  font-weight: 500;
-  color: #c4b5fd;
+  font-weight: var(--font-medium);
+  color: var(--neon-purple-light);
   padding: 3px 10px;
   background: rgba(130, 100, 255, 0.15);
   border: 1px solid rgba(130, 100, 255, 0.3);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
 }
 
 .resultDisplay {
   font-size: 12px;
-  font-weight: 600;
-  color: #10b981;
+  font-weight: var(--font-semibold);
+  color: var(--difficulty-1);
   padding: var(--space-xs) var(--space-sm);
   background: rgba(16, 185, 128, 0.15);
   border: 1px solid rgba(16, 185, 128, 0.4);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   box-shadow: 0 0 8px rgba(16, 185, 128, 0.2);
 }

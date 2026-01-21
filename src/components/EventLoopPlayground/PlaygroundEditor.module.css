@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-sm) var(--space-md);
   background: rgba(255, 255, 255, 0.03);
   border-bottom: 1px solid var(--js-viz-border);
 }
@@ -22,14 +22,14 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.3rem 0.7rem;
-  font-size: 0.6rem;
-  font-weight: 600;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--js-viz-text);
   background: var(--js-viz-pill-bg);
   border: 1px solid var(--js-viz-pill-border);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
 }
 
 .analyzeBtn {
@@ -37,11 +37,11 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.4rem 0.8rem;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   color: white;
   cursor: pointer;
   transition: all 0.2s;
@@ -67,18 +67,18 @@
   justify-content: center;
   height: 100%;
   color: var(--js-viz-muted);
-  font-size: 0.8rem;
+  font-size: var(--text-base);
 }
 
 .errorPanel {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
   background: rgba(239, 68, 68, 0.1);
   border-top: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
-  font-size: 0.75rem;
+  color: var(--accent-red);
+  font-size: var(--text-sm);
 }
 
 .errorIcon {
@@ -87,11 +87,11 @@
   justify-content: center;
   width: 16px;
   height: 16px;
-  background: #ef4444;
+  background: var(--accent-red);
   color: white;
   border-radius: 50%;
-  font-size: 0.65rem;
-  font-weight: 700;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-bold);
 }
 
 /* Monaco editor line decorations */

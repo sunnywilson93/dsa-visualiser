@@ -8,10 +8,10 @@
 .inputWrapper {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(168, 85, 247, 0.2);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   padding: 0.375rem 0.75rem;
   transition: all 0.2s ease;
 }
@@ -27,12 +27,12 @@
 }
 
 .searchIcon {
-  color: #9ca3af;
+  color: var(--gray-400);
   flex-shrink: 0;
 }
 
 .inputWrapper.focused .searchIcon {
-  color: #a855f7;
+  color: var(--neon-purple);
 }
 
 .input {
@@ -40,8 +40,8 @@
   background: transparent;
   border: none;
   outline: none;
-  font-size: 0.875rem;
-  color: #f5f7ff;
+  font-size: var(--text-base);
+  color: var(--text-bright);
   min-width: 0;
 }
 
@@ -58,19 +58,19 @@
   color: #6b7280;
   cursor: pointer;
   padding: 0.125rem;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   transition: all 0.15s ease;
 }
 
 .clearButton:hover {
-  color: #f5f7ff;
+  color: var(--text-bright);
   background: rgba(255, 255, 255, 0.1);
 }
 
 .shortcut {
-  font-size: 0.65rem;
+  font-size: var(--text-2xs);
   padding: 0.125rem 0.375rem;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.1);
   color: #6b7280;
   font-family: inherit;
@@ -83,16 +83,16 @@
   top: calc(100% + 0.5rem);
   left: 0;
   right: 0;
-  background: #1a1a2e;
+  background: var(--bg-page-secondary);
   border: 1px solid rgba(168, 85, 247, 0.3);
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   box-shadow:
     0 4px 24px rgba(0, 0, 0, 0.4),
     0 0 20px rgba(168, 85, 247, 0.1);
   max-height: 400px;
   overflow-y: auto;
   z-index: 1000;
-  padding: 0.5rem;
+  padding: var(--space-sm);
 }
 
 /* Scrollbar styling */
@@ -125,11 +125,11 @@
   }
 
   .input {
-    font-size: 0.8rem;
+    font-size: var(--text-base);
   }
 
   .inputWrapper {
-    padding: 0.25rem 0.5rem;
+    padding: var(--space-xs) var(--space-sm);
   }
 }
 
