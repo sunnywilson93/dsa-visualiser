@@ -2890,6 +2890,763 @@ export default defineConfig({
       'Know what problems esbuild solves (100x faster transforms)',
     ],
   },
+  // ============================================================================
+  // Phase 1: JavaScript Deep Dive Concepts
+  // ============================================================================
+  {
+    id: 'promises-deep-dive',
+    title: 'Promises Deep Dive',
+    category: 'core',
+    difficulty: 'intermediate',
+    description: 'Promises are JavaScript\'s primary abstraction for asynchronous operations. Understanding Promise internals, combinators (all/race/any/allSettled), and error handling patterns is essential for writing robust async code.',
+    shortDescription: 'Async operations and combinators',
+    keyPoints: [
+      'A Promise represents a value that may be available now, later, or never',
+      'Promise states: pending → fulfilled OR rejected (immutable once settled)',
+      'Promise.all() fails fast: rejects on first rejection',
+      'Promise.race() returns first settled (fulfilled OR rejected)',
+      'Promise.any() returns first fulfilled (ignores rejections until all fail)',
+      'Promise.allSettled() waits for all, never short-circuits',
+      '.then() always returns a new Promise (enabling chaining)',
+      'Unhandled rejections are dangerous - always add .catch() or try/catch',
+    ],
+    examples: [
+      {
+        title: 'Promise States',
+        code: `// Creating Promises
+const pending = new Promise(() => {});  // stays pending
+const fulfilled = Promise.resolve(42);  // immediately fulfilled
+const rejected = Promise.reject('err'); // immediately rejected
+
+// State transitions are ONE-WAY and IMMUTABLE
+const p = new Promise((resolve, reject) => {
+  resolve('first');   // Promise is now fulfilled
+  resolve('second');  // ignored!
+  reject('error');    // ignored!
+});
+
+p.then(v => console.log(v));  // "first"`,
+        explanation: 'Once a Promise settles, its state and value are locked forever',
+      },
+      {
+        title: 'Promise.all() - Fail Fast',
+        code: `// All must succeed
+const results = await Promise.all([
+  fetch('/api/users'),
+  fetch('/api/posts'),
+  fetch('/api/comments')
+]);
+// results = [usersResponse, postsResponse, commentsResponse]
+
+// One failure = immediate rejection
+await Promise.all([
+  Promise.resolve(1),
+  Promise.reject('Error!'),  // Fails here
+  Promise.resolve(3)          // Never awaited!
+]);
+// Throws: "Error!"`,
+        explanation: 'Use all() when you need ALL results and want fast failure',
+      },
+      {
+        title: 'Promise.race() - First Wins',
+        code: `// Timeout pattern
+async function fetchWithTimeout(url, ms) {
+  const timeout = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Timeout')), ms)
+  );
+  return Promise.race([fetch(url), timeout]);
+}
+
+// First to settle wins (success OR failure)
+await Promise.race([
+  fetch('/slow'),    // takes 5s
+  fetch('/fast')     // takes 1s - this wins!
+]);`,
+        explanation: 'Use race() for timeouts or "first response wins" patterns',
+      },
+      {
+        title: 'Promise.any() - First Success',
+        code: `// Try multiple sources, take first success
+const data = await Promise.any([
+  fetch('https://primary.api/data'),
+  fetch('https://backup.api/data'),
+  fetch('https://fallback.api/data')
+]);
+// Returns first successful response
+
+// Only fails if ALL fail
+await Promise.any([
+  Promise.reject('A failed'),
+  Promise.reject('B failed'),
+  Promise.reject('C failed')
+]);
+// Throws: AggregateError with all rejection reasons`,
+        explanation: 'Use any() for redundant sources or fallback chains',
+      },
+      {
+        title: 'Promise.allSettled() - Wait for All',
+        code: `// Get results regardless of success/failure
+const results = await Promise.allSettled([
+  Promise.resolve('success'),
+  Promise.reject('error'),
+  Promise.resolve('another')
+]);
+
+// results = [
+//   { status: 'fulfilled', value: 'success' },
+//   { status: 'rejected', reason: 'error' },
+//   { status: 'fulfilled', value: 'another' }
+// ]
+
+// Filter successes
+const successes = results
+  .filter(r => r.status === 'fulfilled')
+  .map(r => r.value);`,
+        explanation: 'Use allSettled() when you need all results regardless of failures',
+      },
+      {
+        title: 'Promisify Callback APIs',
+        code: `// Convert callback-based function to Promise
+function promisify(fn) {
+  return function(...args) {
+    return new Promise((resolve, reject) => {
+      fn(...args, (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
+    });
+  };
+}
+
+// Usage
+const readFile = promisify(fs.readFile);
+const data = await readFile('file.txt', 'utf8');`,
+        explanation: 'Promisify wraps Node-style callbacks (err, result) into Promises',
+      },
+      {
+        title: 'Retry with Exponential Backoff',
+        code: `async function retry(fn, retries = 3, delay = 1000) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (i === retries - 1) throw err;
+      await new Promise(r => setTimeout(r, delay * Math.pow(2, i)));
+    }
+  }
+}
+
+// Usage
+const data = await retry(
+  () => fetch('/flaky-api'),
+  3,    // 3 attempts
+  1000  // 1s, 2s, 4s delays
+);`,
+        explanation: 'Retry pattern with increasing delays between attempts',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting to return in .then() chains (breaks the chain)',
+      'Not handling Promise rejections (.catch or try/catch)',
+      'Using Promise.all() when you need allSettled() behavior',
+      'Creating promises in loops without proper batching',
+      'Mixing async/await with .then() inconsistently',
+    ],
+    interviewTips: [
+      'Know the difference between all/race/any/allSettled',
+      'Implement Promise.all() from scratch',
+      'Explain the microtask queue and Promise execution order',
+      'Write a promisify function',
+      'Implement retry with exponential backoff',
+    ],
+  },
+  {
+    id: 'function-composition',
+    title: 'Function Composition',
+    category: 'core',
+    difficulty: 'intermediate',
+    description: 'Function composition is the art of combining simple functions to build complex ones. Master currying, partial application, pipe/compose, and middleware patterns to write declarative, reusable code.',
+    shortDescription: 'Curry, pipe, compose, and middleware',
+    keyPoints: [
+      'Currying transforms f(a, b, c) into f(a)(b)(c) - one arg at a time',
+      'Partial application fixes some arguments, returns function for the rest',
+      'pipe() flows left-to-right: pipe(f, g, h)(x) = h(g(f(x)))',
+      'compose() flows right-to-left: compose(f, g, h)(x) = f(g(h(x)))',
+      'Point-free style eliminates explicit parameter references',
+      'Middleware chains handlers: request → handler1 → handler2 → response',
+    ],
+    examples: [
+      {
+        title: 'Currying',
+        code: `// Manual currying
+const add = a => b => c => a + b + c;
+add(1)(2)(3);  // 6
+
+// Generic curry function
+function curry(fn) {
+  return function curried(...args) {
+    if (args.length >= fn.length) {
+      return fn.apply(this, args);
+    }
+    return (...more) => curried(...args, ...more);
+  };
+}
+
+const curriedAdd = curry((a, b, c) => a + b + c);
+curriedAdd(1)(2)(3);  // 6
+curriedAdd(1, 2)(3);  // 6
+curriedAdd(1)(2, 3);  // 6`,
+        explanation: 'Currying enables partial application of any argument',
+      },
+      {
+        title: 'Partial Application',
+        code: `// _.partial fixes arguments from the left
+function partial(fn, ...presetArgs) {
+  return function(...laterArgs) {
+    return fn(...presetArgs, ...laterArgs);
+  };
+}
+
+const greet = (greeting, name) => \`\${greeting}, \${name}!\`;
+const sayHello = partial(greet, 'Hello');
+
+sayHello('Alice');  // "Hello, Alice!"
+sayHello('Bob');    // "Hello, Bob!"
+
+// Real-world: pre-configure API calls
+const fetchJSON = partial(fetch, { headers: { 'Content-Type': 'application/json' } });`,
+        explanation: 'Partial fixes some args, unlike curry which transforms the signature',
+      },
+      {
+        title: 'Pipe and Compose',
+        code: `// pipe: left-to-right (reading order)
+const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
+
+// compose: right-to-left (math notation)
+const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
+
+// Example functions
+const add10 = x => x + 10;
+const multiply2 = x => x * 2;
+const subtract5 = x => x - 5;
+
+// pipe: 5 → add10 → multiply2 → subtract5
+pipe(add10, multiply2, subtract5)(5);     // ((5+10)*2)-5 = 25
+
+// compose: subtract5 ← multiply2 ← add10 ← 5
+compose(subtract5, multiply2, add10)(5);  // ((5+10)*2)-5 = 25`,
+        explanation: 'Pipe reads naturally; compose matches mathematical notation f∘g',
+      },
+      {
+        title: 'Point-Free Style',
+        code: `// With explicit parameters
+const getNames = users => users.map(user => user.name);
+
+// Point-free (no explicit parameters)
+const prop = key => obj => obj[key];
+const map = fn => arr => arr.map(fn);
+
+const getName = prop('name');
+const getNames = map(getName);
+
+// Usage
+const users = [{ name: 'Alice' }, { name: 'Bob' }];
+getNames(users);  // ['Alice', 'Bob']
+
+// Point-free with pipe
+const getActiveNames = pipe(
+  filter(prop('active')),
+  map(prop('name'))
+);`,
+        explanation: 'Point-free eliminates intermediate variables for cleaner pipelines',
+      },
+      {
+        title: '_.once() - Execute Once',
+        code: `function once(fn) {
+  let called = false;
+  let result;
+
+  return function(...args) {
+    if (!called) {
+      called = true;
+      result = fn.apply(this, args);
+    }
+    return result;
+  };
+}
+
+// Usage: expensive initialization
+const initializeApp = once(() => {
+  console.log('Initializing...');
+  return { config: loadConfig() };
+});
+
+initializeApp();  // "Initializing..." + returns config
+initializeApp();  // returns cached config (no log)
+initializeApp();  // returns cached config (no log)`,
+        explanation: 'Once ensures a function runs exactly once, caching the result',
+      },
+      {
+        title: 'Middleware Pattern',
+        code: `// Express-style middleware
+function createApp() {
+  const middlewares = [];
+
+  return {
+    use(fn) {
+      middlewares.push(fn);
+    },
+    async handle(req) {
+      let idx = 0;
+      const next = async () => {
+        if (idx < middlewares.length) {
+          await middlewares[idx++](req, next);
+        }
+      };
+      await next();
+      return req;
+    }
+  };
+}
+
+const app = createApp();
+app.use(async (req, next) => { req.start = Date.now(); await next(); });
+app.use(async (req, next) => { req.user = await getUser(req); await next(); });
+app.use(async (req, next) => { req.result = process(req); });
+
+await app.handle({ path: '/api' });`,
+        explanation: 'Middleware chains functions with next() control flow',
+      },
+    ],
+    commonMistakes: [
+      'Confusing curry (transforms signature) with partial (fixes args)',
+      'Forgetting that pipe and compose return functions, not values',
+      'Over-using point-free style when it hurts readability',
+      'Not handling async functions in compose/pipe',
+    ],
+    interviewTips: [
+      'Implement curry() that handles any arity',
+      'Implement pipe() and compose() - know the difference',
+      'Explain when to use currying vs partial application',
+      'Write a middleware system from scratch',
+    ],
+  },
+  {
+    id: 'timing-control',
+    title: 'Timing Control',
+    category: 'core',
+    difficulty: 'intermediate',
+    description: 'Debounce and throttle are essential patterns for controlling function execution frequency. Debounce delays execution until activity stops; throttle limits execution rate. Both use closures to maintain timer state.',
+    shortDescription: 'Debounce and throttle patterns',
+    keyPoints: [
+      'Debounce: waits for pause in calls before executing (e.g., search input)',
+      'Throttle: executes at most once per interval (e.g., scroll handler)',
+      'Both use closures to persist timer state between calls',
+      'Leading edge: execute immediately on first call',
+      'Trailing edge: execute after the wait period',
+      'Cancel methods allow cleanup on unmount',
+    ],
+    examples: [
+      {
+        title: 'Basic Debounce',
+        code: `function debounce(fn, wait) {
+  let timeoutId;
+
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn.apply(this, args), wait);
+  };
+}
+
+// Usage: search input
+const searchInput = document.getElementById('search');
+const handleSearch = debounce((query) => {
+  fetch(\`/api/search?q=\${query}\`);
+}, 300);
+
+searchInput.addEventListener('input', (e) => {
+  handleSearch(e.target.value);
+});
+// Only searches 300ms after user stops typing`,
+        explanation: 'Each call resets the timer; function runs after activity stops',
+      },
+      {
+        title: 'Debounce with Leading/Trailing',
+        code: `function debounce(fn, wait, options = {}) {
+  let timeoutId;
+  let lastArgs;
+  const { leading = false, trailing = true } = options;
+
+  return function(...args) {
+    const shouldCallNow = leading && !timeoutId;
+    lastArgs = args;
+
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => {
+      timeoutId = null;
+      if (trailing && lastArgs) {
+        fn.apply(this, lastArgs);
+      }
+    }, wait);
+
+    if (shouldCallNow) {
+      fn.apply(this, args);
+    }
+  };
+}
+
+// Leading: execute immediately, then debounce
+const saveNow = debounce(save, 1000, { leading: true, trailing: false });
+
+// Trailing (default): wait for pause, then execute
+const saveAfter = debounce(save, 1000, { leading: false, trailing: true });`,
+        explanation: 'Leading fires immediately; trailing fires after wait period',
+      },
+      {
+        title: 'Basic Throttle',
+        code: `function throttle(fn, wait) {
+  let lastTime = 0;
+
+  return function(...args) {
+    const now = Date.now();
+    if (now - lastTime >= wait) {
+      lastTime = now;
+      fn.apply(this, args);
+    }
+  };
+}
+
+// Usage: scroll handler
+const handleScroll = throttle(() => {
+  console.log('Scroll position:', window.scrollY);
+}, 100);
+
+window.addEventListener('scroll', handleScroll);
+// Logs at most every 100ms while scrolling`,
+        explanation: 'Throttle ensures function runs at most once per interval',
+      },
+      {
+        title: 'Throttle with Leading/Trailing',
+        code: `function throttle(fn, wait, options = {}) {
+  let lastTime = 0;
+  let timeoutId;
+  const { leading = true, trailing = true } = options;
+
+  return function(...args) {
+    const now = Date.now();
+    const remaining = wait - (now - lastTime);
+
+    if (remaining <= 0 || remaining > wait) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+      lastTime = now;
+      if (leading || lastTime !== 0) {
+        fn.apply(this, args);
+      }
+    } else if (!timeoutId && trailing) {
+      timeoutId = setTimeout(() => {
+        lastTime = leading ? Date.now() : 0;
+        timeoutId = null;
+        fn.apply(this, args);
+      }, remaining);
+    }
+  };
+}
+
+// Trailing ensures final call executes after scrolling stops
+const handleResize = throttle(recalculate, 200, { trailing: true });`,
+        explanation: 'Trailing ensures the final invocation is not lost',
+      },
+      {
+        title: 'Debounce with Cancel',
+        code: `function debounce(fn, wait) {
+  let timeoutId;
+
+  function debounced(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn.apply(this, args), wait);
+  }
+
+  debounced.cancel = function() {
+    clearTimeout(timeoutId);
+    timeoutId = null;
+  };
+
+  return debounced;
+}
+
+// React usage with cleanup
+function SearchComponent() {
+  const debouncedSearch = useMemo(
+    () => debounce(search, 300),
+    []
+  );
+
+  useEffect(() => {
+    return () => debouncedSearch.cancel();  // Cleanup on unmount
+  }, [debouncedSearch]);
+
+  return <input onChange={e => debouncedSearch(e.target.value)} />;
+}`,
+        explanation: 'Cancel method prevents stale executions after unmount',
+      },
+      {
+        title: 'Comparison: Debounce vs Throttle',
+        code: `// User types: a...b...c...d (each 50ms apart)
+// wait = 200ms
+
+// DEBOUNCE: waits for pause, then executes ONCE
+// Timeline: a--b--c--d-------[execute with 'd']
+// Calls: 0, 0, 0, 0, 0, 0, 0, 1
+
+// THROTTLE: executes every 200ms
+// Timeline: a--b--c--d--[exec]--[exec]
+// Calls: 1, 0, 0, 0, 1, 0, 0, 1
+
+// Use DEBOUNCE for:
+// - Search input (wait for user to stop typing)
+// - Window resize (recalculate after resizing stops)
+// - Auto-save (save after user stops editing)
+
+// Use THROTTLE for:
+// - Scroll events (update UI at fixed rate)
+// - Mouse move (track position without overwhelming)
+// - API rate limiting (max N calls per second)`,
+        explanation: 'Debounce: wait for pause. Throttle: limit rate.',
+      },
+    ],
+    commonMistakes: [
+      'Confusing debounce (wait for pause) with throttle (rate limit)',
+      'Forgetting to cancel debounced functions on component unmount',
+      'Not preserving "this" context in the returned function',
+      'Using debounce when throttle is more appropriate (and vice versa)',
+    ],
+    interviewTips: [
+      'Implement debounce from scratch with cancel method',
+      'Implement throttle from scratch',
+      'Explain when to use debounce vs throttle with examples',
+      'Know how leading and trailing edge options work',
+    ],
+  },
+  {
+    id: 'memoization',
+    title: 'Memoization',
+    category: 'core',
+    difficulty: 'intermediate',
+    description: 'Memoization is an optimization technique that caches function results based on arguments. When called with the same inputs, the cached result is returned instead of recomputing. Essential for expensive calculations and React optimizations.',
+    shortDescription: 'Cache function results',
+    keyPoints: [
+      'Memoization trades memory for speed - cache results for repeated calls',
+      'Works best for pure functions (same input → same output)',
+      'Cache key is typically derived from function arguments',
+      'memoizeOne: caches only the last result (great for React)',
+      'Consider cache invalidation and memory limits for production',
+      'React.memo, useMemo, useCallback are built-in memoization',
+    ],
+    examples: [
+      {
+        title: 'Basic Memoization',
+        code: `function memoize(fn) {
+  const cache = new Map();
+
+  return function(...args) {
+    const key = JSON.stringify(args);
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    const result = fn.apply(this, args);
+    cache.set(key, result);
+    return result;
+  };
+}
+
+// Usage
+const expensiveCalc = memoize((n) => {
+  console.log('Computing...');
+  return n * n;
+});
+
+expensiveCalc(5);  // "Computing..." → 25
+expensiveCalc(5);  // → 25 (cached, no log)
+expensiveCalc(10); // "Computing..." → 100`,
+        explanation: 'Cache stores results keyed by stringified arguments',
+      },
+      {
+        title: 'Custom Cache Key',
+        code: `function memoize(fn, keyFn = JSON.stringify) {
+  const cache = new Map();
+
+  return function(...args) {
+    const key = keyFn(args);
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    const result = fn.apply(this, args);
+    cache.set(key, result);
+    return result;
+  };
+}
+
+// Custom key for object arguments
+const fetchUser = memoize(
+  async (user) => await api.get(\`/users/\${user.id}\`),
+  ([user]) => user.id  // Use only id as cache key
+);
+
+await fetchUser({ id: 1, name: 'Alice' });
+await fetchUser({ id: 1, name: 'Bob' });  // Cache hit! Same id`,
+        explanation: 'Custom keyFn allows flexible cache key generation',
+      },
+      {
+        title: 'memoizeOne - Last Call Only',
+        code: `function memoizeOne(fn) {
+  let lastArgs = null;
+  let lastResult;
+
+  return function(...args) {
+    // Check if args are the same as last call
+    if (
+      lastArgs !== null &&
+      args.length === lastArgs.length &&
+      args.every((arg, i) => arg === lastArgs[i])
+    ) {
+      return lastResult;
+    }
+
+    lastArgs = args;
+    lastResult = fn.apply(this, args);
+    return lastResult;
+  };
+}
+
+// Perfect for React - only caches last result
+const filterUsers = memoizeOne((users, query) => {
+  console.log('Filtering...');
+  return users.filter(u => u.name.includes(query));
+});
+
+filterUsers(users, 'A');  // "Filtering..."
+filterUsers(users, 'A');  // cached (same args)
+filterUsers(users, 'B');  // "Filtering..." (new args)
+filterUsers(users, 'A');  // "Filtering..." (args changed)`,
+        explanation: 'memoizeOne only remembers the last call - ideal for React renders',
+      },
+      {
+        title: 'Cache with Max Size (LRU)',
+        code: `function memoize(fn, maxSize = 100) {
+  const cache = new Map();
+
+  return function(...args) {
+    const key = JSON.stringify(args);
+
+    if (cache.has(key)) {
+      // Move to end (most recently used)
+      const value = cache.get(key);
+      cache.delete(key);
+      cache.set(key, value);
+      return value;
+    }
+
+    const result = fn.apply(this, args);
+
+    if (cache.size >= maxSize) {
+      // Remove oldest (first) entry
+      const firstKey = cache.keys().next().value;
+      cache.delete(firstKey);
+    }
+
+    cache.set(key, result);
+    return result;
+  };
+}
+
+// Cache stays bounded at 100 entries
+const memoizedFetch = memoize(fetchData, 100);`,
+        explanation: 'LRU eviction prevents unbounded memory growth',
+      },
+      {
+        title: 'React useMemo & useCallback',
+        code: `function UserList({ users, filter }) {
+  // Memoize expensive computation
+  const filteredUsers = useMemo(() => {
+    return users.filter(u => u.name.includes(filter));
+  }, [users, filter]);  // Only recompute if deps change
+
+  // Memoize callback to prevent child re-renders
+  const handleClick = useCallback((userId) => {
+    console.log('Clicked', userId);
+  }, []);  // Empty deps = same function reference
+
+  return (
+    <div>
+      {filteredUsers.map(user => (
+        <UserRow
+          key={user.id}
+          user={user}
+          onClick={handleClick}  // Stable reference
+        />
+      ))}
+    </div>
+  );
+}
+
+// Memoize component to skip re-renders
+const UserRow = React.memo(({ user, onClick }) => (
+  <div onClick={() => onClick(user.id)}>{user.name}</div>
+));`,
+        explanation: 'React provides useMemo, useCallback, and React.memo for memoization',
+      },
+      {
+        title: 'Recursive Memoization (Fibonacci)',
+        code: `// Without memoization: O(2^n) - exponential!
+function fib(n) {
+  if (n <= 1) return n;
+  return fib(n - 1) + fib(n - 2);
+}
+
+// With memoization: O(n) - linear!
+function memoizedFib() {
+  const cache = {};
+
+  function fib(n) {
+    if (n in cache) return cache[n];
+    if (n <= 1) return n;
+    cache[n] = fib(n - 1) + fib(n - 2);
+    return cache[n];
+  }
+
+  return fib;
+}
+
+const fib = memoizedFib();
+fib(50);  // Instant! Without memo: years
+
+// Or using our generic memoize
+const fib = memoize((n) => {
+  if (n <= 1) return n;
+  return fib(n - 1) + fib(n - 2);
+});`,
+        explanation: 'Memoization transforms exponential recursion to linear',
+      },
+    ],
+    commonMistakes: [
+      'Memoizing impure functions (functions with side effects)',
+      'Using memoize for functions that rarely repeat inputs',
+      'Not considering memory usage for large caches',
+      'Using JSON.stringify for objects with circular references',
+      'Forgetting that React.memo does shallow comparison',
+    ],
+    interviewTips: [
+      'Implement memoize() with configurable cache key function',
+      'Implement memoizeOne() for React-style single-result caching',
+      'Explain when memoization helps vs hurts performance',
+      'Know how useMemo and useCallback work in React',
+      'Discuss cache invalidation strategies',
+    ],
+  },
 ]
 
 export const conceptCategories = [
@@ -2934,6 +3691,11 @@ const relatedConceptsMap: Record<string, string[]> = {
   // Browser
   'critical-render-path': ['event-loop', 'web-workers', 'memory-model'],
   'web-workers': ['event-loop', 'nodejs-event-loop', 'critical-render-path'],
+  // Phase 1: JavaScript Deep Dive
+  'promises-deep-dive': ['event-loop', 'closures', 'async-evolution'],
+  'function-composition': ['closures', 'functions', 'memoization'],
+  'timing-control': ['closures', 'event-loop', 'memoization'],
+  'memoization': ['closures', 'function-composition', 'recursion'],
 }
 
 export function getConceptById(id: string): Concept | undefined {

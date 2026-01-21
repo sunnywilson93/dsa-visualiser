@@ -43,6 +43,11 @@ const visualizations: Record<string, React.ComponentType> = {
   'async-evolution': dynamic(() => import('@/components/Concepts/AsyncEvolutionViz').then(m => m.AsyncEvolutionViz)),
   'state-evolution': dynamic(() => import('@/components/Concepts/StateEvolutionViz').then(m => m.StateEvolutionViz)),
   'build-tools-evolution': dynamic(() => import('@/components/Concepts/BuildToolsEvolutionViz').then(m => m.BuildToolsEvolutionViz)),
+  // Phase 1: JavaScript Deep Dive
+  'promises-deep-dive': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
+  'function-composition': dynamic(() => import('@/components/Concepts/CompositionViz').then(m => m.CompositionViz)),
+  'timing-control': dynamic(() => import('@/components/Concepts/TimingViz').then(m => m.TimingViz)),
+  'memoization': dynamic(() => import('@/components/Concepts/MemoizationViz').then(m => m.MemoizationViz)),
 }
 
 const difficultyColors = {

@@ -4,3 +4,8 @@ export { ClosuresViz } from './ClosuresViz'
 export { ThisKeywordViz } from './ThisKeywordViz'
 export { EventLoopViz } from './EventLoopViz'
 export { PrototypesViz } from './PrototypesViz'
+// Phase 1: JavaScript Deep Dive
+export { PromisesViz } from './PromisesViz'
+export { CompositionViz } from './CompositionViz'
+export { TimingViz } from './TimingViz'
+export { MemoizationViz } from './MemoizationViz'

@@ -33,6 +33,20 @@ import {
   Activity,
   Code2,
   Network,
+  // JS Concepts - Phase 1 Deep Dive
+  Workflow,
+  TimerReset,
+  DatabaseZap,
+  // JS Concepts - Evolution/History
+  History,
+  PackageOpen,
+  Layers3,
+  Container,
+  Hammer,
+  // JS Concepts - Additional
+  ServerCog,
+  PaintBucket,
+  Link,
   // Categories
   CircleDot,
   Settings,
@@ -104,6 +118,24 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'streams-buffers': Activity,      // Data flow/streaming
   'dom-rendering': Code2,           // Code rendering
   'web-workers': Network,           // Parallel threads
+
+  // JS Concepts - Phase 1 Deep Dive
+  'promises-deep-dive': Clock,      // Async/promises - future values
+  'function-composition': Workflow, // Function pipelines/composition
+  'timing-control': TimerReset,     // Debounce/throttle timing
+  'memoization': DatabaseZap,       // Caching/storing results
+
+  // JS Concepts - Evolution/History
+  'web-evolution': History,         // Web history/evolution
+  'module-evolution': PackageOpen,  // Module systems evolution
+  'async-evolution': Layers3,       // Async patterns evolution
+  'state-evolution': Container,     // State management evolution
+  'build-tools-evolution': Hammer,  // Build tools evolution
+
+  // JS Concepts - Additional
+  'nodejs-event-loop': ServerCog,   // Node.js server event loop
+  'critical-render-path': PaintBucket, // Browser rendering
+  'prototypes': Link,               // Prototype chain links
 
   // Categories - JS
   'philosophy': Sparkles,

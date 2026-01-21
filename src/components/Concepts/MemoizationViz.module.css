@@ -1,0 +1,404 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* Level Selector */
+.levelSelector {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-bottom: 0.25rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  padding: 0.35rem;
+}
+
+.levelBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.levelBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--gray-300);
+}
+
+.levelBtn.activeLevel {
+  background: rgba(130, 100, 255, 0.18);
+  border-color: rgba(130, 100, 255, 0.7);
+  color: var(--text-bright);
+  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
+}
+
+.levelDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Example Selector */
+.exampleSelector {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  padding: 0.35rem;
+}
+
+.exampleBtn {
+  padding: 0.4rem 0.8rem;
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.exampleBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--gray-300);
+}
+
+.exampleBtn.active {
+  background: rgba(130, 100, 255, 0.18);
+  border-color: rgba(130, 100, 255, 0.7);
+  color: var(--text-bright);
+  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
+}
+
+/* Code panel */
+.codePanel {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.codeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--gray-500);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.phaseBadge {
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-black);
+}
+
+.code {
+  margin: 0;
+  padding: 0.5rem 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.codeLine {
+  display: flex;
+  padding: 0.1rem 0.5rem;
+  transition: background 0.2s;
+}
+
+.codeLine.activeLine {
+  background: rgba(102, 126, 234, 0.2);
+}
+
+.lineNum {
+  width: 1.5rem;
+  color: var(--gray-800);
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-2xs);
+  user-select: none;
+}
+
+.lineCode {
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-xs);
+  color: var(--gray-300);
+}
+
+.activeLine .lineCode {
+  color: #a5b4fc;
+}
+
+/* Cache Visualization */
+.cacheContainer {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  padding: var(--space-md);
+}
+
+.cacheHeader {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--gray-400);
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.cacheGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.emptyCache {
+  text-align: center;
+  color: var(--gray-600);
+  padding: var(--space-md);
+}
+
+.cacheEntry {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+
+.cacheEntry.hit {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.cacheEntry.new {
+  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.cacheKey {
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-sm);
+  color: #a78bfa;
+  min-width: 80px;
+}
+
+.cacheArrow {
+  color: var(--gray-500);
+}
+
+.cacheValue {
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-sm);
+  color: var(--gray-300);
+}
+
+.hitBadge,
+.newBadge {
+  position: absolute;
+  right: var(--space-sm);
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-bold);
+}
+
+.hitBadge {
+  background: #10b981;
+  color: var(--color-black);
+}
+
+.newBadge {
+  background: #f59e0b;
+  color: var(--color-black);
+}
+
+/* Call Panel */
+.callPanel {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.callHeader {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--gray-500);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.callContent {
+  padding: var(--space-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+}
+
+.callArgs,
+.callResult {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.callLabel {
+  font-size: var(--text-sm);
+  color: var(--gray-500);
+}
+
+.callValue {
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-sm);
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+}
+
+.callValue.cached {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.callValue.computed {
+  color: #f59e0b;
+}
+
+/* Output Panel */
+.outputPanel {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.outputHeader {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--gray-500);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.output {
+  padding: var(--space-md);
+  min-height: 50px;
+}
+
+.emptyOutput {
+  color: var(--gray-700);
+}
+
+.outputLine {
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-sm);
+  color: var(--gray-300);
+  padding: 0.2rem 0;
+  white-space: pre;
+}
+
+/* Description */
+.description {
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--gray-300);
+  line-height: 1.5;
+}
+
+.stepBadge {
+  display: inline-block;
+  background: rgba(102, 126, 234, 0.3);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  color: #a5b4fc;
+  margin-right: var(--space-sm);
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+}
+
+.btnPrimary,
+.btnSecondary {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnPrimary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  color: white;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--gray-400);
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-bright);
+}
+
+.btnSecondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Insight */
+.insight {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--gray-300);
+  line-height: 1.5;
+}
+
+.insight strong {
+  color: #10b981;
+}
