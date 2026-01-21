@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+  background: var(--gradient-page);
   display: flex;
   flex-direction: column;
 }
@@ -13,16 +13,16 @@
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  background: var(--gradient-neon);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin: 0 0 0.5rem;
-  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.3));
+  filter: drop-shadow(var(--glow-neon-text));
 }
 
 .subtitle {
-  color: #888;
+  color: var(--neon-purple-dim);
   font-size: 1rem;
   margin: 0;
 }
@@ -53,7 +53,7 @@
   gap: 0.75rem;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-bright);
   margin: 0;
 }
 
@@ -63,8 +63,8 @@
   justify-content: center;
   width: 28px;
   height: 28px;
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-  border-radius: 8px;
+  background: var(--gradient-neon);
+  border-radius: var(--radius-lg);
   font-size: 0.875rem;
   font-weight: 700;
   color: white;
@@ -72,23 +72,23 @@
 
 .sectionDescription {
   font-size: 0.875rem;
-  color: #888;
+  color: var(--neon-purple-dim);
   margin: 0.25rem 0 0;
 }
 
 .sectionDescription strong {
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
 }
 
 .viewAllLink {
   font-size: 0.875rem;
-  color: #a855f7;
+  color: var(--neon-purple);
   text-decoration: none;
   padding: 0.5rem 0;
 }
 
 .viewAllLink:hover {
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
 }
 
 /* Concepts Grid - Section 1 */
@@ -108,20 +108,20 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1.25rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
   text-decoration: none;
   color: inherit;
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal);
   text-align: center;
 }
 
 .conceptCard:hover {
-  background: rgba(168, 85, 247, 0.1);
-  border-color: rgba(168, 85, 247, 0.4);
+  background: var(--surface-card-hover);
+  border-color: var(--border-card-hover);
   transform: translateY(-4px);
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2), 0 0 40px rgba(236, 72, 153, 0.1);
+  box-shadow: var(--glow-neon);
 }
 
 .conceptIcon {
@@ -136,13 +136,13 @@
 .conceptTitle {
   font-size: 1rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--text-bright);
   margin: 0 0 0.25rem;
 }
 
 .conceptDescription {
   font-size: 0.75rem;
-  color: #888;
+  color: var(--neon-purple-dim);
   margin: 0;
   line-height: 1.4;
 }
@@ -151,9 +151,9 @@
   font-size: 0.65rem;
   text-transform: uppercase;
   padding: 0.2rem 0.5rem;
-  background: rgba(168, 85, 247, 0.15);
-  border-radius: 4px;
-  color: #c4b5fd;
+  background: var(--neon-purple-15);
+  border-radius: var(--radius-sm);
+  color: var(--neon-purple-light);
 }
 
 /* Concept Category Cards - Section 1 (new) */
@@ -168,19 +168,19 @@
   flex-direction: column;
   gap: 0.75rem;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--surface-card);
+  border: 1px solid var(--border-card);
   border-radius: 16px;
   text-decoration: none;
   color: inherit;
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal);
 }
 
 .conceptCategoryCard:hover {
-  background: rgba(168, 85, 247, 0.08);
-  border-color: rgba(168, 85, 247, 0.4);
+  background: var(--neon-purple-8);
+  border-color: var(--border-card-hover);
   transform: translateY(-4px);
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2), 0 0 40px rgba(236, 72, 153, 0.1);
+  box-shadow: var(--glow-neon);
 }
 
 .conceptCategoryHeader {
@@ -193,28 +193,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
 }
 
 .conceptCategoryBadge {
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.3rem 0.75rem;
-  background: rgba(168, 85, 247, 0.15);
+  background: var(--neon-purple-15);
   border-radius: 20px;
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
 }
 
 .conceptCategoryTitle {
   font-size: 1.35rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-bright);
   margin: 0;
 }
 
 .conceptCategoryDescription {
   font-size: 0.9rem;
-  color: #888;
+  color: var(--neon-purple-dim);
   margin: 0;
   line-height: 1.5;
 }
@@ -229,16 +229,16 @@
 .topicTag {
   font-size: 0.7rem;
   padding: 0.25rem 0.6rem;
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.2);
-  border-radius: 12px;
-  color: #c4b5fd;
+  background: var(--neon-purple-10);
+  border: 1px solid var(--neon-purple-20);
+  border-radius: var(--radius-xl);
+  color: var(--neon-purple-light);
 }
 
 .topicMore {
   font-size: 0.7rem;
   padding: 0.25rem 0.6rem;
-  color: #666;
+  color: var(--text-muted);
 }
 
 /* Build Grid - Section 2 */
@@ -257,19 +257,19 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
   text-decoration: none;
   color: inherit;
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal);
 }
 
 .buildCard:hover {
-  background: rgba(168, 85, 247, 0.06);
-  border-color: rgba(168, 85, 247, 0.3);
+  background: var(--neon-purple-5);
+  border-color: var(--neon-purple-30);
   transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
+  box-shadow: 0 0 15px var(--neon-purple-15);
 }
 
 .buildIcon {
@@ -277,7 +277,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
 }
 
 .buildContent {
@@ -288,7 +288,7 @@
 .buildTitle {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--text-bright);
   margin: 0 0 0.15rem;
   white-space: nowrap;
   overflow: hidden;
@@ -297,7 +297,7 @@
 
 .buildDescription {
   font-size: 0.7rem;
-  color: #666;
+  color: var(--text-muted);
   margin: 0;
   line-height: 1.3;
   display: -webkit-box;
@@ -310,29 +310,29 @@
   flex-shrink: 0;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #c4b5fd;
-  background: rgba(168, 85, 247, 0.1);
+  color: var(--neon-purple-light);
+  background: var(--neon-purple-10);
   padding: 0.25rem 0.5rem;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
 }
 
 /* DSA Banner - Section 3 */
 .dsaBanner {
   display: block;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
-  border: 1px solid rgba(168, 85, 247, 0.3);
+  background: var(--gradient-neon-subtle);
+  border: 1px solid var(--neon-purple-30);
   border-radius: 16px;
   padding: 1.5rem;
   text-decoration: none;
   color: inherit;
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal);
 }
 
 .dsaBanner:hover {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%);
-  border-color: rgba(168, 85, 247, 0.5);
+  background: var(--gradient-neon-hover);
+  border-color: var(--neon-purple-50);
   transform: translateY(-2px);
-  box-shadow: 0 0 25px rgba(168, 85, 247, 0.25), 0 0 50px rgba(236, 72, 153, 0.15);
+  box-shadow: var(--glow-neon-strong);
 }
 
 .dsaContent {
@@ -352,19 +352,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
 }
 
 .dsaTitle {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-bright);
   margin: 0 0 0.25rem;
 }
 
 .dsaDescription {
   font-size: 0.9rem;
-  color: #aaa;
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -381,7 +381,7 @@
   display: block;
   font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  background: var(--gradient-neon);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -390,7 +390,7 @@
 
 .dsaLabel {
   font-size: 0.75rem;
-  color: #888;
+  color: var(--neon-purple-dim);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -405,23 +405,23 @@
 .dsaTopic {
   font-size: 0.75rem;
   padding: 0.35rem 0.75rem;
-  background: rgba(168, 85, 247, 0.15);
-  border: 1px solid rgba(168, 85, 247, 0.3);
+  background: var(--neon-purple-15);
+  border: 1px solid var(--neon-purple-30);
   border-radius: 20px;
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
 }
 
 .dsaMore {
   font-size: 0.75rem;
   padding: 0.35rem 0.75rem;
-  color: #888;
+  color: var(--neon-purple-dim);
 }
 
 .dsaCta {
   display: inline-block;
   padding: 0.6rem 1.5rem;
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-  border-radius: 8px;
+  background: var(--gradient-neon);
+  border-radius: var(--radius-lg);
   font-size: 0.9rem;
   font-weight: 600;
   color: white;
@@ -431,9 +431,9 @@
 .footer {
   text-align: center;
   padding: 1.5rem 2rem;
-  color: #555;
+  color: var(--text-muted);
   font-size: 0.875rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--border-card);
 }
 
 /* Tablet */

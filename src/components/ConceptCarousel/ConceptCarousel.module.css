@@ -13,12 +13,12 @@
   border-radius: 50%;
   border: none;
   background: rgba(15, 15, 26, 0.9);
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal);
   backdrop-filter: blur(8px);
   opacity: 0;
 }
@@ -29,7 +29,7 @@
 
 .navButton:hover:not(:disabled) {
   background: rgba(168, 85, 247, 0.6);
-  color: #fff;
+  color: var(--text-bright);
   transform: translateY(-60%) scale(1.1);
 }
 
@@ -69,7 +69,7 @@
 .cardWrapper {
   flex: 0 0 340px;
   scroll-snap-align: start;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform var(--transition-slow), opacity var(--transition-slow);
 }
 
 .cardWrapper.active {
@@ -83,12 +83,12 @@
 /* Card styling */
 .card {
   position: relative;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15));
+  background: linear-gradient(135deg, var(--neon-purple-15), var(--neon-pink-15));
   border-radius: 16px;
   padding: 2px;
   text-decoration: none;
   color: inherit;
-  transition: all 0.3s ease;
+  transition: all var(--transition-slow);
   display: block;
   height: 100%;
 }
@@ -99,14 +99,14 @@
   inset: 0;
   border-radius: 16px;
   padding: 2px;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.4));
+  background: linear-gradient(135deg, var(--neon-purple-40), rgba(236, 72, 153, 0.4));
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0.5;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-slow);
 }
 
 .cardWrapper.active .card::before {
@@ -115,9 +115,7 @@
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow:
-    0 0 24px rgba(168, 85, 247, 0.35),
-    0 0 48px rgba(236, 72, 153, 0.2);
+  box-shadow: var(--glow-neon-strong);
 }
 
 .card:hover::before {
@@ -125,7 +123,7 @@
 }
 
 .cardInner {
-  background: #1a1a2e;
+  background: var(--bg-page-secondary);
   border-radius: 14px;
   padding: 1.5rem;
   display: flex;
@@ -150,13 +148,13 @@
 .cardTitle {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #f5f7ff;
+  color: var(--text-bright);
   margin: 0.25rem 0 0;
 }
 
 .cardDescription {
   font-size: 0.85rem;
-  color: #9ca3af;
+  color: var(--text-secondary);
   margin: 0;
   line-height: 1.5;
   flex: 1;
@@ -167,12 +165,12 @@
   gap: 1rem;
   margin-top: auto;
   padding-top: 0.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--border-card);
 }
 
 .stat {
   font-size: 0.75rem;
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
   font-weight: 500;
 }
 
@@ -189,21 +187,21 @@
   height: 8px;
   border-radius: 50%;
   border: none;
-  background: rgba(168, 85, 247, 0.3);
+  background: var(--neon-purple-30);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal);
   padding: 0;
 }
 
 .dot:hover {
-  background: rgba(168, 85, 247, 0.5);
+  background: var(--neon-purple-50);
 }
 
 .dotActive {
-  background: linear-gradient(135deg, #a855f7, #ec4899);
+  background: var(--gradient-neon);
   width: 24px;
-  border-radius: 4px;
-  box-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 8px var(--neon-purple-50);
 }
 
 /* Responsive */

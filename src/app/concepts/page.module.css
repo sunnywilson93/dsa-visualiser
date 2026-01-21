@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+  background: var(--gradient-page);
   display: flex;
   flex-direction: column;
 }
@@ -21,16 +21,16 @@
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  background: var(--gradient-neon);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin: 0 0 0.75rem;
-  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.3));
+  filter: drop-shadow(var(--glow-neon-text));
 }
 
 .subtitle {
-  color: #9ca3af;
+  color: var(--text-secondary);
   font-size: 1rem;
   margin: 0;
   line-height: 1.6;
@@ -47,7 +47,7 @@
   gap: 0.75rem;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #f5f7ff;
+  color: var(--text-bright);
   margin: 0 0 1rem;
 }
 
@@ -59,7 +59,7 @@
 .sectionDescription {
   font-size: 0.875rem;
   font-weight: 400;
-  color: #6b7280;
+  color: var(--text-muted);
   margin-left: auto;
 }
 
@@ -73,12 +73,12 @@
 /* Neon card styling */
 .card {
   position: relative;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15));
+  background: linear-gradient(135deg, var(--neon-purple-15), var(--neon-pink-15));
   border-radius: 14px;
   padding: 2px;
   text-decoration: none;
   color: inherit;
-  transition: all 0.3s ease;
+  transition: all var(--transition-slow);
   display: block;
 }
 
@@ -88,19 +88,19 @@
   inset: 0;
   border-radius: 14px;
   padding: 2px;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.4));
+  background: linear-gradient(135deg, var(--neon-purple-40), rgba(236, 72, 153, 0.4));
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0.5;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-slow);
 }
 
 .cardInner {
-  background: #1a1a2e;
-  border-radius: 12px;
+  background: var(--bg-page-secondary);
+  border-radius: var(--radius-xl);
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
@@ -110,9 +110,7 @@
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow:
-    0 0 20px rgba(168, 85, 247, 0.3),
-    0 0 40px rgba(236, 72, 153, 0.15);
+  box-shadow: var(--glow-neon);
 }
 
 .card:hover::before {
@@ -147,20 +145,20 @@
   font-weight: 600;
   padding: 0.25rem 0.6rem;
   border-radius: 999px;
-  background: rgba(168, 85, 247, 0.3);
-  color: #c4b5fd;
+  background: var(--neon-purple-30);
+  color: var(--neon-purple-light);
 }
 
 .cardTitle {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #f5f7ff;
+  color: var(--text-bright);
   margin: 0.25rem 0 0;
 }
 
 .cardDescription {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: var(--text-secondary);
   margin: 0;
   line-height: 1.4;
   flex: 1;
@@ -171,27 +169,27 @@
   gap: 1rem;
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--border-card);
 }
 
 .keyPoints,
 .examples {
   font-size: 0.7rem;
-  color: #c4b5fd;
+  color: var(--neon-purple-light);
   font-weight: 500;
 }
 
 .searchResults {
   background: rgba(26, 26, 46, 0.5);
-  border: 1px solid rgba(168, 85, 247, 0.2);
-  border-radius: 12px;
+  border: 1px solid var(--neon-purple-20);
+  border-radius: var(--radius-xl);
   padding: 0.5rem;
 }
 
 .footer {
   text-align: center;
   padding: 2rem;
-  color: #6b7280;
+  color: var(--text-muted);
   font-size: 0.875rem;
 }
 

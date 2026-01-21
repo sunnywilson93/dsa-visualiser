@@ -5,9 +5,14 @@
   --bg-tertiary: #242b33;
   --bg-elevated: #2d353f;
 
+  /* Page backgrounds (neon theme) */
+  --bg-page: #0f0f1a;
+  --bg-page-secondary: #1a1a2e;
+
   --text-primary: #e6edf3;
   --text-secondary: #8b949e;
   --text-muted: #6e7681;
+  --text-bright: #f5f7ff;
 
   --accent-blue: #58a6ff;
   --accent-green: #3fb950;
@@ -17,7 +22,49 @@
   --accent-cyan: #39c5cf;
   --accent-orange: #db6d28;
 
+  /* Neon theme colors */
+  --neon-purple: #a855f7;
+  --neon-pink: #ec4899;
+  --neon-purple-light: #c4b5fd;
+  --neon-purple-dim: #888;
+
+  /* Neon transparent variants */
+  --neon-purple-5: rgba(168, 85, 247, 0.05);
+  --neon-purple-8: rgba(168, 85, 247, 0.08);
+  --neon-purple-10: rgba(168, 85, 247, 0.1);
+  --neon-purple-15: rgba(168, 85, 247, 0.15);
+  --neon-purple-20: rgba(168, 85, 247, 0.2);
+  --neon-purple-25: rgba(168, 85, 247, 0.25);
+  --neon-purple-30: rgba(168, 85, 247, 0.3);
+  --neon-purple-40: rgba(168, 85, 247, 0.4);
+  --neon-purple-50: rgba(168, 85, 247, 0.5);
+  --neon-pink-10: rgba(236, 72, 153, 0.1);
+  --neon-pink-15: rgba(236, 72, 153, 0.15);
+
+  /* Gradients */
+  --gradient-neon: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-pink) 100%);
+  --gradient-neon-subtle: linear-gradient(135deg, var(--neon-purple-10) 0%, var(--neon-pink-10) 100%);
+  --gradient-neon-hover: linear-gradient(135deg, var(--neon-purple-15) 0%, var(--neon-pink-15) 100%);
+  --gradient-page: linear-gradient(135deg, var(--bg-page) 0%, var(--bg-page-secondary) 100%);
+
+  /* Neon shadows/glows */
+  --glow-neon: 0 0 20px var(--neon-purple-20), 0 0 40px var(--neon-pink-10);
+  --glow-neon-strong: 0 0 25px var(--neon-purple-25), 0 0 50px var(--neon-pink-15);
+  --glow-neon-text: 0 0 20px var(--neon-purple-30);
+
+  /* Card/surface styles */
+  --surface-card: rgba(255, 255, 255, 0.03);
+  --surface-card-hover: var(--neon-purple-10);
+  --border-card: rgba(255, 255, 255, 0.08);
+  --border-card-hover: var(--neon-purple-40);
+
   /* Difficulty levels */
+  --difficulty-easy: #22c55e;
+  --difficulty-easy-bg: rgba(34, 197, 94, 0.15);
+  --difficulty-medium: #eab308;
+  --difficulty-medium-bg: rgba(234, 179, 8, 0.15);
+  --difficulty-hard: #ef4444;
+  --difficulty-hard-bg: rgba(239, 68, 68, 0.15);
   --difficulty-1: #10b981;
   --difficulty-2: #f59e0b;
   --difficulty-3: #ef4444;

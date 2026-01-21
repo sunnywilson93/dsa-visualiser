@@ -4,7 +4,7 @@
   z-index: 100;
   background: rgba(15, 15, 26, 0.85);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--border-card);
 }
 
 .container {
@@ -31,8 +31,8 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 8px;
+  background: var(--gradient-neon);
+  border-radius: var(--radius-lg);
   font-size: 0.75rem;
   font-weight: 700;
   color: #fff;
@@ -42,7 +42,7 @@
 .logoText {
   font-size: 1.125rem;
   font-weight: 600;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-neon);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -76,21 +76,21 @@
 .breadcrumbLink {
   display: flex;
   align-items: center;
-  color: #888;
+  color: var(--neon-purple-dim);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color var(--transition-normal);
 }
 
 .breadcrumbLink:hover {
-  color: #fff;
+  color: var(--text-bright);
 }
 
 .separator {
-  color: #555;
+  color: var(--text-muted);
 }
 
 .breadcrumbCurrent {
-  color: #ccc;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
