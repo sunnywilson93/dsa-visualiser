@@ -10,7 +10,9 @@
   align-items: center;
   gap: var(--space-lg);
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .backLink {
@@ -44,7 +46,9 @@
   border: 1px solid var(--neon-purple-25);
   border-radius: var(--radius-xl);
   padding: 0.625rem 1rem;
-  margin: 1rem 2rem;
+  margin: 1rem auto;
+  max-width: calc(1200px - 4rem);
+  width: calc(100% - 4rem);
   transition: all var(--transition-normal);
 }
 
@@ -167,7 +171,9 @@
   display: flex;
   gap: var(--space-sm);
   flex-wrap: wrap;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .subcatBtn {
@@ -197,7 +203,9 @@
 
 .conceptLinkWrapper {
   padding: 0.75rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .conceptLink {
@@ -234,6 +242,9 @@
 .main {
   flex: 1;
   padding: 1.5rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .problemCount {
@@ -285,66 +296,6 @@
   gap: var(--space-lg);
 }
 
-.problemCard {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-xl);
-  padding: var(--space-lg);
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.problemCard:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(102, 126, 234, 0.3);
-}
-
-.problemHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--space-md);
-  margin-bottom: 0.5rem;
-}
-
-.problemName {
-  font-weight: var(--font-medium);
-  color: var(--color-white);
-  font-size: 0.95rem;
-}
-
-.difficultyBadge {
-  font-size: var(--text-2xs);
-  font-weight: var(--font-medium);
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
-  text-transform: uppercase;
-  flex-shrink: 0;
-}
-
-.difficultyBadge.easy {
-  background: rgba(74, 222, 128, 0.15);
-  color: #4ade80;
-}
-
-.difficultyBadge.medium {
-  background: rgba(251, 191, 36, 0.15);
-  color: #fbbf24;
-}
-
-.difficultyBadge.hard {
-  background: rgba(248, 113, 113, 0.15);
-  color: #f87171;
-}
-
-.problemDesc {
-  color: var(--gray-500);
-  font-size: var(--text-base);
-  margin: 0;
-  line-height: 1.4;
-}
-
 .notFound {
   display: flex;
   flex-direction: column;
@@ -366,7 +317,8 @@
   }
 
   .searchBar {
-    margin: 1rem 1.5rem;
+    max-width: calc(100% - 3rem);
+    width: calc(100% - 3rem);
   }
 
   .subcategories {
@@ -396,7 +348,8 @@
     flex-wrap: wrap;
     gap: var(--space-sm);
     padding: var(--space-md);
-    margin: var(--space-lg);
+    max-width: calc(100% - 2rem);
+    width: calc(100% - 2rem);
   }
 
   .searchInput {
@@ -438,18 +391,6 @@
   .problemGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-md);
-  }
-
-  .problemCard {
-    padding: 0.875rem;
-  }
-
-  .problemName {
-    font-size: var(--text-base);
-  }
-
-  .problemDesc {
-    font-size: var(--text-sm);
   }
 }
 
