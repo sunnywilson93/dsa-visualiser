@@ -1,26 +1,24 @@
 # Technology Stack
 
-**Analysis Date:** 2026-01-22
+**Analysis Date:** 2026-01-23
 
 ## Languages
 
 **Primary:**
 - TypeScript 5.5 - All source code, components, and engine logic
-- JSX - React component definitions in `.tsx` files
-- JavaScript - Client-side code execution and visualization
+- JavaScript - Build and configuration files
 
 **Secondary:**
-- CSS Modules - Component styling (`*.module.css`)
-- HTML - Metadata and structured data (JSON-LD)
+- CSS - Styling with CSS Modules (`.module.css` pattern)
 
 ## Runtime
 
 **Environment:**
-- Node.js - Development and build environment
-- Web Browser - Client-side execution (ES2017+)
+- Node.js (specified in package.json dependencies)
+- Browser runtime (ES2017 target with DOM APIs)
 
 **Package Manager:**
-- npm - Dependency management
+- npm
 - Lockfile: `package-lock.json` present
 
 ## Frameworks
@@ -28,102 +26,66 @@
 **Core:**
 - Next.js 14.2.0 - Full-stack React framework with App Router
 - React 18.3.1 - UI component library
-- Zustand 4.5.2 - State management (executionStore for interpreter state)
+- React DOM 18.3.1 - DOM rendering
 
-**UI/Visualization:**
-- Framer Motion 11.0.0 - Animation library for smooth transitions
-- Lucide React 0.400.0 - Icon library
-- @monaco-editor/react 4.6.0 - Code editor component integration
-
-**Code Analysis:**
-- Acorn 8.11.3 - JavaScript parser (AST generation from source code)
-- Acorn-walk 8.3.2 - AST tree walker for interpretation
+**State Management:**
+- Zustand 4.5.2 - Lightweight store management in `src/store/executionStore.ts`
 - Immer 10.0.4 - Immutable state updates
 
-**Testing:**
-- Vitest 4.0.16 - Fast unit test runner
-- @testing-library/react 16.3.1 - React component testing utilities
-- @testing-library/jest-dom 6.9.1 - DOM matchers
-- @testing-library/user-event 14.6.1 - User interaction simulation
-- jsdom 27.4.0 - DOM environment for tests
-- @vitest/coverage-v8 4.0.16 - Code coverage reporting
+**Visualization & Animation:**
+- Framer Motion 11.0.0 - Component animations and transitions
+- Lucide React 0.400.0 - Icon library
 
-**Build/Dev:**
-- TypeScript 5.5 - Type checking and transpilation
-- @vitejs/plugin-react 4.3.1 - Vite React integration for tests
-- ESLint 8.57.0 - Linting (`next lint`)
-- eslint-config-next 14.2.0 - Next.js ESLint configuration
+**Code Editing:**
+- Monaco Editor (@monaco-editor/react 4.6.0) - Code editor component in CodeEditor
+
+**Parsing & Interpretation:**
+- Acorn 8.11.3 - JavaScript AST parser in `src/engine/parser.ts`
+- Acorn-walk 8.3.2 - AST traversal utility used in interpreter
 
 ## Key Dependencies
 
 **Critical:**
-- `acorn` & `acorn-walk` - Parse JavaScript code to AST and walk the tree for step-by-step execution
-- `zustand` - Manage interpreter execution state (code, AST, execution steps, current step index)
-- `@monaco-editor/react` - Code editor UI for writing and debugging JavaScript
-- `framer-motion` - Animation for visualizations and UI interactions
+- `acorn` - Parses user-written JavaScript code to AST for step-by-step execution
+- `zustand` - Manages execution state (code, steps, breakpoints, console output)
+- `framer-motion` - Powers visualization animations and transitions
+- `@monaco-editor/react` - Provides in-browser code editing experience
 
 **Infrastructure:**
-- `next` - Server-side rendering, routing, and deployment preparation
-- `react` & `react-dom` - Component rendering and DOM updates
+- `next` - Serves pages, handles routing, provides SSR/SSG
+- `lucide-react` - UI icons throughout the app
 
 ## Configuration
 
 **Environment:**
-- Configured via Next.js metadata API in `src/app/layout.tsx`
-- Google Analytics enabled via environment variable `GA_MEASUREMENT_ID` (hardcoded as `G-W2VCY1D7Y7`)
-- Google Search Console verification enabled
-- No `.env` file required for core functionality
+- No `.env` files detected in repository
+- Google Analytics ID hardcoded: `G-W2VCY1D7Y7` in `src/components/Analytics.tsx`
+- Vercel deployment configuration: `vercel.json` with `framework: nextjs`
 
 **Build:**
-- TypeScript config: `tsconfig.json`
-  - Target: ES2017
-  - Strict mode enabled
-  - Path alias: `@/*` → `src/*`
-  - Module: ESNext
-  - JSX: preserve (processed by Next.js)
-- Vitest config: `vitest.config.ts`
+- `next.config.js` - Next.js configuration with React strict mode enabled
+- `tsconfig.json` - TypeScript configuration targeting ES2017, with path alias `@/*` → `src/*`
+
+**Development:**
+- `vitest.config.ts` - Test runner configuration
   - Environment: jsdom
   - Setup file: `src/__tests__/setup.ts`
+  - Test discovery: `src/**/*.test.{ts,tsx}`
   - Coverage provider: v8
-- Next.js config: `next.config.js`
-  - React Strict Mode enabled
-  - Default configuration
+  - Coverage reporters: text, json, html
 
 ## Platform Requirements
 
 **Development:**
-- Node.js (version not locked, npm latest)
-- TypeScript 5.5 compatible environment
-- Browser with ES2017 support
+- TypeScript ~5.5.0 (strict mode required)
+- Node.js with npm
+- jsdom for test environment (for DOM simulation)
 
 **Production:**
-- Deployment target: Vercel (`.vercel/` directory present)
-- Static site generation + SSR via Next.js
-- Browser requirements: Modern JavaScript support (closures, async/await, Promises, prototypes)
-- No backend server required (client-side only after initial HTML)
-- No database required (static content + client-side state)
-
-## Build Output
-
-**Development:**
-```bash
-npm run dev           # Start Next.js dev server on port 3000
-```
-
-**Production:**
-```bash
-npm run build         # Next.js production build → .next/
-npm start            # Start production server
-npm run lint         # ESLint + Next.js lint checks
-```
-
-**Testing:**
-```bash
-npm test             # Vitest watch mode
-npm run test:run     # Single test run (CI mode)
-npm run test:coverage # Generate coverage report
-```
+- Deployment target: Vercel (indicated by `vercel.json`)
+- Next.js 14 compatible hosting
+- Modern browsers with ES2017 support (Arrow functions, async/await, classes, etc.)
 
 ---
 
-*Stack analysis: 2026-01-22*
+*Stack analysis: 2026-01-23*

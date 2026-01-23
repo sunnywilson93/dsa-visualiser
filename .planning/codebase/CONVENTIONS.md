@@ -1,11 +1,11 @@
 # Coding Conventions
 
-**Analysis Date:** 2026-01-22
+**Analysis Date:** 2026-01-23
 
 ## Naming Patterns
 
 **Files:**
-- React components: PascalCase with `.tsx` extension (e.g., `CodeEditor.tsx`, `Variables.tsx`)
+- React components: PascalCase with `.tsx` extension (e.g., `Controls.tsx`, `Variables.tsx`)
 - Non-React modules: camelCase with `.ts` extension (e.g., `parser.ts`, `runtime.ts`)
 - Barrel exports: `index.ts` files re-export from modules in the directory (e.g., `src/components/index.ts`)
 - CSS modules: `ComponentName.module.css` imported as `styles` object
@@ -86,7 +86,7 @@
     error?: ExecutionError
   }
   ```
-- Error formatting: Dedicated `errorFormatter.ts` module with specific patterns (syntax, language, runtime, unsupported, limit)
+- Error formatting: Dedicated `src/engine/errorFormatter.ts` module with specific patterns (syntax, language, runtime, unsupported, limit)
 - Try-catch blocks used selectively; errors wrapped with context (e.g., line/column info)
 - Custom control flow signals for break/continue: `BreakSignal` and `ContinueSignal` classes extending Error
 - Validation via `validateCode()` for warnings before execution (infinite loops, restricted APIs)
@@ -110,7 +110,7 @@
 ## Comments
 
 **When to Comment:**
-- Complex AST-to-source conversion logic (e.g., `nodeToSource()` function)
+- Complex AST-to-source conversion logic (e.g., `nodeToSource()` function in `src/engine/interpreter.ts`)
 - Non-obvious interpretation rules (e.g., breakpoint/continue signals)
 - Public function documentation with block comments explaining purpose and parameters
 - Type guard patterns and complex type coercions
@@ -167,4 +167,4 @@
 
 ---
 
-*Convention analysis: 2026-01-22*
+*Convention analysis: 2026-01-23*

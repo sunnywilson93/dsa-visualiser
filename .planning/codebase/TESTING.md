@@ -1,6 +1,6 @@
 # Testing Patterns
 
-**Analysis Date:** 2026-01-22
+**Analysis Date:** 2026-01-23
 
 ## Test Framework
 
@@ -33,7 +33,7 @@ npm test -- interpreter.test.ts
 
 **Location:**
 - Co-located with source: `.test.ts` or `.test.tsx` suffix in same directory as implementation
-- Example: `src/engine/parser.ts` → `src/engine/parser.test.ts` not found (main tests in `interpreter.test.ts`)
+- Example: `src/engine/interpreter.ts` → `src/engine/interpreter.test.ts`
 - Dedicated test utilities: `src/__tests__/setup.ts`
 
 **Naming:**
@@ -115,7 +115,7 @@ describe('Interpreter', () => {
 
 ## Mocking
 
-**Framework:** Vitest built-in mocking (vi)
+**Framework:** Vitest built-in mocking (vi not required for setup tests)
 
 **Global Mocks Setup** (`src/__tests__/setup.ts`):
 ```typescript
@@ -162,7 +162,7 @@ global.IntersectionObserver = class IntersectionObserver {
 
 **Test Data:**
 
-Language detection test examples:
+Language detection test examples at `src/engine/languageDetector.test.ts`:
 ```typescript
 it('detects valid JavaScript with const/let', () => {
   const result = detectLanguage('const x = 5; let y = 10;')
@@ -176,7 +176,7 @@ it('detects Python function definition', () => {
 })
 ```
 
-Event loop test data:
+Event loop test data from `src/engine/eventLoopAnalyzer.test.ts`:
 ```typescript
 const code = `
 console.log('start')
@@ -212,9 +212,9 @@ npm run test:coverage
 - Scope: Single function/module isolation
 - Approach: Direct function calls with input/output verification
 - Examples:
-  - `interpreter.test.ts` - variable declarations, assignments, function calls, loops
-  - `languageDetector.test.ts` - pattern matching for JS vs Python
-  - `eventLoopAnalyzer.test.ts` - async execution order
+  - `src/engine/interpreter.test.ts` - variable declarations, assignments, function calls, loops
+  - `src/engine/languageDetector.test.ts` - pattern matching for JS vs Python
+  - `src/engine/eventLoopAnalyzer.test.ts` - async execution order
 
 **Integration Tests:**
 - Scope: Multiple modules working together
@@ -270,15 +270,31 @@ expect(finalScope.variables.x).toBeDefined()
 expect(finalScope.variables.x.type).toBe('primitive')
 ```
 
+**Skipped Tests:**
+```typescript
+// Tests marked with it.skip() are deferred until feature is complete
+it.skip('should handle array.push', () => {
+  // Note: Array method calls (.push, .pop, etc.) are not fully tracked
+  // by the interpreter - skipping until support is added
+  const steps = executeCode(`
+    let arr = [1, 2];
+    arr.push(3);
+  `)
+
+  const finalScope = steps[steps.length - 1].scopes[0]
+  expect(getArrayElements(finalScope.variables.arr).length).toBe(3)
+})
+```
+
 ## Critical Test Coverage Areas
 
 **Well-Covered:**
-- Interpreter variable declarations (var, let, const)
+- Interpreter variable declarations (var, let, const) at `src/engine/interpreter.test.ts`
 - Assignment and compound assignment operations
 - Function calls and parameter passing
 - Loop iteration and control flow
-- Language detection and mismatch handling
-- Event loop ordering (sync, microtask, macrotask)
+- Language detection and mismatch handling at `src/engine/languageDetector.test.ts`
+- Event loop ordering (sync, microtask, macrotask) at `src/engine/eventLoopAnalyzer.test.ts`
 
 **Gaps/Minimal Coverage:**
 - React component rendering (no component tests found)
@@ -290,4 +306,4 @@ expect(finalScope.variables.x.type).toBe('primitive')
 
 ---
 
-*Testing analysis: 2026-01-22*
+*Testing analysis: 2026-01-23*
