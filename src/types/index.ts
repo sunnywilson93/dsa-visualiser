@@ -89,6 +89,7 @@ export interface FunctionValue {
   params: string[]
   body: Node
   closure: ScopeChain
+  defaultValues?: (Node | null)[]
 }
 
 export interface NullValue {

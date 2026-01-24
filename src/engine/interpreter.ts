@@ -232,11 +232,18 @@ export class Interpreter {
   private declareFunctionHoisted(node: ASTNode): void {
     if (!node.id?.name) return
 
+    const rawParams = node.params || []
     const func = createFunction(
       node.id.name,
-      (node.params || []).map((p: { name: string }) => p.name),
+      rawParams.map((p: ASTNode) => {
+        if (p.type === 'Identifier') return p.name!
+        if (p.type === 'AssignmentPattern' && p.left?.name) return p.left.name
+        if (p.type === 'RestElement' && p.argument?.name) return p.argument.name
+        return ''
+      }).filter(Boolean),
       node.body!,
-      [...this.state.scopes]
+      [...this.state.scopes],
+      rawParams.map((p: ASTNode) => p.type === 'AssignmentPattern' ? p.right : null)
     )
 
     this.setVariable(node.id.name, func)
@@ -261,6 +268,8 @@ export class Interpreter {
         return this.executeIfStatement(node)
       case 'ForStatement':
         return this.executeForStatement(node)
+      case 'ForOfStatement':
+        return this.executeForOfStatement(node)
       case 'WhileStatement':
         return this.executeWhileStatement(node)
       case 'BlockStatement':
@@ -334,12 +343,15 @@ export class Interpreter {
   private executeFunctionExpression(node: ASTNode): RuntimeValue {
     // Create a function value for function expressions and arrow functions
     const name = node.id?.name || '<anonymous>'
-    const params = (node.params || []).map((p: ASTNode) => {
+    const rawParams = node.params || []
+    const params = rawParams.map((p: ASTNode) => {
       // Handle different parameter types
       if (p.type === 'Identifier') return p.name!
+      if (p.type === 'AssignmentPattern' && p.left?.name) return p.left.name
       if (p.type === 'RestElement' && p.argument?.name) return p.argument.name
       return ''
     }).filter(Boolean)
+    const defaultValues = rawParams.map((p: ASTNode) => p.type === 'AssignmentPattern' ? p.right : null)
 
     // For arrow functions with expression body, wrap in a return statement
     let body = node.body as ASTNode
@@ -358,7 +370,7 @@ export class Interpreter {
       } as ASTNode
     }
 
-    return createFunction(name, params, body, [...this.state.scopes])
+    return createFunction(name, params, body, [...this.state.scopes], defaultValues)
   }
 
   private executeExpressionStatement(node: ASTNode): RuntimeValue {
@@ -475,6 +487,82 @@ export class Interpreter {
     return createUndefined()
   }
 
+  private executeForOfStatement(node: ASTNode): RuntimeValue {
+    // Create block scope for loop
+    this.pushScope('block', 'for-of-loop')
+
+    // Get the iterable
+    const iterable = this.executeNode(node.right as ASTNode)
+
+    // Get elements to iterate over
+    let elements: RuntimeValue[] = []
+    if (iterable.type === 'array') {
+      elements = iterable.elements
+    } else if (iterable.type === 'primitive' && typeof iterable.value === 'string') {
+      // String iteration
+      elements = (iterable.value as string).split('').map(char => createPrimitive(char))
+    }
+
+    this.recordStep(node, 'loop-start', `For-of loop started over ${elements.length} elements`)
+
+    let iterations = 0
+    const maxIterations = 1000
+    let shouldBreak = false
+
+    for (let i = 0; i < elements.length && iterations < maxIterations && !shouldBreak; i++) {
+      const element = elements[i]
+
+      // Declare the loop variable
+      const left = node.left as ASTNode
+      if (left.type === 'VariableDeclaration') {
+        const declarations = left.declarations as ASTNode[]
+        const decl = declarations[0]
+        const varName = (decl.id as ASTNode).name as string
+        this.setVariable(varName, cloneValue(element))
+      }
+
+      this.recordStep(node, 'loop-iteration', `For-of loop iteration ${iterations + 1}`)
+
+      // Execute body with break/continue handling
+      try {
+        const body = node.body as ASTNode
+        if (body.type === 'BlockStatement') {
+          const statements = body.body as ASTNode[]
+          for (const stmt of statements) {
+            this.executeNode(stmt)
+          }
+        } else {
+          this.executeNode(body)
+        }
+      } catch (e) {
+        if (e instanceof BreakSignal) {
+          this.recordStep(node, 'loop-end', 'For-of loop exited via break')
+          shouldBreak = true
+          continue
+        }
+        if (e instanceof ContinueSignal) {
+          // Continue to next iteration
+        } else {
+          throw e
+        }
+      }
+
+      iterations++
+    }
+
+    if (!shouldBreak) {
+      this.recordStep(node, 'loop-end', 'For-of loop completed')
+    }
+
+    this.popScope()
+
+    if (iterations >= maxIterations) {
+      throw new Error('Maximum loop iterations exceeded')
+    }
+
+    return createUndefined()
+  }
+
   private executeWhileStatement(node: ASTNode): RuntimeValue {
     this.recordStep(node, 'loop-start', 'While loop started')
 
@@ -561,6 +649,22 @@ export class Interpreter {
       }
     }
 
+    // Check for Array static methods (e.g., Array.isArray)
+    if (
+      callee.type === 'MemberExpression' &&
+      (callee.object as ASTNode).type === 'Identifier' &&
+      ((callee.object as ASTNode).name === 'Array')
+    ) {
+      const methodName = (callee.property as ASTNode).name
+      const builtin = this.builtins.get(`Array.${methodName}`)
+      if (builtin) {
+        const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
+        const result = builtin(...args)
+        this.recordStep(node, 'expression', `Array.${methodName}() → ${formatValue(result)}`)
+        return result
+      }
+    }
+
     // Check for array methods
     if (callee.type === 'MemberExpression') {
       const obj = this.executeNode(callee.object as ASTNode)
@@ -634,9 +738,14 @@ export class Interpreter {
       depth: this.state.callStack.length,
     }
 
-    // Bind parameters
+    // Bind parameters (with default value support)
     for (let i = 0; i < func.params.length; i++) {
-      frame.params[func.params[i]] = args[i] ?? createUndefined()
+      let value = args[i]
+      // If no argument provided and there's a default value, evaluate it
+      if (value === undefined && func.defaultValues?.[i]) {
+        value = this.executeNode(func.defaultValues[i] as ASTNode)
+      }
+      frame.params[func.params[i]] = value ?? createUndefined()
     }
 
     this.state.callStack.push(frame)
@@ -662,6 +771,13 @@ export class Interpreter {
 
     if (body.type === 'BlockStatement') {
       const statements = body.body as ASTNode[]
+      // First pass: hoist function declarations
+      for (const stmt of statements) {
+        if (stmt.type === 'FunctionDeclaration') {
+          this.declareFunctionHoisted(stmt)
+        }
+      }
+      // Second pass: execute statements
       for (const stmt of statements) {
         result = this.executeNode(stmt)
         // Check if we hit a return
@@ -1055,9 +1171,13 @@ export class Interpreter {
       depth: this.state.callStack.length,
     }
 
-    // Bind parameters
+    // Bind parameters (with default value support)
     for (let i = 0; i < func.params.length; i++) {
-      frame.params[func.params[i]] = callbackArgs[i] ?? createUndefined()
+      let value = callbackArgs[i]
+      if (value === undefined && func.defaultValues?.[i]) {
+        value = this.executeNode(func.defaultValues[i] as ASTNode)
+      }
+      frame.params[func.params[i]] = value ?? createUndefined()
     }
 
     this.state.callStack.push(frame)
@@ -1078,6 +1198,13 @@ export class Interpreter {
 
     if (body.type === 'BlockStatement') {
       const statements = body.body as ASTNode[]
+      // First pass: hoist function declarations
+      for (const stmt of statements) {
+        if (stmt.type === 'FunctionDeclaration') {
+          this.declareFunctionHoisted(stmt)
+        }
+      }
+      // Second pass: execute statements
       for (const stmt of statements) {
         result = this.executeNode(stmt)
         if (frame.returnValue !== undefined) {
@@ -1124,9 +1251,13 @@ export class Interpreter {
       depth: this.state.callStack.length,
     }
 
-    // Bind parameters
+    // Bind parameters (with default value support)
     for (let i = 0; i < func.params.length; i++) {
-      frame.params[func.params[i]] = args[i] ?? createUndefined()
+      let value = args[i]
+      if (value === undefined && func.defaultValues?.[i]) {
+        value = this.executeNode(func.defaultValues[i] as ASTNode)
+      }
+      frame.params[func.params[i]] = value ?? createUndefined()
     }
 
     this.state.callStack.push(frame)
@@ -1154,6 +1285,13 @@ export class Interpreter {
 
     if (body.type === 'BlockStatement') {
       const statements = body.body as ASTNode[]
+      // First pass: hoist function declarations
+      for (const stmt of statements) {
+        if (stmt.type === 'FunctionDeclaration') {
+          this.declareFunctionHoisted(stmt)
+        }
+      }
+      // Second pass: execute statements
       for (const stmt of statements) {
         result = this.executeNode(stmt)
         if (frame.returnValue !== undefined) {

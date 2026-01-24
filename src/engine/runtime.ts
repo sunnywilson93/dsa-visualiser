@@ -56,7 +56,8 @@ export function createFunction(
   name: string,
   params: string[],
   body: unknown,
-  closure: unknown[]
+  closure: unknown[],
+  defaultValues?: (unknown | null)[]
 ): FunctionValue {
   return {
     type: 'function',
@@ -64,6 +65,7 @@ export function createFunction(
     params,
     body: body as FunctionValue['body'],
     closure: closure as FunctionValue['closure'],
+    defaultValues: defaultValues as FunctionValue['defaultValues'],
   }
 }
 

@@ -228,6 +228,21 @@ describe('Interpreter', () => {
       const loopSteps = steps.filter(s => s.type === 'loop-iteration')
       expect(loopSteps.length).toBe(6) // 2 outer + 4 inner
     })
+
+    it('should handle for-of loops', () => {
+      const steps = executeCode(`
+        let sum = 0;
+        for (let x of [1, 2, 3]) {
+          sum = sum + x;
+        }
+      `)
+
+      const loopSteps = steps.filter(s => s.type === 'loop-iteration')
+      expect(loopSteps.length).toBe(3)
+
+      const finalScope = steps[steps.length - 1].scopes[0]
+      expect(getPrimitiveValue(finalScope.variables.sum)).toBe(6)
+    })
   })
 
   describe('Conditionals', () => {
@@ -437,6 +452,29 @@ describe('Interpreter', () => {
 
       const finalScope = steps[steps.length - 1].scopes[0]
       expect(getPrimitiveValue(finalScope.variables.sum)).toBe(6)
+    })
+
+    it('should handle Array.flat polyfill with for-of and default params', () => {
+      const steps = executeCode(`
+        Array.prototype.myFlat = function(depth = 1) {
+          function flatten(arr, d) {
+            let result = [];
+            for (let item of arr) {
+              if (Array.isArray(item) && d > 0) {
+                result = result.concat(flatten(item, d - 1));
+              } else {
+                result.push(item);
+              }
+            }
+            return result;
+          }
+          return flatten(this, depth);
+        };
+
+        let flat1 = [1, [2, [3]]].myFlat();
+      `)
+
+      expect(steps.length).toBeGreaterThan(10)
     })
   })
 })
