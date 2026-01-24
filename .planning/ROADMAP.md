@@ -1,23 +1,14 @@
-# Roadmap: Enhanced JS Concept Visualizations
+# Roadmap: DSA Visualizer
 
-## Overview
+## Milestones
 
-This roadmap transforms simple auto-play visualizations into rich step-through experiences matching the EventLoopViz gold standard. Starting with shared foundation components, we systematically upgrade LoopsViz, VariablesViz, FunctionsViz, ArraysBasicsViz, and ObjectsBasicsViz to provide learners with interactive, step-controlled exploration of JavaScript execution.
+- [x] **v1.0 JS Concept Visualizations** - Phases 1-6 (shipped 2026-01-24)
+- [ ] **v1.1 DSA Pattern Visualizations** - Phases 7-10 (in progress)
 
 ## Phases
 
-**Phase Numbering:**
-- Integer phases (1, 2, 3): Planned milestone work
-- Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
-
-- [x] **Phase 1: Foundation** - Shared reusable components for all visualizations ✓
-- [x] **Phase 2: LoopsViz** - Step-through loop iteration with closure capture examples ✓
-- [x] **Phase 3: VariablesViz** - Hoisting, TDZ, and scope chain visualization ✓
-- [x] **Phase 4: FunctionsViz** - Execution context and call stack visualization ✓
-- [x] **Phase 5: ArraysBasicsViz** - Reference semantics and method iteration stepping ✓
-- [x] **Phase 6: ObjectsBasicsViz** - Property mutation and reference sharing visualization ✓
-
-## Phase Details
+<details>
+<summary>v1.0 JS Concept Visualizations (Phases 1-6) - SHIPPED 2026-01-24</summary>
 
 ### Phase 1: Foundation
 **Goal**: Reusable components exist for consistent step-through UX across all visualizations
@@ -31,8 +22,8 @@ This roadmap transforms simple auto-play visualizations into rich step-through e
 **Plans**: 2 plans
 
 Plans:
-- [x] 01-01-PLAN.md - CodePanel and StepProgress display components ✓
-- [x] 01-02-PLAN.md - StepControls and useAutoPlay hook ✓
+- [x] 01-01-PLAN.md - CodePanel and StepProgress display components
+- [x] 01-02-PLAN.md - StepControls and useAutoPlay hook
 
 ### Phase 2: LoopsViz
 **Goal**: Learners can step through loop iterations to understand control flow and closure capture
@@ -47,8 +38,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [x] 02-01-PLAN.md — Core LoopsViz rewrite with types, state, SharedViz integration, and beginner examples ✓
-- [x] 02-02-PLAN.md — Intermediate/advanced examples with closure capture visualization ✓
+- [x] 02-01-PLAN.md - Core LoopsViz rewrite with types, state, SharedViz integration, and beginner examples
+- [x] 02-02-PLAN.md - Intermediate/advanced examples with closure capture visualization
 
 ### Phase 3: VariablesViz
 **Goal**: Learners can step through variable lifecycle to understand hoisting, TDZ, and scope
@@ -62,9 +53,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [x] 03-01-PLAN.md — Types, beginner examples, core component with level selector and SharedViz integration ✓
-- [x] 03-02-PLAN.md — Intermediate examples with scope chain visualization and lookup animation ✓
-- [x] 03-03-PLAN.md — Advanced examples with error states, hoisting animation, and phase badge ✓
+- [x] 03-01-PLAN.md - Types, beginner examples, core component with level selector and SharedViz integration
+- [x] 03-02-PLAN.md - Intermediate examples with scope chain visualization and lookup animation
+- [x] 03-03-PLAN.md - Advanced examples with error states, hoisting animation, and phase badge
 
 ### Phase 4: FunctionsViz
 **Goal**: Learners can step through function execution to understand contexts and the call stack
@@ -78,9 +69,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [x] 04-01-PLAN.md — Types, beginner examples, call stack panel, execution context display ✓
-- [x] 04-02-PLAN.md — Parameter binding animation with intermediate examples ✓
-- [x] 04-03-PLAN.md — This binding visualization with advanced examples ✓
+- [x] 04-01-PLAN.md - Types, beginner examples, call stack panel, execution context display
+- [x] 04-02-PLAN.md - Parameter binding animation with intermediate examples
+- [x] 04-03-PLAN.md - This binding visualization with advanced examples
 
 ### Phase 5: ArraysBasicsViz
 **Goal**: Learners can step through array operations to understand references, mutation, and iteration
@@ -94,9 +85,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [x] 05-01-PLAN.md — Types, beginner examples, core component rewrite with stack/heap visualization ✓
-- [x] 05-02-PLAN.md — Intermediate examples with spread operator and warning badges ✓
-- [x] 05-03-PLAN.md — Advanced examples with method iteration (map/filter/reduce) ✓
+- [x] 05-01-PLAN.md - Types, beginner examples, core component rewrite with stack/heap visualization
+- [x] 05-02-PLAN.md - Intermediate examples with spread operator and warning badges
+- [x] 05-03-PLAN.md - Advanced examples with method iteration (map/filter/reduce)
 
 ### Phase 6: ObjectsBasicsViz
 **Goal**: Learners can step through object operations to understand references and mutation
@@ -110,24 +101,109 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [x] 06-01-PLAN.md - Types, beginner examples, core component rewrite with stack/heap visualization ✓
-- [x] 06-02-PLAN.md - Intermediate examples with spread operator and warning badges ✓
-- [x] 06-03-PLAN.md - Advanced examples with destructuring visualization ✓
+- [x] 06-01-PLAN.md - Types, beginner examples, core component rewrite with stack/heap visualization
+- [x] 06-02-PLAN.md - Intermediate examples with spread operator and warning badges
+- [x] 06-03-PLAN.md - Advanced examples with destructuring visualization
+
+</details>
+
+### v1.1 DSA Pattern Visualizations (In Progress)
+
+**Milestone Goal:** Learners can step through algorithm patterns visually, understanding decision logic rather than just memorizing steps. Three core patterns: Two Pointers, Hash Map, and Bit Manipulation.
+
+- [ ] **Phase 7: Foundation** - DSAPatterns structure, routing, and pattern metadata
+- [ ] **Phase 8: TwoPointersViz** - Complete Two Pointers pattern page with variants
+- [ ] **Phase 9: HashMapViz** - Complete Hash Map pattern page with bucket visualization
+- [ ] **Phase 10: BitManipulationViz** - Complete Bit Manipulation pattern page with operation animation
+
+## Phase Details
+
+### Phase 7: Foundation
+**Goal**: DSAPatterns infrastructure exists for pattern pages with shared types and routing
+**Depends on**: Phase 6 (v1.0 complete)
+**Requirements**: DSA-01, DSA-02, DSA-03
+**Success Criteria** (what must be TRUE):
+  1. DSAPatterns directory exists with shared types for pattern visualizations
+  2. User can navigate to /concepts/dsa/patterns/[patternId] and see a pattern page shell
+  3. dsaPatterns.ts exports pattern metadata (name, description, when to use, variants)
+**Plans**: TBD
+
+Plans:
+- [ ] 07-01-PLAN.md - DSAPatterns directory structure and shared types
+- [ ] 07-02-PLAN.md - Pattern page routing and dsaPatterns.ts data file
+
+### Phase 8: TwoPointersViz
+**Goal**: Learners can step through Two Pointers pattern with decision logic visible before movement
+**Depends on**: Phase 7
+**Requirements**: TP-01, TP-02, TP-03, TP-04, TP-05, TP-06
+**Success Criteria** (what must be TRUE):
+  1. User can navigate to /concepts/dsa/patterns/two-pointers and see TwoPointersViz component
+  2. User can switch between beginner, intermediate, and advanced difficulty levels
+  3. Pointer positions animate smoothly with movement direction clear
+  4. Decision logic (why pointer moved) displays before movement animation completes
+  5. Code panel highlights current line synced with visualization step
+  6. User can see all three variants: converging (left/right), same-direction (slow/fast), partition
+**Plans**: TBD
+
+Plans:
+- [ ] 08-01-PLAN.md - TwoPointersViz core component with SharedViz integration
+- [ ] 08-02-PLAN.md - Beginner examples with converging variant
+- [ ] 08-03-PLAN.md - Intermediate/advanced examples with all three variants
+
+### Phase 9: HashMapViz
+**Goal**: Learners can step through Hash Map pattern seeing bucket mechanism, not just key-value pairs
+**Depends on**: Phase 7
+**Requirements**: HM-01, HM-02, HM-03, HM-04, HM-05, HM-06
+**Success Criteria** (what must be TRUE):
+  1. User can navigate to /concepts/dsa/patterns/hash-map and see HashMapViz component
+  2. User can switch between beginner, intermediate, and advanced difficulty levels
+  3. Key-value pairs display within bucket structure showing hash relationship
+  4. Bucket visualization shows hash function converting key to bucket index
+  5. Frequency counter examples show count incrementing with visual feedback
+  6. Lookup and insert operations step through with hash -> bucket -> entry flow
+**Plans**: TBD
+
+Plans:
+- [ ] 09-01-PLAN.md - HashMapViz core component with bucket structure
+- [ ] 09-02-PLAN.md - Beginner examples with basic lookup/insert
+- [ ] 09-03-PLAN.md - Intermediate/advanced examples with frequency counter
+
+### Phase 10: BitManipulationViz
+**Goal**: Learners can step through Bit Manipulation seeing each bit position as independent flag
+**Depends on**: Phase 7
+**Requirements**: BM-01, BM-02, BM-03, BM-04, BM-05, BM-06
+**Success Criteria** (what must be TRUE):
+  1. User can navigate to /concepts/dsa/patterns/bit-manipulation and see BitManipulationViz component
+  2. User can switch between beginner, intermediate, and advanced difficulty levels
+  3. Binary representation displays with configurable bit width (4, 8, 16, or 32 bits)
+  4. Active bit position highlights during operations with distinct visual indicator
+  5. Bit-by-bit operation animation shows AND, OR, XOR, and shift operations step by step
+  6. Operation result displays with explanation of what changed and why
+**Plans**: TBD
+
+Plans:
+- [ ] 10-01-PLAN.md - BitManipulationViz core component with binary display
+- [ ] 10-02-PLAN.md - Beginner examples with basic operations
+- [ ] 10-03-PLAN.md - Intermediate/advanced examples with complex bit patterns
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
+Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 1. Foundation | 2/2 | ✓ Complete | 2026-01-24 |
-| 2. LoopsViz | 2/2 | ✓ Complete | 2026-01-24 |
-| 3. VariablesViz | 3/3 | ✓ Complete | 2026-01-24 |
-| 4. FunctionsViz | 3/3 | ✓ Complete | 2026-01-24 |
-| 5. ArraysBasicsViz | 3/3 | ✓ Complete | 2026-01-24 |
-| 6. ObjectsBasicsViz | 3/3 | ✓ Complete | 2026-01-24 |
+| Phase | Milestone | Plans Complete | Status | Completed |
+|-------|-----------|----------------|--------|-----------|
+| 1. Foundation | v1.0 | 2/2 | Complete | 2026-01-24 |
+| 2. LoopsViz | v1.0 | 2/2 | Complete | 2026-01-24 |
+| 3. VariablesViz | v1.0 | 3/3 | Complete | 2026-01-24 |
+| 4. FunctionsViz | v1.0 | 3/3 | Complete | 2026-01-24 |
+| 5. ArraysBasicsViz | v1.0 | 3/3 | Complete | 2026-01-24 |
+| 6. ObjectsBasicsViz | v1.0 | 3/3 | Complete | 2026-01-24 |
+| 7. Foundation | v1.1 | 0/2 | Not started | - |
+| 8. TwoPointersViz | v1.1 | 0/3 | Not started | - |
+| 9. HashMapViz | v1.1 | 0/3 | Not started | - |
+| 10. BitManipulationViz | v1.1 | 0/3 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 6 complete, milestone complete*
+*Last updated: 2026-01-24 — v1.1 milestone added (Phases 7-10)*
