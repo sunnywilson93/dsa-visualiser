@@ -1492,6 +1492,51 @@ export function FunctionsViz() {
         </div>
       )}
 
+      {currentStep.thisBinding && (
+        <div className={styles.thisBindingPanel}>
+          <div className={styles.panelHeader}>this Binding</div>
+
+          <div className={styles.thisDisplay}>
+            <div className={styles.thisLabel}>this =</div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentStep.thisBinding.value}
+                className={`${styles.thisValueDisplay} ${styles[currentStep.thisBinding.rule]}`}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+              >
+                {currentStep.thisBinding.value}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <div className={styles.thisRule}>
+            <span className={`${styles.ruleBadge} ${styles[currentStep.thisBinding.rule]}`}>
+              {currentStep.thisBinding.rule} binding
+            </span>
+            {currentStep.thisBinding.isArrow && (
+              <span className={styles.arrowBadge}>Arrow Function</span>
+            )}
+          </div>
+
+          <div className={styles.thisExplanation}>
+            {currentStep.thisBinding.explanation}
+          </div>
+
+          {currentStep.thisBinding.comparisonValue && (
+            <div className={styles.thisComparison}>
+              <div className={styles.comparisonLabel}>
+                {currentStep.thisBinding.isArrow ? 'If regular function:' : 'If arrow function:'}
+              </div>
+              <div className={styles.comparisonValue}>
+                this = {currentStep.thisBinding.comparisonValue}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className={styles.outputBox}>
         <div className={styles.boxHeader}>Console Output</div>
         <div className={styles.outputContent}>

@@ -379,6 +379,137 @@
   text-align: center;
 }
 
+.thisBindingPanel {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+}
+
+.thisDisplay {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.thisLabel {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--gray-400);
+}
+
+.thisValueDisplay {
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-lg);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  border: 2px solid;
+}
+
+.thisValueDisplay.implicit {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.thisValueDisplay.explicit {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+.thisValueDisplay.default {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+.thisValueDisplay.lexical {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: #8b5cf6;
+  color: #8b5cf6;
+}
+
+.thisValueDisplay.new {
+  background: rgba(236, 72, 153, 0.15);
+  border-color: #ec4899;
+  color: #ec4899;
+}
+
+.thisRule {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.ruleBadge {
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+}
+
+.ruleBadge.implicit {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.ruleBadge.explicit {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+}
+
+.ruleBadge.default {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+.ruleBadge.lexical {
+  background: rgba(139, 92, 246, 0.2);
+  color: #8b5cf6;
+}
+
+.ruleBadge.new {
+  background: rgba(236, 72, 153, 0.2);
+  color: #ec4899;
+}
+
+.arrowBadge {
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  background: rgba(139, 92, 246, 0.2);
+  color: #8b5cf6;
+}
+
+.thisExplanation {
+  font-size: var(--text-base);
+  color: var(--gray-300);
+  margin-bottom: var(--space-md);
+}
+
+.thisComparison {
+  padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+}
+
+.comparisonLabel {
+  font-size: var(--text-sm);
+  color: var(--gray-500);
+  margin-bottom: var(--space-xs);
+}
+
+.comparisonValue {
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-base);
+  color: var(--gray-400);
+}
+
 @media (max-width: 768px) {
   .mainGrid {
     grid-template-columns: 1fr;
