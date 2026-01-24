@@ -438,7 +438,332 @@ const examples: Record<Level, ArrayExample[]> = {
       insight: 'Any number of variables can reference the same array. They all see the same data!',
     },
   ],
-  intermediate: [],
+  intermediate: [
+    {
+      id: 'spread-creates-copy',
+      title: 'Spread creates a copy',
+      code: [
+        'let arr1 = [1, 2, 3]',
+        'let arr2 = [...arr1]',
+        '',
+        'arr2.push(4)',
+        '',
+        'console.log(arr1)',
+        'console.log(arr2)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'let arr1 = [1, 2, 3] - Array created in heap as #1.',
+          phase: 'reference',
+          stack: [
+            { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'let arr2 = [...arr1] - Spread creates a NEW array in heap as #2! Elements are copied, but it\'s a different object.',
+          phase: 'reference',
+          stack: [
+            { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'arr2', value: '-> #2', isReference: true, refId: 'array2', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1' },
+            { id: 'array2', type: 'array', elements: [1, 2, 3], label: '#2', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 3,
+          codeLine: 3,
+          description: 'arr2.push(4) - Only #2 is mutated. #1 remains unchanged because they are different arrays!',
+          phase: 'mutate',
+          stack: [
+            { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'arr2', value: '-> #2', isReference: true, refId: 'array2' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1' },
+            { id: 'array2', type: 'array', elements: [1, 2, 3, 4], label: '#2', highlight: 'mutated' },
+          ],
+          output: [],
+        },
+        {
+          id: 4,
+          codeLine: 5,
+          description: 'console.log(arr1) outputs [1, 2, 3] - Original unaffected!',
+          phase: 'result',
+          stack: [
+            { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'arr2', value: '-> #2', isReference: true, refId: 'array2' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1' },
+            { id: 'array2', type: 'array', elements: [1, 2, 3, 4], label: '#2' },
+          ],
+          output: ['[1, 2, 3]'],
+        },
+        {
+          id: 5,
+          codeLine: 6,
+          description: 'console.log(arr2) outputs [1, 2, 3, 4] - Only the copy has the new element.',
+          phase: 'result',
+          stack: [
+            { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'arr2', value: '-> #2', isReference: true, refId: 'array2' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1' },
+            { id: 'array2', type: 'array', elements: [1, 2, 3, 4], label: '#2' },
+          ],
+          output: ['[1, 2, 3]', '[1, 2, 3, 4]'],
+        },
+      ],
+      insight: 'The spread operator [...arr] creates a NEW array in memory. Changes to the copy don\'t affect the original!',
+    },
+    {
+      id: 'reference-vs-spread',
+      title: 'Reference copy vs Spread copy',
+      code: [
+        'let original = [1, 2, 3]',
+        '',
+        'let refCopy = original',
+        'let spreadCopy = [...original]',
+        '',
+        'refCopy.push(4)',
+        'spreadCopy.push(5)',
+        '',
+        'console.log(original)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'let original = [1, 2, 3] - Array created in heap.',
+          phase: 'reference',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 2,
+          description: 'let refCopy = original - Reference copy! refCopy points to the SAME array #1.',
+          phase: 'reference',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'refCopy', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1' },
+          ],
+          output: [],
+        },
+        {
+          id: 3,
+          codeLine: 3,
+          description: 'let spreadCopy = [...original] - Spread creates a NEW array #2! Independent copy.',
+          phase: 'reference',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'refCopy', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'spreadCopy', value: '-> #2', isReference: true, refId: 'array2', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1' },
+            { id: 'array2', type: 'array', elements: [1, 2, 3], label: '#2', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 4,
+          codeLine: 5,
+          description: 'refCopy.push(4) - Mutates #1. Both original AND refCopy see this change!',
+          phase: 'mutate',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'refCopy', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'spreadCopy', value: '-> #2', isReference: true, refId: 'array2' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3, 4], label: '#1', highlight: 'mutated' },
+            { id: 'array2', type: 'array', elements: [1, 2, 3], label: '#2' },
+          ],
+          output: [],
+        },
+        {
+          id: 5,
+          codeLine: 6,
+          description: 'spreadCopy.push(5) - Only mutates #2. original is NOT affected.',
+          phase: 'mutate',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'refCopy', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'spreadCopy', value: '-> #2', isReference: true, refId: 'array2' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
+            { id: 'array2', type: 'array', elements: [1, 2, 3, 5], label: '#2', highlight: 'mutated' },
+          ],
+          output: [],
+        },
+        {
+          id: 6,
+          codeLine: 8,
+          description: 'console.log(original) outputs [1, 2, 3, 4] - The refCopy mutation affected it, but spreadCopy mutation did not!',
+          phase: 'result',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'refCopy', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'spreadCopy', value: '-> #2', isReference: true, refId: 'array2' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
+            { id: 'array2', type: 'array', elements: [1, 2, 3, 5], label: '#2' },
+          ],
+          output: ['[1, 2, 3, 4]'],
+        },
+      ],
+      insight: 'Reference copy (=) shares the same array. Spread copy ([...]) creates an independent array.',
+    },
+    {
+      id: 'shallow-copy-warning',
+      title: 'Shallow copy warning',
+      code: [
+        'let matrix = [[1, 2], [3, 4]]',
+        'let copy = [...matrix]',
+        '',
+        'copy[0].push(99)',
+        '',
+        'console.log(matrix[0])',
+        'console.log(copy[0])',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'let matrix = [[1, 2], [3, 4]] - Nested arrays! Outer array #1 contains references to inner arrays #2 and #3.',
+          phase: 'reference',
+          stack: [
+            { name: 'matrix', value: '-> #1', isReference: true, refId: 'outer1', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'outer1', type: 'array', elements: ['-> #2', '-> #3'], label: '#1', highlight: 'new' },
+            { id: 'inner1', type: 'array', elements: [1, 2], label: '#2', highlight: 'new' },
+            { id: 'inner2', type: 'array', elements: [3, 4], label: '#3', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'let copy = [...matrix] - Spread creates NEW outer array #4, but the inner arrays #2 and #3 are NOT copied!',
+          phase: 'reference',
+          stack: [
+            { name: 'matrix', value: '-> #1', isReference: true, refId: 'outer1' },
+            { name: 'copy', value: '-> #4', isReference: true, refId: 'outer2', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'outer1', type: 'array', elements: ['-> #2', '-> #3'], label: '#1' },
+            { id: 'inner1', type: 'array', elements: [1, 2], label: '#2' },
+            { id: 'inner2', type: 'array', elements: [3, 4], label: '#3' },
+            { id: 'outer2', type: 'array', elements: ['-> #2', '-> #3'], label: '#4', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 3,
+          codeLine: 3,
+          description: 'copy[0].push(99) - Mutates #2. Both matrix AND copy share this inner array!',
+          phase: 'mutate',
+          stack: [
+            { name: 'matrix', value: '-> #1', isReference: true, refId: 'outer1' },
+            { name: 'copy', value: '-> #4', isReference: true, refId: 'outer2' },
+          ],
+          heap: [
+            { id: 'outer1', type: 'array', elements: ['-> #2', '-> #3'], label: '#1' },
+            { id: 'inner1', type: 'array', elements: [1, 2, 99], label: '#2', highlight: 'mutated' },
+            { id: 'inner2', type: 'array', elements: [3, 4], label: '#3' },
+            { id: 'outer2', type: 'array', elements: ['-> #2', '-> #3'], label: '#4' },
+          ],
+          output: [],
+        },
+        {
+          id: 4,
+          codeLine: 5,
+          description: 'console.log(matrix[0]) outputs [1, 2, 99] - matrix sees the change even though we modified through copy!',
+          phase: 'result',
+          stack: [
+            { name: 'matrix', value: '-> #1', isReference: true, refId: 'outer1' },
+            { name: 'copy', value: '-> #4', isReference: true, refId: 'outer2' },
+          ],
+          heap: [
+            { id: 'outer1', type: 'array', elements: ['-> #2', '-> #3'], label: '#1' },
+            { id: 'inner1', type: 'array', elements: [1, 2, 99], label: '#2' },
+            { id: 'inner2', type: 'array', elements: [3, 4], label: '#3' },
+            { id: 'outer2', type: 'array', elements: ['-> #2', '-> #3'], label: '#4' },
+          ],
+          output: ['[1, 2, 99]'],
+        },
+        {
+          id: 5,
+          codeLine: 6,
+          description: 'console.log(copy[0]) also outputs [1, 2, 99] - Same inner array!',
+          phase: 'result',
+          stack: [
+            { name: 'matrix', value: '-> #1', isReference: true, refId: 'outer1' },
+            { name: 'copy', value: '-> #4', isReference: true, refId: 'outer2' },
+          ],
+          heap: [
+            { id: 'outer1', type: 'array', elements: ['-> #2', '-> #3'], label: '#1' },
+            { id: 'inner1', type: 'array', elements: [1, 2, 99], label: '#2' },
+            { id: 'inner2', type: 'array', elements: [3, 4], label: '#3' },
+            { id: 'outer2', type: 'array', elements: ['-> #2', '-> #3'], label: '#4' },
+          ],
+          output: ['[1, 2, 99]', '[1, 2, 99]'],
+        },
+      ],
+      insight: 'Spread creates a SHALLOW copy. Nested arrays/objects are still shared references!',
+    },
+  ],
   advanced: [
     {
       id: 'map-transforms',
@@ -877,6 +1202,28 @@ export function ArraysBasicsViz() {
     setStepIndex(0)
   }
 
+  const getSharedRefWarning = () => {
+    if (!currentStep || currentStep.phase !== 'mutate') return null
+
+    const refCounts = new Map<string, string[]>()
+    currentStep.stack.forEach(item => {
+      if (item.isReference && item.refId) {
+        const existing = refCounts.get(item.refId) || []
+        existing.push(item.name)
+        refCounts.set(item.refId, existing)
+      }
+    })
+
+    for (const [, names] of refCounts) {
+      if (names.length > 1) {
+        return names
+      }
+    }
+    return null
+  }
+
+  const sharedRefVars = getSharedRefWarning()
+
   if (!currentStep) {
     return (
       <div className={styles.container}>
@@ -970,6 +1317,21 @@ export function ArraysBasicsViz() {
           <div className={styles.heapSection}>
             <div className={styles.sectionHeader}>Heap</div>
             <div className={styles.heapObjects}>
+              <AnimatePresence>
+                {sharedRefVars && (
+                  <motion.div
+                    className={styles.warningBadge}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                  >
+                    <span className={styles.warningIcon}>!</span>
+                    <span className={styles.warningText}>
+                      Both {sharedRefVars.join(' and ')} affected!
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
               <AnimatePresence mode="popLayout">
                 {currentStep.heap.length === 0 ? (
                   <div className={styles.emptySection}>(empty)</div>
