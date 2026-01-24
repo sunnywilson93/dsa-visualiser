@@ -1,5 +1,5 @@
 // DSA Pattern Visualizers
-// Visualization components will be added in Phases 8-10
+export { TwoPointersViz } from './TwoPointersViz/TwoPointersViz'
 
 // Re-export types for convenience
 export * from './types'
