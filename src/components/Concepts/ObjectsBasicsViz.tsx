@@ -626,6 +626,112 @@ const examples: Record<Level, ObjectExample[]> = {
       ],
       insight: 'Adding and deleting properties modifies the object. All references see the changes!',
     },
+    {
+      id: 'shallow-copy-warning',
+      title: 'Shallow copy warning',
+      code: [
+        'let person = {',
+        '  name: "Alice",',
+        '  address: { city: "NYC" }',
+        '}',
+        '',
+        'let copy = { ...person }',
+        '',
+        'copy.address.city = "LA"',
+        '',
+        'console.log(person.address.city)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'Creating person object with nested address object...',
+          phase: 'reference',
+          stack: [
+            { name: 'person', value: '-> #1', isReference: true, refId: 'person', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'address', type: 'object', properties: [{ key: 'city', value: 'NYC' }], label: '#2', highlight: 'new' },
+            { id: 'person', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'address', value: '-> #2', isReference: true, refId: 'address' }], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 5,
+          description: 'let copy = { ...person } - Spread creates a NEW object #3, but ONLY copies top-level values!',
+          phase: 'spread',
+          stack: [
+            { name: 'person', value: '-> #1', isReference: true, refId: 'person' },
+            { name: 'copy', value: '-> #3', isReference: true, refId: 'copy', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'address', type: 'object', properties: [{ key: 'city', value: 'NYC' }], label: '#2' },
+            { id: 'person', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'address', value: '-> #2', isReference: true, refId: 'address' }], label: '#1' },
+            { id: 'copy', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'address', value: '-> #2', isReference: true, refId: 'address', highlight: 'new' }], label: '#3', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 3,
+          codeLine: 5,
+          description: 'Notice: Both person and copy point to the SAME address object #2! This is shallow copy.',
+          phase: 'spread',
+          stack: [
+            { name: 'person', value: '-> #1', isReference: true, refId: 'person' },
+            { name: 'copy', value: '-> #3', isReference: true, refId: 'copy' },
+          ],
+          heap: [
+            { id: 'address', type: 'object', properties: [{ key: 'city', value: 'NYC' }], label: '#2' },
+            { id: 'person', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'address', value: '-> #2', isReference: true, refId: 'address' }], label: '#1' },
+            { id: 'copy', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'address', value: '-> #2', isReference: true, refId: 'address' }], label: '#3' },
+          ],
+          output: [],
+        },
+        {
+          id: 4,
+          codeLine: 7,
+          description: 'copy.address.city = "LA" - Mutating nested object #2 affects BOTH person and copy!',
+          phase: 'mutate',
+          stack: [
+            { name: 'person', value: '-> #1', isReference: true, refId: 'person' },
+            { name: 'copy', value: '-> #3', isReference: true, refId: 'copy' },
+          ],
+          heap: [
+            { id: 'address', type: 'object', properties: [{ key: 'city', value: 'LA', highlight: 'changed' }], label: '#2', highlight: 'mutated' },
+            { id: 'person', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'address', value: '-> #2', isReference: true, refId: 'address' }], label: '#1' },
+            { id: 'copy', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'address', value: '-> #2', isReference: true, refId: 'address' }], label: '#3' },
+          ],
+          output: [],
+        },
+        {
+          id: 5,
+          codeLine: 9,
+          description: 'console.log(person.address.city) outputs "LA" - person sees the change made through copy!',
+          phase: 'result',
+          stack: [
+            { name: 'person', value: '-> #1', isReference: true, refId: 'person' },
+            { name: 'copy', value: '-> #3', isReference: true, refId: 'copy' },
+          ],
+          heap: [
+            { id: 'address', type: 'object', properties: [{ key: 'city', value: 'LA' }], label: '#2' },
+            { id: 'person', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'address', value: '-> #2', isReference: true, refId: 'address' }], label: '#1' },
+            { id: 'copy', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'address', value: '-> #2', isReference: true, refId: 'address' }], label: '#3' },
+          ],
+          output: ['LA'],
+        },
+      ],
+      insight: 'Spread creates a SHALLOW copy. Nested objects are still shared references!',
+    },
   ],
   advanced: []
 }
@@ -654,6 +760,7 @@ export function ObjectsBasicsViz() {
     if (!currentStep || currentStep.phase !== 'mutate') return null
 
     const refCounts = new Map<string, string[]>()
+
     currentStep.stack.forEach(item => {
       if (item.isReference && item.refId) {
         const existing = refCounts.get(item.refId) || []
@@ -661,6 +768,25 @@ export function ObjectsBasicsViz() {
         refCounts.set(item.refId, existing)
       }
     })
+
+    currentStep.heap.forEach(obj => {
+      obj.properties.forEach(prop => {
+        if (prop.isReference && prop.refId) {
+          const existing = refCounts.get(prop.refId) || []
+          existing.push(`${obj.label}.${prop.key}`)
+          refCounts.set(prop.refId, existing)
+        }
+      })
+    })
+
+    for (const [refId, names] of refCounts) {
+      if (names.length > 1) {
+        const mutatedObj = currentStep.heap.find(h => h.highlight === 'mutated')
+        if (mutatedObj && mutatedObj.id === refId) {
+          return names
+        }
+      }
+    }
 
     for (const [, names] of refCounts) {
       if (names.length > 1) {
