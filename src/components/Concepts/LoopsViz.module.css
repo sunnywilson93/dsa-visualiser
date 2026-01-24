@@ -219,6 +219,67 @@
   margin-right: 0.5rem;
 }
 
+.bindingsPanel {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--js-viz-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.bindingsGrid {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bindingBox {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg);
+  min-width: 100px;
+  text-align: center;
+}
+
+.sharedBinding {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.separateBinding {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.bindingIteration {
+  font-size: var(--text-xs);
+  color: var(--gray-500);
+  margin-bottom: var(--space-xs);
+}
+
+.bindingValue {
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-white);
+}
+
+.callbackRefs {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.callbackRef {
+  font-size: 10px;
+  color: var(--gray-400);
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+}
+
 @media (max-width: 768px) {
   .mainGrid {
     grid-template-columns: 1fr;

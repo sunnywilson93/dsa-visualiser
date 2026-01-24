@@ -1682,6 +1682,38 @@ export function LoopsViz() {
         </div>
       </div>
 
+      {currentStep.bindings && (
+        <div className={styles.bindingsPanel}>
+          <div className={styles.boxHeader}>
+            {currentStep.bindings.length === 1 ? 'Shared Binding (var)' : 'Per-Iteration Bindings (let)'}
+          </div>
+          <div className={styles.bindingsGrid}>
+            {currentStep.bindings.map((binding, i) => (
+              <motion.div
+                key={`${binding.iteration}-${binding.value}`}
+                className={`${styles.bindingBox} ${currentStep.bindings!.length === 1 ? styles.sharedBinding : styles.separateBinding}`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                <div className={styles.bindingIteration}>
+                  {currentStep.bindings!.length === 1 ? 'All iterations' : `Iteration ${binding.iteration}`}
+                </div>
+                <div className={styles.bindingValue}>
+                  {binding.variableName} = {binding.value}
+                </div>
+                {binding.callbacks && binding.callbacks.length > 0 && (
+                  <div className={styles.callbackRefs}>
+                    {binding.callbacks.map(cb => (
+                      <span key={cb} className={styles.callbackRef}>{cb}</span>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <StepProgress
         current={stepIndex}
         total={currentExample.steps.length}
