@@ -1317,6 +1317,39 @@ export function ObjectsBasicsViz() {
         </div>
       </div>
 
+      {currentStep.destructureState && (
+        <div className={styles.destructurePanel}>
+          <div className={styles.destructureHeader}>
+            <span className={styles.destructureBadge}>Destructuring</span>
+            <span className={styles.sourceRef}>
+              from {currentStep.stack.find(s => s.refId === currentStep.destructureState?.sourceRefId)?.name || 'object'}
+            </span>
+          </div>
+
+          <div className={styles.extractionList}>
+            {currentStep.destructureState.extractedProps.map((prop, idx) => (
+              <motion.div
+                key={prop.propKey}
+                className={`${styles.extractionItem} ${styles[prop.status]}`}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.1 }}
+              >
+                <span className={styles.extractSource}>{prop.propKey}</span>
+                <span className={styles.extractArrow}>
+                  {prop.status === 'extracting' ? '>>>' : '>'}
+                </span>
+                <span className={styles.extractTarget}>{prop.targetVar}</span>
+                <span className={styles.extractValue}>= {prop.value}</span>
+                {prop.status === 'complete' && (
+                  <span className={styles.extractCheck}>OK</span>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className={styles.outputBox}>
         <div className={styles.boxHeader}>Console Output</div>
         <div className={styles.outputContent}>
