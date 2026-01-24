@@ -31,6 +31,13 @@ interface Scope {
   variables: string[]
 }
 
+interface HoistingAnimation {
+  variableName: string
+  keyword: 'var' | 'let' | 'const'
+  fromLine: number
+  toPosition: 'top'
+}
+
 interface VariableStep {
   id: number
   codeLine: number
@@ -42,6 +49,7 @@ interface VariableStep {
   lookupPath?: string[]
   output: string[]
   error?: string
+  hoistingAnimation?: HoistingAnimation
 }
 
 interface VariableExample {
@@ -894,7 +902,335 @@ const examples: Record<Level, VariableExample[]> = {
       whyItMatters: 'Understanding shadowing prevents confusion about which variable you are modifying. The outer variable is NOT changed by the inner one.'
     }
   ],
-  advanced: []
+  advanced: [
+    {
+      id: 'tdz-error',
+      title: 'TDZ error',
+      code: [
+        'console.log(x);  // ReferenceError!',
+        'let x = 5;',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Creation phase: JavaScript hoists let x, but places it in the Temporal Dead Zone (TDZ). It exists but cannot be accessed yet.',
+          phase: 'creation',
+          action: 'hoist',
+          variables: [
+            { name: 'x', keyword: 'let', value: undefined, state: 'hoisted-tdz', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] }
+          ],
+          output: []
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'Execution: We try to access x before its declaration. x is in the TDZ - this throws a ReferenceError!',
+          phase: 'execution',
+          action: 'error',
+          variables: [
+            { name: 'x', keyword: 'let', value: undefined, state: 'hoisted-tdz', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] }
+          ],
+          output: [],
+          error: "ReferenceError: Cannot access 'x' before initialization"
+        }
+      ],
+      insight: 'The Temporal Dead Zone (TDZ) is the period between entering a scope and the let/const declaration being processed. Accessing the variable during TDZ throws a ReferenceError.',
+      whyItMatters: 'The TDZ catches bugs where you accidentally use a variable before declaring it. With var, you would silently get undefined instead.'
+    },
+    {
+      id: 'const-reassignment-error',
+      title: 'const reassignment',
+      code: [
+        'const pi = 3.14;',
+        'pi = 3.14159;  // TypeError!',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'const declares pi with the value 3.14. This creates a constant binding - the variable cannot be reassigned.',
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'pi', keyword: 'const', value: '3.14', state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['pi'] }
+          ],
+          output: []
+        },
+        {
+          id: 1,
+          codeLine: 1,
+          description: 'We try to reassign pi to a new value. const bindings cannot be reassigned - this throws a TypeError!',
+          phase: 'execution',
+          action: 'error',
+          variables: [
+            { name: 'pi', keyword: 'const', value: '3.14', state: 'error', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['pi'] }
+          ],
+          output: [],
+          error: 'TypeError: Assignment to constant variable'
+        }
+      ],
+      insight: 'const creates a constant BINDING, not a constant value. You cannot point the variable to something else, but you CAN mutate objects/arrays.',
+      whyItMatters: 'Use const by default - it prevents accidental reassignment. Only use let when you genuinely need to reassign.'
+    },
+    {
+      id: 'var-redeclaration',
+      title: 'var redeclaration',
+      code: [
+        'var x = 1;',
+        'console.log(x);  // 1',
+        'var x = 2;       // No error!',
+        'console.log(x);  // 2',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Creation phase: JavaScript hoists var x. Even though x is declared twice, hoisting merges them into one variable.',
+          phase: 'creation',
+          action: 'hoist',
+          variables: [
+            { name: 'x', keyword: 'var', value: 'undefined', state: 'hoisted-undefined', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] }
+          ],
+          output: []
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'First var x = 1 assigns the value 1 to x.',
+          phase: 'execution',
+          action: 'assign',
+          variables: [
+            { name: 'x', keyword: 'var', value: '1', state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] }
+          ],
+          output: []
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'console.log(x) outputs 1.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'x', keyword: 'var', value: '1', state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] }
+          ],
+          output: ['1']
+        },
+        {
+          id: 3,
+          codeLine: 2,
+          description: 'Second var x = 2 - this is allowed with var! It just reassigns x to 2. With let, this would be a SyntaxError.',
+          phase: 'execution',
+          action: 'assign',
+          variables: [
+            { name: 'x', keyword: 'var', value: '2', state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] }
+          ],
+          output: ['1']
+        },
+        {
+          id: 4,
+          codeLine: 3,
+          description: 'console.log(x) outputs 2. The redeclaration silently overwrote the first value.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'x', keyword: 'var', value: '2', state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] }
+          ],
+          output: ['1', '2']
+        },
+        {
+          id: 5,
+          codeLine: -1,
+          description: 'Done! var allows redeclaration in the same scope, which can cause subtle bugs. let/const throw an error if you try to redeclare.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'x', keyword: 'var', value: '2', state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          output: ['1', '2']
+        }
+      ],
+      insight: 'var allows redeclaring the same variable in the same scope. This can silently overwrite values and cause hard-to-find bugs.',
+      whyItMatters: 'let and const prevent redeclaration, catching copy-paste errors and variable name collisions at compile time.'
+    },
+    {
+      id: 'hoisting-comparison',
+      title: 'hoisting comparison',
+      code: [
+        '// Creation Phase (hoisting)',
+        '// var a -> undefined',
+        '// let b -> TDZ',
+        '',
+        'console.log(a);  // undefined',
+        '// console.log(b);  // ReferenceError',
+        '',
+        'var a = 1;',
+        'let b = 2;',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Creation phase begins. JavaScript scans for declarations. First, it finds var a on line 8.',
+          phase: 'creation',
+          action: 'hoist',
+          variables: [],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: [] }
+          ],
+          output: []
+        },
+        {
+          id: 1,
+          codeLine: 7,
+          description: 'var a is hoisted to the top of the scope with value undefined. Watch it "float up" to the top!',
+          phase: 'creation',
+          action: 'hoist',
+          variables: [
+            { name: 'a', keyword: 'var', value: 'undefined', state: 'hoisted-undefined', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a'] }
+          ],
+          hoistingAnimation: { variableName: 'a', keyword: 'var', fromLine: 8, toPosition: 'top' },
+          output: []
+        },
+        {
+          id: 2,
+          codeLine: 8,
+          description: 'let b is also hoisted, but it enters the Temporal Dead Zone (TDZ). It exists but cannot be accessed until its declaration.',
+          phase: 'creation',
+          action: 'hoist',
+          variables: [
+            { name: 'a', keyword: 'var', value: 'undefined', state: 'hoisted-undefined', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: undefined, state: 'hoisted-tdz', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          hoistingAnimation: { variableName: 'b', keyword: 'let', fromLine: 9, toPosition: 'top' },
+          output: []
+        },
+        {
+          id: 3,
+          codeLine: -1,
+          description: 'Creation phase complete. Now execution begins from the top. var a = undefined, let b is in TDZ.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'a', keyword: 'var', value: 'undefined', state: 'hoisted-undefined', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: undefined, state: 'hoisted-tdz', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          output: []
+        },
+        {
+          id: 4,
+          codeLine: 4,
+          description: 'console.log(a) - a exists and is undefined (hoisted). This works! Logs undefined.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'a', keyword: 'var', value: 'undefined', state: 'hoisted-undefined', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: undefined, state: 'hoisted-tdz', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          lookupPath: ['global'],
+          output: ['undefined']
+        },
+        {
+          id: 5,
+          codeLine: 5,
+          description: 'If we tried console.log(b) here, we would get ReferenceError! b exists but is in the TDZ - it cannot be accessed yet.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'a', keyword: 'var', value: 'undefined', state: 'hoisted-undefined', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: undefined, state: 'hoisted-tdz', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          output: ['undefined']
+        },
+        {
+          id: 6,
+          codeLine: 7,
+          description: 'We reach var a = 1. The assignment happens - a changes from undefined to 1.',
+          phase: 'execution',
+          action: 'assign',
+          variables: [
+            { name: 'a', keyword: 'var', value: '1', state: 'initialized', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: undefined, state: 'hoisted-tdz', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          output: ['undefined']
+        },
+        {
+          id: 7,
+          codeLine: 8,
+          description: 'We reach let b = 2. NOW b exits the TDZ and gets initialized with 2. Only now is b safely accessible.',
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'a', keyword: 'var', value: '1', state: 'initialized', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: '2', state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          output: ['undefined']
+        },
+        {
+          id: 8,
+          codeLine: -1,
+          description: 'Done! Both var and let hoist, but var initializes to undefined while let stays in the TDZ. This is why let is safer!',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'a', keyword: 'var', value: '1', state: 'initialized', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: '2', state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          output: ['undefined']
+        }
+      ],
+      insight: 'Both var and let are hoisted during creation phase, but var is initialized with undefined while let stays in the Temporal Dead Zone until its declaration.',
+      whyItMatters: 'The TDZ makes let/const safer - accessing before declaration throws an error instead of silently giving undefined.'
+    }
+  ]
 }
 
 export function VariablesViz() {
