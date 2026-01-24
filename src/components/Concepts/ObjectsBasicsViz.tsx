@@ -987,6 +987,127 @@ const examples: Record<Level, ObjectExample[]> = {
       ],
       insight: '{ name: userName } extracts the "name" property but stores it in a variable called "userName".',
     },
+    {
+      id: 'destructuring-defaults',
+      title: 'Destructuring with defaults',
+      code: [
+        'const config = { theme: "dark" }',
+        'const { theme, language = "en" } = config',
+        '',
+        'console.log(theme)',
+        'console.log(language)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'const config = { theme: "dark" } - Object created with ONLY "theme". No "language" property!',
+          phase: 'reference',
+          stack: [
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config1', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'Destructuring "theme" - property exists in object, will use its value.',
+          phase: 'destructure',
+          stack: [
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config1' },
+          ],
+          heap: [
+            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark', highlight: 'changed' }], label: '#1' },
+          ],
+          output: [],
+          destructureState: {
+            sourceRefId: 'config1',
+            extractedProps: [
+              { propKey: 'theme', targetVar: 'theme', value: '"dark"', status: 'extracting' },
+              { propKey: 'language', targetVar: 'language', value: '"en" (default)', status: 'pending' },
+            ],
+          },
+        },
+        {
+          id: 3,
+          codeLine: 1,
+          description: '"theme" extracted. Now checking "language" - NOT in object, using default value "en"!',
+          phase: 'destructure',
+          stack: [
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config1' },
+          ],
+          heap: [
+            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
+          ],
+          output: [],
+          destructureState: {
+            sourceRefId: 'config1',
+            extractedProps: [
+              { propKey: 'theme', targetVar: 'theme', value: '"dark"', status: 'complete' },
+              { propKey: 'language', targetVar: 'language', value: '"en" (default)', status: 'extracting' },
+            ],
+          },
+        },
+        {
+          id: 4,
+          codeLine: 1,
+          description: 'Complete! "theme" got "dark" from object. "language" got "en" from default (property was missing).',
+          phase: 'destructure',
+          stack: [
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config1' },
+            { name: 'theme', value: '"dark"', highlight: 'new' },
+            { name: 'language', value: '"en"', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
+          ],
+          output: [],
+        },
+        {
+          id: 5,
+          codeLine: 3,
+          description: 'console.log(theme) outputs "dark" - value from the object.',
+          phase: 'result',
+          stack: [
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config1' },
+            { name: 'theme', value: '"dark"' },
+            { name: 'language', value: '"en"' },
+          ],
+          heap: [
+            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
+          ],
+          output: ['dark'],
+        },
+        {
+          id: 6,
+          codeLine: 4,
+          description: 'console.log(language) outputs "en" - the default value, since property was missing.',
+          phase: 'result',
+          stack: [
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config1' },
+            { name: 'theme', value: '"dark"' },
+            { name: 'language', value: '"en"' },
+          ],
+          heap: [
+            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
+          ],
+          output: ['dark', 'en'],
+        },
+      ],
+      insight: 'Default values (= "en") are used only when the property is missing or undefined.',
+    },
   ]
 }
 
