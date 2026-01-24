@@ -1,288 +1,509 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { CodePanel, StepProgress, StepControls } from '@/components/SharedViz'
 import styles from './FunctionsViz.module.css'
 
-type FunctionType = 'declaration' | 'expression' | 'arrow'
-
-interface FunctionInfo {
-  id: FunctionType
+interface CallStackFrame {
+  id: string
   name: string
-  color: string
-  syntax: string
-  features: string[]
-  hoisted: boolean
-  hasThis: boolean
+  params: Record<string, string>
+  locals: Record<string, string>
+  thisValue: string
+  outerRef: string | null
+  status: 'creating' | 'active' | 'returning' | 'destroyed'
 }
 
-const functionTypes: FunctionInfo[] = [
-  {
-    id: 'declaration',
-    name: 'Function Declaration',
-    color: '#10b981',
-    syntax: `function greet(name) {
-  return "Hello, " + name;
-}
-
-// Can call BEFORE definition
-greet("Alice"); // Works!`,
-    features: ['Hoisted (can call before definition)', 'Has its own "this"', 'Can be named'],
-    hoisted: true,
-    hasThis: true,
-  },
-  {
-    id: 'expression',
-    name: 'Function Expression',
-    color: '#3b82f6',
-    syntax: `const greet = function(name) {
-  return "Hello, " + name;
-};
-
-// Must define BEFORE calling
-// greet("Alice"); // Error if above!`,
-    features: ['NOT hoisted', 'Has its own "this"', 'Can be anonymous or named'],
-    hoisted: false,
-    hasThis: true,
-  },
-  {
-    id: 'arrow',
-    name: 'Arrow Function',
-    color: '#8b5cf6',
-    syntax: `const greet = (name) => {
-  return "Hello, " + name;
-};
-
-// Short syntax (implicit return)
-const greet2 = name => "Hello, " + name;`,
-    features: ['NOT hoisted', 'NO own "this" (inherits)', 'Concise syntax', 'Implicit return option'],
-    hoisted: false,
-    hasThis: false,
-  },
-]
-
-interface Step {
-  code: string[]
+interface FunctionStep {
+  id: number
+  codeLine: number
   description: string
-  highlight: number
-  output?: string
+  phase: 'setup' | 'call' | 'enter' | 'execute' | 'return' | 'cleanup'
+  callStack: CallStackFrame[]
+  output: string[]
 }
 
-const currentStepss: Record<FunctionType, Step[]> = {
-  declaration: [
+interface FunctionExample {
+  id: string
+  title: string
+  code: string[]
+  steps: FunctionStep[]
+  insight: string
+}
+
+type Level = 'beginner' | 'intermediate' | 'advanced'
+
+const levelInfo: Record<Level, { label: string; color: string }> = {
+  beginner: { label: 'Beginner', color: '#10b981' },
+  intermediate: { label: 'Intermediate', color: '#f59e0b' },
+  advanced: { label: 'Advanced', color: '#ef4444' }
+}
+
+const examples: Record<Level, FunctionExample[]> = {
+  beginner: [
     {
-      code: ['greet("Alice");  // Works!', '', 'function greet(name) {', '  return "Hello, " + name;', '}'],
-      description: 'Function declarations are HOISTED. We can call greet() before it\'s defined!',
-      highlight: 0,
+      id: 'simple-call',
+      title: 'Simple function call',
+      code: [
+        'function greet(name) {',
+        '  return "Hello, " + name',
+        '}',
+        '',
+        'const result = greet("Alice")',
+        'console.log(result)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Function greet is defined. It exists in memory but has not been called yet.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 4,
+          description: 'We call greet("Alice"). JavaScript pushes a new frame onto the call stack.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: { name: '"Alice"' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 0,
+          description: 'Execution context created for greet(). The parameter name is bound to "Alice".',
+          phase: 'enter',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: { name: '"Alice"' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 3,
+          codeLine: 1,
+          description: 'The function body executes. It returns "Hello, " + name which is "Hello, Alice".',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: { name: '"Alice"' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'returning' }
+          ],
+          output: [],
+        },
+        {
+          id: 4,
+          codeLine: 4,
+          description: 'greet() returns. Its execution context is destroyed and popped from the stack.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn', result: '"Hello, Alice"' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 5,
+          codeLine: 5,
+          description: 'console.log outputs the result. Only the global execution context remains.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn', result: '"Hello, Alice"' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['Hello, Alice'],
+        },
+      ],
+      insight: 'Every function call creates a new execution context (frame) that is pushed onto the call stack. When the function returns, the context is destroyed and popped off.',
     },
     {
-      code: ['greet("Alice");  // Works!', '', 'function greet(name) {', '  return "Hello, " + name;', '}'],
-      description: 'The function receives "Alice" as the name parameter.',
-      highlight: 2,
+      id: 'nested-calls',
+      title: 'Nested function calls',
+      code: [
+        'function outer() {',
+        '  console.log("outer start")',
+        '  inner()',
+        '  console.log("outer end")',
+        '}',
+        '',
+        'function inner() {',
+        '  console.log("inner")',
+        '}',
+        '',
+        'outer()',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Functions outer and inner are defined in global scope.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { outer: 'fn', inner: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 10,
+          description: 'We call outer(). A new execution context is pushed onto the stack.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { outer: 'fn', inner: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'outer-1', name: 'outer()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'outer() begins executing. It logs "outer start".',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { outer: 'fn', inner: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'outer-1', name: 'outer()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'active' }
+          ],
+          output: ['outer start'],
+        },
+        {
+          id: 3,
+          codeLine: 2,
+          description: 'outer() calls inner(). A THIRD frame is pushed. Stack grows: global -> outer -> inner.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { outer: 'fn', inner: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'outer-1', name: 'outer()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'active' },
+            { id: 'inner-1', name: 'inner()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: ['outer start'],
+        },
+        {
+          id: 4,
+          codeLine: 7,
+          description: 'inner() executes its body and logs "inner".',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { outer: 'fn', inner: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'outer-1', name: 'outer()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'active' },
+            { id: 'inner-1', name: 'inner()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'active' }
+          ],
+          output: ['outer start', 'inner'],
+        },
+        {
+          id: 5,
+          codeLine: 8,
+          description: 'inner() finishes. Its context is popped. Stack shrinks: global -> outer.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { outer: 'fn', inner: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'outer-1', name: 'outer()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'active' }
+          ],
+          output: ['outer start', 'inner'],
+        },
+        {
+          id: 6,
+          codeLine: 3,
+          description: 'outer() resumes after inner() returned. It logs "outer end".',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { outer: 'fn', inner: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'outer-1', name: 'outer()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'active' }
+          ],
+          output: ['outer start', 'inner', 'outer end'],
+        },
+        {
+          id: 7,
+          codeLine: 10,
+          description: 'outer() finishes. Its context is popped. Only global remains.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { outer: 'fn', inner: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['outer start', 'inner', 'outer end'],
+        },
+      ],
+      insight: 'The call stack follows LIFO (Last In, First Out). inner() was called last but finishes first. outer() waits for inner() to complete before continuing.',
     },
     {
-      code: ['greet("Alice");  // Works!', '', 'function greet(name) {', '  return "Hello, " + name;', '}'],
-      description: 'Returns the concatenated string "Hello, Alice".',
-      highlight: 3,
-      output: '"Hello, Alice"',
+      id: 'local-variables',
+      title: 'Function with local variables',
+      code: [
+        'function calculateArea(width, height) {',
+        '  const area = width * height',
+        '  const label = "Area: "',
+        '  return label + area',
+        '}',
+        '',
+        'const result = calculateArea(5, 3)',
+        'console.log(result)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Function calculateArea is defined. Its code exists but local variables do not exist yet.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { calculateArea: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 6,
+          description: 'We call calculateArea(5, 3). A new execution context is created.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { calculateArea: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'calc-1', name: 'calculateArea()', params: { width: '5', height: '3' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 0,
+          description: 'Execution context is ready. Parameters width=5 and height=3 are bound.',
+          phase: 'enter',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { calculateArea: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'calc-1', name: 'calculateArea()', params: { width: '5', height: '3' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 3,
+          codeLine: 1,
+          description: 'const area = 5 * 3. Local variable "area" is created with value 15.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { calculateArea: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'calc-1', name: 'calculateArea()', params: { width: '5', height: '3' }, locals: { area: '15' }, thisValue: 'undefined', outerRef: 'global', status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 4,
+          codeLine: 2,
+          description: 'const label = "Area: ". Another local variable is added to this context.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { calculateArea: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'calc-1', name: 'calculateArea()', params: { width: '5', height: '3' }, locals: { area: '15', label: '"Area: "' }, thisValue: 'undefined', outerRef: 'global', status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 5,
+          codeLine: 3,
+          description: 'return label + area returns "Area: 15". The function prepares to exit.',
+          phase: 'return',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { calculateArea: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'calc-1', name: 'calculateArea()', params: { width: '5', height: '3' }, locals: { area: '15', label: '"Area: "' }, thisValue: 'undefined', outerRef: 'global', status: 'returning' }
+          ],
+          output: [],
+        },
+        {
+          id: 6,
+          codeLine: 6,
+          description: 'Context destroyed! All local variables (area, label) are gone. They only existed inside the function.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { calculateArea: 'fn', result: '"Area: 15"' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 7,
+          codeLine: 7,
+          description: 'console.log outputs "Area: 15". The local variables from calculateArea no longer exist.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { calculateArea: 'fn', result: '"Area: 15"' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['Area: 15'],
+        },
+      ],
+      insight: 'Each execution context has its own local variables. When the function returns, those variables are destroyed. This is why you cannot access local variables from outside the function.',
     },
   ],
-  expression: [
-    {
-      code: ['// greet("Alice"); // Error!', '', 'const greet = function(name) {', '  return "Hello, " + name;', '};', '', 'greet("Bob");  // Works here'],
-      description: 'Function expressions are NOT hoisted. Calling before definition throws an error!',
-      highlight: 0,
-    },
-    {
-      code: ['// greet("Alice"); // Error!', '', 'const greet = function(name) {', '  return "Hello, " + name;', '};', '', 'greet("Bob");  // Works here'],
-      description: 'The function is assigned to the variable greet. Now it can be called.',
-      highlight: 2,
-    },
-    {
-      code: ['// greet("Alice"); // Error!', '', 'const greet = function(name) {', '  return "Hello, " + name;', '};', '', 'greet("Bob");  // Works here'],
-      description: 'After definition, we can call greet() normally.',
-      highlight: 6,
-      output: '"Hello, Bob"',
-    },
-  ],
-  arrow: [
-    {
-      code: ['const greet = (name) => {', '  return "Hello, " + name;', '};', '', 'const short = name => "Hi, " + name;', '', 'greet("Carol");'],
-      description: 'Arrow functions use => syntax. They can have a block body with explicit return.',
-      highlight: 0,
-    },
-    {
-      code: ['const greet = (name) => {', '  return "Hello, " + name;', '};', '', 'const short = name => "Hi, " + name;', '', 'greet("Carol");'],
-      description: 'Single-expression arrows can omit {} and return. This is implicit return.',
-      highlight: 4,
-    },
-    {
-      code: ['const greet = (name) => {', '  return "Hello, " + name;', '};', '', 'const short = name => "Hi, " + name;', '', 'greet("Carol");'],
-      description: 'Arrow functions do NOT have their own "this" - they inherit from parent scope.',
-      highlight: 6,
-      output: '"Hello, Carol"',
-    },
-  ],
+  intermediate: [],
+  advanced: [],
 }
 
 export function FunctionsViz() {
-  const [selectedType, setSelectedType] = useState<FunctionType>('declaration')
+  const [level, setLevel] = useState<Level>('beginner')
+  const [exampleIndex, setExampleIndex] = useState(0)
   const [stepIndex, setStepIndex] = useState(0)
-  const [showCall, setShowCall] = useState(false)
 
-  const currentType = functionTypes.find(t => t.id === selectedType)!
-  const currentSteps = currentStepss[selectedType]
+  const currentExamples = examples[level]
+  const currentExample = currentExamples[exampleIndex]
+  const currentStep = currentExample?.steps[stepIndex]
 
-  const handleTypeChange = (type: FunctionType) => {
-    setSelectedType(type)
+  const handleLevelChange = (newLevel: Level) => {
+    setLevel(newLevel)
+    setExampleIndex(0)
     setStepIndex(0)
   }
 
-  const handleNext = () => {
-    if (stepIndex < currentSteps.length - 1) {
-      setStepIndex(s => s + 1)
-    }
+  const handleExampleChange = (index: number) => {
+    setExampleIndex(index)
+    setStepIndex(0)
   }
 
-  const handlePrev = () => {
-    if (stepIndex > 0) setStepIndex(s => s - 1)
+  if (!currentStep) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.levelSelector}>
+          {(Object.keys(levelInfo) as Level[]).map(lvl => (
+            <button
+              key={lvl}
+              className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+              onClick={() => handleLevelChange(lvl)}
+              disabled={examples[lvl].length === 0}
+              style={{
+                borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
+                background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+              }}
+            >
+              <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }} />
+              {levelInfo[lvl].label}
+            </button>
+          ))}
+        </div>
+        <div className={styles.emptyState}>No examples available for this level yet.</div>
+      </div>
+    )
   }
-
-  const handleReset = () => setStepIndex(0)
 
   return (
     <div className={styles.container}>
-      {/* Type selector */}
-      <div className={styles.typeSelector}>
-        {functionTypes.map(type => (
+      <div className={styles.levelSelector}>
+        {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
-            key={type.id}
-            className={`${styles.typeBtn} ${selectedType === type.id ? styles.active : ''}`}
+            key={lvl}
+            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            onClick={() => handleLevelChange(lvl)}
+            disabled={examples[lvl].length === 0}
             style={{
-              borderColor: selectedType === type.id ? type.color : 'transparent',
-              background: selectedType === type.id ? `${type.color}15` : 'transparent'
+              borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
+              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
             }}
-            onClick={() => handleTypeChange(type.id)}
           >
-            <span className={styles.typeDot} style={{ background: type.color }} />
-            {type.name}
+            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }} />
+            {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
-      <div className={styles.toggleRow}>
-        <button
-          className={`${styles.toggleBtn} ${!showCall ? styles.active : ''}`}
-          onClick={() => setShowCall(false)}
-        >
-          Syntax
-        </button>
-        <button
-          className={`${styles.toggleBtn} ${showCall ? styles.active : ''}`}
-          onClick={() => { setShowCall(true); setStepIndex(0) }}
-        >
-          How Calls Work
-        </button>
+      <div className={styles.exampleTabs}>
+        {currentExamples.map((ex, i) => (
+          <button
+            key={ex.id}
+            className={`${styles.exampleTab} ${exampleIndex === i ? styles.activeTab : ''}`}
+            onClick={() => handleExampleChange(i)}
+          >
+            {ex.title}
+          </button>
+        ))}
       </div>
 
-      <AnimatePresence mode="wait">
-        {!showCall ? (
-          <motion.div
-            key="syntax"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className={styles.content}
-          >
-            <div className={styles.codeCard} style={{ borderColor: currentType.color }}>
-              <pre className={styles.code}>
-                <code>{currentType.syntax}</code>
-              </pre>
-            </div>
+      <div className={styles.mainGrid}>
+        <CodePanel
+          code={currentExample.code}
+          highlightedLine={currentStep.codeLine}
+          title="Code"
+        />
 
-            <div className={styles.features}>
-              <h4 className={styles.featuresTitle}>Features</h4>
-              <div className={styles.featureList}>
-                {currentType.features.map((feature, i) => (
-                  <motion.div
-                    key={i}
-                    className={styles.feature}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                  >
-                    <span className={styles.featureIcon} style={{ background: currentType.color }}>&#x2713;</span>
-                    {feature}
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.badges}>
-              <span className={`${styles.badge} ${currentType.hoisted ? styles.badgeGreen : styles.badgeRed}`}>
-                {currentType.hoisted ? 'Hoisted' : 'Not Hoisted'}
-              </span>
-              <span className={`${styles.badge} ${currentType.hasThis ? styles.badgeBlue : styles.badgePurple}`}>
-                {currentType.hasThis ? 'Has own "this"' : 'Inherits "this"'}
-              </span>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="call"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className={styles.callContent}
-          >
-            <div className={styles.codeCard}>
-              <pre className={styles.code}>
-                {currentSteps[stepIndex].code.map((line, i) => (
-                  <div
-                    key={i}
-                    className={`${styles.codeLine} ${currentSteps[stepIndex].highlight === i ? styles.activeLine : ''}`}
-                  >
-                    {line || ' '}
+        <div className={styles.callStackPanel}>
+          <div className={styles.panelHeader}>Call Stack</div>
+          <div className={styles.stackFrames}>
+            <AnimatePresence mode="popLayout">
+              {currentStep.callStack.slice().reverse().map((frame) => (
+                <motion.div
+                  key={frame.id}
+                  className={`${styles.stackFrame} ${styles[frame.status]}`}
+                  initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                  layout
+                >
+                  <div className={styles.frameName}>{frame.name}</div>
+                  {Object.keys(frame.params).length > 0 && (
+                    <div className={styles.frameSection}>
+                      <span className={styles.sectionLabel}>params:</span>
+                      {Object.entries(frame.params).map(([k, v]) => (
+                        <span key={k} className={styles.variable}>{k}: {v}</span>
+                      ))}
+                    </div>
+                  )}
+                  {Object.keys(frame.locals).length > 0 && (
+                    <div className={styles.frameSection}>
+                      <span className={styles.sectionLabel}>locals:</span>
+                      {Object.entries(frame.locals).map(([k, v]) => (
+                        <span key={k} className={styles.variable}>{k}: {v}</span>
+                      ))}
+                    </div>
+                  )}
+                  <div className={styles.frameSection}>
+                    <span className={styles.sectionLabel}>this:</span>
+                    <span className={styles.thisValue}>{frame.thisValue}</span>
                   </div>
-                ))}
-              </pre>
-            </div>
+                  {frame.outerRef && (
+                    <div className={styles.frameSection}>
+                      <span className={styles.sectionLabel}>outer:</span>
+                      <span className={styles.outerRef}>{frame.outerRef}</span>
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
 
-            <div className={styles.description}>
-              <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentSteps.length}</span>
-              {currentSteps[stepIndex].description}
-            </div>
-
-            {currentSteps[stepIndex].output && (
-              <div className={styles.outputBox}>
-                <span className={styles.outputLabel}>Return value:</span>
-                <code className={styles.outputValue}>{currentSteps[stepIndex].output}</code>
-              </div>
+      <div className={styles.outputBox}>
+        <div className={styles.boxHeader}>Console Output</div>
+        <div className={styles.outputContent}>
+          <AnimatePresence>
+            {currentStep.output.length === 0 ? (
+              <span className={styles.placeholder}>No output yet</span>
+            ) : (
+              currentStep.output.map((line, i) => (
+                <motion.div
+                  key={i}
+                  className={styles.outputLine}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                >
+                  {line}
+                </motion.div>
+              ))
             )}
+          </AnimatePresence>
+        </div>
+      </div>
 
-            <div className={styles.controls}>
-              <button
-                className={styles.btnSecondary}
-                onClick={handlePrev}
-                disabled={stepIndex === 0}
-              >
-                Prev
-              </button>
-              <button
-                className={styles.btnPrimary}
-                onClick={handleNext}
-                disabled={stepIndex === currentSteps.length - 1}
-              >
-                Next
-              </button>
-              <button
-                className={styles.btnSecondary}
-                onClick={handleReset}
-              >
-                Reset
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <StepProgress
+        current={stepIndex}
+        total={currentExample.steps.length}
+        description={currentStep.description}
+      />
+
+      <StepControls
+        onPrev={() => setStepIndex(s => s - 1)}
+        onNext={() => setStepIndex(s => s + 1)}
+        onReset={() => setStepIndex(0)}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+      />
+
+      <div className={styles.insightBox}>
+        <span className={styles.insightLabel}>Key Insight:</span>
+        {currentExample.insight}
+      </div>
     </div>
   )
 }
