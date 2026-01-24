@@ -866,6 +866,127 @@ const examples: Record<Level, ObjectExample[]> = {
       ],
       insight: 'Destructuring extracts properties into standalone variables. They hold copies of the primitive values!',
     },
+    {
+      id: 'destructuring-renaming',
+      title: 'Destructuring with renaming',
+      code: [
+        'const user = { name: "Alice", id: 42 }',
+        'const { name: userName, id: userId } = user',
+        '',
+        'console.log(userName)',
+        'console.log(userId)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'const user = { name: "Alice", id: 42 } - Object created in heap.',
+          phase: 'reference',
+          stack: [
+            { name: 'user', value: '-> #1', isReference: true, refId: 'user1', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'user1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'id', value: 42 }], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'const { name: userName } = ... - "name: userName" means extract "name", store as "userName".',
+          phase: 'destructure',
+          stack: [
+            { name: 'user', value: '-> #1', isReference: true, refId: 'user1' },
+          ],
+          heap: [
+            { id: 'user1', type: 'object', properties: [{ key: 'name', value: 'Alice', highlight: 'changed' }, { key: 'id', value: 42 }], label: '#1' },
+          ],
+          output: [],
+          destructureState: {
+            sourceRefId: 'user1',
+            extractedProps: [
+              { propKey: 'name', targetVar: 'userName', value: '"Alice"', status: 'extracting' },
+              { propKey: 'id', targetVar: 'userId', value: '42', status: 'pending' },
+            ],
+          },
+        },
+        {
+          id: 3,
+          codeLine: 1,
+          description: '"name" extracted as "userName". Now extracting "id" as "userId"...',
+          phase: 'destructure',
+          stack: [
+            { name: 'user', value: '-> #1', isReference: true, refId: 'user1' },
+          ],
+          heap: [
+            { id: 'user1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'id', value: 42, highlight: 'changed' }], label: '#1' },
+          ],
+          output: [],
+          destructureState: {
+            sourceRefId: 'user1',
+            extractedProps: [
+              { propKey: 'name', targetVar: 'userName', value: '"Alice"', status: 'complete' },
+              { propKey: 'id', targetVar: 'userId', value: '42', status: 'extracting' },
+            ],
+          },
+        },
+        {
+          id: 4,
+          codeLine: 1,
+          description: 'Complete! Note: stack shows "userName" and "userId" - the renamed variables, NOT "name" and "id".',
+          phase: 'destructure',
+          stack: [
+            { name: 'user', value: '-> #1', isReference: true, refId: 'user1' },
+            { name: 'userName', value: '"Alice"', highlight: 'new' },
+            { name: 'userId', value: '42', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'user1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'id', value: 42 }], label: '#1' },
+          ],
+          output: [],
+        },
+        {
+          id: 5,
+          codeLine: 3,
+          description: 'console.log(userName) outputs "Alice" - using the renamed variable.',
+          phase: 'result',
+          stack: [
+            { name: 'user', value: '-> #1', isReference: true, refId: 'user1' },
+            { name: 'userName', value: '"Alice"' },
+            { name: 'userId', value: '42' },
+          ],
+          heap: [
+            { id: 'user1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'id', value: 42 }], label: '#1' },
+          ],
+          output: ['Alice'],
+        },
+        {
+          id: 6,
+          codeLine: 4,
+          description: 'console.log(userId) outputs 42.',
+          phase: 'result',
+          stack: [
+            { name: 'user', value: '-> #1', isReference: true, refId: 'user1' },
+            { name: 'userName', value: '"Alice"' },
+            { name: 'userId', value: '42' },
+          ],
+          heap: [
+            { id: 'user1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'id', value: 42 }], label: '#1' },
+          ],
+          output: ['Alice', '42'],
+        },
+      ],
+      insight: '{ name: userName } extracts the "name" property but stores it in a variable called "userName".',
+    },
   ]
 }
 
