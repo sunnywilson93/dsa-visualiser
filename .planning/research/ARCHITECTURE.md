@@ -1,530 +1,382 @@
-# Architecture Patterns: Step-Through Code Visualizations
+# Architecture Research: DSA Pattern Visualizations
 
-**Domain:** Interactive code step-through visualization components
 **Researched:** 2026-01-24
-**Confidence:** HIGH (based on existing codebase patterns and analysis)
+**Confidence:** HIGH (based on existing codebase patterns)
+**Scope:** Integrating pattern-based DSA visualizations (two-pointers, hash-map, etc.) following user decision to use pattern-based pages like JS concepts
 
 ## Executive Summary
 
-The codebase already has **two proven patterns** for step-through visualizations:
+The codebase has two established visualization systems:
 
-1. **Self-Contained Viz Components** (`EventLoopViz`, `HoistingViz`, `ClosuresViz`, `PromisesViz`) - All-in-one components with embedded step data, local state, and domain-specific visual panels.
+1. **JS Concepts** (`/concepts/[conceptId]`): Pattern-level pages with embedded step data in `*Viz.tsx` components
+2. **DSA Concepts** (`/concepts/dsa/[conceptId]`): Data structure pages (arrays, hash-tables, stacks) with interactive visualizers
+3. **Problem-specific Algorithm Visualizations** (`/[categoryId]/[problemId]/concept`): Uses `ConceptPanel` with step data from `algorithmConcepts.ts`
 
-2. **Composable Panel Components** (`ConceptPanel` + `TwoPointersConcept`, `HashMapConcept`) - Generic controller with pluggable visualization components receiving step data as props.
-
-For enhanced visualizations, **follow Pattern 1** (self-contained) for complex, unique visualizations. Use **Pattern 2** (composable) when building variations of similar patterns (e.g., multiple two-pointer problems).
-
----
-
-## Recommended Architecture
-
-### High-Level Component Structure
-
-```
-StepThroughVisualization
-├── StateSelector         # Level/example/difficulty tabs
-├── CodePanel             # Code display with line highlighting
-├── VisualPanels[]        # Domain-specific visual state panels
-│   ├── CallStackPanel
-│   ├── VariablesPanel
-│   ├── QueuePanel
-│   ├── HeapPanel
-│   └── [Custom]Panel
-├── DescriptionPanel      # Current step explanation
-├── OutputPanel           # Console/result output
-├── ControlBar            # Prev/Play/Next/Reset + progress
-└── InsightPanel          # Key learning takeaway
-```
-
-### Component Boundaries
-
-| Component | Responsibility | Communicates With |
-|-----------|---------------|-------------------|
-| **Container Viz** | Owns state (level, example, step), defines Step interface | All child panels via props/direct access |
-| **CodePanel** | Renders code with line numbers, highlights current line | Receives `code[]`, `highlightLines[]` from parent |
-| **VisualPanel** | Renders domain-specific state (stack, heap, queues, etc.) | Receives step's visual state slice |
-| **ControlBar** | Prev/Next/Play/Reset buttons, progress indicator | Calls parent's step navigation handlers |
-| **DescriptionPanel** | Shows step description with animation | Receives `currentStep.description` |
-
-### Data Flow Direction
-
-```
-┌────────────────────────────────────────────────────────────────────┐
-│                        Container Component                          │
-│  ┌─────────────────┐                                               │
-│  │  Static Data    │   examples: Record<Level, Example[]>          │
-│  │  (embedded)     │   Each Example has: code[], steps[], insight  │
-│  └────────┬────────┘                                               │
-│           │                                                         │
-│           ▼                                                         │
-│  ┌─────────────────┐                                               │
-│  │  Local State    │   level, exampleIndex, stepIndex, isPlaying  │
-│  │  (useState)     │                                               │
-│  └────────┬────────┘                                               │
-│           │                                                         │
-│           ▼                                                         │
-│  ┌─────────────────┐                                               │
-│  │  Derived State  │   currentExample = examples[level][exampleIndex]│
-│  │  (computed)     │   currentStep = currentExample.steps[stepIndex]│
-│  └────────┬────────┘                                               │
-│           │                                                         │
-│           ▼                                                         │
-│  ┌─────────────────────────────────────────────────────────────┐   │
-│  │                    Child Components                          │   │
-│  │  CodePanel(code, highlightLine)                             │   │
-│  │  VisualPanels(currentStep.visualState)                      │   │
-│  │  DescriptionPanel(currentStep.description)                  │   │
-│  │  ControlBar(handlers, stepIndex, totalSteps)                │   │
-│  └─────────────────────────────────────────────────────────────┘   │
-└────────────────────────────────────────────────────────────────────┘
-```
-
-**Key principle:** Data flows DOWN. Events flow UP. Step changes trigger re-renders of all visual panels.
+The new DSA pattern visualizations should follow the JS Concepts pattern, creating pattern-level pages at `/concepts/dsa/patterns/[patternId]` (e.g., `/concepts/dsa/patterns/two-pointers`).
 
 ---
 
-## Step Data Structure (Core Interface)
+## Recommended Structure
 
-Based on analysis of 5+ existing visualization components, here is the recommended Step interface:
+### Directory Organization
 
-```typescript
-interface Step {
-  id: number
+```
+src/
+  data/
+    dsaConcepts.ts          # Existing - data structures (arrays, stacks, etc.)
+    dsaPatterns.ts          # NEW - pattern metadata (two-pointers, sliding-window, etc.)
+    algorithmConcepts.ts    # Existing - problem-specific step data (keep for problem pages)
 
-  // Code highlighting
-  codeLine: number              // Single line to highlight (-1 for none)
-  highlightLines?: number[]     // Multiple lines (for complex highlights)
+  components/
+    DSAConcepts/            # Existing - data structure visualizers (ArrayViz, StackViz)
+    DSAPatterns/            # NEW - pattern-focused visualizers
+      TwoPointersPatternViz.tsx
+      TwoPointersPatternViz.module.css
+      HashMapPatternViz.tsx
+      HashMapPatternViz.module.css
+      BitManipulationPatternViz.tsx
+      BitManipulationPatternViz.module.css
+      SlidingWindowPatternViz.tsx
+      SlidingWindowPatternViz.module.css
+      BinarySearchPatternViz.tsx
+      BinarySearchPatternViz.module.css
+      index.ts
 
-  // Explanation
-  phase: string                 // e.g., 'Creation', 'Execution', 'Return'
-  description: string           // Human-readable explanation
+    ConceptPanel/           # Existing - problem-specific visualizers (keep as-is)
 
-  // Visual state (domain-specific, varies by visualization type)
-  // Pick what your viz needs:
-
-  // For execution visualizations:
-  callStack?: StackFrame[]
-  variables?: Variable[]
-  scopes?: Scope[]
-
-  // For queue/async visualizations:
-  microQueue?: string[]
-  macroQueue?: string[]
-
-  // For memory/closure visualizations:
-  heap?: HeapObject[]
-
-  // For algorithm visualizations:
-  array?: (number | string)[]
-  pointers?: Record<string, number>
-  highlights?: number[]
-
-  // Common across all:
-  output?: string[]             // Console output at this step
-  error?: string                // Error message if applicable
-  annotations?: string[]        // Text labels on visuals
-  result?: unknown              // Final result display
-}
+  app/
+    concepts/
+      dsa/
+        [conceptId]/        # Existing - data structure pages (arrays, stacks)
+        patterns/           # NEW - pattern pages
+          page.tsx          # Pattern listing page
+          [patternId]/      # Pattern detail pages
+            page.tsx
+            PatternPageClient.tsx
+            page.module.css
 ```
 
-### Example-Level Structure
+### Data Model
+
+**New file: `src/data/dsaPatterns.ts`**
 
 ```typescript
-interface Example {
-  id: string
-  title: string
-  code: string[]                // Lines of code
-  steps: Step[]                 // All steps for this example
-  insight: string               // Key learning takeaway
-}
-
-// Organize by difficulty
-type Level = 'beginner' | 'intermediate' | 'advanced'
-const examples: Record<Level, Example[]> = { ... }
-```
-
----
-
-## Patterns to Follow
-
-### Pattern 1: Self-Contained Visualization Component
-
-**When:** Complex, unique visualization with domain-specific panels.
-**Examples:** `EventLoopViz`, `HoistingViz`, `ClosuresViz`
-
-```typescript
-export function ConceptViz() {
-  // State
-  const [level, setLevel] = useState<Level>('beginner')
-  const [exampleIndex, setExampleIndex] = useState(0)
-  const [stepIndex, setStepIndex] = useState(0)
-  const lineRefs = useRef<(HTMLDivElement | null)[]>([])
-
-  // Derived
-  const currentExamples = examples[level]
-  const currentExample = currentExamples[exampleIndex]
-  const currentStep = currentExample.steps[stepIndex]
-
-  // Reset on level/example change
-  const handleLevelChange = (newLevel: Level) => {
-    setLevel(newLevel)
-    setExampleIndex(0)
-    setStepIndex(0)
-  }
-
-  // Auto-scroll to highlighted line
-  useEffect(() => {
-    if (currentStep.codeLine >= 0) {
-      lineRefs.current[currentStep.codeLine]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-      })
-    }
-  }, [stepIndex, currentStep.codeLine])
-
-  // Navigation handlers
-  const handleNext = () => {
-    if (stepIndex < currentExample.steps.length - 1) {
-      setStepIndex(s => s + 1)
-    }
-  }
-
-  // ... render
-}
-```
-
-### Pattern 2: Composable Panel with Pluggable Visualization
-
-**When:** Multiple visualizations share controls but have different visual renderers.
-**Examples:** `ConceptPanel` with `TwoPointersConcept`, `HashMapConcept`
-
-```typescript
-// Generic controller
-interface ConceptPanelProps {
-  title: string
+export interface PatternExample {
+  problemId: string        // Links to algorithmConcepts.ts
+  problemName: string
+  difficulty: 'easy' | 'medium' | 'hard'
   keyInsight: string
-  type: ConceptType
-  steps: ConceptStep[]
 }
 
-export function ConceptPanel({ type, steps }: ConceptPanelProps) {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
-
-  // Auto-advance when playing
-  useEffect(() => {
-    if (!isPlaying) return
-    const timer = setInterval(() => {
-      setCurrentStep(prev => prev >= steps.length - 1
-        ? (setIsPlaying(false), prev)
-        : prev + 1
-      )
-    }, playbackSpeed)
-    return () => clearInterval(timer)
-  }, [isPlaying, steps.length])
-
-  // Render appropriate visualization
-  const renderVisualization = () => {
-    switch (type) {
-      case 'two-pointers-converge':
-      case 'two-pointers-same-dir':
-        return <TwoPointersConcept step={steps[currentStep]} type={type} />
-      case 'bit-manipulation':
-        return <BitManipulationConcept step={steps[currentStep]} />
-      default:
-        return null
-    }
+export interface DSAPattern {
+  id: string               // 'two-pointers', 'hash-map', 'sliding-window'
+  title: string
+  category: 'array-patterns' | 'string-patterns' | 'bit-patterns'
+  difficulty: 'beginner' | 'intermediate' | 'advanced'
+  description: string
+  shortDescription: string
+  keyPoints: string[]
+  whenToUse: string[]      // Pattern recognition triggers
+  variants: {              // Sub-patterns with difficulty levels
+    id: string
+    name: string
+    description: string
+    difficulty: 'beginner' | 'intermediate' | 'advanced'
+  }[]
+  examples: PatternExample[]  // Linked problems for practice
+  commonMistakes?: string[]
+  interviewTips?: string[]
+  complexity: {
+    time: string
+    space: string
   }
 }
-
-// Pluggable visualization (receives step as prop)
-interface TwoPointersConceptProps {
-  step: ConceptStep
-  type: ConceptType
-}
-
-export function TwoPointersConcept({ step, type }: TwoPointersConceptProps) {
-  const { visual } = step
-  // Pure render based on step.visual
-}
 ```
 
-### Pattern 3: Animation Coordination with Framer Motion
+---
 
-**Established pattern:** Use `AnimatePresence` with `mode="popLayout"` for smooth step transitions.
+## Integration Points
 
+### 1. Routing Integration
+
+**Current routes:**
+- `/concepts` - Concepts hub (JS and DSA cards)
+- `/concepts/js` - JS concepts listing
+- `/concepts/dsa` - DSA concepts listing (data structures only)
+- `/concepts/[conceptId]` - Individual JS concept
+- `/concepts/dsa/[conceptId]` - Individual DSA data structure concept
+
+**New routes to add:**
+- `/concepts/dsa/patterns` - Pattern listing page
+- `/concepts/dsa/patterns/[patternId]` - Individual pattern page
+
+**Update needed:** `/concepts/dsa/page.tsx` to add link to patterns section
+
+### 2. Data Integration
+
+**Keep existing `algorithmConcepts.ts`:**
+- Problem-specific step data remains valuable for `/[categoryId]/[problemId]/concept` pages
+- Pattern pages can reference these via `patternId` in step data
+
+**New `dsaPatterns.ts`:**
+- Pattern-level metadata (when to use, variants, complexity)
+- Links to example problems
+- Pattern visualizations embed their own step data (like JS Concepts do)
+
+### 3. Component Integration
+
+**Reuse SharedViz components:**
+- `CodePanel` - Show pattern template code
+- `StepProgress` - Step indicators
+- `StepControls` - Play/pause/step navigation
+- `useAutoPlay` hook - Auto-advance through steps
+
+**New pattern visualizers follow JS Concepts pattern:**
+- Self-contained `*PatternViz.tsx` components
+- Embed step data directly in component (like `HoistingViz.tsx`)
+- Include difficulty-level tabs (beginner/intermediate/advanced)
+- CSS Module for styling with pattern-specific accent colors
+
+### 4. Type Integration
+
+**Extend existing types in `src/types/index.ts`:**
 ```typescript
-// Step description animation
-<AnimatePresence mode="wait">
-  <motion.div
-    key={`${level}-${exampleIndex}-${stepIndex}`}
-    initial={{ opacity: 0, y: 5 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -5 }}
-  >
-    {currentStep.description}
-  </motion.div>
-</AnimatePresence>
+// Existing ConceptType already covers patterns:
+export type ConceptType =
+  | 'two-pointers-converge'
+  | 'two-pointers-same-dir'
+  | 'two-pointers-partition'
+  | 'bit-manipulation'
+  | 'sliding-window'
+  | 'binary-search'
+  | 'hash-map'  // Add if not present
 
-// List items (stack, queue) animation
-<AnimatePresence mode="popLayout">
-  {items.map((item, i) => (
-    <motion.div
-      key={item.id}
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      layout
-    >
-      {item.content}
-    </motion.div>
-  ))}
-</AnimatePresence>
+// Existing ConceptStep and ConceptVisualState work as-is
 ```
 
 ---
 
-## Anti-Patterns to Avoid
+## Component Inventory
 
-### Anti-Pattern 1: Global Store for Standalone Visualizations
+### New Components
 
-**What:** Using Zustand/Redux for self-contained visualization state.
-**Why bad:** Adds complexity without benefit. Each viz is independent with no shared state needs.
-**Instead:** Use `useState` for local state. The codebase's `executionStore` is for the interpreter feature only.
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| `TwoPointersPatternViz` | `src/components/DSAPatterns/` | Two-pointer pattern visualization with variants |
+| `HashMapPatternViz` | `src/components/DSAPatterns/` | Hash map pattern visualization |
+| `BitManipulationPatternViz` | `src/components/DSAPatterns/` | Bit manipulation pattern visualization |
+| `SlidingWindowPatternViz` | `src/components/DSAPatterns/` | Sliding window pattern visualization |
+| `BinarySearchPatternViz` | `src/components/DSAPatterns/` | Binary search pattern visualization |
+| `PatternPageClient` | `src/app/concepts/dsa/patterns/[patternId]/` | Pattern page client component |
 
-### Anti-Pattern 2: Fetching Step Data Dynamically
+### Modified Components
 
-**What:** Loading steps from API or computing them on-the-fly.
-**Why bad:** Adds latency, error handling, loading states. Step data is static and known at build time.
-**Instead:** Embed step data directly in the component as a constant.
+| Component | Location | Modification |
+|-----------|----------|--------------|
+| DSA concepts listing | `src/app/concepts/dsa/page.tsx` | Add "Patterns" section/link |
+| Concepts hub | `src/app/concepts/page.tsx` | Optionally update DSA card description |
 
-### Anti-Pattern 3: Shared Mutable Step State
+### Existing Components to Reuse (No Changes)
 
-**What:** Mutating the step object during visualization.
-**Why bad:** Breaks stepping backward, causes stale state bugs.
-**Instead:** Steps are immutable snapshots. Each step contains complete state for that moment.
-
-### Anti-Pattern 4: Over-Generalization
-
-**What:** Building an abstract "universal step-through engine" that handles all visualization types.
-**Why bad:** The codebase has 30+ visualizations with different Step shapes. Abstraction adds complexity.
-**Instead:** Let each visualization define its own Step interface. Share only truly common pieces (controls, code panel).
-
----
-
-## Component Decomposition Recommendations
-
-### Extractable Shared Components (DO extract these)
-
-| Component | Purpose | Already Exists? |
-|-----------|---------|-----------------|
-| `LevelSelector` | beginner/intermediate/advanced tabs | No (repeated inline) |
-| `ExampleSelector` | Tab buttons for examples within level | No (repeated inline) |
-| `CodePanel` | Code display with line highlighting | No (repeated inline) |
-| `StepControls` | Prev/Play/Next/Reset buttons | Partial (`ConceptPanel`) |
-| `StepDescription` | Animated step explanation | No (repeated inline) |
-| `KeyInsight` | Bottom insight box | No (repeated inline) |
-
-### Keep Domain-Specific (DO NOT extract)
-
-| Component | Why Keep Separate |
-|-----------|-------------------|
-| Visual panels (stack, heap, queues) | Each has unique layout, animations, data shape |
-| Phase badge colors | Different semantics per visualization |
-| Step interface | Varies significantly by domain |
-
-### Suggested Extraction Priority
-
-1. **CodePanel** - Identical across all visualizations
-2. **StepControls** - Identical logic, minor styling differences
-3. **LevelSelector + ExampleSelector** - Identical pattern
-4. **StepDescription with AnimatePresence** - Identical animation pattern
+| Component | Location | Usage |
+|-----------|----------|-------|
+| `CodePanel` | `src/components/SharedViz/` | Show template code in pattern pages |
+| `StepProgress` | `src/components/SharedViz/` | Step indicators |
+| `StepControls` | `src/components/SharedViz/` | Navigation controls |
+| `useAutoPlay` | `src/components/SharedViz/` | Auto-advance hook |
+| `NavBar` | `src/components/NavBar/` | Breadcrumb navigation |
+| `ConceptIcon` | `src/components/Icons/` | May need new icons for patterns |
+| `ConceptPanel` | `src/components/ConceptPanel/` | Keep for problem-specific pages |
 
 ---
 
-## Suggested Build Order
+## Build Order
 
-Based on dependencies and complexity:
+Based on dependencies and incremental value delivery:
 
-### Phase 1: Foundation (build first)
+### Phase 1: Foundation (No Breaking Changes)
 
-1. **Define Step interfaces** for each new visualization type
-2. **Create example data** - The hardest part is authoring good step-by-step content
-3. **Scaffold container component** with local state pattern
+1. **Create `src/data/dsaPatterns.ts`**
+   - Define `DSAPattern` interface
+   - Add metadata for first pattern (two-pointers)
+   - No routes yet, just data
 
-### Phase 2: Core Panels
+2. **Create `src/components/DSAPatterns/` directory**
+   - Create `index.ts` barrel export
+   - Create base CSS variables file for consistent styling
 
-4. **CodePanel** (or extract shared version)
-5. **Domain-specific visual panel(s)** - The unique value of each visualization
-6. **Output/console panel**
+### Phase 2: First Pattern Page
 
-### Phase 3: Controls & Polish
+3. **Create `TwoPointersPatternViz.tsx`**
+   - Follow `HoistingViz.tsx` structure:
+     - Difficulty-level tabs (beginner/intermediate/advanced)
+     - Embedded step data for each variant
+     - Self-contained visualization
+   - Reuse TwoPointersConcept rendering logic where applicable
 
-7. **StepControls** with navigation handlers
-8. **Auto-play with interval** (copy from `ConceptPanel`)
-9. **Keyboard shortcuts** (Shift+Left/Right pattern)
-10. **Auto-scroll to highlighted line**
+4. **Create route structure:**
+   - `src/app/concepts/dsa/patterns/page.tsx` (listing)
+   - `src/app/concepts/dsa/patterns/[patternId]/page.tsx`
+   - `src/app/concepts/dsa/patterns/[patternId]/PatternPageClient.tsx`
 
-### Phase 4: Enhancement (optional)
+5. **Update `/concepts/dsa/page.tsx`**
+   - Add patterns section linking to new route
 
-11. **Speed controls** (0.5x, 1x, 2x)
-12. **Progress bar**
-13. **Responsive layout** (mobile considerations)
+### Phase 3: Additional Patterns (Parallelizable)
 
----
+6. **Create remaining pattern visualizers:**
+   - `HashMapPatternViz.tsx` (leverage existing HashMapConcept)
+   - `BitManipulationPatternViz.tsx` (leverage existing BitManipulationConcept)
+   - `SlidingWindowPatternViz.tsx` (new)
+   - `BinarySearchPatternViz.tsx` (new)
 
-## State Management Recommendations
+7. **Expand `dsaPatterns.ts`**
+   - Add metadata for all patterns
+   - Link example problems from `algorithmConcepts.ts`
 
-### For Self-Contained Visualizations
+### Phase 4: Polish and Integration
 
-```typescript
-// All state is local - no store needed
-const [level, setLevel] = useState<Level>('beginner')
-const [exampleIndex, setExampleIndex] = useState(0)
-const [stepIndex, setStepIndex] = useState(0)
-const [isPlaying, setIsPlaying] = useState(false)
-const [playbackSpeed, setPlaybackSpeed] = useState(1500) // ms
-```
+8. **Add pattern icons to `ConceptIcon`**
+   - Pattern-specific icons for navigation
 
-### For Cross-Component Communication (rare)
+9. **Cross-link patterns with problems**
+   - On pattern pages: "Practice this pattern" section
+   - On problem concept pages: "Learn this pattern" link
 
-If visualization needs to communicate with other page components (e.g., code editor), use:
-- **Props drilling** for simple cases
-- **Context** for deeply nested components
-- **Zustand** only if truly shared state (interpreter feature uses this)
-
-### Do NOT Need
-
-- React Query (no data fetching)
-- Redux (overkill for local state)
-- URL state (steps are ephemeral, not deep-linked)
-
----
-
-## Animation Coordination Strategy
-
-### Principle: Animate State Changes, Not Step Transitions
-
-```typescript
-// GOOD: Animate when visual state changes
-<motion.div
-  animate={{
-    scale: isHighlighted ? 1.1 : 1,
-    boxShadow: isHighlighted ? '0 0 16px var(--accent)' : 'none',
-  }}
-  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
->
-  {value}
-</motion.div>
-
-// GOOD: Animate list additions/removals
-<AnimatePresence mode="popLayout">
-  {stack.map(item => (
-    <motion.div
-      key={item.id}
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 10 }}
-      layout
-    />
-  ))}
-</AnimatePresence>
-```
-
-### Animation Constants (established in codebase)
-
-```typescript
-// Spring for interactive elements
-const springConfig = { type: 'spring', stiffness: 400, damping: 25 }
-
-// Fade for descriptions
-const fadeConfig = { duration: 0.2 }
-
-// Stagger for lists (delay between items)
-const staggerDelay = 0.1
-```
+10. **SEO and metadata**
+    - Structured data for pattern pages
+    - OpenGraph images
 
 ---
 
-## CSS Architecture
+## Key Architectural Decisions
 
-### Established Pattern: CSS Modules
+### Decision 1: Separate DSAPatterns Directory
 
-Each visualization has its own `.module.css` file:
-- `EventLoopViz.module.css`
-- `HoistingViz.module.css`
-- etc.
+**Rationale:** Pattern visualizers are conceptually different from data structure visualizers (DSAConcepts). Patterns show algorithmic techniques applied to data; data structures show the structures themselves.
 
-### Shared Styles
+**Alternative considered:** Add to existing DSAConcepts folder.
+**Why rejected:** Would conflate two different concept types and make the folder harder to navigate.
 
-`SharedViz.module.css` contains common patterns:
-- `.container` - Flex column with gap
-- `.controls` - Button row styling
-- `.btn`, `.btnSecondary` - Button variants
-- `.codeDisplay`, `.codeBlock` - Code panel styles
+### Decision 2: Embed Step Data in Viz Components
 
-### Neon Box Pattern (visual panels)
+**Rationale:** Follows proven JS Concepts pattern. Each `*Viz.tsx` component is self-contained with its step data, making it easy to understand, test, and modify.
 
-```css
-.neonBox {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
+**Alternative considered:** Central data file for all pattern steps.
+**Why rejected:** JS Concepts pattern works well; step data is tightly coupled to visualization logic.
 
-.neonBoxHeader {
-  padding: var(--space-sm) var(--space-md);
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--accent-blue);
-  background: rgba(102, 126, 234, 0.1);
-}
+### Decision 3: Keep algorithmConcepts.ts for Problem Pages
 
-.neonBoxInner {
-  padding: var(--space-md);
-}
-```
+**Rationale:** Problem-specific concept pages (`/[categoryId]/[problemId]/concept`) serve a different purpose than pattern pages. They show how a specific problem maps to a pattern with that problem's exact data.
+
+**Relationship:**
+- Pattern pages: "Here's how two-pointers works" (generic examples)
+- Problem pages: "Here's how two-pointers solves Two Sum II" (specific)
+
+### Decision 4: Nested Route `/concepts/dsa/patterns/[patternId]`
+
+**Rationale:** Maintains clear URL hierarchy. DSA has two sub-categories: data structures (`/concepts/dsa/arrays`) and patterns (`/concepts/dsa/patterns/two-pointers`).
+
+**Alternative considered:** Flat `/concepts/patterns/[patternId]`.
+**Why rejected:** Patterns are DSA-specific, not general JS concepts.
 
 ---
 
-## Roadmap Implications
+## Risk Areas and Mitigations
 
-### Build Order Based on Dependencies
+### Risk 1: Duplicate Visualization Code
 
-1. **Step interface + example data** - Must come first (everything depends on this)
-2. **Container with state** - Provides the step navigation foundation
-3. **Visual panels** - The core value; can be built in parallel with controls
-4. **Controls + polish** - Can be added incrementally
+**Risk:** Pattern visualizers might duplicate code from existing `ConceptPanel` components.
 
-### Phases That Likely Need Research
+**Mitigation:**
+- Extract shared rendering logic into utility functions
+- Pattern components can compose existing low-level visualizers
+- Example: `TwoPointersPatternViz` uses array rendering from `TwoPointersConcept`
 
-- **New visualization types** (e.g., graph traversal) - Need to design Step interface
-- **Performance optimization** - Only if step counts exceed ~100
+### Risk 2: Data Inconsistency
 
-### Standard Patterns (No Research Needed)
+**Risk:** Pattern metadata in `dsaPatterns.ts` might drift from problem data in `algorithmConcepts.ts`.
 
-- State management (useState pattern proven)
-- Animation (Framer Motion patterns proven)
-- Styling (CSS Modules + SharedViz proven)
-- Controls (ConceptPanel pattern proven)
+**Mitigation:**
+- Use TypeScript to link pattern IDs
+- Pattern pages reference problem IDs, don't duplicate content
+- Consider generating links from single source of truth
+
+### Risk 3: Navigation Complexity
+
+**Risk:** Users might get lost between concepts/dsa/patterns vs [categoryId]/[problemId]/concept.
+
+**Mitigation:**
+- Clear naming: "Learn Pattern" vs "See Solution"
+- Cross-linking between pages
+- Breadcrumbs show current location
+
+---
+
+## File Changes Summary
+
+### New Files
+
+| File | Purpose |
+|------|---------|
+| `src/data/dsaPatterns.ts` | Pattern metadata |
+| `src/components/DSAPatterns/index.ts` | Barrel export |
+| `src/components/DSAPatterns/TwoPointersPatternViz.tsx` | Two-pointers viz |
+| `src/components/DSAPatterns/TwoPointersPatternViz.module.css` | Styling |
+| `src/components/DSAPatterns/HashMapPatternViz.tsx` | Hash map viz |
+| `src/components/DSAPatterns/HashMapPatternViz.module.css` | Styling |
+| `src/components/DSAPatterns/BitManipulationPatternViz.tsx` | Bit manipulation viz |
+| `src/components/DSAPatterns/BitManipulationPatternViz.module.css` | Styling |
+| `src/components/DSAPatterns/SlidingWindowPatternViz.tsx` | Sliding window viz |
+| `src/components/DSAPatterns/SlidingWindowPatternViz.module.css` | Styling |
+| `src/components/DSAPatterns/BinarySearchPatternViz.tsx` | Binary search viz |
+| `src/components/DSAPatterns/BinarySearchPatternViz.module.css` | Styling |
+| `src/app/concepts/dsa/patterns/page.tsx` | Pattern listing |
+| `src/app/concepts/dsa/patterns/[patternId]/page.tsx` | Pattern SSR page |
+| `src/app/concepts/dsa/patterns/[patternId]/PatternPageClient.tsx` | Pattern client |
+| `src/app/concepts/dsa/patterns/[patternId]/page.module.css` | Styling |
+
+### Modified Files
+
+| File | Change |
+|------|--------|
+| `src/app/concepts/dsa/page.tsx` | Add patterns section |
+| `src/types/index.ts` | Potentially add 'hash-map' to ConceptType if missing |
+| `src/components/Icons/ConceptIcon.tsx` | Add pattern icons |
+
+### Unchanged Files
+
+| File | Reason |
+|------|--------|
+| `src/data/algorithmConcepts.ts` | Keep for problem-specific pages |
+| `src/components/ConceptPanel/*` | Keep for problem-specific visualization |
+| `src/app/[categoryId]/[problemId]/concept/*` | Problem-specific concept pages unchanged |
+
+---
+
+## Pattern Pages vs Problem Pages: Comparison
+
+| Aspect | Pattern Page | Problem Page |
+|--------|--------------|--------------|
+| URL | `/concepts/dsa/patterns/two-pointers` | `/arrays-hashing/two-sum-ii/concept` |
+| Purpose | Teach the pattern generically | Show pattern applied to specific problem |
+| Data Source | `dsaPatterns.ts` + embedded steps | `algorithmConcepts.ts` |
+| Component | `TwoPointersPatternViz` | `ConceptPanel` + `TwoPointersConcept` |
+| Examples | Multiple generic examples | Single problem-specific example |
+| Difficulty | Tabs for beginner/intermediate/advanced | Single difficulty (problem's difficulty) |
+| Navigation from | Learn Concepts flow | Practice Problems flow |
+
+This separation allows users to:
+1. Learn patterns conceptually first (pattern pages)
+2. See patterns applied in practice (problem pages)
+3. Navigate between both via cross-links
 
 ---
 
 ## Sources
 
-**Primary (HIGH confidence):**
-- Existing codebase analysis:
-  - `/src/components/Concepts/EventLoopViz.tsx` (1212 lines)
-  - `/src/components/Concepts/HoistingViz.tsx` (643 lines)
-  - `/src/components/Concepts/ClosuresViz.tsx` (857 lines)
-  - `/src/components/Concepts/PromisesViz.tsx` (672 lines)
-  - `/src/components/ConceptPanel/ConceptPanel.tsx` (217 lines)
-  - `/src/components/ConceptPanel/TwoPointersConcept.tsx` (171 lines)
-  - `/src/components/ConceptPanel/HashMapConcept.tsx` (229 lines)
-  - `/src/store/executionStore.ts` (301 lines)
-  - `/src/types/index.ts` (327 lines)
-
-**Supporting:**
-- Framer Motion patterns used consistently across all visualization components
-- CSS Modules with SharedViz.module.css for common styles
+- Existing codebase analysis (HIGH confidence)
+- `/src/components/Concepts/HoistingViz.tsx` - JS concept pattern template
+- `/src/data/algorithmConcepts.ts` - Existing problem-specific data
+- `/src/components/ConceptPanel/` - Existing algorithm visualizers
+- `/src/app/concepts/dsa/[conceptId]/` - Existing DSA page structure

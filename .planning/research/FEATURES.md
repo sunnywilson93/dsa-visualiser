@@ -1,256 +1,291 @@
-# Feature Landscape: Educational Code Step-Through Visualizations
+# Features Research: DSA Visualizations
 
-**Domain:** Interactive code execution visualization for JavaScript learning
+**Domain:** Algorithm pattern visualizations for interview prep
 **Researched:** 2026-01-24
-**Overall Confidence:** HIGH (based on analysis of Python Tutor, JS Visualizer 9000, Loupe, ui.dev JavaScript Visualizer, CS50 debugging tools, and academic research on program visualization effectiveness)
-
----
+**Overall confidence:** HIGH (based on competitor analysis + existing codebase patterns)
 
 ## Executive Summary
 
-Educational code visualizations help learners build accurate mental models of program execution. Research shows that well-designed visualizations with features like variable tracking, line highlighting, and step controls significantly improve learning outcomes (82.69% vs 51.41% in one study). The key differentiator is not just *showing* state, but *explaining* state transitions in sync with code execution.
-
-**Your existing EventLoopViz is already at the "gold standard" level.** The gap is that simpler visualizations (VariablesViz, LoopsViz, ArraysBasicsViz) lack the rich step-through pattern.
+DSA algorithm visualization is a mature space with established expectations. The project already has solid foundations (step controls, playback, progress indicators) from JS concepts. For DSA patterns specifically, users expect pattern-specific visualizations that make abstract algorithm techniques tangible. The key differentiator opportunity is in the "why" explanations and pattern recognition training, not just "what" animations.
 
 ---
 
 ## Table Stakes
 
-Features users expect. Missing = learners struggle to build mental models.
+Features users expect from any DSA visualizer. Missing these makes the product feel incomplete.
 
-| Feature | Why Expected | Complexity | Current State | Notes |
-|---------|--------------|------------|---------------|-------|
-| **Code Line Highlighting** | Shows "where we are" in execution | Low | EventLoopViz has it; others partial | Synchronize highlight with step state |
-| **Step Forward/Back Controls** | Learners need to pause, review, re-examine | Low | EventLoopViz has it; LoopsViz lacks back | Critical for self-paced learning |
-| **Current Step Indicator** | "Step 3/10" orientation prevents getting lost | Low | EventLoopViz has it | Simple badge, high value |
-| **Variable State Panel** | Shows current values of variables | Medium | VariablesViz has it statically | Must update per-step, not just per-example |
-| **Per-Step Explanation** | Text describing what's happening NOW | Low | EventLoopViz excellent | The "why" behind each state change |
-| **Reset/Restart** | Return to beginning without reloading | Low | All have it | Essential for re-watching |
-| **Console/Output Panel** | Shows what would print | Low | Most have it | Shows effect of code execution |
-| **Multiple Examples** | One example isn't enough for concept mastery | Medium | EventLoopViz has levels + examples | At minimum 2-3 examples per concept |
+| Feature | Why Expected | Complexity | Notes |
+|---------|--------------|------------|-------|
+| **Step-by-step execution** | Core value prop of visualizers | Already built | ConceptPanel has prev/next controls |
+| **Play/pause auto-advance** | Users want to watch at their pace | Already built | ConceptPanel has playback toggle |
+| **Speed control** | Different learners, different speeds | Already built | 0.5x, 1x, 2x in ConceptPanel |
+| **Progress indicator** | Shows where in algorithm | Already built | Progress bar + step count |
+| **Array visualization with indices** | DSA operates on arrays | Already built | TwoPointersConcept, HashMapConcept |
+| **Pointer position highlighting** | Shows current state | Already built | Pointer labels with arrows |
+| **Color coding for states** | Distinguish processed/active/pending | Already built | highlights array, CSS classes |
+| **Text annotations** | Explain what's happening this step | Already built | annotations array, descriptions |
+| **Result display** | Show final answer | Already built | visual.result rendering |
+| **Keyboard navigation** | Power users want shortcuts | Already built | Shift+Left/Right in ConceptPanel |
+| **Pattern-specific visualizations** | Two pointers looks different than hash map | Already built | Separate components per pattern |
+| **Mobile-friendly layout** | Many users learn on mobile | Medium | Need responsive CSS updates |
+| **Code highlighting sync** | Show which line is executing | Medium | Not built yet for DSA; exists in interpreter |
 
-### Why These Are Table Stakes
-
-From [Python Tutor](https://pythontutor.com/), the most widely-used code visualization tool (20M+ users):
-- Step-by-step execution with forward/back
-- Line highlighting synchronized with execution
-- Variable panel showing current state
-- Call stack visualization
-
-From academic research on program visualization effectiveness:
-- "Visualizations that displayed pseudocode with steps highlighted as executed, changing variable values and comments resulted in significantly higher post-test scores"
-- Learners need to see "qualitatively different representations of the same process" to build mental models
+### Verification Notes
+- Existing features verified by reading `/src/components/ConceptPanel/` components
+- Step controls, playback, progress all present in `ConceptPanel.tsx`
+- Pattern visualizations exist for Two Pointers, Bit Manipulation, Hash Map
 
 ---
 
 ## Differentiators
 
-Features that set your platform apart. Not expected, but create "aha moments."
+Features that would make this product stand out. Not expected, but create competitive advantage.
 
-| Feature | Value Proposition | Complexity | Priority | Notes |
-|---------|-------------------|------------|----------|-------|
-| **Difficulty Levels** | Beginner/Intermediate/Advanced progression | Medium | High | EventLoopViz pattern: same concept, increasing complexity |
-| **Key Insight Summary** | One-liner that crystallizes the concept | Low | High | EventLoopViz has this; very high value |
-| **Animated State Transitions** | Smooth animations showing changes | Medium | High | Already using Framer Motion; leverage it |
-| **Phase/Context Indicators** | "Sync phase" / "Microtask phase" badges | Low | High | Helps learners understand context |
-| **Visual Memory Model** | Show heap vs stack, references vs values | High | Medium | Python Tutor's signature feature |
-| **Interactive Data Structures** | Click on array element to see operations | Medium | Medium | ArraysBasicsViz has basic version |
-| **Execution Speed Control** | Slow/Medium/Fast playback | Low | Medium | Loupe has this; good for different learning paces |
-| **Auto-Play with Pause** | Let it run, pause when interesting | Low | Medium | Current LoopsViz auto-runs but can't pause mid-way |
-| **Error State Visualization** | Show what happens when code throws | Medium | Medium | VariablesViz hints at this with error message |
-| **Scope Visualization** | Visual nesting of scopes/closures | High | Medium | ClosuresViz could benefit from this |
-| **Code + Diagram Split View** | See code and visual simultaneously | Low | High | EventLoopViz does this well |
+| Feature | Value Proposition | Complexity | Notes |
+|---------|-------------------|------------|-------|
+| **Pattern variant labels** | Shows "converging" vs "same-direction" vs "partition" | Low | Already partially built via ConceptType |
+| **Direction indicators** | Animated arrows showing pointer movement direction | Low | TwoPointersConcept has this for converge/same-dir |
+| **Key insight callout** | One-liner pattern recognition aid | Low | Already built as `keyInsight` |
+| **State transition animations** | Smooth morph between steps (not just swap) | Medium | Framer Motion in place, could enhance |
+| **Before/after comparison** | Show array state change clearly | Medium | Could add diff highlighting |
+| **Interactive "what-if" mode** | User modifies input, sees different execution | High | Would require re-running algorithm |
+| **Complexity annotation** | Show O(n) progress as steps execute | Medium | Track iterations, comparisons |
+| **Pattern recognition training** | Quiz: "What pattern would you use here?" | High | New feature, educational value |
+| **Problem-to-pattern mapping** | Link problems to their underlying patterns | Low | Already structured in problemConcepts |
+| **Collision visualization (Hash Map)** | Show how collisions are resolved | Medium | Hash map component exists but basic |
+| **Bit position labels** | Show bit 0, 1, 2... positions | Low | Already built in BitManipulationConcept |
+| **Binary operation breakdown** | Show AND/OR/XOR bit-by-bit | Low | Already built with operator symbols |
+| **Recursion tree visualization** | Show recursive calls as tree | High | Would be new component |
+| **Memory/space visualization** | Show auxiliary space being used | High | Would require tracking allocations |
 
-### Differentiator Analysis
+### High-Value, Low-Complexity Quick Wins
 
-**Highest Impact (implement first):**
-1. **Difficulty Levels** - EventLoopViz pattern is proven. Apply to other concepts.
-2. **Key Insight Summary** - Low effort, high retention impact.
-3. **Code + Diagram Split** - Already works; ensure all visualizations use it.
-
-**Medium Impact (implement second):**
-4. **Animated State Transitions** - You have Framer Motion; animate variable value changes.
-5. **Phase/Context Indicators** - Visual badges showing "what kind of thing is happening."
-
-**Nice to Have (future):**
-6. **Visual Memory Model** - Complex but powerful for references/values distinction.
-7. **Scope Visualization** - Nested boxes showing scope hierarchy.
+1. **Pattern variant badges** - Already have types, just surface them visually
+2. **Before/after diff** - Highlight what changed between steps with different color
+3. **O(n) progress counter** - Show "Iteration 3 of 5" or "Comparisons: 12"
+4. **Expanded hash map collision viz** - Show bucket chains, not just key-value pairs
 
 ---
 
 ## Anti-Features
 
-Features to deliberately NOT build. Common mistakes in educational visualization.
+Features to deliberately NOT build. Common mistakes in this domain.
 
 | Anti-Feature | Why Avoid | What to Do Instead |
 |--------------|-----------|-------------------|
-| **Free-Form Code Input** | Arbitrary code breaks curated examples; edge cases create confusion | Use curated examples with known execution paths |
-| **Real-Time Interpretation** | Performance issues, security concerns, unpredictable output | Pre-compute step data; store as static data |
-| **Complex Syntax Highlighting** | Distracts from execution understanding | Simple monochrome with line highlight only |
-| **Too Many Simultaneous Panels** | Cognitive overload | Max 3-4 visible panels; progressive disclosure |
-| **Auto-Advance Without User Control** | Learners can't keep up; miss key moments | Always require explicit step-forward action |
-| **Overwhelming Initial State** | All code visible at once is intimidating | Start simple; reveal complexity through steps |
-| **Sound Effects/Excessive Animation** | Distracting, accessibility issues | Subtle transitions only; respect reduced-motion |
-| **Live Collaboration** | Scope creep; complex state sync | Focus on individual learning path first |
-| **Gamification (points, badges)** | Shifts focus from understanding to achievements | Learning is intrinsic reward |
-| **Mobile-First Layout** | Visualizations need horizontal space | Desktop-first; responsive collapse for mobile |
+| **Auto-playing on page load** | Jarring, user not ready | Start paused, user initiates |
+| **Sound effects** | Annoying, accessibility issues | Silent animations only |
+| **Complex 3D visualizations** | Cognitive overload, slow to render | 2D is sufficient for DSA patterns |
+| **Multiple algorithms at once** | Focus is key to learning | One pattern, one problem at a time |
+| **Real-time code editing in viz** | Scope creep, interpreter already exists | Keep viz read-only, separate from editor |
+| **Gamification badges** | Distracts from learning, feels cheap | Focus on understanding, not points |
+| **Social features (comments, sharing)** | Out of scope, maintenance burden | Keep focused on individual learning |
+| **AI-generated explanations** | Quality inconsistency, trust issues | Curated, human-written explanations |
+| **Full algorithm implementations** | Interpreter already handles this | Visualizations are conceptual, not executable |
+| **Over-animation** | Slows down learning, looks gimmicky | Purposeful, minimal animations |
+| **Too many configuration options** | Decision paralysis | Sensible defaults (speed is enough) |
 
-### Why These Are Anti-Features
+---
 
-**Free-Form Code Input:**
-- Python Tutor allows this but handles it server-side with sandboxing
-- Your interpreter already exists but maintenance burden for arbitrary code is high
-- Curated examples ensure consistent learning progression
+## Pattern-Specific Features
 
-**Auto-Advance:**
-- Research shows learners need control over pace
-- "What just happened?" is the most common question when advancing too fast
-- Let learners control timing; they'll learn faster
+### Two Pointers
 
-**Too Many Panels:**
-- EventLoopViz has 5+ panels but they're well-organized
-- Cognitive load research: 3-4 items is working memory limit
-- Use progressive disclosure: show more detail as learner advances
+**Already Built (TwoPointersConcept.tsx):**
+- Array with index labels
+- Colored pointer labels (left=blue, right=purple)
+- Pointer position tracking
+- Highlight active elements
+- Direction indicators (converging arrows, same-direction arrows)
+- Result display
+
+**Needed Enhancements:**
+
+| Feature | Value | Complexity |
+|---------|-------|------------|
+| **Partition zone coloring** | For Dutch flag: 0s zone, 1s zone, 2s zone | Low |
+| **Movement trail** | Faded positions showing where pointer was | Medium |
+| **Comparison annotation** | Show "arr[left] + arr[right] = 17 > target" inline | Low |
+| **Swap animation** | When elements exchange, animate the swap | Medium |
+| **Window bracket (for sliding window)** | Visual bracket around current window | Low |
+
+**Pattern Variants to Support:**
+1. Converging (left/right moving inward) - supported
+2. Same-direction (slow/fast) - supported
+3. Partition (three-way) - needs zone coloring
+4. Sliding window - needs window bracket visual
+5. Binary search - needs halving visualization
+
+### Hash Map
+
+**Already Built (HashMapConcept.tsx):**
+- Array visualization with current index pointer
+- Hash map entries grid with key:value
+- New entry animation (scale in)
+- Lookup status display (found/not-found)
+- Dual array support (for anagram-like problems)
+- Phase labels (building/checking)
+- Decrement value styling
+
+**Needed Enhancements:**
+
+| Feature | Value | Complexity |
+|---------|-------|------------|
+| **Bucket visualization** | Show hash buckets, not just flat entries | Medium |
+| **Hash function indication** | Show key -> bucket mapping | Medium |
+| **Collision chain** | Linked list or chain when collision occurs | Medium |
+| **Frequency count bars** | Visual bar chart of frequencies | Low |
+| **Lookup path animation** | Animate the lookup: hash -> bucket -> find | Medium |
+| **"Seen" marker on array** | Mark which array elements have been processed | Low |
+
+**Pattern Variants to Support:**
+1. Frequency counting - supported
+2. Two Sum lookup - supported
+3. Anagram check (dual array) - supported
+4. Sliding window with hash map - needs window + map combo
+5. Grouping by key - needs grouped display
+
+### Bit Manipulation
+
+**Already Built (BitManipulationConcept.tsx):**
+- Binary number display (8-bit by default)
+- Bit position labels (7, 6, 5... 0)
+- Active bit highlighting
+- Operator badge (AND, OR, XOR, etc.)
+- Operation breakdown (input, operator, result)
+- Result row with animation
+- Decimal to binary display
+
+**Needed Enhancements:**
+
+| Feature | Value | Complexity |
+|---------|-------|------------|
+| **Configurable bit width** | Support 4, 8, 16, 32 bit displays | Low |
+| **Bit mask overlay** | Show mask being applied visually | Low |
+| **Carry/borrow visualization** | For addition without +, show carry propagation | Medium |
+| **Shift animation** | Bits visually sliding left/right | Medium |
+| **Two's complement toggle** | Show negative number representation | Low |
+| **Bit-by-bit operation flow** | Animate each bit position being calculated | Medium |
+| **Power of 2 markers** | Highlight which bits are set in powers of 2 | Low |
+
+**Pattern Variants to Support:**
+1. XOR tricks (single number, pairs cancel) - supported
+2. Bit counting (n & n-1) - supported
+3. Masking operations - partially supported
+4. Shift operations - needs shift animation
+5. Bit checking/setting - needs clearer visualization
 
 ---
 
 ## Feature Dependencies
 
 ```
-Step Controls (base)
+Core Infrastructure (already built)
     |
-    +-- Code Line Highlighting (requires: step state)
+    +-- Step Controls (prev/next/play/pause)
+    |       |
+    |       +-- Keyboard Navigation (Shift+arrows)
+    |       +-- Speed Control (0.5x, 1x, 2x)
     |
-    +-- Variable State Panel (requires: step state)
+    +-- Progress Indicator
     |
-    +-- Per-Step Explanation (requires: step state)
-    |
-    +-- Console Output (requires: step state)
-
-Multiple Examples (independent)
-    |
-    +-- Difficulty Levels (requires: example grouping)
-    |
-    +-- Key Insight per Example (requires: example structure)
-
-Animation System (base - Framer Motion)
-    |
-    +-- Animated State Transitions
-    |
-    +-- Smooth Panel Updates
+    +-- Pattern Visualizers
+            |
+            +-- Two Pointers Concept
+            |       +-- Converge variant
+            |       +-- Same-direction variant
+            |       +-- Partition variant (needs zone coloring)
+            |
+            +-- Hash Map Concept
+            |       +-- Single array mode
+            |       +-- Dual array mode (anagram)
+            |       +-- Bucket visualization (not built)
+            |
+            +-- Bit Manipulation Concept
+                    +-- Binary display
+                    +-- Operator breakdown
+                    +-- Shift animation (not built)
 ```
 
-### Critical Path
+---
 
-1. **Step State Model** - Define step data structure (already exists in EventLoopViz)
-2. **Step Controls** - Forward/Back/Reset buttons
-3. **Line Highlighting** - Connect step.codeLine to code display
-4. **Variable Panel** - Show step.variables state
-5. **Explanation** - Show step.description
-6. **Multiple Examples** - Add example selector
-7. **Difficulty Levels** - Group examples by level
+## MVP vs Post-MVP Recommendations
+
+### For MVP (Current Milestone)
+
+**Prioritize:**
+1. Partition zone coloring for Two Pointers (Dutch flag problems)
+2. "Seen" markers on arrays for Hash Map
+3. Configurable bit width for Bit Manipulation
+4. Before/after diff highlighting (works across all patterns)
+5. Mobile-responsive layout fixes
+
+**Defer:**
+- Interactive "what-if" mode
+- Recursion tree visualization
+- Pattern recognition quizzes
+- Full collision chain visualization
+
+### Rationale
+
+The existing visualizers cover the core needs. Enhancements should focus on:
+1. **Clarity** - Make existing visualizations clearer (zone coloring, seen markers)
+2. **Completeness** - Support all three pattern variants fully
+3. **Accessibility** - Mobile support is critical for learning platform
 
 ---
 
-## MVP Recommendation
+## Competitive Landscape Summary
 
-For each visualization upgrade, prioritize in this order:
+| Competitor | Strength | Gap We Can Fill |
+|------------|----------|-----------------|
+| VisuAlgo | Comprehensive, academic | Less interview-focused, no pattern training |
+| Algorithm Visualizer | Code-centric, custom input | No curated interview problem mapping |
+| LeetCopilot | AI-powered hints | Not visualization-first |
+| Hello Interview | Pattern explanations | Visualizations less interactive |
+| This Project | Pattern-specific DSA + JS concepts | Need to complete DSA visualization enhancements |
 
-### Must Have (MVP)
-
-1. **Step-through controls** (Prev/Next/Reset)
-2. **Code line highlighting** synchronized with step
-3. **Step indicator** ("Step 3/10")
-4. **Per-step explanation** text
-5. **At least 3 examples** per concept
-
-### Should Have (V1)
-
-6. **Difficulty levels** (beginner/intermediate/advanced)
-7. **Key insight summary** per example
-8. **Animated state transitions** for variable changes
-9. **Output/Console panel** showing execution results
-
-### Nice to Have (V2)
-
-10. **Keyboard navigation** (arrow keys for step control)
-11. **Auto-scroll to highlighted line** (EventLoopViz has this)
-12. **Phase indicators** where relevant
+**Our differentiation:**
+- Combined JS concepts + DSA patterns in one platform
+- Problem-to-pattern mapping (already structured in algorithmConcepts.ts)
+- Interview-focused key insights
+- Step-by-step problem walkthroughs (not just generic algorithm demos)
 
 ---
 
-## Gap Analysis: Current Visualizations
+## Confidence Assessment
 
-### EventLoopViz (Gold Standard)
-- Has all table stakes features
-- Has most differentiators
-- Use as pattern template
-
-### VariablesViz (Needs Upgrade)
-| Feature | Status | Gap |
-|---------|--------|-----|
-| Step controls | Has | - |
-| Line highlighting | Has | - |
-| Variable panel | Has | Static, not per-step updated with animations |
-| Difficulty levels | Missing | Add beginner/intermediate/advanced |
-| Key insight | Missing | Add per-example |
-
-### FunctionsViz (Needs Upgrade)
-| Feature | Status | Gap |
-|---------|--------|-----|
-| Step controls | Has (in call mode) | Syntax mode lacks steps |
-| Line highlighting | Has | - |
-| Call stack visual | Missing | Would strengthen mental model |
-| Difficulty levels | Missing | Add levels |
-
-### LoopsViz (Needs Significant Upgrade)
-| Feature | Status | Gap |
-|---------|--------|-----|
-| Step controls | Missing | Only auto-play, no back/pause |
-| Line highlighting | Missing | No code stepping |
-| Variable panel | Partial | Shows iteration but not variable state |
-| Step explanation | Missing | No per-step text |
-
-### ArraysBasicsViz (Needs Upgrade)
-| Feature | Status | Gap |
-|---------|--------|-----|
-| Step controls | Missing | Tab-based, not step-based |
-| Line highlighting | Missing | No code execution shown |
-| Step explanation | Missing | Method descriptions are static |
-| Iteration visualization | Missing | map/filter/reduce should show iteration |
-
----
-
-## Implementation Complexity Estimates
-
-| Visualization | Current State | Effort to Upgrade | Priority |
-|---------------|---------------|-------------------|----------|
-| LoopsViz | Auto-play only | Medium (add step state) | High - loops are foundational |
-| VariablesViz | Good base | Low (add levels, polish) | High - first concept learners encounter |
-| ArraysBasicsViz | Tab-based | Medium (restructure to steps) | Medium |
-| FunctionsViz | Two modes | Low-Medium (unify into steps) | Medium |
-| ObjectsBasicsViz | Likely similar to Arrays | Medium | Medium |
+| Area | Confidence | Reason |
+|------|------------|--------|
+| Table stakes | HIGH | Established by multiple competitor analysis |
+| Differentiators | MEDIUM | Some based on web search, needs user validation |
+| Anti-features | HIGH | Common mistakes well-documented in DSA viz space |
+| Pattern-specific | HIGH | Based on existing codebase analysis + domain knowledge |
 
 ---
 
 ## Sources
 
-### Primary Sources (HIGH Confidence)
+**Competitor Research:**
+- [VisuAlgo](https://visualgo.net/en) - Comprehensive DSA visualizations
+- [Algorithm Visualizer](https://algorithm-visualizer.org/) - Code-centric approach
+- [LeetCopilot Two Pointers](https://leetcopilot.dev/tool/two-pointers-visualizer) - Interview-focused
+- [Hello Interview](https://www.hellointerview.com/learn/code) - Pattern explanations
+- [AlgoVis.io](https://tobinatore.github.io/algovis/hashtable.html) - Hash table visualization
 
-- [Python Tutor](https://pythontutor.com/) - 20M+ users, gold standard for code visualization
-- [JavaScript Visualizer 9000](https://www.jsv9000.app/) - Event loop specific visualization
-- [ui.dev JavaScript Visualizer](https://ui.dev/javascript-visualizer) (now at fireship.dev) - Execution context, hoisting, closures, scopes
-- [Loupe by Philip Roberts](http://latentflip.com/loupe/) - Event loop visualization from JSConf talk
-- [CS50 Debug50](https://cs50.harvard.edu/ap/2020/assets/pdfs/bugs_and_debugging.pdf) - Harvard's debugging curriculum
+**Pattern Resources:**
+- [USACO Guide - Two Pointers](https://usaco.guide/silver/two-pointers)
+- [Design Gurus - Coding Patterns](https://www.designgurus.io/blog/grokking-the-coding-interview-patterns)
+- [GeeksforGeeks - Two Pointers](https://www.geeksforgeeks.org/dsa/two-pointers-technique/)
 
-### Academic Sources (MEDIUM Confidence)
+**UX Best Practices:**
+- [Data Visualization UX Best Practices 2026](https://www.designstudiouiux.com/blog/data-visualization-ux-best-practices/)
+- [Algorithm Visualizer vs VisuAlgo Comparison](https://daily.dev/blog/algorithm-visualizer-vs-visualgo-comparison)
 
-- "Designing Educationally Effective Algorithm Visualizations" - Auburn University research
-- "Exploring the role of visualization and engagement in computer science education" - ACM SIGCSE
-- "The impact of using program visualization techniques on learning basic programming concepts at the K-12 level" - Wiley research
-- "A Review of Generic Program Visualization Systems for Introductory Programming Education" - ACM Computing Education
-
-### Implementation References (HIGH Confidence)
-
-- Your existing EventLoopViz.tsx - Best-in-class pattern already implemented
-- Your existing VariablesViz.tsx, FunctionsViz.tsx - Good foundations to extend
+**Existing Codebase:**
+- `/src/components/ConceptPanel/ConceptPanel.tsx` - Step controls, playback
+- `/src/components/ConceptPanel/TwoPointersConcept.tsx` - Two pointers viz
+- `/src/components/ConceptPanel/HashMapConcept.tsx` - Hash map viz
+- `/src/components/ConceptPanel/BitManipulationConcept.tsx` - Bit manipulation viz
+- `/src/data/algorithmConcepts.ts` - Problem-specific step data
+- `/src/types/index.ts` - ConceptType, ConceptVisualState types

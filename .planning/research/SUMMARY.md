@@ -1,260 +1,238 @@
 # Project Research Summary
 
-**Project:** DSA Visualizer - Enhanced JS Concept Visualizations
-**Domain:** Interactive educational code visualization platform
+**Project:** DSA Visualizer - Enhanced DSA Concept Visualizations
+**Domain:** Interactive educational algorithm visualization
 **Researched:** 2026-01-24
 **Confidence:** HIGH
 
 ## Executive Summary
 
-This project builds on an already-excellent foundation. The existing codebase has EventLoopViz as a gold-standard step-through visualization, complete with difficulty levels, multiple examples, animated state transitions, and rich explanations. The opportunity is to systematically upgrade the simpler visualizations (VariablesViz, LoopsViz, ArraysBasicsViz, FunctionsViz, ObjectsBasicsViz) to match this proven pattern.
+This project aims to upgrade DSA pattern visualizations (Two Pointers, Hash Map, Bit Manipulation) to match the quality of existing JS concept visualizations. The good news: no new stack is needed. The existing React 18, Framer Motion 11, and CSS Modules infrastructure already powers successful JS concept visualizers with step controls, playback, and smooth animations. This is a pure architectural alignment project, not a technology upgrade.
 
-The recommended approach is pattern replication, not innovation. No new dependencies are needed - the stack (Framer Motion, CSS Modules, local state) is already optimal. The architecture pattern is proven: embedded step data, local state management, domain-specific visual panels, and synchronized code highlighting. The primary challenge is content creation - authoring high-quality step-by-step data that teaches correct mental models without oversimplification.
+The recommended approach follows the proven JS Concepts pattern: create pattern-level pages at `/concepts/dsa/patterns/[patternId]` with self-contained visualizer components that embed their own step data and difficulty levels. These components will reuse SharedViz controls (CodePanel, StepProgress, StepControls) and animation patterns that already work well in existing JS visualizers. The existing problem-specific visualizations in ConceptPanel remain valuable for showing patterns applied to specific problems.
 
-The key risk is propagating wrong mental models. Research shows that visualizations teaching incorrect mental models (e.g., "variables are boxes" instead of "wires to values") cause learners to confidently hold wrong beliefs for years. Mitigation requires consulting authoritative sources like Just JavaScript and Python Tutor, and ensuring each visualization teaches the actual JavaScript execution model, not oversimplified analogies borrowed from other languages.
+The critical risk is building visualizations that look good but create incorrect mental models. Research shows 62.5% of learners feel prepared after passive video watching but score only 45% vs 70% for active learners. Key mitigations: visualize decision logic before movements (not just pointer positions changing), show hash bucket mechanisms (not just key-value pairs), and treat bit positions as independent flags. Step descriptions must match visual states exactly, and animations must be sequenced to show causality rather than simultaneous changes.
 
 ## Key Findings
 
 ### Recommended Stack
 
-The existing stack is complete - no new dependencies needed. Analysis of EventLoopViz, HoistingViz, ClosuresViz, and PromisesViz confirms that current technologies handle all requirements.
+**No new dependencies needed.** The existing stack is fully capable. This is an architectural upgrade, not a technology change.
 
 **Core technologies:**
-- **Framer Motion v11+**: Animation and state transitions - already provides layout animations, AnimatePresence, and 120fps GPU-accelerated performance
-- **CSS Modules**: Styling with SharedViz.module.css for common patterns - maintains consistency across visualizations
-- **Custom `<pre>` with CSS**: Code display for visualizations - simpler than Monaco for static examples, full animation control
-- **@monaco-editor/react**: Code editor for practice pages - already integrated with line decorations and breakpoints
-- **Zustand**: State management - used for interpreter execution; local useState for isolated visualizations
+- **Framer Motion 11.18.2**: Already handles all animation needs — spring animations, AnimatePresence for list changes, layout animations for smooth transitions, and staggered sequences for clarity
+- **SharedViz components**: CodePanel, StepProgress, StepControls, and useAutoPlay hook provide proven infrastructure for step-through visualizations
+- **CSS Modules**: Established pattern for pattern-specific styling with scoped accent colors
+- **TypeScript types**: ConceptStep and ConceptVisualState already support all DSA pattern needs (array, pointers, highlights, binary, hashMap, annotations)
 
-**What NOT to add:**
-- react-syntax-highlighter (maintenance issues, SSG conflicts)
-- shiki (700KB+ bundle size, overkill for curated examples)
-- GSAP (license concerns, Motion is sufficient)
-- react-spring (would create inconsistency)
+**What to add:** Optional icon imports from existing lucide-react (ArrowLeftRight for converging pointers, Hash for hash maps, Binary for bit manipulation). No npm install required.
+
+**What to avoid:** D3.js (280KB+ overhead for minimal benefit), Canvas/WebGL (DOM animations perform fine for small DSA examples), animation state libraries (useState + useAutoPlay sufficient), CSS animation libraries (inconsistent with Framer Motion pattern).
 
 ### Expected Features
 
-Research across Python Tutor (20M+ users), JavaScript Visualizer 9000, ui.dev visualizer, and academic literature reveals clear feature tiers.
+**Table stakes (all already built):**
+- Step-by-step execution with play/pause auto-advance
+- Speed control (0.5x, 1x, 2x)
+- Progress indicator with step count
+- Keyboard navigation (Shift+Left/Right)
+- Array visualization with indices and pointer highlighting
+- Color coding for states (active/processed/pending)
+- Text annotations explaining current step
+- Pattern-specific visualizations (separate components per pattern)
 
-**Must have (table stakes):**
-- Code line highlighting synchronized with execution step
-- Step forward/back controls - critical for self-paced learning
-- Current step indicator ("Step 3/10") - prevents getting lost
-- Variable state panel updating per-step
-- Per-step explanation describing what's happening and why
-- Reset/restart without reloading
-- Console/output panel showing execution results
-- Multiple examples (minimum 2-3 per concept)
+**Missing table stakes:**
+- Mobile-friendly responsive layout (needs CSS updates)
+- Code highlighting sync with steps (exists in interpreter but not DSA visualizers)
 
-**Should have (competitive):**
-- Difficulty levels (beginner/intermediate/advanced) - EventLoopViz pattern proven
-- Key insight summary - one-liner crystallizing the concept
-- Animated state transitions - leverage existing Framer Motion
-- Phase/context indicators - "Sync phase" / "Microtask phase" badges
-- Code + diagram split view - EventLoopViz does this well
-- Auto-scroll to highlighted line - EventLoopViz has this
+**Differentiators (quick wins):**
+- Pattern variant labels (converging vs same-direction vs partition) — low complexity, high value
+- Before/after diff highlighting — show what changed between steps
+- Complexity annotation — show iteration/comparison counters as algorithm progresses
+- Collision visualization for hash maps — show bucket chains, not just flat entries
 
-**Defer (v2+):**
-- Visual memory model (heap vs stack visualization) - high complexity
-- Scope visualization (nested boxes showing hierarchy) - high complexity
-- Interactive data structures (clickable elements) - ArraysBasicsViz has basic version
-- Execution speed control (slow/medium/fast) - nice but not essential
-- Error state visualization - medium priority
-
-**Anti-features (deliberately avoid):**
-- Free-form code input - security, edge cases, maintenance burden
-- Real-time interpretation - performance issues, use pre-computed steps
-- Auto-advance without user control - research shows passive viewing has no learning benefit
-- Complex syntax highlighting - distracts from execution understanding
-- Too many simultaneous panels - cognitive overload (max 3-4 visible)
-- Gamification - shifts focus from understanding to achievements
+**Anti-features to avoid:**
+- Auto-playing on page load (start paused)
+- Sound effects or gamification
+- Complex 3D visualizations (2D sufficient)
+- Real-time code editing in visualizations (keep separate from interpreter)
+- Over-animation that slows learning
 
 ### Architecture Approach
 
-The codebase has two proven patterns: (1) Self-contained viz components with embedded step data and local state for unique visualizations, and (2) Composable panel components with pluggable visualizers for similar patterns. For enhanced visualizations, follow Pattern 1 (self-contained) which EventLoopViz exemplifies.
+Create pattern-level pages at `/concepts/dsa/patterns/[patternId]` following the proven JS Concepts pattern. New `DSAPatterns/` component directory contains self-contained visualizers (TwoPointersPatternViz, HashMapPatternViz, BitManipulationPatternViz) that embed their own step data with difficulty levels (beginner/intermediate/advanced). New `dsaPatterns.ts` data file contains pattern metadata (when to use, variants, complexity). Keep existing `algorithmConcepts.ts` for problem-specific step data used on `/[categoryId]/[problemId]/concept` pages.
 
 **Major components:**
-1. **Container Component** - Owns state (level, example, step index), defines Step interface, embeds static step data as constants
-2. **CodePanel** - Renders code array with line numbers, highlights current line(s), manages auto-scroll refs
-3. **Domain Visual Panels** - Render concept-specific state (call stack, variables, queues, heap, pointers) from currentStep
-4. **ControlBar** - Prev/Play/Next/Reset buttons with progress indicator, calls parent navigation handlers
-5. **DescriptionPanel** - Shows step.description with AnimatePresence fade transitions
-6. **InsightPanel** - Displays key learning takeaway at completion
+1. **DSAPatterns/** — Pattern visualizer components with embedded step data (new)
+2. **SharedViz/** — Reusable controls (CodePanel, StepProgress, StepControls, useAutoPlay) (reuse existing)
+3. **ConceptPanel/** — Problem-specific visualizations (keep unchanged, serves different purpose)
+4. **dsaPatterns.ts** — Pattern metadata, variants, example problem links (new)
+5. **algorithmConcepts.ts** — Problem-specific step data (keep for problem pages)
 
-**Data flow pattern:**
-```
-Embedded Static Data (examples: Record<Level, Example[]>)
-  ↓
-Local State (level, exampleIndex, stepIndex, isPlaying)
-  ↓
-Derived State (currentExample, currentStep)
-  ↓
-Props to Child Components (code, visualState, handlers)
-```
-
-**Step data structure:**
-```typescript
-interface Step {
-  id: number
-  codeLine: number              // or highlightLines: number[]
-  phase: string                 // e.g., 'Creation', 'Execution'
-  description: string           // Why this state changed
-  // Domain-specific visual state:
-  variables?: Variable[]
-  callStack?: StackFrame[]
-  output?: string[]
-  // ... concept-specific fields
-}
-```
+**Integration:** Pattern pages and problem pages serve complementary purposes. Pattern pages teach techniques generically (multiple examples per difficulty level). Problem pages show techniques applied to specific LeetCode problems. Cross-link between both for comprehensive learning.
 
 ### Critical Pitfalls
 
-Research from Just JavaScript, Python Tutor design constraints, and academic studies on program visualization effectiveness identifies key failure modes.
+1. **Pointers as markers, not decision-makers** — Learners see positions changing but don't understand WHY pointers moved. Prevention: Visualize the decision condition before the movement. Show annotations like "sum > target, so shrink window" ON the visualization. Animate decision-making process, not just results.
 
-1. **Wrong Mental Model Propagation** - Showing variables as "boxes containing values" instead of "wires pointing to values" creates reference vs value confusion. Closures shown as copied values rather than captured references. Prevention: Adopt Just JavaScript mental models, show arrows to values, visualize scope capture not scope copying.
+2. **Hash map as magic lookup, not data structure** — Learners treat HashMap as O(1) black box without understanding hashing converts keys to indices. Prevention: Show hash function and bucket concept in introductory steps (even simplified). Animate "hash → find bucket → check entry" flow. Later steps can abstract to entries only.
 
-2. **Step Granularity Mismatch** - Too many steps (50+ for 5 lines) overwhelm learners; too few skip crucial transitions. Python Tutor principle: "what fits on a blackboard" (5-15 steps typical). For loops, show first 2-3 iterations in detail then abbreviate. Different granularity per concept: hoisting needs 2-4 steps, closures need 5-8 steps.
+3. **Binary as just another number format** — Learners see binary representations but don't internalize that each bit is an independent flag. Prevention: Treat bit positions as distinct visual elements. Show bit-by-bit operation execution (AND compares position 0, then 1, then 2). Connect bit positions to problem semantics.
 
-3. **Passive Viewing Instead of Active Engagement** - Research shows "viewing" mode produces no better learning than no visualization. Autoplay or frictionless clicking leads to passive consumption. Prevention: Consider prediction prompts before key state changes, add friction at critical steps, include understanding checks.
+4. **Passive watching illusion** — Learners watch visualizations without engaging mentally. Research shows 45% performance vs 70% for active learners. Prevention: Design step descriptions that explain WHY, not just WHAT. Frame step titles as questions ("Is sum == target?"). Ensure descriptions match visual state exactly.
 
-4. **Scope Chain vs Call Stack Confusion** - Conflating lexical scope (where defined) with call stack (where called) creates fundamental misconception. Learners believe scope follows call stack (it doesn't in JS). Prevention: Separate visual spaces for call stack and scope, use explicit [[Scope]] arrows, include examples where call stack depth differs from scope chain depth.
+5. **Animation timing obscures logic** — Fast or simultaneous animations hide causality. Prevention: Stagger animations with delays (decision highlight at 200ms, change at 300ms, result highlight after). Match animation timing to description reading speed. Test at 0.5x speed to verify sequence clarity.
 
-5. **var/let/const Closure in Loops** - Teaching to "use let" without showing mechanism (shared single binding vs per-iteration binding) leaves learners memorizing without understanding. Prevention: Visualize var creating ONE variable shared across iterations, let creating NEW binding per iteration, show all callbacks pointing to same `i` vs separate `i`s.
+6. **Description-visual mismatch** — Text says one thing, visual shows another. Prevention: Audit all step data. Description must match CURRENT visual state. Either show before-state with "about to" or after-state with "just did." Never describe action while showing result.
+
+7. **Pointer collision visual confusion** — When two pointers meet at same index, labels overlap and visualization breaks. Current code stacks vertically but doesn't handle dense scenarios. Prevention: Use horizontal offset or combined indicator ("L,R" badge). Ensure "pointers meet" state is MOST clear, not least.
 
 ## Implications for Roadmap
 
-Based on combined research, the optimal approach is systematic pattern replication starting with highest-impact visualizations.
+Based on research, suggested three-phase structure aligned with component dependencies and incremental value delivery:
 
-### Phase 1: Foundation - Shared Components
-**Rationale:** Extract reusable components from EventLoopViz to avoid duplication across 5+ visualization upgrades
-**Delivers:** Shared CodePanel, StepControls, LevelSelector, StepDescription components
-**Uses:** Existing CSS Modules pattern, SharedViz.module.css
-**Avoids:** Copy-paste of identical code across visualizations (consistency pitfall)
-**Effort:** Low-Medium
-**Research needed:** No - pattern already proven in codebase
+### Phase 1: Two Pointers Pattern Foundation
+**Rationale:** Two Pointers is the simplest pattern architecturally and establishes the foundation. Creating this first validates the DSAPatterns component structure, SharedViz integration, and pattern page routing before expanding to other patterns.
 
-### Phase 2: LoopsViz Upgrade
-**Rationale:** Loops are foundational for beginners; currently only has auto-play without step controls or back navigation
-**Delivers:** Step-through controls, variable state panel per-step, difficulty levels, multiple examples with insights
-**Addresses:** Must-have features (step controls, line highlighting, variable panel, explanations)
-**Avoids:** Step granularity mismatch (show 2-3 iterations then abbreviate), passive viewing (remove auto-play, require explicit advancement)
-**Implements:** Self-contained container pattern with embedded step data
-**Effort:** Medium
-**Research needed:** No - copy EventLoopViz pattern
+**Delivers:**
+- Complete `/concepts/dsa/patterns/two-pointers` page
+- TwoPointersPatternViz component with beginner/intermediate/advanced levels
+- Three variants: converging (left/right inward), same-direction (slow/fast), partition (three-way)
+- Foundation for dsaPatterns.ts data structure
 
-### Phase 3: VariablesViz Upgrade
-**Rationale:** First concept learners encounter; already has good base, needs difficulty levels and animated state transitions
-**Delivers:** Beginner/intermediate/advanced levels, per-step animated variable updates, key insight summaries
-**Addresses:** Should-have features (difficulty levels, animated transitions)
-**Avoids:** Wrong mental model (ensure "wires to values" not "boxes"), TDZ shown correctly as "exists but uninitialized"
-**Effort:** Low-Medium
-**Research needed:** No - polish existing pattern
+**Addresses features:**
+- Pattern variant differentiation (visual indicators for each variant)
+- Decision visualization before movement (show comparison logic)
+- Sorted precondition visualization (highlight array properties)
+- Responsive layout for long arrays (mobile support)
 
-### Phase 4: FunctionsViz Upgrade
-**Rationale:** Currently has two modes (syntax vs call); needs unified step-through with call stack visualization
-**Delivers:** Call stack visual panel, unified step-based navigation, execution context phases
-**Addresses:** Table stakes (step controls across both modes)
-**Avoids:** Scope chain vs call stack confusion (separate visual regions, [[Scope]] arrows)
-**Implements:** Call stack panel component
-**Effort:** Medium
-**Research needed:** No - established pattern
+**Avoids pitfalls:**
+- MM-1: Visualize pointer decision logic, not just positions
+- MM-4: Show continuity between steps, not snapshots
+- T-2: Handle pointer collision scenarios visually
+- T-6: State sync between carousel and visualization
+- TP-1: Differentiate pattern variants prominently
+- TP-3: Show comparison before movement
 
-### Phase 5: ArraysBasicsViz Upgrade
-**Rationale:** Currently tab-based not step-based; needs iteration visualization for map/filter/reduce
-**Delivers:** Step-through showing iteration, per-step array state changes, method operation explanations
-**Addresses:** Must-have features (code stepping, explanations)
-**Avoids:** Reference vs value confusion (show primitives as values, objects as arrows to heap)
-**Effort:** Medium
-**Research needed:** No - standard pattern
+**Research flag:** Standard pattern (skip research-phase). Two-pointers is well-documented with established visualization patterns.
 
-### Phase 6: ObjectsBasicsViz Upgrade (if exists)
-**Rationale:** Complete coverage of basic concepts
-**Delivers:** Step-through property access, mutation visualization, prototype chain if relevant
-**Addresses:** Reference semantics visualization
-**Avoids:** Mutation appearing invisible (animate value changes in heap)
-**Effort:** Medium
-**Research needed:** No - similar to Arrays pattern
+### Phase 2: Hash Map and Bit Manipulation Patterns
+**Rationale:** After validating the pattern page architecture in Phase 1, parallelize these two patterns since they have different visualization needs (Hash Map needs bucket concept, Bit Manipulation needs position-by-position operations) and can be developed independently.
+
+**Delivers:**
+- `/concepts/dsa/patterns/hash-map` page with HashMapPatternViz
+- `/concepts/dsa/patterns/bit-manipulation` page with BitManipulationPatternViz
+- Bucket visualization for hash maps (show hash → bucket → entry flow)
+- Bit-by-bit operation animation for bit manipulation
+- Complete dsaPatterns.ts with all three initial patterns
+
+**Addresses features:**
+- Hash map collision visualization (bucket chains, not flat entries)
+- Frequency vs index map semantic clarity (different labels/styling)
+- Phase indicators for two-phase hash problems (build/check)
+- Configurable bit width for bit manipulation (4/8/16/32 bit support)
+- Shift animation (bits visually sliding left/right)
+
+**Avoids pitfalls:**
+- MM-2: Show hash bucket mechanism, not magic lookup
+- MM-3: Treat bit positions as independent flags
+- T-3: Fix HashMap entry key uniqueness bug (use stepId in key)
+- T-4: Binary bit width consistency across steps
+- HM-1: Include collision example for O(1) awareness
+- HM-2: Clearly label frequency vs index maps
+- HM-3: Visual phase transition indicators
+- BM-3: Explain XOR properties bit-by-bit
+- BM-4: Animate shift direction clearly
+
+**Research flag:** Hash Map buckets may need deeper research for educational clarity. Standard bucket visualization approaches exist but need adaptation for interview context.
+
+### Phase 3: Polish and Integration
+**Rationale:** After core patterns are built, focus on cross-cutting concerns: interaction improvements, responsive design, content audit for quality, and cross-linking between pattern pages and problem pages.
+
+**Delivers:**
+- Mobile-responsive layouts for all pattern visualizers
+- Code highlighting sync with visualization steps
+- Cross-links from pattern pages to example problems
+- Cross-links from problem pages to pattern explanations
+- Content audit for step granularity and description-visual matches
+- SEO metadata and OpenGraph images for pattern pages
+
+**Addresses features:**
+- Before/after diff highlighting across all patterns
+- Complexity annotations (iteration counters, comparison counts)
+- Pattern icons in navigation
+- "Practice this pattern" sections on pattern pages
+
+**Avoids pitfalls:**
+- MM-5: Add engagement prompts to mitigate passive watching
+- T-1: Animation timing review for all patterns
+- T-5: Responsive design for long arrays (collapse with "...")
+- C-1: Step granularity audit (3-7 steps for intro problems)
+- C-3: Annotation declutter (max 2 per step)
+- C-4: Result timing audit (final step only)
+- C-5: Add "why not" explanations for key decisions
+
+**Research flag:** No research needed. Standard UX polish patterns.
 
 ### Phase Ordering Rationale
 
-- **Foundation first** - Shared components eliminate duplication and ensure consistency across all subsequent phases
-- **Loops before Arrays/Objects** - Loops are more fundamental; learners encounter them earlier
-- **Variables early** - First concept in learning path; quick win with low effort
-- **Functions after Variables** - Builds on variable scoping understanding
-- **Arrays/Objects last** - Most complex due to reference semantics; benefit from patterns established in earlier phases
-
-This ordering avoids the "step granularity mismatch" pitfall by tackling concepts with different granularity needs separately. It avoids the "wrong mental model" pitfall by addressing each concept's specific mental model challenges individually rather than trying to generalize.
+- **Foundation first:** Two Pointers establishes pattern page architecture, SharedViz integration, and dsaPatterns.ts structure before expanding to other patterns. Validates approach early.
+- **Parallel expansion:** Hash Map and Bit Manipulation have different visualization needs and no shared dependencies, so develop in parallel after foundation is proven.
+- **Polish last:** Cross-cutting improvements (responsive, SEO, cross-links) can only be done after all pattern pages exist. Content audit is more efficient when all content is written.
+- **Risk mitigation:** Critical pitfalls (MM-1, MM-2, MM-3) are addressed in their respective phases. Cross-cutting pitfalls (animation timing, responsive design) addressed in Phase 3 polish.
+- **Incremental value:** Phase 1 delivers complete working pattern page. Phase 2 delivers two more. Phase 3 makes all three production-ready.
 
 ### Research Flags
 
-**Phases with standard patterns (skip research-phase):**
-- **All phases** - EventLoopViz, HoistingViz, ClosuresViz, PromisesViz provide proven patterns for every feature needed
-- **Foundation** - Component extraction is mechanical refactoring
-- **LoopsViz, VariablesViz, FunctionsViz, Arrays/Objects** - All follow self-contained container pattern with embedded step data
+**Needs deeper research during planning:**
+- **Phase 2 (Hash Map):** Bucket visualization educational approach — existing visualizers show buckets for data structure courses, but interview-focused pattern visualizations may need different abstraction level. Research during planning: review VisuAlgo, AlgoVis.io approaches, decide on simplified bucket model vs full chain visualization.
 
-**No phases need deeper research** - The stack, architecture, and patterns are already proven in the codebase. The challenge is content creation (authoring step data), not technical unknowns.
-
-**Content validation checkpoints:**
-- After each visualization upgrade, validate mental model accuracy against Just JavaScript and MDN
-- Test step granularity with actual users (30%+ skipping to end = too many steps)
-- Ensure keyboard navigation and accessibility in each phase
+**Standard patterns (skip research-phase):**
+- **Phase 1 (Two Pointers):** Well-documented pattern with established visualization approaches across multiple educational platforms. Decision visualization and pointer movement patterns are standard.
+- **Phase 2 (Bit Manipulation):** Binary representation and bitwise operations have standard visualizations. Position-by-position animation is straightforward.
+- **Phase 3 (Polish):** Responsive design, SEO, cross-linking, and content audit are standard web development practices.
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | Verified from existing package.json and working implementations; no new dependencies needed |
-| Features | HIGH | Based on Python Tutor (20M+ users), academic research, and analysis of 4+ reference implementations |
-| Architecture | HIGH | Extracted from existing codebase patterns; 5+ working visualization components analyzed |
-| Pitfalls | HIGH | Authoritative sources (Just JavaScript, Python Tutor constraints, W3C ARIA, Motion docs) plus academic research |
+| Stack | HIGH | Based on existing codebase analysis. All needed technologies already in place. SharedViz components proven in JS concepts. |
+| Features | HIGH | Table stakes verified by competitor analysis (VisuAlgo, Algorithm Visualizer, LeetCopilot). Existing components already implement most. |
+| Architecture | HIGH | Pattern directly mirrors proven JS Concepts architecture. DSAPatterns/ follows DSAConcepts/ and Concepts/ directory patterns. Route nesting is consistent. |
+| Pitfalls | HIGH | Research backed by academic studies on algorithm visualization effectiveness and common learner misconceptions. Many pitfalls validated by existing codebase issues. |
 
 **Overall confidence:** HIGH
 
-The research is based primarily on the existing codebase analysis (HIGH confidence) supplemented by authoritative external sources. The main uncertainty is not technical but pedagogical - ensuring step content teaches correct mental models.
+All research grounded in either existing codebase patterns (stack, architecture) or established domain knowledge (features, pitfalls). No speculative recommendations.
 
 ### Gaps to Address
 
-**Content quality validation:**
-- Each visualization's step data must be reviewed against authoritative mental model sources (Just JavaScript for variables/scope/closures, MDN for language semantics)
-- Step granularity should be user-tested (analytics on skip rates, completion rates)
-- Accessibility testing with screen readers needed for each component
+**Animation sequencing specifics:** Research identifies the need for staggered animations (decision → change → result) but exact timing values (200ms, 300ms) should be validated during development through user testing. Start with suggested values, iterate based on feedback.
 
-**Performance validation:**
-- Test on throttled CPU (Chrome DevTools 4x slowdown) to catch animation lag
-- Test in Firefox specifically (documented Motion lag issues)
-- Verify animations respect prefers-reduced-motion
+**Hash map bucket abstraction level:** While research confirms buckets should be shown, the exact level of detail (full chain visualization vs simplified bucket indicator) needs decision during Phase 2 planning. Consider user testing with both approaches.
 
-**Pedagogical effectiveness:**
-- Consider adding prediction prompts to prevent passive viewing (research gap)
-- Validate that learners can explain concepts after using visualizations, not just recognize patterns
-- Test whether visualizations reduce common interview mistakes (var loop closure bug, scope confusion)
+**Pattern page vs problem page navigation flow:** Cross-linking strategy is proposed but user flow needs validation. During Phase 3, consider analytics on which links users actually follow to optimize placement and wording.
 
-**Mobile experience:**
-- Multi-panel layouts may need responsive collapse patterns
-- Touch targets need 44x44px minimum
-- Consider progressive disclosure on small screens
+**Mobile responsive breakpoints:** Research identifies need for responsive design but didn't specify breakpoints. During Phase 3, test on real devices (especially tablet size where long arrays may still fit but pointers get cramped).
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- **Existing codebase** - EventLoopViz.tsx (1212 lines), HoistingViz.tsx (643 lines), ClosuresViz.tsx (857 lines), PromisesViz.tsx (672 lines), ConceptPanel.tsx, TwoPointersConcept.tsx, HashMapConcept.tsx
-- **package.json** - Current dependencies: framer-motion ^11.0.0, @monaco-editor/react ^4.6.0, zustand ^4.5.2
-- **Just JavaScript** (justjavascript.com) - Mental models for variables, references, scope
-- **Python Tutor** (pythontutor.com) - 20M+ users, gold standard for code visualization, feature analysis
-- **Motion GitHub** (github.com/motiondivision/motion) - 30.8k stars, animation performance best practices
-- **W3C ARIA Authoring Practices** - Keyboard navigation patterns
-- **MDN Keyboard-navigable widgets** - Accessibility guidelines
+- **Existing codebase:** Direct analysis of `/src/components/ConceptPanel/`, `/src/components/SharedViz/`, `/src/data/algorithmConcepts.ts`, `/src/types/index.ts`, `/src/app/concepts/` routing
+- **Framer Motion 11 docs:** Context7 verification of spring animations, AnimatePresence, layout animations support
+- **package.json:** Confirmed versions and dependencies (React 18.3.1, Framer Motion 11.18.2, lucide-react 0.400.0)
 
 ### Secondary (MEDIUM confidence)
-- **JavaScript Visualizer 9000** (jsv9000.app) - Event loop visualization reference
-- **ui.dev JavaScript Visualizer** (fireship.dev) - Execution context, hoisting, closures, scopes
-- **Loupe by Philip Roberts** (latentflip.com/loupe) - Event loop from JSConf talk
-- **Academic research** - "Designing Educationally Effective Algorithm Visualizations" (Auburn), "Exploring visualization and engagement in CS education" (ACM SIGCSE), "Impact of program visualization at K-12 level" (Wiley)
-- **CrossCode multi-level visualization** (ACM DL) - Step aggregation patterns
-- **Program visualization active learning study** (PMC) - "Responding" vs "Viewing" engagement
+- [Algorithm Visualization Meta-Study (Auburn)](http://s3.amazonaws.com/publicationslist.org/data/helplab/ref-52/JVLC-AVMetaStudy.pdf) — Effectiveness research, 45% vs 70% active vs passive scores
+- [VisuAlgo](https://visualgo.net/en) — Competitor analysis, hash table and bitmask visualization approaches
+- [Algorithm Visualizer](https://algorithm-visualizer.org/) — Code-centric pattern analysis
+- [LeetCopilot Two Pointers](https://leetcopilot.dev/tool/two-pointers-visualizer) — Interview-focused competitor
+- [USACO Guide - Two Pointers](https://usaco.guide/silver/two-pointers) — Pattern documentation
+- [Design Gurus - Coding Patterns](https://www.designgurus.io/blog/grokking-the-coding-interview-patterns) — Pattern taxonomy
 
 ### Tertiary (LOW confidence)
-- **Community sources** - react-syntax-highlighter maintenance issues (best-of-web.builder.io), shiki bundle sizes (GitHub), Motion Firefox lag (GitHub issue #441)
+- [Active Learning vs Passive Video Meta-Analysis](https://www.sciencedirect.com/science/article/abs/pii/S1747938X25000454) — 62.5% confidence claim, needs validation
+- [Identifying Student Difficulties with Data Structures (ACM)](https://dl.acm.org/doi/10.1145/3230977.3231005) — Mental model pitfalls
 
 ---
 *Research completed: 2026-01-24*

@@ -1,351 +1,229 @@
-# Technology Stack: Step-Through Code Visualization
+# Stack Research: DSA Visualizations
 
-**Project:** DSA Visualizer - Enhanced JS Concept Visualizations
+**Project:** DSA Visualiser - Algorithm Pattern Upgrades
 **Researched:** 2026-01-24
-**Confidence:** HIGH (existing stack verified + ecosystem research)
+**Confidence:** HIGH
 
-## Recommendation Summary
+## Recommendation
 
-**Continue with the existing stack.** The codebase already has an excellent foundation for step-through visualizations. No new dependencies are needed.
+**No new dependencies needed.** The existing stack (React 18, Framer Motion 11, Lucide React, CSS Modules) is fully capable of supporting enhanced DSA algorithm visualizations. The upgrade path is architectural (applying proven patterns from JS Concepts), not technological.
 
-| Category | Recommendation | Rationale |
-|----------|---------------|-----------|
-| Animation | Framer Motion (existing) | Already in use, 30k+ stars, 120fps GPU-accelerated |
-| Code Display | Custom `<pre>` with CSS | Simpler than Monaco for static examples, matches EventLoopViz pattern |
-| Code Editor | Monaco (existing) | Already integrated with line decorations, breakpoints |
-| State | Zustand (existing) | Perfect for step index, playback state |
-| Styling | CSS Modules (existing) | Consistent with codebase patterns |
+## Current Stack Analysis
 
----
+### What We Have
 
-## Detailed Recommendations
+| Technology | Version | Current Use | DSA Viz Applicability |
+|------------|---------|-------------|----------------------|
+| **framer-motion** | 11.18.2 | All animations in JS Concepts, ConceptPanel components | Fully sufficient - spring animations, AnimatePresence, layout animations all work |
+| **React** | 18.3.1 | Component architecture | Functional components with hooks pattern proven |
+| **lucide-react** | 0.400.0 | Icons (Play, Pause) | May need additional icons for DSA (ArrowRight, ArrowLeft, Hash, Binary) |
+| **CSS Modules** | native | Scoped styling | Pattern well-established |
+| **TypeScript** | 5.5.0 | Type safety | Types already defined in `types/index.ts` |
 
-### 1. Animation Library
+### Proven Patterns Already Working
 
-**Use: Framer Motion v11+ (existing `framer-motion` package)**
+1. **SharedViz Components** (`src/components/SharedViz/`)
+   - `CodePanel` - Code display with line highlighting
+   - `StepProgress` - Step counter with description
+   - `StepControls` - Navigation (Prev/Next/Reset/Play)
+   - `useAutoPlay` - Auto-advance hook
 
-| Aspect | Details |
-|--------|---------|
-| Current Version | ^11.0.0 in package.json |
-| Purpose | Smooth transitions between execution steps |
-| Why Keep | Already powers EventLoopViz, ClosuresViz, VariablesViz perfectly |
+2. **Animation Patterns** (from `ArraysBasicsViz.tsx`, `EventLoopViz.tsx`)
+   - `motion.div` with spring transitions for element entry/exit
+   - `AnimatePresence` with `mode="popLayout"` for list animations
+   - `whileHover`, `whileTap` for interactions
+   - Layout animations for smooth reordering
 
-**Key Features Already Being Used:**
+3. **Multi-Level Examples** (from `ArraysBasicsViz.tsx`)
+   - Beginner/Intermediate/Advanced difficulty selection
+   - Multiple examples per level
+   - Step-through with state management
+
+### Existing DSA Components (Need Upgrade)
+
+| Component | Current State | Gap |
+|-----------|--------------|-----|
+| `TwoPointersConcept.tsx` | Basic array + pointers | No difficulty levels, no SharedViz integration, single example |
+| `HashMapConcept.tsx` | Array + hash map entries | No difficulty levels, limited examples |
+| `BitManipulationConcept.tsx` | Binary representation | No difficulty levels, limited interactivity |
+
+## Additions Needed
+
+### Required: None
+
+The existing stack handles all DSA visualization needs:
+
+| DSA Visualization Need | Existing Solution |
+|-----------------------|-------------------|
+| Array with pointer animations | `motion.div` with spring (already in TwoPointersConcept) |
+| Binary number display | Already implemented in BitManipulationConcept |
+| Hash table visualization | Already implemented in HashMapConcept |
+| Step-through navigation | SharedViz StepControls |
+| Difficulty levels | Pattern from ArraysBasicsViz |
+| Auto-play | useAutoPlay hook |
+
+### Optional Enhancement: Icon Additions
+
+Lucide React already installed. May use additional icons for DSA context:
+
 ```typescript
-// Step transitions (from EventLoopViz)
-<AnimatePresence mode="wait">
-  <motion.div
-    key={`${level}-${exampleIndex}-${stepIndex}`}
-    initial={{ opacity: 0, y: 5 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -5 }}
-  >
-    {currentStep.description}
-  </motion.div>
-</AnimatePresence>
-
-// Layout animations for call stack (from ClosuresViz)
-<AnimatePresence mode="popLayout">
-  {currentStep.callStack.map((item) => (
-    <motion.div layout key={item.id}>
-      {item.name}
-    </motion.div>
-  ))}
-</AnimatePresence>
+// Already available in lucide-react, just need to import
+import {
+  ArrowRight, ArrowLeft,     // Pointer direction
+  ArrowLeftRight,            // Converging pointers
+  Hash,                      // Hash map operations
+  Binary,                    // Bit manipulation
+  Crosshair                  // Current position
+} from 'lucide-react'
 ```
 
-**Why NOT add a new library:**
-- Motion provides everything needed: springs, layout animations, AnimatePresence
-- Existing visualizations already demonstrate the patterns work well
-- Adding react-spring or GSAP would create inconsistency
-
----
-
-### 2. Code Syntax Display (for visualizations)
-
-**Use: Custom `<pre>` with CSS line highlighting (existing pattern)**
-
-The EventLoopViz pattern is ideal for step-through visualizations:
-
-```typescript
-// Pattern from EventLoopViz.tsx - simple and effective
-<pre className={styles.code}>
-  {currentExample.code.map((line, i) => (
-    <div
-      key={i}
-      ref={el => { lineRefs.current[i] = el }}
-      className={`${styles.codeLine} ${currentStep.codeLine === i ? styles.activeLine : ''}`}
-    >
-      <span className={styles.lineNum}>{i + 1}</span>
-      <span className={styles.lineCode}>{line || ' '}</span>
-    </div>
-  ))}
-</pre>
-```
-
-**Why NOT use syntax highlighting libraries for visualizations:**
-
-| Library | Why Not |
-|---------|---------|
-| react-syntax-highlighter | Overkill for curated examples, maintenance issues with Next.js SSG |
-| prism-react-renderer | Adds complexity, harder to control line highlighting animation |
-| shiki | Server-side focused, bundle size (~695KB-1.2MB), harder to animate |
-
-**Why the custom approach works:**
-1. **Full animation control** - Each line is a motion target
-2. **Curated examples** - Code is predefined, not user-entered
-3. **Visual consistency** - CSS Modules match component styling
-4. **No bundle bloat** - Zero additional dependencies
-5. **Auto-scroll support** - `scrollIntoView` with refs (already implemented)
-
----
-
-### 3. Code Editor (for practice pages)
-
-**Keep: @monaco-editor/react (existing)**
-
-| Aspect | Details |
-|--------|---------|
-| Current Version | ^4.6.0 in package.json |
-| Purpose | User code editing on practice pages |
-| Line Highlighting | Already implemented via deltaDecorations |
-
-**Existing Implementation (from CodeEditor.tsx):**
-```typescript
-// Line decoration for current execution step
-decorations.push({
-  range: new monaco.Range(line, 1, line, 1),
-  options: {
-    isWholeLine: true,
-    className: styles.currentLine,
-    glyphMarginClassName: styles.currentLineGlyph,
-  },
-})
-
-decorationsRef.current = editor.deltaDecorations(
-  decorationsRef.current,
-  decorations
-)
-```
-
-**Do NOT use Monaco for concept visualizations:**
-- Monaco is ~2MB (heavy for static examples)
-- Overkill when code is read-only and curated
-- Harder to animate individual lines with Framer Motion
-
----
-
-### 4. State Management
-
-**Keep: Zustand (existing)**
-
-| Aspect | Details |
-|--------|---------|
-| Current Version | ^4.5.2 in package.json |
-| Purpose | Step index, playback state, execution state |
-
-**Pattern for visualizations (local state preferred):**
-```typescript
-// From EventLoopViz - local state for isolated visualizations
-const [stepIndex, setStepIndex] = useState(0)
-const [level, setLevel] = useState<Level>('beginner')
-const [exampleIndex, setExampleIndex] = useState(0)
-```
-
-**When to use Zustand vs local state:**
-- **Local state:** Isolated visualization components (like EventLoopViz)
-- **Zustand:** Shared state across components (like interpreter execution)
-
----
-
-### 5. Styling
-
-**Keep: CSS Modules (existing pattern)**
-
-Consistent with codebase style: `Component.module.css`
-
-**Key styling patterns for step-through:**
-```css
-/* Active line highlighting */
-.activeLine {
-  background: rgba(102, 126, 234, 0.15);
-  border-left: 3px solid #667eea;
-}
-
-/* Step transitions */
-.codeLine {
-  transition: background-color 0.2s ease;
-}
-
-/* Neon box pattern for state panels */
-.neonBox {
-  background: #161b22;
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 8px;
-}
-```
-
----
-
-## Alternatives Considered
-
-| Category | Considered | Rejected Because |
-|----------|------------|------------------|
-| Animation | react-spring | Would create inconsistency, Motion already works |
-| Animation | GSAP | License concerns, heavier, Motion sufficient |
-| Syntax | react-syntax-highlighter | Maintenance issues, harder to animate lines |
-| Syntax | prism-react-renderer | Overkill for static code, adds bundle weight |
-| Syntax | shiki | Server-focused, 700KB+ bundle, not needed |
-| State | Redux Toolkit | Zustand simpler, already working |
-| State | Jotai | No benefit over Zustand for this use case |
-
----
+**Verdict:** No `npm install` required.
 
 ## What NOT to Add
 
-**Do NOT add these libraries:**
+### Rejected: D3.js or Similar
 
-1. **react-syntax-highlighter** - Not actively maintained, SSG issues
-2. **shiki/react-shiki** - Overkill bundle size for curated static examples
-3. **prism-react-renderer** - Adds complexity without benefit
-4. **GSAP** - License concerns, Motion is sufficient
-5. **react-spring** - Would create inconsistency with existing Motion usage
-6. **pythontutor-style libraries** - Build custom, they don't fit React patterns
+**Why considered:** Complex graph/tree visualizations
+**Why rejected:**
+- Framer Motion handles all current needs (arrays, hash maps, binary)
+- D3 adds 280KB+ bundle size
+- Learning curve for team
+- Existing patterns prove React + Framer Motion sufficient
+- No tree/graph structures in current DSA scope (Two Pointers, Hash Map, Bit Manipulation)
 
----
+### Rejected: Canvas/WebGL Libraries
 
-## Implementation Guidance
+**Why considered:** Performance for large visualizations
+**Why rejected:**
+- DSA examples are small (< 20 elements typically)
+- DOM-based animations perform fine
+- Accessibility better with DOM elements
+- Existing components prove this works
 
-### Pattern to Follow (EventLoopViz exemplar)
+### Rejected: Animation State Libraries (XState, Zustand for animation)
 
-The EventLoopViz component is the gold standard. New visualizations should follow its pattern:
+**Why considered:** Complex animation sequencing
+**Why rejected:**
+- `useState` + `useAutoPlay` hook handle state fine
+- Framer Motion's built-in sequencing sufficient
+- Would add complexity without benefit
+
+### Rejected: CSS Animation Libraries (Tailwind Animate, Animate.css)
+
+**Why considered:** Quick animation presets
+**Why rejected:**
+- Framer Motion already provides spring physics (better UX)
+- CSS Modules pattern established
+- Would create inconsistency with existing components
+
+## Integration Points
+
+### How DSA Viz Will Use Existing SharedViz
 
 ```typescript
-interface Step {
-  description: string
-  codeLine: number  // or highlightLines: number[]
-  // ... concept-specific state
-}
+// Example: Enhanced TwoPointersConcept structure
+import { CodePanel, StepProgress, StepControls, useAutoPlay } from '@/components/SharedViz'
 
-interface Example {
-  id: string
-  title: string
-  code: string[]
-  steps: Step[]
-  insight: string
-}
-
-// Component structure
-export function ConceptViz() {
-  const [level, setLevel] = useState<Level>('beginner')
+function TwoPointersViz() {
+  // Same pattern as ArraysBasicsViz
+  const [level, setLevel] = useState<'beginner' | 'intermediate' | 'advanced'>('beginner')
   const [exampleIndex, setExampleIndex] = useState(0)
   const [stepIndex, setStepIndex] = useState(0)
-  const lineRefs = useRef<(HTMLDivElement | null)[]>([])
 
-  // Auto-scroll to highlighted line
-  useEffect(() => {
-    if (highlightedLine >= 0 && lineRefs.current[highlightedLine]) {
-      lineRefs.current[highlightedLine]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-      })
-    }
-  }, [stepIndex, highlightedLine])
+  // Auto-play integration
+  const { isPlaying, toggle } = useAutoPlay({
+    onTick: () => setStepIndex(s => s + 1),
+    canAdvance: stepIndex < currentExample.steps.length - 1
+  })
 
-  // ... rest follows EventLoopViz pattern
+  return (
+    <>
+      {/* Level selector - same pattern as ArraysBasicsViz */}
+      <LevelSelector level={level} onChange={handleLevelChange} />
+
+      {/* Code panel - from SharedViz */}
+      <CodePanel code={currentExample.code} highlightedLine={currentStep.codeLine} />
+
+      {/* DSA-specific visualization - ENHANCED existing component */}
+      <TwoPointersVisualization step={currentStep} type={currentExample.pattern} />
+
+      {/* Step controls - from SharedViz */}
+      <StepProgress current={stepIndex} total={steps.length} description={description} />
+      <StepControls
+        onPrev={() => setStepIndex(s => s - 1)}
+        onNext={() => setStepIndex(s => s + 1)}
+        onReset={() => setStepIndex(0)}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < steps.length - 1}
+        showPlayPause
+        isPlaying={isPlaying}
+        onPlayPause={toggle}
+      />
+    </>
+  )
 }
 ```
 
-### Step Controls Pattern
+### Data Structure Reuse
+
+The existing `ConceptStep` and `ConceptVisualState` types in `types/index.ts` already support:
 
 ```typescript
-const handleNext = () => {
-  if (stepIndex < steps.length - 1) setStepIndex(s => s + 1)
+// Already defined and working
+interface ConceptVisualState {
+  array?: (number | string)[]        // For Two Pointers
+  pointers?: Record<string, number>  // For pointer positions
+  highlights?: number[]              // For highlighting elements
+  binary?: BinaryConceptState        // For Bit Manipulation
+  hashMap?: HashMapVisualState       // For Hash Map
+  annotations?: string[]             // For explanatory text
+  result?: number | string | boolean // For final answer
 }
-
-const handlePrev = () => {
-  if (stepIndex > 0) setStepIndex(s => s - 1)
-}
-
-const handleReset = () => setStepIndex(0)
-
-// Controls UI
-<div className={styles.controls}>
-  <button onClick={handlePrev} disabled={stepIndex === 0}>Prev</button>
-  <motion.button onClick={handleNext} disabled={stepIndex >= steps.length - 1}>
-    {stepIndex >= steps.length - 1 ? 'Done' : 'Next'}
-  </motion.button>
-  <button onClick={handleReset}>Reset</button>
-</div>
 ```
 
-### Auto-play Pattern (if needed)
+### Animation Pattern Reuse
+
+From `ArraysBasicsViz.tsx` - apply to DSA components:
 
 ```typescript
-const [isPlaying, setIsPlaying] = useState(false)
+// Entry animation for array elements
+<motion.div
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  exit={{ opacity: 0, scale: 0.8 }}
+  layout  // Smooth position changes
+>
 
-useEffect(() => {
-  if (!isPlaying) return
+// Highlight animation (already in TwoPointersConcept)
+animate={{
+  scale: isHighlighted ? 1.05 : 1,
+  boxShadow: isHighlighted
+    ? '0 0 12px rgba(96, 165, 250, 0.5)'
+    : '0 1px 2px rgba(0, 0, 0, 0.1)',
+}}
+transition={{ type: 'spring', stiffness: 400, damping: 25 }}
 
-  const timer = setInterval(() => {
-    setStepIndex(s => {
-      if (s >= steps.length - 1) {
-        setIsPlaying(false)
-        return s
-      }
-      return s + 1
-    })
-  }, 1500) // Adjust timing as needed
-
-  return () => clearInterval(timer)
-}, [isPlaying, steps.length])
+// Pointer movement (already working)
+<motion.div
+  initial={{ y: -10, opacity: 0 }}
+  animate={{ y: 0, opacity: 1 }}
+  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+>
 ```
-
----
-
-## Installation
-
-**No new packages required.** The existing stack is complete.
-
-Current relevant dependencies:
-```json
-{
-  "dependencies": {
-    "@monaco-editor/react": "^4.6.0",
-    "framer-motion": "^11.0.0",
-    "zustand": "^4.5.2"
-  }
-}
-```
-
----
 
 ## Sources
 
-### HIGH Confidence (verified from codebase)
-- Existing EventLoopViz.tsx, ClosuresViz.tsx, VariablesViz.tsx implementations
-- Existing CodeEditor.tsx Monaco integration
-- Current package.json dependencies
+- **Codebase analysis:** Direct inspection of existing components
+- **Framer Motion docs:** Version 11 capabilities verified via Context7 (supports all needed features)
+- **package.json:** Confirmed versions and dependencies
 
-### MEDIUM Confidence (verified from official sources)
-- [Motion GitHub](https://github.com/motiondivision/motion) - 30.8k stars, hybrid engine, 120fps
-- [Monaco Editor Decorations](https://medium.com/@lyuda.dzyubinska/monaco-editor-decorator-385ba6aa90b8) - deltaDecorations API
+## Summary for Roadmap
 
-### LOW Confidence (WebSearch only - included for completeness)
-- [react-syntax-highlighter maintenance issues](https://best-of-web.builder.io/library/react-syntax-highlighter/react-syntax-highlighter)
-- [shiki bundle sizes](https://github.com/AVGVSTVS96/react-shiki) - 695KB-1.2MB range
-- [prism-react-renderer vs alternatives](https://npm-compare.com/prism-react-renderer,react-highlight,react-syntax-highlighter)
+**Technology decisions are settled.** The upgrade work is:
 
----
+1. **Refactor DSA components** to use SharedViz (CodePanel, StepControls, StepProgress)
+2. **Add difficulty levels** following ArraysBasicsViz pattern
+3. **Expand step data** in algorithmConcepts.ts with multiple examples per problem
+4. **Apply animation patterns** already proven in JS Concept visualizations
 
-## Summary
-
-**The existing stack is optimal.** The codebase has battle-tested patterns for step-through visualizations:
-
-1. **Framer Motion** handles all animation needs (layout, presence, springs)
-2. **Custom `<pre>` with CSS** provides full control over line highlighting
-3. **Monaco Editor** (for practice pages) already has line decorations working
-4. **Zustand** manages state efficiently
-5. **CSS Modules** maintains styling consistency
-
-New foundational concept visualizations should copy the EventLoopViz pattern exactly. No new dependencies are needed - focus on content quality and step data structure design.
+No stack changes. No new dependencies. Pure architectural alignment.
