@@ -91,10 +91,12 @@ Plans:
   2. Mutation effect steps show original array changing when mutated through reference
   3. Spread operator visualization shows elements being unpacked into new array
   4. Array method iteration (map/filter/reduce) steps through each callback invocation
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 05-01: TBD
+- [ ] 05-01-PLAN.md — Types, beginner examples, core component rewrite with stack/heap visualization
+- [ ] 05-02-PLAN.md — Intermediate examples with spread operator and warning badges
+- [ ] 05-03-PLAN.md — Advanced examples with method iteration (map/filter/reduce)
 
 ### Phase 6: ObjectsBasicsViz
 **Goal**: Learners can step through object operations to understand references and mutation
@@ -121,9 +123,9 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 2. LoopsViz | 2/2 | ✓ Complete | 2026-01-24 |
 | 3. VariablesViz | 3/3 | ✓ Complete | 2026-01-24 |
 | 4. FunctionsViz | 3/3 | ✓ Complete | 2026-01-24 |
-| 5. ArraysBasicsViz | 0/? | Not started | - |
+| 5. ArraysBasicsViz | 0/3 | Planning complete | - |
 | 6. ObjectsBasicsViz | 0/? | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 4 complete*
+*Last updated: 2026-01-24 — Phase 5 planned*
