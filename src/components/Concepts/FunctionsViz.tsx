@@ -915,6 +915,75 @@ export function FunctionsViz() {
         </div>
       </div>
 
+      {currentStep.parameterBindings && (
+        <div className={styles.paramBindingPanel}>
+          <div className={styles.panelHeader}>Parameter Binding</div>
+          <div className={styles.bindingFlow}>
+            <div className={styles.argumentsColumn}>
+              <div className={styles.columnLabel}>Arguments</div>
+              {currentStep.parameterBindings
+                .filter(b => !b.isMissing)
+                .map((binding, i) => (
+                  <motion.div
+                    key={binding.argumentIndex}
+                    className={`${styles.argument} ${binding.isExtra ? styles.extraArg : ''}`}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                  >
+                    <span className={styles.argLabel}>{binding.argumentLabel}</span>
+                    <span className={styles.argValue}>{binding.argumentValue}</span>
+                  </motion.div>
+                ))}
+            </div>
+
+            <div className={styles.flowArrows}>
+              {currentStep.parameterBindings
+                .filter(b => !b.isExtra)
+                .map((binding, i) => (
+                  <motion.div
+                    key={`arrow-${binding.parameterName}`}
+                    className={`${styles.flowArrow} ${binding.status === 'flowing' ? styles.flowing : ''} ${binding.status === 'bound' ? styles.bound : ''}`}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: binding.status !== 'waiting' ? 1 : 0 }}
+                    transition={{ delay: i * 0.15, duration: 0.3 }}
+                  >
+                    {'\u2192'}
+                  </motion.div>
+                ))}
+            </div>
+
+            <div className={styles.parametersColumn}>
+              <div className={styles.columnLabel}>Parameters</div>
+              {currentStep.parameterBindings
+                .filter(b => !b.isExtra)
+                .map((binding, i) => (
+                  <motion.div
+                    key={binding.parameterName}
+                    className={`${styles.parameter} ${binding.isMissing && !binding.isDefault ? styles.missingArg : ''} ${binding.isDefault ? styles.defaultArg : ''} ${binding.status === 'bound' ? styles.boundParam : ''}`}
+                    initial={{ opacity: 0.5 }}
+                    animate={{ opacity: binding.status === 'bound' ? 1 : 0.5 }}
+                    transition={{ delay: i * 0.15 + 0.3 }}
+                  >
+                    <span className={styles.paramName}>{binding.parameterName}</span>
+                    <span className={styles.paramValue}>
+                      {binding.status === 'bound' ? binding.boundValue : '?'}
+                      {binding.isDefault && <span className={styles.defaultBadge}>(default)</span>}
+                      {binding.isMissing && !binding.isDefault && <span className={styles.undefinedBadge}>undefined</span>}
+                    </span>
+                  </motion.div>
+                ))}
+            </div>
+          </div>
+
+          {currentStep.parameterBindings.some(b => b.isExtra) && (
+            <div className={styles.extraArgsNotice}>
+              Extra arguments ignored
+            </div>
+          )}
+        </div>
+      )}
+
       <div className={styles.outputBox}>
         <div className={styles.boxHeader}>Console Output</div>
         <div className={styles.outputContent}>
