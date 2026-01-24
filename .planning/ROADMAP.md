@@ -143,12 +143,12 @@ Plans:
   4. Decision logic (why pointer moved) displays before movement animation completes
   5. Code panel highlights current line synced with visualization step
   6. User can see all three variants: converging (left/right), same-direction (slow/fast), partition
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 08-01-PLAN.md - TwoPointersViz core component with SharedViz integration
-- [ ] 08-02-PLAN.md - Beginner examples with converging variant
-- [ ] 08-03-PLAN.md - Intermediate/advanced examples with all three variants
+- [ ] 08-01-PLAN.md - Core TwoPointersViz component with types, variant tabs, beginner examples
+- [ ] 08-02-PLAN.md - Intermediate examples (Container With Most Water, 3Sum, Remove Duplicates)
+- [ ] 08-03-PLAN.md - Advanced examples (Sort Colors, Trapping Rain Water)
 
 ### Phase 9: HashMapViz
 **Goal**: Learners can step through Hash Map pattern seeing bucket mechanism, not just key-value pairs
@@ -200,10 +200,10 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | 5. ArraysBasicsViz | v1.0 | 3/3 | Complete | 2026-01-24 |
 | 6. ObjectsBasicsViz | v1.0 | 3/3 | Complete | 2026-01-24 |
 | 7. Foundation | v1.1 | 2/2 | Complete | 2026-01-24 |
-| 8. TwoPointersViz | v1.1 | 0/3 | Not started | - |
+| 8. TwoPointersViz | v1.1 | 0/3 | Planned | - |
 | 9. HashMapViz | v1.1 | 0/3 | Not started | - |
 | 10. BitManipulationViz | v1.1 | 0/3 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-24 — v1.1 milestone added (Phases 7-10)*
+*Last updated: 2026-01-24 — Phase 8 planned (3 plans in 3 waves)*
