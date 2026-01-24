@@ -1253,6 +1253,8 @@ export function VariablesViz() {
     setStepIndex(0)
   }
 
+  const isAtEnd = stepIndex >= currentExample.steps.length - 1 || !!currentStep?.error
+
   if (!currentExample || !currentStep) {
     return <div className={styles.container}>No examples available for this level.</div>
   }
@@ -1290,14 +1292,34 @@ export function VariablesViz() {
       </div>
 
       <div className={styles.mainGrid}>
-        <CodePanel
-          code={currentExample.code}
-          highlightedLine={currentStep.codeLine}
-          title="Code"
-        />
+        <div className={styles.codeColumn}>
+          <div className={styles.codePanelWrapper}>
+            <div className={styles.codePanelHeader}>
+              <span>Code</span>
+              <span
+                className={styles.phaseBadge}
+                style={{
+                  background: currentStep.phase === 'creation' ? '#60a5fa' : '#10b981'
+                }}
+              >
+                {currentStep.phase === 'creation' ? 'Creation' : 'Execution'} Phase
+              </span>
+            </div>
+            <CodePanel
+              code={currentExample.code}
+              highlightedLine={currentStep.codeLine}
+              title=""
+            />
+          </div>
+        </div>
 
         <div className={styles.variablesBox}>
-          <div className={styles.boxHeader}>Variables</div>
+          <div className={styles.boxHeader}>
+            Variables
+            {currentStep.phase === 'creation' && (
+              <span className={styles.creatingIndicator}>Creating...</span>
+            )}
+          </div>
           <div className={styles.boxContent}>
             <AnimatePresence mode="popLayout">
               {currentStep.variables.length === 0 ? (
@@ -1351,6 +1373,31 @@ export function VariablesViz() {
           </div>
         </div>
       </div>
+
+      {currentStep.error && (
+        <motion.div
+          className={styles.errorPanel}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className={styles.errorIcon}>!</div>
+          <div className={styles.errorType}>
+            {currentStep.error.includes('ReferenceError') ? 'ReferenceError' : 'TypeError'}
+          </div>
+          <div className={styles.errorMessage}>
+            {currentStep.error}
+          </div>
+          <div className={styles.errorHint}>
+            {currentStep.error.includes('before initialization')
+              ? 'Variable is in the Temporal Dead Zone (TDZ)'
+              : currentStep.error.includes('constant')
+                ? 'const bindings cannot be reassigned'
+                : ''
+            }
+          </div>
+        </motion.div>
+      )}
 
       {currentStep.scopes && currentStep.scopes.length > 0 && (
         <div className={styles.scopeChainPanel}>
@@ -1472,7 +1519,7 @@ export function VariablesViz() {
         onNext={() => setStepIndex(s => s + 1)}
         onReset={() => setStepIndex(0)}
         canPrev={stepIndex > 0}
-        canNext={stepIndex < currentExample.steps.length - 1}
+        canNext={!isAtEnd}
       />
 
       <div className={styles.insightBox}>
