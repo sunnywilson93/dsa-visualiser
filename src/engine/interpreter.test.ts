@@ -419,4 +419,24 @@ describe('Interpreter', () => {
       expect(getPrimitiveValue(finalScope.variables.x)).toBe(Infinity)
     })
   })
+
+  describe('Prototype Methods', () => {
+    it('should handle Array.prototype assignment and method call', () => {
+      const steps = executeCode(`
+        Array.prototype.myForEach = function(callback) {
+          for (let i = 0; i < this.length; i++) {
+            callback(this[i], i, this);
+          }
+        };
+
+        let sum = 0;
+        [1, 2, 3].myForEach(function(num) {
+          sum = sum + num;
+        });
+      `)
+
+      const finalScope = steps[steps.length - 1].scopes[0]
+      expect(getPrimitiveValue(finalScope.variables.sum)).toBe(6)
+    })
+  })
 })

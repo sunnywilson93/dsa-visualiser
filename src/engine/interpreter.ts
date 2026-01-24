@@ -46,6 +46,12 @@ interface InterpreterState {
   stepId: number
   frameId: number
   consoleOutput: string[]
+  // Prototype storage for custom prototype methods
+  prototypes: {
+    Array: Record<string, RuntimeValue>
+    Object: Record<string, RuntimeValue>
+    String: Record<string, RuntimeValue>
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -120,6 +126,13 @@ export class Interpreter {
       variables: {},
     }
 
+    // Initialize prototype storage
+    const prototypes = {
+      Array: {} as Record<string, RuntimeValue>,
+      Object: {} as Record<string, RuntimeValue>,
+      String: {} as Record<string, RuntimeValue>,
+    }
+
     return {
       steps: [],
       callStack: [],
@@ -128,6 +141,7 @@ export class Interpreter {
       stepId: 0,
       frameId: 0,
       consoleOutput: [],
+      prototypes,
     }
   }
 
@@ -279,6 +293,8 @@ export class Interpreter {
         return this.executeBreakStatement(node)
       case 'ContinueStatement':
         return this.executeContinueStatement(node)
+      case 'ThisExpression':
+        return this.executeThisExpression()
       default:
         return createUndefined()
     }
@@ -552,17 +568,43 @@ export class Interpreter {
 
       if (obj.type === 'array') {
         const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
+        // First check built-in methods
         const result = this.executeArrayMethod(obj, methodName, args, node)
         if (result !== null) {
           return result
         }
+        // Then check custom prototype methods
+        const protoMethod = this.state.prototypes.Array[methodName]
+        if (protoMethod && protoMethod.type === 'function') {
+          return this.executePrototypeMethod(protoMethod, obj, args, node, methodName)
+        }
       }
 
       if (obj.type === 'primitive' && obj.dataType === 'string') {
+        const strValue = obj.value as string
         const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
-        const result = this.executeStringMethod(obj.value as string, methodName, args, node)
+        const result = this.executeStringMethod(strValue, methodName, args, node)
         if (result !== null) {
           return result
+        }
+        // Check custom String prototype methods
+        const protoMethod = this.state.prototypes.String[methodName]
+        if (protoMethod && protoMethod.type === 'function') {
+          // Create a temporary array-like wrapper for string
+          const strWrapper = createObject({ length: createPrimitive(strValue.length) })
+          for (let i = 0; i < strValue.length; i++) {
+            strWrapper.properties[i] = createPrimitive(strValue[i])
+          }
+          return this.executePrototypeMethod(protoMethod, strWrapper, args, node, methodName)
+        }
+      }
+
+      // Check for object method calls (obj.method())
+      if (obj.type === 'object') {
+        const method = obj.properties[methodName]
+        if (method && method.type === 'function') {
+          const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
+          return this.executePrototypeMethod(method, obj, args, node, methodName)
         }
       }
     }
@@ -665,6 +707,15 @@ export class Interpreter {
     }
 
     if (left.type === 'MemberExpression') {
+      // Check for prototype assignment pattern: Array.prototype.xxx = value
+      const protoAssignment = this.parsePrototypeAssignment(left)
+      if (protoAssignment) {
+        const { constructor, methodName } = protoAssignment
+        this.state.prototypes[constructor][methodName] = right
+        this.recordStep(node, 'assignment', `${constructor}.prototype.${methodName} = ${formatValue(right)}`)
+        return right
+      }
+
       const obj = this.executeNode(left.object as ASTNode)
       const prop = left.computed
         ? this.executeNode(left.property as ASTNode)
@@ -700,6 +751,29 @@ export class Interpreter {
     }
 
     return right
+  }
+
+  // Parse pattern like Array.prototype.methodName to extract constructor and method name
+  private parsePrototypeAssignment(node: ASTNode): { constructor: 'Array' | 'Object' | 'String'; methodName: string } | null {
+    // Pattern: MemberExpression { object: MemberExpression { object: Identifier, property: "prototype" }, property: methodName }
+    if (node.type !== 'MemberExpression') return null
+
+    const methodName = node.property?.name
+    if (!methodName) return null
+
+    const protoAccess = node.object
+    if (protoAccess?.type !== 'MemberExpression') return null
+    if (protoAccess.property?.name !== 'prototype') return null
+
+    const constructorNode = protoAccess.object
+    if (constructorNode?.type !== 'Identifier') return null
+
+    const constructorName = constructorNode.name
+    if (constructorName === 'Array' || constructorName === 'Object' || constructorName === 'String') {
+      return { constructor: constructorName, methodName }
+    }
+
+    return null
   }
 
   private applyCompoundOperator(left: RuntimeValue, right: RuntimeValue, op: string): RuntimeValue {
@@ -933,6 +1007,10 @@ export class Interpreter {
     return this.getVariable(node.name!)
   }
 
+  private executeThisExpression(): RuntimeValue {
+    return this.getVariable('this')
+  }
+
   private executeLiteral(node: ASTNode): RuntimeValue {
     const value = node.value
 
@@ -952,6 +1030,150 @@ export class Interpreter {
     } else {
       return this.executeNode(node.alternate as ASTNode)
     }
+  }
+
+  // Helper to invoke a callback function with arguments
+  private invokeCallback(
+    callback: RuntimeValue,
+    callbackArgs: RuntimeValue[],
+    node: ASTNode
+  ): RuntimeValue {
+    if (callback.type !== 'function') {
+      throw new Error(`${formatValue(callback)} is not a function`)
+    }
+
+    const func = callback
+
+    // Create stack frame
+    const frame: StackFrame = {
+      id: `frame_${++this.state.frameId}`,
+      name: func.name || '(callback)',
+      params: {},
+      locals: {},
+      callSite: getNodeLocation(node),
+      startLine: getNodeLocation(func.body).line,
+      depth: this.state.callStack.length,
+    }
+
+    // Bind parameters
+    for (let i = 0; i < func.params.length; i++) {
+      frame.params[func.params[i]] = callbackArgs[i] ?? createUndefined()
+    }
+
+    this.state.callStack.push(frame)
+
+    // Save current scopes and restore closure scopes
+    const savedScopes = this.state.scopes
+    this.state.scopes = [...func.closure]
+
+    // Create function scope with parameters
+    this.pushScope('function', func.name || '(callback)')
+    for (const [name, value] of Object.entries(frame.params)) {
+      this.setVariable(name, value)
+    }
+
+    // Execute function body
+    let result: RuntimeValue = createUndefined()
+    const body = func.body as ASTNode
+
+    if (body.type === 'BlockStatement') {
+      const statements = body.body as ASTNode[]
+      for (const stmt of statements) {
+        result = this.executeNode(stmt)
+        if (frame.returnValue !== undefined) {
+          result = frame.returnValue
+          break
+        }
+      }
+    } else {
+      result = this.executeNode(body)
+    }
+
+    // Pop function scope and restore original scopes
+    this.popScope()
+    this.state.scopes = savedScopes
+
+    // Pop stack frame
+    this.state.callStack.pop()
+
+    return result
+  }
+
+  // Execute a prototype method with proper 'this' binding
+  private executePrototypeMethod(
+    method: RuntimeValue,
+    thisValue: RuntimeValue,
+    args: RuntimeValue[],
+    node: ASTNode,
+    methodName: string
+  ): RuntimeValue {
+    if (method.type !== 'function') {
+      throw new Error(`${methodName} is not a function`)
+    }
+
+    const func = method
+
+    // Create stack frame
+    const frame: StackFrame = {
+      id: `frame_${++this.state.frameId}`,
+      name: func.name || methodName,
+      params: {},
+      locals: {},
+      callSite: getNodeLocation(node),
+      startLine: getNodeLocation(func.body).line,
+      depth: this.state.callStack.length,
+    }
+
+    // Bind parameters
+    for (let i = 0; i < func.params.length; i++) {
+      frame.params[func.params[i]] = args[i] ?? createUndefined()
+    }
+
+    this.state.callStack.push(frame)
+    this.recordStep(
+      node,
+      'call',
+      `Call ${methodName}(${args.map((a: RuntimeValue) => formatValue(a)).join(', ')})`
+    )
+
+    // Save current scopes and restore closure scopes
+    const savedScopes = this.state.scopes
+    this.state.scopes = [...func.closure]
+
+    // Create function scope with parameters and 'this'
+    this.pushScope('function', func.name || methodName)
+    for (const [name, value] of Object.entries(frame.params)) {
+      this.setVariable(name, value)
+    }
+    // Bind 'this' to the target object (array/object)
+    this.setVariable('this', thisValue)
+
+    // Execute function body
+    let result: RuntimeValue = createUndefined()
+    const body = func.body as ASTNode
+
+    if (body.type === 'BlockStatement') {
+      const statements = body.body as ASTNode[]
+      for (const stmt of statements) {
+        result = this.executeNode(stmt)
+        if (frame.returnValue !== undefined) {
+          result = frame.returnValue
+          break
+        }
+      }
+    } else {
+      result = this.executeNode(body)
+    }
+
+    // Pop function scope and restore original scopes
+    this.popScope()
+    this.state.scopes = savedScopes
+
+    // Pop stack frame
+    this.state.callStack.pop()
+    this.recordStep(node, 'return', `Return from ${methodName}: ${formatValue(result)}`)
+
+    return result
   }
 
   // Array methods
@@ -1084,6 +1306,149 @@ export class Interpreter {
         }
         this.recordStep(node, 'array-modify', `Array.fill(${formatValue(fillValue)}) → ${formatValue(arr)}`)
         return arr
+      }
+
+      // Callback-based array methods
+      case 'forEach': {
+        const callback = args[0]
+        if (!callback || callback.type !== 'function') {
+          throw new Error('forEach requires a callback function')
+        }
+        this.recordStep(node, 'expression', `Array.forEach() - iterating ${arr.elements.length} elements`)
+        for (let i = 0; i < arr.elements.length; i++) {
+          this.invokeCallback(callback, [arr.elements[i], createPrimitive(i), arr], node)
+        }
+        return createUndefined()
+      }
+
+      case 'map': {
+        const callback = args[0]
+        if (!callback || callback.type !== 'function') {
+          throw new Error('map requires a callback function')
+        }
+        const results: RuntimeValue[] = []
+        this.recordStep(node, 'expression', `Array.map() - transforming ${arr.elements.length} elements`)
+        for (let i = 0; i < arr.elements.length; i++) {
+          const result = this.invokeCallback(callback, [arr.elements[i], createPrimitive(i), arr], node)
+          results.push(cloneValue(result))
+        }
+        const resultArr = createArray(results)
+        this.recordStep(node, 'expression', `Array.map() → ${formatValue(resultArr)}`)
+        return resultArr
+      }
+
+      case 'filter': {
+        const callback = args[0]
+        if (!callback || callback.type !== 'function') {
+          throw new Error('filter requires a callback function')
+        }
+        const results: RuntimeValue[] = []
+        this.recordStep(node, 'expression', `Array.filter() - filtering ${arr.elements.length} elements`)
+        for (let i = 0; i < arr.elements.length; i++) {
+          const result = this.invokeCallback(callback, [arr.elements[i], createPrimitive(i), arr], node)
+          if (isTruthy(result)) {
+            results.push(cloneValue(arr.elements[i]))
+          }
+        }
+        const resultArr = createArray(results)
+        this.recordStep(node, 'expression', `Array.filter() → ${formatValue(resultArr)}`)
+        return resultArr
+      }
+
+      case 'reduce': {
+        const callback = args[0]
+        if (!callback || callback.type !== 'function') {
+          throw new Error('reduce requires a callback function')
+        }
+        let accumulator: RuntimeValue
+        let startIndex = 0
+        if (args.length > 1) {
+          accumulator = args[1]
+        } else {
+          if (arr.elements.length === 0) {
+            throw new Error('Reduce of empty array with no initial value')
+          }
+          accumulator = arr.elements[0]
+          startIndex = 1
+        }
+        this.recordStep(node, 'expression', `Array.reduce() - reducing ${arr.elements.length} elements`)
+        for (let i = startIndex; i < arr.elements.length; i++) {
+          accumulator = this.invokeCallback(
+            callback,
+            [accumulator, arr.elements[i], createPrimitive(i), arr],
+            node
+          )
+        }
+        this.recordStep(node, 'expression', `Array.reduce() → ${formatValue(accumulator)}`)
+        return accumulator
+      }
+
+      case 'find': {
+        const callback = args[0]
+        if (!callback || callback.type !== 'function') {
+          throw new Error('find requires a callback function')
+        }
+        this.recordStep(node, 'expression', `Array.find() - searching ${arr.elements.length} elements`)
+        for (let i = 0; i < arr.elements.length; i++) {
+          const result = this.invokeCallback(callback, [arr.elements[i], createPrimitive(i), arr], node)
+          if (isTruthy(result)) {
+            this.recordStep(node, 'expression', `Array.find() → ${formatValue(arr.elements[i])}`)
+            return arr.elements[i]
+          }
+        }
+        this.recordStep(node, 'expression', `Array.find() → undefined`)
+        return createUndefined()
+      }
+
+      case 'findIndex': {
+        const callback = args[0]
+        if (!callback || callback.type !== 'function') {
+          throw new Error('findIndex requires a callback function')
+        }
+        this.recordStep(node, 'expression', `Array.findIndex() - searching ${arr.elements.length} elements`)
+        for (let i = 0; i < arr.elements.length; i++) {
+          const result = this.invokeCallback(callback, [arr.elements[i], createPrimitive(i), arr], node)
+          if (isTruthy(result)) {
+            this.recordStep(node, 'expression', `Array.findIndex() → ${i}`)
+            return createPrimitive(i)
+          }
+        }
+        this.recordStep(node, 'expression', `Array.findIndex() → -1`)
+        return createPrimitive(-1)
+      }
+
+      case 'some': {
+        const callback = args[0]
+        if (!callback || callback.type !== 'function') {
+          throw new Error('some requires a callback function')
+        }
+        this.recordStep(node, 'expression', `Array.some() - testing ${arr.elements.length} elements`)
+        for (let i = 0; i < arr.elements.length; i++) {
+          const result = this.invokeCallback(callback, [arr.elements[i], createPrimitive(i), arr], node)
+          if (isTruthy(result)) {
+            this.recordStep(node, 'expression', `Array.some() → true`)
+            return createPrimitive(true)
+          }
+        }
+        this.recordStep(node, 'expression', `Array.some() → false`)
+        return createPrimitive(false)
+      }
+
+      case 'every': {
+        const callback = args[0]
+        if (!callback || callback.type !== 'function') {
+          throw new Error('every requires a callback function')
+        }
+        this.recordStep(node, 'expression', `Array.every() - testing ${arr.elements.length} elements`)
+        for (let i = 0; i < arr.elements.length; i++) {
+          const result = this.invokeCallback(callback, [arr.elements[i], createPrimitive(i), arr], node)
+          if (!isTruthy(result)) {
+            this.recordStep(node, 'expression', `Array.every() → false`)
+            return createPrimitive(false)
+          }
+        }
+        this.recordStep(node, 'expression', `Array.every() → true`)
+        return createPrimitive(true)
       }
 
       default:
