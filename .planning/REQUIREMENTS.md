@@ -31,10 +31,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### FunctionsViz Upgrade
 
-- [ ] **FUNC-01**: Execution context creation and teardown steps
-- [ ] **FUNC-02**: Parameter binding visualization (argument -> parameter flow)
-- [ ] **FUNC-03**: Call stack panel showing stack frames
-- [ ] **FUNC-04**: Arrow function vs regular function this binding comparison
+- [x] **FUNC-01**: Execution context creation and teardown steps ✓
+- [x] **FUNC-02**: Parameter binding visualization (argument -> parameter flow) ✓
+- [x] **FUNC-03**: Call stack panel showing stack frames ✓
+- [x] **FUNC-04**: Arrow function vs regular function this binding comparison ✓
 
 ### ArraysBasicsViz Upgrade
 
@@ -95,10 +95,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VAR-02 | Phase 3 | Complete |
 | VAR-03 | Phase 3 | Complete |
 | VAR-04 | Phase 3 | Complete |
-| FUNC-01 | Phase 4 | Pending |
-| FUNC-02 | Phase 4 | Pending |
-| FUNC-03 | Phase 4 | Pending |
-| FUNC-04 | Phase 4 | Pending |
+| FUNC-01 | Phase 4 | Complete |
+| FUNC-02 | Phase 4 | Complete |
+| FUNC-03 | Phase 4 | Complete |
+| FUNC-04 | Phase 4 | Complete |
 | ARR-01 | Phase 5 | Pending |
 | ARR-02 | Phase 5 | Pending |
 | ARR-03 | Phase 5 | Pending |
@@ -115,4 +115,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 3 requirements complete*
+*Last updated: 2026-01-24 — Phase 4 requirements complete*

@@ -13,7 +13,7 @@ This roadmap transforms simple auto-play visualizations into rich step-through e
 - [x] **Phase 1: Foundation** - Shared reusable components for all visualizations ✓
 - [x] **Phase 2: LoopsViz** - Step-through loop iteration with closure capture examples ✓
 - [x] **Phase 3: VariablesViz** - Hoisting, TDZ, and scope chain visualization ✓
-- [ ] **Phase 4: FunctionsViz** - Execution context and call stack visualization
+- [x] **Phase 4: FunctionsViz** - Execution context and call stack visualization ✓
 - [ ] **Phase 5: ArraysBasicsViz** - Reference semantics and method iteration stepping
 - [ ] **Phase 6: ObjectsBasicsViz** - Property mutation and reference sharing visualization
 
@@ -78,9 +78,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — Types, beginner examples, call stack panel, execution context display
-- [ ] 04-02-PLAN.md — Parameter binding animation with intermediate examples
-- [ ] 04-03-PLAN.md — This binding visualization with advanced examples
+- [x] 04-01-PLAN.md — Types, beginner examples, call stack panel, execution context display ✓
+- [x] 04-02-PLAN.md — Parameter binding animation with intermediate examples ✓
+- [x] 04-03-PLAN.md — This binding visualization with advanced examples ✓
 
 ### Phase 5: ArraysBasicsViz
 **Goal**: Learners can step through array operations to understand references, mutation, and iteration
@@ -120,10 +120,10 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 1. Foundation | 2/2 | ✓ Complete | 2026-01-24 |
 | 2. LoopsViz | 2/2 | ✓ Complete | 2026-01-24 |
 | 3. VariablesViz | 3/3 | ✓ Complete | 2026-01-24 |
-| 4. FunctionsViz | 0/3 | Planned | - |
+| 4. FunctionsViz | 3/3 | ✓ Complete | 2026-01-24 |
 | 5. ArraysBasicsViz | 0/? | Not started | - |
 | 6. ObjectsBasicsViz | 0/? | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 4 planned*
+*Last updated: 2026-01-24 — Phase 4 complete*
