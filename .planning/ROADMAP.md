@@ -75,10 +75,12 @@ Plans:
   2. Parameter binding visualization shows arguments flowing into function parameters
   3. Call stack panel shows stack frames being pushed and popped during nested calls
   4. Arrow vs regular function examples demonstrate different this binding behavior
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 04-01: TBD
+- [ ] 04-01-PLAN.md — Types, beginner examples, call stack panel, execution context display
+- [ ] 04-02-PLAN.md — Parameter binding animation with intermediate examples
+- [ ] 04-03-PLAN.md — This binding visualization with advanced examples
 
 ### Phase 5: ArraysBasicsViz
 **Goal**: Learners can step through array operations to understand references, mutation, and iteration
@@ -118,10 +120,10 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 1. Foundation | 2/2 | ✓ Complete | 2026-01-24 |
 | 2. LoopsViz | 2/2 | ✓ Complete | 2026-01-24 |
 | 3. VariablesViz | 3/3 | ✓ Complete | 2026-01-24 |
-| 4. FunctionsViz | 0/? | Not started | - |
+| 4. FunctionsViz | 0/3 | Planned | - |
 | 5. ArraysBasicsViz | 0/? | Not started | - |
 | 6. ObjectsBasicsViz | 0/? | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 3 complete*
+*Last updated: 2026-01-24 — Phase 4 planned*
