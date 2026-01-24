@@ -437,7 +437,106 @@ const examples: Record<Level, ObjectExample[]> = {
       insight: 'Any number of variables can reference the same object. They all see the same data!',
     },
   ],
-  intermediate: [],
+  intermediate: [
+    {
+      id: 'spread-creates-copy',
+      title: 'Spread creates a copy',
+      code: [
+        'let original = { name: "Alice", age: 25 }',
+        'let copy = { ...original }',
+        '',
+        'copy.name = "Bob"',
+        '',
+        'console.log(original.name)',
+        'console.log(copy.name)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'let original = { name: "Alice", age: 25 } - Object created in heap.',
+          phase: 'reference',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'obj1', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'obj1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'age', value: 25 }], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'let copy = { ...original } - Spread creates a NEW object #2 with COPIED values!',
+          phase: 'spread',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'obj1' },
+            { name: 'copy', value: '-> #2', isReference: true, refId: 'obj2', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'obj1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'age', value: 25 }], label: '#1' },
+            { id: 'obj2', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'age', value: 25 }], label: '#2', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 3,
+          codeLine: 3,
+          description: 'copy.name = "Bob" - Only modifies #2. original (#1) is NOT affected!',
+          phase: 'mutate',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'obj1' },
+            { name: 'copy', value: '-> #2', isReference: true, refId: 'obj2' },
+          ],
+          heap: [
+            { id: 'obj1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'age', value: 25 }], label: '#1' },
+            { id: 'obj2', type: 'object', properties: [{ key: 'name', value: 'Bob', highlight: 'changed' }, { key: 'age', value: 25 }], label: '#2', highlight: 'mutated' },
+          ],
+          output: [],
+        },
+        {
+          id: 4,
+          codeLine: 5,
+          description: 'console.log(original.name) outputs "Alice" - original is unchanged!',
+          phase: 'result',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'obj1' },
+            { name: 'copy', value: '-> #2', isReference: true, refId: 'obj2' },
+          ],
+          heap: [
+            { id: 'obj1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'age', value: 25 }], label: '#1' },
+            { id: 'obj2', type: 'object', properties: [{ key: 'name', value: 'Bob' }, { key: 'age', value: 25 }], label: '#2' },
+          ],
+          output: ['Alice'],
+        },
+        {
+          id: 5,
+          codeLine: 6,
+          description: 'console.log(copy.name) outputs "Bob" - copy has its own independent data.',
+          phase: 'result',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'obj1' },
+            { name: 'copy', value: '-> #2', isReference: true, refId: 'obj2' },
+          ],
+          heap: [
+            { id: 'obj1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'age', value: 25 }], label: '#1' },
+            { id: 'obj2', type: 'object', properties: [{ key: 'name', value: 'Bob' }, { key: 'age', value: 25 }], label: '#2' },
+          ],
+          output: ['Alice', 'Bob'],
+        },
+      ],
+      insight: 'Spread { ...obj } creates a NEW object. Changes to the copy don\'t affect the original!',
+    },
+  ],
   advanced: []
 }
 
