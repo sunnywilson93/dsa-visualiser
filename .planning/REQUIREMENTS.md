@@ -45,10 +45,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### ObjectsBasicsViz Upgrade
 
-- [ ] **OBJ-01**: Reference vs value visualization for objects
-- [ ] **OBJ-02**: Property mutation effect steps
-- [ ] **OBJ-03**: Destructuring unpacking visualization
-- [ ] **OBJ-04**: Object spread and shallow copy visualization
+- [x] **OBJ-01**: Reference vs value visualization for objects ✓
+- [x] **OBJ-02**: Property mutation effect steps ✓
+- [x] **OBJ-03**: Destructuring unpacking visualization ✓
+- [x] **OBJ-04**: Object spread and shallow copy visualization ✓
 
 ## v2 Requirements
 
@@ -103,10 +103,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ARR-02 | Phase 5 | Complete |
 | ARR-03 | Phase 5 | Complete |
 | ARR-04 | Phase 5 | Complete |
-| OBJ-01 | Phase 6 | Pending |
-| OBJ-02 | Phase 6 | Pending |
-| OBJ-03 | Phase 6 | Pending |
-| OBJ-04 | Phase 6 | Pending |
+| OBJ-01 | Phase 6 | Complete |
+| OBJ-02 | Phase 6 | Complete |
+| OBJ-03 | Phase 6 | Complete |
+| OBJ-04 | Phase 6 | Complete |
 
 **Coverage:**
 - v1 requirements: 24 total
@@ -115,4 +115,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 5 requirements complete*
+*Last updated: 2026-01-24 — Phase 6 requirements complete, v1 milestone complete*
