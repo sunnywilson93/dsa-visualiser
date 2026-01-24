@@ -1,56 +1,66 @@
-# DSA Visualiser - Enhanced JS Concept Visualizations
+# DSA Visualiser - Enhanced Concept Visualizations
 
 ## What This Is
 
-A visual learning platform for JavaScript concepts and DSA interview preparation. This milestone focuses on upgrading the interactive visualizations for foundational JS concepts (Variables, Functions, Arrays/Objects, Loops) to have rich step-by-step execution similar to the EventLoopViz gold standard.
+A visual learning platform for JavaScript concepts and DSA interview preparation. Features interactive step-through visualizations for both JS concepts (Variables, Functions, Arrays, Objects, Loops) and DSA patterns (Two Pointers, Hash Map, Bit Manipulation).
 
 ## Core Value
 
-Learners can step through code execution visually, seeing exactly how JavaScript works under the hood — not just reading about it.
+Learners can step through code execution visually, seeing exactly how algorithms and JavaScript work under the hood — not just reading about them.
+
+## Current Milestone: v1.1 Enhanced DSA Concept Visualizations
+
+**Goal:** Upgrade DSA pattern visualizations to match the quality of JS concept visualizations — step-through, difficulty levels, code panel, SharedViz integration.
+
+**Target features:**
+- TwoPointersViz — pattern page with beginner/intermediate/advanced examples
+- HashMapViz — same treatment
+- BitManipulationViz — same treatment
 
 ## Requirements
 
 ### Validated
 
-- ✓ Custom JavaScript interpreter with step-by-step execution — existing
-- ✓ 28 JS concept pages with visualizations — existing
-- ✓ Rich EventLoopViz with step controls, code highlighting, queues — existing
-- ✓ Problem practice pages with code editor and debugger — existing
-- ✓ Algorithm concept visualizations (two-pointers, hash-map, etc.) — existing
+- ✓ Custom JavaScript interpreter with step-by-step execution — v1.0
+- ✓ 28 JS concept pages with visualizations — v1.0
+- ✓ Rich EventLoopViz with step controls, code highlighting, queues — v1.0
+- ✓ Problem practice pages with code editor and debugger — v1.0
+- ✓ Enhanced VariablesViz with step-through, hoisting, TDZ, scope chain — v1.0
+- ✓ Enhanced FunctionsViz with execution context, call stack, this binding — v1.0
+- ✓ Enhanced ArraysBasicsViz with reference semantics, spread, method iteration — v1.0
+- ✓ Enhanced ObjectsBasicsViz with references, mutation, destructuring — v1.0
+- ✓ Enhanced LoopsViz with iteration stepping, closure capture visualization — v1.0
+- ✓ SharedViz components (CodePanel, StepControls, StepProgress) — v1.0
 
 ### Active
 
-- [ ] Enhanced VariablesViz with step-through execution showing scope chain, hoisting phases, TDZ
-- [ ] Enhanced FunctionsViz with execution context, parameter binding, return flow
-- [ ] Enhanced ArraysBasicsViz with reference vs value, mutation, spread visualization
-- [ ] Enhanced ObjectsBasicsViz with property access, mutation, reference sharing
-- [ ] Enhanced LoopsViz with iteration stepping, break/continue flow, closure capture bug
+- [ ] Enhanced TwoPointersViz with pattern page, difficulty levels, SharedViz
+- [ ] Enhanced HashMapViz with pattern page, difficulty levels, SharedViz
+- [ ] Enhanced BitManipulationViz with pattern page, difficulty levels, SharedViz
 
 ### Out of Scope
 
-- New JS concepts — focus on enhancing existing 4 concept areas
-- DSA algorithm visualizations — separate milestone
+- New DSA patterns (Sliding Window, Binary Search, etc.) — future milestone after establishing design
 - Interpreter feature additions — unless needed for visualizations
 - Mobile responsiveness — desktop-first learning tool
 
 ## Context
 
-**Existing pattern (EventLoopViz):**
+**Proven pattern (EventLoopViz, LoopsViz, VariablesViz, etc.):**
 - Step interface with description, codeLine, state snapshots
-- Multiple examples organized by difficulty level
-- Forward/back step controls
+- Multiple examples organized by difficulty level (beginner/intermediate/advanced)
+- Forward/back step controls via SharedViz components
 - Code panel with line highlighting
-- State panels (call stack, queues, memory)
-- Explanation per step
+- Domain-specific state panels
+- Explanation per step with insights
 
-**Current simple visualizations (LoopsViz, etc.):**
-- Auto-play animation only
-- Single example
-- No step controls
-- No code line highlighting
-- Minimal state visualization
+**Current DSA visualizations (TwoPointersConcept, etc.):**
+- Simpler components receiving step from outside
+- No difficulty levels or example tabs
+- No SharedViz integration
+- Problem-specific, not pattern-focused
 
-**Gap:** Foundational concepts need the same depth as advanced concepts to build proper mental models.
+**Gap:** DSA patterns need the same interactive step-through experience as JS concepts.
 
 ## Constraints
 
@@ -63,9 +73,11 @@ Learners can step through code execution visually, seeing exactly how JavaScript
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Enhance existing viz components | Preserve URLs, avoid breaking changes | — Pending |
-| Follow EventLoopViz pattern | Proven UX, consistent experience | — Pending |
-| 4 concept areas in scope | Variables, Functions, Arrays/Objects, Loops are foundational | — Pending |
+| Enhance existing viz components | Preserve URLs, avoid breaking changes | ✓ Good |
+| Follow EventLoopViz pattern | Proven UX, consistent experience | ✓ Good |
+| SharedViz components for reuse | Avoid duplication across visualizations | ✓ Good |
+| Pattern pages for DSA (not problem-specific) | Matches JS concept structure, teaches transferable skills | — Pending |
+| 3 DSA patterns first (Two Pointers, Hash Map, Bit Manipulation) | Establish design before expanding | — Pending |
 
 ---
-*Last updated: 2026-01-24 after initialization*
+*Last updated: 2026-01-24 after v1.1 milestone start*
