@@ -19,14 +19,23 @@ interface HeapObject {
   highlight?: 'mutated' | 'new' | 'none'
 }
 
+interface IterationState {
+  method: 'map' | 'filter' | 'reduce'
+  currentIndex: number
+  accumulator?: string | number
+  resultArray?: (string | number)[]
+  rejected?: number[]
+}
+
 interface ArrayStep {
   id: number
   codeLine: number
   description: string
-  phase: 'setup' | 'access' | 'reference' | 'mutate' | 'result'
+  phase: 'setup' | 'access' | 'reference' | 'mutate' | 'result' | 'iterate'
   stack: StackItem[]
   heap: HeapObject[]
   output: string[]
+  iterationState?: IterationState
 }
 
 interface ArrayExample {
@@ -430,7 +439,422 @@ const examples: Record<Level, ArrayExample[]> = {
     },
   ],
   intermediate: [],
-  advanced: []
+  advanced: [
+    {
+      id: 'map-transforms',
+      title: 'map() transforms each element',
+      code: [
+        'const nums = [1, 2, 3]',
+        'const doubled = nums.map(n => n * 2)',
+        '',
+        'console.log(doubled)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. We will see how map() processes each element.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'const nums = [1, 2, 3] - Source array created in heap.',
+          phase: 'reference',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'map() starts - Processing index 0. Callback receives 1, returns 1 * 2 = 2.',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'map',
+            currentIndex: 0,
+            resultArray: [2],
+          },
+        },
+        {
+          id: 3,
+          codeLine: 1,
+          description: 'map() continues - Processing index 1. Callback receives 2, returns 2 * 2 = 4.',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'map',
+            currentIndex: 1,
+            resultArray: [2, 4],
+          },
+        },
+        {
+          id: 4,
+          codeLine: 1,
+          description: 'map() continues - Processing index 2. Callback receives 3, returns 3 * 2 = 6.',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'map',
+            currentIndex: 2,
+            resultArray: [2, 4, 6],
+          },
+        },
+        {
+          id: 5,
+          codeLine: 1,
+          description: 'map() complete! New array [2, 4, 6] is created and assigned to doubled.',
+          phase: 'reference',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+            { name: 'doubled', value: '-> #2', isReference: true, refId: 'doubled', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1' },
+            { id: 'doubled', type: 'array', elements: [2, 4, 6], label: '#2', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 6,
+          codeLine: 3,
+          description: 'console.log(doubled) outputs [2, 4, 6]. Original array is unchanged!',
+          phase: 'result',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+            { name: 'doubled', value: '-> #2', isReference: true, refId: 'doubled' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1' },
+            { id: 'doubled', type: 'array', elements: [2, 4, 6], label: '#2' },
+          ],
+          output: ['[2, 4, 6]'],
+        },
+      ],
+      insight: 'map() creates a NEW array by transforming each element. The original array is never modified!',
+    },
+    {
+      id: 'filter-keeps',
+      title: 'filter() keeps matching elements',
+      code: [
+        'const nums = [1, 2, 3, 4, 5]',
+        'const evens = nums.filter(n => n % 2 === 0)',
+        '',
+        'console.log(evens)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. We will see how filter() tests each element.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'const nums = [1, 2, 3, 4, 5] - Source array created in heap.',
+          phase: 'reference',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'filter() starts - Index 0: 1 % 2 === 0 is FALSE. Element REJECTED.',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'filter',
+            currentIndex: 0,
+            resultArray: [],
+            rejected: [0],
+          },
+        },
+        {
+          id: 3,
+          codeLine: 1,
+          description: 'filter() continues - Index 1: 2 % 2 === 0 is TRUE. Element KEPT!',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'filter',
+            currentIndex: 1,
+            resultArray: [2],
+            rejected: [0],
+          },
+        },
+        {
+          id: 4,
+          codeLine: 1,
+          description: 'filter() continues - Index 2: 3 % 2 === 0 is FALSE. Element REJECTED.',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'filter',
+            currentIndex: 2,
+            resultArray: [2],
+            rejected: [0, 2],
+          },
+        },
+        {
+          id: 5,
+          codeLine: 1,
+          description: 'filter() continues - Index 3: 4 % 2 === 0 is TRUE. Element KEPT!',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'filter',
+            currentIndex: 3,
+            resultArray: [2, 4],
+            rejected: [0, 2],
+          },
+        },
+        {
+          id: 6,
+          codeLine: 1,
+          description: 'filter() continues - Index 4: 5 % 2 === 0 is FALSE. Element REJECTED.',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'filter',
+            currentIndex: 4,
+            resultArray: [2, 4],
+            rejected: [0, 2, 4],
+          },
+        },
+        {
+          id: 7,
+          codeLine: 1,
+          description: 'filter() complete! New array [2, 4] with only elements that passed the test.',
+          phase: 'reference',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+            { name: 'evens', value: '-> #2', isReference: true, refId: 'evens', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
+            { id: 'evens', type: 'array', elements: [2, 4], label: '#2', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 8,
+          codeLine: 3,
+          description: 'console.log(evens) outputs [2, 4]. Only even numbers made it through!',
+          phase: 'result',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+            { name: 'evens', value: '-> #2', isReference: true, refId: 'evens' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
+            { id: 'evens', type: 'array', elements: [2, 4], label: '#2' },
+          ],
+          output: ['[2, 4]'],
+        },
+      ],
+      insight: 'filter() tests each element and creates a NEW array with only the elements that pass. Rejected elements are excluded.',
+    },
+    {
+      id: 'reduce-accumulates',
+      title: 'reduce() accumulates to single value',
+      code: [
+        'const nums = [1, 2, 3, 4]',
+        'const sum = nums.reduce((acc, n) => acc + n, 0)',
+        '',
+        'console.log(sum)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. We will see how reduce() accumulates a single value.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'const nums = [1, 2, 3, 4] - Source array created in heap.',
+          phase: 'reference',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'reduce() starts with initial value 0. Index 0: acc=0, n=1. Returns 0 + 1 = 1.',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'reduce',
+            currentIndex: 0,
+            accumulator: 1,
+          },
+        },
+        {
+          id: 3,
+          codeLine: 1,
+          description: 'reduce() continues - Index 1: acc=1, n=2. Returns 1 + 2 = 3.',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'reduce',
+            currentIndex: 1,
+            accumulator: 3,
+          },
+        },
+        {
+          id: 4,
+          codeLine: 1,
+          description: 'reduce() continues - Index 2: acc=3, n=3. Returns 3 + 3 = 6.',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'reduce',
+            currentIndex: 2,
+            accumulator: 6,
+          },
+        },
+        {
+          id: 5,
+          codeLine: 1,
+          description: 'reduce() continues - Index 3: acc=6, n=4. Returns 6 + 4 = 10.',
+          phase: 'iterate',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
+          ],
+          output: [],
+          iterationState: {
+            method: 'reduce',
+            currentIndex: 3,
+            accumulator: 10,
+          },
+        },
+        {
+          id: 6,
+          codeLine: 1,
+          description: 'reduce() complete! Final accumulator value 10 is assigned to sum.',
+          phase: 'setup',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+            { name: 'sum', value: '10', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
+          ],
+          output: [],
+        },
+        {
+          id: 7,
+          codeLine: 3,
+          description: 'console.log(sum) outputs 10. The entire array reduced to a single value!',
+          phase: 'result',
+          stack: [
+            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
+            { name: 'sum', value: '10' },
+          ],
+          heap: [
+            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
+          ],
+          output: ['10'],
+        },
+      ],
+      insight: 'reduce() processes each element to build a single accumulated value. The accumulator carries forward through each iteration.',
+    },
+  ]
 }
 
 export function ArraysBasicsViz() {
