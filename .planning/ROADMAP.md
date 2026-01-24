@@ -44,10 +44,11 @@ Plans:
   3. Current code line highlights in sync with step, including loop body and condition
   4. User can select from beginner/intermediate/advanced examples with progressively complex loops
   5. Closure capture bug example clearly shows var creating one shared binding vs let creating per-iteration bindings
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: TBD
+- [ ] 02-01-PLAN.md — Core LoopsViz rewrite with types, state, SharedViz integration, and beginner examples
+- [ ] 02-02-PLAN.md — Intermediate/advanced examples with closure capture visualization
 
 ### Phase 3: VariablesViz
 **Goal**: Learners can step through variable lifecycle to understand hoisting, TDZ, and scope
@@ -113,7 +114,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | ✓ Complete | 2026-01-24 |
-| 2. LoopsViz | 0/? | Not started | - |
+| 2. LoopsViz | 0/2 | Planned | - |
 | 3. VariablesViz | 0/? | Not started | - |
 | 4. FunctionsViz | 0/? | Not started | - |
 | 5. ArraysBasicsViz | 0/? | Not started | - |
@@ -121,4 +122,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 1 complete*
+*Last updated: 2026-01-24 — Phase 2 planned*
