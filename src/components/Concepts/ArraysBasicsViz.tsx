@@ -996,6 +996,89 @@ export function ArraysBasicsViz() {
         </div>
       </div>
 
+      {currentStep.iterationState && (
+        <div className={styles.iterationPanel}>
+          <div className={styles.iterationHeader}>
+            <span className={styles.methodBadge}>
+              {currentStep.iterationState.method}()
+            </span>
+            <span className={styles.iterationIndex}>
+              Index {currentStep.iterationState.currentIndex}
+            </span>
+          </div>
+
+          <div className={styles.iterationContent}>
+            <div className={styles.sourceArraySection}>
+              <div className={styles.iterationLabel}>Source Array</div>
+              <div className={styles.sourceElements}>
+                {currentStep.heap[0]?.elements.map((el, idx) => {
+                  const isCurrent = idx === currentStep.iterationState!.currentIndex
+                  const isRejected = currentStep.iterationState!.rejected?.includes(idx)
+                  const isPast = idx < currentStep.iterationState!.currentIndex
+                  return (
+                    <motion.div
+                      key={idx}
+                      className={`${styles.sourceElement} ${isCurrent ? styles.currentElement : ''} ${isRejected ? styles.rejectedElement : ''} ${isPast && !isRejected ? styles.processedElement : ''}`}
+                      animate={isCurrent ? { scale: [1, 1.1, 1] } : { scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <span className={styles.elementIndex}>[{idx}]</span>
+                      <span className={styles.elementValue}>{el}</span>
+                      {currentStep.iterationState!.method === 'filter' && isPast && (
+                        <span className={isRejected ? styles.filterMark : styles.filterKeep}>
+                          {isRejected ? '\u00D7' : '\u2713'}
+                        </span>
+                      )}
+                    </motion.div>
+                  )
+                })}
+              </div>
+            </div>
+
+            {currentStep.iterationState.method === 'reduce' && currentStep.iterationState.accumulator !== undefined && (
+              <div className={styles.accumulatorSection}>
+                <div className={styles.iterationLabel}>Accumulator</div>
+                <motion.div
+                  className={styles.accumulatorValue}
+                  key={currentStep.iterationState.accumulator}
+                  initial={{ scale: 1.2, opacity: 0.5 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                >
+                  {currentStep.iterationState.accumulator}
+                </motion.div>
+              </div>
+            )}
+
+            {(currentStep.iterationState.method === 'map' || currentStep.iterationState.method === 'filter') && currentStep.iterationState.resultArray && (
+              <div className={styles.resultArraySection}>
+                <div className={styles.iterationLabel}>Result Array</div>
+                <div className={styles.resultElements}>
+                  <span className={styles.bracket}>[</span>
+                  <AnimatePresence mode="popLayout">
+                    {currentStep.iterationState.resultArray.map((el, idx) => (
+                      <motion.span
+                        key={`${idx}-${el}`}
+                        className={styles.resultElement}
+                        initial={{ opacity: 0, scale: 0.5, x: -10 }}
+                        animate={{ opacity: 1, scale: 1, x: 0 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        {idx > 0 && <span className={styles.comma}>, </span>}
+                        {el}
+                      </motion.span>
+                    ))}
+                  </AnimatePresence>
+                  {currentStep.iterationState.resultArray.length === 0 && (
+                    <span className={styles.emptyResult}>empty</span>
+                  )}
+                  <span className={styles.bracket}>]</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className={styles.outputBox}>
         <div className={styles.boxHeader}>Console Output</div>
         <div className={styles.outputContent}>
