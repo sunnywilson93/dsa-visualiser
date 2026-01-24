@@ -1,224 +1,235 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { CodePanel, StepProgress, StepControls } from '@/components/SharedViz'
 import styles from './ArraysBasicsViz.module.css'
 
-type Tab = 'access' | 'methods' | 'transform'
-
-interface ArrayMethod {
+interface StackItem {
   name: string
-  description: string
-  mutates: boolean
-  code: string
-  result: string
+  value: string
+  isReference?: boolean
+  refId?: string
+  highlight?: 'new' | 'changed' | 'none'
 }
 
-const mutatingMethods: ArrayMethod[] = [
-  { name: 'push(4)', description: 'Add to end', mutates: true, code: 'arr.push(4)', result: '[1, 2, 3, 4]' },
-  { name: 'pop()', description: 'Remove from end', mutates: true, code: 'arr.pop()', result: '[1, 2]' },
-  { name: 'unshift(0)', description: 'Add to beginning', mutates: true, code: 'arr.unshift(0)', result: '[0, 1, 2, 3]' },
-  { name: 'shift()', description: 'Remove from beginning', mutates: true, code: 'arr.shift()', result: '[2, 3]' },
-]
+interface HeapObject {
+  id: string
+  type: 'array'
+  elements: (string | number)[]
+  label: string
+  highlight?: 'mutated' | 'new' | 'none'
+}
 
-const transformMethods: ArrayMethod[] = [
-  { name: 'map(x => x * 2)', description: 'Transform each element', mutates: false, code: 'arr.map(x => x * 2)', result: '[2, 4, 6]' },
-  { name: 'filter(x => x > 1)', description: 'Keep matching elements', mutates: false, code: 'arr.filter(x => x > 1)', result: '[2, 3]' },
-  { name: 'reduce((a,b) => a+b, 0)', description: 'Combine into one value', mutates: false, code: 'arr.reduce((a,b) => a+b, 0)', result: '6' },
-]
+interface ArrayStep {
+  id: number
+  codeLine: number
+  description: string
+  phase: 'setup' | 'access' | 'reference' | 'mutate' | 'result'
+  stack: StackItem[]
+  heap: HeapObject[]
+  output: string[]
+}
+
+interface ArrayExample {
+  id: string
+  title: string
+  code: string[]
+  steps: ArrayStep[]
+  insight: string
+}
+
+type Level = 'beginner' | 'intermediate' | 'advanced'
+
+const levelInfo: Record<Level, { label: string; color: string }> = {
+  beginner: { label: 'Beginner', color: '#10b981' },
+  intermediate: { label: 'Intermediate', color: '#f59e0b' },
+  advanced: { label: 'Advanced', color: '#ef4444' }
+}
+
+const examples: Record<Level, ArrayExample[]> = {
+  beginner: [],
+  intermediate: [],
+  advanced: []
+}
 
 export function ArraysBasicsViz() {
-  const [activeTab, setActiveTab] = useState<Tab>('access')
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
-  const [selectedMethod, setSelectedMethod] = useState<string | null>(null)
+  const [level, setLevel] = useState<Level>('beginner')
+  const [exampleIndex, setExampleIndex] = useState(0)
+  const [stepIndex, setStepIndex] = useState(0)
 
-  const baseArray = [1, 2, 3]
+  const currentExamples = examples[level]
+  const currentExample = currentExamples[exampleIndex]
+  const currentStep = currentExample?.steps[stepIndex]
+
+  const handleLevelChange = (newLevel: Level) => {
+    setLevel(newLevel)
+    setExampleIndex(0)
+    setStepIndex(0)
+  }
+
+  const handleExampleChange = (index: number) => {
+    setExampleIndex(index)
+    setStepIndex(0)
+  }
+
+  if (!currentStep) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.levelSelector}>
+          {(Object.keys(levelInfo) as Level[]).map(lvl => (
+            <button
+              key={lvl}
+              className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+              onClick={() => handleLevelChange(lvl)}
+              disabled={examples[lvl].length === 0}
+              style={{
+                borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
+                background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+              }}
+            >
+              <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }} />
+              {levelInfo[lvl].label}
+            </button>
+          ))}
+        </div>
+        <div className={styles.emptyState}>No examples available for this level yet.</div>
+      </div>
+    )
+  }
 
   return (
     <div className={styles.container}>
-      {/* Tab selector */}
-      <div className={styles.tabSelector}>
-        <button
-          className={`${styles.tabBtn} ${activeTab === 'access' ? styles.active : ''}`}
-          onClick={() => { setActiveTab('access'); setSelectedIndex(null) }}
-        >
-          Accessing
-        </button>
-        <button
-          className={`${styles.tabBtn} ${activeTab === 'methods' ? styles.active : ''}`}
-          onClick={() => { setActiveTab('methods'); setSelectedMethod(null) }}
-        >
-          Add / Remove
-        </button>
-        <button
-          className={`${styles.tabBtn} ${activeTab === 'transform' ? styles.active : ''}`}
-          onClick={() => { setActiveTab('transform'); setSelectedMethod(null) }}
-        >
-          Transform
-        </button>
+      <div className={styles.levelSelector}>
+        {(Object.keys(levelInfo) as Level[]).map(lvl => (
+          <button
+            key={lvl}
+            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            onClick={() => handleLevelChange(lvl)}
+            disabled={examples[lvl].length === 0}
+            style={{
+              borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
+              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+            }}
+          >
+            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }} />
+            {levelInfo[lvl].label}
+          </button>
+        ))}
       </div>
 
-      <AnimatePresence mode="wait">
-        {activeTab === 'access' && (
-          <motion.div
-            key="access"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className={styles.content}
+      <div className={styles.exampleTabs}>
+        {currentExamples.map((ex, i) => (
+          <button
+            key={ex.id}
+            className={`${styles.exampleTab} ${exampleIndex === i ? styles.activeTab : ''}`}
+            onClick={() => handleExampleChange(i)}
           >
-            <div className={styles.arrayViz}>
-              <div className={styles.arrayLabel}>const fruits = </div>
-              <div className={styles.arrayBracket}>[</div>
-              {['apple', 'banana', 'cherry'].map((item, i) => (
-                <motion.button
+            {ex.title}
+          </button>
+        ))}
+      </div>
+
+      <div className={styles.mainGrid}>
+        <CodePanel
+          code={currentExample.code}
+          highlightedLine={currentStep.codeLine}
+          title="Code"
+        />
+
+        <div className={styles.memoryPanel}>
+          <div className={styles.stackSection}>
+            <div className={styles.sectionHeader}>Stack</div>
+            <div className={styles.stackItems}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.stack.length === 0 ? (
+                  <div className={styles.emptySection}>(empty)</div>
+                ) : (
+                  currentStep.stack.slice().reverse().map((item) => (
+                    <motion.div
+                      key={item.name}
+                      className={`${styles.stackItem} ${item.isReference ? styles.reference : ''} ${item.highlight === 'new' ? styles.highlightNew : ''}`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      layout
+                    >
+                      <span className={styles.varName}>{item.name}</span>
+                      <span className={styles.varValue}>{item.value}</span>
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+
+          <div className={styles.heapSection}>
+            <div className={styles.sectionHeader}>Heap</div>
+            <div className={styles.heapObjects}>
+              <AnimatePresence mode="popLayout">
+                {currentStep.heap.length === 0 ? (
+                  <div className={styles.emptySection}>(empty)</div>
+                ) : (
+                  currentStep.heap.map((obj) => (
+                    <motion.div
+                      key={obj.id}
+                      className={`${styles.heapObject} ${obj.highlight === 'mutated' ? styles.highlightMutated : ''} ${obj.highlight === 'new' ? styles.highlightNew : ''}`}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      layout
+                    >
+                      <div className={styles.objectLabel}>{obj.label}</div>
+                      <div className={styles.arrayElements}>
+                        [{obj.elements.join(', ')}]
+                      </div>
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.outputBox}>
+        <div className={styles.boxHeader}>Console Output</div>
+        <div className={styles.outputContent}>
+          <AnimatePresence>
+            {currentStep.output.length === 0 ? (
+              <span className={styles.placeholder}>No output yet</span>
+            ) : (
+              currentStep.output.map((line, i) => (
+                <motion.div
                   key={i}
-                  className={`${styles.arrayItem} ${selectedIndex === i ? styles.active : ''}`}
-                  onClick={() => setSelectedIndex(i)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  className={styles.outputLine}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
                 >
-                  <span className={styles.indexLabel}>[{i}]</span>
-                  <span className={styles.itemValue}>&quot;{item}&quot;</span>
-                </motion.button>
-              ))}
-              <div className={styles.arrayBracket}>]</div>
-            </div>
-
-            {selectedIndex !== null && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={styles.accessResult}
-              >
-                <code className={styles.accessCode}>
-                  fruits[{selectedIndex}]
-                </code>
-                <span className={styles.accessArrow}>→</span>
-                <code className={styles.accessValue}>
-                  &quot;{['apple', 'banana', 'cherry'][selectedIndex]}&quot;
-                </code>
-              </motion.div>
+                  {line}
+                </motion.div>
+              ))
             )}
+          </AnimatePresence>
+        </div>
+      </div>
 
-            <div className={styles.tip}>
-              Click an item to see how to access it. Arrays are zero-indexed!
-            </div>
-          </motion.div>
-        )}
+      <StepProgress
+        current={stepIndex}
+        total={currentExample.steps.length}
+        description={currentStep.description}
+      />
 
-        {activeTab === 'methods' && (
-          <motion.div
-            key="methods"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className={styles.content}
-          >
-            <div className={styles.baseArray}>
-              <span className={styles.baseLabel}>Starting array:</span>
-              <code>[1, 2, 3]</code>
-            </div>
+      <StepControls
+        onPrev={() => setStepIndex(s => s - 1)}
+        onNext={() => setStepIndex(s => s + 1)}
+        onReset={() => setStepIndex(0)}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+      />
 
-            <div className={styles.methodGrid}>
-              {mutatingMethods.map(method => (
-                <motion.button
-                  key={method.name}
-                  className={`${styles.methodCard} ${selectedMethod === method.name ? styles.active : ''}`}
-                  onClick={() => setSelectedMethod(method.name)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <code className={styles.methodName}>{method.name}</code>
-                  <span className={styles.methodDesc}>{method.description}</span>
-                </motion.button>
-              ))}
-            </div>
-
-            {selectedMethod && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={styles.methodResult}
-              >
-                {(() => {
-                  const method = mutatingMethods.find(m => m.name === selectedMethod)!
-                  return (
-                    <>
-                      <div className={styles.resultRow}>
-                        <span className={styles.resultLabel}>Code:</span>
-                        <code>{method.code}</code>
-                      </div>
-                      <div className={styles.resultRow}>
-                        <span className={styles.resultLabel}>Result:</span>
-                        <code className={styles.resultValue}>{method.result}</code>
-                      </div>
-                      <div className={styles.mutatesTag}>
-                        Mutates original array
-                      </div>
-                    </>
-                  )
-                })()}
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-
-        {activeTab === 'transform' && (
-          <motion.div
-            key="transform"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className={styles.content}
-          >
-            <div className={styles.baseArray}>
-              <span className={styles.baseLabel}>Starting array:</span>
-              <code>[1, 2, 3]</code>
-            </div>
-
-            <div className={styles.methodGrid}>
-              {transformMethods.map(method => (
-                <motion.button
-                  key={method.name}
-                  className={`${styles.methodCard} ${selectedMethod === method.name ? styles.active : ''}`}
-                  onClick={() => setSelectedMethod(method.name)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <code className={styles.methodName}>{method.name}</code>
-                  <span className={styles.methodDesc}>{method.description}</span>
-                </motion.button>
-              ))}
-            </div>
-
-            {selectedMethod && transformMethods.find(m => m.name === selectedMethod) && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={styles.methodResult}
-              >
-                {(() => {
-                  const method = transformMethods.find(m => m.name === selectedMethod)!
-                  return (
-                    <>
-                      <div className={styles.resultRow}>
-                        <span className={styles.resultLabel}>Code:</span>
-                        <code>{method.code}</code>
-                      </div>
-                      <div className={styles.resultRow}>
-                        <span className={styles.resultLabel}>Returns:</span>
-                        <code className={styles.resultValue}>{method.result}</code>
-                      </div>
-                      <div className={styles.noMutateTag}>
-                        Returns new array (doesn&apos;t mutate)
-                      </div>
-                    </>
-                  )
-                })()}
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div className={styles.insightBox}>
+        <span className={styles.insightLabel}>Key Insight:</span>
+        {currentExample.insight}
+      </div>
     </div>
   )
 }
