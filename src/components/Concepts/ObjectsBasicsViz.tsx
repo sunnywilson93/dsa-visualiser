@@ -536,6 +536,96 @@ const examples: Record<Level, ObjectExample[]> = {
       ],
       insight: 'Spread { ...obj } creates a NEW object. Changes to the copy don\'t affect the original!',
     },
+    {
+      id: 'adding-deleting-properties',
+      title: 'Adding and deleting properties',
+      code: [
+        'let user = { name: "Alice" }',
+        '',
+        'user.email = "alice@test.com"',
+        '',
+        'delete user.name',
+        '',
+        'console.log(user)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'let user = { name: "Alice" } - Object created with one property.',
+          phase: 'reference',
+          stack: [
+            { name: 'user', value: '-> #1', isReference: true, refId: 'obj', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'obj', type: 'object', properties: [{ key: 'name', value: 'Alice' }], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 2,
+          description: 'user.email = "alice@test.com" - Adding a NEW property to the object.',
+          phase: 'mutate',
+          stack: [
+            { name: 'user', value: '-> #1', isReference: true, refId: 'obj' },
+          ],
+          heap: [
+            { id: 'obj', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'email', value: 'alice@test.com', highlight: 'new' }], label: '#1', highlight: 'mutated' },
+          ],
+          output: [],
+        },
+        {
+          id: 3,
+          codeLine: 4,
+          description: 'delete user.name - Marking the name property for deletion...',
+          phase: 'mutate',
+          stack: [
+            { name: 'user', value: '-> #1', isReference: true, refId: 'obj' },
+          ],
+          heap: [
+            { id: 'obj', type: 'object', properties: [{ key: 'name', value: 'Alice', highlight: 'deleted' }, { key: 'email', value: 'alice@test.com' }], label: '#1', highlight: 'mutated' },
+          ],
+          output: [],
+        },
+        {
+          id: 4,
+          codeLine: 4,
+          description: 'delete user.name - Property removed! The object now only has email.',
+          phase: 'mutate',
+          stack: [
+            { name: 'user', value: '-> #1', isReference: true, refId: 'obj' },
+          ],
+          heap: [
+            { id: 'obj', type: 'object', properties: [{ key: 'email', value: 'alice@test.com' }], label: '#1', highlight: 'mutated' },
+          ],
+          output: [],
+        },
+        {
+          id: 5,
+          codeLine: 6,
+          description: 'console.log(user) outputs the modified object.',
+          phase: 'result',
+          stack: [
+            { name: 'user', value: '-> #1', isReference: true, refId: 'obj' },
+          ],
+          heap: [
+            { id: 'obj', type: 'object', properties: [{ key: 'email', value: 'alice@test.com' }], label: '#1' },
+          ],
+          output: ['{ email: "alice@test.com" }'],
+        },
+      ],
+      insight: 'Adding and deleting properties modifies the object. All references see the changes!',
+    },
   ],
   advanced: []
 }
