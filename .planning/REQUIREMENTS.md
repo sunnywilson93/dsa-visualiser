@@ -9,10 +9,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Foundation (Shared Components)
 
-- [ ] **FOUND-01**: Reusable CodePanel component with line highlighting
-- [ ] **FOUND-02**: StepControls component (Prev/Next/Reset buttons)
-- [ ] **FOUND-03**: Step progress indicator showing "Step X/Y"
-- [ ] **FOUND-04**: Auto-play mode with configurable speed control
+- [x] **FOUND-01**: Reusable CodePanel component with line highlighting ✓
+- [x] **FOUND-02**: StepControls component (Prev/Next/Reset buttons) ✓
+- [x] **FOUND-03**: Step progress indicator showing "Step X/Y" ✓
+- [x] **FOUND-04**: Auto-play mode with configurable speed control ✓
 
 ### LoopsViz Upgrade
 
@@ -82,10 +82,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Pending |
-| FOUND-02 | Phase 1 | Pending |
-| FOUND-03 | Phase 1 | Pending |
-| FOUND-04 | Phase 1 | Pending |
+| FOUND-01 | Phase 1 | Complete |
+| FOUND-02 | Phase 1 | Complete |
+| FOUND-03 | Phase 1 | Complete |
+| FOUND-04 | Phase 1 | Complete |
 | LOOP-01 | Phase 2 | Pending |
 | LOOP-02 | Phase 2 | Pending |
 | LOOP-03 | Phase 2 | Pending |
@@ -115,4 +115,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-24 after roadmap creation*
+*Last updated: 2026-01-24 — Phase 1 requirements complete*
