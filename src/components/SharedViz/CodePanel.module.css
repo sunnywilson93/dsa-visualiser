@@ -1,0 +1,74 @@
+.codePanel {
+  --js-viz-surface: rgba(26, 26, 46, 1);
+  --js-viz-border: rgba(255, 255, 255, 0.1);
+  --js-viz-text: #e5e7eb;
+  --js-viz-muted: #888;
+  --js-viz-radius: var(--radius-lg);
+  --js-viz-pill-bg: rgba(102, 126, 234, 0.1);
+  --js-viz-pill-border: rgba(102, 126, 234, 0.3);
+
+  background: var(--js-viz-surface);
+  border: 1px solid var(--js-viz-border);
+  border-radius: var(--js-viz-radius);
+  box-shadow: 0 10px 24px rgba(2, 4, 10, 0.35);
+  overflow: hidden;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.panelTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--js-viz-text);
+  background: var(--js-viz-pill-bg);
+  border: 1px solid var(--js-viz-pill-border);
+  border-radius: var(--radius-full);
+}
+
+.code {
+  margin: 0;
+  padding: 0.5rem 0;
+  overflow-y: auto;
+}
+
+.codeLine {
+  display: flex;
+  padding: 0.15rem 0.5rem;
+  transition: background 0.2s;
+}
+
+.codeLine.activeLine {
+  background: rgba(102, 126, 234, 0.2);
+}
+
+.lineNum {
+  width: 1.5rem;
+  color: var(--gray-800);
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-2xs);
+  text-align: right;
+  user-select: none;
+  margin-right: 0.5rem;
+}
+
+.lineCode {
+  font-family: 'Fira Code', monospace;
+  font-size: var(--text-2xs);
+  color: var(--gray-300);
+}
+
+.activeLine .lineCode {
+  color: #a5b4fc;
+}
