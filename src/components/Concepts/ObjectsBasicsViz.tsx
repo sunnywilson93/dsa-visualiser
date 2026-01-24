@@ -27,6 +27,16 @@ interface HeapObject {
   highlight?: 'mutated' | 'new' | 'none'
 }
 
+interface DestructureState {
+  sourceRefId: string
+  extractedProps: {
+    propKey: string
+    targetVar: string
+    value: string
+    status: 'pending' | 'extracting' | 'complete'
+  }[]
+}
+
 interface ObjectStep {
   id: number
   codeLine: number
@@ -35,6 +45,7 @@ interface ObjectStep {
   stack: StackItem[]
   heap: HeapObject[]
   output: string[]
+  destructureState?: DestructureState
 }
 
 interface ObjectExample {
