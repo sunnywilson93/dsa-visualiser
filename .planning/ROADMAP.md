@@ -107,10 +107,12 @@ Plans:
   2. Property mutation steps show changes to object properties affecting all references
   3. Destructuring visualization shows properties being extracted into new variables
   4. Object spread visualization shows shallow copy creating new object with copied references
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 06-01: TBD
+- [ ] 06-01-PLAN.md - Types, beginner examples, core component rewrite with stack/heap visualization
+- [ ] 06-02-PLAN.md - Intermediate examples with spread operator and warning badges
+- [ ] 06-03-PLAN.md - Advanced examples with destructuring visualization
 
 ## Progress
 
