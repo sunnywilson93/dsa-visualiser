@@ -111,7 +111,7 @@ Plans:
 
 **Milestone Goal:** Learners can step through algorithm patterns visually, understanding decision logic rather than just memorizing steps. Three core patterns: Two Pointers, Hash Map, and Bit Manipulation.
 
-- [ ] **Phase 7: Foundation** - DSAPatterns structure, routing, and pattern metadata
+- [x] **Phase 7: Foundation** - DSAPatterns structure, routing, and pattern metadata
 - [ ] **Phase 8: TwoPointersViz** - Complete Two Pointers pattern page with variants
 - [ ] **Phase 9: HashMapViz** - Complete Hash Map pattern page with bucket visualization
 - [ ] **Phase 10: BitManipulationViz** - Complete Bit Manipulation pattern page with operation animation
@@ -129,8 +129,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 07-01-PLAN.md - DSAPatterns directory structure, shared types, and dsaPatterns.ts data file
-- [ ] 07-02-PLAN.md - Pattern page routing and page shell at /concepts/dsa/patterns/[patternId]
+- [x] 07-01-PLAN.md - DSAPatterns directory structure, shared types, and dsaPatterns.ts data file
+- [x] 07-02-PLAN.md - Pattern page routing and page shell at /concepts/dsa/patterns/[patternId]
 
 ### Phase 8: TwoPointersViz
 **Goal**: Learners can step through Two Pointers pattern with decision logic visible before movement
@@ -199,7 +199,7 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | 4. FunctionsViz | v1.0 | 3/3 | Complete | 2026-01-24 |
 | 5. ArraysBasicsViz | v1.0 | 3/3 | Complete | 2026-01-24 |
 | 6. ObjectsBasicsViz | v1.0 | 3/3 | Complete | 2026-01-24 |
-| 7. Foundation | v1.1 | 0/2 | Not started | - |
+| 7. Foundation | v1.1 | 2/2 | Complete | 2026-01-24 |
 | 8. TwoPointersViz | v1.1 | 0/3 | Not started | - |
 | 9. HashMapViz | v1.1 | 0/3 | Not started | - |
 | 10. BitManipulationViz | v1.1 | 0/3 | Not started | - |
