@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Clock, HardDrive, CheckCircle } from 'lucide-react'
 import { getPatternBySlug } from '@/data/dsaPatterns'
+import { TwoPointersViz } from '@/components/DSAPatterns'
 import styles from './page.module.css'
 
 interface Props {
@@ -69,12 +70,16 @@ export default function PatternPageClient({ patternId }: Props) {
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Interactive Visualization</h2>
-        <div className={styles.vizPlaceholder}>
-          <p>Step-through visualization coming soon...</p>
-          <p className={styles.vizHint}>
-            This will include beginner, intermediate, and advanced examples with code highlighting.
-          </p>
-        </div>
+        {patternId === 'two-pointers' ? (
+          <TwoPointersViz />
+        ) : (
+          <div className={styles.vizPlaceholder}>
+            <p>Step-through visualization coming soon...</p>
+            <p className={styles.vizHint}>
+              This will include beginner, intermediate, and advanced examples with code highlighting.
+            </p>
+          </div>
+        )}
       </section>
     </div>
   )
