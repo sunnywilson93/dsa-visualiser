@@ -28,10 +28,11 @@ This roadmap transforms simple auto-play visualizations into rich step-through e
   2. StepControls component provides Prev/Next/Reset buttons that disable appropriately at boundaries
   3. Progress indicator shows "Step X/Y" synchronized with step state
   4. Auto-play mode advances steps at configurable intervals and pauses on user interaction
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: TBD
+- [ ] 01-01-PLAN.md - CodePanel and StepProgress display components
+- [ ] 01-02-PLAN.md - StepControls and useAutoPlay hook
 
 ### Phase 2: LoopsViz
 **Goal**: Learners can step through loop iterations to understand control flow and closure capture
@@ -111,7 +112,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/? | Not started | - |
+| 1. Foundation | 0/2 | Planned | - |
 | 2. LoopsViz | 0/? | Not started | - |
 | 3. VariablesViz | 0/? | Not started | - |
 | 4. FunctionsViz | 0/? | Not started | - |
