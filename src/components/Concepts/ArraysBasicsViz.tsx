@@ -46,7 +46,389 @@ const levelInfo: Record<Level, { label: string; color: string }> = {
 }
 
 const examples: Record<Level, ArrayExample[]> = {
-  beginner: [],
+  beginner: [
+    {
+      id: 'value-vs-reference',
+      title: 'Value vs Reference copy',
+      code: [
+        'let a = 5',
+        'let b = a',
+        'b = 10',
+        'console.log(a, b)',
+        '',
+        'let arr1 = [1, 2, 3]',
+        'let arr2 = arr1',
+        'arr2.push(4)',
+        'console.log(arr1)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'let a = 5 - Primitive value stored directly in the stack.',
+          phase: 'setup',
+          stack: [
+            { name: 'a', value: '5', highlight: 'new' },
+          ],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'let b = a - The VALUE 5 is COPIED to b. They are independent.',
+          phase: 'setup',
+          stack: [
+            { name: 'a', value: '5' },
+            { name: 'b', value: '5', highlight: 'new' },
+          ],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 3,
+          codeLine: 2,
+          description: 'b = 10 - Only b changes. a is still 5 because they have separate copies.',
+          phase: 'setup',
+          stack: [
+            { name: 'a', value: '5' },
+            { name: 'b', value: '10', highlight: 'changed' },
+          ],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 4,
+          codeLine: 3,
+          description: 'console.log(a, b) outputs: 5, 10. Primitives are independent!',
+          phase: 'result',
+          stack: [
+            { name: 'a', value: '5' },
+            { name: 'b', value: '10' },
+          ],
+          heap: [],
+          output: ['5 10'],
+        },
+        {
+          id: 5,
+          codeLine: 5,
+          description: 'let arr1 = [1,2,3] - Array created in HEAP. arr1 stores a REFERENCE to it.',
+          phase: 'reference',
+          stack: [
+            { name: 'a', value: '5' },
+            { name: 'b', value: '10' },
+            { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' },
+          ],
+          output: ['5 10'],
+        },
+        {
+          id: 6,
+          codeLine: 6,
+          description: 'let arr2 = arr1 - The REFERENCE is copied, not the array! Both point to the SAME heap object.',
+          phase: 'reference',
+          stack: [
+            { name: 'a', value: '5' },
+            { name: 'b', value: '10' },
+            { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'arr2', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1' },
+          ],
+          output: ['5 10'],
+        },
+        {
+          id: 7,
+          codeLine: 7,
+          description: 'arr2.push(4) - Mutates the heap array. Since arr1 and arr2 point to the same array, arr1 sees the change!',
+          phase: 'mutate',
+          stack: [
+            { name: 'a', value: '5' },
+            { name: 'b', value: '10' },
+            { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'arr2', value: '-> #1', isReference: true, refId: 'array1' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3, 4], label: '#1', highlight: 'mutated' },
+          ],
+          output: ['5 10'],
+        },
+        {
+          id: 8,
+          codeLine: 8,
+          description: 'console.log(arr1) outputs [1,2,3,4]. arr1 sees the change made through arr2!',
+          phase: 'result',
+          stack: [
+            { name: 'a', value: '5' },
+            { name: 'b', value: '10' },
+            { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1' },
+            { name: 'arr2', value: '-> #1', isReference: true, refId: 'array1' },
+          ],
+          heap: [
+            { id: 'array1', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
+          ],
+          output: ['5 10', '[1, 2, 3, 4]'],
+        },
+      ],
+      insight: 'Primitives are copied by VALUE (independent). Arrays are copied by REFERENCE (shared)!',
+    },
+    {
+      id: 'mutation-through-reference',
+      title: 'Mutation through reference',
+      code: [
+        'let original = [1, 2, 3]',
+        'let copy = original',
+        '',
+        'copy[0] = 99',
+        '',
+        'console.log(original[0])',
+        'console.log(copy[0])',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'let original = [1, 2, 3] - Array created in heap, original points to it.',
+          phase: 'reference',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'let copy = original - copy now points to the SAME array. No new array created!',
+          phase: 'reference',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'copy', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [1, 2, 3], label: '#1' },
+          ],
+          output: [],
+        },
+        {
+          id: 3,
+          codeLine: 3,
+          description: 'copy[0] = 99 - Modifying through copy mutates the shared array!',
+          phase: 'mutate',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'copy', value: '-> #1', isReference: true, refId: 'arr' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [99, 2, 3], label: '#1', highlight: 'mutated' },
+          ],
+          output: [],
+        },
+        {
+          id: 4,
+          codeLine: 5,
+          description: 'console.log(original[0]) outputs 99. The original sees the change!',
+          phase: 'result',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'copy', value: '-> #1', isReference: true, refId: 'arr' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [99, 2, 3], label: '#1' },
+          ],
+          output: ['99'],
+        },
+        {
+          id: 5,
+          codeLine: 6,
+          description: 'console.log(copy[0]) also outputs 99. Both see the same data.',
+          phase: 'result',
+          stack: [
+            { name: 'original', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'copy', value: '-> #1', isReference: true, refId: 'arr' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [99, 2, 3], label: '#1' },
+          ],
+          output: ['99', '99'],
+        },
+      ],
+      insight: 'When two variables reference the same array, mutation through either affects both!',
+    },
+    {
+      id: 'multiple-references',
+      title: 'Multiple references',
+      code: [
+        'let data = [10, 20, 30]',
+        'let ref1 = data',
+        'let ref2 = data',
+        'let ref3 = data',
+        '',
+        'ref2[1] = 999',
+        '',
+        'console.log(data[1])',
+        'console.log(ref1[1])',
+        'console.log(ref3[1])',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'let data = [10, 20, 30] - Array created in heap.',
+          phase: 'reference',
+          stack: [
+            { name: 'data', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'let ref1 = data - ref1 now points to the same array.',
+          phase: 'reference',
+          stack: [
+            { name: 'data', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref1', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1' },
+          ],
+          output: [],
+        },
+        {
+          id: 3,
+          codeLine: 2,
+          description: 'let ref2 = data - ref2 also points to the same array.',
+          phase: 'reference',
+          stack: [
+            { name: 'data', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref1', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1' },
+          ],
+          output: [],
+        },
+        {
+          id: 4,
+          codeLine: 3,
+          description: 'let ref3 = data - Now 4 variables all point to the SAME array!',
+          phase: 'reference',
+          stack: [
+            { name: 'data', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref1', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref3', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1' },
+          ],
+          output: [],
+        },
+        {
+          id: 5,
+          codeLine: 5,
+          description: 'ref2[1] = 999 - Mutating through ref2 affects the shared array.',
+          phase: 'mutate',
+          stack: [
+            { name: 'data', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref1', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref3', value: '-> #1', isReference: true, refId: 'arr' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1', highlight: 'mutated' },
+          ],
+          output: [],
+        },
+        {
+          id: 6,
+          codeLine: 7,
+          description: 'console.log(data[1]) outputs 999 - data sees the mutation.',
+          phase: 'result',
+          stack: [
+            { name: 'data', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref1', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref3', value: '-> #1', isReference: true, refId: 'arr' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1' },
+          ],
+          output: ['999'],
+        },
+        {
+          id: 7,
+          codeLine: 8,
+          description: 'console.log(ref1[1]) also outputs 999 - ref1 sees it too.',
+          phase: 'result',
+          stack: [
+            { name: 'data', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref1', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref3', value: '-> #1', isReference: true, refId: 'arr' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1' },
+          ],
+          output: ['999', '999'],
+        },
+        {
+          id: 8,
+          codeLine: 9,
+          description: 'console.log(ref3[1]) outputs 999 - ALL references see the same change!',
+          phase: 'result',
+          stack: [
+            { name: 'data', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref1', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr' },
+            { name: 'ref3', value: '-> #1', isReference: true, refId: 'arr' },
+          ],
+          heap: [
+            { id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1' },
+          ],
+          output: ['999', '999', '999'],
+        },
+      ],
+      insight: 'Any number of variables can reference the same array. They all see the same data!',
+    },
+  ],
   intermediate: [],
   advanced: []
 }
