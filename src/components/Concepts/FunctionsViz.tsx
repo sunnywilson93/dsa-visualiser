@@ -25,6 +25,14 @@ interface ParameterBinding {
   isMissing: boolean
 }
 
+interface ThisBindingState {
+  value: string
+  rule: 'implicit' | 'explicit' | 'new' | 'default' | 'lexical'
+  explanation: string
+  isArrow: boolean
+  comparisonValue?: string
+}
+
 interface FunctionStep {
   id: number
   codeLine: number
@@ -33,6 +41,7 @@ interface FunctionStep {
   callStack: CallStackFrame[]
   output: string[]
   parameterBindings?: ParameterBinding[]
+  thisBinding?: ThisBindingState
 }
 
 interface FunctionExample {
@@ -781,7 +790,506 @@ const examples: Record<Level, FunctionExample[]> = {
       insight: 'Default parameters (ES6) provide fallback values when arguments are missing or undefined. They prevent the common bug of undefined creeping into your code.',
     },
   ],
-  advanced: [],
+  advanced: [
+    {
+      id: 'method-invocation',
+      title: 'Method invocation (implicit)',
+      code: [
+        'const user = {',
+        '  name: "Alice",',
+        '  greet() {',
+        '    console.log("Hi, " + this.name)',
+        '  }',
+        '}',
+        '',
+        'user.greet()',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Create the user object with a name property and a greet method.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: {}, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 5,
+          description: 'The user object is now in memory. The greet method is defined inside it.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { user: '{ name, greet }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 7,
+          description: 'Calling user.greet(). Since we call greet as a method of user (obj.method), this will be bound to user.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { user: '{ name, greet }' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: {}, locals: {}, thisValue: 'user', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          thisBinding: {
+            value: 'user { name: "Alice" }',
+            rule: 'implicit',
+            explanation: 'Called as object method: user.greet() - the object before the dot becomes this',
+            isArrow: false,
+          },
+        },
+        {
+          id: 3,
+          codeLine: 3,
+          description: 'Inside greet(), this refers to the user object. So this.name is "Alice".',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { user: '{ name, greet }' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: {}, locals: {}, thisValue: 'user', outerRef: 'global', status: 'active' }
+          ],
+          output: ['Hi, Alice'],
+          thisBinding: {
+            value: 'user { name: "Alice" }',
+            rule: 'implicit',
+            explanation: 'this.name resolves to "Alice" because this is the user object',
+            isArrow: false,
+          },
+        },
+        {
+          id: 4,
+          codeLine: 7,
+          description: 'greet() completes. The implicit binding rule: whatever object is left of the dot at call time is this.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { user: '{ name, greet }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['Hi, Alice'],
+        },
+      ],
+      insight: 'Implicit binding: When you call a method as obj.method(), the object before the dot (obj) becomes the value of this inside the method.',
+    },
+    {
+      id: 'standalone-function',
+      title: 'Standalone function (default)',
+      code: [
+        'function sayName() {',
+        '  console.log(this)',
+        '}',
+        '',
+        'sayName()',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Define the sayName function. It logs whatever this is.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { sayName: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 4,
+          description: 'Call sayName() directly - not as a method of any object. No dot, no object context.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { sayName: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'sayName-1', name: 'sayName()', params: {}, locals: {}, thisValue: 'window', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          thisBinding: {
+            value: 'window (or undefined in strict)',
+            rule: 'default',
+            explanation: 'Called without object context - no dot before function name',
+            isArrow: false,
+          },
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'Inside sayName(), this defaults to the global object (window in browser). In strict mode, it would be undefined.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { sayName: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'sayName-1', name: 'sayName()', params: {}, locals: {}, thisValue: 'window', outerRef: 'global', status: 'active' }
+          ],
+          output: ['[object Window]'],
+          thisBinding: {
+            value: 'window (or undefined in strict)',
+            rule: 'default',
+            explanation: 'Default binding applies: this = global object (non-strict) or undefined (strict mode)',
+            isArrow: false,
+          },
+        },
+        {
+          id: 3,
+          codeLine: 4,
+          description: 'sayName() completes. Default binding is often a source of bugs when methods are passed as callbacks.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { sayName: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['[object Window]'],
+        },
+      ],
+      insight: 'Default binding: When a function is called standalone (not as a method), this defaults to the global object (window) or undefined in strict mode.',
+    },
+    {
+      id: 'explicit-binding',
+      title: 'call/apply/bind (explicit)',
+      code: [
+        'function greet() {',
+        '  console.log("Hi, " + this.name)',
+        '}',
+        '',
+        'const person = { name: "Bob" }',
+        '',
+        'greet.call(person)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Define a greet function that uses this.name. It has no inherent this binding yet.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 4,
+          description: 'Create a person object with a name property. This object will be used as our this value.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn', person: '{ name: "Bob" }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 6,
+          description: 'Using greet.call(person) to explicitly set this to the person object. This overrides default binding.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn', person: '{ name: "Bob" }' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: {}, locals: {}, thisValue: 'person', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          thisBinding: {
+            value: 'person { name: "Bob" }',
+            rule: 'explicit',
+            explanation: 'Explicitly set via .call(person) - we chose what this should be',
+            isArrow: false,
+          },
+        },
+        {
+          id: 3,
+          codeLine: 1,
+          description: 'Inside greet(), this is the person object because we explicitly set it. this.name is "Bob".',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn', person: '{ name: "Bob" }' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: {}, locals: {}, thisValue: 'person', outerRef: 'global', status: 'active' }
+          ],
+          output: ['Hi, Bob'],
+          thisBinding: {
+            value: 'person { name: "Bob" }',
+            rule: 'explicit',
+            explanation: 'this.name resolves to "Bob" because we explicitly bound this to person',
+            isArrow: false,
+          },
+        },
+        {
+          id: 4,
+          codeLine: 6,
+          description: 'greet() completes. call(), apply(), and bind() let you explicitly control what this is.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn', person: '{ name: "Bob" }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['Hi, Bob'],
+        },
+      ],
+      insight: 'Explicit binding: Using .call(obj), .apply(obj), or .bind(obj) lets you explicitly set what this will be inside the function.',
+    },
+    {
+      id: 'arrow-vs-regular',
+      title: 'Arrow vs Regular (comparison)',
+      code: [
+        'const obj = {',
+        '  name: "Carol",',
+        '  regularFn: function() {',
+        '    console.log("Regular:", this.name)',
+        '  },',
+        '  arrowFn: () => {',
+        '    console.log("Arrow:", this.name)',
+        '  }',
+        '}',
+        '',
+        'obj.regularFn()',
+        'obj.arrowFn()',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Create an object with both a regular function method and an arrow function method.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: {}, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 8,
+          description: 'The obj is created. Note: the arrow function captures this from where it was defined (global scope), not from where it will be called.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { obj: '{ name, regularFn, arrowFn }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 10,
+          description: 'Call obj.regularFn(). For regular functions, this is determined at call time - it will be obj.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { obj: '{ name, regularFn, arrowFn }' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'regularFn-1', name: 'regularFn()', params: {}, locals: {}, thisValue: 'obj', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          thisBinding: {
+            value: 'obj { name: "Carol" }',
+            rule: 'implicit',
+            explanation: 'Regular function: this determined at call time (obj.regularFn)',
+            isArrow: false,
+            comparisonValue: 'window (if arrow)',
+          },
+        },
+        {
+          id: 3,
+          codeLine: 3,
+          description: 'Inside regularFn, this is obj (implicit binding). this.name is "Carol". This is what we expect!',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { obj: '{ name, regularFn, arrowFn }' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'regularFn-1', name: 'regularFn()', params: {}, locals: {}, thisValue: 'obj', outerRef: 'global', status: 'active' }
+          ],
+          output: ['Regular: Carol'],
+          thisBinding: {
+            value: 'obj { name: "Carol" }',
+            rule: 'implicit',
+            explanation: 'this.name = "Carol" because regular function gets this from the call site',
+            isArrow: false,
+            comparisonValue: 'window (if arrow)',
+          },
+        },
+        {
+          id: 4,
+          codeLine: 10,
+          description: 'regularFn() completes. Regular functions work as expected with method invocation.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { obj: '{ name, regularFn, arrowFn }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['Regular: Carol'],
+        },
+        {
+          id: 5,
+          codeLine: 11,
+          description: 'Now call obj.arrowFn(). Arrow functions do NOT get their own this - they inherit from where they were defined.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { obj: '{ name, regularFn, arrowFn }' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'arrowFn-1', name: 'arrowFn()', params: {}, locals: {}, thisValue: 'window', outerRef: 'global', status: 'creating' }
+          ],
+          output: ['Regular: Carol'],
+          thisBinding: {
+            value: 'window (lexical)',
+            rule: 'lexical',
+            explanation: 'Arrow function: this inherited from where defined (global scope), not call site',
+            isArrow: true,
+            comparisonValue: 'obj (if regular)',
+          },
+        },
+        {
+          id: 6,
+          codeLine: 6,
+          description: 'Inside arrowFn, this is window (where the arrow was defined), NOT obj. this.name is undefined!',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { obj: '{ name, regularFn, arrowFn }' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'arrowFn-1', name: 'arrowFn()', params: {}, locals: {}, thisValue: 'window', outerRef: 'global', status: 'active' }
+          ],
+          output: ['Regular: Carol', 'Arrow: undefined'],
+          thisBinding: {
+            value: 'window (lexical)',
+            rule: 'lexical',
+            explanation: 'this.name = undefined because window has no name property',
+            isArrow: true,
+            comparisonValue: 'obj (if regular)',
+          },
+        },
+        {
+          id: 7,
+          codeLine: 11,
+          description: 'arrowFn() completes. The key difference: regular functions get this at call time, arrow functions capture this at definition time.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { obj: '{ name, regularFn, arrowFn }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['Regular: Carol', 'Arrow: undefined'],
+        },
+      ],
+      insight: 'Arrow functions have lexical this - they inherit this from their enclosing scope at definition time and ignore how they are called. Regular functions determine this at call time.',
+    },
+    {
+      id: 'callback-pitfall',
+      title: 'Callback losing this (pitfall)',
+      code: [
+        'const user = {',
+        '  name: "Dan",',
+        '  greet() {',
+        '    console.log("Hi, " + this.name)',
+        '  }',
+        '}',
+        '',
+        '// Bug: method loses this when passed as callback',
+        'setTimeout(user.greet, 100)',
+        '',
+        '// Fix 1: Arrow wrapper',
+        '// setTimeout(() => user.greet(), 100)',
+        '',
+        '// Fix 2: bind()',
+        '// setTimeout(user.greet.bind(user), 100)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Create a user object with a greet method that uses this.name.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: {}, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 5,
+          description: 'User object created. The greet method needs this to refer to user to work correctly.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { user: '{ name, greet }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 8,
+          description: 'We pass user.greet to setTimeout. This EXTRACTS the function from the object - the method loses its connection to user!',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { user: '{ name, greet }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+          thisBinding: {
+            value: 'function reference extracted',
+            rule: 'default',
+            explanation: 'Passing user.greet extracts just the function - no object context attached',
+            isArrow: false,
+          },
+        },
+        {
+          id: 3,
+          codeLine: 8,
+          description: '100ms later, setTimeout calls the function. But it calls it as a standalone function, not as user.greet()!',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { user: '{ name, greet }' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: {}, locals: {}, thisValue: 'window', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          thisBinding: {
+            value: 'window (BUG!)',
+            rule: 'default',
+            explanation: 'setTimeout calls the function without object context - default binding kicks in',
+            isArrow: false,
+          },
+        },
+        {
+          id: 4,
+          codeLine: 3,
+          description: 'Inside greet(), this is window, NOT user. this.name is undefined. This is a common JavaScript bug!',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { user: '{ name, greet }' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: {}, locals: {}, thisValue: 'window', outerRef: 'global', status: 'active' }
+          ],
+          output: ['Hi, undefined'],
+          thisBinding: {
+            value: 'window (BUG!)',
+            rule: 'default',
+            explanation: 'this.name is undefined because window.name is not "Dan"',
+            isArrow: false,
+          },
+        },
+        {
+          id: 5,
+          codeLine: 8,
+          description: 'The bug happened because passing a method as a callback loses its object context. Fixes: arrow wrapper or .bind().',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { user: '{ name, greet }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['Hi, undefined'],
+        },
+        {
+          id: 6,
+          codeLine: 11,
+          description: 'Fix 1: Arrow wrapper - () => user.greet() keeps the method call syntax intact, preserving implicit binding.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { user: '{ name, greet }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['Hi, undefined'],
+          thisBinding: {
+            value: 'user (with arrow fix)',
+            rule: 'implicit',
+            explanation: 'Arrow wrapper: () => user.greet() calls greet as a method, keeping this = user',
+            isArrow: false,
+          },
+        },
+        {
+          id: 7,
+          codeLine: 14,
+          description: 'Fix 2: .bind(user) creates a new function with this permanently bound to user. No matter how its called, this is user.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { user: '{ name, greet }' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['Hi, undefined'],
+          thisBinding: {
+            value: 'user (with bind fix)',
+            rule: 'explicit',
+            explanation: '.bind(user) explicitly locks this to user - cannot be overridden',
+            isArrow: false,
+          },
+        },
+      ],
+      insight: 'When you pass a method as a callback, it loses its object context. The receiver calls it as a standalone function. Fix with arrow wrapper or .bind() to preserve this.',
+    },
+  ],
 }
 
 export function FunctionsViz() {
