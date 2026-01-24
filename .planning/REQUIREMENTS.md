@@ -38,10 +38,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### ArraysBasicsViz Upgrade
 
-- [ ] **ARR-01**: Reference vs value visualization with memory addresses
-- [ ] **ARR-02**: Mutation effect steps showing state changes
-- [ ] **ARR-03**: Spread operator unpacking visualization
-- [ ] **ARR-04**: Array method iteration (map/filter/reduce step-through)
+- [x] **ARR-01**: Reference vs value visualization with memory addresses ✓
+- [x] **ARR-02**: Mutation effect steps showing state changes ✓
+- [x] **ARR-03**: Spread operator unpacking visualization ✓
+- [x] **ARR-04**: Array method iteration (map/filter/reduce step-through) ✓
 
 ### ObjectsBasicsViz Upgrade
 
@@ -99,10 +99,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FUNC-02 | Phase 4 | Complete |
 | FUNC-03 | Phase 4 | Complete |
 | FUNC-04 | Phase 4 | Complete |
-| ARR-01 | Phase 5 | Pending |
-| ARR-02 | Phase 5 | Pending |
-| ARR-03 | Phase 5 | Pending |
-| ARR-04 | Phase 5 | Pending |
+| ARR-01 | Phase 5 | Complete |
+| ARR-02 | Phase 5 | Complete |
+| ARR-03 | Phase 5 | Complete |
+| ARR-04 | Phase 5 | Complete |
 | OBJ-01 | Phase 6 | Pending |
 | OBJ-02 | Phase 6 | Pending |
 | OBJ-03 | Phase 6 | Pending |
@@ -115,4 +115,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 4 requirements complete*
+*Last updated: 2026-01-24 — Phase 5 requirements complete*

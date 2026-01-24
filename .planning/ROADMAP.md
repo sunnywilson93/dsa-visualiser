@@ -14,7 +14,7 @@ This roadmap transforms simple auto-play visualizations into rich step-through e
 - [x] **Phase 2: LoopsViz** - Step-through loop iteration with closure capture examples ✓
 - [x] **Phase 3: VariablesViz** - Hoisting, TDZ, and scope chain visualization ✓
 - [x] **Phase 4: FunctionsViz** - Execution context and call stack visualization ✓
-- [ ] **Phase 5: ArraysBasicsViz** - Reference semantics and method iteration stepping
+- [x] **Phase 5: ArraysBasicsViz** - Reference semantics and method iteration stepping ✓
 - [ ] **Phase 6: ObjectsBasicsViz** - Property mutation and reference sharing visualization
 
 ## Phase Details
@@ -94,9 +94,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Types, beginner examples, core component rewrite with stack/heap visualization
-- [ ] 05-02-PLAN.md — Intermediate examples with spread operator and warning badges
-- [ ] 05-03-PLAN.md — Advanced examples with method iteration (map/filter/reduce)
+- [x] 05-01-PLAN.md — Types, beginner examples, core component rewrite with stack/heap visualization ✓
+- [x] 05-02-PLAN.md — Intermediate examples with spread operator and warning badges ✓
+- [x] 05-03-PLAN.md — Advanced examples with method iteration (map/filter/reduce) ✓
 
 ### Phase 6: ObjectsBasicsViz
 **Goal**: Learners can step through object operations to understand references and mutation
@@ -123,9 +123,9 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 2. LoopsViz | 2/2 | ✓ Complete | 2026-01-24 |
 | 3. VariablesViz | 3/3 | ✓ Complete | 2026-01-24 |
 | 4. FunctionsViz | 3/3 | ✓ Complete | 2026-01-24 |
-| 5. ArraysBasicsViz | 0/3 | Planning complete | - |
+| 5. ArraysBasicsViz | 3/3 | ✓ Complete | 2026-01-24 |
 | 6. ObjectsBasicsViz | 0/? | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 5 planned*
+*Last updated: 2026-01-24 — Phase 5 complete*
