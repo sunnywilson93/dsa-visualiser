@@ -744,7 +744,129 @@ const examples: Record<Level, ObjectExample[]> = {
       insight: 'Spread creates a SHALLOW copy. Nested objects are still shared references!',
     },
   ],
-  advanced: []
+  advanced: [
+    {
+      id: 'basic-destructuring',
+      title: 'Basic destructuring',
+      code: [
+        'const person = { name: "Alice", age: 25 }',
+        'const { name, age } = person',
+        '',
+        'console.log(name)',
+        'console.log(age)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Script starts. Stack and heap are empty.',
+          phase: 'setup',
+          stack: [],
+          heap: [],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'const person = { name: "Alice", age: 25 } - Object created in heap.',
+          phase: 'reference',
+          stack: [
+            { name: 'person', value: '-> #1', isReference: true, refId: 'person1', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'person1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'age', value: 25 }], label: '#1', highlight: 'new' },
+          ],
+          output: [],
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'const { name, age } = person - Destructuring begins. Extracting "name" from person...',
+          phase: 'destructure',
+          stack: [
+            { name: 'person', value: '-> #1', isReference: true, refId: 'person1' },
+          ],
+          heap: [
+            { id: 'person1', type: 'object', properties: [{ key: 'name', value: 'Alice', highlight: 'changed' }, { key: 'age', value: 25 }], label: '#1' },
+          ],
+          output: [],
+          destructureState: {
+            sourceRefId: 'person1',
+            extractedProps: [
+              { propKey: 'name', targetVar: 'name', value: '"Alice"', status: 'extracting' },
+              { propKey: 'age', targetVar: 'age', value: '25', status: 'pending' },
+            ],
+          },
+        },
+        {
+          id: 3,
+          codeLine: 1,
+          description: 'Continuing destructuring. "name" extracted, now extracting "age"...',
+          phase: 'destructure',
+          stack: [
+            { name: 'person', value: '-> #1', isReference: true, refId: 'person1' },
+          ],
+          heap: [
+            { id: 'person1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'age', value: 25, highlight: 'changed' }], label: '#1' },
+          ],
+          output: [],
+          destructureState: {
+            sourceRefId: 'person1',
+            extractedProps: [
+              { propKey: 'name', targetVar: 'name', value: '"Alice"', status: 'complete' },
+              { propKey: 'age', targetVar: 'age', value: '25', status: 'extracting' },
+            ],
+          },
+        },
+        {
+          id: 4,
+          codeLine: 1,
+          description: 'Destructuring complete! New variables "name" and "age" created with COPIES of the values.',
+          phase: 'destructure',
+          stack: [
+            { name: 'person', value: '-> #1', isReference: true, refId: 'person1' },
+            { name: 'name', value: '"Alice"', highlight: 'new' },
+            { name: 'age', value: '25', highlight: 'new' },
+          ],
+          heap: [
+            { id: 'person1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'age', value: 25 }], label: '#1' },
+          ],
+          output: [],
+        },
+        {
+          id: 5,
+          codeLine: 3,
+          description: 'console.log(name) outputs "Alice" - reading from the destructured variable.',
+          phase: 'result',
+          stack: [
+            { name: 'person', value: '-> #1', isReference: true, refId: 'person1' },
+            { name: 'name', value: '"Alice"' },
+            { name: 'age', value: '25' },
+          ],
+          heap: [
+            { id: 'person1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'age', value: 25 }], label: '#1' },
+          ],
+          output: ['Alice'],
+        },
+        {
+          id: 6,
+          codeLine: 4,
+          description: 'console.log(age) outputs 25 - another independent copy.',
+          phase: 'result',
+          stack: [
+            { name: 'person', value: '-> #1', isReference: true, refId: 'person1' },
+            { name: 'name', value: '"Alice"' },
+            { name: 'age', value: '25' },
+          ],
+          heap: [
+            { id: 'person1', type: 'object', properties: [{ key: 'name', value: 'Alice' }, { key: 'age', value: 25 }], label: '#1' },
+          ],
+          output: ['Alice', '25'],
+        },
+      ],
+      insight: 'Destructuring extracts properties into standalone variables. They hold copies of the primitive values!',
+    },
+  ]
 }
 
 export function ObjectsBasicsViz() {
