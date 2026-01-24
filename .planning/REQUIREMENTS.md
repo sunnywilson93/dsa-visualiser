@@ -24,10 +24,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### VariablesViz Upgrade
 
-- [ ] **VAR-01**: Hoisting phase visualization showing declaration vs initialization
-- [ ] **VAR-02**: TDZ (Temporal Dead Zone) step-through for let/const
-- [ ] **VAR-03**: Scope chain visualization showing variable lookup
-- [ ] **VAR-04**: Block scope vs function scope comparison examples
+- [x] **VAR-01**: Hoisting phase visualization showing declaration vs initialization ✓
+- [x] **VAR-02**: TDZ (Temporal Dead Zone) step-through for let/const ✓
+- [x] **VAR-03**: Scope chain visualization showing variable lookup ✓
+- [x] **VAR-04**: Block scope vs function scope comparison examples ✓
 
 ### FunctionsViz Upgrade
 
@@ -91,10 +91,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | LOOP-03 | Phase 2 | Complete |
 | LOOP-04 | Phase 2 | Complete |
 | LOOP-05 | Phase 2 | Complete |
-| VAR-01 | Phase 3 | Pending |
-| VAR-02 | Phase 3 | Pending |
-| VAR-03 | Phase 3 | Pending |
-| VAR-04 | Phase 3 | Pending |
+| VAR-01 | Phase 3 | Complete |
+| VAR-02 | Phase 3 | Complete |
+| VAR-03 | Phase 3 | Complete |
+| VAR-04 | Phase 3 | Complete |
 | FUNC-01 | Phase 4 | Pending |
 | FUNC-02 | Phase 4 | Pending |
 | FUNC-03 | Phase 4 | Pending |
@@ -115,4 +115,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 2 requirements complete*
+*Last updated: 2026-01-24 — Phase 3 requirements complete*

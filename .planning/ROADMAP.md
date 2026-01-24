@@ -12,7 +12,7 @@ This roadmap transforms simple auto-play visualizations into rich step-through e
 
 - [x] **Phase 1: Foundation** - Shared reusable components for all visualizations ✓
 - [x] **Phase 2: LoopsViz** - Step-through loop iteration with closure capture examples ✓
-- [ ] **Phase 3: VariablesViz** - Hoisting, TDZ, and scope chain visualization
+- [x] **Phase 3: VariablesViz** - Hoisting, TDZ, and scope chain visualization ✓
 - [ ] **Phase 4: FunctionsViz** - Execution context and call stack visualization
 - [ ] **Phase 5: ArraysBasicsViz** - Reference semantics and method iteration stepping
 - [ ] **Phase 6: ObjectsBasicsViz** - Property mutation and reference sharing visualization
@@ -62,9 +62,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Types, beginner examples, core component with level selector and SharedViz integration
-- [ ] 03-02-PLAN.md — Intermediate examples with scope chain visualization and lookup animation
-- [ ] 03-03-PLAN.md — Advanced examples with error states, hoisting animation, and phase badge
+- [x] 03-01-PLAN.md — Types, beginner examples, core component with level selector and SharedViz integration ✓
+- [x] 03-02-PLAN.md — Intermediate examples with scope chain visualization and lookup animation ✓
+- [x] 03-03-PLAN.md — Advanced examples with error states, hoisting animation, and phase badge ✓
 
 ### Phase 4: FunctionsViz
 **Goal**: Learners can step through function execution to understand contexts and the call stack
@@ -117,11 +117,11 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | ✓ Complete | 2026-01-24 |
 | 2. LoopsViz | 2/2 | ✓ Complete | 2026-01-24 |
-| 3. VariablesViz | 0/3 | Planned | - |
+| 3. VariablesViz | 3/3 | ✓ Complete | 2026-01-24 |
 | 4. FunctionsViz | 0/? | Not started | - |
 | 5. ArraysBasicsViz | 0/? | Not started | - |
 | 6. ObjectsBasicsViz | 0/? | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 3 planned*
+*Last updated: 2026-01-24 — Phase 3 complete*
