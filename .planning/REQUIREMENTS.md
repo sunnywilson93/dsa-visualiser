@@ -32,7 +32,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### FunctionsViz Upgrade
 
 - [ ] **FUNC-01**: Execution context creation and teardown steps
-- [ ] **FUNC-02**: Parameter binding visualization (argument → parameter flow)
+- [ ] **FUNC-02**: Parameter binding visualization (argument -> parameter flow)
 - [ ] **FUNC-03**: Call stack panel showing stack frames
 - [ ] **FUNC-04**: Arrow function vs regular function this binding comparison
 
@@ -111,8 +111,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 **Coverage:**
 - v1 requirements: 24 total
 - Mapped to phases: 24
-- Unmapped: 0 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-24 after initial definition*
+*Last updated: 2026-01-24 after roadmap creation*
