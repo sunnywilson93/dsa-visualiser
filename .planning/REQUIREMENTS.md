@@ -16,11 +16,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### LoopsViz Upgrade
 
-- [ ] **LOOP-01**: Step forward/back controls replacing auto-play only
-- [ ] **LOOP-02**: Per-step explanations describing what's happening
-- [ ] **LOOP-03**: Code line highlighting synchronized with current step
-- [ ] **LOOP-04**: Multiple examples organized by difficulty level (beginner/intermediate/advanced)
-- [ ] **LOOP-05**: Closure capture bug example demonstrating var vs let in loops
+- [x] **LOOP-01**: Step forward/back controls replacing auto-play only ✓
+- [x] **LOOP-02**: Per-step explanations describing what's happening ✓
+- [x] **LOOP-03**: Code line highlighting synchronized with current step ✓
+- [x] **LOOP-04**: Multiple examples organized by difficulty level (beginner/intermediate/advanced) ✓
+- [x] **LOOP-05**: Closure capture bug example demonstrating var vs let in loops ✓
 
 ### VariablesViz Upgrade
 
@@ -86,11 +86,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-02 | Phase 1 | Complete |
 | FOUND-03 | Phase 1 | Complete |
 | FOUND-04 | Phase 1 | Complete |
-| LOOP-01 | Phase 2 | Pending |
-| LOOP-02 | Phase 2 | Pending |
-| LOOP-03 | Phase 2 | Pending |
-| LOOP-04 | Phase 2 | Pending |
-| LOOP-05 | Phase 2 | Pending |
+| LOOP-01 | Phase 2 | Complete |
+| LOOP-02 | Phase 2 | Complete |
+| LOOP-03 | Phase 2 | Complete |
+| LOOP-04 | Phase 2 | Complete |
+| LOOP-05 | Phase 2 | Complete |
 | VAR-01 | Phase 3 | Pending |
 | VAR-02 | Phase 3 | Pending |
 | VAR-03 | Phase 3 | Pending |
@@ -115,4 +115,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 1 requirements complete*
+*Last updated: 2026-01-24 — Phase 2 requirements complete*

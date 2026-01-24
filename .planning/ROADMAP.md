@@ -11,7 +11,7 @@ This roadmap transforms simple auto-play visualizations into rich step-through e
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 1: Foundation** - Shared reusable components for all visualizations ✓
-- [ ] **Phase 2: LoopsViz** - Step-through loop iteration with closure capture examples
+- [x] **Phase 2: LoopsViz** - Step-through loop iteration with closure capture examples ✓
 - [ ] **Phase 3: VariablesViz** - Hoisting, TDZ, and scope chain visualization
 - [ ] **Phase 4: FunctionsViz** - Execution context and call stack visualization
 - [ ] **Phase 5: ArraysBasicsViz** - Reference semantics and method iteration stepping
@@ -47,8 +47,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Core LoopsViz rewrite with types, state, SharedViz integration, and beginner examples
-- [ ] 02-02-PLAN.md — Intermediate/advanced examples with closure capture visualization
+- [x] 02-01-PLAN.md — Core LoopsViz rewrite with types, state, SharedViz integration, and beginner examples ✓
+- [x] 02-02-PLAN.md — Intermediate/advanced examples with closure capture visualization ✓
 
 ### Phase 3: VariablesViz
 **Goal**: Learners can step through variable lifecycle to understand hoisting, TDZ, and scope
@@ -114,7 +114,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | ✓ Complete | 2026-01-24 |
-| 2. LoopsViz | 0/2 | Planned | - |
+| 2. LoopsViz | 2/2 | ✓ Complete | 2026-01-24 |
 | 3. VariablesViz | 0/? | Not started | - |
 | 4. FunctionsViz | 0/? | Not started | - |
 | 5. ArraysBasicsViz | 0/? | Not started | - |
@@ -122,4 +122,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-24 — Phase 2 planned*
+*Last updated: 2026-01-24 — Phase 2 complete*
