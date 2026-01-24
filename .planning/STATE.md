@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** Learners can step through code execution visually, seeing exactly how JavaScript works under the hood
-**Current focus:** Phase 3 - VariablesViz (Complete)
+**Current focus:** Phase 4 - FunctionsViz (In Progress)
 
 ## Current Position
 
-Phase: 3 of 6 (VariablesViz) ✓ COMPLETE
-Plan: 3 of 3 in current phase
-Status: Phase verified and complete
-Last activity: 2026-01-24 — Phase 3 verified, 4/4 must-haves passed
+Phase: 4 of 6 (FunctionsViz)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-01-24 — Completed 04-01-PLAN.md
 
-Progress: [██████░░░░] 50%
+Progress: [███████░░░] 58%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: ~3.5 min
-- Total execution time: ~23 min
+- Total plans completed: 8
+- Average duration: ~3.6 min
+- Total execution time: ~27 min
 
 **By Phase:**
 
@@ -30,9 +30,10 @@ Progress: [██████░░░░] 50%
 | 01-foundation | 2 | ~4 min | ~2 min |
 | 02-loopsviz | 2 | ~7 min | ~3.5 min |
 | 03-variablesviz | 3 | ~12 min | ~4 min |
+| 04-functionsviz | 1 | ~4 min | ~4 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-02 (~4m), 03-01 (~4m), 03-02 (~4m), 03-03 (~4m)
+- Last 5 plans: 03-01 (~4m), 03-02 (~4m), 03-03 (~4m), 04-01 (~4m)
 - Trend: Consistent
 
 *Updated after each plan completion*
@@ -58,6 +59,9 @@ Recent decisions affecting current work:
 | Scope type colors | global=green, function=blue, block=amber | 03-02 |
 | Error type detection | String.includes() parsing | 03-03 |
 | Hoisting arrow symbol | Caret (^) for cross-platform rendering | 03-03 |
+| Call stack frame structure | CallStackFrame with id, name, params, locals, thisValue, outerRef, status | 04-01 |
+| Frame status types | creating, active, returning, destroyed union | 04-01 |
+| FunctionsViz accent color | Purple (#8b5cf6) | 04-01 |
 
 ### Pending Todos
 
@@ -70,6 +74,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-24
-Stopped at: Phase 3 VariablesViz complete and verified
+Stopped at: Completed 04-01-PLAN.md (FunctionsViz core rewrite)
 Resume file: None
-Next action: /gsd:discuss-phase 4 or /gsd:plan-phase 4
+Next action: Execute 04-02-PLAN.md (intermediate examples)
