@@ -175,38 +175,66 @@
   color: var(--gray-500);
 }
 
-.scopesPanel {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--js-viz-border);
+.scopeChainPanel {
+  --neon-start: #8b5cf6;
+  --neon-end: #3b82f6;
+
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(59, 130, 246, 0.08));
+  border: 1px solid;
+  border-image: linear-gradient(135deg, var(--neon-start), var(--neon-end)) 1;
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
-.scopesContent {
+.scopeChainContent {
   padding: var(--space-md);
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: 0.5rem;
 }
 
 .scopeBox {
+  background: rgba(30, 41, 59, 0.5);
+  border: 2px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.scopeBox:first-child {
+  margin-left: 0 !important;
+}
+
+.scopeHeader {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  padding: 0.4rem 0.6rem;
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: var(--radius-md);
-  width: fit-content;
+  margin-bottom: 0.5rem;
 }
 
-.scopeType {
-  font-size: 0.6rem;
+.scopeLabel {
+  font-size: 0.65rem;
+  font-weight: 600;
   text-transform: uppercase;
-  color: var(--gray-500);
-  padding: 0.1rem 0.3rem;
-  background: rgba(255, 255, 255, 0.05);
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.4rem;
   border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.scopeLabel.global {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.15);
+}
+
+.scopeLabel.function {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.scopeLabel.block {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
 }
 
 .scopeName {
@@ -215,10 +243,59 @@
   color: var(--gray-300);
 }
 
-.scopeVars {
+.searchingIndicator {
+  font-size: 0.65rem;
+  color: #10b981;
+  margin-left: auto;
+  padding: 0.1rem 0.4rem;
+  background: rgba(16, 185, 129, 0.15);
+  border-radius: var(--radius-sm);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.scopeSearched {
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.scopeCurrentSearch {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+.scopeVariables {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.scopeVar {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: var(--gray-400);
+  padding: 0.25rem 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.scopeVarName {
+  color: #a5b4fc;
+}
+
+.scopeVarValue {
+  color: #10b981;
+  font-weight: 500;
+}
+
+.scopeVarsHint {
   font-family: 'Fira Code', monospace;
   font-size: var(--text-xs);
-  color: #3b82f6;
+  color: rgba(59, 130, 246, 0.7);
+  margin-top: 0.25rem;
 }
 
 .outputBox {
