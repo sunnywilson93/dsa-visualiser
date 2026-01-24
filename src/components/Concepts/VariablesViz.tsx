@@ -1291,6 +1291,38 @@ export function VariablesViz() {
         ))}
       </div>
 
+      {currentStep.hoistingAnimation && (
+        <motion.div
+          className={styles.hoistingAnimation}
+          key={`hoist-${currentStep.id}-${currentStep.hoistingAnimation.variableName}`}
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            duration: 0.8,
+            ease: 'easeOut'
+          }}
+        >
+          <div className={styles.hoistingLabel}>Hoisting to top of scope</div>
+          <div className={styles.hoistingVar}>
+            <span style={{ color: keywordColors[currentStep.hoistingAnimation.keyword] }}>
+              {currentStep.hoistingAnimation.keyword}
+            </span>
+            {' '}{currentStep.hoistingAnimation.variableName} ={' '}
+            <span className={styles.hoistingValue}>
+              {currentStep.hoistingAnimation.keyword === 'var' ? 'undefined' : 'TDZ'}
+            </span>
+          </div>
+          <motion.div
+            className={styles.hoistingArrow}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            ^
+          </motion.div>
+        </motion.div>
+      )}
+
       <div className={styles.mainGrid}>
         <div className={styles.codeColumn}>
           <div className={styles.codePanelWrapper}>
@@ -1548,6 +1580,10 @@ export function VariablesViz() {
           <div className={styles.legendItem}>
             <span className={styles.legendDot} style={{ background: stateColors['hoisted-undefined'] }} />
             <span>hoisted</span>
+          </div>
+          <div className={styles.legendItem}>
+            <span className={styles.legendDot} style={{ background: stateColors['hoisted-tdz'] }} />
+            <span>TDZ</span>
           </div>
           <div className={styles.legendItem}>
             <span className={styles.legendDot} style={{ background: stateColors['initialized'] }} />
