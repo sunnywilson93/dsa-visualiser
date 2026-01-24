@@ -395,7 +395,505 @@ const examples: Record<Level, VariableExample[]> = {
       whyItMatters: 'Block scope is why let/const are preferred. Each block can have its own isolated variables.'
     }
   ],
-  intermediate: [],
+  intermediate: [
+    {
+      id: 'var-vs-let-hoisting',
+      title: 'var vs let hoisting',
+      code: [
+        'console.log(a);',
+        '// console.log(b); // Would be TDZ error',
+        'var a = 1;',
+        'let b = 2;',
+        'console.log(a, b);',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: -1,
+          description: 'Creation phase: JavaScript scans the code. var declarations are hoisted with value undefined. let declarations are hoisted but placed in the Temporal Dead Zone (TDZ).',
+          phase: 'creation',
+          action: 'hoist',
+          variables: [
+            { name: 'a', keyword: 'var', value: 'undefined', state: 'hoisted-undefined', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: undefined, state: 'hoisted-tdz', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          output: []
+        },
+        {
+          id: 1,
+          codeLine: 0,
+          description: 'Execution: We access a before its declaration line. Because var hoists with undefined, this works - it logs undefined.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'a', keyword: 'var', value: 'undefined', state: 'hoisted-undefined', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: undefined, state: 'hoisted-tdz', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          lookupPath: ['global'],
+          output: ['undefined']
+        },
+        {
+          id: 2,
+          codeLine: 1,
+          description: 'If we tried to access b here, we would get a ReferenceError! let variables exist in the TDZ from the start of the scope until their declaration.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'a', keyword: 'var', value: 'undefined', state: 'hoisted-undefined', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: undefined, state: 'hoisted-tdz', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          output: ['undefined']
+        },
+        {
+          id: 3,
+          codeLine: 2,
+          description: 'We reach the var declaration. The assignment happens: a gets the value 1.',
+          phase: 'execution',
+          action: 'assign',
+          variables: [
+            { name: 'a', keyword: 'var', value: '1', state: 'initialized', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: undefined, state: 'hoisted-tdz', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          output: ['undefined']
+        },
+        {
+          id: 4,
+          codeLine: 3,
+          description: 'We reach the let declaration. NOW b exits the TDZ and gets initialized with 2. Only now is b accessible.',
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'a', keyword: 'var', value: '1', state: 'initialized', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: '2', state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          output: ['undefined']
+        },
+        {
+          id: 5,
+          codeLine: 4,
+          description: 'Now both a and b are initialized. We can access both safely and log their values.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'a', keyword: 'var', value: '1', state: 'initialized', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: '2', state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['a', 'b'] }
+          ],
+          lookupPath: ['global'],
+          output: ['undefined', '1 2']
+        },
+        {
+          id: 6,
+          codeLine: -1,
+          description: 'Done! Both var and let hoist, but var initializes to undefined while let stays in the TDZ until its declaration.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'a', keyword: 'var', value: '1', state: 'initialized', scope: 'global', scopeLevel: 0 },
+            { name: 'b', keyword: 'let', value: '2', state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          output: ['undefined', '1 2']
+        }
+      ],
+      insight: 'Both var and let are hoisted, but var is initialized with undefined while let stays in the Temporal Dead Zone (TDZ) until its declaration line.',
+      whyItMatters: 'The TDZ makes let/const safer - accessing before declaration throws an error instead of silently giving undefined.'
+    },
+    {
+      id: 'function-vs-block-scope',
+      title: 'function vs block scope',
+      code: [
+        'function test() {',
+        '  if (true) {',
+        '    var x = 1;',
+        '    let y = 2;',
+        '  }',
+        '  console.log(x);',
+        '  // console.log(y); // Error!',
+        '}',
+        'test();',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 8,
+          description: 'We call test(). A new function scope is created. JavaScript hoists var x to the function scope (not block scope).',
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'x', keyword: 'var', value: 'undefined', state: 'hoisted-undefined', scope: 'function:test', scopeLevel: 1 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: [] },
+            { id: 'function:test', type: 'function', name: 'function: test', level: 1, variables: ['x'] }
+          ],
+          output: []
+        },
+        {
+          id: 1,
+          codeLine: 1,
+          description: 'We enter the if block. This creates a new block scope. let y will be scoped here.',
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'x', keyword: 'var', value: 'undefined', state: 'hoisted-undefined', scope: 'function:test', scopeLevel: 1 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: [] },
+            { id: 'function:test', type: 'function', name: 'function: test', level: 1, variables: ['x'] },
+            { id: 'block:if', type: 'block', name: 'if block', level: 2, variables: [] }
+          ],
+          output: []
+        },
+        {
+          id: 2,
+          codeLine: 2,
+          description: 'var x = 1 assigns to x. Note: x lives in the FUNCTION scope, not the block. var ignores block boundaries!',
+          phase: 'execution',
+          action: 'assign',
+          variables: [
+            { name: 'x', keyword: 'var', value: '1', state: 'initialized', scope: 'function:test', scopeLevel: 1 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: [] },
+            { id: 'function:test', type: 'function', name: 'function: test', level: 1, variables: ['x'] },
+            { id: 'block:if', type: 'block', name: 'if block', level: 2, variables: [] }
+          ],
+          output: []
+        },
+        {
+          id: 3,
+          codeLine: 3,
+          description: 'let y = 2 creates y in the BLOCK scope. y only exists inside this if block.',
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'x', keyword: 'var', value: '1', state: 'initialized', scope: 'function:test', scopeLevel: 1 },
+            { name: 'y', keyword: 'let', value: '2', state: 'initialized', scope: 'block:if', scopeLevel: 2 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: [] },
+            { id: 'function:test', type: 'function', name: 'function: test', level: 1, variables: ['x'] },
+            { id: 'block:if', type: 'block', name: 'if block', level: 2, variables: ['y'] }
+          ],
+          output: []
+        },
+        {
+          id: 4,
+          codeLine: 4,
+          description: 'We exit the if block. The block scope is destroyed - y is GONE. But x survives in the function scope!',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'x', keyword: 'var', value: '1', state: 'initialized', scope: 'function:test', scopeLevel: 1 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: [] },
+            { id: 'function:test', type: 'function', name: 'function: test', level: 1, variables: ['x'] }
+          ],
+          output: []
+        },
+        {
+          id: 5,
+          codeLine: 5,
+          description: 'console.log(x) works! var x escaped the block and exists in the function scope. It logs 1.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'x', keyword: 'var', value: '1', state: 'initialized', scope: 'function:test', scopeLevel: 1 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: [] },
+            { id: 'function:test', type: 'function', name: 'function: test', level: 1, variables: ['x'] }
+          ],
+          lookupPath: ['function:test', 'global'],
+          output: ['1']
+        },
+        {
+          id: 6,
+          codeLine: 6,
+          description: 'If we tried console.log(y), we would get ReferenceError: y is not defined. y died with the block.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'x', keyword: 'var', value: '1', state: 'initialized', scope: 'function:test', scopeLevel: 1 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: [] },
+            { id: 'function:test', type: 'function', name: 'function: test', level: 1, variables: ['x'] }
+          ],
+          output: ['1']
+        },
+        {
+          id: 7,
+          codeLine: -1,
+          description: 'Done! var is function-scoped (escapes blocks), while let is block-scoped (stays contained). This is a key difference!',
+          phase: 'execution',
+          action: 'access',
+          variables: [],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: [] }
+          ],
+          output: ['1']
+        }
+      ],
+      insight: 'var is function-scoped - it ignores block boundaries like if/for/while. let and const are block-scoped - they are contained within {}.',
+      whyItMatters: 'This is why let/const are preferred in modern JS. var leaking out of blocks causes many subtle bugs.'
+    },
+    {
+      id: 'scope-chain-lookup',
+      title: 'scope chain lookup',
+      code: [
+        "let name = 'Alice';",
+        'function greet() {',
+        '  console.log(name);',
+        '}',
+        'greet();',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: "We declare name in the global scope with value 'Alice'.",
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'name', keyword: 'let', value: "'Alice'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['name'] }
+          ],
+          output: []
+        },
+        {
+          id: 1,
+          codeLine: 1,
+          description: 'The greet function is defined. It has access to the global scope through the scope chain.',
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'name', keyword: 'let', value: "'Alice'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['name'] }
+          ],
+          output: []
+        },
+        {
+          id: 2,
+          codeLine: 4,
+          description: "We call greet(). A new function scope is created. It's empty but linked to global scope.",
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'name', keyword: 'let', value: "'Alice'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['name'] },
+            { id: 'function:greet', type: 'function', name: 'function: greet', level: 1, variables: [] }
+          ],
+          output: []
+        },
+        {
+          id: 3,
+          codeLine: 2,
+          description: "console.log(name) - we need to find 'name'. First we search the function scope... not found!",
+          phase: 'execution',
+          action: 'lookup',
+          variables: [
+            { name: 'name', keyword: 'let', value: "'Alice'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['name'] },
+            { id: 'function:greet', type: 'function', name: 'function: greet', level: 1, variables: [] }
+          ],
+          lookupPath: ['function:greet'],
+          output: []
+        },
+        {
+          id: 4,
+          codeLine: 2,
+          description: "Not in function scope, so we follow the scope chain UP to global scope. Found name = 'Alice'!",
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'name', keyword: 'let', value: "'Alice'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['name'] },
+            { id: 'function:greet', type: 'function', name: 'function: greet', level: 1, variables: [] }
+          ],
+          lookupPath: ['function:greet', 'global'],
+          output: ['Alice']
+        },
+        {
+          id: 5,
+          codeLine: -1,
+          description: 'Done! JavaScript searches from innermost scope outward. This is the scope chain - how closures work!',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'name', keyword: 'let', value: "'Alice'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['name'] }
+          ],
+          output: ['Alice']
+        }
+      ],
+      insight: 'When accessing a variable, JavaScript searches from the current scope outward through the scope chain until it finds the variable or reaches global scope.',
+      whyItMatters: 'This is the foundation of closures - inner functions can access outer variables through the scope chain.'
+    },
+    {
+      id: 'variable-shadowing',
+      title: 'variable shadowing',
+      code: [
+        "let x = 'outer';",
+        'function inner() {',
+        "  let x = 'inner';",
+        '  console.log(x);',
+        '}',
+        'inner();',
+        'console.log(x);',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: "We declare x in the global scope with value 'outer'.",
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'x', keyword: 'let', value: "'outer'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] }
+          ],
+          output: []
+        },
+        {
+          id: 1,
+          codeLine: 1,
+          description: 'The inner function is defined. When called, it will create its own scope.',
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'x', keyword: 'let', value: "'outer'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] }
+          ],
+          output: []
+        },
+        {
+          id: 2,
+          codeLine: 5,
+          description: 'We call inner(). A new function scope is created, linked to global scope.',
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'x', keyword: 'let', value: "'outer'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] },
+            { id: 'function:inner', type: 'function', name: 'function: inner', level: 1, variables: [] }
+          ],
+          output: []
+        },
+        {
+          id: 3,
+          codeLine: 2,
+          description: "let x = 'inner' creates a NEW x in the function scope. This SHADOWS (hides) the outer x. Both variables exist!",
+          phase: 'execution',
+          action: 'declare',
+          variables: [
+            { name: 'x', keyword: 'let', value: "'outer'", state: 'initialized', scope: 'global', scopeLevel: 0 },
+            { name: 'x', keyword: 'let', value: "'inner'", state: 'initialized', scope: 'function:inner', scopeLevel: 1 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] },
+            { id: 'function:inner', type: 'function', name: 'function: inner', level: 1, variables: ['x'] }
+          ],
+          output: []
+        },
+        {
+          id: 4,
+          codeLine: 3,
+          description: "console.log(x) - we search for x. Found immediately in function scope! The outer x is shadowed. Logs 'inner'.",
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'x', keyword: 'let', value: "'outer'", state: 'initialized', scope: 'global', scopeLevel: 0 },
+            { name: 'x', keyword: 'let', value: "'inner'", state: 'initialized', scope: 'function:inner', scopeLevel: 1 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] },
+            { id: 'function:inner', type: 'function', name: 'function: inner', level: 1, variables: ['x'] }
+          ],
+          lookupPath: ['function:inner'],
+          output: ['inner']
+        },
+        {
+          id: 5,
+          codeLine: 4,
+          description: 'inner() returns. The function scope is destroyed, along with the inner x. Only global x remains.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'x', keyword: 'let', value: "'outer'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] }
+          ],
+          output: ['inner']
+        },
+        {
+          id: 6,
+          codeLine: 6,
+          description: "console.log(x) in global scope. The global x was never modified - it's still 'outer'. Logs 'outer'.",
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'x', keyword: 'let', value: "'outer'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          scopes: [
+            { id: 'global', type: 'global', name: 'Global', level: 0, variables: ['x'] }
+          ],
+          lookupPath: ['global'],
+          output: ['inner', 'outer']
+        },
+        {
+          id: 7,
+          codeLine: -1,
+          description: 'Done! Shadowing creates a new variable with the same name in an inner scope. It hides but does NOT modify the outer variable.',
+          phase: 'execution',
+          action: 'access',
+          variables: [
+            { name: 'x', keyword: 'let', value: "'outer'", state: 'initialized', scope: 'global', scopeLevel: 0 }
+          ],
+          output: ['inner', 'outer']
+        }
+      ],
+      insight: 'Variable shadowing occurs when an inner scope declares a variable with the same name as an outer scope. The inner variable hides (shadows) the outer one.',
+      whyItMatters: 'Understanding shadowing prevents confusion about which variable you are modifying. The outer variable is NOT changed by the inner one.'
+    }
+  ],
   advanced: []
 }
 
@@ -518,30 +1016,80 @@ export function VariablesViz() {
         </div>
       </div>
 
-      {currentStep.scopes && currentStep.scopes.length > 1 && (
-        <div className={styles.scopesPanel}>
+      {currentStep.scopes && currentStep.scopes.length > 0 && (
+        <div className={styles.scopeChainPanel}>
           <div className={styles.boxHeader}>Scope Chain</div>
-          <div className={styles.scopesContent}>
-            {currentStep.scopes.map((scope, idx) => (
-              <motion.div
-                key={scope.id}
-                className={styles.scopeBox}
-                initial={{ opacity: 0, y: -5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                style={{
-                  marginLeft: `${scope.level * 1.5}rem`
-                }}
-              >
-                <span className={styles.scopeType}>{scope.type}</span>
-                <span className={styles.scopeName}>{scope.name}</span>
-                {scope.variables.length > 0 && (
-                  <span className={styles.scopeVars}>
-                    [{scope.variables.join(', ')}]
-                  </span>
-                )}
-              </motion.div>
-            ))}
+          <div className={styles.scopeChainContent}>
+            {currentStep.scopes.map((scope, idx) => {
+              const isBeingSearched = currentStep.lookupPath?.includes(scope.id)
+              const isCurrentSearch = currentStep.lookupPath?.[currentStep.lookupPath.length - 1] === scope.id
+              const scopeVariables = currentStep.variables.filter(v => v.scope === scope.id)
+
+              return (
+                <motion.div
+                  key={scope.id}
+                  className={`${styles.scopeBox} ${
+                    isBeingSearched ? styles.scopeSearched : ''
+                  } ${
+                    isCurrentSearch ? styles.scopeCurrentSearch : ''
+                  }`}
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    borderColor: isCurrentSearch
+                      ? '#10b981'
+                      : isBeingSearched
+                        ? 'rgba(16, 185, 129, 0.3)'
+                        : 'rgba(148, 163, 184, 0.2)',
+                    boxShadow: isCurrentSearch
+                      ? '0 0 15px rgba(16, 185, 129, 0.4)'
+                      : 'none'
+                  }}
+                  transition={{ duration: 0.3, delay: idx * 0.05 }}
+                  style={{
+                    marginLeft: `${scope.level * 1.5}rem`
+                  }}
+                >
+                  <div className={styles.scopeHeader}>
+                    <span className={`${styles.scopeLabel} ${styles[scope.type]}`}>
+                      {scope.type}
+                    </span>
+                    <span className={styles.scopeName}>{scope.name}</span>
+                    {isBeingSearched && (
+                      <motion.span
+                        className={styles.searchingIndicator}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                      >
+                        {isCurrentSearch ? 'found!' : 'searching...'}
+                      </motion.span>
+                    )}
+                  </div>
+                  {scopeVariables.length > 0 && (
+                    <div className={styles.scopeVariables}>
+                      {scopeVariables.map((v, vIdx) => (
+                        <div key={`${v.name}-${vIdx}`} className={styles.scopeVar}>
+                          <span style={{ color: keywordColors[v.keyword] }}>
+                            {v.keyword}
+                          </span>{' '}
+                          <span className={styles.scopeVarName}>{v.name}</span>
+                          {' = '}
+                          <span className={styles.scopeVarValue}>
+                            {v.value ?? 'undefined'}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {scope.variables.length > 0 && scopeVariables.length === 0 && (
+                    <div className={styles.scopeVarsHint}>
+                      [{scope.variables.join(', ')}]
+                    </div>
+                  )}
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       )}
