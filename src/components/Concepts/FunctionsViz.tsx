@@ -13,6 +13,18 @@ interface CallStackFrame {
   status: 'creating' | 'active' | 'returning' | 'destroyed'
 }
 
+interface ParameterBinding {
+  argumentIndex: number
+  argumentValue: string
+  argumentLabel: string
+  parameterName: string
+  boundValue: string
+  status: 'waiting' | 'flowing' | 'bound'
+  isDefault: boolean
+  isExtra: boolean
+  isMissing: boolean
+}
+
 interface FunctionStep {
   id: number
   codeLine: number
@@ -20,6 +32,7 @@ interface FunctionStep {
   phase: 'setup' | 'call' | 'enter' | 'execute' | 'return' | 'cleanup'
   callStack: CallStackFrame[]
   output: string[]
+  parameterBindings?: ParameterBinding[]
 }
 
 interface FunctionExample {
@@ -329,7 +342,445 @@ const examples: Record<Level, FunctionExample[]> = {
       insight: 'Each execution context has its own local variables. When the function returns, those variables are destroyed. This is why you cannot access local variables from outside the function.',
     },
   ],
-  intermediate: [],
+  intermediate: [
+    {
+      id: 'basic-binding',
+      title: 'Basic parameter binding',
+      code: [
+        'function greet(name, greeting) {',
+        '  return greeting + ", " + name',
+        '}',
+        '',
+        'const result = greet("Alice", "Hello")',
+        'console.log(result)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Function greet is defined with two parameters: name and greeting.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 4,
+          description: 'Call initiated: greet("Alice", "Hello"). Arguments ready to be bound to parameters.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '"Alice"', argumentLabel: 'arg 1', parameterName: 'name', boundValue: '"Alice"', status: 'waiting', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: 1, argumentValue: '"Hello"', argumentLabel: 'arg 2', parameterName: 'greeting', boundValue: '"Hello"', status: 'waiting', isDefault: false, isExtra: false, isMissing: false }
+          ],
+        },
+        {
+          id: 2,
+          codeLine: 4,
+          description: 'First argument "Alice" flows into parameter name.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: { name: '"Alice"' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '"Alice"', argumentLabel: 'arg 1', parameterName: 'name', boundValue: '"Alice"', status: 'flowing', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: 1, argumentValue: '"Hello"', argumentLabel: 'arg 2', parameterName: 'greeting', boundValue: '"Hello"', status: 'waiting', isDefault: false, isExtra: false, isMissing: false }
+          ],
+        },
+        {
+          id: 3,
+          codeLine: 4,
+          description: 'Second argument "Hello" flows into parameter greeting.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: { name: '"Alice"', greeting: '"Hello"' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '"Alice"', argumentLabel: 'arg 1', parameterName: 'name', boundValue: '"Alice"', status: 'bound', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: 1, argumentValue: '"Hello"', argumentLabel: 'arg 2', parameterName: 'greeting', boundValue: '"Hello"', status: 'flowing', isDefault: false, isExtra: false, isMissing: false }
+          ],
+        },
+        {
+          id: 4,
+          codeLine: 0,
+          description: 'Both parameters bound. Execution context is now active.',
+          phase: 'enter',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: { name: '"Alice"', greeting: '"Hello"' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'active' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '"Alice"', argumentLabel: 'arg 1', parameterName: 'name', boundValue: '"Alice"', status: 'bound', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: 1, argumentValue: '"Hello"', argumentLabel: 'arg 2', parameterName: 'greeting', boundValue: '"Hello"', status: 'bound', isDefault: false, isExtra: false, isMissing: false }
+          ],
+        },
+        {
+          id: 5,
+          codeLine: 1,
+          description: 'Execute body: return greeting + ", " + name returns "Hello, Alice".',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: { name: '"Alice"', greeting: '"Hello"' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'returning' }
+          ],
+          output: [],
+        },
+        {
+          id: 6,
+          codeLine: 4,
+          description: 'greet() returns. Execution context destroyed, result assigned to variable.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn', result: '"Hello, Alice"' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 7,
+          codeLine: 5,
+          description: 'console.log outputs the result.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn', result: '"Hello, Alice"' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['Hello, Alice'],
+        },
+      ],
+      insight: 'Arguments are bound to parameters in order: first argument to first parameter, second to second, and so on. This mapping happens during function call setup.',
+    },
+    {
+      id: 'missing-args',
+      title: 'Missing arguments (undefined)',
+      code: [
+        'function add(a, b) {',
+        '  return a + b',
+        '}',
+        '',
+        'const result = add(5)',
+        'console.log(result)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Function add is defined with two parameters: a and b.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { add: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 4,
+          description: 'Call add(5) with only ONE argument. But add expects TWO parameters!',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { add: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'add-1', name: 'add()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '5', argumentLabel: 'arg 1', parameterName: 'a', boundValue: '5', status: 'waiting', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: -1, argumentValue: '', argumentLabel: 'missing', parameterName: 'b', boundValue: 'undefined', status: 'waiting', isDefault: false, isExtra: false, isMissing: true }
+          ],
+        },
+        {
+          id: 2,
+          codeLine: 4,
+          description: 'Argument 5 flows into parameter a normally.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { add: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'add-1', name: 'add()', params: { a: '5' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '5', argumentLabel: 'arg 1', parameterName: 'a', boundValue: '5', status: 'bound', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: -1, argumentValue: '', argumentLabel: 'missing', parameterName: 'b', boundValue: 'undefined', status: 'waiting', isDefault: false, isExtra: false, isMissing: true }
+          ],
+        },
+        {
+          id: 3,
+          codeLine: 4,
+          description: 'No second argument provided. Parameter b receives undefined automatically.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { add: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'add-1', name: 'add()', params: { a: '5', b: 'undefined' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '5', argumentLabel: 'arg 1', parameterName: 'a', boundValue: '5', status: 'bound', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: -1, argumentValue: '', argumentLabel: 'missing', parameterName: 'b', boundValue: 'undefined', status: 'bound', isDefault: false, isExtra: false, isMissing: true }
+          ],
+        },
+        {
+          id: 4,
+          codeLine: 1,
+          description: 'Execute: a + b = 5 + undefined = NaN. Adding number to undefined produces NaN!',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { add: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'add-1', name: 'add()', params: { a: '5', b: 'undefined' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'returning' }
+          ],
+          output: [],
+        },
+        {
+          id: 5,
+          codeLine: 4,
+          description: 'Function returns NaN. This is a common bug from missing arguments.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { add: 'fn', result: 'NaN' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 6,
+          codeLine: 5,
+          description: 'console.log outputs NaN. The missing argument caused unexpected behavior.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { add: 'fn', result: 'NaN' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['NaN'],
+        },
+      ],
+      insight: 'Missing arguments become undefined. JavaScript does not throw an error for missing arguments - it silently assigns undefined, which can lead to bugs like NaN.',
+    },
+    {
+      id: 'extra-args',
+      title: 'Extra arguments (ignored)',
+      code: [
+        'function first(a) {',
+        '  return a',
+        '}',
+        '',
+        'const result = first(1, 2, 3)',
+        'console.log(result)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Function first is defined with only ONE parameter: a.',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { first: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 4,
+          description: 'Call first(1, 2, 3) with THREE arguments. But first only has ONE parameter!',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { first: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'first-1', name: 'first()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '1', argumentLabel: 'arg 1', parameterName: 'a', boundValue: '1', status: 'waiting', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: 1, argumentValue: '2', argumentLabel: 'arg 2', parameterName: '', boundValue: '2', status: 'waiting', isDefault: false, isExtra: true, isMissing: false },
+            { argumentIndex: 2, argumentValue: '3', argumentLabel: 'arg 3', parameterName: '', boundValue: '3', status: 'waiting', isDefault: false, isExtra: true, isMissing: false }
+          ],
+        },
+        {
+          id: 2,
+          codeLine: 4,
+          description: 'First argument 1 binds to parameter a. This is the only parameter.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { first: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'first-1', name: 'first()', params: { a: '1' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '1', argumentLabel: 'arg 1', parameterName: 'a', boundValue: '1', status: 'bound', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: 1, argumentValue: '2', argumentLabel: 'arg 2', parameterName: '', boundValue: '2', status: 'bound', isDefault: false, isExtra: true, isMissing: false },
+            { argumentIndex: 2, argumentValue: '3', argumentLabel: 'arg 3', parameterName: '', boundValue: '3', status: 'bound', isDefault: false, isExtra: true, isMissing: false }
+          ],
+        },
+        {
+          id: 3,
+          codeLine: 0,
+          description: 'Arguments 2 and 3 are ignored - no parameters to receive them. Context active.',
+          phase: 'enter',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { first: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'first-1', name: 'first()', params: { a: '1' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'active' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '1', argumentLabel: 'arg 1', parameterName: 'a', boundValue: '1', status: 'bound', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: 1, argumentValue: '2', argumentLabel: 'arg 2', parameterName: '', boundValue: '2', status: 'bound', isDefault: false, isExtra: true, isMissing: false },
+            { argumentIndex: 2, argumentValue: '3', argumentLabel: 'arg 3', parameterName: '', boundValue: '3', status: 'bound', isDefault: false, isExtra: true, isMissing: false }
+          ],
+        },
+        {
+          id: 4,
+          codeLine: 1,
+          description: 'Execute: return a returns 1. The extra arguments (2, 3) were simply ignored.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { first: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'first-1', name: 'first()', params: { a: '1' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'returning' }
+          ],
+          output: [],
+        },
+        {
+          id: 5,
+          codeLine: 4,
+          description: 'Function returns 1. Extra arguments were silently discarded.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { first: 'fn', result: '1' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 6,
+          codeLine: 5,
+          description: 'console.log outputs 1. Arguments 2 and 3 were completely ignored.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { first: 'fn', result: '1' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['1'],
+        },
+      ],
+      insight: 'JavaScript ignores extra arguments silently. No error is thrown. However, extra arguments are accessible via the special "arguments" object (in non-arrow functions).',
+    },
+    {
+      id: 'default-params',
+      title: 'Default parameters',
+      code: [
+        'function greet(name, greeting = "Hello") {',
+        '  return greeting + ", " + name',
+        '}',
+        '',
+        'const result = greet("Bob")',
+        'console.log(result)',
+      ],
+      steps: [
+        {
+          id: 0,
+          codeLine: 0,
+          description: 'Function greet has a default parameter: greeting = "Hello".',
+          phase: 'setup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 1,
+          codeLine: 4,
+          description: 'Call greet("Bob") with only ONE argument. greeting parameter has a default value.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: {}, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '"Bob"', argumentLabel: 'arg 1', parameterName: 'name', boundValue: '"Bob"', status: 'waiting', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: -1, argumentValue: '', argumentLabel: 'missing', parameterName: 'greeting', boundValue: '"Hello"', status: 'waiting', isDefault: true, isExtra: false, isMissing: true }
+          ],
+        },
+        {
+          id: 2,
+          codeLine: 4,
+          description: 'Argument "Bob" flows into parameter name normally.',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: { name: '"Bob"' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '"Bob"', argumentLabel: 'arg 1', parameterName: 'name', boundValue: '"Bob"', status: 'bound', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: -1, argumentValue: '', argumentLabel: 'missing', parameterName: 'greeting', boundValue: '"Hello"', status: 'waiting', isDefault: true, isExtra: false, isMissing: true }
+          ],
+        },
+        {
+          id: 3,
+          codeLine: 4,
+          description: 'No argument for greeting. DEFAULT value "Hello" is used instead of undefined!',
+          phase: 'call',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: { name: '"Bob"', greeting: '"Hello"' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'creating' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '"Bob"', argumentLabel: 'arg 1', parameterName: 'name', boundValue: '"Bob"', status: 'bound', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: -1, argumentValue: '', argumentLabel: 'missing', parameterName: 'greeting', boundValue: '"Hello"', status: 'bound', isDefault: true, isExtra: false, isMissing: true }
+          ],
+        },
+        {
+          id: 4,
+          codeLine: 0,
+          description: 'Both parameters bound. name="Bob", greeting="Hello" (from default).',
+          phase: 'enter',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: { name: '"Bob"', greeting: '"Hello"' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'active' }
+          ],
+          output: [],
+          parameterBindings: [
+            { argumentIndex: 0, argumentValue: '"Bob"', argumentLabel: 'arg 1', parameterName: 'name', boundValue: '"Bob"', status: 'bound', isDefault: false, isExtra: false, isMissing: false },
+            { argumentIndex: -1, argumentValue: '', argumentLabel: 'missing', parameterName: 'greeting', boundValue: '"Hello"', status: 'bound', isDefault: true, isExtra: false, isMissing: true }
+          ],
+        },
+        {
+          id: 5,
+          codeLine: 1,
+          description: 'Execute: return greeting + ", " + name returns "Hello, Bob".',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn' }, thisValue: 'window', outerRef: null, status: 'active' },
+            { id: 'greet-1', name: 'greet()', params: { name: '"Bob"', greeting: '"Hello"' }, locals: {}, thisValue: 'undefined', outerRef: 'global', status: 'returning' }
+          ],
+          output: [],
+        },
+        {
+          id: 6,
+          codeLine: 4,
+          description: 'Function returns "Hello, Bob". Default parameter prevented undefined.',
+          phase: 'cleanup',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn', result: '"Hello, Bob"' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: [],
+        },
+        {
+          id: 7,
+          codeLine: 5,
+          description: 'console.log outputs the result. Default parameters make functions more robust.',
+          phase: 'execute',
+          callStack: [
+            { id: 'global', name: 'global()', params: {}, locals: { greet: 'fn', result: '"Hello, Bob"' }, thisValue: 'window', outerRef: null, status: 'active' }
+          ],
+          output: ['Hello, Bob'],
+        },
+      ],
+      insight: 'Default parameters (ES6) provide fallback values when arguments are missing or undefined. They prevent the common bug of undefined creeping into your code.',
+    },
+  ],
   advanced: [],
 }
 
