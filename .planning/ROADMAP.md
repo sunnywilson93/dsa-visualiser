@@ -126,11 +126,11 @@ Plans:
   1. DSAPatterns directory exists with shared types for pattern visualizations
   2. User can navigate to /concepts/dsa/patterns/[patternId] and see a pattern page shell
   3. dsaPatterns.ts exports pattern metadata (name, description, when to use, variants)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 07-01-PLAN.md - DSAPatterns directory structure and shared types
-- [ ] 07-02-PLAN.md - Pattern page routing and dsaPatterns.ts data file
+- [ ] 07-01-PLAN.md - DSAPatterns directory structure, shared types, and dsaPatterns.ts data file
+- [ ] 07-02-PLAN.md - Pattern page routing and page shell at /concepts/dsa/patterns/[patternId]
 
 ### Phase 8: TwoPointersViz
 **Goal**: Learners can step through Two Pointers pattern with decision logic visible before movement
