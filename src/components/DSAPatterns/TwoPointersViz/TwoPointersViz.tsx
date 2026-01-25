@@ -15,6 +15,7 @@ interface TwoPointerStep {
   pointers: {
     left: number
     right: number
+    mid?: number
   }
   decision?: {
     condition: string
@@ -1358,7 +1359,319 @@ const examples: Record<Variant, Record<Level, TwoPointerExample[]>> = {
   partition: {
     beginner: [],
     intermediate: [],
-    advanced: []
+    advanced: [
+      {
+        id: 'sort-colors',
+        title: 'Sort Colors (Dutch Flag)',
+        variant: 'partition',
+        code: [
+          'function sortColors(nums) {',
+          '  let low = 0',
+          '  let mid = 0',
+          '  let high = nums.length - 1',
+          '',
+          '  while (mid <= high) {',
+          '    if (nums[mid] === 0) {',
+          '      [nums[low], nums[mid]] = [nums[mid], nums[low]]',
+          '      low++',
+          '      mid++',
+          '    } else if (nums[mid] === 1) {',
+          '      mid++',
+          '    } else {',
+          '      [nums[mid], nums[high]] = [nums[high], nums[mid]]',
+          '      high--',
+          '    }',
+          '  }',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Sort array of 0s, 1s, 2s in-place with a single pass. Three pointers partition into three regions.',
+            phase: 'init',
+            pointers: { left: -1, right: -1 },
+            array: [2, 0, 2, 1, 1, 0],
+            output: ['Input: [2, 0, 2, 1, 1, 0]', 'Goal: [0, 0, 1, 1, 2, 2]']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'Initialize low pointer at 0. Everything left of low will be 0s.',
+            phase: 'init',
+            pointers: { left: 0, right: -1, mid: -1 },
+            array: [2, 0, 2, 1, 1, 0],
+            highlightedCells: [0],
+            output: ['low=0 (0s boundary)']
+          },
+          {
+            id: 2,
+            codeLine: 2,
+            description: 'Initialize mid pointer at 0. Mid scans through the array.',
+            phase: 'init',
+            pointers: { left: 0, right: -1, mid: 0 },
+            array: [2, 0, 2, 1, 1, 0],
+            highlightedCells: [0],
+            output: ['low=0, mid=0']
+          },
+          {
+            id: 3,
+            codeLine: 3,
+            description: 'Initialize high pointer at 5 (last index). Everything right of high will be 2s.',
+            phase: 'init',
+            pointers: { left: 0, right: 5, mid: 0 },
+            array: [2, 0, 2, 1, 1, 0],
+            highlightedCells: [0, 5],
+            output: ['low=0, mid=0, high=5']
+          },
+          {
+            id: 4,
+            codeLine: 5,
+            description: 'Check: is mid (0) <= high (5)? Yes, enter the loop.',
+            phase: 'compare',
+            pointers: { left: 0, right: 5, mid: 0 },
+            array: [2, 0, 2, 1, 1, 0],
+            highlightedCells: [0],
+            output: ['mid <= high: 0 <= 5 ✓']
+          },
+          {
+            id: 5,
+            codeLine: 6,
+            description: 'Check nums[mid]=nums[0]=2.',
+            phase: 'compare',
+            pointers: { left: 0, right: 5, mid: 0 },
+            array: [2, 0, 2, 1, 1, 0],
+            highlightedCells: [0],
+            output: ['nums[mid] = 2'],
+            decision: {
+              condition: 'Is nums[mid] === 0?',
+              conditionMet: false,
+              action: 'Check if nums[mid] === 1'
+            }
+          },
+          {
+            id: 6,
+            codeLine: 10,
+            description: 'Check if nums[mid] === 1.',
+            phase: 'compare',
+            pointers: { left: 0, right: 5, mid: 0 },
+            array: [2, 0, 2, 1, 1, 0],
+            highlightedCells: [0],
+            output: ['nums[mid] = 2'],
+            decision: {
+              condition: 'Is nums[mid] === 1?',
+              conditionMet: false,
+              action: 'nums[mid] === 2, swap with high and decrement high'
+            }
+          },
+          {
+            id: 7,
+            codeLine: 13,
+            description: 'Swap nums[mid] with nums[high]: swap 2 and 0. Decrement high.',
+            phase: 'move',
+            pointers: { left: 0, right: 4, mid: 0 },
+            array: [0, 0, 2, 1, 1, 2],
+            highlightedCells: [0, 5],
+            output: ['Swapped: [0, 0, 2, 1, 1, 2]', 'high-- → 4', 'Note: mid stays (new value needs checking)']
+          },
+          {
+            id: 8,
+            codeLine: 5,
+            description: 'Check: is mid (0) <= high (4)? Yes, continue.',
+            phase: 'compare',
+            pointers: { left: 0, right: 4, mid: 0 },
+            array: [0, 0, 2, 1, 1, 2],
+            highlightedCells: [0],
+            output: ['mid <= high: 0 <= 4 ✓']
+          },
+          {
+            id: 9,
+            codeLine: 6,
+            description: 'Check nums[mid]=nums[0]=0.',
+            phase: 'compare',
+            pointers: { left: 0, right: 4, mid: 0 },
+            array: [0, 0, 2, 1, 1, 2],
+            highlightedCells: [0],
+            output: ['nums[mid] = 0'],
+            decision: {
+              condition: 'Is nums[mid] === 0?',
+              conditionMet: true,
+              action: 'Swap with low, increment both low and mid'
+            }
+          },
+          {
+            id: 10,
+            codeLine: 7,
+            description: 'Swap nums[mid] with nums[low] (same position). Increment both low and mid.',
+            phase: 'move',
+            pointers: { left: 1, right: 4, mid: 1 },
+            array: [0, 0, 2, 1, 1, 2],
+            highlightedCells: [0, 1],
+            output: ['Swapped (same pos): [0, 0, 2, 1, 1, 2]', 'low++ → 1, mid++ → 1']
+          },
+          {
+            id: 11,
+            codeLine: 5,
+            description: 'Check: is mid (1) <= high (4)? Yes, continue.',
+            phase: 'compare',
+            pointers: { left: 1, right: 4, mid: 1 },
+            array: [0, 0, 2, 1, 1, 2],
+            highlightedCells: [1],
+            output: ['mid <= high: 1 <= 4 ✓']
+          },
+          {
+            id: 12,
+            codeLine: 6,
+            description: 'Check nums[mid]=nums[1]=0.',
+            phase: 'compare',
+            pointers: { left: 1, right: 4, mid: 1 },
+            array: [0, 0, 2, 1, 1, 2],
+            highlightedCells: [1],
+            output: ['nums[mid] = 0'],
+            decision: {
+              condition: 'Is nums[mid] === 0?',
+              conditionMet: true,
+              action: 'Swap with low, increment both low and mid'
+            }
+          },
+          {
+            id: 13,
+            codeLine: 7,
+            description: 'Swap nums[mid] with nums[low] (same position). Increment both.',
+            phase: 'move',
+            pointers: { left: 2, right: 4, mid: 2 },
+            array: [0, 0, 2, 1, 1, 2],
+            highlightedCells: [1, 2],
+            output: ['Swapped (same pos): [0, 0, 2, 1, 1, 2]', 'low++ → 2, mid++ → 2']
+          },
+          {
+            id: 14,
+            codeLine: 5,
+            description: 'Check: is mid (2) <= high (4)? Yes, continue.',
+            phase: 'compare',
+            pointers: { left: 2, right: 4, mid: 2 },
+            array: [0, 0, 2, 1, 1, 2],
+            highlightedCells: [2],
+            output: ['mid <= high: 2 <= 4 ✓']
+          },
+          {
+            id: 15,
+            codeLine: 6,
+            description: 'Check nums[mid]=nums[2]=2.',
+            phase: 'compare',
+            pointers: { left: 2, right: 4, mid: 2 },
+            array: [0, 0, 2, 1, 1, 2],
+            highlightedCells: [2],
+            output: ['nums[mid] = 2'],
+            decision: {
+              condition: 'Is nums[mid] === 2?',
+              conditionMet: true,
+              action: 'Swap with high, decrement high (mid stays)'
+            }
+          },
+          {
+            id: 16,
+            codeLine: 13,
+            description: 'Swap nums[mid] with nums[high]: swap 2 and 1. Decrement high.',
+            phase: 'move',
+            pointers: { left: 2, right: 3, mid: 2 },
+            array: [0, 0, 1, 1, 2, 2],
+            highlightedCells: [2, 4],
+            output: ['Swapped: [0, 0, 1, 1, 2, 2]', 'high-- → 3']
+          },
+          {
+            id: 17,
+            codeLine: 5,
+            description: 'Check: is mid (2) <= high (3)? Yes, continue.',
+            phase: 'compare',
+            pointers: { left: 2, right: 3, mid: 2 },
+            array: [0, 0, 1, 1, 2, 2],
+            highlightedCells: [2],
+            output: ['mid <= high: 2 <= 3 ✓']
+          },
+          {
+            id: 18,
+            codeLine: 6,
+            description: 'Check nums[mid]=nums[2]=1.',
+            phase: 'compare',
+            pointers: { left: 2, right: 3, mid: 2 },
+            array: [0, 0, 1, 1, 2, 2],
+            highlightedCells: [2],
+            output: ['nums[mid] = 1'],
+            decision: {
+              condition: 'Is nums[mid] === 1?',
+              conditionMet: true,
+              action: 'Just increment mid (1s stay in middle)'
+            }
+          },
+          {
+            id: 19,
+            codeLine: 11,
+            description: 'Increment mid only. 1s belong in the middle region.',
+            phase: 'move',
+            pointers: { left: 2, right: 3, mid: 3 },
+            array: [0, 0, 1, 1, 2, 2],
+            highlightedCells: [3],
+            output: ['mid++ → 3']
+          },
+          {
+            id: 20,
+            codeLine: 5,
+            description: 'Check: is mid (3) <= high (3)? Yes, continue.',
+            phase: 'compare',
+            pointers: { left: 2, right: 3, mid: 3 },
+            array: [0, 0, 1, 1, 2, 2],
+            highlightedCells: [3],
+            output: ['mid <= high: 3 <= 3 ✓']
+          },
+          {
+            id: 21,
+            codeLine: 6,
+            description: 'Check nums[mid]=nums[3]=1.',
+            phase: 'compare',
+            pointers: { left: 2, right: 3, mid: 3 },
+            array: [0, 0, 1, 1, 2, 2],
+            highlightedCells: [3],
+            output: ['nums[mid] = 1'],
+            decision: {
+              condition: 'Is nums[mid] === 1?',
+              conditionMet: true,
+              action: 'Just increment mid'
+            }
+          },
+          {
+            id: 22,
+            codeLine: 11,
+            description: 'Increment mid.',
+            phase: 'move',
+            pointers: { left: 2, right: 3, mid: 4 },
+            array: [0, 0, 1, 1, 2, 2],
+            highlightedCells: [4],
+            output: ['mid++ → 4']
+          },
+          {
+            id: 23,
+            codeLine: 5,
+            description: 'Check: is mid (4) <= high (3)? No! mid has passed high, loop terminates.',
+            phase: 'compare',
+            pointers: { left: 2, right: 3, mid: 4 },
+            array: [0, 0, 1, 1, 2, 2],
+            output: ['mid <= high: 4 <= 3 ✗', 'Loop complete']
+          },
+          {
+            id: 24,
+            codeLine: 16,
+            description: 'Array is sorted! 0s are left of low, 1s between low and high, 2s right of high.',
+            phase: 'done',
+            pointers: { left: 2, right: 3, mid: 4 },
+            array: [0, 0, 1, 1, 2, 2],
+            highlightedCells: [0, 1, 2, 3, 4, 5],
+            output: ['Result: [0, 0, 1, 1, 2, 2]', 'Sorted in single pass!']
+          }
+        ],
+        insight: 'Three-way partition keeps 0s left of low, 2s right of high. Mid scans once through the array - O(n) time, O(1) space.'
+      }
+    ]
   }
 }
 
@@ -1393,7 +1706,16 @@ export function TwoPointersViz() {
 
   const getPointerLabel = (index: number) => {
     if (!currentStep) return null
-    const { left, right } = currentStep.pointers
+    const { left, right, mid } = currentStep.pointers
+
+    if (variant === 'partition' && mid !== undefined) {
+      const labels: string[] = []
+      if (left === index) labels.push('low')
+      if (mid === index) labels.push('mid')
+      if (right === index) labels.push('high')
+      return labels.length > 0 ? labels.join(',') : null
+    }
+
     const isSameDirection = variant === 'same-direction'
     const leftLabel = isSameDirection ? 'slow' : 'L'
     const rightLabel = isSameDirection ? 'fast' : 'R'
@@ -1407,8 +1729,15 @@ export function TwoPointersViz() {
 
   const getCellState = (index: number) => {
     if (!currentStep) return ''
-    const { left, right } = currentStep.pointers
+    const { left, right, mid } = currentStep.pointers
     if (currentStep.highlightedCells?.includes(index)) return styles.active
+
+    if (variant === 'partition' && mid !== undefined && mid >= 0) {
+      if (index < left) return styles.processed
+      if (index > right) return styles.processed
+      return ''
+    }
+
     if (left >= 0 && right >= 0 && index < left) return styles.processed
     if (left >= 0 && right >= 0 && index > right) return styles.processed
     return ''
