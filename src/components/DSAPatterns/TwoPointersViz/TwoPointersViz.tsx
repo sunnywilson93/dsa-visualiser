@@ -1022,7 +1022,496 @@ const examples: Record<Variant, Record<Level, TwoPointerExample[]>> = {
         insight: 'Fix one element, use two pointers for the other two. Sorting enables O(n^2) instead of O(n^3) and makes duplicate skipping simple.'
       }
     ],
-    advanced: []
+    advanced: [
+      {
+        id: 'trapping-rain-water',
+        title: 'Trapping Rain Water',
+        variant: 'converging',
+        code: [
+          'function trap(height) {',
+          '  let left = 0',
+          '  let right = height.length - 1',
+          '  let leftMax = 0, rightMax = 0',
+          '  let total = 0',
+          '',
+          '  while (left < right) {',
+          '    if (height[left] < height[right]) {',
+          '      if (height[left] >= leftMax) {',
+          '        leftMax = height[left]',
+          '      } else {',
+          '        total += leftMax - height[left]',
+          '      }',
+          '      left++',
+          '    } else {',
+          '      if (height[right] >= rightMax) {',
+          '        rightMax = height[right]',
+          '      } else {',
+          '        total += rightMax - height[right]',
+          '      }',
+          '      right--',
+          '    }',
+          '  }',
+          '  return total',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Calculate total water trapped between bars. Water at position i = min(leftMax, rightMax) - height[i].',
+            phase: 'init',
+            pointers: { left: -1, right: -1 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            output: ['Input: heights = [0,1,0,2,1,0,1,3,2,1,2,1]']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'Initialize left pointer at start (index 0, height 0).',
+            phase: 'init',
+            pointers: { left: 0, right: -1 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [0],
+            output: ['left=0']
+          },
+          {
+            id: 2,
+            codeLine: 2,
+            description: 'Initialize right pointer at end (index 11, height 1).',
+            phase: 'init',
+            pointers: { left: 0, right: 11 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [0, 11],
+            output: ['left=0, right=11']
+          },
+          {
+            id: 3,
+            codeLine: 3,
+            description: 'Initialize leftMax=0, rightMax=0, total=0. Track max heights seen from each side.',
+            phase: 'init',
+            pointers: { left: 0, right: 11 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [0, 11],
+            output: ['leftMax=0, rightMax=0', 'total=0']
+          },
+          {
+            id: 4,
+            codeLine: 6,
+            description: 'Check: left (0) < right (11)? Yes, enter loop.',
+            phase: 'compare',
+            pointers: { left: 0, right: 11 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [0, 11],
+            output: ['leftMax=0, rightMax=0', 'total=0']
+          },
+          {
+            id: 5,
+            codeLine: 7,
+            description: 'Compare heights: height[left]=0 vs height[right]=1.',
+            phase: 'compare',
+            pointers: { left: 0, right: 11 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [0, 11],
+            output: ['leftMax=0, rightMax=0', 'total=0'],
+            decision: {
+              condition: 'Is height[left]=0 < height[right]=1?',
+              conditionMet: true,
+              action: 'Process left side (shorter side is bounded by taller right)'
+            }
+          },
+          {
+            id: 6,
+            codeLine: 8,
+            description: 'Check if height[left]=0 >= leftMax=0. Yes! Update leftMax.',
+            phase: 'compare',
+            pointers: { left: 0, right: 11 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [0],
+            output: ['leftMax=0 (updated)', 'rightMax=0', 'total=0', 'No water at index 0 (height equals leftMax)']
+          },
+          {
+            id: 7,
+            codeLine: 13,
+            description: 'Move left pointer right: left++ (0 to 1).',
+            phase: 'move',
+            pointers: { left: 1, right: 11 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [1, 11],
+            output: ['leftMax=0, rightMax=0', 'total=0']
+          },
+          {
+            id: 8,
+            codeLine: 7,
+            description: 'Compare heights: height[left]=1 vs height[right]=1.',
+            phase: 'compare',
+            pointers: { left: 1, right: 11 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [1, 11],
+            output: ['leftMax=0, rightMax=0', 'total=0'],
+            decision: {
+              condition: 'Is height[left]=1 < height[right]=1?',
+              conditionMet: false,
+              action: 'Heights equal, process right side'
+            }
+          },
+          {
+            id: 9,
+            codeLine: 15,
+            description: 'Check if height[right]=1 >= rightMax=0. Yes! Update rightMax to 1.',
+            phase: 'compare',
+            pointers: { left: 1, right: 11 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [11],
+            output: ['leftMax=0', 'rightMax=1 (updated)', 'total=0', 'No water at index 11']
+          },
+          {
+            id: 10,
+            codeLine: 20,
+            description: 'Move right pointer left: right-- (11 to 10).',
+            phase: 'move',
+            pointers: { left: 1, right: 10 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [1, 10],
+            output: ['leftMax=0, rightMax=1', 'total=0']
+          },
+          {
+            id: 11,
+            codeLine: 7,
+            description: 'Compare: height[left]=1 < height[right]=2.',
+            phase: 'compare',
+            pointers: { left: 1, right: 10 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [1, 10],
+            output: ['leftMax=0, rightMax=1', 'total=0'],
+            decision: {
+              condition: 'Is height[left]=1 < height[right]=2?',
+              conditionMet: true,
+              action: 'Process left side'
+            }
+          },
+          {
+            id: 12,
+            codeLine: 8,
+            description: 'height[left]=1 >= leftMax=0? Yes! Update leftMax to 1.',
+            phase: 'compare',
+            pointers: { left: 1, right: 10 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [1],
+            output: ['leftMax=1 (updated)', 'rightMax=1', 'total=0', 'No water at index 1']
+          },
+          {
+            id: 13,
+            codeLine: 13,
+            description: 'Move left: left++ (1 to 2).',
+            phase: 'move',
+            pointers: { left: 2, right: 10 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [2, 10],
+            output: ['leftMax=1, rightMax=1', 'total=0']
+          },
+          {
+            id: 14,
+            codeLine: 7,
+            description: 'Compare: height[left]=0 < height[right]=2.',
+            phase: 'compare',
+            pointers: { left: 2, right: 10 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [2, 10],
+            output: ['leftMax=1, rightMax=1', 'total=0'],
+            decision: {
+              condition: 'Is height[left]=0 < height[right]=2?',
+              conditionMet: true,
+              action: 'Process left side'
+            }
+          },
+          {
+            id: 15,
+            codeLine: 10,
+            description: 'height[left]=0 < leftMax=1. Water can be trapped! Add leftMax - height = 1 - 0 = 1.',
+            phase: 'compare',
+            pointers: { left: 2, right: 10 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [2],
+            output: ['leftMax=1, rightMax=1', 'Water at index 2: 1-0 = 1', 'total=1']
+          },
+          {
+            id: 16,
+            codeLine: 13,
+            description: 'Move left: left++ (2 to 3).',
+            phase: 'move',
+            pointers: { left: 3, right: 10 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [3, 10],
+            output: ['leftMax=1, rightMax=1', 'total=1']
+          },
+          {
+            id: 17,
+            codeLine: 7,
+            description: 'Compare: height[left]=2 < height[right]=2? No, process right.',
+            phase: 'compare',
+            pointers: { left: 3, right: 10 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [3, 10],
+            output: ['leftMax=1, rightMax=1', 'total=1'],
+            decision: {
+              condition: 'Is height[left]=2 < height[right]=2?',
+              conditionMet: false,
+              action: 'Process right side'
+            }
+          },
+          {
+            id: 18,
+            codeLine: 15,
+            description: 'height[right]=2 >= rightMax=1? Yes! Update rightMax to 2.',
+            phase: 'compare',
+            pointers: { left: 3, right: 10 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [10],
+            output: ['leftMax=1', 'rightMax=2 (updated)', 'total=1', 'No water at index 10']
+          },
+          {
+            id: 19,
+            codeLine: 20,
+            description: 'Move right: right-- (10 to 9).',
+            phase: 'move',
+            pointers: { left: 3, right: 9 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [3, 9],
+            output: ['leftMax=1, rightMax=2', 'total=1']
+          },
+          {
+            id: 20,
+            codeLine: 7,
+            description: 'Compare: height[left]=2 < height[right]=1? No.',
+            phase: 'compare',
+            pointers: { left: 3, right: 9 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [3, 9],
+            output: ['leftMax=1, rightMax=2', 'total=1'],
+            decision: {
+              condition: 'Is height[left]=2 < height[right]=1?',
+              conditionMet: false,
+              action: 'Process right side'
+            }
+          },
+          {
+            id: 21,
+            codeLine: 17,
+            description: 'height[right]=1 < rightMax=2. Trap water! Add 2 - 1 = 1.',
+            phase: 'compare',
+            pointers: { left: 3, right: 9 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [9],
+            output: ['leftMax=1, rightMax=2', 'Water at index 9: 2-1 = 1', 'total=2']
+          },
+          {
+            id: 22,
+            codeLine: 20,
+            description: 'Move right: right-- (9 to 8).',
+            phase: 'move',
+            pointers: { left: 3, right: 8 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [3, 8],
+            output: ['leftMax=1, rightMax=2', 'total=2']
+          },
+          {
+            id: 23,
+            codeLine: 7,
+            description: 'Compare: height[left]=2 < height[right]=2? No.',
+            phase: 'compare',
+            pointers: { left: 3, right: 8 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [3, 8],
+            output: ['leftMax=1, rightMax=2', 'total=2'],
+            decision: {
+              condition: 'Is height[left]=2 < height[right]=2?',
+              conditionMet: false,
+              action: 'Process right side'
+            }
+          },
+          {
+            id: 24,
+            codeLine: 15,
+            description: 'height[right]=2 >= rightMax=2? Yes! rightMax stays 2. No water.',
+            phase: 'compare',
+            pointers: { left: 3, right: 8 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [8],
+            output: ['leftMax=1, rightMax=2', 'total=2', 'No water at index 8']
+          },
+          {
+            id: 25,
+            codeLine: 20,
+            description: 'Move right: right-- (8 to 7).',
+            phase: 'move',
+            pointers: { left: 3, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [3, 7],
+            output: ['leftMax=1, rightMax=2', 'total=2']
+          },
+          {
+            id: 26,
+            codeLine: 7,
+            description: 'Compare: height[left]=2 < height[right]=3? Yes.',
+            phase: 'compare',
+            pointers: { left: 3, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [3, 7],
+            output: ['leftMax=1, rightMax=2', 'total=2'],
+            decision: {
+              condition: 'Is height[left]=2 < height[right]=3?',
+              conditionMet: true,
+              action: 'Process left side'
+            }
+          },
+          {
+            id: 27,
+            codeLine: 8,
+            description: 'height[left]=2 >= leftMax=1? Yes! Update leftMax to 2.',
+            phase: 'compare',
+            pointers: { left: 3, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [3],
+            output: ['leftMax=2 (updated)', 'rightMax=2', 'total=2', 'No water at index 3']
+          },
+          {
+            id: 28,
+            codeLine: 13,
+            description: 'Move left: left++ (3 to 4).',
+            phase: 'move',
+            pointers: { left: 4, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [4, 7],
+            output: ['leftMax=2, rightMax=2', 'total=2']
+          },
+          {
+            id: 29,
+            codeLine: 7,
+            description: 'Compare: height[left]=1 < height[right]=3? Yes.',
+            phase: 'compare',
+            pointers: { left: 4, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [4, 7],
+            output: ['leftMax=2, rightMax=2', 'total=2'],
+            decision: {
+              condition: 'Is height[left]=1 < height[right]=3?',
+              conditionMet: true,
+              action: 'Process left side'
+            }
+          },
+          {
+            id: 30,
+            codeLine: 10,
+            description: 'height[left]=1 < leftMax=2. Trap water! Add 2 - 1 = 1.',
+            phase: 'compare',
+            pointers: { left: 4, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [4],
+            output: ['leftMax=2, rightMax=2', 'Water at index 4: 2-1 = 1', 'total=3']
+          },
+          {
+            id: 31,
+            codeLine: 13,
+            description: 'Move left: left++ (4 to 5).',
+            phase: 'move',
+            pointers: { left: 5, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [5, 7],
+            output: ['leftMax=2, rightMax=2', 'total=3']
+          },
+          {
+            id: 32,
+            codeLine: 7,
+            description: 'Compare: height[left]=0 < height[right]=3? Yes.',
+            phase: 'compare',
+            pointers: { left: 5, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [5, 7],
+            output: ['leftMax=2, rightMax=2', 'total=3'],
+            decision: {
+              condition: 'Is height[left]=0 < height[right]=3?',
+              conditionMet: true,
+              action: 'Process left side'
+            }
+          },
+          {
+            id: 33,
+            codeLine: 10,
+            description: 'height[left]=0 < leftMax=2. Trap water! Add 2 - 0 = 2.',
+            phase: 'compare',
+            pointers: { left: 5, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [5],
+            output: ['leftMax=2, rightMax=2', 'Water at index 5: 2-0 = 2', 'total=5']
+          },
+          {
+            id: 34,
+            codeLine: 13,
+            description: 'Move left: left++ (5 to 6).',
+            phase: 'move',
+            pointers: { left: 6, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [6, 7],
+            output: ['leftMax=2, rightMax=2', 'total=5']
+          },
+          {
+            id: 35,
+            codeLine: 7,
+            description: 'Compare: height[left]=1 < height[right]=3? Yes.',
+            phase: 'compare',
+            pointers: { left: 6, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [6, 7],
+            output: ['leftMax=2, rightMax=2', 'total=5'],
+            decision: {
+              condition: 'Is height[left]=1 < height[right]=3?',
+              conditionMet: true,
+              action: 'Process left side'
+            }
+          },
+          {
+            id: 36,
+            codeLine: 10,
+            description: 'height[left]=1 < leftMax=2. Trap water! Add 2 - 1 = 1.',
+            phase: 'compare',
+            pointers: { left: 6, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [6],
+            output: ['leftMax=2, rightMax=2', 'Water at index 6: 2-1 = 1', 'total=6']
+          },
+          {
+            id: 37,
+            codeLine: 13,
+            description: 'Move left: left++ (6 to 7). Now left equals right!',
+            phase: 'move',
+            pointers: { left: 7, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [7],
+            output: ['leftMax=2, rightMax=2', 'total=6']
+          },
+          {
+            id: 38,
+            codeLine: 6,
+            description: 'Check: left (7) < right (7)? No! Loop terminates.',
+            phase: 'compare',
+            pointers: { left: 7, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            highlightedCells: [7],
+            output: ['leftMax=2, rightMax=2', 'total=6', 'Loop complete']
+          },
+          {
+            id: 39,
+            codeLine: 23,
+            description: 'Return total = 6 units of water trapped!',
+            phase: 'done',
+            pointers: { left: 7, right: 7 },
+            array: [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            output: ['Total water trapped: 6', 'return 6']
+          }
+        ],
+        insight: 'Process the shorter side - it is bounded by a taller bar on the other side. Track max heights to calculate water at each position.'
+      }
+    ]
   },
   'same-direction': {
     beginner: [],
