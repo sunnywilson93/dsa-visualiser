@@ -108,6 +108,20 @@
   --space-xl: 24px;
   --space-2xl: 32px;
 
+  /* Responsive breakpoints (documentation only - cannot use in @media) */
+  /* sm: 640px - Mobile landscape, large phones */
+  /* md: 768px - Tablets, hide Monaco below this */
+  /* lg: 1024px - Desktops, full layout */
+
+  /* Use these exact values in media queries:
+   * @media (max-width: 639px) - mobile only
+   * @media (max-width: 767px) - below tablet
+   * @media (max-width: 1023px) - below desktop
+   * @media (min-width: 640px) - tablet and up
+   * @media (min-width: 768px) - tablet and up (tablet+)
+   * @media (min-width: 1024px) - desktop and up
+   */
+
   /* Border radius */
   --radius-sm: 4px;
   --radius-md: 6px;
