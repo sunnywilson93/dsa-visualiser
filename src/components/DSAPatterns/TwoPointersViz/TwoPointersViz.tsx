@@ -430,12 +430,929 @@ const examples: Record<Variant, Record<Level, TwoPointerExample[]>> = {
         insight: 'Converging pointers check symmetry in O(n) time - we only need to check each position once from both ends.'
       }
     ],
-    intermediate: [],
+    intermediate: [
+      {
+        id: 'container-most-water',
+        title: 'Container With Most Water',
+        variant: 'converging',
+        code: [
+          'function maxArea(height) {',
+          '  let left = 0',
+          '  let right = height.length - 1',
+          '  let maxArea = 0',
+          '',
+          '  while (left < right) {',
+          '    const width = right - left',
+          '    const h = Math.min(height[left], height[right])',
+          '    const area = width * h',
+          '    maxArea = Math.max(maxArea, area)',
+          '',
+          '    if (height[left] < height[right]) {',
+          '      left++',
+          '    } else {',
+          '      right--',
+          '    }',
+          '  }',
+          '  return maxArea',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Find max water area between two heights. Width = distance between lines, height = shorter of the two.',
+            phase: 'init',
+            pointers: { left: -1, right: -1 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            output: ['maxArea = 0']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'Initialize left pointer at start (index 0, height 1).',
+            phase: 'init',
+            pointers: { left: 0, right: -1 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [0],
+            output: ['maxArea = 0']
+          },
+          {
+            id: 2,
+            codeLine: 2,
+            description: 'Initialize right pointer at end (index 8, height 7).',
+            phase: 'init',
+            pointers: { left: 0, right: 8 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [0, 8],
+            output: ['maxArea = 0']
+          },
+          {
+            id: 3,
+            codeLine: 5,
+            description: 'Check: left (0) < right (8)? Yes, enter loop.',
+            phase: 'compare',
+            pointers: { left: 0, right: 8 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [0, 8],
+            output: ['maxArea = 0']
+          },
+          {
+            id: 4,
+            codeLine: 8,
+            description: 'Calculate area: width=8, min(1,7)=1, area=8*1=8. Update maxArea to 8.',
+            phase: 'compare',
+            pointers: { left: 0, right: 8 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [0, 8],
+            output: ['maxArea = 8'],
+            decision: {
+              condition: 'Is height[left]=1 < height[right]=7?',
+              conditionMet: true,
+              action: 'Move left pointer right (shorter side limits area)'
+            }
+          },
+          {
+            id: 5,
+            codeLine: 12,
+            description: 'Move left pointer right: left++ (0 to 1, now height 8).',
+            phase: 'move',
+            pointers: { left: 1, right: 8 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 8],
+            output: ['maxArea = 8']
+          },
+          {
+            id: 6,
+            codeLine: 8,
+            description: 'Calculate area: width=7, min(8,7)=7, area=7*7=49. Update maxArea to 49!',
+            phase: 'compare',
+            pointers: { left: 1, right: 8 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 8],
+            output: ['maxArea = 49'],
+            decision: {
+              condition: 'Is height[left]=8 < height[right]=7?',
+              conditionMet: false,
+              action: 'Move right pointer left (right side is shorter)'
+            }
+          },
+          {
+            id: 7,
+            codeLine: 14,
+            description: 'Move right pointer left: right-- (8 to 7, now height 3).',
+            phase: 'move',
+            pointers: { left: 1, right: 7 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 7],
+            output: ['maxArea = 49']
+          },
+          {
+            id: 8,
+            codeLine: 8,
+            description: 'Calculate area: width=6, min(8,3)=3, area=6*3=18. maxArea stays 49.',
+            phase: 'compare',
+            pointers: { left: 1, right: 7 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 7],
+            output: ['maxArea = 49'],
+            decision: {
+              condition: 'Is height[left]=8 < height[right]=3?',
+              conditionMet: false,
+              action: 'Move right pointer left (right side is shorter)'
+            }
+          },
+          {
+            id: 9,
+            codeLine: 14,
+            description: 'Move right pointer left: right-- (7 to 6, now height 8).',
+            phase: 'move',
+            pointers: { left: 1, right: 6 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 6],
+            output: ['maxArea = 49']
+          },
+          {
+            id: 10,
+            codeLine: 8,
+            description: 'Calculate area: width=5, min(8,8)=8, area=5*8=40. maxArea stays 49.',
+            phase: 'compare',
+            pointers: { left: 1, right: 6 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 6],
+            output: ['maxArea = 49'],
+            decision: {
+              condition: 'Is height[left]=8 < height[right]=8?',
+              conditionMet: false,
+              action: 'Heights equal, move right pointer left (either works)'
+            }
+          },
+          {
+            id: 11,
+            codeLine: 14,
+            description: 'Move right pointer left: right-- (6 to 5, now height 4).',
+            phase: 'move',
+            pointers: { left: 1, right: 5 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 5],
+            output: ['maxArea = 49']
+          },
+          {
+            id: 12,
+            codeLine: 8,
+            description: 'Calculate area: width=4, min(8,4)=4, area=4*4=16. maxArea stays 49.',
+            phase: 'compare',
+            pointers: { left: 1, right: 5 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 5],
+            output: ['maxArea = 49'],
+            decision: {
+              condition: 'Is height[left]=8 < height[right]=4?',
+              conditionMet: false,
+              action: 'Move right pointer left'
+            }
+          },
+          {
+            id: 13,
+            codeLine: 14,
+            description: 'Move right pointer left: right-- (5 to 4, now height 5).',
+            phase: 'move',
+            pointers: { left: 1, right: 4 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 4],
+            output: ['maxArea = 49']
+          },
+          {
+            id: 14,
+            codeLine: 8,
+            description: 'Calculate area: width=3, min(8,5)=5, area=3*5=15. maxArea stays 49.',
+            phase: 'compare',
+            pointers: { left: 1, right: 4 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 4],
+            output: ['maxArea = 49'],
+            decision: {
+              condition: 'Is height[left]=8 < height[right]=5?',
+              conditionMet: false,
+              action: 'Move right pointer left'
+            }
+          },
+          {
+            id: 15,
+            codeLine: 14,
+            description: 'Move right pointer left: right-- (4 to 3, now height 2).',
+            phase: 'move',
+            pointers: { left: 1, right: 3 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 3],
+            output: ['maxArea = 49']
+          },
+          {
+            id: 16,
+            codeLine: 8,
+            description: 'Calculate area: width=2, min(8,2)=2, area=2*2=4. maxArea stays 49.',
+            phase: 'compare',
+            pointers: { left: 1, right: 3 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 3],
+            output: ['maxArea = 49'],
+            decision: {
+              condition: 'Is height[left]=8 < height[right]=2?',
+              conditionMet: false,
+              action: 'Move right pointer left'
+            }
+          },
+          {
+            id: 17,
+            codeLine: 14,
+            description: 'Move right pointer left: right-- (3 to 2, now height 6).',
+            phase: 'move',
+            pointers: { left: 1, right: 2 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 2],
+            output: ['maxArea = 49']
+          },
+          {
+            id: 18,
+            codeLine: 8,
+            description: 'Calculate area: width=1, min(8,6)=6, area=1*6=6. maxArea stays 49.',
+            phase: 'compare',
+            pointers: { left: 1, right: 2 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1, 2],
+            output: ['maxArea = 49'],
+            decision: {
+              condition: 'Is height[left]=8 < height[right]=6?',
+              conditionMet: false,
+              action: 'Move right pointer left'
+            }
+          },
+          {
+            id: 19,
+            codeLine: 14,
+            description: 'Move right pointer left: right-- (2 to 1). Pointers meet!',
+            phase: 'move',
+            pointers: { left: 1, right: 1 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1],
+            output: ['maxArea = 49']
+          },
+          {
+            id: 20,
+            codeLine: 5,
+            description: 'Check: left (1) < right (1)? No! Loop terminates.',
+            phase: 'compare',
+            pointers: { left: 1, right: 1 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1],
+            output: ['maxArea = 49']
+          },
+          {
+            id: 21,
+            codeLine: 17,
+            description: 'Return maxArea = 49. Best container was between indices 1 (height 8) and 8 (height 7).',
+            phase: 'done',
+            pointers: { left: 1, right: 1 },
+            array: [1, 8, 6, 2, 5, 4, 8, 3, 7],
+            highlightedCells: [1],
+            output: ['maxArea = 49', 'return 49']
+          }
+        ],
+        insight: 'Moving the shorter side gives a chance for larger area; moving the taller side can only decrease or maintain the area since height is limited by the shorter side.'
+      },
+      {
+        id: '3sum',
+        title: '3Sum',
+        variant: 'converging',
+        code: [
+          'function threeSum(nums) {',
+          '  nums.sort((a, b) => a - b)',
+          '  const result = []',
+          '',
+          '  for (let i = 0; i < nums.length - 2; i++) {',
+          '    if (i > 0 && nums[i] === nums[i - 1]) continue',
+          '    let left = i + 1',
+          '    let right = nums.length - 1',
+          '',
+          '    while (left < right) {',
+          '      const sum = nums[i] + nums[left] + nums[right]',
+          '      if (sum === 0) {',
+          '        result.push([nums[i], nums[left], nums[right]])',
+          '        left++',
+          '        while (left < right && nums[left] === nums[left-1]) left++',
+          '      } else if (sum < 0) {',
+          '        left++',
+          '      } else {',
+          '        right--',
+          '      }',
+          '    }',
+          '  }',
+          '  return result',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Find all unique triplets that sum to zero. We fix one element and use two pointers for the other two.',
+            phase: 'init',
+            pointers: { left: -1, right: -1 },
+            array: [-1, 0, 1, 2, -1, -4],
+            output: ['Input: [-1, 0, 1, 2, -1, -4]']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'Sort the array first. Sorting enables the two pointer approach and helps skip duplicates.',
+            phase: 'init',
+            pointers: { left: -1, right: -1 },
+            array: [-4, -1, -1, 0, 1, 2],
+            output: ['Sorted: [-4, -1, -1, 0, 1, 2]']
+          },
+          {
+            id: 2,
+            codeLine: 4,
+            description: 'Fix i=0 (value -4). Now find two numbers in remaining array that sum to 4 (to make total 0).',
+            phase: 'init',
+            pointers: { left: -1, right: -1 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [0],
+            output: ['Fixed: nums[0] = -4', 'Need: left + right = 4']
+          },
+          {
+            id: 3,
+            codeLine: 6,
+            description: 'Initialize left pointer at i+1=1 (value -1) and right at end=5 (value 2).',
+            phase: 'init',
+            pointers: { left: 1, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [0, 1, 5],
+            output: ['Fixed: -4', 'left=1, right=5']
+          },
+          {
+            id: 4,
+            codeLine: 10,
+            description: 'Calculate sum: nums[0] + nums[1] + nums[5] = -4 + (-1) + 2 = -3.',
+            phase: 'compare',
+            pointers: { left: 1, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [0, 1, 5],
+            output: ['Sum = -4 + (-1) + 2 = -3'],
+            decision: {
+              condition: 'Is -3 < 0?',
+              conditionMet: true,
+              action: 'Sum too small, move left pointer right'
+            }
+          },
+          {
+            id: 5,
+            codeLine: 16,
+            description: 'Move left pointer right: left++ (1 to 2, now value -1).',
+            phase: 'move',
+            pointers: { left: 2, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [0, 2, 5],
+            output: ['Sum = -4 + (-1) + 2 = -3']
+          },
+          {
+            id: 6,
+            codeLine: 10,
+            description: 'Calculate sum: -4 + (-1) + 2 = -3. Still too small.',
+            phase: 'compare',
+            pointers: { left: 2, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [0, 2, 5],
+            output: ['Sum = -4 + (-1) + 2 = -3'],
+            decision: {
+              condition: 'Is -3 < 0?',
+              conditionMet: true,
+              action: 'Sum too small, move left pointer right'
+            }
+          },
+          {
+            id: 7,
+            codeLine: 16,
+            description: 'Move left pointer right: left++ (2 to 3, now value 0).',
+            phase: 'move',
+            pointers: { left: 3, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [0, 3, 5],
+            output: ['Sum = -4 + 0 + 2 = -2']
+          },
+          {
+            id: 8,
+            codeLine: 10,
+            description: 'Calculate sum: -4 + 0 + 2 = -2. Still too small.',
+            phase: 'compare',
+            pointers: { left: 3, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [0, 3, 5],
+            output: ['Sum = -4 + 0 + 2 = -2'],
+            decision: {
+              condition: 'Is -2 < 0?',
+              conditionMet: true,
+              action: 'Sum too small, move left pointer right'
+            }
+          },
+          {
+            id: 9,
+            codeLine: 16,
+            description: 'Move left pointer right: left++ (3 to 4, now value 1).',
+            phase: 'move',
+            pointers: { left: 4, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [0, 4, 5],
+            output: ['Sum = -4 + 1 + 2 = -1']
+          },
+          {
+            id: 10,
+            codeLine: 10,
+            description: 'Calculate sum: -4 + 1 + 2 = -1. Still too small, but left will meet right.',
+            phase: 'compare',
+            pointers: { left: 4, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [0, 4, 5],
+            output: ['Sum = -4 + 1 + 2 = -1'],
+            decision: {
+              condition: 'Is -1 < 0?',
+              conditionMet: true,
+              action: 'Sum too small, move left pointer right'
+            }
+          },
+          {
+            id: 11,
+            codeLine: 16,
+            description: 'left++ makes left=5, which equals right. Inner loop ends for i=0.',
+            phase: 'move',
+            pointers: { left: 5, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [0, 5],
+            output: ['No triplet found with -4']
+          },
+          {
+            id: 12,
+            codeLine: 4,
+            description: 'Move to i=1 (value -1). Find two numbers that sum to 1.',
+            phase: 'init',
+            pointers: { left: -1, right: -1 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [1],
+            output: ['Fixed: nums[1] = -1', 'Need: left + right = 1']
+          },
+          {
+            id: 13,
+            codeLine: 6,
+            description: 'Initialize left=2 (value -1) and right=5 (value 2).',
+            phase: 'init',
+            pointers: { left: 2, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [1, 2, 5],
+            output: ['Fixed: -1', 'left=2, right=5']
+          },
+          {
+            id: 14,
+            codeLine: 10,
+            description: 'Calculate sum: -1 + (-1) + 2 = 0. Found a triplet!',
+            phase: 'compare',
+            pointers: { left: 2, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [1, 2, 5],
+            output: ['Sum = -1 + (-1) + 2 = 0'],
+            decision: {
+              condition: 'Is 0 === 0?',
+              conditionMet: true,
+              action: 'Found triplet! Add to result, move left and skip duplicates'
+            }
+          },
+          {
+            id: 15,
+            codeLine: 12,
+            description: 'Add [-1, -1, 2] to result. Move left pointer and skip duplicates.',
+            phase: 'move',
+            pointers: { left: 3, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [1, 3, 5],
+            output: ['Result: [[-1, -1, 2]]', 'left moved to 3']
+          },
+          {
+            id: 16,
+            codeLine: 10,
+            description: 'Calculate sum: -1 + 0 + 2 = 1. Too large.',
+            phase: 'compare',
+            pointers: { left: 3, right: 5 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [1, 3, 5],
+            output: ['Sum = -1 + 0 + 2 = 1'],
+            decision: {
+              condition: 'Is 1 > 0?',
+              conditionMet: true,
+              action: 'Sum too large, move right pointer left'
+            }
+          },
+          {
+            id: 17,
+            codeLine: 18,
+            description: 'Move right pointer left: right-- (5 to 4, now value 1).',
+            phase: 'move',
+            pointers: { left: 3, right: 4 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [1, 3, 4],
+            output: ['Result: [[-1, -1, 2]]']
+          },
+          {
+            id: 18,
+            codeLine: 10,
+            description: 'Calculate sum: -1 + 0 + 1 = 0. Found another triplet!',
+            phase: 'compare',
+            pointers: { left: 3, right: 4 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [1, 3, 4],
+            output: ['Sum = -1 + 0 + 1 = 0'],
+            decision: {
+              condition: 'Is 0 === 0?',
+              conditionMet: true,
+              action: 'Found triplet! Add to result'
+            }
+          },
+          {
+            id: 19,
+            codeLine: 12,
+            description: 'Add [-1, 0, 1] to result. Move pointers.',
+            phase: 'move',
+            pointers: { left: 4, right: 4 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [1, 4],
+            output: ['Result: [[-1, -1, 2], [-1, 0, 1]]']
+          },
+          {
+            id: 20,
+            codeLine: 9,
+            description: 'left=4, right=4. Pointers meet, inner loop ends for i=1.',
+            phase: 'compare',
+            pointers: { left: 4, right: 4 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [1],
+            output: ['Result: [[-1, -1, 2], [-1, 0, 1]]']
+          },
+          {
+            id: 21,
+            codeLine: 5,
+            description: 'i=2 has value -1, same as i=1. Skip to avoid duplicate triplets.',
+            phase: 'compare',
+            pointers: { left: -1, right: -1 },
+            array: [-4, -1, -1, 0, 1, 2],
+            highlightedCells: [2],
+            output: ['Skip: nums[2] === nums[1]'],
+            decision: {
+              condition: 'Is nums[2] === nums[1]?',
+              conditionMet: true,
+              action: 'Skip duplicate to avoid duplicate triplets'
+            }
+          },
+          {
+            id: 22,
+            codeLine: 4,
+            description: 'Remaining i values (3,4) would only have 1-2 elements right, not enough for triplets.',
+            phase: 'done',
+            pointers: { left: -1, right: -1 },
+            array: [-4, -1, -1, 0, 1, 2],
+            output: ['Result: [[-1, -1, 2], [-1, 0, 1]]', 'return result']
+          }
+        ],
+        insight: 'Fix one element, use two pointers for the other two. Sorting enables O(n^2) instead of O(n^3) and makes duplicate skipping simple.'
+      }
+    ],
     advanced: []
   },
   'same-direction': {
     beginner: [],
-    intermediate: [],
+    intermediate: [
+      {
+        id: 'remove-duplicates',
+        title: 'Remove Duplicates',
+        variant: 'same-direction',
+        code: [
+          'function removeDuplicates(nums) {',
+          '  if (nums.length === 0) return 0',
+          '  let slow = 0',
+          '',
+          '  for (let fast = 1; fast < nums.length; fast++) {',
+          '    if (nums[fast] !== nums[slow]) {',
+          '      slow++',
+          '      nums[slow] = nums[fast]',
+          '    }',
+          '  }',
+          '  return slow + 1',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Remove duplicates from sorted array in-place. Return the count of unique elements.',
+            phase: 'init',
+            pointers: { left: -1, right: -1 },
+            array: [0, 0, 1, 1, 1, 2, 2, 3, 3, 4],
+            output: ['Input: [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]']
+          },
+          {
+            id: 1,
+            codeLine: 2,
+            description: 'Initialize slow pointer at 0. Slow marks the last position of unique elements.',
+            phase: 'init',
+            pointers: { left: 0, right: -1 },
+            array: [0, 0, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [0],
+            output: ['slow=0 (write position)']
+          },
+          {
+            id: 2,
+            codeLine: 4,
+            description: 'Initialize fast pointer at 1. Fast scans ahead looking for new unique values.',
+            phase: 'init',
+            pointers: { left: 0, right: 1 },
+            array: [0, 0, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [0, 1],
+            output: ['slow=0, fast=1']
+          },
+          {
+            id: 3,
+            codeLine: 5,
+            description: 'Compare nums[fast]=0 with nums[slow]=0.',
+            phase: 'compare',
+            pointers: { left: 0, right: 1 },
+            array: [0, 0, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [0, 1],
+            output: ['Comparing: nums[1]=0 vs nums[0]=0'],
+            decision: {
+              condition: 'Is nums[fast] !== nums[slow]?',
+              conditionMet: false,
+              action: 'Same value, just advance fast (skip duplicate)'
+            }
+          },
+          {
+            id: 4,
+            codeLine: 4,
+            description: 'fast++ (1 to 2). Fast advances to find next unique value.',
+            phase: 'move',
+            pointers: { left: 0, right: 2 },
+            array: [0, 0, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [0, 2],
+            output: ['slow=0, fast=2']
+          },
+          {
+            id: 5,
+            codeLine: 5,
+            description: 'Compare nums[fast]=1 with nums[slow]=0.',
+            phase: 'compare',
+            pointers: { left: 0, right: 2 },
+            array: [0, 0, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [0, 2],
+            output: ['Comparing: nums[2]=1 vs nums[0]=0'],
+            decision: {
+              condition: 'Is nums[fast] !== nums[slow]?',
+              conditionMet: true,
+              action: 'New value found! Increment slow and copy value'
+            }
+          },
+          {
+            id: 6,
+            codeLine: 6,
+            description: 'slow++ (0 to 1). Copy nums[fast]=1 to nums[slow]=nums[1].',
+            phase: 'move',
+            pointers: { left: 1, right: 2 },
+            array: [0, 1, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [1, 2],
+            output: ['Copied: nums[1] = 1', 'Unique so far: [0, 1]']
+          },
+          {
+            id: 7,
+            codeLine: 4,
+            description: 'fast++ (2 to 3). Continue scanning.',
+            phase: 'move',
+            pointers: { left: 1, right: 3 },
+            array: [0, 1, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [1, 3],
+            output: ['slow=1, fast=3']
+          },
+          {
+            id: 8,
+            codeLine: 5,
+            description: 'Compare nums[fast]=1 with nums[slow]=1.',
+            phase: 'compare',
+            pointers: { left: 1, right: 3 },
+            array: [0, 1, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [1, 3],
+            output: ['Comparing: nums[3]=1 vs nums[1]=1'],
+            decision: {
+              condition: 'Is nums[fast] !== nums[slow]?',
+              conditionMet: false,
+              action: 'Same value, skip duplicate'
+            }
+          },
+          {
+            id: 9,
+            codeLine: 4,
+            description: 'fast++ (3 to 4). Skip duplicate.',
+            phase: 'move',
+            pointers: { left: 1, right: 4 },
+            array: [0, 1, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [1, 4],
+            output: ['slow=1, fast=4']
+          },
+          {
+            id: 10,
+            codeLine: 5,
+            description: 'Compare nums[fast]=1 with nums[slow]=1. Still a duplicate.',
+            phase: 'compare',
+            pointers: { left: 1, right: 4 },
+            array: [0, 1, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [1, 4],
+            output: ['Comparing: nums[4]=1 vs nums[1]=1'],
+            decision: {
+              condition: 'Is nums[fast] !== nums[slow]?',
+              conditionMet: false,
+              action: 'Same value, skip duplicate'
+            }
+          },
+          {
+            id: 11,
+            codeLine: 4,
+            description: 'fast++ (4 to 5). Continue scanning.',
+            phase: 'move',
+            pointers: { left: 1, right: 5 },
+            array: [0, 1, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [1, 5],
+            output: ['slow=1, fast=5']
+          },
+          {
+            id: 12,
+            codeLine: 5,
+            description: 'Compare nums[fast]=2 with nums[slow]=1.',
+            phase: 'compare',
+            pointers: { left: 1, right: 5 },
+            array: [0, 1, 1, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [1, 5],
+            output: ['Comparing: nums[5]=2 vs nums[1]=1'],
+            decision: {
+              condition: 'Is nums[fast] !== nums[slow]?',
+              conditionMet: true,
+              action: 'New value found! Increment slow and copy value'
+            }
+          },
+          {
+            id: 13,
+            codeLine: 6,
+            description: 'slow++ (1 to 2). Copy nums[fast]=2 to nums[slow]=nums[2].',
+            phase: 'move',
+            pointers: { left: 2, right: 5 },
+            array: [0, 1, 2, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [2, 5],
+            output: ['Copied: nums[2] = 2', 'Unique so far: [0, 1, 2]']
+          },
+          {
+            id: 14,
+            codeLine: 4,
+            description: 'fast++ (5 to 6). Continue scanning.',
+            phase: 'move',
+            pointers: { left: 2, right: 6 },
+            array: [0, 1, 2, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [2, 6],
+            output: ['slow=2, fast=6']
+          },
+          {
+            id: 15,
+            codeLine: 5,
+            description: 'Compare nums[fast]=2 with nums[slow]=2. Duplicate.',
+            phase: 'compare',
+            pointers: { left: 2, right: 6 },
+            array: [0, 1, 2, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [2, 6],
+            output: ['Comparing: nums[6]=2 vs nums[2]=2'],
+            decision: {
+              condition: 'Is nums[fast] !== nums[slow]?',
+              conditionMet: false,
+              action: 'Same value, skip duplicate'
+            }
+          },
+          {
+            id: 16,
+            codeLine: 4,
+            description: 'fast++ (6 to 7). Continue scanning.',
+            phase: 'move',
+            pointers: { left: 2, right: 7 },
+            array: [0, 1, 2, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [2, 7],
+            output: ['slow=2, fast=7']
+          },
+          {
+            id: 17,
+            codeLine: 5,
+            description: 'Compare nums[fast]=3 with nums[slow]=2.',
+            phase: 'compare',
+            pointers: { left: 2, right: 7 },
+            array: [0, 1, 2, 1, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [2, 7],
+            output: ['Comparing: nums[7]=3 vs nums[2]=2'],
+            decision: {
+              condition: 'Is nums[fast] !== nums[slow]?',
+              conditionMet: true,
+              action: 'New value found! Increment slow and copy value'
+            }
+          },
+          {
+            id: 18,
+            codeLine: 6,
+            description: 'slow++ (2 to 3). Copy nums[fast]=3 to nums[slow]=nums[3].',
+            phase: 'move',
+            pointers: { left: 3, right: 7 },
+            array: [0, 1, 2, 3, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [3, 7],
+            output: ['Copied: nums[3] = 3', 'Unique so far: [0, 1, 2, 3]']
+          },
+          {
+            id: 19,
+            codeLine: 4,
+            description: 'fast++ (7 to 8). Continue scanning.',
+            phase: 'move',
+            pointers: { left: 3, right: 8 },
+            array: [0, 1, 2, 3, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [3, 8],
+            output: ['slow=3, fast=8']
+          },
+          {
+            id: 20,
+            codeLine: 5,
+            description: 'Compare nums[fast]=3 with nums[slow]=3. Duplicate.',
+            phase: 'compare',
+            pointers: { left: 3, right: 8 },
+            array: [0, 1, 2, 3, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [3, 8],
+            output: ['Comparing: nums[8]=3 vs nums[3]=3'],
+            decision: {
+              condition: 'Is nums[fast] !== nums[slow]?',
+              conditionMet: false,
+              action: 'Same value, skip duplicate'
+            }
+          },
+          {
+            id: 21,
+            codeLine: 4,
+            description: 'fast++ (8 to 9). Continue scanning.',
+            phase: 'move',
+            pointers: { left: 3, right: 9 },
+            array: [0, 1, 2, 3, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [3, 9],
+            output: ['slow=3, fast=9']
+          },
+          {
+            id: 22,
+            codeLine: 5,
+            description: 'Compare nums[fast]=4 with nums[slow]=3.',
+            phase: 'compare',
+            pointers: { left: 3, right: 9 },
+            array: [0, 1, 2, 3, 1, 2, 2, 3, 3, 4],
+            highlightedCells: [3, 9],
+            output: ['Comparing: nums[9]=4 vs nums[3]=3'],
+            decision: {
+              condition: 'Is nums[fast] !== nums[slow]?',
+              conditionMet: true,
+              action: 'New value found! Increment slow and copy value'
+            }
+          },
+          {
+            id: 23,
+            codeLine: 6,
+            description: 'slow++ (3 to 4). Copy nums[fast]=4 to nums[slow]=nums[4].',
+            phase: 'move',
+            pointers: { left: 4, right: 9 },
+            array: [0, 1, 2, 3, 4, 2, 2, 3, 3, 4],
+            highlightedCells: [4, 9],
+            output: ['Copied: nums[4] = 4', 'Unique so far: [0, 1, 2, 3, 4]']
+          },
+          {
+            id: 24,
+            codeLine: 4,
+            description: 'fast would be 10, but array length is 10. Loop ends.',
+            phase: 'compare',
+            pointers: { left: 4, right: 9 },
+            array: [0, 1, 2, 3, 4, 2, 2, 3, 3, 4],
+            highlightedCells: [4],
+            output: ['Loop complete']
+          },
+          {
+            id: 25,
+            codeLine: 10,
+            description: 'Return slow + 1 = 5. First 5 elements are unique: [0, 1, 2, 3, 4].',
+            phase: 'done',
+            pointers: { left: 4, right: -1 },
+            array: [0, 1, 2, 3, 4, 2, 2, 3, 3, 4],
+            highlightedCells: [0, 1, 2, 3, 4],
+            output: ['Unique elements: [0, 1, 2, 3, 4]', 'return 5']
+          }
+        ],
+        insight: 'Slow pointer marks the end of unique elements; fast scans ahead finding new values. This in-place approach uses O(1) extra space.'
+      }
+    ],
     advanced: []
   },
   partition: {
@@ -477,9 +1394,14 @@ export function TwoPointersViz() {
   const getPointerLabel = (index: number) => {
     if (!currentStep) return null
     const { left, right } = currentStep.pointers
-    if (left === index && right === index) return 'L,R'
-    if (left === index) return 'L'
-    if (right === index) return 'R'
+    const isSameDirection = variant === 'same-direction'
+    const leftLabel = isSameDirection ? 'slow' : 'L'
+    const rightLabel = isSameDirection ? 'fast' : 'R'
+    if (left === index && right === index) {
+      return isSameDirection ? 'slow,fast' : 'L,R'
+    }
+    if (left === index) return leftLabel
+    if (right === index) return rightLabel
     return null
   }
 
