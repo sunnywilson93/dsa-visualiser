@@ -13,18 +13,18 @@ const footerLinks = {
   patterns: {
     title: 'Patterns',
     links: [
-      { label: 'Two Pointers', href: '/patterns/two-pointers' },
-      { label: 'Hash Map', href: '/patterns/hash-map' },
-      { label: 'Bit Manipulation', href: '/patterns/bit-manipulation' },
+      { label: 'Two Pointers', href: '/concepts/dsa/patterns/two-pointers' },
+      { label: 'Hash Map', href: '/concepts/dsa/patterns/hash-map' },
+      { label: 'Bit Manipulation', href: '/concepts/dsa/patterns/bit-manipulation' },
     ],
   },
   practice: {
     title: 'Practice',
     links: [
       { label: 'Arrays & Hashing', href: '/arrays-hashing' },
-      { label: 'Closures', href: '/closures' },
-      { label: 'Promises', href: '/promises' },
-      { label: 'DSA Problems', href: '/dsa' },
+      { label: 'Closures', href: '/concepts/closures' },
+      { label: 'Promises', href: '/concepts/promises' },
+      { label: 'DSA Problems', href: '/concepts/dsa' },
     ],
   },
 }
