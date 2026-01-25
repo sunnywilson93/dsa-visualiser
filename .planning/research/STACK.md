@@ -1,229 +1,236 @@
-# Stack Research: DSA Visualizations
+# Stack Research: Polish & Production
 
-**Project:** DSA Visualiser - Algorithm Pattern Upgrades
-**Researched:** 2026-01-24
+**Project:** DSA Visualizer - Polish & Production Features
+**Researched:** 2026-01-25
+**Focus:** Responsive design, SEO optimization, cross-linking
 **Confidence:** HIGH
 
-## Recommendation
+## Executive Summary
 
-**No new dependencies needed.** The existing stack (React 18, Framer Motion 11, Lucide React, CSS Modules) is fully capable of supporting enhanced DSA algorithm visualizations. The upgrade path is architectural (applying proven patterns from JS Concepts), not technological.
+The existing stack (Next.js 14, React 18, CSS Modules, Framer Motion, Zustand) already provides robust foundations for the polish features. **No new dependencies are required.** All needed capabilities exist in the current stack or as built-in Next.js features.
 
-## Current Stack Analysis
+---
 
-### What We Have
+## Recommended Additions
 
-| Technology | Version | Current Use | DSA Viz Applicability |
-|------------|---------|-------------|----------------------|
-| **framer-motion** | 11.18.2 | All animations in JS Concepts, ConceptPanel components | Fully sufficient - spring animations, AnimatePresence, layout animations all work |
-| **React** | 18.3.1 | Component architecture | Functional components with hooks pattern proven |
-| **lucide-react** | 0.400.0 | Icons (Play, Pause) | May need additional icons for DSA (ArrowRight, ArrowLeft, Hash, Binary) |
-| **CSS Modules** | native | Scoped styling | Pattern well-established |
-| **TypeScript** | 5.5.0 | Type safety | Types already defined in `types/index.ts` |
+### 1. Dynamic OG Image Generation (Built-in)
 
-### Proven Patterns Already Working
+**What:** Use Next.js built-in `ImageResponse` from `next/og` for dynamic OpenGraph images.
 
-1. **SharedViz Components** (`src/components/SharedViz/`)
-   - `CodePanel` - Code display with line highlighting
-   - `StepProgress` - Step counter with description
-   - `StepControls` - Navigation (Prev/Next/Reset/Play)
-   - `useAutoPlay` - Auto-advance hook
+**Why:** The project currently has a static SVG OG image (`public/og-image.svg`), but OpenGraph requires PNG/JPG format. Social media platforms (Twitter, LinkedIn, Facebook) need properly formatted images to display rich previews. Dynamic generation allows unique images per page.
 
-2. **Animation Patterns** (from `ArraysBasicsViz.tsx`, `EventLoopViz.tsx`)
-   - `motion.div` with spring transitions for element entry/exit
-   - `AnimatePresence` with `mode="popLayout"` for list animations
-   - `whileHover`, `whileTap` for interactions
-   - Layout animations for smooth reordering
-
-3. **Multi-Level Examples** (from `ArraysBasicsViz.tsx`)
-   - Beginner/Intermediate/Advanced difficulty selection
-   - Multiple examples per level
-   - Step-through with state management
-
-### Existing DSA Components (Need Upgrade)
-
-| Component | Current State | Gap |
-|-----------|--------------|-----|
-| `TwoPointersConcept.tsx` | Basic array + pointers | No difficulty levels, no SharedViz integration, single example |
-| `HashMapConcept.tsx` | Array + hash map entries | No difficulty levels, limited examples |
-| `BitManipulationConcept.tsx` | Binary representation | No difficulty levels, limited interactivity |
-
-## Additions Needed
-
-### Required: None
-
-The existing stack handles all DSA visualization needs:
-
-| DSA Visualization Need | Existing Solution |
-|-----------------------|-------------------|
-| Array with pointer animations | `motion.div` with spring (already in TwoPointersConcept) |
-| Binary number display | Already implemented in BitManipulationConcept |
-| Hash table visualization | Already implemented in HashMapConcept |
-| Step-through navigation | SharedViz StepControls |
-| Difficulty levels | Pattern from ArraysBasicsViz |
-| Auto-play | useAutoPlay hook |
-
-### Optional Enhancement: Icon Additions
-
-Lucide React already installed. May use additional icons for DSA context:
+**Implementation:**
+- Create `opengraph-image.tsx` files in dynamic route folders
+- Use `ImageResponse` constructor from `next/og`
+- No npm install required - built into Next.js 14
 
 ```typescript
-// Already available in lucide-react, just need to import
-import {
-  ArrowRight, ArrowLeft,     // Pointer direction
-  ArrowLeftRight,            // Converging pointers
-  Hash,                      // Hash map operations
-  Binary,                    // Bit manipulation
-  Crosshair                  // Current position
-} from 'lucide-react'
-```
+// Example: src/app/concepts/[conceptId]/opengraph-image.tsx
+import { ImageResponse } from 'next/og'
 
-**Verdict:** No `npm install` required.
+export const size = { width: 1200, height: 630 }
+export const contentType = 'image/png'
 
-## What NOT to Add
-
-### Rejected: D3.js or Similar
-
-**Why considered:** Complex graph/tree visualizations
-**Why rejected:**
-- Framer Motion handles all current needs (arrays, hash maps, binary)
-- D3 adds 280KB+ bundle size
-- Learning curve for team
-- Existing patterns prove React + Framer Motion sufficient
-- No tree/graph structures in current DSA scope (Two Pointers, Hash Map, Bit Manipulation)
-
-### Rejected: Canvas/WebGL Libraries
-
-**Why considered:** Performance for large visualizations
-**Why rejected:**
-- DSA examples are small (< 20 elements typically)
-- DOM-based animations perform fine
-- Accessibility better with DOM elements
-- Existing components prove this works
-
-### Rejected: Animation State Libraries (XState, Zustand for animation)
-
-**Why considered:** Complex animation sequencing
-**Why rejected:**
-- `useState` + `useAutoPlay` hook handle state fine
-- Framer Motion's built-in sequencing sufficient
-- Would add complexity without benefit
-
-### Rejected: CSS Animation Libraries (Tailwind Animate, Animate.css)
-
-**Why considered:** Quick animation presets
-**Why rejected:**
-- Framer Motion already provides spring physics (better UX)
-- CSS Modules pattern established
-- Would create inconsistency with existing components
-
-## Integration Points
-
-### How DSA Viz Will Use Existing SharedViz
-
-```typescript
-// Example: Enhanced TwoPointersConcept structure
-import { CodePanel, StepProgress, StepControls, useAutoPlay } from '@/components/SharedViz'
-
-function TwoPointersViz() {
-  // Same pattern as ArraysBasicsViz
-  const [level, setLevel] = useState<'beginner' | 'intermediate' | 'advanced'>('beginner')
-  const [exampleIndex, setExampleIndex] = useState(0)
-  const [stepIndex, setStepIndex] = useState(0)
-
-  // Auto-play integration
-  const { isPlaying, toggle } = useAutoPlay({
-    onTick: () => setStepIndex(s => s + 1),
-    canAdvance: stepIndex < currentExample.steps.length - 1
-  })
-
-  return (
-    <>
-      {/* Level selector - same pattern as ArraysBasicsViz */}
-      <LevelSelector level={level} onChange={handleLevelChange} />
-
-      {/* Code panel - from SharedViz */}
-      <CodePanel code={currentExample.code} highlightedLine={currentStep.codeLine} />
-
-      {/* DSA-specific visualization - ENHANCED existing component */}
-      <TwoPointersVisualization step={currentStep} type={currentExample.pattern} />
-
-      {/* Step controls - from SharedViz */}
-      <StepProgress current={stepIndex} total={steps.length} description={description} />
-      <StepControls
-        onPrev={() => setStepIndex(s => s - 1)}
-        onNext={() => setStepIndex(s => s + 1)}
-        onReset={() => setStepIndex(0)}
-        canPrev={stepIndex > 0}
-        canNext={stepIndex < steps.length - 1}
-        showPlayPause
-        isPlaying={isPlaying}
-        onPlayPause={toggle}
-      />
-    </>
+export default async function Image({ params }: { params: { conceptId: string } }) {
+  return new ImageResponse(
+    <div style={{ /* flexbox layout */ }}>
+      {/* JSX for OG image */}
+    </div>,
+    { ...size }
   )
 }
 ```
 
-### Data Structure Reuse
+**Limitations (documented):**
+- Only flexbox layouts supported
+- Limited CSS subset (no grid, no complex selectors)
+- Maximum 500KB bundle size
+- Only ttf, otf, woff fonts
 
-The existing `ConceptStep` and `ConceptVisualState` types in `types/index.ts` already support:
+**Confidence:** HIGH (verified via [Next.js Official Documentation](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image))
 
-```typescript
-// Already defined and working
-interface ConceptVisualState {
-  array?: (number | string)[]        // For Two Pointers
-  pointers?: Record<string, number>  // For pointer positions
-  highlights?: number[]              // For highlighting elements
-  binary?: BinaryConceptState        // For Bit Manipulation
-  hashMap?: HashMapVisualState       // For Hash Map
-  annotations?: string[]             // For explanatory text
-  result?: number | string | boolean // For final answer
+---
+
+### 2. Responsive Design (No New Tools)
+
+**What:** Continue using CSS Modules with media queries; optionally add container queries for component-level responsiveness.
+
+**Why:** The project already has responsive patterns in place (see `NavBar.module.css`, `page.module.css`). Container queries are now baseline-supported (since 2023) and complement media queries well for component-based design.
+
+**Current State (already implemented):**
+- Media queries at 1024px, 768px, 640px, 480px, 400px breakpoints
+- Responsive grids using `grid-template-columns`
+- Text truncation and hiding on mobile
+- NavBar responsive behavior (logo text hidden, search width reduced)
+
+**Enhancement Path:**
+```css
+/* Container queries for component-level responsiveness */
+.vizContainer {
+  container-type: inline-size;
+}
+
+@container (max-width: 400px) {
+  .cell {
+    width: 32px;
+    height: 32px;
+  }
 }
 ```
 
-### Animation Pattern Reuse
+**Do NOT add Tailwind CSS.** The project uses CSS Modules consistently (80+ module files). Converting would be disruptive and unnecessary.
 
-From `ArraysBasicsViz.tsx` - apply to DSA components:
+**Confidence:** HIGH (CSS container queries have baseline support since 2023, per [LogRocket Container Queries 2026](https://blog.logrocket.com/container-queries-2026/))
 
+---
+
+### 3. SEO Metadata (Already Implemented)
+
+**What:** The project already has comprehensive SEO infrastructure.
+
+**Current Implementation (verified in codebase):**
+- Root `layout.tsx`: Full Metadata object with OpenGraph, Twitter cards, JSON-LD structured data
+- Dynamic `generateMetadata` in: `[conceptId]/page.tsx`, `[problemId]/page.tsx`, `[categoryId]/page.tsx`
+- `sitemap.ts`: Generates sitemap for all routes
+- `robots.ts`: Robots configuration
+- Structured data: FAQPage, BreadcrumbList, Article schemas
+- `StructuredData` component for page-specific schema injection
+
+**What's Missing:**
+- Dynamic OG images (addressed above)
+- Consistent page-specific Twitter images
+
+**No new libraries needed.**
+
+**Confidence:** HIGH (directly verified from codebase)
+
+---
+
+### 4. Cross-Linking Infrastructure (Partially Implemented)
+
+**What:** The project has `relatedProblems` and `relatedConcepts` data fields. Need UI components to display them.
+
+**Current State:**
+- `Concept` type has `relatedProblems?: string[]`
+- `getRelatedConcepts()` and `getRelatedProblems()` functions exist in `concepts.ts`
+- DSA patterns have `relatedConcepts` field
+- Data structures exist but UI rendering is incomplete
+
+**What's Needed (no new dependencies):**
+1. `RelatedContent` component using existing patterns
+2. `CrossLinkCard` component for consistent styling
+3. Populate `relatedProblems` and `relatedConcepts` data fields across all content
+
+**Implementation Pattern:**
 ```typescript
-// Entry animation for array elements
-<motion.div
-  initial={{ opacity: 0, scale: 0.9 }}
-  animate={{ opacity: 1, scale: 1 }}
-  exit={{ opacity: 0, scale: 0.8 }}
-  layout  // Smooth position changes
->
+// src/components/RelatedContent/RelatedContent.tsx
+interface RelatedContentProps {
+  concepts?: string[]
+  problems?: string[]
+}
 
-// Highlight animation (already in TwoPointersConcept)
-animate={{
-  scale: isHighlighted ? 1.05 : 1,
-  boxShadow: isHighlighted
-    ? '0 0 12px rgba(96, 165, 250, 0.5)'
-    : '0 1px 2px rgba(0, 0, 0, 0.1)',
-}}
-transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-
-// Pointer movement (already working)
-<motion.div
-  initial={{ y: -10, opacity: 0 }}
-  animate={{ y: 0, opacity: 1 }}
-  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
->
+export function RelatedContent({ concepts, problems }: RelatedContentProps) {
+  // Use existing Link, motion components
+  // Style with CSS Modules
+}
 ```
+
+**Confidence:** HIGH (verified existing infrastructure in `concepts.ts`, `dsaConcepts.ts`, `dsaPatterns.ts`)
+
+---
+
+## Integration Points
+
+| Feature | Integrates With | Notes |
+|---------|-----------------|-------|
+| OG Images | `generateMetadata`, route folders | Co-located with page.tsx |
+| Responsive | Existing CSS Modules | Add container queries as enhancement |
+| Cross-links | `concepts.ts`, `dsaConcepts.ts` data | Component renders existing data fields |
+| SEO | Existing `layout.tsx`, page metadata | Already structured correctly |
+
+---
+
+## What NOT to Add
+
+### Tailwind CSS
+**Why avoid:** Project has 80+ CSS Module files with established patterns and CSS custom properties design system. Migration cost is high, benefit is zero. CSS Modules provide component scoping already.
+
+### next-seo Package
+**Why avoid:** Next.js 14 has built-in Metadata API that's already fully utilized in this codebase. `next-seo` adds redundant abstraction over native features that are already implemented.
+
+### React Responsive / react-device-detect
+**Why avoid:** CSS media queries and container queries handle responsive design better. JavaScript-based detection causes hydration mismatches with SSR and adds unnecessary bundle size.
+
+### Sharp (for OG images)
+**Why avoid:** `ImageResponse` from `next/og` handles all OG image needs without additional dependencies. Sharp is for general image processing which isn't required.
+
+### Schema.org / react-schemaorg Libraries
+**Why avoid:** Project already implements JSON-LD structured data manually in `layout.tsx` and via `StructuredData` component. No additional abstraction needed.
+
+### CSS-in-JS Libraries (styled-components, emotion)
+**Why avoid:** CSS Modules are already established with 80+ files. Adding another styling solution would create inconsistency and increase bundle size.
+
+---
+
+## Version Verification
+
+| Technology | Current Version | Status | Notes |
+|------------|-----------------|--------|-------|
+| Next.js | ^14.2.0 | Current | Has built-in ImageResponse |
+| React | ^18.3.1 | Current | No upgrade needed |
+| Framer Motion | ^11.0.0 | Current | All animation needs met |
+| TypeScript | ~5.5.0 | Current | Full type safety |
+
+All versions are current and support the required features. No upgrades needed.
+
+---
+
+## Feature-Specific Stack Summary
+
+### Responsive Design
+| Need | Solution | Source |
+|------|----------|--------|
+| Viewport-based layouts | Media queries (existing) | CSS Modules |
+| Component-based layouts | Container queries (CSS native) | No library |
+| Smooth transitions | Framer Motion (existing) | Already installed |
+
+### SEO Optimization
+| Need | Solution | Source |
+|------|----------|--------|
+| Page metadata | generateMetadata (existing) | Next.js built-in |
+| OG images | ImageResponse | next/og (built-in) |
+| Structured data | JSON-LD (existing pattern) | Manual implementation |
+| Sitemap | sitemap.ts (existing) | Next.js built-in |
+
+### Cross-Linking
+| Need | Solution | Source |
+|------|----------|--------|
+| Data structure | relatedProblems, relatedConcepts (existing) | concepts.ts |
+| UI component | New RelatedContent component | React + CSS Modules |
+| Navigation | Next.js Link (existing) | Already used |
+
+---
+
+## Summary Recommendation
+
+**Zero new npm dependencies required.**
+
+All polish & production features can be implemented with:
+1. **Built-in Next.js features:** `ImageResponse` for OG images, Metadata API for SEO
+2. **Modern CSS features:** Container queries (baseline 2023), existing media query patterns
+3. **Existing codebase patterns:** CSS Modules, React components, data structures already defined
+
+This is an ideal scenario - the existing stack is well-chosen and complete for the planned features.
+
+---
 
 ## Sources
 
-- **Codebase analysis:** Direct inspection of existing components
-- **Framer Motion docs:** Version 11 capabilities verified via Context7 (supports all needed features)
-- **package.json:** Confirmed versions and dependencies
-
-## Summary for Roadmap
-
-**Technology decisions are settled.** The upgrade work is:
-
-1. **Refactor DSA components** to use SharedViz (CodePanel, StepControls, StepProgress)
-2. **Add difficulty levels** following ArraysBasicsViz pattern
-3. **Expand step data** in algorithmConcepts.ts with multiple examples per problem
-4. **Apply animation patterns** already proven in JS Concept visualizations
-
-No stack changes. No new dependencies. Pure architectural alignment.
+- [Next.js Metadata and OG Images Documentation](https://nextjs.org/docs/app/getting-started/metadata-and-og-images)
+- [Next.js opengraph-image File Convention](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image)
+- [Next.js generateMetadata API](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
+- [Container Queries in 2026 - LogRocket](https://blog.logrocket.com/container-queries-2026/)
+- [Responsive Design Best Practices 2026 - PxlPeak](https://pxlpeak.com/blog/web-design/responsive-design-best-practices)
+- [Internal Linking Strategy Guide 2026 - IdeaMagix](https://www.ideamagix.com/blog/internal-linking-strategy-seo-guide-2026/)
+- [Internal Linking Structure 2026 - ClickRank](https://www.clickrank.ai/effective-internal-linking-structure/)
+- Project codebase analysis (package.json, layout.tsx, concepts.ts, 80+ CSS module files)

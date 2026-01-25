@@ -1,647 +1,547 @@
-# Pitfalls Research: DSA Visualizations
+# Pitfalls Research: Polish & Production
 
-**Domain:** DSA Algorithm Pattern Visualizations
-**Researched:** 2026-01-24
-**Target Patterns:** Two Pointers, Hash Map, Bit Manipulation
-**Reference:** Existing JS concept visualizations (ClosuresViz, MemoryModelViz)
-
----
-
-## Mental Model Pitfalls
-
-Incorrect mental models that learners develop from poorly designed visualizations. These are particularly dangerous because they persist and cause errors in related problems.
-
-### MM-1: "Pointers Are Markers, Not Decision-Makers"
-
-**What goes wrong:** Learners see pointer positions changing but don't understand WHY the pointer moved that direction. They memorize "left moves right when X" without understanding the underlying logic.
-
-**Root cause:** Visualizations show pointer positions as the primary element, with movement as an afterthought. The decision logic is in text descriptions, not visually connected to the state.
-
-**Consequences:**
-- Learners can replay memorized patterns but fail on slight variations
-- Cannot adapt two-pointer logic to new problems
-- Confuse when to move which pointer in interview settings
-
-**Warning signs during development:**
-- Step descriptions say "move left pointer" without showing WHY
-- Pointer movement appears to happen magically between steps
-- No visual connection between current state and movement decision
-
-**Prevention:**
-- Show the decision condition visually before the movement
-- Use annotations like "sum > target, so shrink window" ON the visualization
-- Animate the decision-making process, not just the result
-- Existing pattern to follow: ClosuresViz shows the [[Scope]] chain visually, not just the result
-
-**Which phase should address:** Phase 1 (TwoPointersConcept enhancement) - must be foundational
+**Domain:** Adding responsive design, SEO, and cross-linking to existing Next.js educational platform
+**Researched:** 2026-01-25
+**Confidence:** HIGH (verified against codebase patterns and official documentation)
 
 ---
 
-### MM-2: "Hash Map Is Magic Lookup, Not Data Structure"
+## Responsive Design Pitfalls
 
-**What goes wrong:** Learners see key-value pairs appearing and being found but don't understand that hashing converts keys to array indices. They treat HashMap as a black box with O(1) magic.
+### Pitfall 1: Monaco Editor Mobile Incompatibility (CRITICAL)
 
-**Root cause:** Visualizations show the HashMap entries panel without the underlying mechanism. No connection between "key" and "where it's stored."
+**What goes wrong:** Monaco Editor (currently used via `@monaco-editor/react`) does not support mobile browsers. Users on mobile devices experience broken or unusable code editors, with touch interactions failing and layouts breaking.
 
-**Consequences:**
-- Cannot reason about when HashMap is appropriate
-- Don't understand collision handling or why iteration order is undefined
-- Fail to recognize hash-based patterns in unfamiliar contexts
-
-**Warning signs during development:**
-- HashMap visualization shows only key:value pairs
-- No indication of bucket/slot concept
-- Lookup appears as "scan all entries" rather than "compute hash, go to location"
-
-**Prevention:**
-- Show hash function converting key to index (even simplified)
-- Display buckets/slots concept for at least one introductory step
-- Animate the "hash -> find bucket -> check entry" flow
-- Later steps can abstract to just entries, but foundation must be shown
-
-**Which phase should address:** Phase 2 (HashMap visualization) - needs bucket abstraction in early steps
-
----
-
-### MM-3: "Binary Is Just Another Number Format"
-
-**What goes wrong:** Learners see binary representations as a different way to write numbers but don't internalize that each bit is an independent flag that can be manipulated separately.
-
-**Root cause:** Visualizations show conversions (decimal to binary) but not WHY bit positions matter for the algorithm.
-
-**Consequences:**
-- Cannot predict results of bitwise operations
-- Don't recognize when bit manipulation is applicable
-- Struggle with masks, flags, and set operations
-
-**Warning signs during development:**
-- Binary display is purely informational (like "5 = 101")
-- Bit operations show before/after but not the position-by-position logic
-- Active bits highlight is decorative rather than meaningful
-
-**Prevention:**
-- Treat each bit position as a distinct visual element with meaning
-- Show bit-by-bit operation execution (AND compares position 0, then 1, then 2...)
-- Connect bit positions to problem semantics (bit 0 = "has element 0 in set")
-- Use the existing `activeBits` array to show WHICH bits matter for THIS step
-
-**Which phase should address:** Phase 2 (BitManipulation enhancement) - needs position-by-position animation
-
----
-
-### MM-4: "Algorithm Steps Are Discrete Snapshots"
-
-**What goes wrong:** Learners see each step as an isolated state rather than a continuous process. They don't understand how current state LEADS to the next decision.
-
-**Root cause:** Step-by-step visualizations create artificial boundaries. The transition logic lives in the learner's imagination rather than on screen.
-
-**Consequences:**
-- Difficulty implementing algorithms in code (can't translate states to loops)
-- Miss the invariant that connects all steps
-- Can't debug their own code by comparing to visualization
-
-**Warning signs during development:**
-- Steps feel like a slideshow rather than an execution trace
-- No visual indication of "what we're about to check"
-- Loop invariant is mentioned in text but not visually reinforced
-
-**Prevention:**
-- Show "about to compare" state before showing comparison result
-- Maintain visual consistency for the invariant across ALL steps
-- Use directional indicators (arrows, highlights) for what's NEXT
-- Existing pattern: TwoPointersConcept has `directionIndicator` but it's static, needs to predict
-
-**Which phase should address:** Phase 1 - fundamental to all patterns
-
----
-
-### MM-5: "Visualization Equals Understanding"
-
-**What goes wrong:** Learners passively watch visualizations without engaging mentally. Research shows 62.5% feel prepared after passive watching but score 45% vs 70% for active learners.
-
-**Root cause:** Visualizations are designed for viewing, not interaction. No prompts for prediction or self-testing.
-
-**Consequences:**
-- Illusion of competence without actual learning
-- Cannot reproduce the algorithm without the visualization
-- Poor retention of pattern recognition
-
-**Warning signs during development:**
-- Visualization can be watched start-to-finish without pause
-- No questions or prediction prompts
-- "Next" button requires no thought
-
-**Prevention:**
-- Future: Add prediction prompts ("What will the next state be?")
-- Now: Ensure descriptions explain WHY, not just WHAT
-- Design step titles that frame as questions ("Check Sum" -> "Is sum == target?")
-- Longer pauses on decision points vs mechanical transitions
-
-**Which phase should address:** Phase 3 (polish) - interaction enhancements
-
----
-
-## Technical Pitfalls
-
-Implementation mistakes when building DSA visualizations.
-
-### T-1: Animation Timing Obscures Logic
-
-**What goes wrong:** Fast animations make changes hard to follow. Simultaneous animations hide causality (A causes B appears as A and B happen together).
-
-**Root cause:** Using default Framer Motion timing for all transitions. Not considering that learners need to SEE the sequence.
-
-**Consequences:**
-- Learners miss important state changes
-- Cannot correlate description with visual change
-- Replay button used excessively (sign of unclear animation)
-
-**Warning signs during development:**
-- Multiple elements animate simultaneously
-- Animation completes before description is read
-- Elements "pop" into place rather than flowing
-
-**Prevention:**
-- Use staggered delays for sequential changes
-- Decision highlight first (200ms), then change (300ms), then result highlight
-- Match animation timing to reading speed of descriptions
-- Test at 0.5x speed to verify sequence is clear
-
-**Existing pattern:** HashMapConcept uses `delay: entry.isNew ? 0.1 : 0` - extend this pattern
-
-**Which phase should address:** All phases - per-component timing review
-
----
-
-### T-2: Pointer Collision Visual Confusion
-
-**What goes wrong:** When two pointers occupy the same index, the visualization breaks or becomes unreadable. Labels overlap, arrows cross.
-
-**Root cause:** TwoPointersConcept stacks multiple pointers vertically via `pointersByIndex`, but doesn't handle dense scenarios well.
-
-**Current code pattern:**
-```typescript
-// Group pointers by index for rendering
-const pointersByIndex: Record<number, string[]> = {}
-Object.entries(pointers).forEach(([name, index]) => {
-  if (!pointersByIndex[index]) pointersByIndex[index] = []
-  pointersByIndex[index].push(name)
-})
-```
-
-**Consequences:**
-- "slow" and "fast" meeting is confusing visually
-- Final "pointers meet" state is the most important and least clear
-
-**Prevention:**
-- Horizontal offset for multiple pointers at same index
-- Or: Combined pointer indicator ("L,R" badge)
-- Or: Split-screen showing both pointers' perspective
-- Ensure "meeting" state is MOST clear, not least
-
-**Which phase should address:** Phase 1 - Two Pointers enhancement
-
----
-
-### T-3: Hash Map Entry Key Uniqueness Bug
-
-**What goes wrong:** Using `key={entry.key-entry.value}` for AnimatePresence creates key collisions when same key has same value across steps.
-
-**Current code:**
-```typescript
-{hashMap.entries.map((entry) => (
-  <motion.div
-    key={`${entry.key}-${entry.value}`}  // BUG: Not unique across steps
-```
-
-**Consequences:**
-- Animation glitches when entry is updated to same value
-- React reconciliation issues
-- Inconsistent visual state
-
-**Prevention:**
-- Include step ID or entry index in key: `${stepId}-${entry.key}`
-- Or use a stable entry ID generated during data creation
-
-**Which phase should address:** Phase 2 - HashMap bugfix
-
----
-
-### T-4: Binary Bit Width Inconsistency
-
-**What goes wrong:** `toBinary` function uses fixed 8-bit width, but problems may involve larger numbers or need sign representation.
-
-**Current code:**
-```typescript
-function toBinary(num: number, bits: number = 8): string {
-  if (num < 0) {
-    return (num >>> 0).toString(2).slice(-bits).padStart(bits, '1')
-  }
-  return num.toString(2).padStart(bits, '0')
-}
-```
-
-**Consequences:**
-- Numbers > 255 display incorrectly
-- 32-bit problems (reverse bits) need different width
-- Inconsistent bit width between steps confuses learners
-
-**Prevention:**
-- Calculate minimum required bits from max value in step
-- Or: Pass bit width in step data
-- Ensure consistent width within a problem's steps
-- Show "..." indicator if truncating for display
-
-**Which phase should address:** Phase 2 - BitManipulation enhancement
-
----
-
-### T-5: Missing Responsive Design for Long Arrays
-
-**What goes wrong:** Two-pointer problems with long arrays (like palindrome with 21 characters) overflow or become unreadable on smaller screens.
-
-**Evidence from current data:**
-```typescript
-array: ['a', 'm', 'a', 'n', 'a', 'p', 'l', 'a', 'n', 'a', 'c', 'a', 'n', 'a', 'l', 'p', 'a', 'n', 'a', 'm', 'a'],
-// 21 elements!
-```
-
-**Consequences:**
-- Horizontal scroll breaks visual flow
-- Pointer labels cut off
-- Mobile users cannot use visualization
-
-**Prevention:**
-- Collapse middle elements with "..." for display
-- Show zoom controls for long arrays
-- Ensure pointer positions are always visible
-- Consider chunked/windowed view for very long arrays
-
-**Which phase should address:** Phase 3 - responsive polish
-
----
-
-### T-6: State Sync Between Carousel and Visualization
-
-**What goes wrong:** ConceptCarousel manages step index, but visualization components may have internal state that doesn't reset properly.
-
-**Risk areas:**
-- Animation state persisting across step changes
-- Highlight states not clearing
-- Previous step's "result" still visible during transition
-
-**Prevention:**
-- Use step.id as key for visualization components (forces remount)
-- Or: Explicitly reset all visual state on step change
-- Test rapid step navigation (next-next-next quickly)
-
-**Which phase should address:** Phase 1 - all components
-
----
-
-## Content Pitfalls
-
-Mistakes when authoring step data for visualizations.
-
-### C-1: Step Granularity Mismatch
-
-**What goes wrong:** Steps are too coarse (skip important transitions) or too fine (tedious to navigate). Learners either miss logic or lose patience.
-
-**Existing pattern analysis:**
-- `two-sum-ii`: 5 steps for 4-element array = ~1.25 steps per element (reasonable)
-- `valid-palindrome`: 5 steps for 21-element array = skips most comparisons (too coarse)
-
-**Consequences:**
-- Coarse: Learners don't see the iterative pattern
-- Fine: 50 steps for a simple problem causes disengagement
+**Why it happens:** Monaco is designed for desktop VS Code experience. It has a 5-10MB bundle size and zero mobile optimization. The codebase currently uses Monaco in `CodeEditor.tsx` and `PlaygroundEditor.tsx`.
 
 **Warning signs:**
-- "Continue..." as step title (indicates skipped steps)
-- Steps 2 and 3 are nearly identical
-- Key insight happens between steps, not ON a step
+- Code editor doesn't respond to touch
+- Layout shifts on mobile when editor mounts
+- Extremely slow initial load on mobile devices
+- Bundle size exceeds 5MB on practice pages
 
-**Prevention:**
-- Rule of thumb: 3-7 steps for introductory problems
-- Show first iteration in detail, summarize middle, show termination
-- Every step should introduce NEW information or decision
-- "Continue" steps should at least show different state
+**Prevention strategy:**
+1. Accept read-only code display on mobile (use syntax-highlighted `<pre>` blocks)
+2. Hide code editor entirely below 768px breakpoint (existing pattern in `page.module.css` already hides `.visualizationWrapper` on mobile)
+3. If editing is required on mobile, evaluate CodeMirror 6 migration (300KB vs 5MB, native mobile support)
 
-**Which phase should address:** Content review in each phase
+**Which phase should address it:** Phase 1 (Responsive Layout) - must decide mobile editor strategy before restructuring layouts
 
----
-
-### C-2: Description-Visual Mismatch
-
-**What goes wrong:** Text description says one thing, visual shows another. For example, description mentions "index 3" but highlight shows index 2.
-
-**Example risk in existing data:**
-```typescript
-{
-  title: 'Another Unique',
-  description: 'nums[fast]=2 ≠ nums[slow]=1. Move slow, copy value.',
-  visual: {
-    array: [0, 1, 2, 1, 2],  // But this already shows the copied state!
-    pointers: { slow: 2, fast: 4 },
-```
-
-**Consequences:**
-- Learners see conflicting information
-- Trust in visualization decreases
-- Mental model becomes confused
-
-**Prevention:**
-- Description should match the CURRENT visual state exactly
-- Either: Show before state with "about to copy"
-- Or: Show after state with "just copied"
-- Never describe action while showing result
-
-**Which phase should address:** Content audit in Phase 1
+**Confidence:** HIGH - documented limitation, verified in codebase dependency
 
 ---
 
-### C-3: Annotations Overload
+### Pitfall 2: SSR Hydration Mismatch with Responsive Detection (CRITICAL)
 
-**What goes wrong:** Too many annotations clutter the visualization. Learners don't know where to look.
+**What goes wrong:** Using JavaScript-based media queries (e.g., `window.matchMedia` or `useMediaQuery` hooks) to conditionally render different component trees causes React hydration mismatches. Server renders one version, client renders another based on actual viewport.
 
-**Guideline from existing patterns:**
-- Most steps use 1 annotation: good
-- Some use 2-3: borderline
-- 4+ annotations: problematic
+**Why it happens:** SSR doesn't have access to `window` or viewport dimensions. Server must send a single HTML document. Existing codebase uses CSS media queries in `.module.css` files (correct pattern), but adding responsive logic risks introducing JS-based detection.
 
-**Prevention:**
-- Maximum 2 annotations per step
-- Primary annotation: current action/decision
-- Secondary annotation: running state (e.g., "Max so far: 49")
-- Use visual highlighting instead of text when possible
+**Warning signs:**
+- Console errors about hydration mismatch
+- Components "flickering" on initial load
+- Different content appearing after JavaScript loads
+- Layout "jumping" after hydration
 
-**Which phase should address:** Content review in each phase
+**Prevention strategy:**
+1. Continue using CSS-only media queries (existing pattern)
+2. Never conditionally render different component trees based on viewport in React
+3. Use CSS `display: none` to hide elements, not conditional React rendering
+4. If JS-based detection needed, use `useEffect` with initial SSR-safe value
 
----
+**Which phase should address it:** All phases - establish as coding standard before any responsive work
 
-### C-4: Result Shown Too Early
-
-**What goes wrong:** Final result is visible before learner understands how it was achieved. Spoils the "aha" moment.
-
-**Risk in existing data:**
-```typescript
-{
-  id: 4,
-  title: 'Pointers Meet',
-  description: 'Pointers cross - we\'re done!',
-  visual: {
-    array: ['o', 'l', 'l', 'e', 'h'],  // Already shows final result
-```
-
-**Consequences:**
-- Learners skip to end to see answer
-- Journey of understanding is lost
-- No motivation to follow intermediate steps
-
-**Prevention:**
-- Result should appear ONLY in final step
-- If result state needed earlier, highlight it but don't show `result` property
-- Consider: separate "solution" vs "verification" steps
-
-**Which phase should address:** Content structure in each phase
+**Confidence:** HIGH - documented Next.js SSR limitation
 
 ---
 
-### C-5: Missing "Why Not" Explanations
+### Pitfall 3: Breaking Desktop Three-Column Grid Layout
 
-**What goes wrong:** Visualization shows what happens but not why alternatives were rejected. Learners don't understand the decision space.
+**What goes wrong:** Responsive modifications to the practice page (`/[categoryId]/[problemId]/page.module.css`) inadvertently break the carefully tuned desktop grid layout (`grid-template-columns: 1fr 400px 320px`).
 
-**Example:** In two-sum, when sum > target, we move right pointer. But WHY not move left?
+**Why it happens:** The existing CSS already has media queries at 1200px, 1024px, and 768px. Adding new breakpoints or modifying existing ones without understanding the full cascade causes unintended side effects.
 
-**Consequences:**
-- Learners memorize correct action without understanding
-- Cannot adapt to variations
-- Fail when problem has different constraints
+**Warning signs:**
+- Desktop layout looks different after "mobile-only" changes
+- Grid columns overlap or have wrong proportions
+- Visualization panels truncated or overflowing
 
-**Prevention:**
-- Include "Why this choice?" annotations on key decisions
-- At least one step should explain the alternative: "If we moved left, sum would increase further"
-- Pattern insight should explicitly state the constraint exploited
+**Prevention strategy:**
+1. Document existing breakpoint behavior before modifications
+2. Test at all existing breakpoints (1200px, 1024px, 768px) plus mobile (480px)
+3. Use mobile-first approach for NEW styles only; don't refactor existing desktop-first code
+4. Add `/* RESPONSIVE: affects desktop */` comments when modifying shared properties
 
-**Which phase should address:** Phase 1 for foundational problems, Phase 3 for advanced
+**Which phase should address it:** Phase 1 - audit existing breakpoints first
 
----
-
-## Pattern-Specific Pitfalls
-
-### Two Pointers
-
-#### TP-1: Conflating Pattern Variants
-
-**What goes wrong:** Learners see "two pointers" and apply converging pattern to same-direction problem or vice versa.
-
-**Variants in codebase:**
-- `two-pointers-converge`: left and right move toward center
-- `two-pointers-same-dir`: slow and fast move in same direction
-- `two-pointers-partition`: three-way partition
-
-**Prevention:**
-- Visual direction indicator must be prominent (exists but subtle)
-- Explicitly state variant in first step
-- Color-code pointer types consistently across problems
-- Show warning when common misapplication occurs
-
-**Which phase should address:** Phase 1 - per-pattern variant indicators
+**Confidence:** HIGH - verified in codebase at `/src/app/[categoryId]/[problemId]/page.module.css`
 
 ---
 
-#### TP-2: Sorted Array Assumption Not Highlighted
+### Pitfall 4: Visualization Components with Fixed Pixel Dimensions
 
-**What goes wrong:** Many two-pointer problems require sorted input. Learners apply pattern to unsorted arrays.
+**What goes wrong:** Visualization components (array bars, hash table cells, pointer labels) use hardcoded pixel values that don't scale properly on smaller screens, causing overflow or illegibly small elements.
 
-**Evidence:** `two-sum-ii` works because array is sorted, but only mentioned in description, not visualized.
+**Why it happens:** Components like `ArrayVisualization.module.css` use fixed dimensions (`min-width: 32px`, `max-width: 50px`, `height: 48px`). The `TwoPointersViz.module.css` has fixed `.cell` dimensions (`width: 48px; height: 48px`).
 
-**Prevention:**
-- First step should show "PRE-CONDITION: Array must be sorted"
-- If sort is needed (like 3Sum), show sort step explicitly
-- Annotation on array: "Sorted!" or visual sorted indicator
+**Warning signs:**
+- Arrays with many elements overflow horizontally
+- Pointer labels overlap or become unreadable
+- Touch targets too small (< 44px on iOS)
 
-**Which phase should address:** Phase 1 - precondition visualization
+**Prevention strategy:**
+1. Use `clamp()` for responsive sizing: `width: clamp(32px, 8vw, 50px)`
+2. Add `overflow-x: auto` containers (already present in some places)
+3. Reduce element count on mobile or use pagination
+4. Test with arrays of 10+ elements on 320px viewport
 
----
+**Which phase should address it:** Phase 1 - after grid layout, before content styling
 
-#### TP-3: Pointer Movement Condition Not Visualized
-
-**What goes wrong:** Description says "move left if sum < target" but no visual shows the comparison happening.
-
-**Current state:** Comparison result is in annotation text only.
-
-**Prevention:**
-- Show comparison visually: `sum = 9` vs `target = 10` with < indicator
-- Highlight the comparison BEFORE showing the movement
-- Color code: green = condition met, red = condition not met
-
-**Which phase should address:** Phase 1 - comparison visualization
+**Confidence:** HIGH - verified in codebase CSS files
 
 ---
 
-### Hash Map
+### Pitfall 5: Framer Motion Layout Animations on Mobile
 
-#### HM-1: O(1) Lookup Assumption
+**What goes wrong:** Layout animations that work in desktop browsers and mobile emulators fail on actual mobile devices, especially iOS with "Reduced Motion" or "Low Power Mode" enabled.
 
-**What goes wrong:** Learners think all hash lookups are O(1), don't understand worst-case or collision impact.
+**Why it happens:** The codebase uses `framer-motion` (v11). Mobile devices may disable animations for battery/accessibility. Also, layout animations within scrollable containers require `layoutScroll` prop.
 
-**Prevention:**
-- Show at least one collision example in introductory content
-- Annotation: "O(1) average, O(n) worst case"
-- When showing lookup, mention "hash computation" even if not animated
+**Warning signs:**
+- Animations work in Chrome DevTools mobile view but not on real devices
+- Sudden jumps instead of smooth transitions
+- Carousel/expandable sections behave differently on mobile
 
-**Which phase should address:** Phase 2 - collision awareness
+**Prevention strategy:**
+1. Use `useReducedMotion` hook and provide instant fallbacks
+2. Add `layoutScroll` prop to scrollable animation containers
+3. Test on real iOS and Android devices, not just emulators
+4. Keep animations under 300ms on mobile
 
----
+**Which phase should address it:** Phase 1 - establish animation patterns early
 
-#### HM-2: Frequency Map Vs. Index Map Confusion
-
-**What goes wrong:** Sometimes HashMap stores frequency (count), sometimes stores index (position). Same visualization, different semantics.
-
-**Evidence in codebase:**
-```typescript
-// Frequency: value is count
-{ key: 'a', value: 3 }
-
-// Index: value is position
-{ key: 'a', value: 2 }  // means 'a' is at index 2
-```
-
-**Prevention:**
-- Label HashMap clearly: "Frequency Map" or "Index Map"
-- Different visual styling for different map types
-- Value should have unit: "count: 3" vs "index: 2"
-
-**Which phase should address:** Phase 2 - semantic clarity
+**Confidence:** MEDIUM - framer-motion documented issue, not verified in this codebase
 
 ---
 
-#### HM-3: Two-Phase Problems Not Clearly Delineated
+## SEO Pitfalls
 
-**What goes wrong:** Many HashMap problems have build phase and check phase. If phases aren't clear, learners don't understand the two-pass pattern.
+### Pitfall 6: Missing Page-Specific Metadata (CRITICAL)
 
-**Current support:**
-```typescript
-const phase = hashMap.phase  // 'check' or undefined
-const isCheckPhase = phase === 'check'
-```
+**What goes wrong:** Dynamic pages (category pages, problem pages) inherit generic metadata from root layout instead of having unique, descriptive titles and descriptions. Google may not index these pages properly.
 
-**Prevention:**
-- Phase transition should be explicit step
-- Visual change between phases (color shift, label)
-- Phase indicator always visible: "Phase 1: Build" / "Phase 2: Check"
+**Why it happens:** The root `layout.tsx` has excellent base metadata, but individual page files need `generateMetadata` functions. The concept pages (`/concepts/[conceptId]/page.tsx`) correctly implement this, but other dynamic routes may not.
 
-**Which phase should address:** Phase 2 - phase indicator enhancement
+**Warning signs:**
+- All pages show same title in browser tab
+- Search results show generic descriptions
+- Google Search Console reports "Duplicate meta descriptions"
 
----
+**Prevention strategy:**
+1. Audit all dynamic route pages for `generateMetadata` function
+2. Use pattern from `/concepts/[conceptId]/page.tsx` as template
+3. Each page needs: unique title (< 60 chars), unique description (< 160 chars), canonical URL
+4. Include problem name/category in titles: "Two Sum - Arrays & Hashing | JS Interview Prep"
 
-### Bit Manipulation
+**Which phase should address it:** Phase 2 (SEO) - first task
 
-#### BM-1: Operator Precedence Confusion
-
-**What goes wrong:** Learners don't understand that `n & (n-1)` is different from `n & n - 1`. Parentheses matter but aren't visualized.
-
-**Prevention:**
-- Show expression with clear parentheses
-- Evaluate subexpressions step by step
-- Highlight which operation happens first
-
-**Which phase should address:** Phase 2 - expression evaluation steps
+**Confidence:** HIGH - verified `/concepts/[conceptId]/page.tsx` has correct pattern, need to verify others
 
 ---
 
-#### BM-2: Negative Number Representation
+### Pitfall 7: Missing metadataBase Breaking OG Images
 
-**What goes wrong:** Two's complement is counterintuitive. `-1` in binary surprises learners.
+**What goes wrong:** Social sharing previews show broken images or no images. OG image URLs become relative paths that platforms can't fetch.
 
-**Current handling:**
-```typescript
-if (num < 0) {
-  return (num >>> 0).toString(2).slice(-bits).padStart(bits, '1')
-}
-```
+**Why it happens:** The root layout correctly sets `metadataBase: new URL('https://jsinterview.dev')`, but if any page overrides metadata without including base URL, OG images break.
 
-**Prevention:**
-- For introductory problems, use only positive numbers
-- If negative numbers needed, add explicit step explaining two's complement
-- Show both signed and unsigned interpretation
+**Warning signs:**
+- Twitter/LinkedIn previews show no image
+- Facebook debugger shows "Could not fetch og:image"
+- OG image URLs start with `/` instead of `https://`
 
-**Which phase should address:** Phase 2 - negative number handling
+**Prevention strategy:**
+1. Verify `metadataBase` in root layout (already correct)
+2. When using `generateMetadata`, don't override `metadataBase`
+3. Use relative paths for images in metadata (Next.js resolves against base)
+4. Test with social sharing debuggers after deployment
 
----
+**Which phase should address it:** Phase 2 (SEO) - verify during metadata implementation
 
-#### BM-3: XOR Properties Not Intuitive
-
-**What goes wrong:** XOR properties (a^a=0, a^0=a) seem magical without explanation of WHY.
-
-**Prevention:**
-- Show bit-by-bit XOR: same bits = 0, different bits = 1
-- Explicitly connect to "finding differences"
-- Annotation: "XOR finds differences between bits"
-
-**Which phase should address:** Phase 2 - XOR property visualization
+**Confidence:** HIGH - verified correct base setup exists in codebase
 
 ---
 
-#### BM-4: Shift Operation Direction Confusion
+### Pitfall 8: Client-Side Rendered Critical Content
 
-**What goes wrong:** `<<` vs `>>` direction is non-intuitive. Learners confuse which way bits move.
+**What goes wrong:** Important content (problem descriptions, concept explanations) renders only after JavaScript loads, making it invisible to search engine crawlers that don't execute JS.
 
-**Current state:** Operator badge shows "LEFT SHIFT" but bit animation doesn't show movement direction.
+**Why it happens:** Using client components (`'use client'`) for pages that contain SEO-critical text. The codebase has `*Client.tsx` components that handle interactivity, but content should be in server components.
 
-**Prevention:**
-- Animate bits sliding left/right
-- Show vacated positions filling with 0s
-- Mnemonic in annotation: "<< = multiply by 2" / ">> = divide by 2"
+**Warning signs:**
+- "View Source" shows empty content areas
+- Google Search Console shows "Crawled - currently not indexed"
+- Content appears after page load delay
 
-**Which phase should address:** Phase 2 - shift animation
+**Prevention strategy:**
+1. Keep text content in server components (the page.tsx files)
+2. Pass data as props to client components
+3. Use the existing pattern: `page.tsx` (server) renders `*Client.tsx` (client)
+4. Check `/[categoryId]/[problemId]/page.tsx` loads problem data server-side
+
+**Which phase should address it:** Phase 2 (SEO) - audit during metadata implementation
+
+**Confidence:** HIGH - verified existing pattern separates server/client correctly
 
 ---
 
-## Summary: Priority Pitfalls by Phase
+### Pitfall 9: Missing Sitemap and Robots.txt
 
-### Phase 1 (Two Pointers Enhancement)
-1. **MM-1**: Pointer decision logic must be visualized
-2. **MM-4**: Steps must show continuity, not just snapshots
-3. **T-2**: Pointer collision visual confusion
-4. **T-6**: State sync on step navigation
-5. **C-2**: Description-visual mismatch audit
-6. **TP-1**: Variant differentiation
-7. **TP-2**: Sorted precondition visualization
-8. **TP-3**: Comparison visualization before movement
+**What goes wrong:** Search engines don't discover all pages efficiently. New pages take weeks to get indexed.
 
-### Phase 2 (HashMap and BitManipulation)
-1. **MM-2**: Show hash->bucket mechanism
-2. **MM-3**: Bit position independence
-3. **T-3**: HashMap entry key uniqueness bug
-4. **T-4**: Binary bit width consistency
-5. **HM-1**: Collision awareness
-6. **HM-2**: Frequency vs index map clarity
-7. **HM-3**: Phase indicator enhancement
-8. **BM-1**: Operator precedence visualization
-9. **BM-3**: XOR property explanation
-10. **BM-4**: Shift direction animation
+**Why it happens:** No automated sitemap generation for dynamic routes. Manual sitemap quickly becomes outdated as content grows.
 
-### Phase 3 (Polish and Interaction)
-1. **MM-5**: Passive watching mitigation
-2. **T-1**: Animation timing review
-3. **T-5**: Responsive design for long arrays
-4. **C-1**: Step granularity audit
-5. **C-3**: Annotation declutter
-6. **C-4**: Result timing audit
-7. **C-5**: "Why not" explanations for key decisions
+**Warning signs:**
+- Google Search Console shows few indexed pages
+- New problems/concepts not appearing in search
+- "Discovered - currently not indexed" status
+
+**Prevention strategy:**
+1. Implement `app/sitemap.ts` using Next.js Metadata API
+2. Generate sitemap dynamically from `exampleCategories`, `concepts`, `dsaConcepts`
+3. Include `lastModified` dates for priority pages
+4. Add `app/robots.ts` allowing all crawlers
+
+**Which phase should address it:** Phase 2 (SEO) - after page metadata
+
+**Confidence:** HIGH - standard Next.js SEO requirement
+
+---
+
+### Pitfall 10: Duplicate Content from Trailing Slashes
+
+**What goes wrong:** `/concepts/closures` and `/concepts/closures/` indexed as separate pages, diluting SEO value and causing duplicate content penalties.
+
+**Why it happens:** Next.js by default treats these as different routes. Without explicit canonical URLs, both get indexed.
+
+**Warning signs:**
+- Google Search Console shows duplicate URLs
+- Same content ranking for both variants
+- Internal links inconsistent (some with slash, some without)
+
+**Prevention strategy:**
+1. Set `trailingSlash: false` in `next.config.js` (or `true` - pick one)
+2. Ensure all `<Link>` hrefs consistent
+3. Always include canonical URL in page metadata
+4. Redirect the non-canonical variant
+
+**Which phase should address it:** Phase 2 (SEO) - configuration task
+
+**Confidence:** HIGH - standard Next.js SEO configuration
+
+---
+
+## Cross-Linking Pitfalls
+
+### Pitfall 11: Orphaned Pages (No Internal Links)
+
+**What goes wrong:** New concept or problem pages have no internal links pointing to them. Search engines can't discover them, and users can't navigate to them except via direct URL.
+
+**Why it happens:** Pages added to data files but not linked from anywhere. Category pages may filter or paginate, hiding new entries.
+
+**Warning signs:**
+- Page only accessible via direct URL
+- Google Search Console shows page as "Discovered - not indexed"
+- Analytics shows zero pageviews for new content
+
+**Prevention strategy:**
+1. Every new page must be linked from at least 2 places
+2. Category pages show all items (not just featured)
+3. Add "Related concepts" sections to concept pages
+4. Add "Similar problems" to problem pages
+
+**Which phase should address it:** Phase 3 (Cross-Linking)
+
+**Confidence:** HIGH - verified some pages are deeply nested in codebase
+
+---
+
+### Pitfall 12: Generic Anchor Text ("Click Here", "Learn More")
+
+**What goes wrong:** Internal links use vague anchor text instead of descriptive keywords. Search engines can't understand what the linked page is about.
+
+**Why it happens:** Reusable "View All" or "Learn More" link patterns. Current codebase uses "View All →" which is better but still generic.
+
+**Warning signs:**
+- Same anchor text points to different pages
+- Links say "here" or "more" instead of topic name
+- No keyword context around links
+
+**Prevention strategy:**
+1. Use descriptive text: "View all Arrays & Hashing problems" not "View All"
+2. Include topic name in anchor: "Learn about closures" not "Learn more"
+3. Vary anchor text for same destination (don't always use exact same phrase)
+
+**Which phase should address it:** Phase 3 (Cross-Linking)
+
+**Confidence:** MEDIUM - verified generic patterns exist but impact unclear
+
+---
+
+### Pitfall 13: Excessive Cross-Links Diluting Value
+
+**What goes wrong:** Adding too many internal links to every page makes none of them stand out. "Link equity" gets spread too thin.
+
+**Why it happens:** Enthusiasm for cross-linking leads to linking everything to everything. Footer mega-menus with 50+ links.
+
+**Warning signs:**
+- Pages have 20+ internal links
+- Every page links to every other page
+- Navigation becomes overwhelming
+
+**Prevention strategy:**
+1. Limit to 5-10 contextual links per page
+2. Link to directly related content only
+3. Use hierarchical structure: pillar pages link to topic pages, topic pages link back
+4. Distinguish between navigation links and content links
+
+**Which phase should address it:** Phase 3 (Cross-Linking) - establish link budget
+
+**Confidence:** MEDIUM - SEO best practice, not codebase-specific
+
+---
+
+### Pitfall 14: Broken Links After Refactoring
+
+**What goes wrong:** Renaming routes, reorganizing data structures, or changing URL slugs creates broken internal links. Old URLs 404.
+
+**Why it happens:** Links hardcoded as strings throughout codebase. No central URL generation utility.
+
+**Warning signs:**
+- 404 errors after deployment
+- Google Search Console reports broken links
+- Users report "page not found"
+
+**Prevention strategy:**
+1. Create URL helper functions in `@/utils/urls.ts`
+2. Generate all URLs from data (concept IDs, category IDs)
+3. Add redirects for changed URLs in `next.config.js`
+4. Run link checker before deployment
+
+**Which phase should address it:** Phase 3 (Cross-Linking) - establish URL utilities first
+
+**Confidence:** HIGH - common issue, no URL utilities exist in codebase
+
+---
+
+## Page Consistency Pitfalls
+
+### Pitfall 15: Inconsistent NavBar Usage Across Pages
+
+**What goes wrong:** Some pages use NavBar, some don't. Some pages have custom headers. User loses navigation context.
+
+**Why it happens:** Pages developed at different times with different patterns. Practice page has custom header in `page.module.css`, concept pages use NavBar component.
+
+**Warning signs:**
+- Navigation looks different on different pages
+- Back button behavior inconsistent
+- Users can't find their way back to home
+
+**Prevention strategy:**
+1. Audit all pages for header/navigation usage
+2. Create consistent header pattern:
+   - NavBar on all browse/landing pages
+   - Simplified header with back button on "workspace" pages (practice, playground)
+3. Use Next.js layouts for consistent structure
+4. Document which header variant each page type uses
+
+**Which phase should address it:** Phase 4 (Page Consistency) - first audit task
+
+**Confidence:** HIGH - verified inconsistency between practice page header and NavBar component
+
+---
+
+### Pitfall 16: Layout Re-renders on Navigation
+
+**What goes wrong:** Shared components (NavBar, footer) re-render and lose state when navigating between pages. Scroll position resets, search input clears.
+
+**Why it happens:** Not using Next.js layout pattern correctly. Each page renders its own NavBar instead of sharing through layout.
+
+**Warning signs:**
+- Flash of content on navigation
+- Search query clears when changing pages
+- Scroll position jumps to top unexpectedly
+
+**Prevention strategy:**
+1. Move NavBar to appropriate layout files
+2. Use Next.js `layout.tsx` for truly shared components
+3. Distinguish between page-specific headers and app-wide navigation
+4. Test navigation state persistence
+
+**Which phase should address it:** Phase 4 (Page Consistency)
+
+**Confidence:** HIGH - verified NavBar imported separately in each page
+
+---
+
+### Pitfall 17: Inconsistent Spacing and Typography Scale
+
+**What goes wrong:** New pages use different spacing values or font sizes than existing pages. Visual rhythm feels "off".
+
+**Why it happens:** The codebase has CSS variables (`--space-xs` through `--space-2xl`, `--text-xs` through `--text-3xl`) but not all components use them consistently.
+
+**Warning signs:**
+- Pages feel "different" without obvious reason
+- Inconsistent padding/margins
+- Font sizes don't match design system
+
+**Prevention strategy:**
+1. Always use CSS variables for spacing and typography
+2. Create spacing/typography audit checklist
+3. Review new CSS against index.css variable definitions
+4. Add ESLint rule to warn on hardcoded pixel values (optional)
+
+**Which phase should address it:** Phase 1 (Responsive) - establish during audit
+
+**Confidence:** HIGH - verified CSS variables exist and should be used consistently
+
+---
+
+## Integration Pitfalls
+
+### Pitfall 18: Modifying Shared CSS Affecting Multiple Components
+
+**What goes wrong:** Changing a shared CSS variable or global style (in `index.css`) breaks components you didn't intend to modify.
+
+**Why it happens:** Global CSS variables control many components. Changing `--bg-secondary` affects panels, badges, and many other elements.
+
+**Warning signs:**
+- "I only changed one thing" causes multiple visual regressions
+- Components in unrelated areas look different
+- Hard to track down which change caused issue
+
+**Prevention strategy:**
+1. Never modify global CSS variables without full audit
+2. Add new variants instead of changing existing: `--bg-mobile-panel` instead of modifying `--bg-secondary`
+3. Use CSS Module local overrides instead of global changes
+4. Add visual regression tests for key pages
+
+**Which phase should address it:** All phases - establish as process
+
+**Confidence:** HIGH - verified extensive CSS variable usage in codebase
+
+---
+
+### Pitfall 19: z-index Conflicts with Sticky/Fixed Elements
+
+**What goes wrong:** New sticky headers or mobile navigation overlaps with existing modals, tooltips, or floating elements.
+
+**Why it happens:** NavBar uses `z-index: 100`. Other components may use arbitrary z-index values. No documented z-index scale.
+
+**Warning signs:**
+- Modals appear behind navigation
+- Tooltips cut off by sticky headers
+- Search dropdown hidden by other elements
+
+**Prevention strategy:**
+1. Document z-index scale:
+   - Base content: auto/0
+   - Sticky headers: 100
+   - Dropdowns/popovers: 200
+   - Modals: 300
+   - Tooltips: 400
+2. Review all z-index usage before adding new sticky elements
+3. Use CSS variables for z-index layers
+
+**Which phase should address it:** Phase 1 (Responsive) - when adding mobile navigation
+
+**Confidence:** HIGH - verified NavBar has z-index: 100
+
+---
+
+### Pitfall 20: Performance Regression from Responsive Images
+
+**What goes wrong:** Adding responsive images significantly increases page weight. LCP (Largest Contentful Paint) regresses.
+
+**Why it happens:** Not using Next.js `<Image>` component, or not configuring proper sizing. Loading full-size images on mobile.
+
+**Warning signs:**
+- Core Web Vitals scores drop after changes
+- Mobile PageSpeed Insights shows large image warnings
+- LCP > 2.5s on mobile
+
+**Prevention strategy:**
+1. Always use `next/image` for images
+2. Specify `sizes` prop for responsive images
+3. Use WebP format (Next.js does this automatically)
+4. Run Lighthouse before/after responsive changes
+
+**Which phase should address it:** Phase 1 (Responsive) - if adding any images
+
+**Confidence:** MEDIUM - no significant images in current codebase, but relevant if added
+
+---
+
+## Summary: Phase-Specific Pitfall Checklist
+
+### Phase 1: Responsive Layout
+- [ ] Decide Monaco Editor mobile strategy (Pitfall 1)
+- [ ] Audit existing breakpoints (Pitfall 3)
+- [ ] Check visualization fixed dimensions (Pitfall 4)
+- [ ] Establish animation patterns with `useReducedMotion` (Pitfall 5)
+- [ ] Document z-index scale (Pitfall 19)
+- [ ] SSR-safe responsive detection only (Pitfall 2)
+
+### Phase 2: SEO
+- [ ] Implement `generateMetadata` on all dynamic routes (Pitfall 6)
+- [ ] Verify OG images work (Pitfall 7)
+- [ ] Audit client vs server content (Pitfall 8)
+- [ ] Add sitemap.ts and robots.ts (Pitfall 9)
+- [ ] Configure trailing slash behavior (Pitfall 10)
+
+### Phase 3: Cross-Linking
+- [ ] Audit for orphaned pages (Pitfall 11)
+- [ ] Review anchor text quality (Pitfall 12)
+- [ ] Establish link budget per page (Pitfall 13)
+- [ ] Create URL utility functions (Pitfall 14)
+
+### Phase 4: Page Consistency
+- [ ] Audit NavBar usage patterns (Pitfall 15)
+- [ ] Move shared components to layouts (Pitfall 16)
+- [ ] Verify CSS variable usage (Pitfall 17)
+
+### All Phases
+- [ ] Never modify global CSS variables without audit (Pitfall 18)
+- [ ] Use CSS-only media queries, not JS conditional rendering (Pitfall 2)
 
 ---
 
 ## Sources
 
-- [Designing Educationally Effective Algorithm Visualizations (Auburn)](https://www.eng.auburn.edu/~naraynh/jvlc.pdf)
-- [Algorithm Visualization Meta-Study on Effectiveness](http://s3.amazonaws.com/publicationslist.org/data/helplab/ref-52/JVLC-AVMetaStudy.pdf)
-- [Difficulties in Learning Data Structures Course](https://journals.iaa.ac.tz/index.php/tji/article/view/136)
-- [Identifying Student Difficulties with Basic Data Structures (ACM)](https://dl.acm.org/doi/10.1145/3230977.3231005)
-- [Two Pointers Common Mistakes (InterviewingIO)](https://interviewing.io/two-pointers-interview-questions)
-- [Active Learning vs Passive Video Watching Meta-Analysis (ScienceDirect)](https://www.sciencedirect.com/science/article/abs/pii/S1747938X25000454)
-- [VisuAlgo Hash Table Visualization](https://visualgo.net/en/hashtable)
-- [VisuAlgo Bitmask Visualization](https://visualgo.net/en/bitmask)
-- [Algorithm Animation Effectiveness in Elementary School (Wiley)](https://onlinelibrary.wiley.com/doi/10.1111/jcal.70049)
-- [Practices of Algorithm Education Using Visualization Systems (SpringerOpen)](https://telrp.springeropen.com/articles/10.1186/s41039-016-0041-5)
+### Responsive Design
+- [Next.js SSR and Responsive Design](https://medium.com/fredwong-it/react-nextjs-ssr-and-responsive-design-ae33e658975c)
+- [Monaco Editor Mobile Limitations](https://dev.to/suraj975/monaco-vs-codemirror-in-react-5kf)
+- [CodeMirror vs Monaco Editor Comparison](https://agenthicks.com/research/codemirror-vs-monaco-editor-comparison)
+- [CSS Media Query Breakpoints Guide](https://www.browserstack.com/guide/what-are-css-and-media-query-breakpoints)
+- [Mobile-First CSS](https://zellwk.com/blog/how-to-write-mobile-first-css/)
+- [Framer Motion Mobile Optimization](https://app.studyraid.com/en/read/7850/206068/optimizing-animations-for-mobile-devices)
+
+### SEO
+- [Next.js SEO Guide](https://strapi.io/blog/nextjs-seo)
+- [JavaScript SEO in 2026](https://zumeirah.com/javascript-seo-in-2026/)
+- [Next.js SEO Pitfalls](https://focusreactive.com/typical-next-js-seo-pitfalls-to-avoid-in-2024/)
+- [Complete Next.js SEO Guide](https://www.adeelhere.com/blog/2025-12-09-complete-nextjs-seo-guide-from-zero-to-hero)
+
+### Internal Linking
+- [Internal Linking Mistakes](https://linkstorm.io/resources/internal-linking-mistakes)
+- [SEMrush Internal Linking Mistakes](https://www.semrush.com/blog/internal-linking-mistakes/)
+- [Internal Linking for SEO](https://yoast.com/internal-linking-for-seo-why-and-how/)
+
+### Next.js Layouts
+- [Next.js Pages and Layouts](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts)
+- [Persistent Layout Patterns](https://adamwathan.me/2019/10/17/persistent-layout-patterns-in-nextjs/)
+- [Next.js Layouts Guide](https://blog.logrocket.com/guide-next-js-layouts-nested-layouts/)
+
+### CSS Variables
+- [CSS Variables Pitfalls](https://blog.pixelfreestudio.com/css-variables-gone-wrong-pitfalls-to-watch-out-for/)
+- [CSS Variables in Media Queries](https://css-tricks.com/responsive-designs-and-css-custom-properties-defining-variables-and-breakpoints/)

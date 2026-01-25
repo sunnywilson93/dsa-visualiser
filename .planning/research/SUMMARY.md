@@ -1,239 +1,240 @@
 # Project Research Summary
 
-**Project:** DSA Visualizer - Enhanced DSA Concept Visualizations
-**Domain:** Interactive educational algorithm visualization
-**Researched:** 2026-01-24
+**Project:** DSA Visualizer - v1.2 Polish & Production
+**Domain:** Production polish for educational platform (responsive, SEO, cross-linking)
+**Researched:** 2026-01-25
 **Confidence:** HIGH
 
 ## Executive Summary
 
-This project aims to upgrade DSA pattern visualizations (Two Pointers, Hash Map, Bit Manipulation) to match the quality of existing JS concept visualizations. The good news: no new stack is needed. The existing React 18, Framer Motion 11, and CSS Modules infrastructure already powers successful JS concept visualizers with step controls, playback, and smooth animations. This is a pure architectural alignment project, not a technology upgrade.
+The DSA Visualizer codebase is exceptionally well-positioned for production polish. Zero new dependencies are needed - all polish features can be implemented using existing stack (Next.js 14, CSS Modules, Framer Motion) plus built-in Next.js capabilities (ImageResponse for OG images, Metadata API for SEO). The codebase already has strong foundations: 57 CSS files with responsive patterns, comprehensive SEO metadata infrastructure, and cross-linking data structures in place.
 
-The recommended approach follows the proven JS Concepts pattern: create pattern-level pages at `/concepts/dsa/patterns/[patternId]` with self-contained visualizer components that embed their own step data and difficulty levels. These components will reuse SharedViz controls (CodePanel, StepProgress, StepControls) and animation patterns that already work well in existing JS visualizers. The existing problem-specific visualizations in ConceptPanel remain valuable for showing patterns applied to specific problems.
+The recommended approach is iterative enhancement rather than overhaul. The architecture analysis reveals that responsive patterns, SEO metadata, and cross-linking utilities are already partially implemented following best practices. The primary work is standardization (consistent breakpoints across 57 CSS files), completion (adding UI components to surface existing cross-link data), and configuration (SEO metadata on all dynamic routes).
 
-The critical risk is building visualizations that look good but create incorrect mental models. Research shows 62.5% of learners feel prepared after passive video watching but score only 45% vs 70% for active learners. Key mitigations: visualize decision logic before movements (not just pointer positions changing), show hash bucket mechanisms (not just key-value pairs), and treat bit positions as independent flags. Step descriptions must match visual states exactly, and animations must be sequenced to show causality rather than simultaneous changes.
+The critical risk is Monaco Editor mobile incompatibility - it has zero mobile support and a 5-10MB bundle size. This must be addressed in Phase 1 by accepting read-only code display on mobile devices (syntax-highlighted pre blocks) or hiding the editor entirely below 768px. Other risks are moderate and preventable through CSS-only responsive patterns, SSR-safe implementations, and careful testing.
 
 ## Key Findings
 
 ### Recommended Stack
 
-**No new dependencies needed.** The existing stack is fully capable. This is an architectural upgrade, not a technology change.
+**No new dependencies required.** All polish features leverage existing or built-in capabilities.
 
 **Core technologies:**
-- **Framer Motion 11.18.2**: Already handles all animation needs — spring animations, AnimatePresence for list changes, layout animations for smooth transitions, and staggered sequences for clarity
-- **SharedViz components**: CodePanel, StepProgress, StepControls, and useAutoPlay hook provide proven infrastructure for step-through visualizations
-- **CSS Modules**: Established pattern for pattern-specific styling with scoped accent colors
-- **TypeScript types**: ConceptStep and ConceptVisualState already support all DSA pattern needs (array, pointers, highlights, binary, hashMap, annotations)
+- **Next.js 14 built-in ImageResponse** - Dynamic OG image generation without npm install (next/og)
+- **CSS Modules with container queries** - Component-level responsive design (baseline 2023, no library needed)
+- **Next.js Metadata API** - Already implemented in root layout and concept pages, extend to all routes
+- **Existing data structures** - `relatedProblems`, `relatedConcepts` fields already in concepts.ts, dsaConcepts.ts, dsaPatterns.ts
 
-**What to add:** Optional icon imports from existing lucide-react (ArrowLeftRight for converging pointers, Hash for hash maps, Binary for bit manipulation). No npm install required.
+**What NOT to add:**
+- Tailwind CSS (project has 80+ CSS Module files with established patterns)
+- next-seo package (redundant with Next.js 14 Metadata API already in use)
+- React Responsive libraries (causes SSR hydration mismatches)
+- CSS-in-JS libraries (would conflict with existing CSS Modules)
 
-**What to avoid:** D3.js (280KB+ overhead for minimal benefit), Canvas/WebGL (DOM animations perform fine for small DSA examples), animation state libraries (useState + useAutoPlay sufficient), CSS animation libraries (inconsistent with Framer Motion pattern).
+**Confidence:** HIGH - verified against package.json and codebase patterns
 
 ### Expected Features
 
-**Table stakes (all already built):**
-- Step-by-step execution with play/pause auto-advance
-- Speed control (0.5x, 1x, 2x)
-- Progress indicator with step count
-- Keyboard navigation (Shift+Left/Right)
-- Array visualization with indices and pointer highlighting
-- Color coding for states (active/processed/pending)
-- Text annotations explaining current step
-- Pattern-specific visualizations (separate components per pattern)
+**Must have (table stakes):**
+- Consistent breakpoint system (currently 400, 480, 640, 768, 900, 1024, 1200px used inconsistently) - standardize to 640px/768px/1024px
+- Touch-friendly controls (44px minimum tap targets) - StepControls buttons vary in size
+- Page-specific metadata on all routes - missing on some problem/category pages
+- Breadcrumb schema on all pages - exists on concept pages, extend to all
+- Bidirectional cross-linking - concepts link to problems, but problems don't link back
 
-**Missing table stakes:**
-- Mobile-friendly responsive layout (needs CSS updates)
-- Code highlighting sync with steps (exists in interpreter but not DSA visualizers)
+**Should have (differentiators):**
+- Dynamic OG images per page - currently static SVG, social platforms need PNG/JPG
+- Mobile-optimized code input - Monaco Editor is desktop-only, need read-only fallback
+- PWA offline mode - manifest exists, but no service worker
+- FAQ Schema on problem pages - already implemented on concept pages
+- Touch-friendly swipe gestures for step navigation
 
-**Differentiators (quick wins):**
-- Pattern variant labels (converging vs same-direction vs partition) — low complexity, high value
-- Before/after diff highlighting — show what changed between steps
-- Complexity annotation — show iteration/comparison counters as algorithm progresses
-- Collision visualization for hash maps — show bucket chains, not just flat entries
+**Defer (v2+):**
+- Dark/light mode toggle - requires CSS variables refactor and state persistence
+- Learning path progress tracking - needs complex state management
+- Localization (hreflang) - no immediate need, future consideration
+- HowTo Schema - requires restructuring problem solution format
 
-**Anti-features to avoid:**
-- Auto-playing on page load (start paused)
-- Sound effects or gamification
-- Complex 3D visualizations (2D sufficient)
-- Real-time code editing in visualizations (keep separate from interpreter)
-- Over-animation that slows learning
+**Anti-features (explicitly avoid):**
+- Desktop Monaco editor on mobile (unusable virtual keyboard interaction)
+- Auto-playing animations on mobile (battery drain, accessibility)
+- Keyword stuffing in meta tags (Google penalty)
+- Excessive cross-links per page (dilutes link equity)
 
 ### Architecture Approach
 
-Create pattern-level pages at `/concepts/dsa/patterns/[patternId]` following the proven JS Concepts pattern. New `DSAPatterns/` component directory contains self-contained visualizers (TwoPointersPatternViz, HashMapPatternViz, BitManipulationPatternViz) that embed their own step data with difficulty levels (beginner/intermediate/advanced). New `dsaPatterns.ts` data file contains pattern metadata (when to use, variants, complexity). Keep existing `algorithmConcepts.ts` for problem-specific step data used on `/[categoryId]/[problemId]/concept` pages.
+All features integrate with existing Next.js App Router architecture through enhancement, not replacement.
 
-**Major components:**
-1. **DSAPatterns/** — Pattern visualizer components with embedded step data (new)
-2. **SharedViz/** — Reusable controls (CodePanel, StepProgress, StepControls, useAutoPlay) (reuse existing)
-3. **ConceptPanel/** — Problem-specific visualizations (keep unchanged, serves different purpose)
-4. **dsaPatterns.ts** — Pattern metadata, variants, example problem links (new)
-5. **algorithmConcepts.ts** — Problem-specific step data (keep for problem pages)
+**Major integration points:**
+1. **Responsive CSS** - Extend existing patterns in 57 CSS Module files with standardized breakpoints at 640px/768px/1024px
+2. **SEO Metadata** - Follow `/concepts/[conceptId]/page.tsx` pattern for all dynamic routes using `generateMetadata` + `StructuredData` component
+3. **Cross-linking** - Add UI components (`RelatedProblems.tsx`, `RelatedPattern.tsx`) to surface existing `relatedProblems` data fields
+4. **Page Consistency** - NavBar already supports breadcrumbs, standardize usage across pattern pages
 
-**Integration:** Pattern pages and problem pages serve complementary purposes. Pattern pages teach techniques generically (multiple examples per difficulty level). Problem pages show techniques applied to specific LeetCode problems. Cross-link between both for comprehensive learning.
+**Build order recommendation (from ARCHITECTURE.md):**
+1. Phase 1: Data Layer (crossLinks.ts utility functions) - foundation for cross-linking
+2. Phase 2: SEO Standardization - independent, straightforward audit and fix
+3. Phase 3: Cross-Linking Components - depends on Phase 1 data layer
+4. Phase 4: Page Consistency - quick CSS alignment
+5. Phase 5: Responsive CSS - touches many files, should happen after content finalized
+
+**No new components needed for SEO** - existing `StructuredData` component serves all needs. **Two new components for cross-linking** - `RelatedProblems.tsx` and `RelatedPattern.tsx`.
 
 ### Critical Pitfalls
 
-1. **Pointers as markers, not decision-makers** — Learners see positions changing but don't understand WHY pointers moved. Prevention: Visualize the decision condition before the movement. Show annotations like "sum > target, so shrink window" ON the visualization. Animate decision-making process, not just results.
+1. **Monaco Editor mobile incompatibility** - Zero mobile support, 5-10MB bundle. Prevention: Accept read-only code display on mobile (syntax-highlighted pre blocks) or hide editor below 768px. Phase 1 must decide strategy before restructuring layouts.
 
-2. **Hash map as magic lookup, not data structure** — Learners treat HashMap as O(1) black box without understanding hashing converts keys to indices. Prevention: Show hash function and bucket concept in introductory steps (even simplified). Animate "hash → find bucket → check entry" flow. Later steps can abstract to entries only.
+2. **SSR hydration mismatch with responsive detection** - Using JavaScript-based media queries causes React to render different trees on server vs client. Prevention: CSS-only media queries (existing pattern), never conditionally render based on viewport in React. Establish as coding standard before any responsive work.
 
-3. **Binary as just another number format** — Learners see binary representations but don't internalize that each bit is an independent flag. Prevention: Treat bit positions as distinct visual elements. Show bit-by-bit operation execution (AND compares position 0, then 1, then 2). Connect bit positions to problem semantics.
+3. **Breaking desktop three-column grid** - Practice page has carefully tuned `grid-template-columns: 1fr 400px 320px` with breakpoints at 1200px, 1024px, 768px. Prevention: Document existing breakpoint behavior first, test at all breakpoints, add comments when modifying shared properties. Phase 1 audit required.
 
-4. **Passive watching illusion** — Learners watch visualizations without engaging mentally. Research shows 45% performance vs 70% for active learners. Prevention: Design step descriptions that explain WHY, not just WHAT. Frame step titles as questions ("Is sum == target?"). Ensure descriptions match visual state exactly.
+4. **Missing page-specific metadata** - Dynamic routes inherit generic root layout metadata instead of unique titles/descriptions. Google may not index properly. Prevention: Audit all page.tsx files for `generateMetadata`, use `/concepts/[conceptId]/page.tsx` pattern. Phase 2 first task.
 
-5. **Animation timing obscures logic** — Fast or simultaneous animations hide causality. Prevention: Stagger animations with delays (decision highlight at 200ms, change at 300ms, result highlight after). Match animation timing to description reading speed. Test at 0.5x speed to verify sequence clarity.
-
-6. **Description-visual mismatch** — Text says one thing, visual shows another. Prevention: Audit all step data. Description must match CURRENT visual state. Either show before-state with "about to" or after-state with "just did." Never describe action while showing result.
-
-7. **Pointer collision visual confusion** — When two pointers meet at same index, labels overlap and visualization breaks. Current code stacks vertically but doesn't handle dense scenarios. Prevention: Use horizontal offset or combined indicator ("L,R" badge). Ensure "pointers meet" state is MOST clear, not least.
+5. **Orphaned pages with no internal links** - Pages exist in data files but aren't linked from anywhere, search engines can't discover. Prevention: Every new page needs 2+ incoming links, add "Related concepts" and "Similar problems" sections. Phase 3 critical check.
 
 ## Implications for Roadmap
 
-Based on research, suggested three-phase structure aligned with component dependencies and incremental value delivery:
+Based on combined research, recommended phase structure prioritizes foundation before presentation, data before UI, and independence before dependencies.
 
-### Phase 1: Two Pointers Pattern Foundation
-**Rationale:** Two Pointers is the simplest pattern architecturally and establishes the foundation. Creating this first validates the DSAPatterns component structure, SharedViz integration, and pattern page routing before expanding to other patterns.
-
-**Delivers:**
-- Complete `/concepts/dsa/patterns/two-pointers` page
-- TwoPointersPatternViz component with beginner/intermediate/advanced levels
-- Three variants: converging (left/right inward), same-direction (slow/fast), partition (three-way)
-- Foundation for dsaPatterns.ts data structure
-
-**Addresses features:**
-- Pattern variant differentiation (visual indicators for each variant)
-- Decision visualization before movement (show comparison logic)
-- Sorted precondition visualization (highlight array properties)
-- Responsive layout for long arrays (mobile support)
-
-**Avoids pitfalls:**
-- MM-1: Visualize pointer decision logic, not just positions
-- MM-4: Show continuity between steps, not snapshots
-- T-2: Handle pointer collision scenarios visually
-- T-6: State sync between carousel and visualization
-- TP-1: Differentiate pattern variants prominently
-- TP-3: Show comparison before movement
-
-**Research flag:** Standard pattern (skip research-phase). Two-pointers is well-documented with established visualization patterns.
-
-### Phase 2: Hash Map and Bit Manipulation Patterns
-**Rationale:** After validating the pattern page architecture in Phase 1, parallelize these two patterns since they have different visualization needs (Hash Map needs bucket concept, Bit Manipulation needs position-by-position operations) and can be developed independently.
+### Phase 1: Foundation & Mobile Strategy
+**Rationale:** Must establish mobile editor strategy and responsive foundations before building on top. Data utilities are quick wins that unblock cross-linking.
 
 **Delivers:**
-- `/concepts/dsa/patterns/hash-map` page with HashMapPatternViz
-- `/concepts/dsa/patterns/bit-manipulation` page with BitManipulationPatternViz
-- Bucket visualization for hash maps (show hash → bucket → entry flow)
-- Bit-by-bit operation animation for bit manipulation
-- Complete dsaPatterns.ts with all three initial patterns
+- Mobile editor decision (read-only fallback or hide below 768px)
+- Cross-linking utility functions (`crossLinks.ts`)
+- Responsive breakpoint audit and documentation
+- SSR-safe coding standards established
 
-**Addresses features:**
-- Hash map collision visualization (bucket chains, not flat entries)
-- Frequency vs index map semantic clarity (different labels/styling)
-- Phase indicators for two-phase hash problems (build/check)
-- Configurable bit width for bit manipulation (4/8/16/32 bit support)
-- Shift animation (bits visually sliding left/right)
+**Features:** Table stakes from FEATURES-POLISH.md (mobile navigation, touch targets decision)
 
-**Avoids pitfalls:**
-- MM-2: Show hash bucket mechanism, not magic lookup
-- MM-3: Treat bit positions as independent flags
-- T-3: Fix HashMap entry key uniqueness bug (use stepId in key)
-- T-4: Binary bit width consistency across steps
-- HM-1: Include collision example for O(1) awareness
-- HM-2: Clearly label frequency vs index maps
-- HM-3: Visual phase transition indicators
-- BM-3: Explain XOR properties bit-by-bit
-- BM-4: Animate shift direction clearly
+**Avoids:** Monaco Editor pitfall, SSR hydration mismatch, breaking desktop grid
 
-**Research flag:** Hash Map buckets may need deeper research for educational clarity. Standard bucket visualization approaches exist but need adaptation for interview context.
+**Research needed:** None - patterns documented, decision required
 
-### Phase 3: Polish and Integration
-**Rationale:** After core patterns are built, focus on cross-cutting concerns: interaction improvements, responsive design, content audit for quality, and cross-linking between pattern pages and problem pages.
+### Phase 2: SEO Standardization
+**Rationale:** Independent task with clear patterns. Can happen in parallel with Phase 1. High ROI for search visibility.
 
 **Delivers:**
-- Mobile-responsive layouts for all pattern visualizers
-- Code highlighting sync with visualization steps
-- Cross-links from pattern pages to example problems
-- Cross-links from problem pages to pattern explanations
-- Content audit for step granularity and description-visual matches
-- SEO metadata and OpenGraph images for pattern pages
+- `generateMetadata` on all dynamic routes
+- Breadcrumb schema on all pages
+- Dynamic OG images using ImageResponse
+- Sitemap verification (already exists, verify complete)
+- Canonical URL consistency
 
-**Addresses features:**
-- Before/after diff highlighting across all patterns
-- Complexity annotations (iteration counters, comparison counts)
-- Pattern icons in navigation
-- "Practice this pattern" sections on pattern pages
+**Uses:** Next.js Metadata API (already implemented), `StructuredData` component (already exists)
 
-**Avoids pitfalls:**
-- MM-5: Add engagement prompts to mitigate passive watching
-- T-1: Animation timing review for all patterns
-- T-5: Responsive design for long arrays (collapse with "...")
-- C-1: Step granularity audit (3-7 steps for intro problems)
-- C-3: Annotation declutter (max 2 per step)
-- C-4: Result timing audit (final step only)
-- C-5: Add "why not" explanations for key decisions
+**Avoids:** Missing metadata pitfall, duplicate content from trailing slashes, client-rendered content
 
-**Research flag:** No research needed. Standard UX polish patterns.
+**Research needed:** None - Next.js Metadata API well-documented, pattern exists in codebase
+
+### Phase 3: Cross-Linking UI
+**Rationale:** Depends on Phase 1 data layer. Surfaces existing data through new UI components.
+
+**Delivers:**
+- `RelatedProblems` component (renders existing relatedProblems data)
+- `RelatedPattern` component (reverse lookup from problems to patterns)
+- Integration into pattern pages and problem pages
+- Footer with site links for link equity
+
+**Implements:** Cross-linking architecture from ARCHITECTURE.md
+
+**Avoids:** Orphaned pages, generic anchor text, excessive cross-links (5-10 per page budget)
+
+**Research needed:** None - data structures exist, UI pattern straightforward
+
+### Phase 4: Page Consistency
+**Rationale:** Quick CSS alignment task. Can happen in parallel with Phase 3.
+
+**Delivers:**
+- Consistent header patterns across pattern pages
+- Standardized spacing using CSS variables
+- NavBar breadcrumb usage verification
+- Design system documentation (CSS variables reference)
+
+**Features:** Table stakes from FEATURES-POLISH.md (consistent spacing system, button styles)
+
+**Avoids:** Inconsistent NavBar usage, layout re-renders on navigation
+
+**Research needed:** None - NavBar component exists, pattern established
+
+### Phase 5: Responsive CSS Implementation
+**Rationale:** Highest testing burden, touches 57+ CSS files. Should happen last when content is stable.
+
+**Delivers:**
+- Standardized breakpoints (640px mobile, 768px tablet, 1024px desktop) across all components
+- Touch-friendly step controls (44px minimum)
+- Responsive visualization components (clamp() for sizing)
+- Mobile navigation solution (hamburger or bottom nav)
+- Collapsible panels on practice page
+
+**Features:** All responsive table stakes from FEATURES-POLISH.md
+
+**Avoids:** Visualization fixed dimensions, Framer Motion mobile issues, global CSS variable conflicts
+
+**Research needed:** None - responsive patterns established, extension only
 
 ### Phase Ordering Rationale
 
-- **Foundation first:** Two Pointers establishes pattern page architecture, SharedViz integration, and dsaPatterns.ts structure before expanding to other patterns. Validates approach early.
-- **Parallel expansion:** Hash Map and Bit Manipulation have different visualization needs and no shared dependencies, so develop in parallel after foundation is proven.
-- **Polish last:** Cross-cutting improvements (responsive, SEO, cross-links) can only be done after all pattern pages exist. Content audit is more efficient when all content is written.
-- **Risk mitigation:** Critical pitfalls (MM-1, MM-2, MM-3) are addressed in their respective phases. Cross-cutting pitfalls (animation timing, responsive design) addressed in Phase 3 polish.
-- **Incremental value:** Phase 1 delivers complete working pattern page. Phase 2 delivers two more. Phase 3 makes all three production-ready.
+- **Phase 1 first** because mobile strategy decision affects all downstream work (if Monaco hidden, practice page layout changes significantly)
+- **Phase 2 parallel** because SEO is independent and affects discoverability immediately
+- **Phase 3 after Phase 1** because it depends on `crossLinks.ts` data utilities
+- **Phase 4 parallel with Phase 3** because it's CSS-only, no dependencies
+- **Phase 5 last** because it touches the most files and needs stable content to test against
 
 ### Research Flags
 
-**Needs deeper research during planning:**
-- **Phase 2 (Hash Map):** Bucket visualization educational approach — existing visualizers show buckets for data structure courses, but interview-focused pattern visualizations may need different abstraction level. Research during planning: review VisuAlgo, AlgoVis.io approaches, decide on simplified bucket model vs full chain visualization.
+**Phases with standard patterns (skip research-phase):**
+- **All phases** - Well-documented Next.js patterns, existing codebase has clear examples to follow
 
-**Standard patterns (skip research-phase):**
-- **Phase 1 (Two Pointers):** Well-documented pattern with established visualization approaches across multiple educational platforms. Decision visualization and pointer movement patterns are standard.
-- **Phase 2 (Bit Manipulation):** Binary representation and bitwise operations have standard visualizations. Position-by-position animation is straightforward.
-- **Phase 3 (Polish):** Responsive design, SEO, cross-linking, and content audit are standard web development practices.
+**No phases need `/gsd:research-phase`** during planning. All patterns are established in current codebase or official Next.js documentation. Implementation is enhancement, not greenfield.
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | Based on existing codebase analysis. All needed technologies already in place. SharedViz components proven in JS concepts. |
-| Features | HIGH | Table stakes verified by competitor analysis (VisuAlgo, Algorithm Visualizer, LeetCopilot). Existing components already implement most. |
-| Architecture | HIGH | Pattern directly mirrors proven JS Concepts architecture. DSAPatterns/ follows DSAConcepts/ and Concepts/ directory patterns. Route nesting is consistent. |
-| Pitfalls | HIGH | Research backed by academic studies on algorithm visualization effectiveness and common learner misconceptions. Many pitfalls validated by existing codebase issues. |
+| Stack | HIGH | Zero new dependencies verified, Next.js built-in capabilities confirmed |
+| Features | HIGH | Table stakes verified against actual CSS files, SEO infrastructure in codebase |
+| Architecture | HIGH | Integration points verified through codebase analysis (57 CSS files, data structures) |
+| Pitfalls | HIGH | Critical pitfalls (Monaco mobile, SSR mismatch) documented with clear prevention |
 
 **Overall confidence:** HIGH
 
-All research grounded in either existing codebase patterns (stack, architecture) or established domain knowledge (features, pitfalls). No speculative recommendations.
+All research based on official Next.js 14 documentation, verified codebase patterns, and established web standards (CSS container queries baseline 2023, OpenGraph spec, schema.org).
 
 ### Gaps to Address
 
-**Animation sequencing specifics:** Research identifies the need for staggered animations (decision → change → result) but exact timing values (200ms, 300ms) should be validated during development through user testing. Start with suggested values, iterate based on feedback.
+**Minor gaps (clarify during Phase 1):**
+- Mobile editor experience - decide between read-only fallback vs hide completely (both approaches documented in PITFALLS.md)
+- Breakpoint standardization - choose 3 breakpoints from existing 7 variants (recommendation: 640/768/1024)
+- z-index scale - document existing usage (NavBar uses 100, need scale for modals/tooltips)
 
-**Hash map bucket abstraction level:** While research confirms buckets should be shown, the exact level of detail (full chain visualization vs simplified bucket indicator) needs decision during Phase 2 planning. Consider user testing with both approaches.
-
-**Pattern page vs problem page navigation flow:** Cross-linking strategy is proposed but user flow needs validation. During Phase 3, consider analytics on which links users actually follow to optimize placement and wording.
-
-**Mobile responsive breakpoints:** Research identifies need for responsive design but didn't specify breakpoints. During Phase 3, test on real devices (especially tablet size where long arrays may still fit but pointers get cramped).
+**No significant research gaps** - all features have clear implementation paths in existing stack.
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- **Existing codebase:** Direct analysis of `/src/components/ConceptPanel/`, `/src/components/SharedViz/`, `/src/data/algorithmConcepts.ts`, `/src/types/index.ts`, `/src/app/concepts/` routing
-- **Framer Motion 11 docs:** Context7 verification of spring animations, AnimatePresence, layout animations support
-- **package.json:** Confirmed versions and dependencies (React 18.3.1, Framer Motion 11.18.2, lucide-react 0.400.0)
+- **Next.js Official Documentation** - Metadata API, ImageResponse, App Router patterns
+  - [Metadata and OG Images](https://nextjs.org/docs/app/getting-started/metadata-and-og-images)
+  - [opengraph-image File Convention](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image)
+  - [generateMetadata API](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
+- **Codebase Analysis** - Direct verification of patterns
+  - 57 CSS Module files with responsive patterns
+  - Root layout.tsx with comprehensive SEO
+  - concepts.ts, dsaConcepts.ts, dsaPatterns.ts with relatedProblems fields
+  - StructuredData component implementation
 
 ### Secondary (MEDIUM confidence)
-- [Algorithm Visualization Meta-Study (Auburn)](http://s3.amazonaws.com/publicationslist.org/data/helplab/ref-52/JVLC-AVMetaStudy.pdf) — Effectiveness research, 45% vs 70% active vs passive scores
-- [VisuAlgo](https://visualgo.net/en) — Competitor analysis, hash table and bitmask visualization approaches
-- [Algorithm Visualizer](https://algorithm-visualizer.org/) — Code-centric pattern analysis
-- [LeetCopilot Two Pointers](https://leetcopilot.dev/tool/two-pointers-visualizer) — Interview-focused competitor
-- [USACO Guide - Two Pointers](https://usaco.guide/silver/two-pointers) — Pattern documentation
-- [Design Gurus - Coding Patterns](https://www.designgurus.io/blog/grokking-the-coding-interview-patterns) — Pattern taxonomy
+- [Container Queries in 2026 - LogRocket](https://blog.logrocket.com/container-queries-2026/)
+- [Responsive Design Best Practices 2026 - PxlPeak](https://pxlpeak.com/blog/web-design/responsive-design-best-practices)
+- [Internal Linking Strategy SEO Guide 2026 - IdeaMagix](https://www.ideamagix.com/blog/internal-linking-strategy-seo-guide-2026/)
+- [Next.js SEO Complete Guide - Digital Applied](https://www.digitalapplied.com/blog/nextjs-seo-guide)
+- [Education SEO Guide 2026 - Digitally Unique](https://www.digitallyunique.com/post/education-seo-guide-2026)
 
-### Tertiary (LOW confidence)
-- [Active Learning vs Passive Video Meta-Analysis](https://www.sciencedirect.com/science/article/abs/pii/S1747938X25000454) — 62.5% confidence claim, needs validation
-- [Identifying Student Difficulties with Data Structures (ACM)](https://dl.acm.org/doi/10.1145/3230977.3231005) — Mental model pitfalls
+### Technical Comparisons
+- [Monaco vs CodeMirror in React - Dev.to](https://dev.to/suraj975/monaco-vs-codemirror-in-react-5kf)
+- [Next.js SSR and Responsive Design - Medium](https://medium.com/fredwong-it/react-nextjs-ssr-and-responsive-design-ae33e658975c)
+- [Typical Next.js SEO Pitfalls - Focus Reactive](https://focusreactive.com/typical-next-js-seo-pitfalls-to-avoid-in-2024/)
 
 ---
-*Research completed: 2026-01-24*
+*Research completed: 2026-01-25*
 *Ready for roadmap: yes*
