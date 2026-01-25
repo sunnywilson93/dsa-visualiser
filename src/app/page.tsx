@@ -6,6 +6,7 @@ import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import { exampleCategories, getExamplesByCategory, getAllJsExamples } from '@/data/examples'
 import { concepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
+import { dsaPatterns } from '@/data/dsaPatterns'
 import styles from './page.module.css'
 
 // JS implementation categories (exclude DSA - it gets its own section)
@@ -72,7 +73,7 @@ export default function HomePage() {
                 <span className={styles.conceptCategoryIcon}>
                   <ConceptIcon conceptId="data-structures" size={28} />
                 </span>
-                <span className={styles.conceptCategoryBadge}>{dsaConcepts.length} topics</span>
+                <span className={styles.conceptCategoryBadge}>{dsaConcepts.length + dsaPatterns.length} topics</span>
               </div>
               <h3 className={styles.conceptCategoryTitle}>DSA Fundamentals</h3>
               <p className={styles.conceptCategoryDescription}>
@@ -82,8 +83,8 @@ export default function HomePage() {
                 {dsaConcepts.slice(0, 4).map(c => (
                   <span key={c.id} className={styles.topicTag}>{c.title}</span>
                 ))}
-                {dsaConcepts.length > 4 && (
-                  <span className={styles.topicMore}>+{dsaConcepts.length - 4}</span>
+                {(dsaConcepts.length + dsaPatterns.length) > 4 && (
+                  <span className={styles.topicMore}>+{dsaConcepts.length + dsaPatterns.length - 4}</span>
                 )}
               </div>
             </Link>

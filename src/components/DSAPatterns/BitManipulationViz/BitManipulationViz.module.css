@@ -198,7 +198,7 @@
 
 .bitWidthBadge {
   position: absolute;
-  top: var(--space-sm);
+  top: calc(-1 * var(--space-lg) - 2px);
   right: var(--space-sm);
   padding: 2px 8px;
   background: rgba(255, 255, 255, 0.08);

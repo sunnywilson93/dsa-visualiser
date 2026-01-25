@@ -6,6 +6,7 @@ import { Zap, Box } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { concepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
+import { dsaPatterns } from '@/data/dsaPatterns'
 import styles from './page.module.css'
 
 export default function ConceptsPage() {
@@ -62,7 +63,7 @@ export default function ConceptsPage() {
                   <span className={styles.cardIcon}>
                     <Box size={28} />
                   </span>
-                  <span className={styles.topicCount}>{dsaConcepts.length} topics</span>
+                  <span className={styles.topicCount}>{dsaConcepts.length + dsaPatterns.length} topics</span>
                 </div>
                 <h3 className={styles.cardTitle}>DSA Concepts</h3>
                 <p className={styles.cardDescription}>
