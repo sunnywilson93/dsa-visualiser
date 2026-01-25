@@ -252,7 +252,204 @@ const examples: Record<Variant, Record<Level, BitExample[]>> = {
         insight: 'XOR cancels paired numbers: a ^ a = 0. After XORing all elements, only the single number remains because its pair is missing.'
       }
     ],
-    intermediate: [],
+    intermediate: [
+      {
+        id: 'missing-number',
+        title: 'Missing Number',
+        variant: 'xor-tricks',
+        code: [
+          'function missingNumber(nums) {',
+          '  let result = nums.length',
+          '',
+          '  for (let i = 0; i < nums.length; i++) {',
+          '    result ^= i ^ nums[i]',
+          '  }',
+          '',
+          '  return result',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Find the missing number from 0 to n. XOR trick: pair all indices with values, unpaired one remains.',
+            phase: 'read-value',
+            numbers: [],
+            bitWidth: 8,
+            output: ['Input: [3, 0, 1]', 'Range: 0 to 3, one is missing']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'Initialize result = nums.length = 3. This represents index 3 (which has no value to pair with).',
+            phase: 'show-binary',
+            numbers: [{ label: 'result', value: 3 }],
+            activeBits: [0, 1],
+            bitWidth: 8,
+            output: ['result = 3 = 00000011', 'Index 3 starts unpaired']
+          },
+          {
+            id: 2,
+            codeLine: 3,
+            description: 'Loop i=0: XOR result with index 0 and value nums[0]=3.',
+            phase: 'read-value',
+            numbers: [
+              { label: 'result', value: 3 },
+              { label: 'i', value: 0 },
+              { label: 'nums[0]', value: 3 }
+            ],
+            bitWidth: 8,
+            output: ['i = 0, nums[0] = 3', 'result ^= 0 ^ 3']
+          },
+          {
+            id: 3,
+            codeLine: 4,
+            description: 'First: result ^ i = 3 ^ 0 = 3. XOR with 0 leaves value unchanged.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'result', value: 3 },
+              { label: 'i', value: 0 }
+            ],
+            operator: '^',
+            result: 3,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            decision: {
+              condition: 'XOR with 0',
+              conditionMet: true,
+              action: 'a ^ 0 = a (no change)'
+            },
+            output: ['3 ^ 0 = 3']
+          },
+          {
+            id: 4,
+            codeLine: 4,
+            description: 'Then: 3 ^ nums[0] = 3 ^ 3 = 0. The 3s cancel each other!',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'temp', value: 3 },
+              { label: 'nums[0]', value: 3 }
+            ],
+            operator: '^',
+            result: 0,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            decision: {
+              condition: 'XOR same values',
+              conditionMet: true,
+              action: 'a ^ a = 0 (cancels!)'
+            },
+            output: ['3 ^ 3 = 0', 'Value 3 paired with index 3!']
+          },
+          {
+            id: 5,
+            codeLine: 3,
+            description: 'Loop i=1: result=0, XOR with index 1 and value nums[1]=0.',
+            phase: 'read-value',
+            numbers: [
+              { label: 'result', value: 0 },
+              { label: 'i', value: 1 },
+              { label: 'nums[1]', value: 0 }
+            ],
+            bitWidth: 8,
+            output: ['i = 1, nums[1] = 0', 'result ^= 1 ^ 0']
+          },
+          {
+            id: 6,
+            codeLine: 4,
+            description: 'result ^ i ^ nums[i] = 0 ^ 1 ^ 0 = 1. Index 1 has no matching value yet.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'result', value: 0 },
+              { label: 'i', value: 1 }
+            ],
+            operator: '^',
+            result: 1,
+            activeBits: [0],
+            bitWidth: 8,
+            decision: {
+              condition: '0 ^ 1 ^ 0',
+              conditionMet: true,
+              action: 'Index 1 now in result'
+            },
+            output: ['0 ^ 1 = 1, then 1 ^ 0 = 1', 'result = 1']
+          },
+          {
+            id: 7,
+            codeLine: 3,
+            description: 'Loop i=2: result=1, XOR with index 2 and value nums[2]=1.',
+            phase: 'read-value',
+            numbers: [
+              { label: 'result', value: 1 },
+              { label: 'i', value: 2 },
+              { label: 'nums[2]', value: 1 }
+            ],
+            bitWidth: 8,
+            output: ['i = 2, nums[2] = 1', 'result ^= 2 ^ 1']
+          },
+          {
+            id: 8,
+            codeLine: 4,
+            description: 'First: result ^ i = 1 ^ 2 = 3 (binary: 01 ^ 10 = 11).',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'result', value: 1 },
+              { label: 'i', value: 2 }
+            ],
+            operator: '^',
+            result: 3,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            decision: {
+              condition: '1 ^ 2',
+              conditionMet: true,
+              action: 'Bit 0 and bit 1 differ'
+            },
+            output: ['1 ^ 2 = 3']
+          },
+          {
+            id: 9,
+            codeLine: 4,
+            description: 'Then: 3 ^ nums[2] = 3 ^ 1 = 2. Value 1 cancels with index 1 from earlier!',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'temp', value: 3 },
+              { label: 'nums[2]', value: 1 }
+            ],
+            operator: '^',
+            result: 2,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            decision: {
+              condition: '3 ^ 1',
+              conditionMet: true,
+              action: 'Bit 0 cancels, bit 1 remains'
+            },
+            output: ['3 ^ 1 = 2', 'Value 1 paired, index 2 unpaired']
+          },
+          {
+            id: 10,
+            codeLine: 4,
+            description: 'result = 2. Index 2 has no matching value in the array!',
+            phase: 'show-result',
+            numbers: [{ label: 'result', value: 2 }],
+            activeBits: [1],
+            bitWidth: 8,
+            output: ['result = 2 = 00000010', 'Only unpaired number remains']
+          },
+          {
+            id: 11,
+            codeLine: 7,
+            description: 'Return 2. All paired indices/values canceled, leaving only the missing number!',
+            phase: 'done',
+            numbers: [{ label: 'result', value: 2 }],
+            bitWidth: 8,
+            output: ['return 2', '2 is missing from [3, 0, 1]!']
+          }
+        ],
+        insight: 'XOR all indices 0..n with all values. Each index-value pair cancels (a ^ a = 0), leaving only the missing number unpaired.'
+      }
+    ],
     advanced: []
   },
   'bit-masks': {
@@ -392,7 +589,228 @@ const examples: Record<Variant, Record<Level, BitExample[]>> = {
         insight: 'Power of 2 has exactly one 1-bit. n & (n-1) clears the lowest set bit. If result is 0, n was power of 2 (had only one bit to clear).'
       }
     ],
-    intermediate: [],
+    intermediate: [
+      {
+        id: 'counting-bits',
+        title: 'Counting Bits',
+        variant: 'bit-masks',
+        code: [
+          'function hammingWeight(n) {',
+          '  let count = 0',
+          '',
+          '  while (n !== 0) {',
+          '    count += n & 1',
+          '    n = n >> 1',
+          '  }',
+          '',
+          '  return count',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Count the number of 1-bits (set bits) in a number. Also called Hamming Weight.',
+            phase: 'read-value',
+            numbers: [],
+            bitWidth: 8,
+            output: ['Input: n = 11', 'Count: how many 1-bits?']
+          },
+          {
+            id: 1,
+            codeLine: 0,
+            description: 'n = 11 in binary: 00001011. We can see bits 0, 1, and 3 are set (three 1s).',
+            phase: 'show-binary',
+            numbers: [{ label: 'n', value: 11 }],
+            activeBits: [0, 1, 3],
+            bitWidth: 8,
+            output: ['n = 11 = 00001011', '1-bits at positions 0, 1, 3']
+          },
+          {
+            id: 2,
+            codeLine: 1,
+            description: 'Initialize count = 0. We will increment this for each 1-bit found.',
+            phase: 'show-binary',
+            numbers: [{ label: 'count', value: 0 }],
+            bitWidth: 8,
+            output: ['count = 0']
+          },
+          {
+            id: 3,
+            codeLine: 3,
+            description: 'While loop: n = 11 !== 0, so enter loop. Check the lowest bit.',
+            phase: 'read-value',
+            numbers: [{ label: 'n', value: 11 }],
+            activeBits: [0],
+            bitWidth: 8,
+            decision: {
+              condition: 'Is n !== 0?',
+              conditionMet: true,
+              action: 'Yes (11 !== 0), enter loop'
+            },
+            output: ['n = 11 !== 0', 'Check lowest bit (position 0)']
+          },
+          {
+            id: 4,
+            codeLine: 4,
+            description: 'n & 1 = 11 & 1 = 1. The mask 00000001 isolates bit 0, which is 1.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'n', value: 11 },
+              { label: 'mask', value: 1 }
+            ],
+            operator: '&',
+            result: 1,
+            activeBits: [0],
+            bitWidth: 8,
+            decision: {
+              condition: 'AND with 1 (bit mask)',
+              conditionMet: true,
+              action: 'Bit 0 is 1, add to count'
+            },
+            output: ['11 & 1 = 1', 'count += 1, count = 1']
+          },
+          {
+            id: 5,
+            codeLine: 5,
+            description: 'Right shift: n = n >> 1 = 11 >> 1 = 5. Bits shift right, lowest bit falls off.',
+            phase: 'apply-operation',
+            numbers: [{ label: 'n', value: 11 }],
+            operator: '>>',
+            result: 5,
+            activeBits: [0, 1, 2, 3],
+            bitWidth: 8,
+            decision: {
+              condition: 'Right shift by 1',
+              conditionMet: true,
+              action: 'Bit 0 removed, all bits shift right'
+            },
+            output: ['11 >> 1 = 5', 'n = 5 = 00000101']
+          },
+          {
+            id: 6,
+            codeLine: 3,
+            description: 'Loop continues: n = 5 !== 0. Check next lowest bit.',
+            phase: 'read-value',
+            numbers: [{ label: 'n', value: 5 }],
+            activeBits: [0],
+            bitWidth: 8,
+            decision: {
+              condition: 'Is n !== 0?',
+              conditionMet: true,
+              action: 'Yes (5 !== 0), continue'
+            },
+            output: ['n = 5', 'count = 1']
+          },
+          {
+            id: 7,
+            codeLine: 4,
+            description: 'n & 1 = 5 & 1 = 1. Bit 0 is 1, so count becomes 2.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'n', value: 5 },
+              { label: 'mask', value: 1 }
+            ],
+            operator: '&',
+            result: 1,
+            activeBits: [0],
+            bitWidth: 8,
+            decision: {
+              condition: 'n & 1',
+              conditionMet: true,
+              action: 'Bit 0 is 1, add to count'
+            },
+            output: ['5 & 1 = 1', 'count = 2']
+          },
+          {
+            id: 8,
+            codeLine: 5,
+            description: 'Right shift: n = 5 >> 1 = 2. Now n = 00000010.',
+            phase: 'apply-operation',
+            numbers: [{ label: 'n', value: 5 }],
+            operator: '>>',
+            result: 2,
+            activeBits: [0, 1, 2],
+            bitWidth: 8,
+            output: ['5 >> 1 = 2', 'n = 2 = 00000010']
+          },
+          {
+            id: 9,
+            codeLine: 4,
+            description: 'n & 1 = 2 & 1 = 0. Bit 0 is 0, count stays at 2.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'n', value: 2 },
+              { label: 'mask', value: 1 }
+            ],
+            operator: '&',
+            result: 0,
+            activeBits: [0],
+            bitWidth: 8,
+            decision: {
+              condition: 'n & 1',
+              conditionMet: false,
+              action: 'Bit 0 is 0, skip'
+            },
+            output: ['2 & 1 = 0', 'count = 2 (no change)']
+          },
+          {
+            id: 10,
+            codeLine: 5,
+            description: 'Right shift: n = 2 >> 1 = 1. One more bit to check.',
+            phase: 'apply-operation',
+            numbers: [{ label: 'n', value: 2 }],
+            operator: '>>',
+            result: 1,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            output: ['2 >> 1 = 1', 'n = 1 = 00000001']
+          },
+          {
+            id: 11,
+            codeLine: 4,
+            description: 'n & 1 = 1 & 1 = 1. Final 1-bit found! count becomes 3.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'n', value: 1 },
+              { label: 'mask', value: 1 }
+            ],
+            operator: '&',
+            result: 1,
+            activeBits: [0],
+            bitWidth: 8,
+            decision: {
+              condition: 'n & 1',
+              conditionMet: true,
+              action: 'Bit 0 is 1, add to count'
+            },
+            output: ['1 & 1 = 1', 'count = 3']
+          },
+          {
+            id: 12,
+            codeLine: 5,
+            description: 'Right shift: n = 1 >> 1 = 0. All bits processed.',
+            phase: 'apply-operation',
+            numbers: [{ label: 'n', value: 1 }],
+            operator: '>>',
+            result: 0,
+            activeBits: [0],
+            bitWidth: 8,
+            output: ['1 >> 1 = 0', 'n = 0, loop will exit']
+          },
+          {
+            id: 13,
+            codeLine: 8,
+            description: 'Return count = 3. The number 11 (00001011) has exactly 3 set bits.',
+            phase: 'done',
+            numbers: [{ label: 'count', value: 3 }],
+            bitWidth: 8,
+            output: ['return 3', '11 has 3 one-bits!']
+          }
+        ],
+        insight: 'Check lowest bit with n & 1, then right shift to check next bit. Repeat until n becomes 0. Each shift "pops off" the rightmost bit.'
+      }
+    ],
     advanced: []
   },
   'shift-operations': {
@@ -563,7 +981,190 @@ const examples: Record<Variant, Record<Level, BitExample[]>> = {
         insight: 'Left shift << 1 multiplies by 2 (adds zero on right). Right shift >> 1 divides by 2 (drops rightmost bit). Both are faster than arithmetic!'
       }
     ],
-    intermediate: [],
+    intermediate: [
+      {
+        id: 'reverse-bits',
+        title: 'Reverse Bits',
+        variant: 'shift-operations',
+        code: [
+          'function reverseBits(n) {',
+          '  let result = 0',
+          '',
+          '  for (let i = 0; i < 8; i++) {',
+          '    result = (result << 1) | (n & 1)',
+          '    n = n >> 1',
+          '  }',
+          '',
+          '  return result',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Reverse the bits of a number. Extract from right of input, insert from left into result.',
+            phase: 'read-value',
+            numbers: [],
+            bitWidth: 8,
+            output: ['Input: n = 13', 'Goal: reverse its 8-bit representation']
+          },
+          {
+            id: 1,
+            codeLine: 0,
+            description: 'n = 13 in binary: 00001101. We want to produce 10110000 (176).',
+            phase: 'show-binary',
+            numbers: [{ label: 'n', value: 13 }],
+            activeBits: [0, 2, 3],
+            bitWidth: 8,
+            output: ['n = 13 = 00001101', 'Reversed: 10110000 = 176']
+          },
+          {
+            id: 2,
+            codeLine: 1,
+            description: 'Initialize result = 0. Bits will be shifted in from the left.',
+            phase: 'show-binary',
+            numbers: [
+              { label: 'n', value: 13 },
+              { label: 'result', value: 0 }
+            ],
+            bitWidth: 8,
+            output: ['result = 0']
+          },
+          {
+            id: 3,
+            codeLine: 4,
+            description: 'Iteration 1: Extract n & 1 = 13 & 1 = 1 (lowest bit is 1).',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'n', value: 13 },
+              { label: 'mask', value: 1 }
+            ],
+            operator: '&',
+            result: 1,
+            activeBits: [0],
+            bitWidth: 8,
+            decision: {
+              condition: 'Extract lowest bit',
+              conditionMet: true,
+              action: 'n & 1 = 1'
+            },
+            output: ['13 & 1 = 1', 'Extracted bit: 1']
+          },
+          {
+            id: 4,
+            codeLine: 4,
+            description: 'result = (0 << 1) | 1 = 0 | 1 = 1. Shift result left, OR in extracted bit.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'result<<1', value: 0 },
+              { label: 'bit', value: 1 }
+            ],
+            operator: '|',
+            result: 1,
+            activeBits: [0],
+            bitWidth: 8,
+            output: ['(0 << 1) | 1 = 1', 'result = 1']
+          },
+          {
+            id: 5,
+            codeLine: 5,
+            description: 'Shift n right: n = 13 >> 1 = 6. Processed bit falls off.',
+            phase: 'apply-operation',
+            numbers: [{ label: 'n', value: 13 }],
+            operator: '>>',
+            result: 6,
+            activeBits: [0],
+            bitWidth: 8,
+            output: ['13 >> 1 = 6', 'n = 6 = 00000110']
+          },
+          {
+            id: 6,
+            codeLine: 4,
+            description: 'Iteration 2: n & 1 = 6 & 1 = 0. Lowest bit is 0.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'n', value: 6 },
+              { label: 'mask', value: 1 }
+            ],
+            operator: '&',
+            result: 0,
+            activeBits: [0],
+            bitWidth: 8,
+            decision: {
+              condition: 'Extract lowest bit',
+              conditionMet: false,
+              action: 'n & 1 = 0'
+            },
+            output: ['6 & 1 = 0', 'Extracted bit: 0']
+          },
+          {
+            id: 7,
+            codeLine: 4,
+            description: 'result = (1 << 1) | 0 = 2 | 0 = 2. Previous bits shift left.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'result<<1', value: 2 },
+              { label: 'bit', value: 0 }
+            ],
+            operator: '|',
+            result: 2,
+            activeBits: [1],
+            bitWidth: 8,
+            output: ['(1 << 1) | 0 = 2', 'result = 2 = 00000010']
+          },
+          {
+            id: 8,
+            codeLine: 5,
+            description: 'n = 6 >> 1 = 3. Continue processing.',
+            phase: 'show-result',
+            numbers: [
+              { label: 'n', value: 3 },
+              { label: 'result', value: 2 }
+            ],
+            bitWidth: 8,
+            output: ['n = 3 = 00000011', 'result = 2 = 00000010']
+          },
+          {
+            id: 9,
+            codeLine: 4,
+            description: 'Iterations 3-4: Extract 1, then 1 from n=3. result becomes 11 (00001011).',
+            phase: 'show-result',
+            numbers: [
+              { label: 'n (after)', value: 0 },
+              { label: 'result', value: 11 }
+            ],
+            activeBits: [0, 1, 3],
+            bitWidth: 8,
+            output: ['After 4 iterations:', 'result = 11 = 00001011']
+          },
+          {
+            id: 10,
+            codeLine: 4,
+            description: 'Iterations 5-8: n is 0, so we extract 0s. result shifts left 4 more times.',
+            phase: 'show-result',
+            numbers: [
+              { label: 'result', value: 176 }
+            ],
+            activeBits: [4, 5, 7],
+            bitWidth: 8,
+            output: ['After 8 iterations:', 'result = 176 = 10110000']
+          },
+          {
+            id: 11,
+            codeLine: 8,
+            description: 'Return 176. Original 00001101 reversed to 10110000!',
+            phase: 'done',
+            numbers: [
+              { label: 'original', value: 13 },
+              { label: 'reversed', value: 176 }
+            ],
+            bitWidth: 8,
+            output: ['return 176', '13 reversed = 176']
+          }
+        ],
+        insight: 'Extract bits from right of input (n & 1), insert from left into result (result << 1 | bit). Both shift each iteration, bits swap positions.'
+      }
+    ],
     advanced: []
   }
 }
