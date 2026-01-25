@@ -23,7 +23,7 @@ const footerLinks = {
     links: [
       { label: 'Arrays & Hashing', href: '/arrays-hashing' },
       { label: 'Closures', href: '/concepts/closures' },
-      { label: 'Promises', href: '/concepts/promises' },
+      { label: 'Promises', href: '/concepts/promises-deep-dive' },
       { label: 'DSA Problems', href: '/concepts/dsa' },
     ],
   },
