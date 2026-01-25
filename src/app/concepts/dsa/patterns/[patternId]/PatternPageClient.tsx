@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowLeft, Clock, HardDrive, CheckCircle } from 'lucide-react'
 import { getPatternBySlug } from '@/data/dsaPatterns'
 import { TwoPointersViz, HashMapViz, BitManipulationViz } from '@/components/DSAPatterns'
+import { RelatedProblems } from '@/components/CrossLinks'
 import styles from './page.module.css'
 
 interface Props {
@@ -85,6 +86,8 @@ export default function PatternPageClient({ patternId }: Props) {
           </div>
         )}
       </section>
+
+      <RelatedProblems patternId={patternId} />
     </div>
   )
 }
