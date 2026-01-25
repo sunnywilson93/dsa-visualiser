@@ -194,6 +194,8 @@
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid var(--js-viz-border);
   border-radius: var(--radius-xl);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .bitWidthBadge {
@@ -446,7 +448,6 @@
 
   .bitGrid {
     padding: var(--space-md);
-    overflow-x: auto;
   }
 
   .rowLabel {
@@ -493,5 +494,60 @@
 
   .bitPositionsSpacer {
     min-width: 90px;
+  }
+}
+
+@media (max-width: 640px) {
+  .bit.width4,
+  .bit.width8 {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+
+  .bit.width16 {
+    width: 14px;
+    height: 14px;
+    font-size: 8px;
+  }
+
+  .bit.width32 {
+    width: 11px;
+    height: 11px;
+    font-size: 6px;
+  }
+
+  .bitPosition.width4,
+  .bitPosition.width8 {
+    width: 18px;
+    font-size: 8px;
+  }
+
+  .bitPosition.width16 {
+    width: 14px;
+    font-size: 6px;
+  }
+
+  .bitPosition.width32 {
+    width: 11px;
+    font-size: 6px;
+  }
+
+  .rowLabel {
+    min-width: 40px;
+    font-size: 10px;
+  }
+
+  .decimal {
+    min-width: 24px;
+    font-size: 10px;
+  }
+
+  .bitPositionsSpacer {
+    min-width: 74px;
+  }
+
+  .bitRow {
+    gap: var(--space-xs);
   }
 }

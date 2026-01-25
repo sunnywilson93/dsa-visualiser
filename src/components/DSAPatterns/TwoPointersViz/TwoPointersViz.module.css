@@ -176,11 +176,14 @@
   display: flex;
   gap: var(--space-sm);
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: var(--space-lg) var(--space-md);
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid var(--js-viz-border);
   border-radius: var(--radius-xl);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  min-width: 0;
 }
 
 .cellWrapper {
@@ -335,5 +338,22 @@
 
   .arrayContainer {
     gap: var(--space-xs);
+  }
+}
+
+@media (max-width: 640px) {
+  .cell {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .cellValue {
+    font-size: var(--text-xs);
+  }
+
+  .arrayContainer {
+    justify-content: flex-start;
+    padding: var(--space-md) var(--space-sm);
   }
 }

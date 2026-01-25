@@ -231,8 +231,10 @@
 .inputCells {
   display: flex;
   gap: var(--space-sm);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .inputCell {
@@ -280,6 +282,8 @@
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid var(--js-viz-border);
   border-radius: var(--radius-xl);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .bucket {
@@ -458,5 +462,25 @@
   .hashCalculation {
     font-size: var(--text-xs);
     padding: var(--space-sm);
+  }
+}
+
+@media (max-width: 640px) {
+  .bucketGrid {
+    gap: var(--space-xs);
+  }
+
+  .bucket {
+    min-width: 60px;
+  }
+
+  .inputCell {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .inputCells {
+    justify-content: flex-start;
   }
 }
