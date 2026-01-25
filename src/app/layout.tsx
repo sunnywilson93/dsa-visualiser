@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Analytics } from '@/components/Analytics'
+import { SiteFooter } from '@/components/SiteFooter'
 import '@/index.css'
 
 export const metadata: Metadata = {
@@ -102,6 +103,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <SiteFooter />
         <Suspense fallback={null}>
           <Analytics />
         </Suspense>
