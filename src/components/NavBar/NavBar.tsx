@@ -18,6 +18,7 @@ interface NavBarProps {
 export function NavBar({ breadcrumbs }: NavBarProps) {
   const pathname = usePathname()
   const isHome = pathname === '/'
+  const menuId = 'mobile-menu-toggle'
 
   return (
     <nav className={styles.nav}>
@@ -60,6 +61,38 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
             <GlobalSearch />
           </div>
         </div>
+
+        {/* Mobile menu toggle (checkbox hack) */}
+        <input
+          type="checkbox"
+          id={menuId}
+          className={styles.mobileMenuToggle}
+          aria-hidden="true"
+        />
+        <label htmlFor={menuId} className={styles.hamburgerBtn} aria-label="Toggle menu">
+          <span className={styles.hamburgerIcon} />
+        </label>
+
+        {/* Mobile navigation panel */}
+        <nav className={styles.mobileNav} aria-label="Mobile navigation">
+          <div className={styles.mobileNavLinks}>
+            <Link href="/" className={styles.mobileNavLink}>
+              Home
+            </Link>
+            <Link href="/concepts" className={styles.mobileNavLink}>
+              JS Concepts
+            </Link>
+            <Link href="/concepts/dsa/patterns/two-pointers" className={styles.mobileNavLink}>
+              DSA Patterns
+            </Link>
+            <Link href="/playground/event-loop" className={styles.mobileNavLink}>
+              Playground
+            </Link>
+          </div>
+        </nav>
+
+        {/* Overlay to close menu */}
+        <label htmlFor={menuId} className={styles.overlay} aria-hidden="true" />
       </div>
     </nav>
   )
