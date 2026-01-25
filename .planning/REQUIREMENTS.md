@@ -9,11 +9,11 @@ Requirements for production polish. Each maps to roadmap phases.
 
 ### Responsive Design
 
-- [ ] **RESP-01**: Standardized breakpoints (640/768/1024px) across all CSS files
+- [x] **RESP-01**: Standardized breakpoints (640/768/1024px) across all CSS files
 - [ ] **RESP-02**: Mobile navigation (hamburger menu or bottom nav) replaces hidden nav
 - [ ] **RESP-03**: Touch-friendly controls (44px minimum tap targets)
 - [ ] **RESP-04**: Responsive visualizations adapt to screen width
-- [ ] **RESP-05**: Monaco Editor hidden on mobile, replaced with read-only code display
+- [x] **RESP-05**: Monaco Editor hidden on mobile, replaced with read-only code display
 
 ### SEO & Meta
 
@@ -72,11 +72,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| RESP-01 | Phase 11 | Pending |
+| RESP-01 | Phase 11 | Complete |
 | RESP-02 | Phase 15 | Pending |
 | RESP-03 | Phase 15 | Pending |
 | RESP-04 | Phase 15 | Pending |
-| RESP-05 | Phase 11 | Pending |
+| RESP-05 | Phase 11 | Complete |
 | SEO-01 | Phase 12 | Pending |
 | SEO-02 | Phase 12 | Pending |
 | SEO-03 | Phase 12 | Pending |
@@ -93,4 +93,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-25*
-*Last updated: 2026-01-25 after roadmap creation*
+*Last updated: 2026-01-25 — Phase 11 complete (RESP-01, RESP-05)*
