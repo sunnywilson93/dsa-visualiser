@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowLeft, Code } from 'lucide-react'
 import { ConceptPanel } from '@/components/ConceptPanel'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
+import { RelatedPatterns } from '@/components/CrossLinks'
 import { codeExamples, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
 import { getConceptForProblem, getConceptSteps } from '@/data/algorithmConcepts'
 import styles from './page.module.css'
@@ -85,6 +86,8 @@ export default function ConceptVizPageClient() {
             />
           </ErrorBoundary>
         </div>
+
+        <RelatedPatterns problemId={problemId} />
 
         <Link
           href={`/${categoryId}/${problemId}`}
