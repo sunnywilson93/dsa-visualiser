@@ -236,11 +236,12 @@ Plans:
   2. Problem pages show "Learn the pattern" link to relevant pattern page
   3. Footer navigation exists with site-wide links for discoverability
   4. No orphaned pages (every page has at least 2 incoming internal links)
-**Plans**: 2 plans
+**Plans**: 3 plans
 
 Plans:
-- [ ] 13-01-PLAN.md - RelatedProblems and RelatedPatterns cross-link components
-- [ ] 13-02-PLAN.md - Footer navigation component and integration
+- [x] 13-01-PLAN.md - RelatedProblems and RelatedPatterns cross-link components
+- [x] 13-02-PLAN.md - Footer navigation component and integration
+- [ ] 13-03-PLAN.md - Gap closure: Fix footer links and add missing problem mappings
 
 ### Phase 14: Page Consistency
 **Goal**: All DSA pattern pages have consistent headers matching JS concept pages
@@ -291,10 +292,10 @@ Phases execute in numeric order: 11 -> 12 (parallel) -> 13 -> 14 (parallel) -> 1
 | 10. BitManipulationViz | v1.1 | 3/3 | Complete | 2026-01-25 |
 | 11. Foundation & Mobile | v1.2 | 2/2 | Complete | 2026-01-25 |
 | 12. SEO Standardization | v1.2 | 4/4 | Complete | 2026-01-25 |
-| 13. Cross-Linking | v1.2 | 0/2 | Not started | - |
+| 13. Cross-Linking | v1.2 | 2/3 | Gap closure | - |
 | 14. Page Consistency | v1.2 | 0/1 | Not started | - |
 | 15. Responsive Implementation | v1.2 | 0/3 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-25 — Phase 13 planned*
+*Last updated: 2026-01-25 — Phase 13 gap closure planned*
