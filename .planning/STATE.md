@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** Learners can step through code execution visually, seeing exactly how algorithms and JavaScript work under the hood
-**Current focus:** v1.1 Phase 9 — HashMapViz
+**Current focus:** v1.1 Phase 10 — BitManipulationViz
 
 ## Current Position
 
 Milestone: v1.1
-Phase: 9 of 10 (HashMapViz)
-Plan: 2 of 3
+Phase: 10 of 10 (BitManipulationViz)
+Plan: 1 of 3
 Status: In progress
-Last activity: 2026-01-25 — Completed 09-02-PLAN.md
+Last activity: 2026-01-25 — Completed 10-01-PLAN.md
 
-Progress: [█████████████████████] 96% (23/24 plans)
+Progress: [█████████████████████░░] 92% (24/26 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 23
-- Average duration: ~3.5 min
-- Total execution time: ~82 min
+- Total plans completed: 24
+- Average duration: ~3.4 min
+- Total execution time: ~84 min
 
 **By Phase:**
 
@@ -37,9 +37,10 @@ Progress: [█████████████████████] 96% 
 | 07-foundation | 2 | ~5 min | ~2.5 min |
 | 08-twopointerviz | 3 | ~12 min | ~4 min |
 | 09-hashmapviz | 2 | ~8 min | ~4 min |
+| 10-bitmanipulationviz | 1 | ~2.5 min | ~2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 08-02 (~3m), 08-03 (~4.5m), 09-01 (~5m), 09-02 (~3m)
+- Last 5 plans: 08-03 (~4.5m), 09-01 (~5m), 09-02 (~3m), 10-01 (~2.5m)
 - Trend: Consistent execution times across DSA viz plans
 
 *Updated after each plan completion*
@@ -64,6 +65,8 @@ Recent decisions affecting current work:
 | HashMapViz 8 buckets | Educational simplicity without overwhelming | 09-01 |
 | Hash calculation abbreviated for long keys | Full char codes only for keys <= 4 chars | 09-01 |
 | Valid Anagram 20 steps | Comprehensive two-loop coverage without excess | 09-02 |
+| Bit width author-controlled | bitWidth property (4, 8, 16, 32) per example | 10-01 |
+| Bit cell sizing by width | 24px for 4/8-bit, 18px for 16-bit, 14px for 32-bit | 10-01 |
 
 ### Pending Todos
 
@@ -75,7 +78,7 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-25T09:13:00Z
-Stopped at: Completed 09-02-PLAN.md
+Last session: 2026-01-25T09:35:00Z
+Stopped at: Completed 10-01-PLAN.md
 Resume file: None
-Next action: Continue with 09-03-PLAN.md (advanced examples)
+Next action: Continue with 10-02-PLAN.md (beginner XOR examples)
