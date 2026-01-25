@@ -450,7 +450,283 @@ const examples: Record<Variant, Record<Level, BitExample[]>> = {
         insight: 'XOR all indices 0..n with all values. Each index-value pair cancels (a ^ a = 0), leaving only the missing number unpaired.'
       }
     ],
-    advanced: []
+    advanced: [
+      {
+        id: 'single-number-ii',
+        title: 'Single Number II',
+        variant: 'xor-tricks',
+        code: [
+          'function singleNumber(nums) {',
+          '  let ones = 0, twos = 0',
+          '',
+          '  for (const num of nums) {',
+          '    ones = (ones ^ num) & ~twos',
+          '    twos = (twos ^ num) & ~ones',
+          '  }',
+          '',
+          '  return ones',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Every element appears 3 times except one. Track bits seen once (ones) and twice (twos).',
+            phase: 'read-value',
+            numbers: [],
+            bitWidth: 8,
+            output: ['Input: [2, 2, 3, 2]', 'Find: element appearing once']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'Initialize ones = 0 (bits seen 1 time) and twos = 0 (bits seen 2 times).',
+            phase: 'show-binary',
+            numbers: [
+              { label: 'ones', value: 0 },
+              { label: 'twos', value: 0 }
+            ],
+            bitWidth: 8,
+            output: ['ones = 0, twos = 0', 'Track bit occurrences mod 3']
+          },
+          {
+            id: 2,
+            codeLine: 3,
+            description: 'Process num = 2 (binary: 00000010). Bit 1 appears for the first time.',
+            phase: 'show-binary',
+            numbers: [
+              { label: 'num', value: 2 },
+              { label: 'ones', value: 0 },
+              { label: 'twos', value: 0 }
+            ],
+            activeBits: [1],
+            bitWidth: 8,
+            output: ['Processing: num = 2', 'First occurrence of value 2']
+          },
+          {
+            id: 3,
+            codeLine: 4,
+            description: 'ones = (0 ^ 2) & ~0 = 2 & 1 = 2. Bit 1 is now in ones (seen once).',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'ones^num', value: 2 },
+              { label: '~twos', value: 255 }
+            ],
+            operator: '&',
+            result: 2,
+            activeBits: [1],
+            bitWidth: 8,
+            decision: {
+              condition: '(ones ^ num) & ~twos',
+              conditionMet: true,
+              action: 'Bit 1 added to ones'
+            },
+            output: ['(0 ^ 2) & ~0 = 2', 'ones = 2']
+          },
+          {
+            id: 4,
+            codeLine: 5,
+            description: 'twos = (0 ^ 2) & ~2 = 2 & 253 = 0. Bit 1 not in twos (masked by ones).',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'twos^num', value: 2 },
+              { label: '~ones', value: 253 }
+            ],
+            operator: '&',
+            result: 0,
+            activeBits: [1],
+            bitWidth: 8,
+            decision: {
+              condition: '(twos ^ num) & ~ones',
+              conditionMet: false,
+              action: 'Bit 1 blocked by ones'
+            },
+            output: ['(0 ^ 2) & ~2 = 0', 'twos = 0']
+          },
+          {
+            id: 5,
+            codeLine: 3,
+            description: 'Process num = 2 again (second occurrence). Currently ones=2, twos=0.',
+            phase: 'show-binary',
+            numbers: [
+              { label: 'num', value: 2 },
+              { label: 'ones', value: 2 },
+              { label: 'twos', value: 0 }
+            ],
+            activeBits: [1],
+            bitWidth: 8,
+            output: ['Processing: num = 2 (2nd time)', 'Bit 1 currently in ones']
+          },
+          {
+            id: 6,
+            codeLine: 4,
+            description: 'ones = (2 ^ 2) & ~0 = 0 & 255 = 0. Bit 1 leaves ones (XOR cancels).',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'ones^num', value: 0 },
+              { label: '~twos', value: 255 }
+            ],
+            operator: '&',
+            result: 0,
+            activeBits: [1],
+            bitWidth: 8,
+            decision: {
+              condition: '(ones ^ num) & ~twos',
+              conditionMet: false,
+              action: 'Bit 1 removed from ones'
+            },
+            output: ['(2 ^ 2) & ~0 = 0', 'ones = 0']
+          },
+          {
+            id: 7,
+            codeLine: 5,
+            description: 'twos = (0 ^ 2) & ~0 = 2 & 255 = 2. Bit 1 moves to twos (seen twice).',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'twos^num', value: 2 },
+              { label: '~ones', value: 255 }
+            ],
+            operator: '&',
+            result: 2,
+            activeBits: [1],
+            bitWidth: 8,
+            decision: {
+              condition: '(twos ^ num) & ~ones',
+              conditionMet: true,
+              action: 'Bit 1 added to twos'
+            },
+            output: ['(0 ^ 2) & ~0 = 2', 'twos = 2']
+          },
+          {
+            id: 8,
+            codeLine: 3,
+            description: 'Process num = 3 (binary: 00000011). New number with bits 0 and 1.',
+            phase: 'show-binary',
+            numbers: [
+              { label: 'num', value: 3 },
+              { label: 'ones', value: 0 },
+              { label: 'twos', value: 2 }
+            ],
+            activeBits: [0, 1],
+            bitWidth: 8,
+            output: ['Processing: num = 3', 'Bits 0 and 1 set']
+          },
+          {
+            id: 9,
+            codeLine: 4,
+            description: 'ones = (0 ^ 3) & ~2 = 3 & 253 = 1. Only bit 0 goes to ones (bit 1 blocked by twos).',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'ones^num', value: 3 },
+              { label: '~twos', value: 253 }
+            ],
+            operator: '&',
+            result: 1,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            decision: {
+              condition: '3 & ~2',
+              conditionMet: true,
+              action: 'Bit 0 to ones, bit 1 blocked'
+            },
+            output: ['(0 ^ 3) & ~2 = 1', 'ones = 1 (bit 0 only)']
+          },
+          {
+            id: 10,
+            codeLine: 5,
+            description: 'twos = (2 ^ 3) & ~1 = 1 & 254 = 0. Bit 1 leaves twos (third occurrence clears).',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'twos^num', value: 1 },
+              { label: '~ones', value: 254 }
+            ],
+            operator: '&',
+            result: 0,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            decision: {
+              condition: 'Third occurrence',
+              conditionMet: true,
+              action: 'Bit 1 cleared from twos'
+            },
+            output: ['(2 ^ 3) & ~1 = 0', 'twos = 0, bit 1 cleared!']
+          },
+          {
+            id: 11,
+            codeLine: 3,
+            description: 'Process num = 2 (third occurrence). ones=1, twos=0.',
+            phase: 'show-binary',
+            numbers: [
+              { label: 'num', value: 2 },
+              { label: 'ones', value: 1 },
+              { label: 'twos', value: 0 }
+            ],
+            activeBits: [0, 1],
+            bitWidth: 8,
+            output: ['Processing: num = 2 (3rd time)', 'This completes the triple']
+          },
+          {
+            id: 12,
+            codeLine: 4,
+            description: 'ones = (1 ^ 2) & ~0 = 3 & 255 = 3. Wait, this adds bit 1 to ones temporarily.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'ones^num', value: 3 },
+              { label: '~twos', value: 255 }
+            ],
+            operator: '&',
+            result: 3,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            output: ['(1 ^ 2) & ~0 = 3', 'ones = 3 (temporary)']
+          },
+          {
+            id: 13,
+            codeLine: 5,
+            description: 'twos = (0 ^ 2) & ~3 = 2 & 252 = 0. Bit 1 blocked by ones. Both ones and twos reject it!',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'twos^num', value: 2 },
+              { label: '~ones', value: 252 }
+            ],
+            operator: '&',
+            result: 0,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            decision: {
+              condition: 'Third occurrence logic',
+              conditionMet: true,
+              action: 'Value 2 now appears 3x'
+            },
+            output: ['(0 ^ 2) & ~3 = 0', 'twos = 0']
+          },
+          {
+            id: 14,
+            codeLine: 4,
+            description: 'Correction: ones recalculated. Since twos=0, ones = 3 & ~0 = 3. But bit 1 appeared 3x...',
+            phase: 'show-result',
+            numbers: [
+              { label: 'ones', value: 3 },
+              { label: 'twos', value: 0 }
+            ],
+            activeBits: [0, 1],
+            bitWidth: 8,
+            output: ['State: ones=3, twos=0', 'Hmm, we expected ones=3']
+          },
+          {
+            id: 15,
+            codeLine: 8,
+            description: 'Return ones = 3. The single number appearing once is 3!',
+            phase: 'done',
+            numbers: [{ label: 'ones', value: 3 }],
+            activeBits: [0, 1],
+            bitWidth: 8,
+            output: ['return 3', '3 appears once, 2 appears 3x!']
+          }
+        ],
+        insight: 'Track bits appearing 1x (ones) and 2x (twos). Third appearance clears both. After processing, ones holds the unique number.'
+      }
+    ]
   },
   'bit-masks': {
     beginner: [
@@ -811,7 +1087,217 @@ const examples: Record<Variant, Record<Level, BitExample[]>> = {
         insight: 'Check lowest bit with n & 1, then right shift to check next bit. Repeat until n becomes 0. Each shift "pops off" the rightmost bit.'
       }
     ],
-    advanced: []
+    advanced: [
+      {
+        id: 'subset-generation',
+        title: 'Subset Generation',
+        variant: 'bit-masks',
+        code: [
+          'function subsets(nums) {',
+          '  const n = nums.length',
+          '  const result = []',
+          '',
+          '  for (let mask = 0; mask < (1 << n); mask++) {',
+          '    const subset = []',
+          '    for (let i = 0; i < n; i++) {',
+          '      if (mask & (1 << i)) subset.push(nums[i])',
+          '    }',
+          '    result.push(subset)',
+          '  }',
+          '  return result',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Generate all subsets using bit masking. Each bit represents include/exclude.',
+            phase: 'read-value',
+            numbers: [],
+            bitWidth: 4,
+            output: ['Input: nums = [a, b, c]', '2^3 = 8 possible subsets']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'n = 3 elements. We will iterate mask from 0 to 7 (000 to 111).',
+            phase: 'show-binary',
+            numbers: [{ label: '1 << n', value: 8 }],
+            bitWidth: 4,
+            output: ['n = 3, 1 << 3 = 8', 'Masks: 0 to 7']
+          },
+          {
+            id: 2,
+            codeLine: 4,
+            description: 'mask = 0 (binary: 000). No bits set means no elements included.',
+            phase: 'show-binary',
+            numbers: [{ label: 'mask', value: 0 }],
+            bitWidth: 4,
+            decision: {
+              condition: 'Which bits are set?',
+              conditionMet: false,
+              action: 'None - empty subset'
+            },
+            output: ['mask = 0 = 000', 'subset = []']
+          },
+          {
+            id: 3,
+            codeLine: 4,
+            description: 'mask = 1 (binary: 001). Bit 0 set means include nums[0] = a.',
+            phase: 'show-binary',
+            numbers: [{ label: 'mask', value: 1 }],
+            activeBits: [0],
+            bitWidth: 4,
+            decision: {
+              condition: 'mask & (1 << 0)?',
+              conditionMet: true,
+              action: 'Bit 0 set, include a'
+            },
+            output: ['mask = 1 = 001', 'subset = [a]']
+          },
+          {
+            id: 4,
+            codeLine: 4,
+            description: 'mask = 2 (binary: 010). Bit 1 set means include nums[1] = b.',
+            phase: 'show-binary',
+            numbers: [{ label: 'mask', value: 2 }],
+            activeBits: [1],
+            bitWidth: 4,
+            decision: {
+              condition: 'mask & (1 << 1)?',
+              conditionMet: true,
+              action: 'Bit 1 set, include b'
+            },
+            output: ['mask = 2 = 010', 'subset = [b]']
+          },
+          {
+            id: 5,
+            codeLine: 4,
+            description: 'mask = 3 (binary: 011). Bits 0 and 1 set means include a and b.',
+            phase: 'show-binary',
+            numbers: [{ label: 'mask', value: 3 }],
+            activeBits: [0, 1],
+            bitWidth: 4,
+            decision: {
+              condition: 'Which bits are set?',
+              conditionMet: true,
+              action: 'Bits 0,1 - include a,b'
+            },
+            output: ['mask = 3 = 011', 'subset = [a, b]']
+          },
+          {
+            id: 6,
+            codeLine: 4,
+            description: 'mask = 4 (binary: 100). Bit 2 set means include nums[2] = c.',
+            phase: 'show-binary',
+            numbers: [{ label: 'mask', value: 4 }],
+            activeBits: [2],
+            bitWidth: 4,
+            decision: {
+              condition: 'mask & (1 << 2)?',
+              conditionMet: true,
+              action: 'Bit 2 set, include c'
+            },
+            output: ['mask = 4 = 100', 'subset = [c]']
+          },
+          {
+            id: 7,
+            codeLine: 4,
+            description: 'mask = 5 (binary: 101). Bits 0 and 2 set means include a and c.',
+            phase: 'show-binary',
+            numbers: [{ label: 'mask', value: 5 }],
+            activeBits: [0, 2],
+            bitWidth: 4,
+            decision: {
+              condition: 'Which bits are set?',
+              conditionMet: true,
+              action: 'Bits 0,2 - include a,c'
+            },
+            output: ['mask = 5 = 101', 'subset = [a, c]']
+          },
+          {
+            id: 8,
+            codeLine: 4,
+            description: 'mask = 6 (binary: 110). Bits 1 and 2 set means include b and c.',
+            phase: 'show-binary',
+            numbers: [{ label: 'mask', value: 6 }],
+            activeBits: [1, 2],
+            bitWidth: 4,
+            decision: {
+              condition: 'Which bits are set?',
+              conditionMet: true,
+              action: 'Bits 1,2 - include b,c'
+            },
+            output: ['mask = 6 = 110', 'subset = [b, c]']
+          },
+          {
+            id: 9,
+            codeLine: 4,
+            description: 'mask = 7 (binary: 111). All bits set means include all elements.',
+            phase: 'show-binary',
+            numbers: [{ label: 'mask', value: 7 }],
+            activeBits: [0, 1, 2],
+            bitWidth: 4,
+            decision: {
+              condition: 'All bits set?',
+              conditionMet: true,
+              action: 'Full set - include a,b,c'
+            },
+            output: ['mask = 7 = 111', 'subset = [a, b, c]']
+          },
+          {
+            id: 10,
+            codeLine: 7,
+            description: 'Check inclusion: mask & (1 << i). If bit i is set, include nums[i].',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'mask', value: 5 },
+              { label: '1 << 0', value: 1 }
+            ],
+            operator: '&',
+            result: 1,
+            activeBits: [0],
+            bitWidth: 4,
+            decision: {
+              condition: '5 & 1 = ?',
+              conditionMet: true,
+              action: 'Non-zero, include nums[0]'
+            },
+            output: ['Example: mask=5, i=0', '5 & 1 = 1 (include a)']
+          },
+          {
+            id: 11,
+            codeLine: 7,
+            description: 'Continue check: 5 & (1 << 1) = 5 & 2 = 0. Bit 1 not set, skip b.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'mask', value: 5 },
+              { label: '1 << 1', value: 2 }
+            ],
+            operator: '&',
+            result: 0,
+            activeBits: [1],
+            bitWidth: 4,
+            decision: {
+              condition: '5 & 2 = ?',
+              conditionMet: false,
+              action: 'Zero, skip nums[1]'
+            },
+            output: ['5 & 2 = 0', 'Skip b']
+          },
+          {
+            id: 12,
+            codeLine: 11,
+            description: 'All 8 subsets generated: [], [a], [b], [a,b], [c], [a,c], [b,c], [a,b,c].',
+            phase: 'done',
+            numbers: [{ label: 'total', value: 8 }],
+            bitWidth: 4,
+            output: ['return result', '8 subsets generated!']
+          }
+        ],
+        insight: 'Each bit position represents include/exclude for that element. 2^n masks enumerate all 2^n possible subsets. Bit manipulation makes subset generation O(n * 2^n).'
+      }
+    ]
   },
   'shift-operations': {
     beginner: [
@@ -1165,7 +1651,262 @@ const examples: Record<Variant, Record<Level, BitExample[]>> = {
         insight: 'Extract bits from right of input (n & 1), insert from left into result (result << 1 | bit). Both shift each iteration, bits swap positions.'
       }
     ],
-    advanced: []
+    advanced: [
+      {
+        id: 'find-two-numbers',
+        title: 'Find Two Non-Repeating',
+        variant: 'shift-operations',
+        code: [
+          'function findTwoNumbers(nums) {',
+          '  let xorAll = 0',
+          '  for (const num of nums) xorAll ^= num',
+          '',
+          '  const diffBit = xorAll & -xorAll',
+          '',
+          '  let a = 0, b = 0',
+          '  for (const num of nums) {',
+          '    if (num & diffBit) a ^= num',
+          '    else b ^= num',
+          '  }',
+          '  return [a, b]',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Array where every element appears twice except two. Find both unique elements.',
+            phase: 'read-value',
+            numbers: [],
+            bitWidth: 8,
+            output: ['Input: [1, 2, 1, 3, 2, 5]', 'Find: two unique numbers']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'XOR all elements. Pairs cancel, leaving 3 ^ 5.',
+            phase: 'show-binary',
+            numbers: [{ label: 'xorAll', value: 0 }],
+            bitWidth: 8,
+            output: ['xorAll = 0', 'Will XOR all elements']
+          },
+          {
+            id: 2,
+            codeLine: 2,
+            description: 'After XORing all: 1^2^1^3^2^5 = 3^5 = 6. The 1s and 2s canceled.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: '3', value: 3 },
+              { label: '5', value: 5 }
+            ],
+            operator: '^',
+            result: 6,
+            activeBits: [1, 2],
+            bitWidth: 8,
+            decision: {
+              condition: 'XOR all elements',
+              conditionMet: true,
+              action: 'Pairs cancel, 3 ^ 5 remains'
+            },
+            output: ['1^2^1^3^2^5 = 6', 'xorAll = 6 = 00000110']
+          },
+          {
+            id: 3,
+            codeLine: 2,
+            description: 'xorAll = 6 (binary: 00000110). Bits 1 and 2 are set - these are where 3 and 5 differ!',
+            phase: 'show-binary',
+            numbers: [{ label: 'xorAll', value: 6 }],
+            activeBits: [1, 2],
+            bitWidth: 8,
+            decision: {
+              condition: 'Set bits meaning',
+              conditionMet: true,
+              action: 'These bits differ between the two unique numbers'
+            },
+            output: ['xorAll = 6 = 00000110', 'Bits 1,2 differ in 3 and 5']
+          },
+          {
+            id: 4,
+            codeLine: 4,
+            description: 'Find lowest set bit: diffBit = xorAll & -xorAll. This isolates rightmost 1-bit.',
+            phase: 'show-binary',
+            numbers: [
+              { label: 'xorAll', value: 6 },
+              { label: '-xorAll', value: -6 }
+            ],
+            activeBits: [1],
+            bitWidth: 8,
+            output: ['6 in binary: 00000110', '-6 in binary: 11111010']
+          },
+          {
+            id: 5,
+            codeLine: 4,
+            description: 'diffBit = 6 & -6 = 2. Binary: 00000010. This bit separates 3 from 5.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'xorAll', value: 6 },
+              { label: '-xorAll', value: -6 }
+            ],
+            operator: '&',
+            result: 2,
+            activeBits: [1],
+            bitWidth: 8,
+            decision: {
+              condition: 'Isolate lowest set bit',
+              conditionMet: true,
+              action: 'diffBit = 2 (bit position 1)'
+            },
+            output: ['6 & -6 = 2', 'diffBit = 2 = 00000010']
+          },
+          {
+            id: 6,
+            codeLine: 4,
+            description: 'Why does n & -n work? -n is twos complement: flips bits and adds 1, preserving only lowest 1.',
+            phase: 'show-result',
+            numbers: [{ label: 'diffBit', value: 2 }],
+            activeBits: [1],
+            bitWidth: 8,
+            output: ['n & -n trick:', 'Isolates rightmost set bit']
+          },
+          {
+            id: 7,
+            codeLine: 6,
+            description: 'Initialize a = 0, b = 0. Partition numbers by diffBit, XOR each partition.',
+            phase: 'show-binary',
+            numbers: [
+              { label: 'a', value: 0 },
+              { label: 'b', value: 0 },
+              { label: 'diffBit', value: 2 }
+            ],
+            bitWidth: 8,
+            output: ['a = 0, b = 0', 'Split by bit 1']
+          },
+          {
+            id: 8,
+            codeLine: 8,
+            description: 'Check 1: 1 & 2 = 0. Bit 1 not set in 1, so 1 goes to group b.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'num', value: 1 },
+              { label: 'diffBit', value: 2 }
+            ],
+            operator: '&',
+            result: 0,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            decision: {
+              condition: 'num & diffBit',
+              conditionMet: false,
+              action: '1 goes to group b'
+            },
+            output: ['1 & 2 = 0', 'b ^= 1, b = 1']
+          },
+          {
+            id: 9,
+            codeLine: 8,
+            description: 'Check 2: 2 & 2 = 2. Bit 1 is set in 2, so 2 goes to group a.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'num', value: 2 },
+              { label: 'diffBit', value: 2 }
+            ],
+            operator: '&',
+            result: 2,
+            activeBits: [1],
+            bitWidth: 8,
+            decision: {
+              condition: 'num & diffBit',
+              conditionMet: true,
+              action: '2 goes to group a'
+            },
+            output: ['2 & 2 = 2', 'a ^= 2, a = 2']
+          },
+          {
+            id: 10,
+            codeLine: 8,
+            description: 'Check 3: 3 & 2 = 2. Bit 1 is set in 3, so 3 goes to group a.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'num', value: 3 },
+              { label: 'diffBit', value: 2 }
+            ],
+            operator: '&',
+            result: 2,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            decision: {
+              condition: 'num & diffBit',
+              conditionMet: true,
+              action: '3 goes to group a'
+            },
+            output: ['3 & 2 = 2', 'a ^= 3, a = 2 ^ 3 = 1']
+          },
+          {
+            id: 11,
+            codeLine: 8,
+            description: 'Check 5: 5 & 2 = 0. Bit 1 not set in 5, so 5 goes to group b.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'num', value: 5 },
+              { label: 'diffBit', value: 2 }
+            ],
+            operator: '&',
+            result: 0,
+            activeBits: [0, 2],
+            bitWidth: 8,
+            decision: {
+              condition: 'num & diffBit',
+              conditionMet: false,
+              action: '5 goes to group b'
+            },
+            output: ['5 & 2 = 0', 'b ^= 5']
+          },
+          {
+            id: 12,
+            codeLine: 8,
+            description: 'After all: Group a has [2,1,2,3] and Group b has [1,1,5]. Pairs cancel in each!',
+            phase: 'show-result',
+            numbers: [
+              { label: 'group a', value: 0 },
+              { label: 'group b', value: 0 }
+            ],
+            bitWidth: 8,
+            output: ['Group a: 2^1^2^3 = 3', 'Group b: 1^1^5 = 5']
+          },
+          {
+            id: 13,
+            codeLine: 8,
+            description: 'XOR within groups: a = 2^1^2^3 = 3, b = 1^1^5 = 5. Pairs canceled!',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'a', value: 3 },
+              { label: 'b', value: 5 }
+            ],
+            bitWidth: 8,
+            activeBits: [0, 1, 2],
+            decision: {
+              condition: 'Within each group',
+              conditionMet: true,
+              action: 'Pairs cancel, unique remains'
+            },
+            output: ['a = 3, b = 5', 'The two unique numbers!']
+          },
+          {
+            id: 14,
+            codeLine: 11,
+            description: 'Return [3, 5]. XOR all to get combined diff, partition by any differing bit, XOR each partition.',
+            phase: 'done',
+            numbers: [
+              { label: 'a', value: 3 },
+              { label: 'b', value: 5 }
+            ],
+            bitWidth: 8,
+            output: ['return [3, 5]', 'Found both unique numbers!']
+          }
+        ],
+        insight: 'XOR all gives a^b. Find a bit where they differ (using n & -n). Partition all numbers by that bit - each group has exactly one unique number. XOR each group.'
+      }
+    ]
   }
 }
 
