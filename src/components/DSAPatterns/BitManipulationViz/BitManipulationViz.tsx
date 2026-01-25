@@ -81,17 +81,488 @@ function getOperatorSymbol(op: string): string {
 
 const examples: Record<Variant, Record<Level, BitExample[]>> = {
   'xor-tricks': {
-    beginner: [],
+    beginner: [
+      {
+        id: 'single-number',
+        title: 'Single Number',
+        variant: 'xor-tricks',
+        code: [
+          'function singleNumber(nums) {',
+          '  let result = 0',
+          '',
+          '  for (const num of nums) {',
+          '    result = result ^ num',
+          '  }',
+          '',
+          '  return result',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Find the number that appears only once. XOR trick: a ^ a = 0 and a ^ 0 = a.',
+            phase: 'read-value',
+            numbers: [],
+            bitWidth: 8,
+            output: ['Input: [2, 1, 2]', 'Find: unique number']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'Initialize result = 0. In binary: 00000000.',
+            phase: 'show-binary',
+            numbers: [{ label: 'result', value: 0 }],
+            bitWidth: 8,
+            output: ['result = 0']
+          },
+          {
+            id: 2,
+            codeLine: 3,
+            description: 'First iteration: num = 2. In binary: 00000010.',
+            phase: 'read-value',
+            numbers: [
+              { label: 'result', value: 0 },
+              { label: 'num', value: 2 }
+            ],
+            bitWidth: 8,
+            output: ['Processing: num = 2']
+          },
+          {
+            id: 3,
+            codeLine: 4,
+            description: 'XOR: 0 ^ 2. Bit 1 differs, so it becomes 1 in result.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'result', value: 0 },
+              { label: 'num', value: 2 }
+            ],
+            operator: '^',
+            result: 2,
+            activeBits: [1],
+            bitWidth: 8,
+            decision: {
+              condition: 'XOR: different bits become 1',
+              conditionMet: true,
+              action: 'Bit 1: 0 ^ 1 = 1'
+            },
+            output: ['0 ^ 2 = 2']
+          },
+          {
+            id: 4,
+            codeLine: 4,
+            description: 'result = 2 (binary: 00000010).',
+            phase: 'show-result',
+            numbers: [{ label: 'result', value: 2 }],
+            bitWidth: 8,
+            output: ['result = 2']
+          },
+          {
+            id: 5,
+            codeLine: 3,
+            description: 'Second iteration: num = 1. In binary: 00000001.',
+            phase: 'read-value',
+            numbers: [
+              { label: 'result', value: 2 },
+              { label: 'num', value: 1 }
+            ],
+            bitWidth: 8,
+            output: ['Processing: num = 1']
+          },
+          {
+            id: 6,
+            codeLine: 4,
+            description: 'XOR: 2 ^ 1. Bits 0 and 1 differ between the numbers.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'result', value: 2 },
+              { label: 'num', value: 1 }
+            ],
+            operator: '^',
+            result: 3,
+            activeBits: [0, 1],
+            bitWidth: 8,
+            decision: {
+              condition: 'XOR: different bits become 1',
+              conditionMet: true,
+              action: 'Bit 0: 0 ^ 1 = 1, Bit 1: 1 ^ 0 = 1'
+            },
+            output: ['2 ^ 1 = 3']
+          },
+          {
+            id: 7,
+            codeLine: 4,
+            description: 'result = 3 (binary: 00000011).',
+            phase: 'show-result',
+            numbers: [{ label: 'result', value: 3 }],
+            bitWidth: 8,
+            output: ['result = 3']
+          },
+          {
+            id: 8,
+            codeLine: 3,
+            description: 'Third iteration: num = 2. In binary: 00000010.',
+            phase: 'read-value',
+            numbers: [
+              { label: 'result', value: 3 },
+              { label: 'num', value: 2 }
+            ],
+            bitWidth: 8,
+            output: ['Processing: num = 2 (again)']
+          },
+          {
+            id: 9,
+            codeLine: 4,
+            description: 'XOR: 3 ^ 2. Bit 1 is same in both, so it cancels to 0!',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'result', value: 3 },
+              { label: 'num', value: 2 }
+            ],
+            operator: '^',
+            result: 1,
+            activeBits: [1],
+            bitWidth: 8,
+            decision: {
+              condition: 'XOR: same bits cancel out',
+              conditionMet: true,
+              action: 'Bit 1: 1 ^ 1 = 0 (canceled!)'
+            },
+            output: ['3 ^ 2 = 1', 'The 2s canceled out!']
+          },
+          {
+            id: 10,
+            codeLine: 4,
+            description: 'result = 1 (binary: 00000001). Only the unique number remains!',
+            phase: 'show-result',
+            numbers: [{ label: 'result', value: 1 }],
+            bitWidth: 8,
+            output: ['result = 1']
+          },
+          {
+            id: 11,
+            codeLine: 7,
+            description: 'Return 1. XOR canceled all pairs, leaving only the single number!',
+            phase: 'done',
+            numbers: [{ label: 'result', value: 1 }],
+            bitWidth: 8,
+            output: ['return 1', 'The single number is 1!']
+          }
+        ],
+        insight: 'XOR cancels paired numbers: a ^ a = 0. After XORing all elements, only the single number remains because its pair is missing.'
+      }
+    ],
     intermediate: [],
     advanced: []
   },
   'bit-masks': {
-    beginner: [],
+    beginner: [
+      {
+        id: 'power-of-two',
+        title: 'Power of Two',
+        variant: 'bit-masks',
+        code: [
+          'function isPowerOfTwo(n) {',
+          '  if (n <= 0) return false',
+          '',
+          '  return (n & (n - 1)) === 0',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Check if n = 8 is a power of two. Key insight: powers of 2 have exactly one bit set.',
+            phase: 'read-value',
+            numbers: [],
+            bitWidth: 8,
+            output: ['Input: n = 8', 'Check: is 8 a power of 2?']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'Check if n > 0. Since 8 > 0, continue.',
+            phase: 'read-value',
+            numbers: [{ label: 'n', value: 8 }],
+            bitWidth: 8,
+            decision: {
+              condition: 'Is n > 0?',
+              conditionMet: true,
+              action: 'Yes (8 > 0), continue'
+            },
+            output: ['8 > 0, continue']
+          },
+          {
+            id: 2,
+            codeLine: 3,
+            description: 'Show n = 8 in binary: 00001000. Notice only bit 3 is set (single 1-bit).',
+            phase: 'show-binary',
+            numbers: [{ label: 'n', value: 8 }],
+            activeBits: [3],
+            bitWidth: 8,
+            decision: {
+              condition: 'Power of 2 property',
+              conditionMet: true,
+              action: 'Only ONE bit is set (bit 3)'
+            },
+            output: ['n = 8 = 00001000', 'Single bit at position 3']
+          },
+          {
+            id: 3,
+            codeLine: 3,
+            description: 'Calculate n - 1 = 7. In binary: 00000111. All bits below bit 3 become 1.',
+            phase: 'show-binary',
+            numbers: [
+              { label: 'n', value: 8 },
+              { label: 'n - 1', value: 7 }
+            ],
+            activeBits: [0, 1, 2],
+            bitWidth: 8,
+            decision: {
+              condition: 'Subtract 1 effect',
+              conditionMet: true,
+              action: 'Flips all bits at and below the lowest 1'
+            },
+            output: ['n - 1 = 7 = 00000111', 'All lower bits become 1']
+          },
+          {
+            id: 4,
+            codeLine: 3,
+            description: 'Now AND: n & (n - 1) = 8 & 7. Compare bit by bit.',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'n', value: 8 },
+              { label: 'n - 1', value: 7 }
+            ],
+            operator: '&',
+            activeBits: [0, 1, 2, 3],
+            bitWidth: 8,
+            decision: {
+              condition: 'AND: both must be 1',
+              conditionMet: false,
+              action: 'No position has 1 in both numbers!'
+            },
+            output: ['8 & 7 = ?', '00001000 & 00000111']
+          },
+          {
+            id: 5,
+            codeLine: 3,
+            description: 'Bit 3: 1 & 0 = 0. Bits 2,1,0: 0 & 1 = 0. All bits become 0!',
+            phase: 'apply-operation',
+            numbers: [
+              { label: 'n', value: 8 },
+              { label: 'n - 1', value: 7 }
+            ],
+            operator: '&',
+            result: 0,
+            activeBits: [0, 1, 2, 3],
+            bitWidth: 8,
+            decision: {
+              condition: 'AND result',
+              conditionMet: true,
+              action: 'No overlapping 1-bits!'
+            },
+            output: ['8 & 7 = 0', 'The 1-bits dont overlap!']
+          },
+          {
+            id: 6,
+            codeLine: 3,
+            description: 'Result = 0. Since 0 === 0 is true, 8 is a power of two!',
+            phase: 'show-result',
+            numbers: [{ label: 'result', value: 0 }],
+            bitWidth: 8,
+            decision: {
+              condition: 'Is result === 0?',
+              conditionMet: true,
+              action: 'Yes! 8 is a power of 2'
+            },
+            output: ['(8 & 7) === 0', '0 === 0 is true']
+          },
+          {
+            id: 7,
+            codeLine: 3,
+            description: 'Return true. n & (n-1) clears the lowest set bit. For powers of 2, that leaves 0.',
+            phase: 'done',
+            numbers: [{ label: 'n', value: 8 }],
+            activeBits: [3],
+            bitWidth: 8,
+            output: ['return true', '8 = 2^3 is a power of two!']
+          }
+        ],
+        insight: 'Power of 2 has exactly one 1-bit. n & (n-1) clears the lowest set bit. If result is 0, n was power of 2 (had only one bit to clear).'
+      }
+    ],
     intermediate: [],
     advanced: []
   },
   'shift-operations': {
-    beginner: [],
+    beginner: [
+      {
+        id: 'multiply-divide',
+        title: 'Multiply & Divide by 2',
+        variant: 'shift-operations',
+        code: [
+          'function multiplyDivide(n) {',
+          '  const doubled = n << 1',
+          '  const halved = n >> 1',
+          '',
+          '  return { doubled, halved }',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Learn bit shifts: << multiplies by 2, >> divides by 2. Using n = 5.',
+            phase: 'read-value',
+            numbers: [],
+            bitWidth: 8,
+            output: ['Input: n = 5', 'Goal: double and halve using shifts']
+          },
+          {
+            id: 1,
+            codeLine: 0,
+            description: 'Show n = 5 in binary: 00000101. Bits 0 and 2 are set.',
+            phase: 'show-binary',
+            numbers: [{ label: 'n', value: 5 }],
+            activeBits: [0, 2],
+            bitWidth: 8,
+            output: ['n = 5 = 00000101', 'Bits at positions 0 and 2']
+          },
+          {
+            id: 2,
+            codeLine: 1,
+            description: 'Left shift: n << 1. Every bit moves one position to the left.',
+            phase: 'apply-operation',
+            numbers: [{ label: 'n', value: 5 }],
+            operator: '<<',
+            activeBits: [0, 1, 2, 3, 4, 5, 6, 7],
+            bitWidth: 8,
+            decision: {
+              condition: 'Left shift << 1',
+              conditionMet: true,
+              action: 'All bits move left, 0 fills right'
+            },
+            output: ['5 << 1 = ?', 'Shifting all bits left by 1']
+          },
+          {
+            id: 3,
+            codeLine: 1,
+            description: 'Result: 00001010 = 10. The original 1s moved from positions 0,2 to 1,3.',
+            phase: 'show-result',
+            numbers: [
+              { label: 'n', value: 5 },
+              { label: 'doubled', value: 10 }
+            ],
+            operator: '<<',
+            result: 10,
+            activeBits: [1, 3],
+            bitWidth: 8,
+            decision: {
+              condition: 'Left shift = multiply by 2',
+              conditionMet: true,
+              action: '5 * 2 = 10'
+            },
+            output: ['5 << 1 = 10', 'doubled = 10']
+          },
+          {
+            id: 4,
+            codeLine: 1,
+            description: 'Why does left shift multiply by 2? Each bit position is worth 2x the previous.',
+            phase: 'show-result',
+            numbers: [{ label: 'doubled', value: 10 }],
+            activeBits: [1, 3],
+            bitWidth: 8,
+            decision: {
+              condition: 'Position value doubles each step',
+              conditionMet: true,
+              action: 'bit0=1, bit1=2, bit2=4, bit3=8...'
+            },
+            output: ['Original: 2^0 + 2^2 = 1 + 4 = 5', 'Shifted: 2^1 + 2^3 = 2 + 8 = 10']
+          },
+          {
+            id: 5,
+            codeLine: 2,
+            description: 'Now right shift: n >> 1. Every bit moves one position to the right.',
+            phase: 'apply-operation',
+            numbers: [{ label: 'n', value: 5 }],
+            operator: '>>',
+            activeBits: [0, 1, 2, 3, 4, 5, 6, 7],
+            bitWidth: 8,
+            decision: {
+              condition: 'Right shift >> 1',
+              conditionMet: true,
+              action: 'All bits move right, rightmost bit falls off'
+            },
+            output: ['5 >> 1 = ?', 'Shifting all bits right by 1']
+          },
+          {
+            id: 6,
+            codeLine: 2,
+            description: 'Bit 0 (value 1) falls off! Bit 2 moves to position 1.',
+            phase: 'apply-operation',
+            numbers: [{ label: 'n', value: 5 }],
+            operator: '>>',
+            activeBits: [0],
+            bitWidth: 8,
+            decision: {
+              condition: 'Rightmost bit lost',
+              conditionMet: true,
+              action: 'Bit 0 (value 1) is discarded'
+            },
+            output: ['Bit at position 0 falls off', 'This is like integer division']
+          },
+          {
+            id: 7,
+            codeLine: 2,
+            description: 'Result: 00000010 = 2. The 1 at position 2 moved to position 1.',
+            phase: 'show-result',
+            numbers: [
+              { label: 'n', value: 5 },
+              { label: 'halved', value: 2 }
+            ],
+            operator: '>>',
+            result: 2,
+            activeBits: [1],
+            bitWidth: 8,
+            decision: {
+              condition: 'Right shift = divide by 2 (floor)',
+              conditionMet: true,
+              action: 'floor(5 / 2) = 2'
+            },
+            output: ['5 >> 1 = 2', 'halved = 2']
+          },
+          {
+            id: 8,
+            codeLine: 2,
+            description: 'Note: 5 / 2 = 2.5, but right shift gives floor(2.5) = 2. The 0.5 was the lost bit.',
+            phase: 'show-result',
+            numbers: [{ label: 'halved', value: 2 }],
+            activeBits: [1],
+            bitWidth: 8,
+            decision: {
+              condition: 'Integer division',
+              conditionMet: true,
+              action: 'Remainder (odd bit) is discarded'
+            },
+            output: ['5 / 2 = 2.5', '5 >> 1 = 2 (floor)']
+          },
+          {
+            id: 9,
+            codeLine: 4,
+            description: 'Return { doubled: 10, halved: 2 }. Bit shifts are faster than multiply/divide!',
+            phase: 'done',
+            numbers: [
+              { label: 'doubled', value: 10 },
+              { label: 'halved', value: 2 }
+            ],
+            bitWidth: 8,
+            output: ['return { doubled: 10, halved: 2 }', '<< and >> are O(1) operations!']
+          }
+        ],
+        insight: 'Left shift << 1 multiplies by 2 (adds zero on right). Right shift >> 1 divides by 2 (drops rightmost bit). Both are faster than arithmetic!'
+      }
+    ],
     intermediate: [],
     advanced: []
   }
