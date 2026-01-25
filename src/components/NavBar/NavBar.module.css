@@ -142,14 +142,144 @@
     width: 160px;
   }
 
-  .navLink {
-    display: none;
-  }
-
   .breadcrumbCurrent {
     max-width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+}
+
+/* Mobile Menu - CSS-only checkbox hack */
+.mobileMenuToggle {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.hamburgerBtn {
+  display: none;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 201;
+  background: transparent;
+  border: none;
+}
+
+.hamburgerIcon {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-secondary);
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.hamburgerIcon::before,
+.hamburgerIcon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: var(--text-secondary);
+  transition: transform 0.3s ease;
+}
+
+.hamburgerIcon::before {
+  top: -8px;
+}
+
+.hamburgerIcon::after {
+  bottom: -8px;
+}
+
+/* Hamburger to X animation when checked */
+.mobileMenuToggle:checked + .hamburgerBtn .hamburgerIcon {
+  background: transparent;
+}
+
+.mobileMenuToggle:checked + .hamburgerBtn .hamburgerIcon::before {
+  transform: rotate(45deg) translate(5px, 6px);
+}
+
+.mobileMenuToggle:checked + .hamburgerBtn .hamburgerIcon::after {
+  transform: rotate(-45deg) translate(5px, -6px);
+}
+
+/* Mobile navigation panel */
+.mobileNav {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 280px;
+  height: 100vh;
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border-card);
+  padding-top: 70px;
+  transition: right 0.3s ease;
+  z-index: 200;
+}
+
+.mobileMenuToggle:checked ~ .mobileNav {
+  right: 0;
+}
+
+.mobileNavLinks {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-lg);
+}
+
+.mobileNavLink {
+  display: flex;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  min-height: 44px;
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-card);
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+}
+
+.mobileNavLink:hover {
+  color: var(--text-bright);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Overlay to close menu */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 199;
+}
+
+.mobileMenuToggle:checked ~ .overlay {
+  display: block;
+}
+
+/* Show hamburger on mobile, hide navLink */
+@media (max-width: 767px) {
+  .hamburgerBtn {
+    display: flex;
+  }
+
+  .navLink {
+    display: none;
+  }
+}
+
+/* Force hide mobile menu on desktop */
+@media (min-width: 768px) {
+  .mobileNav,
+  .overlay {
+    display: none !important;
   }
 }
