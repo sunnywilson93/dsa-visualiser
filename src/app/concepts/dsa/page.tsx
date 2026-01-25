@@ -1,11 +1,13 @@
 'use client'
 
-import { Search } from 'lucide-react'
+import Link from 'next/link'
+import { Search, Layers } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { SearchResultsList, usePageSearch, PageSearchControls } from '@/components/Search'
 import { ConceptIcon } from '@/components/Icons'
 import { ConceptCarousel } from '@/components/ConceptCarousel'
 import { dsaConcepts, dsaConceptCategories } from '@/data/dsaConcepts'
+import { dsaPatterns } from '@/data/dsaPatterns'
 import styles from '../page.module.css'
 
 export default function DSAConceptsPage() {
@@ -74,12 +76,46 @@ export default function DSAConceptsPage() {
                 </section>
               )
             })}
+
+            {/* Patterns Section */}
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>
+                <span className={styles.sectionIcon}>
+                  <Layers size={20} />
+                </span>
+                Algorithm Patterns
+                <span className={styles.sectionDescription}>
+                  Step-by-step visualizations of common algorithm patterns
+                </span>
+              </h2>
+
+              <div className={styles.patternGrid}>
+                {dsaPatterns.map((pattern) => (
+                  <Link
+                    key={pattern.id}
+                    href={`/concepts/dsa/patterns/${pattern.slug}`}
+                    className={styles.patternCard}
+                  >
+                    <h3 className={styles.patternName}>{pattern.name}</h3>
+                    <p className={styles.patternDescription}>{pattern.description}</p>
+                    <div className={styles.patternMeta}>
+                      <span className={styles.patternComplexity}>
+                        Time: {pattern.complexity.time}
+                      </span>
+                      <span className={styles.patternVariants}>
+                        {pattern.variants.length} variants
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
           </>
         )}
       </main>
 
       <footer className={styles.footer}>
-        <p>Patterns &amp; advanced concepts coming soon!</p>
+        <p>More patterns coming soon!</p>
       </footer>
     </div>
   )

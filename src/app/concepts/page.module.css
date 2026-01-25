@@ -192,6 +192,62 @@
   padding: var(--space-sm);
 }
 
+/* Pattern cards grid */
+.patternGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+.patternCard {
+  background: linear-gradient(135deg, var(--neon-purple-15), var(--neon-cyan-15, rgba(34, 211, 238, 0.15)));
+  border: 1px solid var(--neon-purple-30);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--transition-slow);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.patternCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glow-neon);
+  border-color: var(--neon-purple-50);
+}
+
+.patternName {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-bright);
+  margin: 0;
+}
+
+.patternDescription {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.patternMeta {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border-card);
+}
+
+.patternComplexity,
+.patternVariants {
+  font-size: var(--text-xs);
+  color: var(--neon-cyan-light, var(--neon-purple-light));
+  font-weight: var(--font-medium);
+}
+
 .footer {
   text-align: center;
   padding: var(--space-2xl);
