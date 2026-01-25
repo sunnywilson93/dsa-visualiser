@@ -1,54 +1,40 @@
-# Requirements: Enhanced DSA Concept Visualizations
+# Requirements: DSA Visualizer v1.2 Polish & Production
 
-**Defined:** 2026-01-24
-**Core Value:** Learners can step through algorithm patterns visually, understanding decision logic — not just memorizing steps
+**Defined:** 2026-01-25
+**Core Value:** Learners can step through code execution visually, seeing exactly how algorithms and JavaScript work under the hood
 
-## v1.1 Requirements
+## v1.2 Requirements
 
-Requirements for DSA pattern visualization upgrade. Each maps to roadmap phases.
+Requirements for production polish. Each maps to roadmap phases.
 
-### Foundation
+### Responsive Design
 
-- [x] **DSA-01**: DSAPatterns directory structure exists with shared types
-- [x] **DSA-02**: Pattern page routing at /concepts/dsa/patterns/[patternId]
-- [x] **DSA-03**: dsaPatterns.ts data file with pattern metadata
+- [ ] **RESP-01**: Standardized breakpoints (640/768/1024px) across all CSS files
+- [ ] **RESP-02**: Mobile navigation (hamburger menu or bottom nav) replaces hidden nav
+- [ ] **RESP-03**: Touch-friendly controls (44px minimum tap targets)
+- [ ] **RESP-04**: Responsive visualizations adapt to screen width
+- [ ] **RESP-05**: Monaco Editor hidden on mobile, replaced with read-only code display
 
-### Two Pointers Pattern
+### SEO & Meta
 
-- [x] **TP-01**: TwoPointersViz pattern page with SharedViz integration
-- [x] **TP-02**: Difficulty levels (beginner/intermediate/advanced) with example tabs
-- [x] **TP-03**: Pointer position visualization with movement animation
-- [x] **TP-04**: Decision visualization showing condition → movement logic
-- [x] **TP-05**: Code panel with line highlighting synced to steps
-- [x] **TP-06**: Variant examples (converge, same-direction, partition)
+- [ ] **SEO-01**: generateMetadata on all dynamic routes
+- [ ] **SEO-02**: Breadcrumb schema (JSON-LD) on all pages
+- [ ] **SEO-03**: Dynamic OpenGraph images for social sharing
 
-### Hash Map Pattern
+### Cross-Linking
 
-- [x] **HM-01**: HashMapViz pattern page with SharedViz integration
-- [x] **HM-02**: Difficulty levels with example tabs
-- [x] **HM-03**: Key-value pair visualization in hash structure
-- [x] **HM-04**: Bucket visualization showing hashing mechanism
-- [x] **HM-05**: Frequency counter visualization for counting problems
-- [x] **HM-06**: Lookup/insert operation step visualization
+- [ ] **LINK-01**: Pattern → Problem links ("Practice this pattern" sections)
+- [ ] **LINK-02**: Problem → Pattern links ("Learn the pattern" sections)
+- [ ] **LINK-03**: Footer navigation with site-wide links
 
-### Bit Manipulation Pattern
+### Page Consistency
 
-- [x] **BM-01**: BitManipulationViz pattern page with SharedViz integration
-- [x] **BM-02**: Difficulty levels with example tabs
-- [x] **BM-03**: Binary representation display with configurable bit width
-- [x] **BM-04**: Active bit highlighting during operations
-- [x] **BM-05**: Bit-by-bit operation animation (AND, OR, XOR, shifts)
-- [x] **BM-06**: Operation result visualization with explanation
+- [ ] **PAGE-01**: Consistent headers on DSA pattern pages matching concept pages
+- [ ] **PAGE-02**: NavBar breadcrumbs present on all page types
 
-## v1.2+ Requirements
+## v1.3+ Requirements
 
 Deferred to future milestone. Tracked but not in current roadmap.
-
-### Additional Patterns
-
-- **SW-01**: Sliding Window pattern visualization
-- **BS-01**: Binary Search pattern visualization
-- **DP-01**: Dynamic Programming pattern visualization
 
 ### Enhanced Interactivity
 
@@ -56,18 +42,29 @@ Deferred to future milestone. Tracked but not in current roadmap.
 - **INT-02**: Keyboard shortcuts for stepping
 - **INT-03**: Pattern recognition quizzes
 
+### Additional DSA Patterns
+
+- **PAT-01**: Sliding Window pattern visualization
+- **PAT-02**: Binary Search pattern visualization
+- **PAT-03**: Dynamic Programming pattern visualization
+
+### Advanced Polish
+
+- **ADV-01**: PWA offline mode with service worker
+- **ADV-02**: Dark/light mode toggle
+- **ADV-03**: Learning path progress tracking
+
 ## Out of Scope
 
 Explicitly excluded. Documented to prevent scope creep.
 
 | Feature | Reason |
 |---------|--------|
-| Auto-play mode | Research shows passive viewing produces no learning benefit |
+| Monaco Editor on mobile | Too heavy (5-10MB), poor touch UX — use read-only display instead |
+| Full PWA offline mode | Complexity vs value for v1.2 — defer to v1.3 |
+| CodeMirror migration | Unnecessary if hiding editor on mobile |
 | 3D visualizations | Adds complexity without educational value |
 | Sound effects | Distracting, accessibility concerns |
-| Gamification | Shifts focus from understanding to achievements |
-| Free-form code input | Curated examples better for learning, security concerns |
-| Mobile responsiveness | Desktop-first for this milestone; future enhancement |
 
 ## Traceability
 
@@ -75,33 +72,25 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DSA-01 | Phase 7 | Complete |
-| DSA-02 | Phase 7 | Complete |
-| DSA-03 | Phase 7 | Complete |
-| TP-01 | Phase 8 | Complete |
-| TP-02 | Phase 8 | Complete |
-| TP-03 | Phase 8 | Complete |
-| TP-04 | Phase 8 | Complete |
-| TP-05 | Phase 8 | Complete |
-| TP-06 | Phase 8 | Complete |
-| HM-01 | Phase 9 | Complete |
-| HM-02 | Phase 9 | Complete |
-| HM-03 | Phase 9 | Complete |
-| HM-04 | Phase 9 | Complete |
-| HM-05 | Phase 9 | Complete |
-| HM-06 | Phase 9 | Complete |
-| BM-01 | Phase 10 | Complete |
-| BM-02 | Phase 10 | Complete |
-| BM-03 | Phase 10 | Complete |
-| BM-04 | Phase 10 | Complete |
-| BM-05 | Phase 10 | Complete |
-| BM-06 | Phase 10 | Complete |
+| RESP-01 | TBD | Pending |
+| RESP-02 | TBD | Pending |
+| RESP-03 | TBD | Pending |
+| RESP-04 | TBD | Pending |
+| RESP-05 | TBD | Pending |
+| SEO-01 | TBD | Pending |
+| SEO-02 | TBD | Pending |
+| SEO-03 | TBD | Pending |
+| LINK-01 | TBD | Pending |
+| LINK-02 | TBD | Pending |
+| LINK-03 | TBD | Pending |
+| PAGE-01 | TBD | Pending |
+| PAGE-02 | TBD | Pending |
 
 **Coverage:**
-- v1.1 requirements: 21 total
-- Mapped to phases: 21
-- Unmapped: 0
+- v1.2 requirements: 13 total
+- Mapped to phases: 0
+- Unmapped: 13 (pending roadmap creation)
 
 ---
-*Requirements defined: 2026-01-24*
-*Last updated: 2026-01-25 — v1.1 complete, all requirements met*
+*Requirements defined: 2026-01-25*
+*Last updated: 2026-01-25 after initial definition*
