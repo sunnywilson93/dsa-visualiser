@@ -1890,6 +1890,192 @@ export const problemConcepts: Record<string, ProblemConcept> = {
       },
     ],
   },
+
+  'two-sum': {
+    title: 'Two Sum',
+    keyInsight: 'Use hash map to store complements. For each num, check if (target - num) exists.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Create empty hash map to store {value: index}. Target = 9.',
+        visual: {
+          array: [2, 7, 11, 15],
+          hashMap: { entries: [] },
+          annotations: ['Find two numbers summing to 9'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Check First Element',
+        description: 'num=2. Complement = 9-2 = 7. Not in map. Store {2: 0}.',
+        visual: {
+          array: [2, 7, 11, 15],
+          highlights: [0],
+          hashMap: {
+            entries: [{ key: '2', value: 0, isNew: true }],
+            currentIndex: 0,
+            lookupKey: '7',
+            lookupResult: 'not-found',
+          },
+          annotations: ['7 not found, store 2'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Check Second Element',
+        description: 'num=7. Complement = 9-7 = 2. Found at index 0!',
+        visual: {
+          array: [2, 7, 11, 15],
+          highlights: [0, 1],
+          hashMap: {
+            entries: [{ key: '2', value: 0, isLookup: true }],
+            currentIndex: 1,
+            lookupKey: '2',
+            lookupResult: 'found',
+          },
+          annotations: ['2 found! Return [0, 1]'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Result',
+        description: 'Return indices [0, 1]. nums[0] + nums[1] = 2 + 7 = 9.',
+        visual: {
+          array: [2, 7, 11, 15],
+          highlights: [0, 1],
+          result: '[0, 1]',
+        },
+      },
+    ],
+  },
+
+  'valid-anagram': {
+    title: 'Valid Anagram',
+    keyInsight: 'Count character frequencies. Anagrams have identical frequency maps.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Count First String',
+        description: 'Count frequencies in "anagram": a=3, n=1, g=1, r=1, m=1',
+        visual: {
+          array: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+          hashMap: {
+            entries: [
+              { key: 'a', value: 3 },
+              { key: 'n', value: 1 },
+              { key: 'g', value: 1 },
+              { key: 'r', value: 1 },
+              { key: 'm', value: 1 },
+            ],
+            phase: 'build',
+          },
+          annotations: ['Frequency map for "anagram"'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Count Second String',
+        description: 'Count frequencies in "nagaram": a=3, n=1, g=1, r=1, m=1',
+        visual: {
+          array: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
+          hashMap: {
+            entries: [
+              { key: 'a', value: 3 },
+              { key: 'n', value: 1 },
+              { key: 'g', value: 1 },
+              { key: 'r', value: 1 },
+              { key: 'm', value: 1 },
+            ],
+            secondArray: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
+            phase: 'check',
+          },
+          annotations: ['Frequency map for "nagaram"'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Compare Maps',
+        description: 'Both maps are identical. Same characters, same counts.',
+        visual: {
+          hashMap: {
+            entries: [
+              { key: 'a', value: 3 },
+              { key: 'n', value: 1 },
+              { key: 'g', value: 1 },
+              { key: 'r', value: 1 },
+              { key: 'm', value: 1 },
+            ],
+          },
+          annotations: ['Maps match!'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Result',
+        description: '"anagram" and "nagaram" ARE anagrams!',
+        visual: {
+          result: true,
+        },
+      },
+    ],
+  },
+
+  'group-anagrams': {
+    title: 'Group Anagrams',
+    keyInsight: 'Use sorted string as key. All anagrams sort to the same key.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Sort Each Word',
+        description: '"eat" -> "aet", "tea" -> "aet", "tan" -> "ant"',
+        visual: {
+          array: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+          annotations: ['Sort each word to get key'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Group by Key',
+        description: 'Use sorted string as hash map key.',
+        visual: {
+          hashMap: {
+            entries: [
+              { key: 'aet', value: 1, isNew: true },
+              { key: 'ant', value: 1, isNew: true },
+            ],
+          },
+          annotations: ['Building groups...'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Continue Grouping',
+        description: '"tea" sorts to "aet" - add to existing group.',
+        visual: {
+          hashMap: {
+            entries: [
+              { key: 'aet', value: 3 },
+              { key: 'ant', value: 2 },
+              { key: 'abt', value: 1 },
+            ],
+          },
+          annotations: ['Anagrams grouped together'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Result',
+        description: 'Return all groups as array of arrays.',
+        visual: {
+          result: '[["eat","tea","ate"], ["tan","nat"], ["bat"]]',
+        },
+      },
+    ],
+  },
 }
 
 // ============================================================================

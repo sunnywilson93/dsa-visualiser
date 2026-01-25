@@ -265,6 +265,7 @@ export type ConceptType =
   | 'two-pointers-converge'    // ← array →
   | 'two-pointers-same-dir'    // → → (slow/fast)
   | 'two-pointers-partition'   // [0s | 1s | 2s]
+  | 'hash-map'                 // Key-value lookups
   | 'bit-manipulation'         // Binary grid operations
   | 'sliding-window'           // Frame over array
   | 'binary-search'            // Halving search space
