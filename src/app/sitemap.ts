@@ -1,45 +1,92 @@
 import type { MetadataRoute } from 'next'
 import { concepts } from '@/data/concepts'
 import { exampleCategories, codeExamples } from '@/data/examples'
+import { dsaPatterns } from '@/data/dsaPatterns'
+import { dsaConcepts } from '@/data/dsaConcepts'
+
+/**
+ * Last content update timestamp.
+ * Update this when making significant content changes.
+ */
+export const CONTENT_LAST_UPDATED = new Date('2026-01-25')
+
+const BASE_URL = 'https://jsinterview.dev'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://jsinterview.dev'
-
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
     {
-      url: baseUrl,
-      lastModified: new Date(),
+      url: BASE_URL,
+      lastModified: CONTENT_LAST_UPDATED,
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: `${baseUrl}/concepts`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/concepts`,
+      lastModified: CONTENT_LAST_UPDATED,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
+    {
+      url: `${BASE_URL}/concepts/js`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/concepts/dsa`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/js-problems`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/playground/event-loop`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
   ]
 
-  // Concept pages
-  const conceptPages: MetadataRoute.Sitemap = concepts.map((concept) => ({
-    url: `${baseUrl}/concepts/${concept.id}`,
-    lastModified: new Date(),
+  // JS Concept pages (/concepts/[conceptId])
+  const jsConceptPages: MetadataRoute.Sitemap = concepts.map((concept) => ({
+    url: `${BASE_URL}/concepts/${concept.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))
 
-  // Category pages
+  // DSA Concept pages (/concepts/dsa/[conceptId])
+  const dsaConceptPages: MetadataRoute.Sitemap = dsaConcepts.map((concept) => ({
+    url: `${BASE_URL}/concepts/dsa/${concept.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+
+  // DSA Pattern pages (/concepts/dsa/patterns/[patternId])
+  const dsaPatternPages: MetadataRoute.Sitemap = dsaPatterns.map((pattern) => ({
+    url: `${BASE_URL}/concepts/dsa/patterns/${pattern.slug}`,
+    lastModified: CONTENT_LAST_UPDATED,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+
+  // Problem category pages (/{categoryId})
   const categoryPages: MetadataRoute.Sitemap = exampleCategories.map((category) => ({
-    url: `${baseUrl}/${category.id}`,
-    lastModified: new Date(),
+    url: `${BASE_URL}/${category.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }))
 
-  // Problem pages
+  // Problem practice pages (/{categoryId}/{problemId})
   const problemPages: MetadataRoute.Sitemap = codeExamples.map((problem) => {
-    // Find the category for this problem
     const category = exampleCategories.find(
       (cat) => cat.id === problem.category ||
       (cat.id === 'dsa' && problem.category.startsWith('dsa-'))
@@ -47,12 +94,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const categoryId = category?.id || 'dsa'
 
     return {
-      url: `${baseUrl}/${categoryId}/${problem.id}`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/${categoryId}/${problem.id}`,
+      lastModified: CONTENT_LAST_UPDATED,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     }
   })
 
-  return [...staticPages, ...conceptPages, ...categoryPages, ...problemPages]
+  return [
+    ...staticPages,
+    ...jsConceptPages,
+    ...dsaConceptPages,
+    ...dsaPatternPages,
+    ...categoryPages,
+    ...problemPages,
+  ]
 }
