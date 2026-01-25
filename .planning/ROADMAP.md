@@ -219,11 +219,13 @@ Plans:
   2. Breadcrumb schema (JSON-LD) present on all page types (concepts, patterns, problems)
   3. Dynamic OpenGraph images generated for pattern pages and concept pages
   4. Sitemap includes all pages with correct lastmod dates
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 12-01-PLAN.md - generateMetadata audit and completion for all routes
-- [ ] 12-02-PLAN.md - Breadcrumb schema extension and OpenGraph image generation
+- [ ] 12-01-PLAN.md - Breadcrumb utility and sitemap enhancement
+- [ ] 12-02-PLAN.md - Breadcrumb schema on category and problem pages
+- [ ] 12-03-PLAN.md - Metadata for client-only concept pages (JS, DSA)
+- [ ] 12-04-PLAN.md - Dynamic OpenGraph images for patterns, concepts, categories
 
 ### Phase 13: Cross-Linking
 **Goal**: Users can navigate between pattern pages and problem pages bidirectionally
@@ -288,11 +290,11 @@ Phases execute in numeric order: 11 -> 12 (parallel) -> 13 -> 14 (parallel) -> 1
 | 9. HashMapViz | v1.1 | 3/3 | Complete | 2026-01-25 |
 | 10. BitManipulationViz | v1.1 | 3/3 | Complete | 2026-01-25 |
 | 11. Foundation & Mobile | v1.2 | 2/2 | Complete | 2026-01-25 |
-| 12. SEO Standardization | v1.2 | 0/2 | Not started | - |
+| 12. SEO Standardization | v1.2 | 0/4 | Not started | - |
 | 13. Cross-Linking | v1.2 | 0/2 | Not started | - |
 | 14. Page Consistency | v1.2 | 0/1 | Not started | - |
 | 15. Responsive Implementation | v1.2 | 0/3 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-25 — Phase 11 complete*
+*Last updated: 2026-01-25 - Phase 12 planned (4 plans)*
