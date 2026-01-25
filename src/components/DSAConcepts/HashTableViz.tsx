@@ -165,7 +165,7 @@ export function HashTableViz() {
         <div className={styles.hashFunction}>
           <div className={styles.hashLabel}>Hash Function</div>
           <div className={styles.hashFormula}>
-            <span className={styles.hashKey}>"{currentStep.key}"</span>
+            <span className={styles.hashKey}>&quot;{currentStep.key}&quot;</span>
             <span className={styles.hashArrow}>→</span>
             <span className={styles.hashCalc}>
               {currentStep.hashValue !== undefined && (

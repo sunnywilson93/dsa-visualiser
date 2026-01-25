@@ -54,7 +54,7 @@ interface InterpreterState {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// Using any here because Acorn's AST types are complex
 type ASTNode = Node & Record<string, any>
 
 /**
