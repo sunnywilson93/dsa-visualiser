@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { exampleCategories, getExamplesByCategory } from '@/data/examples'
 import CategoryPageClient from './CategoryPageClient'
+import { StructuredData } from '@/components/StructuredData'
+import { generateBreadcrumbSchema } from '@/lib/seo/breadcrumb'
 
 interface Props {
   params: { categoryId: string }
@@ -41,6 +43,20 @@ export async function generateStaticParams() {
   }))
 }
 
-export default function CategoryPage() {
-  return <CategoryPageClient />
+export default function CategoryPage({ params }: Props) {
+  const category = exampleCategories.find((c) => c.id === params.categoryId)
+
+  const breadcrumbSchema = category
+    ? generateBreadcrumbSchema([
+        { name: 'Home', path: '/' },
+        { name: category.name },
+      ])
+    : null
+
+  return (
+    <>
+      {breadcrumbSchema && <StructuredData data={breadcrumbSchema} />}
+      <CategoryPageClient />
+    </>
+  )
 }
