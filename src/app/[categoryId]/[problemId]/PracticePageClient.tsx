@@ -14,6 +14,7 @@ import { StepDescription } from '@/components/StepDescription'
 import { useExecutionStore } from '@/store'
 import { codeExamples, exampleCategories, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
 import { getConceptForProblem } from '@/data/algorithmConcepts'
+import { ReadOnlyCode } from '@/components/ReadOnlyCode'
 import styles from './page.module.css'
 
 // Dynamic import for Monaco editor (heavy, browser-only)
@@ -104,10 +105,18 @@ export default function PracticePageClient() {
 
       <main className={styles.main}>
         <section className={styles.editorPanel}>
-          <CodeEditor
-            readOnly
-            conceptLink={hasConcept ? `/${categoryId}/${problemId}/concept` : undefined}
-          />
+          {/* Desktop: Monaco Editor (hidden on mobile via CSS) */}
+          <div className={styles.desktopEditor}>
+            <CodeEditor
+              readOnly
+              conceptLink={hasConcept ? `/${categoryId}/${problemId}/concept` : undefined}
+            />
+          </div>
+
+          {/* Mobile: Simple read-only code (hidden on desktop via CSS) */}
+          <div className={styles.mobileCode}>
+            <ReadOnlyCode code={problem.code} />
+          </div>
         </section>
 
         <section className={styles.centerPanel}>

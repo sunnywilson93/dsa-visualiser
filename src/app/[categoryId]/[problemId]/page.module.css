@@ -134,6 +134,18 @@
   color: var(--text-muted);
 }
 
+/* Desktop editor - hidden on mobile */
+.desktopEditor {
+  display: block;
+  height: 100%;
+}
+
+/* Mobile read-only code - hidden on desktop */
+.mobileCode {
+  display: none;
+  height: 100%;
+}
+
 /* Center panel */
 .centerPanel {
   display: flex;
@@ -294,6 +306,14 @@
     grid-column: 1;
     grid-row: 1;
     min-height: 250px;
+  }
+
+  .desktopEditor {
+    display: none;
+  }
+
+  .mobileCode {
+    display: block;
   }
 
   .centerPanel {
