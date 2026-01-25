@@ -156,7 +156,7 @@
 }
 
 .codeLine.activeLine {
-  background: rgba(102, 126, 234, 0.2);
+  background: var(--color-primary-20);
 }
 
 .lineNum {
@@ -173,7 +173,7 @@
   color: var(--gray-300);
 }
 
-.activeLine .lineCode { color: #a5b4fc; }
+.activeLine .lineCode { color: var(--color-primary-light); }
 
 /* Priority Queues - Neon Boxes */
 .priorityQueues {
@@ -184,13 +184,13 @@
 
 /* nextTick Queue - Purple/Pink */
 .nextTickBox {
-  --neon-start: var(--neon-purple);
-  --neon-end: var(--neon-pink);
+  --neon-start: var(--color-primary);
+  --neon-end: var(--color-secondary);
 }
 
 /* Promise Queue - Pink/Red */
 .promiseBox {
-  --neon-start: var(--neon-pink);
+  --neon-start: var(--color-secondary);
   --neon-end: #f43f5e;
 }
 
@@ -212,18 +212,18 @@
 
 .queueItem {
   padding: 0.2rem 0.5rem;
-  background: rgba(139, 92, 246, 0.2);
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: var(--color-primary-20);
+  border: 1px solid var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-family: 'Fira Code', monospace;
   font-size: 0.55rem;
-  color: var(--neon-purple-light);
+  color: var(--color-primary-light);
 }
 
 /* Event Loop Phases - Neon Box */
 .phasesBox {
   --neon-start: #3b82f6;
-  --neon-end: #8b5cf6;
+  --neon-end: var(--color-primary);
 }
 
 .phasesContainer {
@@ -279,11 +279,11 @@
 
 .phaseItem {
   padding: 0.2rem 0.3rem;
-  background: rgba(102, 126, 234, 0.15);
+  background: var(--color-primary-15);
   border-radius: 3px;
   font-family: 'Fira Code', monospace;
   font-size: 0.5rem;
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   text-align: center;
 }
 
@@ -321,8 +321,8 @@
 /* Description */
 .description {
   padding: 0.6rem 0.75rem;
-  background: rgba(102, 126, 234, 0.1);
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  background: var(--color-primary-10);
+  border: 1px solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
   color: var(--gray-300);
@@ -332,11 +332,11 @@
 .stepBadge {
   display: inline-block;
   padding: 0.15rem 0.4rem;
-  background: rgba(102, 126, 234, 0.3);
+  background: var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   margin-right: 0.5rem;
 }
 
@@ -351,7 +351,7 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);
   color: white;
@@ -394,15 +394,15 @@
 /* Insight */
 .insight {
   padding: var(--space-sm) var(--space-md);
-  background: rgba(139, 92, 246, 0.08);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: var(--color-primary-8);
+  border: 1px solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-xs);
   color: var(--gray-500);
   text-align: center;
 }
 
-.insight strong { color: #8b5cf6; }
+.insight strong { color: var(--color-primary); }
 
 /* Progress Bar */
 .progressContainer {
@@ -421,7 +421,7 @@
 
 .progressFill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border-radius: 2px;
 }
 
@@ -447,7 +447,7 @@
 /* Action color overrides for queue items */
 .queueItem {
   padding: 0.2rem 0.5rem;
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  border: 1px solid var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-family: 'Fira Code', monospace;
   font-size: 0.55rem;
@@ -457,7 +457,7 @@
 /* Focus indicators for keyboard navigation */
 .btnPrimary:focus-visible,
 .btnSecondary:focus-visible {
-  outline: 2px solid #667eea;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 

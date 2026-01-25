@@ -48,44 +48,48 @@ export default function HomePage() {
           {/* Two concept category cards */}
           <div className={styles.conceptCategoryGrid}>
             <Link href="/concepts/js" className={styles.conceptCategoryCard}>
-              <div className={styles.conceptCategoryHeader}>
-                <span className={styles.conceptCategoryIcon}>
-                  <ConceptIcon conceptId="js-core" size={28} />
-                </span>
-                <span className={styles.conceptCategoryBadge}>{concepts.length} topics</span>
-              </div>
-              <h3 className={styles.conceptCategoryTitle}>JavaScript Deep Dive</h3>
-              <p className={styles.conceptCategoryDescription}>
-                Closures, Event Loop, Prototypes, This, V8 Engine
-              </p>
-              <div className={styles.conceptCategoryTopics}>
-                {concepts.slice(0, 4).map(c => (
-                  <span key={c.id} className={styles.topicTag}>{c.title}</span>
-                ))}
-                {concepts.length > 4 && (
-                  <span className={styles.topicMore}>+{concepts.length - 4}</span>
-                )}
+              <div className={styles.conceptCategoryCardInner}>
+                <div className={styles.conceptCategoryHeader}>
+                  <span className={styles.conceptCategoryIcon}>
+                    <ConceptIcon conceptId="js-core" size={28} />
+                  </span>
+                  <span className={styles.conceptCategoryBadge}>{concepts.length} topics</span>
+                </div>
+                <h3 className={styles.conceptCategoryTitle}>JavaScript Deep Dive</h3>
+                <p className={styles.conceptCategoryDescription}>
+                  Closures, Event Loop, Prototypes, This, V8 Engine
+                </p>
+                <div className={styles.conceptCategoryTopics}>
+                  {concepts.slice(0, 4).map(c => (
+                    <span key={c.id} className={styles.topicTag}>{c.title}</span>
+                  ))}
+                  {concepts.length > 4 && (
+                    <span className={styles.topicMore}>+{concepts.length - 4}</span>
+                  )}
+                </div>
               </div>
             </Link>
 
             <Link href="/concepts/dsa" className={styles.conceptCategoryCard}>
-              <div className={styles.conceptCategoryHeader}>
-                <span className={styles.conceptCategoryIcon}>
-                  <ConceptIcon conceptId="data-structures" size={28} />
-                </span>
-                <span className={styles.conceptCategoryBadge}>{dsaConcepts.length + dsaPatterns.length} topics</span>
-              </div>
-              <h3 className={styles.conceptCategoryTitle}>DSA Fundamentals</h3>
-              <p className={styles.conceptCategoryDescription}>
-                Big O, Arrays, Hash Tables, Stacks, Queues, Linked Lists
-              </p>
-              <div className={styles.conceptCategoryTopics}>
-                {dsaConcepts.slice(0, 4).map(c => (
-                  <span key={c.id} className={styles.topicTag}>{c.title}</span>
-                ))}
-                {(dsaConcepts.length + dsaPatterns.length) > 4 && (
-                  <span className={styles.topicMore}>+{dsaConcepts.length + dsaPatterns.length - 4}</span>
-                )}
+              <div className={styles.conceptCategoryCardInner}>
+                <div className={styles.conceptCategoryHeader}>
+                  <span className={styles.conceptCategoryIcon}>
+                    <ConceptIcon conceptId="data-structures" size={28} />
+                  </span>
+                  <span className={styles.conceptCategoryBadge}>{dsaConcepts.length + dsaPatterns.length} topics</span>
+                </div>
+                <h3 className={styles.conceptCategoryTitle}>DSA Fundamentals</h3>
+                <p className={styles.conceptCategoryDescription}>
+                  Big O, Arrays, Hash Tables, Stacks, Queues, Linked Lists
+                </p>
+                <div className={styles.conceptCategoryTopics}>
+                  {dsaConcepts.slice(0, 4).map(c => (
+                    <span key={c.id} className={styles.topicTag}>{c.title}</span>
+                  ))}
+                  {(dsaConcepts.length + dsaPatterns.length) > 4 && (
+                    <span className={styles.topicMore}>+{dsaConcepts.length + dsaPatterns.length - 4}</span>
+                  )}
+                </div>
               </div>
             </Link>
           </div>
@@ -162,36 +166,38 @@ export default function HomePage() {
           </div>
 
           <Link href="/dsa" className={styles.dsaBanner}>
-            <div className={styles.dsaContent}>
-              <div className={styles.dsaLeft}>
-                <span className={styles.dsaIcon}>
-                  <ConceptIcon conceptId="dsa" size={32} />
-                </span>
-                <div>
-                  <h3 className={styles.dsaTitle}>Data Structures & Algorithms</h3>
-                  <p className={styles.dsaDescription}>
-                    Arrays, Trees, Graphs, Dynamic Programming, and more
-                  </p>
+            <div className={styles.dsaBannerInner}>
+              <div className={styles.dsaContent}>
+                <div className={styles.dsaLeft}>
+                  <span className={styles.dsaIcon}>
+                    <ConceptIcon conceptId="dsa" size={32} />
+                  </span>
+                  <div>
+                    <h3 className={styles.dsaTitle}>Data Structures & Algorithms</h3>
+                    <p className={styles.dsaDescription}>
+                      Arrays, Trees, Graphs, Dynamic Programming, and more
+                    </p>
+                  </div>
+                </div>
+                <div className={styles.dsaRight}>
+                  <div className={styles.dsaStats}>
+                    <span className={styles.dsaCount}>{dsaProblems.length}</span>
+                    <span className={styles.dsaLabel}>Problems</span>
+                  </div>
+                  <div className={styles.dsaStats}>
+                    <span className={styles.dsaCount}>19</span>
+                    <span className={styles.dsaLabel}>Topics</span>
+                  </div>
                 </div>
               </div>
-              <div className={styles.dsaRight}>
-                <div className={styles.dsaStats}>
-                  <span className={styles.dsaCount}>{dsaProblems.length}</span>
-                  <span className={styles.dsaLabel}>Problems</span>
-                </div>
-                <div className={styles.dsaStats}>
-                  <span className={styles.dsaCount}>19</span>
-                  <span className={styles.dsaLabel}>Topics</span>
-                </div>
+              <div className={styles.dsaTopics}>
+                {['Arrays', 'Two Pointers', 'Binary Search', 'Trees', 'Graphs', 'DP'].map(topic => (
+                  <span key={topic} className={styles.dsaTopic}>{topic}</span>
+                ))}
+                <span className={styles.dsaMore}>+13 more</span>
               </div>
+              <span className={styles.dsaCta}>Explore DSA Problems →</span>
             </div>
-            <div className={styles.dsaTopics}>
-              {['Arrays', 'Two Pointers', 'Binary Search', 'Trees', 'Graphs', 'DP'].map(topic => (
-                <span key={topic} className={styles.dsaTopic}>{topic}</span>
-              ))}
-              <span className={styles.dsaMore}>+13 more</span>
-            </div>
-            <span className={styles.dsaCta}>Explore DSA Problems →</span>
           </Link>
         </section>
       </main>

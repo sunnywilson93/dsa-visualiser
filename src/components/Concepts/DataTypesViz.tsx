@@ -16,13 +16,13 @@ const primitives: TypeInfo[] = [
   { id: 'number', name: 'Number', color: '#3b82f6', examples: ['42', '3.14', 'Infinity', 'NaN'], typeof: '"number"' },
   { id: 'boolean', name: 'Boolean', color: '#f59e0b', examples: ['true', 'false'], typeof: '"boolean"' },
   { id: 'null', name: 'null', color: '#ef4444', examples: ['null'], typeof: '"object"', note: 'Bug: typeof null is "object"!' },
-  { id: 'undefined', name: 'undefined', color: '#8b5cf6', examples: ['undefined'], typeof: '"undefined"' },
+  { id: 'undefined', name: 'undefined', color: '#a855f7', examples: ['undefined'], typeof: '"undefined"' },
   { id: 'symbol', name: 'Symbol', color: '#ec4899', examples: ['Symbol("id")'], typeof: '"symbol"' },
   { id: 'bigint', name: 'BigInt', color: '#06b6d4', examples: ['9007199254740991n'], typeof: '"bigint"' },
 ]
 
 const referenceTypes: TypeInfo[] = [
-  { id: 'object', name: 'Object', color: '#667eea', examples: ['{ key: "value" }'], typeof: '"object"' },
+  { id: 'object', name: 'Object', color: '#a855f7', examples: ['{ key: "value" }'], typeof: '"object"' },
   { id: 'array', name: 'Array', color: '#a855f7', examples: ['[1, 2, 3]'], typeof: '"object"', note: 'Arrays are objects!' },
   { id: 'function', name: 'Function', color: '#f97316', examples: ['function() {}', '() => {}'], typeof: '"function"' },
 ]
@@ -253,7 +253,7 @@ export function DataTypesViz() {
                       <span className={styles.memoryLabel}>obj1</span>
                       <span className={styles.memoryArrow}>→</span>
                     </div>
-                    <div className={styles.memoryBox} style={{ borderColor: '#8b5cf6', background: 'rgba(139, 92, 246, 0.1)' }}>
+                    <div className={styles.memoryBox} style={{ borderColor: '#a855f7', background: 'rgba(168, 85, 247, 0.1)' }}>
                       <span className={styles.memoryLabel}>Object</span>
                       <span className={styles.memoryValue}>&#123; x: ... &#125;</span>
                     </div>

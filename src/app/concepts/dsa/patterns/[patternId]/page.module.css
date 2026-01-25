@@ -33,7 +33,7 @@
 }
 
 .backBtn:hover {
-  color: #667eea;
+  color: var(--color-primary);
 }
 
 .titleRow {
@@ -46,14 +46,14 @@
 .icon {
   font-size: 2.5rem;
   line-height: 1;
-  color: #667eea;
+  color: var(--color-primary);
 }
 
 .title {
   font-size: var(--text-3xl);
   font-weight: var(--font-bold);
   margin: 0;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -67,8 +67,8 @@
   font-weight: var(--font-semibold);
   padding: 0.25rem 0.6rem;
   border-radius: var(--radius-sm);
-  background: rgba(102, 126, 234, 0.15);
-  color: #667eea;
+  background: var(--color-primary-15);
+  color: var(--color-primary);
 }
 
 .description {
@@ -166,8 +166,8 @@
 
 /* Visualization placeholder */
 .vizPlaceholder {
-  background: rgba(102, 126, 234, 0.1);
-  border: 1px dashed rgba(102, 126, 234, 0.3);
+  background: var(--color-primary-10);
+  border: 1px dashed var(--color-primary-30);
   border-radius: 0.5rem;
   padding: 2rem;
   text-align: center;

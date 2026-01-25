@@ -9,7 +9,7 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);
   color: white;

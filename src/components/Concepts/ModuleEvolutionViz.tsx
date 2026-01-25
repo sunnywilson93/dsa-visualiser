@@ -54,7 +54,7 @@ var result = Utils.formatDate(new Date());
     id: 'iife',
     name: 'IIFE Pattern',
     years: '2009-2012',
-    color: '#8b5cf6',
+    color: '#a855f7',
     technologies: ['IIFE', 'Revealing Module', 'Closures'],
     code: `// The Module Pattern - use IIFE for encapsulation
 var MyModule = (function() {

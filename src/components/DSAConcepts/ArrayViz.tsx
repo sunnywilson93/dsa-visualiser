@@ -256,7 +256,7 @@ export function ArrayViz() {
       case 'search': return '#f59e0b'
       case 'insert': return '#10b981'
       case 'delete': return '#ef4444'
-      case 'shift': return '#8b5cf6'
+      case 'shift': return '#a855f7'
       case 'found': return '#10b981'
       case 'not-found': return '#888'
       default: return '#888'

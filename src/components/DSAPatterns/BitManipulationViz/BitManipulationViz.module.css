@@ -182,13 +182,13 @@
   display: inline-flex;
   align-self: center;
   padding: var(--space-xs) var(--space-md);
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid rgba(139, 92, 246, 0.4);
+  background: var(--color-primary-15);
+  border: 1px solid var(--color-primary-40);
   border-radius: var(--radius-full);
   font-family: 'Fira Code', monospace;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: #8b5cf6;
+  color: var(--color-primary);
 }
 
 .bitGrid {
@@ -313,7 +313,7 @@
   font-family: 'Fira Code', monospace;
   font-size: var(--text-lg);
   font-weight: var(--font-bold);
-  color: #8b5cf6;
+  color: var(--color-primary);
 }
 
 .divider {
@@ -321,8 +321,8 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(139, 92, 246, 0.5) 20%,
-    rgba(139, 92, 246, 0.5) 80%,
+    var(--color-primary-50) 20%,
+    var(--color-primary-50) 80%,
     transparent 100%
   );
   margin: var(--space-xs) 0;

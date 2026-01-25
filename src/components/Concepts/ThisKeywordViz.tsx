@@ -71,7 +71,7 @@ const examples: Record<Level, Example[]> = {
       id: 'call-apply',
       title: 'call() / apply()',
       bindingType: 'Explicit Binding',
-      color: '#667eea',
+      color: '#a855f7',
       code: [
         'function greet(greeting) {',
         '  console.log(greeting, this.name);',
@@ -93,7 +93,7 @@ const examples: Record<Level, Example[]> = {
       id: 'bind',
       title: 'bind()',
       bindingType: 'Hard Binding',
-      color: '#8b5cf6',
+      color: '#a855f7',
       code: [
         'const person = {',
         '  name: "Dave",',

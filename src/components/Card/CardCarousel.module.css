@@ -2,14 +2,14 @@
   position: relative;
 }
 
-/* Navigation buttons */
+/* Navigation buttons - overlay on edges */
 .navButton {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-60%);
   z-index: 10;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: none;
   background: rgba(15, 15, 26, 0.9);
@@ -30,7 +30,7 @@
 .navButton:hover:not(:disabled) {
   background: var(--theme-cyan-50);
   color: var(--text-bright);
-  transform: translateY(-50%) scale(1.1);
+  transform: translateY(-60%) scale(1.1);
 }
 
 .navButton:disabled {
@@ -39,11 +39,11 @@
 }
 
 .navLeft {
-  left: -12px;
+  left: 8px;
 }
 
 .navRight {
-  right: -12px;
+  right: 8px;
 }
 
 /* Scroll container */
@@ -65,37 +65,17 @@
   display: none;
 }
 
-/* Card wrapper - match ConceptCarousel sizing */
-.cardWrapper {
-  flex: 0 0 340px;
-  scroll-snap-align: start;
-  transition: transform var(--transition-slow), opacity var(--transition-slow);
-}
-
-.cardWrapper.active {
-  transform: scale(1.02);
-}
-
-.cardWrapper:not(.active) {
-  opacity: 0.75;
-}
-
-/* Allow hover effects to overflow */
-.cardWrapper > * {
-  transition: all var(--transition-normal);
-}
-
 /* Progress dots */
 .dots {
   display: flex;
   justify-content: center;
   gap: var(--space-sm);
-  margin-top: 0.75rem;
+  margin-top: 1rem;
 }
 
 .dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   border: none;
   background: var(--theme-cyan-30);
@@ -110,17 +90,13 @@
 
 .dotActive {
   background: linear-gradient(135deg, var(--theme-cyan), var(--theme-teal));
-  width: 18px;
+  width: 24px;
   border-radius: var(--radius-sm);
-  box-shadow: 0 0 6px var(--theme-cyan-50);
+  box-shadow: 0 0 8px var(--theme-cyan-50);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .cardWrapper {
-    flex: 0 0 300px;
-  }
-
   .navButton {
     width: 36px;
     height: 36px;
@@ -128,16 +104,11 @@
 }
 
 @media (max-width: 480px) {
-  .cardWrapper {
-    flex: 0 0 calc(100vw - 2rem);
-  }
-
   .navButton {
     display: none;
   }
 
-  .scrollContainer {
-    padding: 0.5rem 0 1rem;
-    margin: 0;
+  .dots {
+    margin-top: 0.75rem;
   }
 }

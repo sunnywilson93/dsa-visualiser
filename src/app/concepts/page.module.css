@@ -78,7 +78,7 @@
 /* Neon card styling */
 .card {
   position: relative;
-  background: linear-gradient(135deg, var(--neon-purple-15), var(--neon-pink-15));
+  background: var(--card-gradient-bg);
   border-radius: 14px;
   padding: 2px;
   text-decoration: none;
@@ -94,7 +94,7 @@
   inset: 0;
   border-radius: 14px;
   padding: 2px;
-  background: linear-gradient(135deg, var(--neon-purple-40), rgba(236, 72, 153, 0.4));
+  background: var(--card-gradient-border);
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -151,8 +151,8 @@
   font-weight: var(--font-semibold);
   padding: 0.25rem 0.6rem;
   border-radius: var(--radius-full);
-  background: var(--neon-purple-30);
-  color: var(--neon-purple-light);
+  background: var(--color-primary-30);
+  color: var(--color-primary-light);
 }
 
 .cardTitle {
@@ -181,13 +181,13 @@
 .keyPoints,
 .examples {
   font-size: var(--text-xs);
-  color: var(--neon-purple-light);
+  color: var(--color-primary);
   font-weight: var(--font-medium);
 }
 
 .searchResults {
   background: rgba(26, 26, 46, 0.5);
-  border: 1px solid var(--neon-purple-20);
+  border: 1px solid var(--color-primary-20);
   border-radius: var(--radius-xl);
   padding: var(--space-sm);
 }
@@ -200,8 +200,8 @@
 }
 
 .patternCard {
-  background: linear-gradient(135deg, var(--neon-purple-15), var(--neon-cyan-15, rgba(34, 211, 238, 0.15)));
-  border: 1px solid var(--neon-purple-30);
+  background: var(--card-gradient-bg);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius-xl);
   padding: var(--space-xl);
   text-decoration: none;
@@ -214,8 +214,8 @@
 
 .patternCard:hover {
   transform: translateY(-4px);
-  box-shadow: var(--glow-neon);
-  border-color: var(--neon-purple-50);
+  box-shadow: var(--card-glow);
+  border-color: var(--card-border-hover);
 }
 
 .patternName {
@@ -244,7 +244,7 @@
 .patternComplexity,
 .patternVariants {
   font-size: var(--text-xs);
-  color: var(--neon-cyan-light, var(--neon-purple-light));
+  color: var(--color-primary);
   font-weight: var(--font-medium);
 }
 

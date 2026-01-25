@@ -32,7 +32,7 @@
 
 .card:hover {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(102, 126, 234, 0.3);
+  border-color: var(--color-primary-30);
 }
 
 .link {
@@ -44,7 +44,7 @@
 }
 
 .link:focus-visible {
-  outline: 2px solid var(--neon-purple-50, #a78bfa);
+  outline: 2px solid var(--color-primary-50);
   outline-offset: 2px;
 }
 

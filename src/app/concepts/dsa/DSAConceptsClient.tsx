@@ -1,11 +1,10 @@
 'use client'
 
-import Link from 'next/link'
 import { Search, Layers } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { SearchResultsList, usePageSearch, PageSearchControls } from '@/components/Search'
 import { ConceptIcon } from '@/components/Icons'
-import { ConceptCarousel } from '@/components/ConceptCarousel'
+import { Card, CardCarousel } from '@/components/Card'
 import { dsaConcepts, dsaConceptCategories } from '@/data/dsaConcepts'
 import { dsaPatterns } from '@/data/dsaPatterns'
 import styles from '../page.module.css'
@@ -70,7 +69,24 @@ export default function DSAConceptsClient() {
                     <span className={styles.sectionDescription}>{category.description}</span>
                   </h2>
 
-                  <ConceptCarousel concepts={categoryConcepts} basePath="/concepts/dsa" />
+                  <CardCarousel itemCount={categoryConcepts.length}>
+                    {categoryConcepts.map((concept, index) => (
+                      <Card
+                        key={concept.id}
+                        href={`/concepts/dsa/${concept.id}`}
+                        title={concept.title}
+                        description={concept.shortDescription}
+                        icon={<ConceptIcon conceptId={concept.id} size={32} />}
+                        difficulty={concept.difficulty}
+                        stats={[
+                          { label: 'key points', value: concept.keyPoints.length },
+                          { label: 'examples', value: concept.examples.length },
+                        ]}
+                        index={index}
+                        isActive={index === 0}
+                      />
+                    ))}
+                  </CardCarousel>
                 </section>
               )
             })}
@@ -86,26 +102,24 @@ export default function DSAConceptsClient() {
                 </span>
               </h2>
 
-              <div className={styles.patternGrid}>
-                {dsaPatterns.map((pattern) => (
-                  <Link
+              <CardCarousel itemCount={dsaPatterns.length}>
+                {dsaPatterns.map((pattern, index) => (
+                  <Card
                     key={pattern.id}
                     href={`/concepts/dsa/patterns/${pattern.slug}`}
-                    className={styles.patternCard}
-                  >
-                    <h3 className={styles.patternName}>{pattern.name}</h3>
-                    <p className={styles.patternDescription}>{pattern.description}</p>
-                    <div className={styles.patternMeta}>
-                      <span className={styles.patternComplexity}>
-                        Time: {pattern.complexity.time}
-                      </span>
-                      <span className={styles.patternVariants}>
-                        {pattern.variants.length} variants
-                      </span>
-                    </div>
-                  </Link>
+                    title={pattern.name}
+                    description={pattern.description}
+                    icon={<ConceptIcon conceptId={pattern.id} size={32} />}
+                    difficulty="intermediate"
+                    stats={[
+                      { label: `Time: ${pattern.complexity.time}`, value: '' },
+                      { label: 'variants', value: pattern.variants.length },
+                    ]}
+                    index={index}
+                    isActive={index === 0}
+                  />
                 ))}
-              </div>
+              </CardCarousel>
             </section>
           </>
         )}

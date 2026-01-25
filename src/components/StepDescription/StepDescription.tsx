@@ -42,7 +42,7 @@ function getStepTypeColor(type: StepType, description: string): string {
       return '#60a5fa' // blue
     case 'call':
     case 'return':
-      return '#8b5cf6' // purple
+      return '#a855f7' // purple
     case 'loop-start':
     case 'loop-iteration':
     case 'loop-end':

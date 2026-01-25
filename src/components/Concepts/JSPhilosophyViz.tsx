@@ -29,7 +29,7 @@ const timeline: TimelineEvent[] = [
   { year: '1995', title: 'Birth of JavaScript', description: 'Brendan Eich creates JavaScript in 10 days at Netscape', color: '#f59e0b' },
   { year: '1997', title: 'ECMAScript 1', description: 'JavaScript becomes standardized as ECMAScript', color: '#10b981' },
   { year: '2009', title: 'ES5', description: 'Strict mode, JSON support, array methods', color: '#3b82f6' },
-  { year: '2015', title: 'ES6/ES2015', description: 'let/const, arrow functions, classes, promises', color: '#8b5cf6' },
+  { year: '2015', title: 'ES6/ES2015', description: 'let/const, arrow functions, classes, promises', color: '#a855f7' },
   { year: '2020+', title: 'Modern JS', description: 'Optional chaining, nullish coalescing, and more', color: '#ec4899' },
 ]
 
@@ -59,7 +59,7 @@ console.log(sum); // 15`,
   {
     id: 'oop',
     name: 'Object-Oriented',
-    color: '#8b5cf6',
+    color: '#a855f7',
     description: 'Objects with methods',
     code: `class Counter {
   constructor() { this.sum = 0; }
@@ -97,7 +97,7 @@ const principles: Principle[] = [
     title: 'Fail Silently',
     description: 'Returns undefined instead of throwing errors',
     example: 'const obj = {}; obj.missing; // undefined',
-    color: '#8b5cf6',
+    color: '#a855f7',
   },
 ]
 

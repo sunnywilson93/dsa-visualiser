@@ -741,7 +741,7 @@ export function MemoryModelViz() {
 
   const getGcPhaseColor = (phase?: string) => {
     switch (phase) {
-      case 'mark': return '#8b5cf6'
+      case 'mark': return '#a855f7'
       case 'sweep': return '#ef4444'
       default: return '#555'
     }

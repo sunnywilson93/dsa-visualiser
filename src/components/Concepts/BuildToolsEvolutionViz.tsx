@@ -168,7 +168,7 @@ import './styles.css';`,
     id: 'zero-config',
     name: 'Zero-Config Era',
     years: '2017-2020',
-    color: '#8b5cf6',
+    color: '#a855f7',
     technologies: ['Create React App', 'Parcel', 'Vue CLI'],
     code: `# Create React App - Zero config to start
 npx create-react-app my-app

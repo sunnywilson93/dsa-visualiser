@@ -324,15 +324,15 @@ export function RecursionViz() {
 
   const getPhaseColor = (phase: Step['phase']) => {
     switch (phase) {
-      case 'calling': return '#667eea'
+      case 'calling': return '#a855f7'
       case 'returning': return '#10b981'
-      case 'complete': return '#8b5cf6'
+      case 'complete': return '#a855f7'
     }
   }
 
   const getStatusColor = (status: StackFrame['status']) => {
     switch (status) {
-      case 'active': return '#667eea'
+      case 'active': return '#a855f7'
       case 'waiting': return '#f59e0b'
       case 'returning': return '#10b981'
     }

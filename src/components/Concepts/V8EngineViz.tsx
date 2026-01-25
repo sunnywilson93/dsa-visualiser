@@ -600,7 +600,7 @@ export function V8EngineViz() {
   const getPhaseColor = (phase: Step['phase']) => {
     switch (phase) {
       case 'parsing': return '#3b82f6'
-      case 'interpreting': return '#667eea'
+      case 'interpreting': return '#a855f7'
       case 'optimizing': return '#10b981'
       case 'deoptimizing': return '#ef4444'
       case 'idle': return '#555'

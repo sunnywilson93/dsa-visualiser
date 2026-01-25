@@ -107,7 +107,7 @@ export function StackViz() {
       case 'push': return '#10b981'
       case 'pop': return '#f59e0b'
       case 'peek': return '#60a5fa'
-      case 'compare': return '#8b5cf6'
+      case 'compare': return '#a855f7'
       case 'match': return '#10b981'
       case 'error': return '#ef4444'
       default: return '#888'

@@ -150,12 +150,12 @@
 
 .stackItem {
   padding: var(--space-sm) var(--space-md);
-  background: rgba(102, 126, 234, 0.15);
-  border: 1px solid rgba(102, 126, 234, 0.4);
+  background: var(--color-primary-15);
+  border: 1px solid var(--color-primary-40);
   border-radius: var(--radius-md);
   font-family: 'Fira Code', monospace;
   font-size: var(--text-xs);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   text-align: center;
 }
 
@@ -171,8 +171,8 @@
 /* Web APIs */
 .webApisBox {
   grid-area: webapis;
-  --neon-start: var(--neon-purple);
-  --neon-end: var(--neon-pink);
+  --neon-start: var(--color-primary);
+  --neon-end: var(--color-secondary);
 }
 
 .webApisBox .neonBoxInner {
@@ -200,9 +200,9 @@
 }
 
 .webApiItem.active {
-  background: rgba(168, 85, 247, 0.2);
-  border: 1px solid rgba(168, 85, 247, 0.5);
-  color: var(--neon-purple-light);
+  background: var(--color-primary-20);
+  border: 1px solid var(--color-primary-50);
+  color: var(--color-primary-light);
 }
 
 .webApiItem.highlight {
@@ -257,7 +257,7 @@
 /* Task Queue (Macrotasks) */
 .taskQueueBox {
   grid-area: taskqueue;
-  --neon-start: var(--neon-pink);
+  --neon-start: var(--color-secondary);
   --neon-end: #f43f5e;
 }
 
@@ -302,12 +302,12 @@
 
 .microItem {
   padding: var(--space-sm) var(--space-md);
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid rgba(139, 92, 246, 0.4);
+  background: var(--color-primary-15);
+  border: 1px solid var(--color-primary-40);
   border-radius: var(--radius-md);
   font-family: 'Fira Code', monospace;
   font-size: var(--text-xs);
-  color: var(--neon-purple-light);
+  color: var(--color-primary-light);
   text-align: center;
 }
 
@@ -365,7 +365,7 @@
 }
 
 .codeLine.activeLine {
-  background: rgba(102, 126, 234, 0.2);
+  background: var(--color-primary-20);
 }
 
 .lineNum {
@@ -383,7 +383,7 @@
 }
 
 .activeLine .lineCode {
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 /* Output Section */
@@ -439,11 +439,11 @@
 .stepBadge {
   display: inline-block;
   padding: 0.15rem 0.4rem;
-  background: rgba(102, 126, 234, 0.3);
+  background: var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   margin-right: 0.5rem;
 }
 
@@ -458,7 +458,7 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);
   color: white;
@@ -493,8 +493,8 @@
 /* Insight */
 .insight {
   padding: var(--space-sm) var(--space-md);
-  background: rgba(139, 92, 246, 0.08);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: var(--color-primary-8);
+  border: 1px solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-xs);
   color: var(--gray-500);
@@ -502,7 +502,7 @@
 }
 
 .insight strong {
-  color: #8b5cf6;
+  color: var(--color-primary);
 }
 
 /* Responsive */

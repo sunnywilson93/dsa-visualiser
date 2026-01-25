@@ -29,9 +29,9 @@
 }
 
 .exampleBtn.active {
-  background: rgba(102, 126, 234, 0.15);
-  border-color: rgba(102, 126, 234, 0.4);
-  color: #a5b4fc;
+  background: var(--color-primary-15);
+  border-color: var(--color-primary-40);
+  color: var(--color-primary-light);
 }
 
 /* Input section */
@@ -72,8 +72,8 @@
 }
 
 .inputChar.activeChar {
-  background: rgba(102, 126, 234, 0.2);
-  box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);
+  background: var(--color-primary-20);
+  box-shadow: 0 0 15px var(--color-primary-40);
 }
 
 .inputChar.processedChar {
@@ -147,7 +147,7 @@
 }
 
 .stackItem.topItem {
-  box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 0 15px var(--color-primary-20);
 }
 
 .stackValue {
@@ -205,7 +205,7 @@
   padding: var(--space-md) var(--space-lg);
   background: rgba(0, 0, 0, 0.3);
   border-radius: var(--radius-lg);
-  border-left: 3px solid #667eea;
+  border-left: 3px solid var(--color-primary);
 }
 
 .actionBadge {
@@ -244,7 +244,7 @@
   padding: 0.6rem 1.25rem;
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);
   color: white;
@@ -281,8 +281,8 @@
 /* Insight */
 .insight {
   padding: var(--space-md) var(--space-lg);
-  background: rgba(102, 126, 234, 0.1);
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  background: var(--color-primary-10);
+  border: 1px solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
   color: var(--gray-300);
@@ -290,7 +290,7 @@
 }
 
 .insight strong {
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 /* Mobile */

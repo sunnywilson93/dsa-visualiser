@@ -144,7 +144,7 @@ Promise.all([
     id: 'generators',
     name: 'Generators',
     years: '2015-2017',
-    color: '#8b5cf6',
+    color: '#a855f7',
     technologies: ['function*', 'yield', 'co', 'Koa'],
     code: `// Generators: pausable functions
 function* fetchSequence() {

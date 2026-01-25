@@ -586,13 +586,13 @@ export function MemoizationViz() {
       case 'Hit': return '#10b981'
       case 'Complete': return '#10b981'
       case 'Problem': return '#ef4444'
-      case 'Memo': return '#a78bfa'
+      case 'Memo': return '#c4b5fd'
       case 'Build': return '#f59e0b'
       case 'Why': return '#60a5fa'
       case 'Fill': return '#f59e0b'
       case 'Access': return '#10b981'
       case 'Add D':
-      case 'Add E': return '#a78bfa'
+      case 'Add E': return '#c4b5fd'
       case 'useMemo':
       case 'useCallback': return '#61dafb'
       case 'Render 1':

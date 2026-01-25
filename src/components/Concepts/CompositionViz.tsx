@@ -574,19 +574,19 @@ export function CompositionViz() {
   const getPhaseColor = (phase: string) => {
     switch (phase) {
       case 'Setup': return '#60a5fa'
-      case 'Compose': return '#a78bfa'
+      case 'Compose': return '#c4b5fd'
       case 'Execute': return '#10b981'
       case 'Complete': return '#10b981'
       case 'Partial': return '#f59e0b'
       case 'Curry': return '#f59e0b'
-      case 'Flexible': return '#a78bfa'
+      case 'Flexible': return '#c4b5fd'
       case 'Pipe': return '#60a5fa'
       case 'Create': return '#60a5fa'
       case 'First Call': return '#10b981'
-      case 'Second Call': return '#a78bfa'
+      case 'Second Call': return '#c4b5fd'
       case 'Register': return '#60a5fa'
       case 'Handle': return '#f59e0b'
-      case 'Chain': return '#a78bfa'
+      case 'Chain': return '#c4b5fd'
       default: return '#888'
     }
   }

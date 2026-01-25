@@ -127,7 +127,7 @@
 .typeofValue {
   font-family: 'Fira Code', monospace;
   font-size: var(--text-sm);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 .noteBox {
@@ -249,7 +249,7 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);
   color: white;

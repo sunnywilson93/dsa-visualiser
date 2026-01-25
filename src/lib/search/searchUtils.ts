@@ -2,6 +2,7 @@
 
 import { concepts, conceptCategories } from '@/data/concepts'
 import { dsaConcepts, dsaConceptCategories } from '@/data/dsaConcepts'
+import { dsaPatterns } from '@/data/dsaPatterns'
 import type { SearchableItem, SearchFilters, SearchResult, CategoryOption, ConceptSource } from './types'
 
 // Convert JS concepts to searchable items
@@ -34,14 +35,31 @@ function normalizeDSAConcepts(): SearchableItem[] {
   }))
 }
 
+// Convert DSA patterns to searchable items
+function normalizeDSAPatterns(): SearchableItem[] {
+  return dsaPatterns.map(p => ({
+    id: p.id,
+    title: p.name,
+    category: 'patterns',
+    difficulty: 'intermediate' as const,
+    description: p.description,
+    shortDescription: p.description.slice(0, 80) + '...',
+    keyPoints: p.whenToUse,
+    source: 'dsa' as ConceptSource,
+    href: `/concepts/dsa/patterns/${p.slug}`,
+  }))
+}
+
 // Get all searchable items
 export function getAllSearchableItems(): SearchableItem[] {
-  return [...normalizeJSConcepts(), ...normalizeDSAConcepts()]
+  return [...normalizeJSConcepts(), ...normalizeDSAConcepts(), ...normalizeDSAPatterns()]
 }
 
 // Get items by source
 export function getSearchableItemsBySource(source: ConceptSource): SearchableItem[] {
-  return source === 'js' ? normalizeJSConcepts() : normalizeDSAConcepts()
+  return source === 'js'
+    ? normalizeJSConcepts()
+    : [...normalizeDSAConcepts(), ...normalizeDSAPatterns()]
 }
 
 // Get all category options for filters

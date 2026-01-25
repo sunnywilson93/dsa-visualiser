@@ -49,7 +49,7 @@ const eras: Era[] = [
     id: 'server-scripting',
     name: 'Server-Side Scripting',
     years: '1995-2005',
-    color: '#8b5cf6',
+    color: '#a855f7',
     technologies: ['PHP', 'CGI', 'ASP', 'JSP'],
     code: `<?php
 // Server generates HTML dynamically

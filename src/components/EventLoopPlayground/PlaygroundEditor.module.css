@@ -39,7 +39,7 @@
   padding: 0.4rem 0.8rem;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);
   color: white;
@@ -49,7 +49,7 @@
 
 .analyzeBtn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px var(--color-primary-30);
 }
 
 .analyzeBtn:active {
@@ -96,11 +96,11 @@
 
 /* Monaco editor line decorations */
 .currentLine {
-  background: rgba(102, 126, 234, 0.2) !important;
+  background: var(--color-primary-20) !important;
 }
 
 .currentLineGlyph {
-  background: #667eea;
+  background: var(--color-primary);
   border-radius: 2px;
   margin-left: 3px;
 }

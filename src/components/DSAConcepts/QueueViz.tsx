@@ -100,7 +100,7 @@ export function QueueViz(): JSX.Element {
       case 'enqueue': return '#10b981'
       case 'dequeue': return '#f59e0b'
       case 'peek': return '#60a5fa'
-      case 'process': return '#8b5cf6'
+      case 'process': return '#a855f7'
       case 'error': return '#ef4444'
       default: return '#888'
     }

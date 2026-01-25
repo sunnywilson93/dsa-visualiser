@@ -67,12 +67,12 @@
 
 .stackItem {
   padding: 0.4rem 0.6rem;
-  background: rgba(102, 126, 234, 0.15);
-  border: 1px solid rgba(102, 126, 234, 0.4);
+  background: var(--color-primary-15);
+  border: 1px solid var(--color-primary-40);
   border-radius: 5px;
   font-family: 'Fira Code', monospace;
   font-size: var(--text-2xs);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   text-align: center;
 }
 
@@ -88,8 +88,8 @@
 /* Web APIs */
 .webApisBox {
   grid-area: webapis;
-  --neon-start: var(--neon-purple);
-  --neon-end: var(--neon-pink);
+  --neon-start: var(--color-primary);
+  --neon-end: var(--color-secondary);
 }
 
 .webApisBox .neonBoxInner {
@@ -117,9 +117,9 @@
 }
 
 .webApiItem.active {
-  background: rgba(168, 85, 247, 0.2);
-  border: 1px solid rgba(168, 85, 247, 0.5);
-  color: var(--neon-purple-light);
+  background: var(--color-primary-20);
+  border: 1px solid var(--color-primary-50);
+  color: var(--color-primary-light);
 }
 
 .webApiItem.highlight {
@@ -173,7 +173,7 @@
 /* Task Queue (Macrotasks) */
 .taskQueueBox {
   grid-area: taskqueue;
-  --neon-start: var(--neon-pink);
+  --neon-start: var(--color-secondary);
   --neon-end: #f43f5e;
 }
 
@@ -218,12 +218,12 @@
 
 .microItem {
   padding: 0.4rem 0.6rem;
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid rgba(139, 92, 246, 0.4);
+  background: var(--color-primary-15);
+  border: 1px solid var(--color-primary-40);
   border-radius: 5px;
   font-family: 'Fira Code', monospace;
   font-size: var(--text-2xs);
-  color: var(--neon-purple-light);
+  color: var(--color-primary-light);
   text-align: center;
 }
 

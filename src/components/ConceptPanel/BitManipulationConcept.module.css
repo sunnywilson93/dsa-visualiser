@@ -19,11 +19,11 @@
   font-size: 10px;
   font-weight: var(--font-semibold);
   padding: 3px 10px;
-  background: linear-gradient(135deg, #a855f7, #ec4899);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   color: white;
   border-radius: var(--radius-full);
   letter-spacing: 0.5px;
-  box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 0 10px var(--color-primary-40);
 }
 
 .visualization {
@@ -136,7 +136,7 @@
 .operatorSymbol {
   font-size: 12px;
   font-weight: var(--font-bold);
-  color: var(--neon-purple-light);
+  color: var(--color-primary-light);
   grid-column: 2;
   justify-self: end;
   text-shadow: 0 0 6px rgba(196, 181, 253, 0.4);
@@ -189,7 +189,7 @@
 .annotation {
   font-size: 10px;
   font-weight: var(--font-medium);
-  color: var(--neon-purple-light);
+  color: var(--color-primary-light);
   padding: 3px 10px;
   background: rgba(130, 100, 255, 0.15);
   border: 1px solid rgba(130, 100, 255, 0.3);

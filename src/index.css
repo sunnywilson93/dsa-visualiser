@@ -38,41 +38,74 @@
   --accent-cyan: #39c5cf;
   --accent-orange: #db6d28;
 
-  /* Neon theme colors */
-  --neon-purple: #a855f7;
-  --neon-pink: #ec4899;
-  --neon-purple-light: #c4b5fd;
-  --neon-purple-dim: var(--gray-500);
+  /* ==========================================================================
+     PRIMARY THEME COLORS - Change these to retheme the entire app
+     ========================================================================== */
+  --color-primary: #a855f7;           /* Purple - main brand color */
+  --color-secondary: #ec4899;         /* Pink - accent/gradient color */
+  --color-primary-light: #c4b5fd;     /* Lighter variant for text */
 
-  /* Neon transparent variants */
-  --neon-purple-5: rgba(168, 85, 247, 0.05);
-  --neon-purple-8: rgba(168, 85, 247, 0.08);
-  --neon-purple-10: rgba(168, 85, 247, 0.1);
-  --neon-purple-15: rgba(168, 85, 247, 0.15);
-  --neon-purple-20: rgba(168, 85, 247, 0.2);
-  --neon-purple-25: rgba(168, 85, 247, 0.25);
-  --neon-purple-30: rgba(168, 85, 247, 0.3);
-  --neon-purple-40: rgba(168, 85, 247, 0.4);
-  --neon-purple-50: rgba(168, 85, 247, 0.5);
-  --neon-pink-10: rgba(236, 72, 153, 0.1);
-  --neon-pink-15: rgba(236, 72, 153, 0.15);
+  /* Primary color opacity variants */
+  --color-primary-5: rgba(168, 85, 247, 0.05);
+  --color-primary-8: rgba(168, 85, 247, 0.08);
+  --color-primary-10: rgba(168, 85, 247, 0.1);
+  --color-primary-15: rgba(168, 85, 247, 0.15);
+  --color-primary-20: rgba(168, 85, 247, 0.2);
+  --color-primary-25: rgba(168, 85, 247, 0.25);
+  --color-primary-30: rgba(168, 85, 247, 0.3);
+  --color-primary-40: rgba(168, 85, 247, 0.4);
+  --color-primary-50: rgba(168, 85, 247, 0.5);
+
+  /* Secondary color opacity variants */
+  --color-secondary-10: rgba(236, 72, 153, 0.1);
+  --color-secondary-15: rgba(236, 72, 153, 0.15);
+  --color-secondary-30: rgba(236, 72, 153, 0.3);
+  --color-secondary-50: rgba(236, 72, 153, 0.5);
+
+  /* ==========================================================================
+     SEMANTIC THEME TOKENS - Use these throughout the app
+     ========================================================================== */
 
   /* Gradients */
-  --gradient-neon: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-pink) 100%);
-  --gradient-neon-subtle: linear-gradient(135deg, var(--neon-purple-10) 0%, var(--neon-pink-10) 100%);
-  --gradient-neon-hover: linear-gradient(135deg, var(--neon-purple-15) 0%, var(--neon-pink-15) 100%);
+  --gradient-brand: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  --gradient-brand-subtle: linear-gradient(135deg, var(--color-primary-10) 0%, var(--color-secondary-10) 100%);
+  --gradient-brand-hover: linear-gradient(135deg, var(--color-primary-15) 0%, var(--color-secondary-15) 100%);
   --gradient-page: linear-gradient(135deg, var(--bg-page) 0%, var(--bg-page-secondary) 100%);
 
-  /* Neon shadows/glows */
-  --glow-neon: 0 0 20px var(--neon-purple-20), 0 0 40px var(--neon-pink-10);
-  --glow-neon-strong: 0 0 25px var(--neon-purple-25), 0 0 50px var(--neon-pink-15);
-  --glow-neon-text: 0 0 20px var(--neon-purple-30);
+  /* Glows/Shadows */
+  --glow-brand: 0 0 20px var(--color-primary-20), 0 0 40px var(--color-secondary-10);
+  --glow-brand-strong: 0 0 25px var(--color-primary-25), 0 0 50px var(--color-secondary-15);
+  --glow-brand-text: 0 0 20px var(--color-primary-30);
 
   /* Card/surface styles */
   --surface-card: rgba(255, 255, 255, 0.03);
-  --surface-card-hover: var(--neon-purple-10);
+  --surface-card-hover: var(--color-primary-10);
   --border-card: rgba(255, 255, 255, 0.08);
-  --border-card-hover: var(--neon-purple-40);
+  --border-card-hover: var(--color-primary-40);
+
+  /* Card theme tokens */
+  --card-gradient-bg: linear-gradient(135deg, var(--color-primary-15), var(--color-secondary-15));
+  --card-gradient-border: linear-gradient(135deg, var(--color-primary-50), var(--color-secondary-50));
+  --card-border: var(--color-primary-30);
+  --card-border-hover: var(--color-primary-50);
+  --card-glow: 0 0 20px var(--color-primary-30), 0 0 40px var(--color-secondary-15);
+  --card-glow-strong: 0 0 25px var(--color-primary-50), 0 0 50px var(--color-secondary-30);
+  --card-stat-color: var(--color-primary);
+
+  /* Legacy aliases (for gradual migration - can remove later) */
+  --theme-cyan: var(--color-primary);
+  --theme-teal: var(--color-secondary);
+  --theme-cyan-15: var(--color-primary-15);
+  --theme-cyan-30: var(--color-primary-30);
+  --theme-cyan-50: var(--color-primary-50);
+  --theme-teal-15: var(--color-secondary-15);
+  --theme-teal-30: var(--color-secondary-30);
+  --theme-teal-50: var(--color-secondary-50);
+  --gradient-neon: var(--gradient-brand);
+  --glow-neon: var(--glow-brand);
+  --glow-neon-strong: var(--glow-brand-strong);
+  --glow-neon-text: var(--glow-brand-text);
+  --neon-purple-light: var(--color-primary-light);
 
   /* Difficulty levels */
   --difficulty-easy: #22c55e;

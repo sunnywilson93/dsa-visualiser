@@ -106,8 +106,8 @@
 }
 
 .optionBtn:hover {
-  border-color: rgba(102, 126, 234, 0.5);
-  background: rgba(102, 126, 234, 0.08);
+  border-color: var(--color-primary-50);
+  background: var(--color-primary-8);
 }
 
 .optionBtnActive {

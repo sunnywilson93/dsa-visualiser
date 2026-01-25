@@ -476,7 +476,7 @@ export function PromisesViz() {
       case 'Settling': return '#10b981'
       case 'Execution': return '#10b981'
       case 'Start': return '#60a5fa'
-      case 'Chain': return '#a78bfa'
+      case 'Chain': return '#c4b5fd'
       case 'Setup': return '#60a5fa'
       case 'Racing': return '#f59e0b'
       case 'Winner': return '#10b981'

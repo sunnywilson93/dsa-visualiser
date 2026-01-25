@@ -147,7 +147,7 @@
 .varName {
   font-family: 'Fira Code', monospace;
   font-size: var(--text-sm);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 .varEquals {
@@ -180,10 +180,10 @@
 }
 
 .scopeChainPanel {
-  --neon-start: #8b5cf6;
+  --neon-start: var(--color-primary);
   --neon-end: #3b82f6;
 
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(59, 130, 246, 0.08));
+  background: linear-gradient(135deg, var(--color-primary-8), rgba(59, 130, 246, 0.08));
   border: 1px solid;
   border-image: linear-gradient(135deg, var(--neon-start), var(--neon-end)) 1;
   border-radius: var(--radius-xl);
@@ -287,7 +287,7 @@
 }
 
 .scopeVarName {
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 .scopeVarValue {

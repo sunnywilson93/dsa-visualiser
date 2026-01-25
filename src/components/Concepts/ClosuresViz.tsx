@@ -778,7 +778,7 @@ export function ClosuresViz() {
                               key={v.value}
                               className={styles.heapVarValue}
                               initial={{ scale: 1.2, color: '#f59e0b' }}
-                              animate={{ scale: 1, color: v.name === '[[Scope]]' ? '#667eea' : '#10b981' }}
+                              animate={{ scale: 1, color: v.name === '[[Scope]]' ? '#a855f7' : '#10b981' }}
                             >
                               {v.value}
                             </motion.span>

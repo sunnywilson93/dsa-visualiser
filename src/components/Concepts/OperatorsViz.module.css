@@ -82,14 +82,14 @@
   gap: var(--space-sm);
   padding: var(--space-xl);
   background: rgba(0, 0, 0, 0.4);
-  border: 2px solid rgba(102, 126, 234, 0.3);
+  border: 2px solid var(--color-primary-30);
   border-radius: var(--radius-xl);
 }
 
 .expression {
   font-family: 'Fira Code', monospace;
   font-size: var(--text-xl);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 .equals {

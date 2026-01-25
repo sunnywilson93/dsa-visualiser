@@ -58,7 +58,7 @@ $('#add-btn').click(function() {
     id: 'mvc',
     name: 'MVC / Backbone',
     years: '2010-2014',
-    color: '#8b5cf6',
+    color: '#a855f7',
     technologies: ['Backbone.js', 'Models', 'Views', 'Collections'],
     code: `// Backbone.js - Separate Models from Views
 var Todo = Backbone.Model.extend({

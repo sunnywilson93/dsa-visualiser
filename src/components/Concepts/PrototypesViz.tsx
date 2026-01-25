@@ -52,7 +52,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'bark', value: 'fn()' },
           ],
           protoRef: 'Animal.prototype',
-          color: '#667eea',
+          color: '#a855f7',
         },
         {
           id: 'Animal.prototype',
@@ -63,7 +63,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'eat', value: 'fn()' },
           ],
           protoRef: 'Object.prototype',
-          color: '#8b5cf6',
+          color: '#a855f7',
         },
         {
           id: 'Object.prototype',
@@ -140,7 +140,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'age', value: '25' },
           ],
           protoRef: 'Object.prototype',
-          color: '#667eea',
+          color: '#a855f7',
         },
         {
           id: 'Object.prototype',
@@ -197,7 +197,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'childProp', value: '"own"' },
           ],
           protoRef: 'parent',
-          color: '#667eea',
+          color: '#a855f7',
         },
         {
           id: 'parent',
@@ -208,7 +208,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'parentProp', value: '"inherited"' },
           ],
           protoRef: 'Object.prototype',
-          color: '#8b5cf6',
+          color: '#a855f7',
         },
         {
           id: 'Object.prototype',
@@ -272,7 +272,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'name', value: '"child"' },
           ],
           protoRef: 'Object.prototype',
-          color: '#667eea',
+          color: '#a855f7',
         },
         {
           id: 'Object.prototype',
@@ -328,7 +328,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'age', value: '30' },
           ],
           protoRef: 'Person.prototype',
-          color: '#667eea',
+          color: '#a855f7',
         },
         {
           id: 'Person.prototype',
@@ -339,7 +339,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'constructor', value: 'Person' },
           ],
           protoRef: 'Object.prototype',
-          color: '#8b5cf6',
+          color: '#a855f7',
         },
         {
           id: 'Object.prototype',
@@ -396,7 +396,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'own', value: '"mine"' },
           ],
           protoRef: 'proto',
-          color: '#667eea',
+          color: '#a855f7',
         },
         {
           id: 'proto',
@@ -406,7 +406,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'inherited', value: '"shared"' },
           ],
           protoRef: 'Object.prototype',
-          color: '#8b5cf6',
+          color: '#a855f7',
         },
         {
           id: 'Object.prototype',
@@ -469,7 +469,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'key2', value: '"value2"' },
           ],
           protoRef: 'null',
-          color: '#667eea',
+          color: '#a855f7',
         },
         {
           id: 'null',
@@ -522,7 +522,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'name', value: '"Spot"' },
           ],
           protoRef: 'Animal.prototype',
-          color: '#667eea',
+          color: '#a855f7',
         },
         {
           id: 'Animal.prototype',
@@ -533,7 +533,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'constructor', value: 'class Animal' },
           ],
           protoRef: 'Object.prototype',
-          color: '#8b5cf6',
+          color: '#a855f7',
         },
         {
           id: 'Object.prototype',

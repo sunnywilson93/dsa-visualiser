@@ -42,7 +42,7 @@ const complexities: Complexity[] = [
     id: 'onlogn',
     name: 'O(n log n)',
     label: 'Linearithmic',
-    color: '#8b5cf6',
+    color: '#a855f7',
     calculate: (n) => n * Math.log2(n) || n,
     example: 'Merge sort, Quick sort'
   },

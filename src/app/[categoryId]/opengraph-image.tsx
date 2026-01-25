@@ -30,7 +30,7 @@ export default async function Image({
       >
         <div
           style={{
-            color: '#667eea',
+            color: '#a855f7',
             fontSize: 28,
             fontWeight: 500,
             marginBottom: 16,

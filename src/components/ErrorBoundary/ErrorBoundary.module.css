@@ -79,7 +79,7 @@
   padding: 0.6rem 1rem;
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary));
   border: none;
   border-radius: var(--radius-lg);
   color: white;
@@ -89,7 +89,7 @@
 
 .btnPrimary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 4px 12px var(--color-primary-40);
 }
 
 .btnSecondary {

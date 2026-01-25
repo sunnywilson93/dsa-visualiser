@@ -16,7 +16,7 @@
 }
 
 .item:hover {
-  background: rgba(168, 85, 247, 0.15);
+  background: var(--color-primary-15);
 }
 
 .itemCompact {
@@ -32,7 +32,7 @@
 }
 
 .itemCompact:hover {
-  background: rgba(168, 85, 247, 0.2);
+  background: var(--color-primary-20);
 }
 
 .icon {
@@ -102,15 +102,15 @@
   border-radius: var(--radius-sm);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  background: rgba(102, 126, 234, 0.3);
-  color: #a5b4fc;
+  background: var(--color-primary-30);
+  color: var(--color-primary-light);
   min-width: 2rem;
   text-align: center;
 }
 
 .sourceBadge[data-source="dsa"] {
   background: rgba(236, 72, 153, 0.3);
-  color: #f9a8d4;
+  color: var(--color-secondary);
 }
 
 .difficultyBadge {

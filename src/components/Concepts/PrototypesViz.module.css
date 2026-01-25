@@ -173,8 +173,8 @@
 
 /* Heap container - Neon Box Purple/Pink */
 .heapBox {
-  --neon-start: var(--neon-purple);
-  --neon-end: var(--neon-pink);
+  --neon-start: var(--color-primary);
+  --neon-end: var(--color-secondary);
 }
 
 .heap {
@@ -257,7 +257,7 @@
 .protoRef {
   font-family: 'Fira Code', monospace;
   font-size: 0.55rem;
-  color: #667eea;
+  color: var(--color-primary);
   padding-top: 0.3rem;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -302,11 +302,11 @@
 .stepBadge {
   display: inline-block;
   padding: 0.15rem 0.4rem;
-  background: rgba(102, 126, 234, 0.3);
+  background: var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   margin-right: 0.5rem;
 }
 
@@ -321,7 +321,7 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);
   color: white;

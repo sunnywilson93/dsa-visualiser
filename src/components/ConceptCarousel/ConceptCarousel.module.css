@@ -13,7 +13,7 @@
   border-radius: 50%;
   border: none;
   background: rgba(15, 15, 26, 0.9);
-  color: var(--neon-purple-light);
+  color: var(--color-primary-light);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@
 }
 
 .navButton:hover:not(:disabled) {
-  background: rgba(168, 85, 247, 0.6);
+  background: var(--color-primary-50);
   color: var(--text-bright);
   transform: translateY(-60%) scale(1.1);
 }
@@ -83,7 +83,7 @@
 /* Card styling */
 .card {
   position: relative;
-  background: linear-gradient(135deg, var(--neon-purple-15), var(--neon-pink-15));
+  background: linear-gradient(135deg, var(--color-primary-15), var(--color-secondary-15));
   border-radius: var(--radius-2xl);
   padding: 2px;
   text-decoration: none;
@@ -99,7 +99,7 @@
   inset: 0;
   border-radius: var(--radius-2xl);
   padding: 2px;
-  background: linear-gradient(135deg, var(--neon-purple-40), rgba(236, 72, 153, 0.4));
+  background: linear-gradient(135deg, var(--color-primary-40), rgba(236, 72, 153, 0.4));
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -170,7 +170,7 @@
 
 .stat {
   font-size: var(--text-sm);
-  color: var(--neon-purple-light);
+  color: var(--color-primary-light);
   font-weight: var(--font-medium);
 }
 
@@ -187,21 +187,21 @@
   height: 8px;
   border-radius: 50%;
   border: none;
-  background: var(--neon-purple-30);
+  background: var(--color-primary-30);
   cursor: pointer;
   transition: all var(--transition-normal);
   padding: 0;
 }
 
 .dot:hover {
-  background: var(--neon-purple-50);
+  background: var(--color-primary-50);
 }
 
 .dotActive {
   background: var(--gradient-neon);
   width: 24px;
   border-radius: var(--radius-sm);
-  box-shadow: 0 0 8px var(--neon-purple-50);
+  box-shadow: 0 0 8px var(--color-primary-50);
 }
 
 /* Responsive */

@@ -4,8 +4,8 @@
   --js-viz-text: #e5e7eb;
   --js-viz-muted: #888;
   --js-viz-radius: var(--radius-lg);
-  --js-viz-pill-bg: rgba(102, 126, 234, 0.1);
-  --js-viz-pill-border: rgba(102, 126, 234, 0.3);
+  --js-viz-pill-bg: var(--color-primary-10);
+  --js-viz-pill-border: var(--color-primary-30);
 
   background: var(--js-viz-surface);
   border: 1px solid var(--js-viz-border);
@@ -50,7 +50,7 @@
 }
 
 .codeLine.activeLine {
-  background: rgba(102, 126, 234, 0.2);
+  background: var(--color-primary-20);
 }
 
 .lineNum {
@@ -70,5 +70,5 @@
 }
 
 .activeLine .lineCode {
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }

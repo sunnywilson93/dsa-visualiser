@@ -18,7 +18,7 @@
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
   margin: 0 0 0.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -75,10 +75,10 @@
 }
 
 .exampleBtn.active {
-  background: rgba(102, 126, 234, 0.18);
-  border-color: rgba(102, 126, 234, 0.7);
+  background: var(--color-primary-20);
+  border-color: var(--color-primary-50);
   color: var(--text-bright);
-  box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 0 10px var(--color-primary-20);
 }
 
 /* Main Content */
@@ -198,7 +198,7 @@
 .playBtn {
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   color: white;
 }
@@ -237,11 +237,11 @@
 }
 
 .phaseBadge[data-phase="sync"] {
-  background: #667eea;
+  background: var(--color-primary);
 }
 
 .phaseBadge[data-phase="micro"] {
-  background: #8b5cf6;
+  background: var(--color-primary);
 }
 
 .phaseBadge[data-phase="macro"] {

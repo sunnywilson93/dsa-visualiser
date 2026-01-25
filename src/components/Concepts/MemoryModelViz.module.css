@@ -159,7 +159,7 @@
 }
 
 .codeLine.activeLine {
-  background: rgba(102, 126, 234, 0.2);
+  background: var(--color-primary-20);
 }
 
 .lineNum {
@@ -177,7 +177,7 @@
 }
 
 .activeLine .lineCode {
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 /* Memory Grid */
@@ -215,8 +215,8 @@
   display: flex;
   justify-content: space-between;
   padding: 0.3rem 0.5rem;
-  background: rgba(102, 126, 234, 0.15);
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  background: var(--color-primary-15);
+  border: 1px solid var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-family: 'Fira Code', monospace;
   font-size: var(--text-2xs);
@@ -228,7 +228,7 @@
 }
 
 .varName {
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 .varValue {
@@ -241,8 +241,8 @@
 
 /* Heap Box - Neon Purple/Pink */
 .heapBox {
-  --neon-start: var(--neon-purple);
-  --neon-end: var(--neon-pink);
+  --neon-start: var(--color-primary);
+  --neon-end: var(--color-secondary);
 }
 
 .heapBox .neonBoxInner {
@@ -260,9 +260,9 @@
 }
 
 .heapObject.marked {
-  border-color: rgba(139, 92, 246, 0.6);
-  background: rgba(139, 92, 246, 0.15);
-  box-shadow: 0 0 8px rgba(139, 92, 246, 0.3);
+  border-color: var(--color-primary-50);
+  background: var(--color-primary-15);
+  box-shadow: 0 0 8px var(--color-primary-30);
 }
 
 .heapObject.unmarked {
@@ -288,7 +288,7 @@
 }
 
 .prop span:first-child {
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 .prop span:last-child {
@@ -296,12 +296,12 @@
 }
 
 .arrayElements {
-  color: var(--neon-purple-light);
+  color: var(--color-primary-light);
   font-size: var(--text-2xs);
 }
 
 .funcLabel {
-  color: #f472b6;
+  color: var(--color-secondary);
   font-style: italic;
 }
 
@@ -349,11 +349,11 @@
 .stepBadge {
   display: inline-block;
   padding: 0.15rem 0.4rem;
-  background: rgba(102, 126, 234, 0.3);
+  background: var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   margin-right: 0.5rem;
 }
 
@@ -368,7 +368,7 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);
   color: white;
@@ -403,8 +403,8 @@
 /* Insight */
 .insight {
   padding: var(--space-sm) var(--space-md);
-  background: rgba(139, 92, 246, 0.08);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: var(--color-primary-8);
+  border: 1px solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-xs);
   color: var(--gray-500);
@@ -412,7 +412,7 @@
 }
 
 .insight strong {
-  color: #8b5cf6;
+  color: var(--color-primary);
 }
 
 /* Responsive */

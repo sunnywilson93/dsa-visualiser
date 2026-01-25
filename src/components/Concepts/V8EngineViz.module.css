@@ -159,7 +159,7 @@
 }
 
 .codeLine.activeLine {
-  background: rgba(102, 126, 234, 0.2);
+  background: var(--color-primary-20);
 }
 
 .lineNum {
@@ -177,13 +177,13 @@
 }
 
 .activeLine .lineCode {
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 /* Pipeline Container - Neon Box Blue/Purple */
 .pipelineBox {
   --neon-start: #3b82f6;
-  --neon-end: #8b5cf6;
+  --neon-end: var(--color-primary);
 }
 
 .pipelineContainer {
@@ -204,9 +204,9 @@
 }
 
 .pipelineStage.active {
-  background: rgba(102, 126, 234, 0.15);
-  border-color: rgba(102, 126, 234, 0.5);
-  box-shadow: 0 0 12px rgba(102, 126, 234, 0.3);
+  background: var(--color-primary-15);
+  border-color: var(--color-primary-50);
+  box-shadow: 0 0 12px var(--color-primary-30);
 }
 
 .pipelineStage.optimized {
@@ -223,7 +223,7 @@
 }
 
 .pipelineStage.active .stageName {
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 .pipelineStage.optimized .stageName {
@@ -322,11 +322,11 @@
 .stepBadge {
   display: inline-block;
   padding: 0.15rem 0.4rem;
-  background: rgba(102, 126, 234, 0.3);
+  background: var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   margin-right: 0.5rem;
 }
 
@@ -341,7 +341,7 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);
   color: white;
@@ -376,8 +376,8 @@
 /* Insight */
 .insight {
   padding: var(--space-sm) var(--space-md);
-  background: rgba(139, 92, 246, 0.08);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: var(--color-primary-8);
+  border: 1px solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-xs);
   color: var(--gray-500);
@@ -385,7 +385,7 @@
 }
 
 .insight strong {
-  color: #8b5cf6;
+  color: var(--color-primary);
 }
 
 /* Responsive */

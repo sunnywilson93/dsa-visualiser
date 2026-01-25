@@ -6,7 +6,7 @@ import { SearchResultsList } from '@/components/Search'
 import { usePageSearch } from '@/components/Search'
 import { PageSearchControls } from '@/components/Search/PageSearchControls'
 import { ConceptIcon } from '@/components/Icons'
-import { ConceptCarousel } from '@/components/ConceptCarousel'
+import { Card, CardCarousel } from '@/components/Card'
 import { concepts, conceptCategories } from '@/data/concepts'
 import styles from '../page.module.css'
 
@@ -68,7 +68,24 @@ export default function JSConceptsClient() {
                     <span className={styles.sectionDescription}>{category.description}</span>
                   </h2>
 
-                  <ConceptCarousel concepts={categoryConcepts} />
+                  <CardCarousel itemCount={categoryConcepts.length}>
+                    {categoryConcepts.map((concept, index) => (
+                      <Card
+                        key={concept.id}
+                        href={`/concepts/${concept.id}`}
+                        title={concept.title}
+                        description={concept.shortDescription}
+                        icon={<ConceptIcon conceptId={concept.id} size={32} />}
+                        difficulty={concept.difficulty}
+                        stats={[
+                          { label: 'key points', value: concept.keyPoints.length },
+                          { label: 'examples', value: concept.examples.length },
+                        ]}
+                        index={index}
+                        isActive={index === 0}
+                      />
+                    ))}
+                  </CardCarousel>
                 </section>
               )
             })}

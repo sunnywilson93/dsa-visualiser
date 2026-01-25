@@ -56,7 +56,7 @@
 .sliderLabel {
   font-family: 'Fira Code', monospace;
   font-size: var(--text-base);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   min-width: 80px;
 }
 
@@ -73,7 +73,7 @@
   -webkit-appearance: none;
   width: 18px;
   height: 18px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border-radius: 50%;
   cursor: pointer;
 }
@@ -172,9 +172,9 @@
 }
 
 .ternaryActive {
-  color: #a5b4fc !important;
-  background: rgba(102, 126, 234, 0.2) !important;
-  box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+  color: var(--color-primary-light) !important;
+  background: var(--color-primary-20) !important;
+  box-shadow: 0 0 8px var(--color-primary-30);
 }
 
 .ternarySymbol {
@@ -236,7 +236,7 @@
 .falsyResult code {
   font-family: 'Fira Code', monospace;
   font-size: var(--text-base);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 .arrow {

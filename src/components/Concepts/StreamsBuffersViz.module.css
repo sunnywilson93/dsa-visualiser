@@ -161,15 +161,15 @@
   transition: background 0.2s;
 }
 
-.codeLine.activeLine { background: rgba(102, 126, 234, 0.2); }
+.codeLine.activeLine { background: var(--color-primary-20); }
 .lineNum { width: 1.5rem; color: var(--gray-800); font-family: 'Fira Code', monospace; font-size: var(--text-2xs); }
 .lineCode { font-family: 'Fira Code', monospace; font-size: var(--text-2xs); color: var(--gray-300); }
-.activeLine .lineCode { color: #a5b4fc; }
+.activeLine .lineCode { color: var(--color-primary-light); }
 
 /* Streams - Neon Box */
 .streamsBox {
   --neon-start: #3b82f6;
-  --neon-end: #8b5cf6;
+  --neon-end: var(--color-primary);
 }
 
 .streamsContainer {
@@ -192,7 +192,7 @@
 }
 
 .stream.readable { border-color: rgba(59, 130, 246, 0.5); background: rgba(59, 130, 246, 0.08); }
-.stream.transform { border-color: rgba(139, 92, 246, 0.5); background: rgba(139, 92, 246, 0.08); }
+.stream.transform { border-color: var(--color-primary-50); background: var(--color-primary-8); }
 .stream.writable { border-color: rgba(16, 185, 129, 0.5); background: rgba(16, 185, 129, 0.08); }
 .stream.flowing { box-shadow: 0 0 12px rgba(59, 130, 246, 0.3); }
 .stream.paused { opacity: 0.6; border-color: rgba(239, 68, 68, 0.5); }
@@ -269,7 +269,7 @@
 
 .bufferFill {
   height: 100%;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(90deg, #3b82f6, var(--color-primary));
   transition: width 0.3s;
 }
 
@@ -285,11 +285,11 @@
 
 .bufferItem {
   padding: 0.15rem 0.3rem;
-  background: rgba(139, 92, 246, 0.2);
+  background: var(--color-primary-20);
   border-radius: 3px;
   font-family: 'Fira Code', monospace;
   font-size: 0.55rem;
-  color: var(--neon-purple-light);
+  color: var(--color-primary-light);
 }
 
 /* Output - Neon Box */
@@ -318,8 +318,8 @@
 /* Description */
 .description {
   padding: 0.6rem 0.75rem;
-  background: rgba(102, 126, 234, 0.1);
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  background: var(--color-primary-10);
+  border: 1px solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
   color: var(--gray-300);
@@ -329,11 +329,11 @@
 .stepBadge {
   display: inline-block;
   padding: 0.15rem 0.4rem;
-  background: rgba(102, 126, 234, 0.3);
+  background: var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   margin-right: 0.5rem;
 }
 
@@ -344,7 +344,7 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);
   color: white;
@@ -369,15 +369,15 @@
 /* Insight */
 .insight {
   padding: var(--space-sm) var(--space-md);
-  background: rgba(139, 92, 246, 0.08);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: var(--color-primary-8);
+  border: 1px solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-xs);
   color: var(--gray-500);
   text-align: center;
 }
 
-.insight strong { color: #8b5cf6; }
+.insight strong { color: var(--color-primary); }
 
 @media (max-width: 640px) {
   .streamsContainer { flex-direction: column; }

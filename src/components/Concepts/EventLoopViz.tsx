@@ -966,8 +966,8 @@ export function EventLoopViz() {
 
   const getPhaseColor = (phase: Step['phase']) => {
     switch (phase) {
-      case 'sync': return '#667eea'
-      case 'micro': return '#8b5cf6'
+      case 'sync': return '#a855f7'
+      case 'micro': return '#a855f7'
       case 'macro': return '#f59e0b'
       case 'idle': return '#555'
     }

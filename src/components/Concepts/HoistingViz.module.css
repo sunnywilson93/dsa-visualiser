@@ -172,7 +172,7 @@
 }
 
 .codeLine.activeLine {
-  background: rgba(102, 126, 234, 0.2);
+  background: var(--color-primary-20);
 }
 
 .lineNum {
@@ -190,14 +190,14 @@
 }
 
 .activeLine .lineCode {
-  color: #a5b4fc;
+  color: var(--color-primary-light);
 }
 
 /* Variables Panel - Neon Box Blue/Purple */
 .variablesBox {
   grid-area: variables;
   --neon-start: #3b82f6;
-  --neon-end: #8b5cf6;
+  --neon-end: var(--color-primary);
 }
 
 .variablesBox .neonBoxInner {
@@ -235,7 +235,7 @@
 .varName {
   font-family: 'Fira Code', monospace;
   font-size: var(--text-sm);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   min-width: 50px;
 }
 
@@ -302,11 +302,11 @@
 .stepBadge {
   display: inline-block;
   padding: 0.15rem 0.4rem;
-  background: rgba(102, 126, 234, 0.3);
+  background: var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  color: #a5b4fc;
+  color: var(--color-primary-light);
   margin-right: 0.5rem;
 }
 
@@ -321,7 +321,7 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);
   color: white;

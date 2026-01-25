@@ -647,13 +647,13 @@ export function TimingViz() {
       case 'Wait': return '#888'
       case 'Execute': return '#10b981'
       case 'Reset': return '#60a5fa'
-      case 'Debounce': return '#a78bfa'
+      case 'Debounce': return '#c4b5fd'
       case 'Throttle': return '#f59e0b'
       case 'Cancel': return '#ef4444'
       case 'Usage': return '#60a5fa'
       case 'React': return '#61dafb'
       case 'Summary': return '#10b981'
-      case 'Trailing': return '#a78bfa'
+      case 'Trailing': return '#c4b5fd'
       default: return '#888'
     }
   }
