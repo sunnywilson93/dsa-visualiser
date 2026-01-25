@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Clock, HardDrive, CheckCircle } from 'lucide-react'
 import { getPatternBySlug } from '@/data/dsaPatterns'
-import { TwoPointersViz, HashMapViz } from '@/components/DSAPatterns'
+import { TwoPointersViz, HashMapViz, BitManipulationViz } from '@/components/DSAPatterns'
 import styles from './page.module.css'
 
 interface Props {
@@ -74,6 +74,8 @@ export default function PatternPageClient({ patternId }: Props) {
           <TwoPointersViz />
         ) : patternId === 'hash-map' ? (
           <HashMapViz />
+        ) : patternId === 'bit-manipulation' ? (
+          <BitManipulationViz />
         ) : (
           <div className={styles.vizPlaceholder}>
             <p>Step-through visualization coming soon...</p>
