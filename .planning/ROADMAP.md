@@ -179,12 +179,12 @@ Plans:
   4. Active bit position highlights during operations with distinct visual indicator
   5. Bit-by-bit operation animation shows AND, OR, XOR, and shift operations step by step
   6. Operation result displays with explanation of what changed and why
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 10-01-PLAN.md - BitManipulationViz core component with binary display
-- [ ] 10-02-PLAN.md - Beginner examples with basic operations
-- [ ] 10-03-PLAN.md - Intermediate/advanced examples with complex bit patterns
+- [ ] 10-01-PLAN.md - Core BitManipulationViz component with types, binary grid, SharedViz integration, wiring
+- [ ] 10-02-PLAN.md - Beginner examples (Single Number, Power of Two, Multiply/Divide)
+- [ ] 10-03-PLAN.md - Intermediate/advanced examples (Missing Number, Counting Bits, Reverse Bits, Subset Generation)
 
 ## Progress
 
@@ -202,8 +202,8 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | 7. Foundation | v1.1 | 2/2 | Complete | 2026-01-24 |
 | 8. TwoPointersViz | v1.1 | 3/3 | Complete | 2026-01-25 |
 | 9. HashMapViz | v1.1 | 3/3 | Complete | 2026-01-25 |
-| 10. BitManipulationViz | v1.1 | 0/3 | Not started | - |
+| 10. BitManipulationViz | v1.1 | 0/3 | Planned | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-25 — Phase 9 complete (HashMapViz shipped)*
+*Last updated: 2026-01-25 — Phase 10 planned (BitManipulationViz)*
