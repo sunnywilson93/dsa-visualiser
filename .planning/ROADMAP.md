@@ -161,12 +161,12 @@ Plans:
   4. Bucket visualization shows hash function converting key to bucket index
   5. Frequency counter examples show count incrementing with visual feedback
   6. Lookup and insert operations step through with hash -> bucket -> entry flow
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 09-01-PLAN.md - HashMapViz core component with bucket structure
-- [ ] 09-02-PLAN.md - Beginner examples with basic lookup/insert
-- [ ] 09-03-PLAN.md - Intermediate/advanced examples with frequency counter
+- [ ] 09-01-PLAN.md - Core HashMapViz component with bucket grid, hash calculation display, wiring, and beginner examples
+- [ ] 09-02-PLAN.md - Intermediate examples (Valid Anagram with frequency counting)
+- [ ] 09-03-PLAN.md - Advanced examples (Group Anagrams with sorted key technique)
 
 ### Phase 10: BitManipulationViz
 **Goal**: Learners can step through Bit Manipulation seeing each bit position as independent flag
@@ -201,9 +201,9 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | 6. ObjectsBasicsViz | v1.0 | 3/3 | Complete | 2026-01-24 |
 | 7. Foundation | v1.1 | 2/2 | Complete | 2026-01-24 |
 | 8. TwoPointersViz | v1.1 | 3/3 | Complete | 2026-01-25 |
-| 9. HashMapViz | v1.1 | 0/3 | Not started | - |
+| 9. HashMapViz | v1.1 | 0/3 | Planned | - |
 | 10. BitManipulationViz | v1.1 | 0/3 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-25 — Phase 8 complete (7 examples across 3 variants and 3 difficulty levels)*
+*Last updated: 2026-01-25 — Phase 9 planned (3 plans in 3 waves)*
