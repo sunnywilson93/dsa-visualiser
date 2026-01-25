@@ -30,6 +30,8 @@
   color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
+  min-height: 44px;
+  touch-action: manipulation;
 }
 
 .variantBtn:hover {
@@ -68,6 +70,8 @@
   color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
+  min-height: 44px;
+  touch-action: manipulation;
 }
 
 .levelBtn:hover:not(:disabled) {
@@ -111,6 +115,8 @@
   color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
+  min-height: 44px;
+  touch-action: manipulation;
 }
 
 .exampleTab:hover {
@@ -438,12 +444,14 @@
   .variantBtn {
     padding: 0.4rem 0.7rem;
     font-size: var(--text-xs);
+    min-height: 44px;
   }
 
   .levelBtn,
   .exampleTab {
     padding: 0.35rem 0.6rem;
     font-size: var(--text-xs);
+    min-height: 44px;
   }
 
   .bitGrid {
