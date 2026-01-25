@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+  background: var(--gradient-page);
   display: flex;
   flex-direction: column;
 }
@@ -36,14 +36,14 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
-  padding: 0.5rem 0;
+  padding: var(--space-sm) 0;
   background: none;
   border: none;
   color: var(--gray-500);
   font-size: var(--text-base);
   cursor: pointer;
   transition: color 0.2s;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-lg);
 }
 
 .backBtn:hover {
@@ -54,7 +54,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-md);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-lg);
 }
 
 .icon {
@@ -74,14 +74,14 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 0.25rem 0.6rem;
+  padding: var(--space-xs) var(--space-2-5);
   border-radius: var(--radius-sm);
   color: white;
 }
 
 .description {
   font-size: var(--text-md);
-  color: #aaa;
+  color: var(--gray-400);
   line-height: 1.7;
   margin: 0;
 }
@@ -101,7 +101,7 @@
   color: var(--color-white);
   margin: 0 0 1rem;
   padding-bottom: 0.6rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: var(--border-width-1) solid var(--white-10);
 }
 
 .sectionIcon {
@@ -114,8 +114,8 @@
 
 /* Visualization */
 .vizContainer {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--black-30);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-xl);
   padding: var(--space-xl);
   min-height: 300px;
@@ -144,7 +144,7 @@
   position: relative;
   padding-left: 1.5rem;
   color: var(--gray-300);
-  line-height: 1.5;
+  line-height: var(--leading-normal);
 }
 
 .keyPoints li::before {
@@ -159,12 +159,12 @@
 .examples {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-xl);
 }
 
 .example {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--white-3);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -176,17 +176,17 @@
   margin: 0;
   padding: var(--space-md) var(--space-lg);
   background: var(--color-primary-15);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: var(--border-width-1) solid var(--white-8);
 }
 
 .code {
   margin: 0;
   padding: var(--space-lg);
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--black-40);
   overflow-x: auto;
   font-family: 'Fira Code', 'Monaco', monospace;
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: var(--leading-relaxed);
   color: #e0e0e0;
 }
 
@@ -198,10 +198,10 @@
   margin: 0;
   padding: var(--space-md) var(--space-lg);
   font-size: var(--text-base);
-  color: #aaa;
-  line-height: 1.6;
+  color: var(--gray-400);
+  line-height: var(--leading-relaxed);
   background: var(--color-primary-5);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--white-5);
 }
 
 /* Common Mistakes */
@@ -217,8 +217,8 @@
 .mistakes li {
   position: relative;
   padding: 0.6rem 0.75rem 0.6rem 2rem;
-  background: rgba(239, 68, 68, 0.1);
-  border-left: 3px solid #ef4444;
+  background: var(--red-10);
+  border-left: 3px solid var(--red-500);
   border-radius: 0 6px 6px 0;
   color: #f8a0a0;
   font-size: var(--text-base);
@@ -244,10 +244,10 @@
 .tips li {
   position: relative;
   padding: 0.6rem 0.75rem 0.6rem 2rem;
-  background: rgba(16, 185, 129, 0.1);
-  border-left: 3px solid #10b981;
+  background: var(--emerald-10);
+  border-left: 3px solid var(--emerald-500);
   border-radius: 0 6px 6px 0;
-  color: #6ee7b7;
+  color: var(--emerald-400);
   font-size: var(--text-base);
 }
 
@@ -277,11 +277,11 @@
   flex-direction: column;
   gap: var(--space-sm);
   padding: var(--space-md) var(--space-lg);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--white-3);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-lg);
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .problemCard:hover {
@@ -309,28 +309,28 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 0.2rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   border-radius: var(--radius-sm);
   color: white;
 }
 
 .problemDifficulty.easy {
-  background: #10b981;
+  background: var(--emerald-500);
 }
 
 .problemDifficulty.medium {
-  background: #f59e0b;
+  background: var(--amber-500);
 }
 
 .problemDifficulty.hard {
-  background: #ef4444;
+  background: var(--red-500);
 }
 
 .problemDesc {
   font-size: var(--text-sm);
   color: var(--gray-500);
   margin: 0;
-  line-height: 1.4;
+  line-height: var(--leading-snug);
 }
 
 /* Related Concepts */
@@ -345,11 +345,11 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-lg);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--white-3);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-lg);
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .relatedCard:hover {

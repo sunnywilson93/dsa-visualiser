@@ -6,7 +6,7 @@
 
 .header {
   text-align: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-sm);
 }
 
 .title {
@@ -35,11 +35,11 @@
   align-items: center;
   gap: 0.3rem;
   padding: var(--space-md);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--white-3);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .ruleBtn:hover {
@@ -48,23 +48,23 @@
 
 .ruleBtn.active {
   border-color: var(--rule-color);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
 }
 
 .ruleName {
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  color: #aaa;
+  color: var(--gray-400);
 }
 
 .ruleCode {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-primary);
 }
 
 .result {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border: 2px solid;
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -85,7 +85,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-sm);
 }
 
 .resultLabel {
@@ -95,7 +95,7 @@
 }
 
 .resultRow code {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-base);
   color: var(--gray-300);
 }
@@ -108,7 +108,7 @@
   font-size: var(--text-base);
   color: var(--gray-500);
   padding-top: 0.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--white-5);
   margin-top: 0.25rem;
 }
 
@@ -120,7 +120,7 @@
 }
 
 .queue {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border-radius: var(--radius-lg);
   overflow: hidden;
   min-height: 150px;
@@ -143,9 +143,9 @@
 
 .queueItem {
   padding: 0.35rem 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--white-10);
   border-radius: var(--radius-sm);
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
   color: var(--gray-300);
 }
@@ -154,7 +154,7 @@
   display: flex;
   gap: var(--space-sm);
   justify-content: center;
-  margin-top: 0.5rem;
+  margin-top: var(--space-sm);
 }
 
 .btn {
@@ -169,13 +169,13 @@
 }
 
 .btnSecondary {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-10);
   color: var(--gray-500);
 }
 
 .btnSecondary:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--white-10);
   color: var(--color-white);
 }
 
@@ -190,7 +190,7 @@
 .protoNode {
   padding: var(--space-md) var(--space-lg);
   background: var(--color-primary-10);
-  border: 1px solid var(--color-primary-30);
+  border: var(--border-width-1) solid var(--color-primary-30);
   border-radius: var(--radius-lg);
   min-width: 180px;
   text-align: center;
@@ -204,7 +204,7 @@
 }
 
 .protoProps {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--gray-500);
 }
@@ -216,7 +216,7 @@
 
 /* Code display */
 .codeDisplay {
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--black-40);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -224,9 +224,9 @@
 .codeBlock {
   margin: 0;
   padding: var(--space-lg);
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: var(--leading-relaxed);
   color: var(--gray-300);
   white-space: pre;
 }
@@ -235,11 +235,11 @@
   background: var(--color-primary-20);
   display: inline;
   padding: 0.1rem 0.25rem;
-  border-radius: 3px;
+  border-radius: var(--space-1);
 }
 
 .comment {
-  color: #6b7280;
+  color: var(--gray-500);
 }
 
 /* Visual row */
@@ -250,8 +250,8 @@
 }
 
 .backpackBox {
-  background: rgba(245, 158, 11, 0.1);
-  border: 2px solid rgba(245, 158, 11, 0.3);
+  background: var(--amber-10);
+  border: 2px solid var(--amber-30);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
 }
@@ -272,25 +272,25 @@
   justify-content: center;
   gap: var(--space-md);
   padding: var(--space-sm);
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border-radius: var(--radius-md);
 }
 
 .varName {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-base);
   color: var(--gray-500);
 }
 
 .varValue {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xl);
   font-weight: var(--font-semibold);
   color: var(--difficulty-1);
 }
 
 .outputBox {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -300,12 +300,12 @@
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--gray-500);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
 }
 
 .outputContent {
   padding: var(--space-md);
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-base);
   color: var(--difficulty-1);
   min-height: 60px;
@@ -319,7 +319,7 @@
 .stepDescription {
   padding: var(--space-md);
   background: var(--color-primary-10);
-  border: 1px solid var(--color-primary-20);
+  border: var(--border-width-1) solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
   color: var(--gray-300);
@@ -328,18 +328,18 @@
 
 .stepNumber {
   display: inline-block;
-  padding: 0.2rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   background: var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
   color: var(--color-primary-light);
-  margin-right: 0.5rem;
+  margin-right: var(--space-sm);
 }
 
 /* Primary/Secondary buttons */
 .primaryBtn {
-  padding: 0.6rem 1.25rem;
+  padding: var(--space-2-5) var(--space-xl);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--gradient-brand);
@@ -357,21 +357,21 @@
 .secondaryBtn {
   padding: 0.6rem 1rem;
   font-size: var(--text-base);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-md);
   color: var(--gray-500);
   cursor: pointer;
 }
 
 .secondaryBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--white-10);
   color: var(--color-white);
 }
 
 /* Try it yourself */
 .tryIt {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -381,7 +381,7 @@
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--gray-500);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
 }
 
 .tryItContent {
@@ -393,7 +393,7 @@
 
 .callBtn {
   padding: var(--space-sm) var(--space-lg);
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-base);
   background: var(--gradient-brand);
   border: none;
@@ -403,7 +403,7 @@
 }
 
 .tryItOutput {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-base);
   color: var(--gray-500);
 }

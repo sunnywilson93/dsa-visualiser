@@ -10,8 +10,8 @@
   gap: var(--space-sm);
   justify-content: center;
   margin-bottom: 0.25rem;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--black-30);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
@@ -19,34 +19,34 @@
 .levelBtn {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.8rem;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--white-4);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-full);
   color: var(--gray-500);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .levelBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--white-8);
   color: var(--gray-300);
 }
 
 .levelBtn.activeLevel {
-  background: rgba(130, 100, 255, 0.18);
-  border-color: rgba(130, 100, 255, 0.7);
+  background: var(--neon-viz-18);
+  border-color: var(--neon-viz-70);
   color: var(--text-bright);
-  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
+  box-shadow: var(--glow-xl) var(--neon-viz-25);
 }
 
 .levelDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+  width: var(--space-sm);
+  height: var(--space-sm);
+  border-radius: var(--radius-full);
 }
 
 /* Example Selector */
@@ -55,40 +55,40 @@
   gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--black-30);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
 
 .exampleBtn {
-  padding: 0.4rem 0.8rem;
-  font-family: 'Fira Code', monospace;
+  padding: var(--space-2) var(--space-md);
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--white-4);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-full);
   color: var(--gray-500);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .exampleBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--white-8);
   color: var(--gray-300);
 }
 
 .exampleBtn.active {
-  background: rgba(130, 100, 255, 0.18);
-  border-color: rgba(130, 100, 255, 0.7);
+  background: var(--neon-viz-18);
+  border-color: var(--neon-viz-70);
   color: var(--text-bright);
-  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
+  box-shadow: var(--glow-xl) var(--neon-viz-25);
 }
 
 /* Code panel */
 .codePanel {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--black-40);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
@@ -101,11 +101,11 @@
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--gray-500);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
 }
 
 .phaseBadge {
-  padding: 0.2rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
@@ -114,14 +114,14 @@
 
 .code {
   margin: 0;
-  padding: 0.5rem 0;
+  padding: var(--space-sm) 0;
   max-height: 200px;
   overflow-y: auto;
 }
 
 .codeLine {
   display: flex;
-  padding: 0.1rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   transition: background 0.2s;
 }
 
@@ -132,13 +132,13 @@
 .lineNum {
   width: 1.5rem;
   color: var(--gray-800);
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
   user-select: none;
 }
 
 .lineCode {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--gray-300);
 }
@@ -149,8 +149,8 @@
 
 /* Timeline Visualization */
 .timelineContainer {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--black-30);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-xl);
   padding: var(--space-md);
 }
@@ -187,7 +187,7 @@
 .eventMarker {
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -199,7 +199,7 @@
 
 .eventLabel {
   margin-top: var(--space-xs);
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
   color: var(--gray-400);
   white-space: nowrap;
@@ -229,15 +229,15 @@
 }
 
 .legendDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+  width: var(--space-2-5);
+  height: var(--space-2-5);
+  border-radius: var(--radius-full);
 }
 
 /* Closure Panel */
 .closurePanel {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--black-40);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
@@ -247,7 +247,7 @@
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--gray-500);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
 }
 
 .closureContent {
@@ -264,24 +264,24 @@
 }
 
 .varName {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--gray-400);
 }
 
 .varValue {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--font-bold);
-  padding: 0.2rem 0.5rem;
-  background: rgba(16, 185, 129, 0.1);
+  padding: var(--space-0-5) var(--space-sm);
+  background: var(--emerald-10);
   border-radius: var(--radius-md);
 }
 
 /* Output Panel */
 .outputPanel {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--black-40);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
@@ -291,7 +291,7 @@
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--gray-500);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
 }
 
 .output {
@@ -304,27 +304,27 @@
 }
 
 .outputLine {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: #10b981;
+  color: var(--emerald-500);
   padding: 0.2rem 0;
 }
 
 /* Description */
 .description {
   background: var(--color-primary-10);
-  border: 1px solid var(--color-primary-30);
+  border: var(--border-width-1) solid var(--color-primary-30);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
   font-size: var(--text-sm);
   color: var(--gray-300);
-  line-height: 1.5;
+  line-height: var(--leading-normal);
 }
 
 .stepBadge {
   display: inline-block;
   background: var(--color-primary-30);
-  padding: 0.15rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
@@ -341,12 +341,12 @@
 
 .btnPrimary,
 .btnSecondary {
-  padding: 0.5rem 1rem;
+  padding: var(--space-sm) var(--space-lg);
   border-radius: var(--radius-full);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .btnPrimary {
@@ -365,13 +365,13 @@
 }
 
 .btnSecondary {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-10);
   color: var(--gray-400);
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--white-10);
   color: var(--text-bright);
 }
 
@@ -382,15 +382,15 @@
 
 /* Insight */
 .insight {
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: var(--emerald-10);
+  border: var(--border-width-1) solid var(--emerald-30);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
   font-size: var(--text-sm);
   color: var(--gray-300);
-  line-height: 1.5;
+  line-height: var(--leading-normal);
 }
 
 .insight strong {
-  color: #10b981;
+  color: var(--emerald-500);
 }

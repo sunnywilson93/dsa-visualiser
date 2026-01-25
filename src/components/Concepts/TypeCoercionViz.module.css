@@ -27,7 +27,7 @@
 .neonBox {
   position: relative;
   border-radius: var(--radius-xl);
-  padding: 3px;
+  padding: var(--space-1);
   background: linear-gradient(135deg, var(--neon-start), var(--neon-end));
 }
 
@@ -44,8 +44,8 @@
   top: -1px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 0.35rem 1rem;
-  background: #4a4a5a;
+  padding: var(--space-1-5) var(--space-lg);
+  background: var(--bg-tertiary);
   border-radius: 0 0 8px 8px;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
@@ -63,7 +63,7 @@
 
 .controlGroup {
   background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-xl);
   padding: var(--space-md);
   display: flex;
@@ -83,18 +83,18 @@
 .optionsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  gap: 0.4rem;
+  gap: var(--space-2);
 }
 
 .operatorGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  gap: 0.4rem;
+  gap: var(--space-2);
 }
 
 .optionBtn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--white-3);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-lg);
   padding: 0.45rem 0.4rem;
   cursor: pointer;
@@ -102,7 +102,7 @@
   flex-direction: column;
   gap: 0.15rem;
   align-items: center;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast) ease;
 }
 
 .optionBtn:hover {
@@ -112,8 +112,8 @@
 
 .optionBtnActive {
   border-color: rgba(130, 100, 255, 0.9);
-  background: rgba(130, 100, 255, 0.18);
-  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
+  background: var(--neon-viz-18);
+  box-shadow: var(--glow-xl) var(--neon-viz-25);
 }
 
 .optionLabel {
@@ -137,7 +137,7 @@
 /* Equation Card - Neon Box Green/Cyan */
 .equationBox {
   --neon-start: var(--difficulty-1);
-  --neon-end: #06b6d4;
+  --neon-end: var(--accent-cyan);
 }
 
 .equationBox .neonBoxInner {
@@ -151,15 +151,15 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem;
-  font-family: 'Fira Code', monospace;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
   font-size: var(--text-base);
   color: var(--color-white);
 }
 
 .valueChip {
   padding: var(--space-xs) var(--space-sm);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--white-8);
   border-radius: var(--radius-lg);
 }
 
@@ -183,26 +183,26 @@
 .typeRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: var(--space-2);
 }
 
 .typeBadge {
-  padding: 0.15rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
   color: #9aa0a6;
 }
 
 .typeBadgeAccent {
-  padding: 0.15rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  background: rgba(16, 185, 129, 0.4);
+  background: var(--emerald-40);
   color: var(--difficulty-1);
 }
 
@@ -229,10 +229,10 @@
   padding-left: 1rem;
   color: #b3b7bd;
   font-size: var(--text-sm);
-  line-height: 1.6;
+  line-height: var(--leading-relaxed);
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: var(--space-2);
 }
 
 @media (max-width: 900px) {

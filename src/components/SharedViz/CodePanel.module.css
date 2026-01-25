@@ -1,16 +1,16 @@
 .codePanel {
-  --js-viz-surface: rgba(26, 26, 46, 1);
-  --js-viz-border: rgba(255, 255, 255, 0.1);
-  --js-viz-text: #e5e7eb;
-  --js-viz-muted: #888;
+  --js-viz-surface: var(--bg-page-secondary);
+  --js-viz-border: var(--white-10);
+  --js-viz-text: var(--gray-200);
+  --js-viz-muted: var(--gray-500);
   --js-viz-radius: var(--radius-lg);
   --js-viz-pill-bg: var(--color-primary-10);
   --js-viz-pill-border: var(--color-primary-30);
 
   background: var(--js-viz-surface);
-  border: 1px solid var(--js-viz-border);
+  border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--js-viz-radius);
-  box-shadow: 0 10px 24px rgba(2, 4, 10, 0.35);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
 }
 
@@ -19,34 +19,34 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--space-sm) var(--space-md);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface-card);
 }
 
 .panelTitle {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.3rem 0.7rem;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--js-viz-text);
   background: var(--js-viz-pill-bg);
-  border: 1px solid var(--js-viz-pill-border);
+  border: var(--border-width-1) solid var(--js-viz-pill-border);
   border-radius: var(--radius-full);
 }
 
 .code {
   margin: 0;
-  padding: 0.5rem 0;
+  padding: var(--space-sm) 0;
   overflow-y: auto;
 }
 
 .codeLine {
   display: flex;
-  padding: 0.15rem 0.5rem;
-  transition: background 0.2s;
+  padding: var(--space-0-5) var(--space-sm);
+  transition: background var(--transition-fast);
 }
 
 .codeLine.activeLine {
@@ -54,17 +54,17 @@
 }
 
 .lineNum {
-  width: 1.5rem;
+  width: var(--space-xl);
   color: var(--gray-800);
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
   text-align: right;
   user-select: none;
-  margin-right: 0.5rem;
+  margin-right: var(--space-sm);
 }
 
 .lineCode {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
   color: var(--gray-300);
 }

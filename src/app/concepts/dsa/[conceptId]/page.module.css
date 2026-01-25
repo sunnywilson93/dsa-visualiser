@@ -2,8 +2,8 @@
 
 /* Complexity Table */
 .complexityTable {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--black-30);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -37,24 +37,24 @@
 }
 
 .complexityTable tr:hover td {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--white-2);
 }
 
 .complexityCell {
-  color: #10b981 !important;
-  font-family: 'Fira Code', monospace;
+  color: var(--emerald-500) !important;
+  font-family: var(--font-mono);
   font-weight: var(--font-medium);
 }
 
 .complexityCellWorse {
-  color: #f59e0b !important;
-  font-family: 'Fira Code', monospace;
+  color: var(--amber-500) !important;
+  font-family: var(--font-mono);
   font-weight: var(--font-medium);
 }
 
 .complexityCellBest {
-  color: #10b981 !important;
-  font-family: 'Fira Code', monospace;
+  color: var(--emerald-500) !important;
+  font-family: var(--font-mono);
   font-weight: var(--font-medium);
 }
 
@@ -70,13 +70,13 @@
   align-items: center;
   padding: var(--space-sm) var(--space-lg);
   background: var(--color-primary-10);
-  border: 1px solid var(--color-primary-30);
-  border-radius: 20px;
+  border: var(--border-width-1) solid var(--color-primary-30);
+  border-radius: var(--radius-3xl);
   color: var(--color-primary);
   text-decoration: none;
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .problemLink:hover {

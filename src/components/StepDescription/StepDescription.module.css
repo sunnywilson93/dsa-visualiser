@@ -1,8 +1,8 @@
 .container {
   padding: var(--space-md);
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: var(--border-width-1) solid var(--white-8);
 }
 
 .idle {
@@ -13,9 +13,9 @@
 
 .idle kbd {
   display: inline-block;
-  padding: 0.15rem 0.4rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--space-0-5) var(--space-xs);
+  background: var(--white-10);
+  border: var(--border-width-1) solid var(--white-20);
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -36,9 +36,9 @@
 }
 
 .stepBadge {
-  padding: 0.2rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   background: var(--color-primary-20);
-  border: 1px solid var(--color-primary-30);
+  border: var(--border-width-1) solid var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
@@ -46,7 +46,7 @@
 }
 
 .typeBadge {
-  padding: 0.2rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
@@ -54,9 +54,9 @@
 }
 
 .lineBadge {
-  padding: 0.2rem 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--space-0-5) var(--space-sm);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-medium);
@@ -67,14 +67,14 @@
 .description {
   font-size: var(--text-base);
   color: var(--gray-300);
-  line-height: 1.4;
+  line-height: var(--leading-snug);
 }
 
 /* Highlight variable names and values in description */
 .description code {
   font-family: var(--font-mono);
   background: var(--color-primary-15);
-  padding: 0.1rem 0.3rem;
-  border-radius: 3px;
+  padding: var(--space-0-5) var(--space-1);
+  border-radius: var(--radius-sm);
   color: var(--color-primary-light);
 }

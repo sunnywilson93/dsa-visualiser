@@ -3,7 +3,7 @@
   flex-direction: column;
   height: 100%;
   background: var(--bg-secondary);
-  border: 1px solid var(--border-primary);
+  border: var(--border-width-1) solid var(--border-primary);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -14,11 +14,11 @@
   justify-content: space-between;
   padding: var(--space-sm) var(--space-md);
   background: var(--bg-tertiary);
-  border-bottom: 1px solid var(--border-primary);
+  border-bottom: var(--border-width-1) solid var(--border-primary);
 }
 
 .title {
-  font-size: 12px;
+  font-size: var(--text-sm);
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -37,7 +37,7 @@
   justify-content: center;
   padding: var(--space-xl);
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: var(--text-base);
   text-align: center;
 }
 
@@ -45,7 +45,7 @@
 .scope {
   margin-bottom: var(--space-sm);
   background: var(--bg-tertiary);
-  border: 1px solid var(--border-primary);
+  border: var(--border-width-1) solid var(--border-primary);
   border-radius: var(--radius-md);
   overflow: hidden;
 }
@@ -74,13 +74,13 @@
 
 .scopeName {
   font-weight: var(--font-semibold);
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .scopeType {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   color: var(--text-muted);
-  padding: 1px 6px;
+  padding: var(--space-px) var(--space-2);
   background: var(--bg-primary);
   border-radius: var(--radius-sm);
   text-transform: uppercase;
@@ -88,13 +88,13 @@
 
 .varCount {
   margin-left: auto;
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--text-muted);
 }
 
 .scopeContent {
   padding: var(--space-sm) var(--space-md);
-  border-top: 1px solid var(--border-secondary);
+  border-top: var(--border-width-1) solid var(--border-secondary);
   overflow: hidden;
 }
 
@@ -103,9 +103,9 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-xs);
-  padding: var(--space-xs) 0;
+  padding: var(--space-xs) var(--space-0);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .varName {
@@ -157,9 +157,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
-  padding: 0;
+  width: var(--space-lg);
+  height: var(--space-lg);
+  padding: var(--space-0);
   background: transparent;
   border: none;
   color: var(--text-muted);
@@ -174,7 +174,7 @@
 .expandedContent {
   width: 100%;
   padding-left: var(--space-md);
-  border-left: 1px solid var(--border-secondary);
+  border-left: var(--border-width-1) solid var(--border-secondary);
   margin-left: var(--space-xs);
   margin-top: var(--space-xs);
   overflow: hidden;
@@ -184,7 +184,7 @@
 .arrayItems {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-0-5);
 }
 
 .arrayItem {
@@ -195,7 +195,7 @@
 
 .index {
   color: var(--text-muted);
-  min-width: 24px;
+  min-width: var(--space-xl);
   flex-shrink: 0;
 }
 
@@ -203,7 +203,7 @@
 .objectProps {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-0-5);
 }
 
 .objectProp {
@@ -218,8 +218,8 @@
 }
 
 /* Empty indicator */
-.empty {
+.emptyIndicator {
   font-style: italic;
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: var(--text-xs);
 }

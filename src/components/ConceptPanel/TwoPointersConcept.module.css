@@ -19,8 +19,8 @@
   font-weight: var(--font-medium);
   color: var(--color-primary-light);
   padding: 3px 10px;
-  background: rgba(130, 100, 255, 0.15);
-  border: 1px solid rgba(130, 100, 255, 0.3);
+  background: var(--neon-viz-18);
+  border: 1px solid var(--neon-viz-25);
   border-radius: var(--radius-full);
 }
 
@@ -29,7 +29,7 @@
   align-items: flex-end;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 3px;
+  gap: var(--space-1);
   padding: var(--space-sm);
   max-width: 100%;
 }
@@ -38,7 +38,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: var(--space-0-5);
 }
 
 .pointerArea {
@@ -47,7 +47,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 2px;
+  gap: var(--space-0-5);
 }
 
 .pointer {
@@ -81,20 +81,20 @@
   min-width: 28px;
   height: 28px;
   padding: 0 4px;
-  background: #2a2a3e;
+  background: var(--bg-elevated);
   border: 2px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-md);
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .element.highlighted {
   background: rgba(96, 165, 250, 0.2);
-  border-color: #60a5fa;
+  border-color: var(--blue-400);
   box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
 }
 
 .element.hasPointer {
-  border-color: #60a5fa;
+  border-color: var(--blue-400);
   box-shadow: 0 0 6px rgba(96, 165, 250, 0.25);
 }
 
@@ -108,7 +108,7 @@
 .index {
   font-size: 9px;
   font-family: var(--font-mono);
-  color: #6b7280;
+  color: var(--gray-500);
 }
 
 .directionIndicator {
@@ -119,21 +119,21 @@
 }
 
 .arrow {
-  font-size: 16px;
+  font-size: var(--space-lg);
   font-weight: bold;
   filter: drop-shadow(0 0 4px currentColor);
 }
 
 .directionText {
-  font-size: 10px;
+  font-size: var(--space-2-5);
   font-weight: var(--font-medium);
-  color: #6b7280;
+  color: var(--gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .result {
-  font-size: 12px;
+  font-size: var(--space-md);
   font-weight: var(--font-medium);
   color: var(--gray-400);
   margin-top: var(--space-sm);

@@ -7,29 +7,29 @@
 
 .header {
   text-align: center;
-  padding: 2rem 2rem 1rem;
+  padding: var(--space-2xl) var(--space-2xl) var(--space-lg);
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: var(--text-3xl);
   font-weight: var(--font-bold);
   background: var(--gradient-neon);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-sm);
   filter: drop-shadow(var(--glow-neon-text));
 }
 
 .subtitle {
   color: var(--text-secondary);
   font-size: var(--text-md);
-  margin: 0;
+  margin: var(--space-0);
 }
 
 .main {
   flex: 1;
-  padding: 1.5rem 2rem 2rem;
+  padding: var(--space-xl) var(--space-2xl) var(--space-2xl);
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
@@ -37,14 +37,14 @@
 
 /* Sections */
 .section {
-  margin-bottom: 3rem;
+  margin-bottom: var(--space-3xl);
 }
 
 .sectionHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1.25rem;
+  margin-bottom: var(--space-xl);
 }
 
 .sectionTitle {
@@ -54,7 +54,7 @@
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
   color: var(--text-bright);
-  margin: 0;
+  margin: var(--space-0);
 }
 
 .sectionNumber {
@@ -67,13 +67,13 @@
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
   font-weight: var(--font-bold);
-  color: white;
+  color: var(--color-white);
 }
 
 .sectionDescription {
   font-size: var(--text-base);
   color: var(--text-secondary);
-  margin: 0.25rem 0 0;
+  margin: var(--space-xs) 0 0;
 }
 
 .sectionDescription strong {
@@ -84,7 +84,7 @@
   font-size: var(--text-base);
   color: var(--theme-cyan);
   text-decoration: none;
-  padding: 0.5rem 0;
+  padding: var(--space-sm) var(--space-0);
 }
 
 .viewAllLink:hover {
@@ -99,7 +99,7 @@
 }
 
 .conceptsGridCollapsed {
-  max-height: 180px; /* Show only 1 row */
+  max-height: 180px;
 }
 
 .conceptCard {
@@ -107,9 +107,9 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-sm);
-  padding: 1.25rem 1rem;
+  padding: var(--space-xl) var(--space-lg);
   background: var(--surface-card);
-  border: 1px solid var(--border-card);
+  border: var(--border-width-1) solid var(--border-card);
   border-radius: var(--radius-xl);
   text-decoration: none;
   color: inherit;
@@ -126,7 +126,7 @@
 
 .conceptIcon {
   font-size: var(--text-3xl);
-  line-height: 1;
+  line-height: var(--leading-none);
 }
 
 .conceptContent {
@@ -137,20 +137,20 @@
   font-size: var(--text-md);
   font-weight: var(--font-semibold);
   color: var(--text-bright);
-  margin: 0 0 0.25rem;
+  margin: 0 0 var(--space-xs);
 }
 
 .conceptDescription {
   font-size: var(--text-sm);
   color: var(--text-secondary);
-  margin: 0;
-  line-height: 1.4;
+  margin: var(--space-0);
+  line-height: var(--leading-snug);
 }
 
 .conceptBadge {
   font-size: var(--text-2xs);
   text-transform: uppercase;
-  padding: 0.2rem 0.5rem;
+  padding: var(--space-xs) var(--space-sm);
   background: var(--color-primary-15);
   border-radius: var(--radius-sm);
   color: var(--color-primary-light);
@@ -167,7 +167,7 @@
   position: relative;
   background: var(--card-gradient-bg);
   border-radius: var(--radius-2xl);
-  padding: 2px;
+  padding: var(--space-0-5);
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-slow);
@@ -179,11 +179,11 @@
   position: absolute;
   inset: 0;
   border-radius: var(--radius-2xl);
-  padding: 2px;
+  padding: var(--space-0-5);
   background: var(--card-gradient-border);
   -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
+    linear-gradient(var(--color-white) 0 0) content-box,
+    linear-gradient(var(--color-white) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0.5;
@@ -201,8 +201,8 @@
 
 .conceptCategoryCardInner {
   background: var(--bg-page-secondary);
-  border-radius: 14px;
-  padding: 1.5rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
@@ -224,45 +224,45 @@
 .conceptCategoryBadge {
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  padding: 0.3rem 0.75rem;
+  padding: var(--space-1) var(--space-md);
   background: var(--theme-cyan-15);
-  border-radius: 20px;
+  border-radius: var(--radius-3xl);
   color: var(--theme-cyan);
 }
 
 .conceptCategoryTitle {
-  font-size: 1.35rem;
+  font-size: var(--text-xl);
   font-weight: var(--font-bold);
   color: var(--text-bright);
-  margin: 0;
+  margin: var(--space-0);
 }
 
 .conceptCategoryDescription {
   font-size: var(--text-base);
   color: var(--text-secondary);
-  margin: 0;
-  line-height: 1.5;
+  margin: var(--space-0);
+  line-height: var(--leading-normal);
 }
 
 .conceptCategoryTopics {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
-  margin-top: 0.25rem;
+  margin-top: var(--space-xs);
 }
 
 .topicTag {
   font-size: var(--text-xs);
-  padding: 0.25rem 0.6rem;
+  padding: var(--space-xs) var(--space-2-5);
   background: var(--theme-cyan-15);
-  border: 1px solid var(--theme-cyan-30);
+  border: var(--border-width-1) solid var(--theme-cyan-30);
   border-radius: var(--radius-xl);
   color: var(--theme-cyan);
 }
 
 .topicMore {
   font-size: var(--text-xs);
-  padding: 0.25rem 0.6rem;
+  padding: var(--space-xs) var(--space-2-5);
   color: var(--text-muted);
 }
 
@@ -271,7 +271,7 @@
   position: relative;
   background: var(--card-gradient-bg);
   border-radius: var(--radius-2xl);
-  padding: 2px;
+  padding: var(--space-0-5);
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-slow);
@@ -284,11 +284,11 @@
   position: absolute;
   inset: 0;
   border-radius: var(--radius-2xl);
-  padding: 2px;
+  padding: var(--space-0-5);
   background: var(--card-gradient-border);
   -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
+    linear-gradient(var(--color-white) 0 0) content-box,
+    linear-gradient(var(--color-white) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0.5;
@@ -306,8 +306,8 @@
 
 .buildCardInner {
   background: var(--bg-page-secondary);
-  border-radius: 14px;
-  padding: 1.5rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
@@ -323,22 +323,22 @@
 
 .buildIcon {
   font-size: var(--text-3xl);
-  line-height: 1;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+  line-height: var(--leading-none);
+  filter: drop-shadow(var(--glow-md) var(--white-20));
 }
 
 .buildTitle {
-  font-size: 1.2rem;
+  font-size: var(--text-lg);
   font-weight: var(--font-semibold);
   color: var(--text-bright);
-  margin: 0.25rem 0 0;
+  margin: var(--space-xs) 0 0;
 }
 
 .buildDescription {
   font-size: var(--text-base);
   color: var(--text-secondary);
-  margin: 0;
-  line-height: 1.5;
+  margin: var(--space-0);
+  line-height: var(--leading-normal);
   flex: 1;
 }
 
@@ -346,8 +346,8 @@
   display: flex;
   gap: var(--space-lg);
   margin-top: auto;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border-card);
+  padding-top: var(--space-md);
+  border-top: var(--border-width-1) solid var(--border-card);
 }
 
 .buildStat {
@@ -362,7 +362,7 @@
   display: block;
   background: var(--card-gradient-bg);
   border-radius: var(--radius-2xl);
-  padding: 2px;
+  padding: var(--space-0-5);
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-slow);
@@ -373,11 +373,11 @@
   position: absolute;
   inset: 0;
   border-radius: var(--radius-2xl);
-  padding: 2px;
+  padding: var(--space-0-5);
   background: var(--card-gradient-border);
   -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
+    linear-gradient(var(--color-white) 0 0) content-box,
+    linear-gradient(var(--color-white) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0.5;
@@ -395,15 +395,15 @@
 
 .dsaBannerInner {
   background: var(--bg-page-secondary);
-  border-radius: 14px;
-  padding: 1.5rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
 }
 
 .dsaContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-lg);
 }
 
 .dsaLeft {
@@ -423,18 +423,18 @@
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
   color: var(--text-bright);
-  margin: 0 0 0.25rem;
+  margin: 0 0 var(--space-xs);
 }
 
 .dsaDescription {
   font-size: var(--text-base);
   color: var(--text-secondary);
-  margin: 0;
+  margin: var(--space-0);
 }
 
 .dsaRight {
   display: flex;
-  gap: 2rem;
+  gap: var(--space-2xl);
 }
 
 .dsaStats {
@@ -449,7 +449,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  line-height: 1;
+  line-height: var(--leading-none);
 }
 
 .dsaLabel {
@@ -463,41 +463,41 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-lg);
 }
 
 .dsaTopic {
   font-size: var(--text-sm);
-  padding: 0.35rem 0.75rem;
+  padding: var(--space-1) var(--space-md);
   background: var(--theme-cyan-15);
-  border: 1px solid var(--theme-cyan-30);
-  border-radius: 20px;
+  border: var(--border-width-1) solid var(--theme-cyan-30);
+  border-radius: var(--radius-3xl);
   color: var(--theme-cyan);
 }
 
 .dsaMore {
   font-size: var(--text-sm);
-  padding: 0.35rem 0.75rem;
+  padding: var(--space-1) var(--space-md);
   color: var(--text-muted);
 }
 
 .dsaCta {
   display: inline-block;
-  padding: 0.6rem 1.5rem;
+  padding: var(--space-2-5) var(--space-xl);
   background: linear-gradient(135deg, var(--theme-cyan), var(--theme-teal));
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
   font-weight: var(--font-semibold);
-  color: white;
+  color: var(--color-white);
 }
 
 /* Footer */
 .footer {
   text-align: center;
-  padding: 1.5rem 2rem;
+  padding: var(--space-xl) var(--space-2xl);
   color: var(--text-muted);
   font-size: var(--text-base);
-  border-top: 1px solid var(--border-card);
+  border-top: var(--border-width-1) solid var(--border-card);
 }
 
 /* Tablet */
@@ -519,14 +519,14 @@
   .dsaRight {
     width: 100%;
     justify-content: flex-start;
-    gap: 3rem;
+    gap: var(--space-3xl);
   }
 }
 
 /* Mobile */
 @media (max-width: 640px) {
   .header {
-    padding: 1.5rem 1rem 1rem;
+    padding: var(--space-xl) var(--space-lg) var(--space-lg);
   }
 
   .title {
@@ -547,20 +547,20 @@
   }
 
   .conceptCategoryCard {
-    padding: 1.25rem;
+    padding: var(--space-xl);
   }
 
   .buildCardInner {
-    padding: 1.25rem;
+    padding: var(--space-xl);
     min-height: 180px;
   }
 
   .dsaBanner {
-    padding: 1.25rem;
+    padding: var(--space-xl);
   }
 
   .conceptCategoryTitle {
-    font-size: 1.15rem;
+    font-size: var(--text-lg);
   }
 
   .conceptsGrid {
@@ -573,7 +573,7 @@
   }
 
   .conceptCard {
-    padding: 1rem 0.75rem;
+    padding: var(--space-lg) var(--space-md);
   }
 
   .conceptIcon {
@@ -585,7 +585,7 @@
   }
 
   .buildTitle {
-    font-size: 1.1rem;
+    font-size: var(--text-lg);
   }
 
   .buildDescription {
@@ -622,8 +622,8 @@
 
   .conceptBadge {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: var(--space-sm);
+    right: var(--space-sm);
   }
 
   .conceptCard {

@@ -1,23 +1,23 @@
 .container {
   position: relative;
-  padding: 3px;
+  padding: var(--space-1);
   border-radius: var(--radius-2xl);
-  background: linear-gradient(135deg, #ef4444, #f97316);
+  background: linear-gradient(135deg, var(--accent-red), var(--orange-500));
   animation: borderPulse 2s ease-in-out infinite;
 }
 
 @keyframes borderPulse {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+    box-shadow: var(--glow-2xl) var(--accent-red-30);
   }
   50% {
-    box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+    box-shadow: 0 0 30px var(--accent-red-30);
   }
 }
 
 .content {
   background: var(--bg-page-secondary);
-  border-radius: 14px;
+  border-radius: var(--radius-xl);
   padding: var(--space-2xl);
   display: flex;
   flex-direction: column;
@@ -27,13 +27,13 @@
 }
 
 .iconWrapper {
-  width: 64px;
-  height: 64px;
+  width: var(--space-5xl);
+  height: var(--space-5xl);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(239, 68, 68, 0.15);
-  border-radius: 50%;
+  background: var(--accent-red-30);
+  border-radius: var(--radius-full);
   animation: iconPulse 1.5s ease-in-out infinite;
 }
 
@@ -69,74 +69,74 @@
   gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 0.5rem;
+  margin-top: var(--space-sm);
 }
 
 .btnPrimary {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 1rem;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary));
   border: none;
   border-radius: var(--radius-lg);
-  color: white;
+  color: var(--color-white);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .btnPrimary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px var(--color-primary-40);
+  box-shadow: var(--shadow-md) var(--color-primary-40);
 }
 
 .btnSecondary {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 0.8rem;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-md);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: var(--border-width-1) solid var(--white-15);
   border-radius: var(--radius-lg);
   color: var(--gray-500);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .btnSecondary:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: var(--white-5);
+  border-color: var(--white-30);
   color: var(--gray-300);
 }
 
 .detailsToggle {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  padding: 0.4rem 0.6rem;
+  gap: var(--space-1);
+  padding: var(--space-xs) var(--space-md);
   font-size: var(--text-xs);
   background: transparent;
   border: none;
   color: var(--gray-700);
   cursor: pointer;
-  transition: color 0.2s;
+  transition: color var(--transition-fast);
 }
 
 .detailsToggle:hover {
-  color: #999;
+  color: var(--gray-500);
 }
 
 .errorDetails {
   width: 100%;
   max-width: 400px;
-  margin-top: 0.5rem;
+  margin-top: var(--space-sm);
   padding: var(--space-md);
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: var(--black-40);
+  border: var(--border-width-1) solid var(--accent-red-30);
   border-radius: var(--radius-lg);
   text-align: left;
 }
@@ -145,16 +145,16 @@
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
   color: var(--accent-red);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-sm);
   word-break: break-word;
 }
 
 .stackTrace {
   margin: 0;
   padding: var(--space-sm);
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border-radius: var(--radius-sm);
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
   color: var(--gray-700);
   max-height: 150px;
@@ -165,26 +165,26 @@
 
 /* Scrollbar styling for error details */
 .stackTrace::-webkit-scrollbar {
-  width: 6px;
+  width: var(--space-2);
 }
 
 .stackTrace::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+  background: var(--black-30);
+  border-radius: var(--radius-sm);
 }
 
 .stackTrace::-webkit-scrollbar-thumb {
-  background: rgba(239, 68, 68, 0.3);
-  border-radius: 3px;
+  background: var(--accent-red-30);
+  border-radius: var(--radius-sm);
 }
 
 .stackTrace::-webkit-scrollbar-thumb:hover {
-  background: rgba(239, 68, 68, 0.5);
+  background: var(--accent-red);
 }
 
 @media (max-width: 480px) {
   .content {
-    padding: 1.5rem 1rem;
+    padding: var(--space-xl) var(--space-lg);
   }
 
   .actions {

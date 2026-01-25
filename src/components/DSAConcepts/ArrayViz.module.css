@@ -15,16 +15,16 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-md);
   color: var(--gray-500);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .exampleBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--white-10);
   color: var(--color-white);
 }
 
@@ -36,7 +36,7 @@
 
 /* Memory visualization */
 .memorySection {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
 }
@@ -45,7 +45,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-lg);
   flex-wrap: wrap;
   gap: var(--space-sm);
 }
@@ -59,10 +59,10 @@
 }
 
 .formula {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-base);
-  color: #60a5fa;
-  background: rgba(96, 165, 250, 0.1);
+  color: var(--blue-400);
+  background: var(--sky-10);
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-sm);
 }
@@ -77,11 +77,11 @@
 .memoryBlock {
   flex-shrink: 0;
   width: 70px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: var(--black-30);
+  border: var(--border-width-2) solid var(--white-10);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .memoryBlock.highlighted {
@@ -90,17 +90,17 @@
 
 .blockAddress {
   padding: 0.35rem;
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
   color: var(--gray-500);
   text-align: center;
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--white-3);
+  border-bottom: 1px solid var(--white-5);
 }
 
 .blockValue {
   padding: 0.75rem 0.5rem;
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
   color: var(--color-white);
@@ -115,7 +115,7 @@
 
 .blockIndex {
   padding: 0.35rem;
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-primary);
   text-align: center;
@@ -126,7 +126,7 @@
 .pointerRow {
   position: relative;
   height: 30px;
-  margin-top: 0.5rem;
+  margin-top: var(--space-sm);
 }
 
 .pointer {
@@ -144,8 +144,8 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
-  background: rgba(0, 0, 0, 0.3);
-  border: 2px solid #10b981;
+  background: var(--black-30);
+  border: 2px solid var(--emerald-500);
   border-radius: var(--radius-lg);
 }
 
@@ -155,7 +155,7 @@
 }
 
 .outputValue {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
   color: var(--difficulty-1);
@@ -167,7 +167,7 @@
   align-items: flex-start;
   gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border-radius: var(--radius-lg);
   border-left: 3px solid var(--color-primary);
 }
@@ -178,7 +178,7 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 0.2rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   border-radius: var(--radius-sm);
   color: white;
 }
@@ -186,7 +186,7 @@
 .stepText {
   font-size: var(--text-base);
   color: var(--gray-300);
-  line-height: 1.5;
+  line-height: var(--leading-normal);
 }
 
 /* Controls */
@@ -205,7 +205,7 @@
 }
 
 .btnPrimary {
-  padding: 0.6rem 1.25rem;
+  padding: var(--space-2-5) var(--space-xl);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--gradient-brand);
@@ -224,16 +224,16 @@
 .btnSecondary {
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-base);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-md);
   color: var(--gray-500);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--white-10);
   color: var(--color-white);
 }
 
@@ -246,11 +246,11 @@
 .insight {
   padding: var(--space-md) var(--space-lg);
   background: var(--color-primary-10);
-  border: 1px solid var(--color-primary-20);
+  border: var(--border-width-1) solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
   color: var(--gray-300);
-  line-height: 1.5;
+  line-height: var(--leading-normal);
 }
 
 .insight strong {
@@ -269,6 +269,6 @@
   }
 
   .blockAddress {
-    font-size: 0.55rem;
+    font-size: var(--text-xs);
   }
 }

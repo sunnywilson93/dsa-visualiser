@@ -10,8 +10,8 @@
   gap: var(--space-sm);
   justify-content: center;
   margin-bottom: 0.25rem;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--black-30);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
@@ -19,31 +19,31 @@
 .levelBtn {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.8rem;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--white-4);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-full);
   color: var(--gray-500);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .levelBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--white-8);
   color: var(--gray-300);
 }
 
 .levelBtn.activeLevel {
-  background: rgba(130, 100, 255, 0.18);
-  border-color: rgba(130, 100, 255, 0.7);
+  background: var(--neon-viz-18);
+  border-color: var(--neon-viz-70);
   color: var(--text-bright);
-  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
+  box-shadow: var(--glow-xl) var(--neon-viz-25);
 }
 
-.levelDot { width: 8px; height: 8px; border-radius: 50%; }
+.levelDot { width: var(--space-sm); height: var(--space-sm); border-radius: var(--radius-full); }
 
 /* Example Selector */
 .exampleSelector {
@@ -51,34 +51,34 @@
   gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--black-30);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
 
 .exampleBtn {
-  padding: 0.4rem 0.8rem;
-  font-family: 'Fira Code', monospace;
+  padding: var(--space-2) var(--space-md);
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--white-4);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-full);
   color: var(--gray-500);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .exampleBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--white-8);
   color: var(--gray-300);
 }
 
 .exampleBtn.active {
-  background: rgba(130, 100, 255, 0.18);
-  border-color: rgba(130, 100, 255, 0.7);
+  background: var(--neon-viz-18);
+  border-color: var(--neon-viz-70);
   color: var(--text-bright);
-  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
+  box-shadow: var(--glow-xl) var(--neon-viz-25);
 }
 
 /* ============================================
@@ -87,7 +87,7 @@
 .neonBox {
   position: relative;
   border-radius: var(--radius-xl);
-  padding: 3px;
+  padding: var(--space-1);
   background: linear-gradient(135deg, var(--neon-start), var(--neon-end));
 }
 
@@ -104,8 +104,8 @@
   top: -1px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 0.35rem 1rem;
-  background: #4a4a5a;
+  padding: var(--space-1-5) var(--space-lg);
+  background: var(--bg-tertiary);
   border-radius: 0 0 8px 8px;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
@@ -116,8 +116,8 @@
 
 /* Code panel */
 .codePanel {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--black-40);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
@@ -130,11 +130,11 @@
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
   color: var(--gray-500);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
 }
 
 .backpressureBadge {
-  padding: 0.15rem 0.4rem;
+  padding: var(--space-0-5) var(--space-xs);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
@@ -150,25 +150,25 @@
 
 .code {
   margin: 0;
-  padding: 0.5rem 0;
+  padding: var(--space-sm) 0;
   max-height: 160px;
   overflow-y: auto;
 }
 
 .codeLine {
   display: flex;
-  padding: 0.1rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   transition: background 0.2s;
 }
 
 .codeLine.activeLine { background: var(--color-primary-20); }
-.lineNum { width: 1.5rem; color: var(--gray-800); font-family: 'Fira Code', monospace; font-size: var(--text-2xs); }
-.lineCode { font-family: 'Fira Code', monospace; font-size: var(--text-2xs); color: var(--gray-300); }
+.lineNum { width: 1.5rem; color: var(--gray-800); font-family: var(--font-mono); font-size: var(--text-2xs); }
+.lineCode { font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--gray-300); }
 .activeLine .lineCode { color: var(--color-primary-light); }
 
 /* Streams - Neon Box */
 .streamsBox {
-  --neon-start: #3b82f6;
+  --neon-start: var(--blue-500);
   --neon-end: var(--color-primary);
 }
 
@@ -184,31 +184,31 @@
   flex: 1;
   min-width: 100px;
   max-width: 150px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  border: var(--border-width-2) solid var(--white-10);
   position: relative;
 }
 
 .stream.readable { border-color: rgba(59, 130, 246, 0.5); background: rgba(59, 130, 246, 0.08); }
 .stream.transform { border-color: var(--color-primary-50); background: var(--color-primary-8); }
-.stream.writable { border-color: rgba(16, 185, 129, 0.5); background: rgba(16, 185, 129, 0.08); }
+.stream.writable { border-color: var(--emerald-50); background: var(--emerald-8); }
 .stream.flowing { box-shadow: 0 0 12px rgba(59, 130, 246, 0.3); }
 .stream.paused { opacity: 0.6; border-color: rgba(239, 68, 68, 0.5); }
 
 .streamHeader {
-  padding: 0.3rem 0.5rem;
+  padding: var(--space-1) var(--space-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
   color: var(--gray-300);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
   display: flex;
   justify-content: space-between;
 }
 
 .streamType {
-  font-size: 0.5rem;
+  font-size: var(--text-2xs);
   color: var(--gray-500);
   font-weight: 400;
 }
@@ -223,33 +223,33 @@
 
 .chunk {
   padding: 0.2rem 0.4rem;
-  background: rgba(59, 130, 246, 0.2);
+  background: var(--blue-20);
   border-radius: var(--radius-sm);
-  font-family: 'Fira Code', monospace;
-  font-size: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
   color: #93c5fd;
 }
 
 .flowIndicator {
   position: absolute;
-  right: 4px;
-  bottom: 4px;
+  right: var(--space-xs);
+  bottom: var(--space-xs);
   color: var(--difficulty-1);
   font-size: var(--text-xs);
 }
 
 .pausedIndicator {
   position: absolute;
-  right: 4px;
-  bottom: 4px;
+  right: var(--space-xs);
+  bottom: var(--space-xs);
   color: var(--accent-red);
   font-size: var(--text-xs);
 }
 
 /* Buffer - Neon Box */
 .bufferBox {
-  --neon-start: #f97316;
-  --neon-end: #fbbf24;
+  --neon-start: var(--orange-500);
+  --neon-end: var(--amber-400);
 }
 
 .bufferHeader {
@@ -260,8 +260,8 @@
 }
 
 .bufferBar {
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  height: var(--space-sm);
+  background: var(--white-10);
   border-radius: var(--radius-sm);
   overflow: hidden;
   margin-bottom: 0.4rem;
@@ -269,12 +269,12 @@
 
 .bufferFill {
   height: 100%;
-  background: linear-gradient(90deg, #3b82f6, var(--color-primary));
+  background: linear-gradient(90deg, var(--blue-500), var(--color-primary));
   transition: width 0.3s;
 }
 
 .bufferFill.full {
-  background: linear-gradient(90deg, #ef4444, #f97316);
+  background: linear-gradient(90deg, var(--red-500), var(--orange-500));
 }
 
 .bufferContent {
@@ -286,16 +286,16 @@
 .bufferItem {
   padding: 0.15rem 0.3rem;
   background: var(--color-primary-20);
-  border-radius: 3px;
-  font-family: 'Fira Code', monospace;
-  font-size: 0.55rem;
+  border-radius: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
   color: var(--color-primary-light);
 }
 
 /* Output - Neon Box */
 .outputBox {
   --neon-start: var(--difficulty-1);
-  --neon-end: #06b6d4;
+  --neon-end: var(--accent-cyan);
 }
 
 .outputBox .neonBoxInner {
@@ -313,13 +313,13 @@
 }
 
 .outputLabel { color: var(--gray-500); font-size: var(--text-2xs); }
-.outputItem { font-family: 'Fira Code', monospace; font-size: var(--text-xs); color: var(--difficulty-1); }
+.outputItem { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--difficulty-1); }
 
 /* Description */
 .description {
-  padding: 0.6rem 0.75rem;
+  padding: var(--space-2-5) var(--space-md);
   background: var(--color-primary-10);
-  border: 1px solid var(--color-primary-20);
+  border: var(--border-width-1) solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
   color: var(--gray-300);
@@ -328,13 +328,13 @@
 
 .stepBadge {
   display: inline-block;
-  padding: 0.15rem 0.4rem;
+  padding: var(--space-0-5) var(--space-xs);
   background: var(--color-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
   color: var(--color-primary-light);
-  margin-right: 0.5rem;
+  margin-right: var(--space-sm);
 }
 
 /* Controls */
@@ -356,21 +356,21 @@
 .btnSecondary {
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-xs);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-md);
   color: var(--gray-500);
   cursor: pointer;
 }
 
-.btnSecondary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.1); color: var(--color-white); }
+.btnSecondary:hover:not(:disabled) { background: var(--white-10); color: var(--color-white); }
 .btnSecondary:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* Insight */
 .insight {
   padding: var(--space-sm) var(--space-md);
   background: var(--color-primary-8);
-  border: 1px solid var(--color-primary-20);
+  border: var(--border-width-1) solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-xs);
   color: var(--gray-500);

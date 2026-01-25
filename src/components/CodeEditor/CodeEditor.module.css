@@ -3,7 +3,7 @@
   flex-direction: column;
   height: 100%;
   background: var(--bg-secondary);
-  border: 1px solid var(--border-primary);
+  border: var(--border-width-1) solid var(--border-primary);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -14,11 +14,11 @@
   justify-content: space-between;
   padding: var(--space-sm) var(--space-md);
   background: var(--bg-tertiary);
-  border-bottom: 1px solid var(--border-primary);
+  border-bottom: var(--border-width-1) solid var(--border-primary);
 }
 
 .title {
-  font-size: 12px;
+  font-size: var(--text-sm);
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -35,23 +35,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: var(--space-xl);
+  height: var(--space-xl);
   border-radius: var(--radius-sm);
-  background: rgba(251, 191, 36, 0.15);
+  background: var(--amber-30);
   color: var(--accent-yellow);
   transition: all var(--transition-fast);
 }
 
 .conceptBtn:hover {
-  background: rgba(251, 191, 36, 0.25);
+  background: var(--amber-40);
   transform: scale(1.05);
 }
 
 .statusBadge {
-  font-size: 11px;
+  font-size: var(--text-xs);
   font-weight: var(--font-medium);
-  padding: 2px 8px;
+  padding: var(--space-0-5) var(--space-sm);
   border-radius: var(--radius-sm);
   background: var(--bg-elevated);
   color: var(--text-secondary);
@@ -68,38 +68,38 @@
   justify-content: center;
   height: 100%;
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: var(--text-base);
 }
 
 /* Line decorations */
 .currentLine {
-  background: rgba(56, 139, 253, 0.15) !important;
+  background: var(--accent-blue-20) !important;
 }
 
 .currentLineGlyph {
   background: var(--accent-blue);
-  border-radius: 2px;
-  margin-left: 5px;
-  width: 4px !important;
+  border-radius: var(--radius-xs);
+  margin-left: var(--space-1-5);
+  width: var(--space-xs) !important;
 }
 
 .breakpointLine {
-  background: rgba(248, 81, 73, 0.1) !important;
+  background: var(--accent-red-30) !important;
 }
 
 .breakpointGlyph::before {
   content: '';
   display: block;
-  width: 12px;
-  height: 12px;
-  margin: 4px 0 0 4px;
+  width: var(--space-md);
+  height: var(--space-md);
+  margin: var(--space-xs) 0 0 var(--space-xs);
   background: var(--accent-red);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
 }
 
 .errorLine {
-  background: rgba(248, 81, 73, 0.2) !important;
-  border-left: 3px solid var(--accent-red);
+  background: var(--accent-red-30) !important;
+  border-left: var(--border-width-3) solid var(--accent-red);
 }
 
 /* Error panel */
@@ -108,10 +108,10 @@
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
-  background: rgba(248, 81, 73, 0.1);
-  border-top: 1px solid rgba(248, 81, 73, 0.3);
+  background: var(--accent-red-30);
+  border-top: var(--border-width-1) solid var(--accent-red-30);
   color: var(--accent-red);
-  font-size: 13px;
+  font-size: var(--text-base);
 }
 
 .errorIcon {
@@ -122,7 +122,7 @@
   height: 18px;
   background: var(--accent-red);
   color: var(--bg-primary);
-  border-radius: 50%;
-  font-size: 12px;
-  font-weight: bold;
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
 }

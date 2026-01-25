@@ -8,8 +8,8 @@
   display: flex;
   gap: var(--space-sm);
   justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--black-30);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
@@ -18,24 +18,24 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--white-4);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-full);
   color: var(--gray-500);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .tabBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--white-8);
   color: var(--gray-300);
 }
 
 .tabBtn.active {
-  background: rgba(130, 100, 255, 0.18);
-  border-color: rgba(130, 100, 255, 0.7);
+  background: var(--neon-viz-18);
+  border-color: var(--neon-viz-70);
   color: var(--text-bright);
-  box-shadow: 0 0 12px rgba(130, 100, 255, 0.25);
+  box-shadow: var(--glow-xl) var(--neon-viz-25);
 }
 
 .typesContainer {
@@ -54,27 +54,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
+  gap: var(--space-2);
   padding: var(--space-md);
-  background: rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: var(--black-30);
+  border: var(--border-width-2) solid var(--white-10);
   border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .typeCard:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
 }
 
 .typeCard.active {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--white-8);
 }
 
 .typeIcon {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+  width: var(--space-md);
+  height: var(--space-md);
+  border-radius: var(--radius-full);
 }
 
 .typeName {
@@ -84,7 +84,7 @@
 }
 
 .typeDetail {
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--black-40);
   border: 2px solid;
   border-radius: var(--radius-xl);
   padding: var(--space-lg);
@@ -100,7 +100,7 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-sm);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-sm);
 }
 
 .detailLabel {
@@ -112,20 +112,20 @@
 .examples {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: var(--space-2);
 }
 
 .example {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--difficulty-1);
-  background: rgba(16, 185, 129, 0.1);
-  padding: 0.2rem 0.5rem;
+  background: var(--emerald-10);
+  padding: var(--space-0-5) var(--space-sm);
   border-radius: var(--radius-sm);
 }
 
 .typeofValue {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--color-primary-light);
 }
@@ -133,8 +133,8 @@
 .noteBox {
   margin-top: 0.75rem;
   padding: var(--space-sm) var(--space-md);
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: var(--red-10);
+  border: var(--border-width-1) solid var(--red-30);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
   color: var(--accent-red);
@@ -142,8 +142,8 @@
 
 .insight {
   padding: var(--space-md) var(--space-lg);
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: var(--amber-10);
+  border: 1px solid var(--amber-30);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
   color: var(--difficulty-2);
@@ -158,8 +158,8 @@
 }
 
 .compareCard {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--black-40);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-xl);
   padding: var(--space-lg);
 }
@@ -173,7 +173,7 @@
 }
 
 .compareCode {
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--black-40);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
   margin: 0 0 0.75rem;
@@ -181,7 +181,7 @@
 }
 
 .compareCode code {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--gray-300);
   white-space: pre;
@@ -189,7 +189,7 @@
 
 .compareExplanation {
   font-size: var(--text-base);
-  color: #aaa;
+  color: var(--gray-400);
   text-align: center;
   margin: 0 0 1rem;
 }
@@ -211,7 +211,7 @@
   align-items: center;
   gap: var(--space-xs);
   padding: var(--space-sm) var(--space-lg);
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border: 2px solid;
   border-radius: var(--radius-lg);
 }
@@ -222,7 +222,7 @@
 }
 
 .memoryValue {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--difficulty-1);
 }
@@ -264,15 +264,15 @@
 .btnSecondary {
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-xs);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-md);
   color: var(--gray-500);
   cursor: pointer;
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--white-10);
   color: var(--color-white);
 }
 

@@ -14,13 +14,13 @@
   justify-content: center;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-lg);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--white-3);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-lg);
   color: var(--gray-500);
   font-size: var(--text-base);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast) ease;
   align-self: center;
 }
 

@@ -3,10 +3,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0;
-  padding: 3px;
+  gap: var(--space-0);
+  padding: var(--space-1);
   background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  border-radius: 14px;
+  border-radius: var(--radius-xl);
 }
 
 .containerInner {
@@ -31,22 +31,22 @@
 }
 
 .icon {
-  color: #fbbf24;
-  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.4));
+  color: var(--amber-400);
+  filter: drop-shadow(var(--glow-xs) var(--amber-40));
 }
 
 .title {
-  font-size: 14px;
+  font-size: var(--text-base);
   font-weight: var(--font-semibold);
   color: var(--text-bright);
-  margin: 0;
+  margin: var(--space-0);
 }
 
 .description {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--gray-400);
-  margin: 0;
-  line-height: 1.4;
+  margin: var(--space-0);
+  line-height: var(--leading-snug);
 }
 
 /* Insight Box - Neon yellow accent */
@@ -54,9 +54,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 3px;
-  background: linear-gradient(135deg, #fbbf24, #f97316);
+  gap: var(--space-xs);
+  padding: var(--space-1);
+  background: linear-gradient(135deg, var(--amber-400), var(--orange-500));
   border-radius: var(--radius-lg);
 }
 
@@ -67,18 +67,18 @@
 }
 
 .insightLabel {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #fbbf24;
+  color: var(--amber-400);
 }
 
 .insightText {
-  font-size: 12px;
+  font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--text-bright);
-  margin: 0;
+  margin: var(--space-0);
   font-family: var(--font-mono);
 }
 
@@ -88,7 +88,7 @@
   min-height: 180px;
   display: flex;
   flex-direction: column;
-  padding: 3px;
+  padding: var(--space-1);
   background: var(--gradient-brand);
   border-radius: var(--radius-lg);
 }
@@ -116,18 +116,18 @@
 }
 
 .stepNumber {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  padding: 2px 8px;
-  background: rgba(130, 100, 255, 0.3);
-  border: 1px solid rgba(130, 100, 255, 0.6);
+  padding: var(--space-0-5) var(--space-sm);
+  background: var(--color-primary-30);
+  border: var(--border-width-1) solid var(--color-primary-50);
   color: var(--color-primary-light);
   border-radius: var(--radius-full);
-  box-shadow: 0 0 8px rgba(130, 100, 255, 0.2);
+  box-shadow: var(--glow-md) var(--color-primary-20);
 }
 
 .stepTitle {
-  font-size: 13px;
+  font-size: var(--text-base);
   font-weight: var(--font-semibold);
   color: var(--text-bright);
 }
@@ -138,17 +138,17 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-sm);
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px dashed rgba(255, 255, 255, 0.1);
+  background: var(--black-30);
+  border: var(--border-width-1) dashed var(--white-10);
   border-radius: var(--radius-lg);
   min-height: 100px;
 }
 
 .stepDescription {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--gray-400);
-  margin: 0;
-  line-height: 1.5;
+  margin: var(--space-0);
+  line-height: var(--leading-normal);
 }
 
 /* Controls */
@@ -158,13 +158,13 @@
   justify-content: space-between;
   gap: var(--space-md);
   padding-top: var(--space-sm);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: var(--border-width-1) solid var(--white-10);
 }
 
 .playbackControls {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-xs);
 }
 
 .controlBtn {
@@ -173,19 +173,19 @@
   justify-content: center;
   width: 28px;
   height: 28px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-15);
   border-radius: var(--radius-md);
   color: var(--gray-400);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .controlBtn:hover:not(:disabled) {
-  background: rgba(130, 100, 255, 0.15);
-  border-color: rgba(130, 100, 255, 0.4);
+  background: var(--color-primary-15);
+  border-color: var(--color-primary-40);
   color: var(--text-bright);
-  box-shadow: 0 0 8px rgba(130, 100, 255, 0.2);
+  box-shadow: var(--glow-md) var(--color-primary-20);
 }
 
 .controlBtn:disabled {
@@ -198,12 +198,12 @@
   height: 34px;
   background: var(--gradient-brand);
   border: none;
-  color: white;
-  box-shadow: 0 0 12px var(--color-primary-40);
+  color: var(--color-white);
+  box-shadow: var(--glow-xl) var(--color-primary-40);
 }
 
 .controlBtn.playBtn:hover {
-  box-shadow: 0 0 20px var(--color-primary-50);
+  box-shadow: var(--glow-2xl) var(--color-primary-50);
   transform: scale(1.05);
 }
 
@@ -217,24 +217,24 @@
 
 .progressBar {
   flex: 1;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+  height: var(--space-xs);
+  background: var(--white-10);
+  border-radius: var(--radius-xs);
   overflow: hidden;
 }
 
 .progressFill {
   height: 100%;
   background: var(--gradient-brand);
-  border-radius: 2px;
-  transition: width 0.2s ease;
-  box-shadow: 0 0 8px var(--color-primary-50);
+  border-radius: var(--radius-xs);
+  transition: width var(--transition-fast);
+  box-shadow: var(--glow-md) var(--color-primary-50);
 }
 
 .progressText {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   font-family: var(--font-mono);
-  color: #6b7280;
+  color: var(--gray-600);
   white-space: nowrap;
 }
 
@@ -246,31 +246,31 @@
 }
 
 .speedLabel {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
   text-transform: uppercase;
-  color: #6b7280;
+  color: var(--gray-600);
 }
 
 .speedButtons {
   display: flex;
-  gap: 2px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: var(--space-0-5);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-full);
-  padding: 3px;
+  padding: var(--space-1);
 }
 
 .speedBtn {
-  padding: 4px 10px;
-  font-size: 10px;
+  padding: var(--space-xs) var(--space-2-5);
+  font-size: var(--text-2xs);
   font-weight: var(--font-medium);
-  color: #6b7280;
+  color: var(--gray-600);
   background: transparent;
   border: none;
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .speedBtn:hover {
@@ -278,10 +278,10 @@
 }
 
 .speedBtn.active {
-  background: rgba(130, 100, 255, 0.2);
-  border: 1px solid rgba(130, 100, 255, 0.5);
+  background: var(--color-primary-20);
+  border: var(--border-width-1) solid var(--color-primary-50);
   color: var(--text-bright);
-  box-shadow: 0 0 8px rgba(130, 100, 255, 0.25);
+  box-shadow: var(--glow-md) var(--color-primary-25);
 }
 
 /* Mobile responsive */
@@ -291,7 +291,7 @@
   }
 
   .insightText {
-    font-size: 11px;
+    font-size: var(--text-xs);
   }
 
   .visualizationArea {

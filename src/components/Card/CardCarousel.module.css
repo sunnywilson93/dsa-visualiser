@@ -8,9 +8,9 @@
   top: 50%;
   transform: translateY(-60%);
   z-index: 10;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: var(--space-3xl);
+  height: var(--space-3xl);
+  border-radius: var(--radius-full);
   border: none;
   background: rgba(15, 15, 26, 0.9);
   color: var(--theme-cyan);
@@ -39,11 +39,11 @@
 }
 
 .navLeft {
-  left: 8px;
+  left: var(--space-sm);
 }
 
 .navRight {
-  right: 8px;
+  right: var(--space-sm);
 }
 
 /* Scroll container */
@@ -70,13 +70,13 @@
   display: flex;
   justify-content: center;
   gap: var(--space-sm);
-  margin-top: 1rem;
+  margin-top: var(--space-lg);
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+  width: var(--space-sm);
+  height: var(--space-sm);
+  border-radius: var(--radius-full);
   border: none;
   background: var(--theme-cyan-30);
   cursor: pointer;
@@ -90,7 +90,7 @@
 
 .dotActive {
   background: linear-gradient(135deg, var(--theme-cyan), var(--theme-teal));
-  width: 24px;
+  width: var(--space-xl);
   border-radius: var(--radius-sm);
   box-shadow: 0 0 8px var(--theme-cyan-50);
 }

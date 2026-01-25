@@ -4,7 +4,7 @@
   z-index: 100;
   background: rgba(15, 15, 26, 0.85);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-card);
+  border-bottom: var(--border-width-1) solid var(--border-card);
 }
 
 .container {
@@ -13,13 +13,13 @@
   gap: var(--space-lg);
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0.75rem 2rem;
+  padding: var(--space-md) var(--space-2xl);
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: var(--space-2-5);
   text-decoration: none;
   color: inherit;
   flex-shrink: 0;
@@ -29,8 +29,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: var(--space-2xl);
+  height: var(--space-2xl);
   background: var(--gradient-neon);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
@@ -72,18 +72,18 @@
 }
 
 .navLink {
-  padding: 0.4rem 0.75rem;
+  padding: var(--space-xs) var(--space-md);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   color: var(--text-secondary);
   text-decoration: none;
   border-radius: var(--radius-md);
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .navLink:hover {
   color: var(--text-bright);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
 }
 
 .searchWrapper {
@@ -131,7 +131,7 @@
 /* Tablet */
 @media (max-width: 768px) {
   .container {
-    padding: 0.625rem 1rem;
+    padding: var(--space-2-5) var(--space-lg);
     gap: var(--space-md);
   }
 
@@ -206,8 +206,8 @@
 
 .hamburgerIcon {
   display: block;
-  width: 24px;
-  height: 2px;
+  width: var(--space-xl);
+  height: var(--space-0-5);
   background: var(--text-secondary);
   position: relative;
   transition: background 0.3s ease;
@@ -218,8 +218,8 @@
   content: '';
   position: absolute;
   left: 0;
-  width: 24px;
-  height: 2px;
+  width: var(--space-xl);
+  height: var(--space-0-5);
   background: var(--text-secondary);
   transition: transform 0.3s ease;
 }
@@ -253,7 +253,7 @@
   width: 280px;
   height: 100vh;
   background: var(--bg-secondary);
-  border-left: 1px solid var(--border-card);
+  border-left: var(--border-width-1) solid var(--border-card);
   padding-top: 70px;
   transition: right 0.3s ease;
   z-index: 200;
@@ -276,14 +276,14 @@
   min-height: 44px;
   font-size: var(--text-base);
   color: var(--text-secondary);
-  border-bottom: 1px solid var(--border-card);
+  border-bottom: var(--border-width-1) solid var(--border-card);
   text-decoration: none;
-  transition: color 0.2s, background 0.2s;
+  transition: color var(--transition-fast), background var(--transition-fast);
 }
 
 .mobileNavLink:hover {
   color: var(--text-bright);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white-5);
 }
 
 /* Overlay to close menu */
@@ -291,7 +291,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--black-50);
   z-index: 199;
 }
 

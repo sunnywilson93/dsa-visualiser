@@ -15,16 +15,16 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-md);
   color: var(--gray-500);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .exampleBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--white-10);
   color: var(--color-white);
 }
 
@@ -38,12 +38,12 @@
 .queueSection {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 1.5rem;
+  gap: var(--space-xl);
   align-items: start;
 }
 
 .queueContainer {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--black-20);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
 }
@@ -68,17 +68,17 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: var(--space-md);
-  padding: 0.25rem 0;
+  padding: var(--space-xs) 0;
 }
 
 .queueEnd {
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
-  padding: 0.35rem 0.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: var(--space-1-5) var(--space-2-5);
+  border: var(--border-width-1) solid var(--white-8);
   border-radius: var(--radius-md);
-  color: #777;
+  color: var(--gray-600);
   text-align: center;
   min-width: 120px;
 }
@@ -120,14 +120,14 @@
   align-items: center;
   min-height: 120px;
   padding: var(--space-md);
-  background: rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: var(--black-30);
+  border: var(--border-width-2) solid var(--white-10);
   border-radius: var(--radius-lg);
   overflow-x: auto;
 }
 
 .emptyQueue {
-  color: #444;
+  color: var(--gray-700);
   font-size: var(--text-base);
   text-align: center;
   padding: var(--space-2xl);
@@ -142,10 +142,10 @@
   gap: var(--space-xs);
   min-width: 70px;
   padding: 0.75rem 0.9rem;
-  background: rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: var(--black-30);
+  border: var(--border-width-2) solid var(--white-10);
   border-radius: var(--radius-md);
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .queueItem.activeItem {
@@ -153,7 +153,7 @@
 }
 
 .queueValue {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xl);
   font-weight: var(--font-semibold);
   color: var(--color-white);
@@ -174,7 +174,7 @@
 
 /* Output section */
 .outputSection {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   min-width: 120px;
@@ -186,7 +186,7 @@
   color: var(--gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-sm);
 }
 
 .output {
@@ -197,13 +197,13 @@
 }
 
 .outputValue {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
 }
 
 .outputEmpty {
-  color: #444;
+  color: var(--gray-700);
   font-size: var(--text-xl);
 }
 
@@ -213,7 +213,7 @@
   align-items: flex-start;
   gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--black-30);
   border-radius: var(--radius-lg);
   border-left: 3px solid var(--color-primary);
 }
@@ -224,7 +224,7 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 0.2rem 0.5rem;
+  padding: var(--space-0-5) var(--space-sm);
   border-radius: var(--radius-sm);
   color: white;
 }
@@ -232,7 +232,7 @@
 .stepText {
   font-size: var(--text-base);
   color: var(--gray-300);
-  line-height: 1.5;
+  line-height: var(--leading-normal);
 }
 
 /* Controls */
@@ -251,7 +251,7 @@
 }
 
 .btnPrimary {
-  padding: 0.6rem 1.25rem;
+  padding: var(--space-2-5) var(--space-xl);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--gradient-brand);
@@ -270,16 +270,16 @@
 .btnSecondary {
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-base);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--white-5);
+  border: var(--border-width-1) solid var(--white-10);
   border-radius: var(--radius-md);
   color: var(--gray-500);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--white-10);
   color: var(--color-white);
 }
 
@@ -292,11 +292,11 @@
 .insight {
   padding: var(--space-md) var(--space-lg);
   background: var(--color-primary-10);
-  border: 1px solid var(--color-primary-20);
+  border: var(--border-width-1) solid var(--color-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
   color: var(--gray-300);
-  line-height: 1.5;
+  line-height: var(--leading-normal);
 }
 
 .insight strong {

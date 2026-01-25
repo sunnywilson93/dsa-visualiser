@@ -8,9 +8,9 @@
   top: 50%;
   transform: translateY(-60%);
   z-index: 10;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: var(--space-3xl);
+  height: var(--space-3xl);
+  border-radius: var(--radius-full);
   border: none;
   background: rgba(15, 15, 26, 0.9);
   color: var(--color-primary-light);
@@ -39,11 +39,11 @@
 }
 
 .navLeft {
-  left: 8px;
+  left: var(--space-sm);
 }
 
 .navRight {
-  right: 8px;
+  right: var(--space-sm);
 }
 
 /* Scroll container */
@@ -85,7 +85,7 @@
   position: relative;
   background: linear-gradient(135deg, var(--color-primary-15), var(--color-secondary-15));
   border-radius: var(--radius-2xl);
-  padding: 2px;
+  padding: var(--space-0-5);
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-slow);
@@ -98,7 +98,7 @@
   position: absolute;
   inset: 0;
   border-radius: var(--radius-2xl);
-  padding: 2px;
+  padding: var(--space-0-5);
   background: linear-gradient(135deg, var(--color-primary-40), rgba(236, 72, 153, 0.4));
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
@@ -156,7 +156,7 @@
   font-size: var(--text-base);
   color: var(--text-secondary);
   margin: 0;
-  line-height: 1.5;
+  line-height: var(--leading-normal);
   flex: 1;
 }
 
@@ -165,7 +165,7 @@
   gap: var(--space-lg);
   margin-top: auto;
   padding-top: 0.75rem;
-  border-top: 1px solid var(--border-card);
+  border-top: var(--border-width-1) solid var(--border-card);
 }
 
 .stat {
@@ -179,13 +179,13 @@
   display: flex;
   justify-content: center;
   gap: var(--space-sm);
-  margin-top: 1rem;
+  margin-top: var(--space-lg);
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+  width: var(--space-sm);
+  height: var(--space-sm);
+  border-radius: var(--radius-full);
   border: none;
   background: var(--color-primary-30);
   cursor: pointer;
@@ -199,7 +199,7 @@
 
 .dotActive {
   background: var(--gradient-neon);
-  width: 24px;
+  width: var(--space-xl);
   border-radius: var(--radius-sm);
   box-shadow: 0 0 8px var(--color-primary-50);
 }
@@ -231,7 +231,7 @@
   }
 
   .cardTitle {
-    font-size: 1.1rem;
+    font-size: var(--text-lg);
   }
 
   .cardDescription {
