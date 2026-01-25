@@ -113,7 +113,7 @@ Plans:
 
 - [x] **Phase 7: Foundation** - DSAPatterns structure, routing, and pattern metadata
 - [x] **Phase 8: TwoPointersViz** - Complete Two Pointers pattern page with variants
-- [ ] **Phase 9: HashMapViz** - Complete Hash Map pattern page with bucket visualization
+- [x] **Phase 9: HashMapViz** - Complete Hash Map pattern page with bucket visualization
 - [ ] **Phase 10: BitManipulationViz** - Complete Bit Manipulation pattern page with operation animation
 
 ## Phase Details
@@ -164,9 +164,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 09-01-PLAN.md - Core HashMapViz component with bucket grid, hash calculation display, wiring, and beginner examples
-- [ ] 09-02-PLAN.md - Intermediate examples (Valid Anagram with frequency counting)
-- [ ] 09-03-PLAN.md - Advanced examples (Group Anagrams with sorted key technique)
+- [x] 09-01-PLAN.md - Core HashMapViz component with bucket grid, hash calculation display, wiring, and beginner examples
+- [x] 09-02-PLAN.md - Intermediate examples (Valid Anagram with frequency counting)
+- [x] 09-03-PLAN.md - Advanced examples (Group Anagrams with sorted key technique)
 
 ### Phase 10: BitManipulationViz
 **Goal**: Learners can step through Bit Manipulation seeing each bit position as independent flag
@@ -201,9 +201,9 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | 6. ObjectsBasicsViz | v1.0 | 3/3 | Complete | 2026-01-24 |
 | 7. Foundation | v1.1 | 2/2 | Complete | 2026-01-24 |
 | 8. TwoPointersViz | v1.1 | 3/3 | Complete | 2026-01-25 |
-| 9. HashMapViz | v1.1 | 0/3 | Planned | - |
+| 9. HashMapViz | v1.1 | 3/3 | Complete | 2026-01-25 |
 | 10. BitManipulationViz | v1.1 | 0/3 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-25 — Phase 9 planned (3 plans in 3 waves)*
+*Last updated: 2026-01-25 — Phase 9 complete (HashMapViz shipped)*

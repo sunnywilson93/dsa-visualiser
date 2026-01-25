@@ -1023,7 +1023,458 @@ const examples: Record<Variant, Record<Level, HashMapExample[]>> = {
         insight: 'Count characters in first string (+1), then decrement for second string (-1). If all counts reach 0, strings are anagrams. O(n) time, O(1) space (26 letters max).'
       }
     ],
-    advanced: []
+    advanced: [
+      {
+        id: 'group-anagrams',
+        title: 'Group Anagrams',
+        variant: 'frequency-counter',
+        code: [
+          'function groupAnagrams(strs) {',
+          '  const groups = {}',
+          '',
+          '  for (const word of strs) {',
+          '    const key = [...word].sort().join("")',
+          '',
+          '    if (!groups[key]) groups[key] = []',
+          '    groups[key].push(word)',
+          '  }',
+          '',
+          '  return Object.values(groups)',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Group words that are anagrams of each other. Use sorted string as key to group words.',
+            phase: 'read-key',
+            buckets: createEmptyBuckets(),
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            output: ['Input: ["eat", "tea", "tan", "ate", "nat", "bat"]']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'Create empty groups object. Keys will be sorted strings, values will be arrays of original words.',
+            phase: 'read-key',
+            buckets: createEmptyBuckets(),
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            output: ['groups = {}']
+          },
+          {
+            id: 2,
+            codeLine: 3,
+            description: 'Process first word: "eat".',
+            phase: 'read-key',
+            currentKey: 'eat',
+            buckets: createEmptyBuckets(),
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 0,
+            output: ['Processing: "eat"']
+          },
+          {
+            id: 3,
+            codeLine: 4,
+            description: 'Sort "eat" to create key: e,a,t → a,e,t → "aet". This canonical form identifies all anagrams.',
+            phase: 'calculate-hash',
+            currentKey: 'aet',
+            hashCalculation: {
+              key: 'eat→aet',
+              charCodes: [97, 101, 116],
+              sum: 314,
+              bucketCount: 8,
+              result: 2
+            },
+            buckets: createEmptyBuckets(),
+            highlightedBucket: 2,
+            decision: {
+              condition: 'Sort "eat" to create key',
+              conditionMet: true,
+              action: '"eat" → "aet"'
+            },
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 0,
+            output: ['[...\"eat\"].sort().join("")', 'key = "aet"']
+          },
+          {
+            id: 4,
+            codeLine: 6,
+            description: 'Key "aet" not in groups. Create new array: groups["aet"] = [].',
+            phase: 'access-bucket',
+            currentKey: 'aet',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '[]', isNew: true }]
+              return b
+            })(),
+            highlightedBucket: 2,
+            decision: {
+              condition: 'Is "aet" in groups?',
+              conditionMet: false,
+              action: 'No, create empty array'
+            },
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 0,
+            output: ['groups["aet"] = []']
+          },
+          {
+            id: 5,
+            codeLine: 7,
+            description: 'Push "eat" to groups["aet"]. First word in this anagram group.',
+            phase: 'access-bucket',
+            currentKey: 'aet',
+            currentValue: '["eat"]',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat"]', isHighlighted: true }]
+              return b
+            })(),
+            highlightedBucket: 2,
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 0,
+            output: ['groups["aet"].push("eat")', 'groups: {aet: ["eat"]}']
+          },
+          {
+            id: 6,
+            codeLine: 3,
+            description: 'Process next word: "tea".',
+            phase: 'read-key',
+            currentKey: 'tea',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat"]' }]
+              return b
+            })(),
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 1,
+            output: ['Processing: "tea"']
+          },
+          {
+            id: 7,
+            codeLine: 4,
+            description: 'Sort "tea" → "aet". Same key as "eat"! They are anagrams.',
+            phase: 'calculate-hash',
+            currentKey: 'aet',
+            hashCalculation: {
+              key: 'tea→aet',
+              charCodes: [97, 101, 116],
+              sum: 314,
+              bucketCount: 8,
+              result: 2
+            },
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat"]', isHighlighted: true }]
+              return b
+            })(),
+            highlightedBucket: 2,
+            highlightedEntry: 'aet',
+            decision: {
+              condition: 'Sort "tea" to create key',
+              conditionMet: true,
+              action: '"tea" → "aet" (same as "eat"!)'
+            },
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 1,
+            output: ['key = "aet"', 'Same key as "eat"!']
+          },
+          {
+            id: 8,
+            codeLine: 7,
+            description: 'Key "aet" exists. Push "tea" to existing array. Group grows!',
+            phase: 'access-bucket',
+            currentKey: 'aet',
+            currentValue: '["eat","tea"]',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea"]', isHighlighted: true }]
+              return b
+            })(),
+            highlightedBucket: 2,
+            decision: {
+              condition: 'Is "aet" in groups?',
+              conditionMet: true,
+              action: 'Yes, push to existing array'
+            },
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 1,
+            output: ['groups["aet"].push("tea")', 'groups: {aet: ["eat", "tea"]}']
+          },
+          {
+            id: 9,
+            codeLine: 3,
+            description: 'Process next word: "tan".',
+            phase: 'read-key',
+            currentKey: 'tan',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea"]' }]
+              return b
+            })(),
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 2,
+            output: ['Processing: "tan"']
+          },
+          {
+            id: 10,
+            codeLine: 4,
+            description: 'Sort "tan" → "ant". Different key - new anagram group.',
+            phase: 'calculate-hash',
+            currentKey: 'ant',
+            hashCalculation: {
+              key: 'tan→ant',
+              charCodes: [97, 110, 116],
+              sum: 323,
+              bucketCount: 8,
+              result: 3
+            },
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea"]' }]
+              return b
+            })(),
+            highlightedBucket: 3,
+            decision: {
+              condition: 'Sort "tan" to create key',
+              conditionMet: true,
+              action: '"tan" → "ant" (new key!)'
+            },
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 2,
+            output: ['key = "ant"', 'New anagram group!']
+          },
+          {
+            id: 11,
+            codeLine: 7,
+            description: 'Create new array for "ant" and push "tan".',
+            phase: 'access-bucket',
+            currentKey: 'ant',
+            currentValue: '["tan"]',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea"]' }]
+              b[3].entries = [{ key: 'ant', value: '["tan"]', isNew: true }]
+              return b
+            })(),
+            highlightedBucket: 3,
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 2,
+            output: ['groups["ant"] = ["tan"]', 'groups: {aet: ["eat","tea"], ant: ["tan"]}']
+          },
+          {
+            id: 12,
+            codeLine: 3,
+            description: 'Process next word: "ate".',
+            phase: 'read-key',
+            currentKey: 'ate',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea"]' }]
+              b[3].entries = [{ key: 'ant', value: '["tan"]' }]
+              return b
+            })(),
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 3,
+            output: ['Processing: "ate"']
+          },
+          {
+            id: 13,
+            codeLine: 4,
+            description: 'Sort "ate" → "aet". Matches "eat" and "tea" group!',
+            phase: 'calculate-hash',
+            currentKey: 'aet',
+            hashCalculation: {
+              key: 'ate→aet',
+              charCodes: [97, 101, 116],
+              sum: 314,
+              bucketCount: 8,
+              result: 2
+            },
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea"]', isHighlighted: true }]
+              b[3].entries = [{ key: 'ant', value: '["tan"]' }]
+              return b
+            })(),
+            highlightedBucket: 2,
+            highlightedEntry: 'aet',
+            decision: {
+              condition: 'Sort "ate" to create key',
+              conditionMet: true,
+              action: '"ate" → "aet" (joins existing group!)'
+            },
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 3,
+            output: ['key = "aet"', 'Same group as "eat", "tea"!']
+          },
+          {
+            id: 14,
+            codeLine: 7,
+            description: 'Push "ate" to groups["aet"]. Group now has 3 words!',
+            phase: 'access-bucket',
+            currentKey: 'aet',
+            currentValue: '["eat","tea","ate"]',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]', isHighlighted: true }]
+              b[3].entries = [{ key: 'ant', value: '["tan"]' }]
+              return b
+            })(),
+            highlightedBucket: 2,
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 3,
+            output: ['groups["aet"].push("ate")', 'groups: {aet: ["eat","tea","ate"], ant: ["tan"]}']
+          },
+          {
+            id: 15,
+            codeLine: 3,
+            description: 'Process next word: "nat".',
+            phase: 'read-key',
+            currentKey: 'nat',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
+              b[3].entries = [{ key: 'ant', value: '["tan"]' }]
+              return b
+            })(),
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 4,
+            output: ['Processing: "nat"']
+          },
+          {
+            id: 16,
+            codeLine: 4,
+            description: 'Sort "nat" → "ant". Matches "tan" group!',
+            phase: 'calculate-hash',
+            currentKey: 'ant',
+            hashCalculation: {
+              key: 'nat→ant',
+              charCodes: [97, 110, 116],
+              sum: 323,
+              bucketCount: 8,
+              result: 3
+            },
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
+              b[3].entries = [{ key: 'ant', value: '["tan"]', isHighlighted: true }]
+              return b
+            })(),
+            highlightedBucket: 3,
+            highlightedEntry: 'ant',
+            decision: {
+              condition: 'Sort "nat" to create key',
+              conditionMet: true,
+              action: '"nat" → "ant" (joins "tan" group!)'
+            },
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 4,
+            output: ['key = "ant"', 'Same group as "tan"!']
+          },
+          {
+            id: 17,
+            codeLine: 7,
+            description: 'Push "nat" to groups["ant"].',
+            phase: 'access-bucket',
+            currentKey: 'ant',
+            currentValue: '["tan","nat"]',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
+              b[3].entries = [{ key: 'ant', value: '["tan","nat"]', isHighlighted: true }]
+              return b
+            })(),
+            highlightedBucket: 3,
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 4,
+            output: ['groups["ant"].push("nat")', 'groups: {aet: [...], ant: ["tan","nat"]}']
+          },
+          {
+            id: 18,
+            codeLine: 3,
+            description: 'Process last word: "bat".',
+            phase: 'read-key',
+            currentKey: 'bat',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
+              b[3].entries = [{ key: 'ant', value: '["tan","nat"]' }]
+              return b
+            })(),
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 5,
+            output: ['Processing: "bat"']
+          },
+          {
+            id: 19,
+            codeLine: 4,
+            description: 'Sort "bat" → "abt". New unique key - no anagrams for "bat".',
+            phase: 'calculate-hash',
+            currentKey: 'abt',
+            hashCalculation: {
+              key: 'bat→abt',
+              charCodes: [97, 98, 116],
+              sum: 311,
+              bucketCount: 8,
+              result: 7
+            },
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
+              b[3].entries = [{ key: 'ant', value: '["tan","nat"]' }]
+              return b
+            })(),
+            highlightedBucket: 7,
+            decision: {
+              condition: 'Sort "bat" to create key',
+              conditionMet: true,
+              action: '"bat" → "abt" (unique key!)'
+            },
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 5,
+            output: ['key = "abt"', 'No other anagrams for "bat"']
+          },
+          {
+            id: 20,
+            codeLine: 7,
+            description: 'Create new array for "abt" with just "bat".',
+            phase: 'access-bucket',
+            currentKey: 'abt',
+            currentValue: '["bat"]',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
+              b[3].entries = [{ key: 'ant', value: '["tan","nat"]' }]
+              b[7].entries = [{ key: 'abt', value: '["bat"]', isNew: true }]
+              return b
+            })(),
+            highlightedBucket: 7,
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            currentInputIndex: 5,
+            output: ['groups["abt"] = ["bat"]']
+          },
+          {
+            id: 21,
+            codeLine: 10,
+            description: 'Return Object.values(groups). Three groups of anagrams found!',
+            phase: 'done',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
+              b[3].entries = [{ key: 'ant', value: '["tan","nat"]' }]
+              b[7].entries = [{ key: 'abt', value: '["bat"]' }]
+              return b
+            })(),
+            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+            output: [
+              'return Object.values(groups)',
+              'Result: [["eat","tea","ate"], ["tan","nat"], ["bat"]]'
+            ]
+          }
+        ],
+        insight: 'Sorted string as key groups anagrams automatically. All anagrams sort to the same key. Time: O(n × k log k) where k is max word length. Space: O(n × k) for storing all words.'
+      }
+    ]
   },
   'index-storage': {
     beginner: [],
