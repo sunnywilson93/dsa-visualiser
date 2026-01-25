@@ -33,6 +33,8 @@
   color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
+  min-height: 44px;
+  touch-action: manipulation;
 }
 
 .levelBtn:hover:not(:disabled) {
@@ -76,6 +78,8 @@
   color: var(--gray-500);
   cursor: pointer;
   transition: all 0.2s;
+  min-height: 44px;
+  touch-action: manipulation;
 }
 
 .exampleTab:hover {
@@ -537,6 +541,7 @@
   .exampleTab {
     padding: 0.35rem 0.6rem;
     font-size: var(--text-xs);
+    min-height: 44px;
   }
 
   .legend {
