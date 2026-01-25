@@ -184,6 +184,9 @@
   border-radius: var(--radius-lg);
   font-family: 'Fira Code', monospace;
   transition: all 0.2s;
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .heapObject.highlightNew {
@@ -476,5 +479,32 @@
   .exampleTab {
     padding: 0.35rem 0.6rem;
     font-size: var(--text-xs);
+  }
+}
+
+@media (max-width: 640px) {
+  .property {
+    flex-wrap: wrap;
+  }
+
+  .heapObject {
+    padding: var(--space-sm);
+  }
+
+  .stackItem {
+    font-size: var(--text-xs);
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .extractionItem {
+    font-size: var(--text-xs);
+    padding: var(--space-xs) var(--space-sm);
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .extractSource,
+  .extractTarget {
+    min-width: 60px;
   }
 }
