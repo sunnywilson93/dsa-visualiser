@@ -47,30 +47,6 @@
   gap: 2px;
 }
 
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-}
-
-.breadcrumbLink {
-  color: var(--text-muted);
-  text-decoration: none;
-}
-
-.breadcrumbLink:hover {
-  color: var(--text-secondary);
-}
-
-.breadcrumbSep {
-  color: var(--text-muted);
-}
-
-.breadcrumbCurrent {
-  color: var(--text-secondary);
-}
-
 .title {
   font-size: 18px;
   font-weight: var(--font-semibold);
@@ -178,10 +154,6 @@
   .headerLeft {
     flex: 1;
     min-width: 0;
-  }
-
-  .breadcrumb {
-    display: none;
   }
 
   .title {

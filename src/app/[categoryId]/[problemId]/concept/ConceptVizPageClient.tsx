@@ -3,6 +3,7 @@
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Code } from 'lucide-react'
+import { NavBar } from '@/components/NavBar'
 import { ConceptPanel } from '@/components/ConceptPanel'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { RelatedPatterns } from '@/components/CrossLinks'
@@ -34,6 +35,13 @@ export default function ConceptVizPageClient() {
   const conceptSteps = problem ? getConceptSteps(problem.id, problem.category) : []
   const hasConcept = categoryConcept && insight && conceptSteps.length > 0
 
+  // Build breadcrumbs
+  const breadcrumbs = [
+    { label: 'DSA', path: `/${categoryId}` },
+    ...(subcategoryName ? [{ label: subcategoryName }] : []),
+    { label: problem?.name || problemId },
+  ]
+
   if (!problem || !hasConcept) {
     return (
       <div className={styles.notFound}>
@@ -47,25 +55,14 @@ export default function ConceptVizPageClient() {
 
   return (
     <div className={styles.page}>
+      <NavBar breadcrumbs={breadcrumbs} />
+
       <header className={styles.header}>
         <div className={styles.headerLeft}>
           <button onClick={() => router.back()} className={styles.backBtn}>
             <ArrowLeft size={16} />
           </button>
           <div className={styles.problemInfo}>
-            <div className={styles.breadcrumb}>
-              <Link href="/" className={styles.breadcrumbLink}>Home</Link>
-              <span className={styles.breadcrumbSep}>/</span>
-              <Link href={`/${categoryId}`} className={styles.breadcrumbLink}>
-                DSA
-              </Link>
-              {subcategoryName && (
-                <>
-                  <span className={styles.breadcrumbSep}>/</span>
-                  <span className={styles.breadcrumbCurrent}>{subcategoryName}</span>
-                </>
-              )}
-            </div>
             <h1 className={styles.title}>{problem.name}</h1>
           </div>
           <span className={`${styles.difficulty} ${styles[problem.difficulty]}`}>
