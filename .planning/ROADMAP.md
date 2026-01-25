@@ -4,6 +4,7 @@
 
 - [x] **v1.0 JS Concept Visualizations** - Phases 1-6 (shipped 2026-01-24)
 - [x] **v1.1 DSA Pattern Visualizations** - Phases 7-10 (shipped 2026-01-25)
+- [ ] **v1.2 Polish & Production** - Phases 11-15 (in progress)
 
 ## Phases
 
@@ -107,16 +108,10 @@ Plans:
 
 </details>
 
-### v1.1 DSA Pattern Visualizations (SHIPPED 2026-01-25)
+<details>
+<summary>v1.1 DSA Pattern Visualizations (Phases 7-10) - SHIPPED 2026-01-25</summary>
 
 **Milestone Goal:** Learners can step through algorithm patterns visually, understanding decision logic rather than just memorizing steps. Three core patterns: Two Pointers, Hash Map, and Bit Manipulation.
-
-- [x] **Phase 7: Foundation** - DSAPatterns structure, routing, and pattern metadata
-- [x] **Phase 8: TwoPointersViz** - Complete Two Pointers pattern page with variants
-- [x] **Phase 9: HashMapViz** - Complete Hash Map pattern page with bucket visualization
-- [x] **Phase 10: BitManipulationViz** - Complete Bit Manipulation pattern page with operation animation
-
-## Phase Details
 
 ### Phase 7: Foundation
 **Goal**: DSAPatterns infrastructure exists for pattern pages with shared types and routing
@@ -186,10 +181,99 @@ Plans:
 - [x] 10-02-PLAN.md - Beginner examples (Single Number, Power of Two, Multiply/Divide)
 - [x] 10-03-PLAN.md - Intermediate/advanced examples (Missing Number, Counting Bits, Reverse Bits, Subset Generation)
 
+</details>
+
+### v1.2 Polish & Production (In Progress)
+
+**Milestone Goal:** Make the platform production-ready with responsive design, consistent page structure, cross-linking between pattern and problem pages, and SEO optimization.
+
+- [ ] **Phase 11: Foundation & Mobile Strategy** - Breakpoint standardization, mobile editor strategy, cross-link utilities
+- [ ] **Phase 12: SEO Standardization** - Metadata on all routes, breadcrumb schema, OpenGraph images
+- [ ] **Phase 13: Cross-Linking** - Pattern-problem bidirectional links, footer navigation
+- [ ] **Phase 14: Page Consistency** - Consistent headers, NavBar breadcrumbs across all pages
+- [ ] **Phase 15: Responsive Implementation** - Mobile navigation, touch targets, responsive visualizations
+
+## Phase Details
+
+### Phase 11: Foundation & Mobile Strategy
+**Goal**: Establish responsive foundations and mobile editor strategy before building presentation layers
+**Depends on**: Phase 10 (v1.1 complete)
+**Requirements**: RESP-01, RESP-05
+**Success Criteria** (what must be TRUE):
+  1. Breakpoint system documented (640px/768px/1024px) with CSS variables or constants
+  2. Mobile editor strategy decided and implemented (read-only code display below 768px)
+  3. Cross-link utility functions exist (getCrossLinks.ts for pattern-problem relationships)
+  4. SSR-safe responsive coding standards documented (CSS-only media queries, no JS viewport detection)
+**Plans**: TBD
+
+Plans:
+- [ ] 11-01-PLAN.md - Breakpoint audit, CSS variables, mobile editor read-only fallback
+- [ ] 11-02-PLAN.md - Cross-link utility functions (getCrossLinks.ts)
+
+### Phase 12: SEO Standardization
+**Goal**: All pages have proper metadata, structured data, and social sharing images
+**Depends on**: Nothing (independent of Phase 11, can run parallel)
+**Requirements**: SEO-01, SEO-02, SEO-03
+**Success Criteria** (what must be TRUE):
+  1. All dynamic routes have generateMetadata exporting unique title, description, canonical URL
+  2. Breadcrumb schema (JSON-LD) present on all page types (concepts, patterns, problems)
+  3. Dynamic OpenGraph images generated for pattern pages and concept pages
+  4. Sitemap includes all pages with correct lastmod dates
+**Plans**: TBD
+
+Plans:
+- [ ] 12-01-PLAN.md - generateMetadata audit and completion for all routes
+- [ ] 12-02-PLAN.md - Breadcrumb schema extension and OpenGraph image generation
+
+### Phase 13: Cross-Linking
+**Goal**: Users can navigate between pattern pages and problem pages bidirectionally
+**Depends on**: Phase 11 (uses cross-link utilities)
+**Requirements**: LINK-01, LINK-02, LINK-03
+**Success Criteria** (what must be TRUE):
+  1. Pattern pages show "Practice this pattern" section with linked problems
+  2. Problem pages show "Learn the pattern" link to relevant pattern page
+  3. Footer navigation exists with site-wide links for discoverability
+  4. No orphaned pages (every page has at least 2 incoming internal links)
+**Plans**: TBD
+
+Plans:
+- [ ] 13-01-PLAN.md - RelatedProblems and RelatedPattern components
+- [ ] 13-02-PLAN.md - Footer navigation component and integration
+
+### Phase 14: Page Consistency
+**Goal**: All DSA pattern pages have consistent headers matching JS concept pages
+**Depends on**: Nothing (independent, can run parallel with Phase 13)
+**Requirements**: PAGE-01, PAGE-02
+**Success Criteria** (what must be TRUE):
+  1. DSA pattern pages use same header structure as JS concept pages (title, description, when-to-use)
+  2. NavBar breadcrumbs present and working on all page types (home > category > page)
+  3. Consistent spacing using CSS variables across pattern and concept pages
+**Plans**: TBD
+
+Plans:
+- [ ] 14-01-PLAN.md - Pattern page header standardization and NavBar breadcrumb verification
+
+### Phase 15: Responsive Implementation
+**Goal**: Platform works seamlessly on mobile, tablet, and desktop with touch-friendly controls
+**Depends on**: Phase 11 (uses breakpoint system), Phase 13, Phase 14 (content finalized)
+**Requirements**: RESP-02, RESP-03, RESP-04
+**Success Criteria** (what must be TRUE):
+  1. Mobile navigation works (hamburger menu or bottom nav replaces hidden nav items)
+  2. All interactive elements have 44px minimum tap targets
+  3. Visualizations adapt to screen width without horizontal scroll
+  4. Practice page panels collapse appropriately on tablet/mobile
+  5. Step controls remain usable on touch devices
+**Plans**: TBD
+
+Plans:
+- [ ] 15-01-PLAN.md - Mobile navigation and touch target audit
+- [ ] 15-02-PLAN.md - Responsive visualizations and panel collapse
+- [ ] 15-03-PLAN.md - Practice page responsive layout
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 7 -> 8 -> 9 -> 10
+Phases execute in numeric order: 11 -> 12 (parallel) -> 13 -> 14 (parallel) -> 15
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -203,7 +287,12 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | 8. TwoPointersViz | v1.1 | 3/3 | Complete | 2026-01-25 |
 | 9. HashMapViz | v1.1 | 3/3 | Complete | 2026-01-25 |
 | 10. BitManipulationViz | v1.1 | 3/3 | Complete | 2026-01-25 |
+| 11. Foundation & Mobile | v1.2 | 0/2 | Not started | - |
+| 12. SEO Standardization | v1.2 | 0/2 | Not started | - |
+| 13. Cross-Linking | v1.2 | 0/2 | Not started | - |
+| 14. Page Consistency | v1.2 | 0/1 | Not started | - |
+| 15. Responsive Implementation | v1.2 | 0/3 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-25 — v1.1 milestone complete*
+*Last updated: 2026-01-25 — v1.2 milestone added*

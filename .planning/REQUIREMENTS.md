@@ -23,8 +23,8 @@ Requirements for production polish. Each maps to roadmap phases.
 
 ### Cross-Linking
 
-- [ ] **LINK-01**: Pattern → Problem links ("Practice this pattern" sections)
-- [ ] **LINK-02**: Problem → Pattern links ("Learn the pattern" sections)
+- [ ] **LINK-01**: Pattern -> Problem links ("Practice this pattern" sections)
+- [ ] **LINK-02**: Problem -> Pattern links ("Learn the pattern" sections)
 - [ ] **LINK-03**: Footer navigation with site-wide links
 
 ### Page Consistency
@@ -72,25 +72,25 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| RESP-01 | TBD | Pending |
-| RESP-02 | TBD | Pending |
-| RESP-03 | TBD | Pending |
-| RESP-04 | TBD | Pending |
-| RESP-05 | TBD | Pending |
-| SEO-01 | TBD | Pending |
-| SEO-02 | TBD | Pending |
-| SEO-03 | TBD | Pending |
-| LINK-01 | TBD | Pending |
-| LINK-02 | TBD | Pending |
-| LINK-03 | TBD | Pending |
-| PAGE-01 | TBD | Pending |
-| PAGE-02 | TBD | Pending |
+| RESP-01 | Phase 11 | Pending |
+| RESP-02 | Phase 15 | Pending |
+| RESP-03 | Phase 15 | Pending |
+| RESP-04 | Phase 15 | Pending |
+| RESP-05 | Phase 11 | Pending |
+| SEO-01 | Phase 12 | Pending |
+| SEO-02 | Phase 12 | Pending |
+| SEO-03 | Phase 12 | Pending |
+| LINK-01 | Phase 13 | Pending |
+| LINK-02 | Phase 13 | Pending |
+| LINK-03 | Phase 13 | Pending |
+| PAGE-01 | Phase 14 | Pending |
+| PAGE-02 | Phase 14 | Pending |
 
 **Coverage:**
 - v1.2 requirements: 13 total
-- Mapped to phases: 0
-- Unmapped: 13 (pending roadmap creation)
+- Mapped to phases: 13
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-25*
-*Last updated: 2026-01-25 after initial definition*
+*Last updated: 2026-01-25 after roadmap creation*
