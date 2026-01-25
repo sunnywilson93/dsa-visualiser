@@ -3,7 +3,7 @@
 ## Milestones
 
 - [x] **v1.0 JS Concept Visualizations** - Phases 1-6 (shipped 2026-01-24)
-- [ ] **v1.1 DSA Pattern Visualizations** - Phases 7-10 (in progress)
+- [x] **v1.1 DSA Pattern Visualizations** - Phases 7-10 (shipped 2026-01-25)
 
 ## Phases
 
@@ -107,14 +107,14 @@ Plans:
 
 </details>
 
-### v1.1 DSA Pattern Visualizations (In Progress)
+### v1.1 DSA Pattern Visualizations (SHIPPED 2026-01-25)
 
 **Milestone Goal:** Learners can step through algorithm patterns visually, understanding decision logic rather than just memorizing steps. Three core patterns: Two Pointers, Hash Map, and Bit Manipulation.
 
 - [x] **Phase 7: Foundation** - DSAPatterns structure, routing, and pattern metadata
 - [x] **Phase 8: TwoPointersViz** - Complete Two Pointers pattern page with variants
 - [x] **Phase 9: HashMapViz** - Complete Hash Map pattern page with bucket visualization
-- [ ] **Phase 10: BitManipulationViz** - Complete Bit Manipulation pattern page with operation animation
+- [x] **Phase 10: BitManipulationViz** - Complete Bit Manipulation pattern page with operation animation
 
 ## Phase Details
 
@@ -182,9 +182,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 10-01-PLAN.md - Core BitManipulationViz component with types, binary grid, SharedViz integration, wiring
-- [ ] 10-02-PLAN.md - Beginner examples (Single Number, Power of Two, Multiply/Divide)
-- [ ] 10-03-PLAN.md - Intermediate/advanced examples (Missing Number, Counting Bits, Reverse Bits, Subset Generation)
+- [x] 10-01-PLAN.md - Core BitManipulationViz component with types, binary grid, SharedViz integration, wiring
+- [x] 10-02-PLAN.md - Beginner examples (Single Number, Power of Two, Multiply/Divide)
+- [x] 10-03-PLAN.md - Intermediate/advanced examples (Missing Number, Counting Bits, Reverse Bits, Subset Generation)
 
 ## Progress
 
@@ -202,8 +202,8 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | 7. Foundation | v1.1 | 2/2 | Complete | 2026-01-24 |
 | 8. TwoPointersViz | v1.1 | 3/3 | Complete | 2026-01-25 |
 | 9. HashMapViz | v1.1 | 3/3 | Complete | 2026-01-25 |
-| 10. BitManipulationViz | v1.1 | 0/3 | Planned | - |
+| 10. BitManipulationViz | v1.1 | 3/3 | Complete | 2026-01-25 |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-25 — Phase 10 planned (BitManipulationViz)*
+*Last updated: 2026-01-25 — v1.1 milestone complete*
