@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
-import { codeExamples } from '@/data/examples'
+import { codeExamples, exampleCategories } from '@/data/examples'
 import { getConceptForProblem } from '@/data/algorithmConcepts'
 import ConceptVizPageClient from './ConceptVizPageClient'
+import { StructuredData } from '@/components/StructuredData'
+import { generateBreadcrumbSchema } from '@/lib/seo/breadcrumb'
 
 interface Props {
   params: { categoryId: string; problemId: string }
@@ -33,6 +35,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function ConceptVisualizationPage() {
-  return <ConceptVizPageClient />
+export default function ConceptVisualizationPage({ params }: Props) {
+  const problem = codeExamples.find((p) => p.id === params.problemId)
+  const category = exampleCategories.find((c) => c.id === params.categoryId)
+
+  const breadcrumbSchema =
+    problem && category
+      ? generateBreadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: category.name, path: `/${category.id}` },
+          { name: problem.name, path: `/${params.categoryId}/${params.problemId}` },
+          { name: 'Algorithm Concept' },
+        ])
+      : null
+
+  return (
+    <>
+      {breadcrumbSchema && <StructuredData data={breadcrumbSchema} />}
+      <ConceptVizPageClient />
+    </>
+  )
 }

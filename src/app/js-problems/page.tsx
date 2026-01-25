@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { exampleCategories, getAllJsExamples } from '@/data/examples'
 import JSProblemsPageClient from './JSProblemsPageClient'
+import { StructuredData } from '@/components/StructuredData'
+import { generateBreadcrumbSchema } from '@/lib/seo/breadcrumb'
 
 const jsCategories = exampleCategories.filter((category) => category.id !== 'dsa')
 
@@ -24,5 +26,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function JSProblemsPage() {
-  return <JSProblemsPageClient />
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'JavaScript Problems' },
+  ])
+
+  return (
+    <>
+      <StructuredData data={breadcrumbSchema} />
+      <JSProblemsPageClient />
+    </>
+  )
 }

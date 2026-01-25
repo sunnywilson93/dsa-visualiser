@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { codeExamples, exampleCategories } from '@/data/examples'
 import PracticePageClient from './PracticePageClient'
+import { StructuredData } from '@/components/StructuredData'
+import { generateBreadcrumbSchema } from '@/lib/seo/breadcrumb'
 
 interface Props {
   params: { categoryId: string; problemId: string }
@@ -33,6 +35,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function PracticePage() {
-  return <PracticePageClient />
+export default function PracticePage({ params }: Props) {
+  const problem = codeExamples.find((p) => p.id === params.problemId)
+  const category = exampleCategories.find((c) => c.id === params.categoryId)
+
+  const breadcrumbSchema =
+    problem && category
+      ? generateBreadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: category.name, path: `/${category.id}` },
+          { name: problem.name },
+        ])
+      : null
+
+  return (
+    <>
+      {breadcrumbSchema && <StructuredData data={breadcrumbSchema} />}
+      <PracticePageClient />
+    </>
+  )
 }

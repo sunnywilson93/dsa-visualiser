@@ -10,7 +10,7 @@ export interface BreadcrumbItem {
   path?: string
 }
 
-export interface BreadcrumbSchema {
+export interface BreadcrumbSchema extends Record<string, unknown> {
   '@context': 'https://schema.org'
   '@type': 'BreadcrumbList'
   itemListElement: Array<{
