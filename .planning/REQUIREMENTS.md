@@ -17,9 +17,9 @@ Requirements for production polish. Each maps to roadmap phases.
 
 ### SEO & Meta
 
-- [ ] **SEO-01**: generateMetadata on all dynamic routes
-- [ ] **SEO-02**: Breadcrumb schema (JSON-LD) on all pages
-- [ ] **SEO-03**: Dynamic OpenGraph images for social sharing
+- [x] **SEO-01**: generateMetadata on all dynamic routes
+- [x] **SEO-02**: Breadcrumb schema (JSON-LD) on all pages
+- [x] **SEO-03**: Dynamic OpenGraph images for social sharing
 
 ### Cross-Linking
 
@@ -77,9 +77,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | RESP-03 | Phase 15 | Pending |
 | RESP-04 | Phase 15 | Pending |
 | RESP-05 | Phase 11 | Complete |
-| SEO-01 | Phase 12 | Pending |
-| SEO-02 | Phase 12 | Pending |
-| SEO-03 | Phase 12 | Pending |
+| SEO-01 | Phase 12 | Complete |
+| SEO-02 | Phase 12 | Complete |
+| SEO-03 | Phase 12 | Complete |
 | LINK-01 | Phase 13 | Pending |
 | LINK-02 | Phase 13 | Pending |
 | LINK-03 | Phase 13 | Pending |
@@ -93,4 +93,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-25*
-*Last updated: 2026-01-25 — Phase 11 complete (RESP-01, RESP-05)*
+*Last updated: 2026-01-25 — Phase 12 complete (SEO-01, SEO-02, SEO-03)*
