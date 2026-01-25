@@ -236,10 +236,10 @@ Plans:
   2. Problem pages show "Learn the pattern" link to relevant pattern page
   3. Footer navigation exists with site-wide links for discoverability
   4. No orphaned pages (every page has at least 2 incoming internal links)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 13-01-PLAN.md - RelatedProblems and RelatedPattern components
+- [ ] 13-01-PLAN.md - RelatedProblems and RelatedPatterns cross-link components
 - [ ] 13-02-PLAN.md - Footer navigation component and integration
 
 ### Phase 14: Page Consistency
@@ -297,4 +297,4 @@ Phases execute in numeric order: 11 -> 12 (parallel) -> 13 -> 14 (parallel) -> 1
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-25 — Phase 12 complete*
+*Last updated: 2026-01-25 — Phase 13 planned*
