@@ -11,9 +11,9 @@ See: .planning/PROJECT.md (updated 2026-01-25)
 
 Milestone: v1.2
 Phase: 15 of 15 (Responsive Implementation)
-Plan: 1 of 3 in current phase (all 3 complete)
+Plan: 3 of 3 in current phase
 Status: v1.2 milestone complete
-Last activity: 2026-01-25 - Completed 15-01-PLAN.md (mobile hamburger menu)
+Last activity: 2026-01-25 - Completed 15-03-PLAN.md (responsive visualizations)
 
 Progress: [##############################] 100% (39/39 plans complete)
 
@@ -76,6 +76,8 @@ Recent decisions affecting current work:
 | NavBar breadcrumbs pattern | Unified breadcrumb navigation via NavBar component | 14-01 |
 | CSS-only checkbox hack | Hamburger menu toggle without JS state | 15-01 |
 | Overlay as label | Tap overlay to close menu (unchecks checkbox) | 15-01 |
+| flex-wrap: nowrap for array scroll | Horizontal scroll instead of awkward wrapping | 15-03 |
+| 640px breakpoint | Additional breakpoint for smallest mobile screens | 15-03 |
 
 ### Pending Todos
 
@@ -88,6 +90,6 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 15-01-PLAN.md (mobile hamburger menu)
+Stopped at: Completed 15-03-PLAN.md (responsive visualizations)
 Resume file: None
 Next action: v1.2 milestone complete - all 15 phases finished
