@@ -610,7 +610,419 @@ const examples: Record<Variant, Record<Level, HashMapExample[]>> = {
         insight: 'Check if key exists: Yes -> increment count, No -> set count to 1. O(n) time to count all elements, O(1) lookup for each.'
       }
     ],
-    intermediate: [],
+    intermediate: [
+      {
+        id: 'valid-anagram',
+        title: 'Valid Anagram',
+        variant: 'frequency-counter',
+        code: [
+          'function isAnagram(s, t) {',
+          '  if (s.length !== t.length) return false',
+          '',
+          '  const charCount = {}',
+          '',
+          '  for (const char of s) {',
+          '    charCount[char] = (charCount[char] || 0) + 1',
+          '  }',
+          '',
+          '  for (const char of t) {',
+          '    if (!charCount[char]) return false',
+          '    charCount[char]--',
+          '  }',
+          '',
+          '  return true',
+          '}'
+        ],
+        steps: [
+          {
+            id: 0,
+            codeLine: 0,
+            description: 'Check if two strings are anagrams. Count chars in first string, then verify second string has same counts.',
+            phase: 'read-key',
+            buckets: createEmptyBuckets(),
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            output: ['s = "anagram"', 't = "nagaram"']
+          },
+          {
+            id: 1,
+            codeLine: 1,
+            description: 'Check if lengths match. 7 === 7, continue.',
+            phase: 'read-key',
+            buckets: createEmptyBuckets(),
+            decision: {
+              condition: 's.length === t.length?',
+              conditionMet: true,
+              action: 'Yes (7 === 7), continue'
+            },
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            output: ['Length check: 7 === 7', 'Strings could be anagrams']
+          },
+          {
+            id: 2,
+            codeLine: 3,
+            description: 'Create empty character count map.',
+            phase: 'read-key',
+            buckets: createEmptyBuckets(),
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            output: ['charCount = {}']
+          },
+          {
+            id: 3,
+            codeLine: 5,
+            description: 'First loop: count characters in s. Process char = "a".',
+            phase: 'read-key',
+            currentKey: 'a',
+            buckets: createEmptyBuckets(),
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            currentInputIndex: 0,
+            output: ['Processing s[0] = "a"']
+          },
+          {
+            id: 4,
+            codeLine: 6,
+            description: 'Hash("a") = 97 % 8 = 1. Insert "a" with count 1.',
+            phase: 'calculate-hash',
+            currentKey: 'a',
+            hashCalculation: {
+              key: 'a',
+              charCodes: [97],
+              sum: 97,
+              bucketCount: 8,
+              result: 1
+            },
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 1, isNew: true }]
+              return b
+            })(),
+            highlightedBucket: 1,
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            currentInputIndex: 0,
+            output: ['charCount["a"] = 1', '{a: 1}']
+          },
+          {
+            id: 5,
+            codeLine: 5,
+            description: 'Process char = "n".',
+            phase: 'read-key',
+            currentKey: 'n',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 1 }]
+              return b
+            })(),
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            currentInputIndex: 1,
+            output: ['Processing s[1] = "n"']
+          },
+          {
+            id: 6,
+            codeLine: 6,
+            description: 'Hash("n") = 110 % 8 = 6. Insert "n" with count 1.',
+            phase: 'calculate-hash',
+            currentKey: 'n',
+            hashCalculation: {
+              key: 'n',
+              charCodes: [110],
+              sum: 110,
+              bucketCount: 8,
+              result: 6
+            },
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 1 }]
+              b[6].entries = [{ key: 'n', value: 1, isNew: true }]
+              return b
+            })(),
+            highlightedBucket: 6,
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            currentInputIndex: 1,
+            output: ['charCount["n"] = 1', '{a: 1, n: 1}']
+          },
+          {
+            id: 7,
+            codeLine: 5,
+            description: 'Process char = "a" again.',
+            phase: 'read-key',
+            currentKey: 'a',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 1 }]
+              b[6].entries = [{ key: 'n', value: 1 }]
+              return b
+            })(),
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            currentInputIndex: 2,
+            output: ['Processing s[2] = "a"']
+          },
+          {
+            id: 8,
+            codeLine: 6,
+            description: '"a" exists, increment to 2.',
+            phase: 'access-bucket',
+            currentKey: 'a',
+            currentValue: 2,
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 2, isHighlighted: true }]
+              b[6].entries = [{ key: 'n', value: 1 }]
+              return b
+            })(),
+            highlightedBucket: 1,
+            highlightedEntry: 'a',
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            currentInputIndex: 2,
+            output: ['charCount["a"] = 2', '{a: 2, n: 1}']
+          },
+          {
+            id: 9,
+            codeLine: 6,
+            description: 'Process "g". Hash("g") = 103 % 8 = 7. Insert with count 1.',
+            phase: 'calculate-hash',
+            currentKey: 'g',
+            hashCalculation: {
+              key: 'g',
+              charCodes: [103],
+              sum: 103,
+              bucketCount: 8,
+              result: 7
+            },
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 2 }]
+              b[6].entries = [{ key: 'n', value: 1 }]
+              b[7].entries = [{ key: 'g', value: 1, isNew: true }]
+              return b
+            })(),
+            highlightedBucket: 7,
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            currentInputIndex: 3,
+            output: ['charCount["g"] = 1', '{a: 2, n: 1, g: 1}']
+          },
+          {
+            id: 10,
+            codeLine: 6,
+            description: 'Process "r". Hash("r") = 114 % 8 = 2. Insert with count 1.',
+            phase: 'calculate-hash',
+            currentKey: 'r',
+            hashCalculation: {
+              key: 'r',
+              charCodes: [114],
+              sum: 114,
+              bucketCount: 8,
+              result: 2
+            },
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 2 }]
+              b[2].entries = [{ key: 'r', value: 1, isNew: true }]
+              b[6].entries = [{ key: 'n', value: 1 }]
+              b[7].entries = [{ key: 'g', value: 1 }]
+              return b
+            })(),
+            highlightedBucket: 2,
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            currentInputIndex: 4,
+            output: ['charCount["r"] = 1', '{a: 2, n: 1, g: 1, r: 1}']
+          },
+          {
+            id: 11,
+            codeLine: 6,
+            description: 'Process "a" again. Increment to 3.',
+            phase: 'access-bucket',
+            currentKey: 'a',
+            currentValue: 3,
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 3, isHighlighted: true }]
+              b[2].entries = [{ key: 'r', value: 1 }]
+              b[6].entries = [{ key: 'n', value: 1 }]
+              b[7].entries = [{ key: 'g', value: 1 }]
+              return b
+            })(),
+            highlightedBucket: 1,
+            highlightedEntry: 'a',
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            currentInputIndex: 5,
+            output: ['charCount["a"] = 3', '{a: 3, n: 1, g: 1, r: 1}']
+          },
+          {
+            id: 12,
+            codeLine: 6,
+            description: 'Process "m". Hash("m") = 109 % 8 = 5. Insert with count 1.',
+            phase: 'calculate-hash',
+            currentKey: 'm',
+            hashCalculation: {
+              key: 'm',
+              charCodes: [109],
+              sum: 109,
+              bucketCount: 8,
+              result: 5
+            },
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 3 }]
+              b[2].entries = [{ key: 'r', value: 1 }]
+              b[5].entries = [{ key: 'm', value: 1, isNew: true }]
+              b[6].entries = [{ key: 'n', value: 1 }]
+              b[7].entries = [{ key: 'g', value: 1 }]
+              return b
+            })(),
+            highlightedBucket: 5,
+            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
+            currentInputIndex: 6,
+            output: ['charCount["m"] = 1', '{a: 3, n: 1, g: 1, r: 1, m: 1}']
+          },
+          {
+            id: 13,
+            codeLine: 9,
+            description: 'First loop done. Now verify t = "nagaram" has same character counts.',
+            phase: 'read-key',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 3 }]
+              b[2].entries = [{ key: 'r', value: 1 }]
+              b[5].entries = [{ key: 'm', value: 1 }]
+              b[6].entries = [{ key: 'n', value: 1 }]
+              b[7].entries = [{ key: 'g', value: 1 }]
+              return b
+            })(),
+            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
+            output: ['Counts built: {a:3, n:1, g:1, r:1, m:1}', 'Now checking t = "nagaram"']
+          },
+          {
+            id: 14,
+            codeLine: 10,
+            description: 'Process t[0] = "n". Check if charCount["n"] is truthy.',
+            phase: 'access-bucket',
+            currentKey: 'n',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 3 }]
+              b[2].entries = [{ key: 'r', value: 1 }]
+              b[5].entries = [{ key: 'm', value: 1 }]
+              b[6].entries = [{ key: 'n', value: 1, isHighlighted: true }]
+              b[7].entries = [{ key: 'g', value: 1 }]
+              return b
+            })(),
+            highlightedBucket: 6,
+            highlightedEntry: 'n',
+            decision: {
+              condition: 'Is charCount["n"] truthy?',
+              conditionMet: true,
+              action: 'Yes (count=1), decrement'
+            },
+            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
+            currentInputIndex: 0,
+            output: ['charCount["n"] = 1', 'Truthy, decrement']
+          },
+          {
+            id: 15,
+            codeLine: 11,
+            description: 'Decrement charCount["n"] to 0.',
+            phase: 'access-bucket',
+            currentKey: 'n',
+            currentValue: 0,
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 3 }]
+              b[2].entries = [{ key: 'r', value: 1 }]
+              b[5].entries = [{ key: 'm', value: 1 }]
+              b[6].entries = [{ key: 'n', value: 0, isHighlighted: true }]
+              b[7].entries = [{ key: 'g', value: 1 }]
+              return b
+            })(),
+            highlightedBucket: 6,
+            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
+            currentInputIndex: 0,
+            output: ['charCount["n"]--', '{a: 3, n: 0, g: 1, r: 1, m: 1}']
+          },
+          {
+            id: 16,
+            codeLine: 10,
+            description: 'Process t[1] = "a". charCount["a"] = 3, truthy.',
+            phase: 'access-bucket',
+            currentKey: 'a',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 3, isHighlighted: true }]
+              b[2].entries = [{ key: 'r', value: 1 }]
+              b[5].entries = [{ key: 'm', value: 1 }]
+              b[6].entries = [{ key: 'n', value: 0 }]
+              b[7].entries = [{ key: 'g', value: 1 }]
+              return b
+            })(),
+            highlightedBucket: 1,
+            highlightedEntry: 'a',
+            decision: {
+              condition: 'Is charCount["a"] truthy?',
+              conditionMet: true,
+              action: 'Yes (count=3), decrement'
+            },
+            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
+            currentInputIndex: 1,
+            output: ['charCount["a"] = 3', 'Truthy, decrement']
+          },
+          {
+            id: 17,
+            codeLine: 11,
+            description: 'Decrement charCount["a"] to 2.',
+            phase: 'access-bucket',
+            currentKey: 'a',
+            currentValue: 2,
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 2, isHighlighted: true }]
+              b[2].entries = [{ key: 'r', value: 1 }]
+              b[5].entries = [{ key: 'm', value: 1 }]
+              b[6].entries = [{ key: 'n', value: 0 }]
+              b[7].entries = [{ key: 'g', value: 1 }]
+              return b
+            })(),
+            highlightedBucket: 1,
+            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
+            currentInputIndex: 1,
+            output: ['charCount["a"]--', '{a: 2, n: 0, g: 1, r: 1, m: 1}']
+          },
+          {
+            id: 18,
+            codeLine: 11,
+            description: 'Process "g", "a", "r", "a", "m" - decrement each. All counts reach 0.',
+            phase: 'access-bucket',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 0 }]
+              b[2].entries = [{ key: 'r', value: 0 }]
+              b[5].entries = [{ key: 'm', value: 0 }]
+              b[6].entries = [{ key: 'n', value: 0 }]
+              b[7].entries = [{ key: 'g', value: 0 }]
+              return b
+            })(),
+            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
+            currentInputIndex: 6,
+            output: ['All chars processed', '{a: 0, n: 0, g: 0, r: 0, m: 0}']
+          },
+          {
+            id: 19,
+            codeLine: 14,
+            description: 'All counts are 0, meaning both strings have identical character frequencies. Return true!',
+            phase: 'done',
+            buckets: (() => {
+              const b = createEmptyBuckets()
+              b[1].entries = [{ key: 'a', value: 0 }]
+              b[2].entries = [{ key: 'r', value: 0 }]
+              b[5].entries = [{ key: 'm', value: 0 }]
+              b[6].entries = [{ key: 'n', value: 0 }]
+              b[7].entries = [{ key: 'g', value: 0 }]
+              return b
+            })(),
+            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
+            output: ['return true', '"anagram" and "nagaram" are anagrams!']
+          }
+        ],
+        insight: 'Count characters in first string (+1), then decrement for second string (-1). If all counts reach 0, strings are anagrams. O(n) time, O(1) space (26 letters max).'
+      }
+    ],
     advanced: []
   },
   'index-storage': {
