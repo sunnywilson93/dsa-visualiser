@@ -1,5 +1,5 @@
 interface StructuredDataProps {
-  data: Record<string, unknown>
+  data: object
 }
 
 export function StructuredData({ data }: StructuredDataProps) {
