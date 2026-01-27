@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Analytics } from '@/components/Analytics'
 import { SiteFooter } from '@/components/SiteFooter'
-import '@/index.css'
+import '@/styles/globals.css'
 
 export const metadata: Metadata = {
   verification: {
