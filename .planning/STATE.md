@@ -11,9 +11,9 @@ See: .planning/PROJECT.md (updated 2026-01-27)
 
 Milestone: v2.0
 Phase: 16 of 17 (Config & Token Migration)
-Plan: 4 of 6
+Plan: 5 of 6
 Status: In progress
-Last activity: 2026-01-27 -- Completed 16-04-PLAN.md (Typography Token Migration)
+Last activity: 2026-01-27 -- Completed 16-05-PLAN.md (Visual Token Migration)
 
 Progress: [###############.........] 88% (15/17 phases complete)
 
@@ -45,6 +45,8 @@ Recent decisions affecting current work:
 | Numeric tokens inlined | --space-0 through --space-2-5 replaced with literal px values | 16-03 |
 | --font-weight-* namespace | Font weights renamed from --font-* to --font-weight-* to avoid family collision | 16-04 |
 | Font families keep --font-* | --font-sans/mono already correct for Tailwind v4 | 16-04 |
+| Radius/shadow in @theme | --radius-* and --shadow-* map to Tailwind v4 namespaces | 16-05 |
+| Glow/border-width/transition in :root | No Tailwind v4 namespace mapping | 16-05 |
 
 ### Pending Todos
 
@@ -57,6 +59,6 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completed 16-04-PLAN.md (Typography Token Migration)
+Stopped at: Completed 16-05-PLAN.md (Visual Token Migration)
 Resume file: None
-Next action: Execute 16-05-PLAN.md
+Next action: Execute 16-06-PLAN.md
