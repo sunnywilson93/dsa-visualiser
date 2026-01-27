@@ -33,6 +33,7 @@ const DYNAMIC_PROPS_ALLOWLIST = new Set([
   '--result-color',
   '--active-color',
   '--stagger',
+  '--rule-color',
 ])
 
 function collectGlobalProperties(): Set<string> {
