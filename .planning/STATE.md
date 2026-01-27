@@ -11,9 +11,9 @@ See: .planning/PROJECT.md (updated 2026-01-27)
 
 Milestone: v2.0
 Phase: 16 of 17 (Config & Token Migration)
-Plan: 2 of 6
+Plan: 3 of 6
 Status: In progress
-Last activity: 2026-01-27 -- Completed 16-02-PLAN.md (Color Token Migration)
+Last activity: 2026-01-27 -- Completed 16-03-PLAN.md (Spacing Token Migration)
 
 Progress: [###############.........] 88% (15/17 phases complete)
 
@@ -41,6 +41,8 @@ Recent decisions affecting current work:
 | --color-* namespace for colors | All color tokens use --color-{category}-{name} in @theme | 16-02 |
 | Brand token naming | --color-primary/secondary renamed to --color-brand-primary/secondary | 16-02 |
 | --color-*: initial | Clear Tailwind default color utilities to avoid conflicts | 16-02 |
+| --spacing-* namespace | Named spacing tokens use --spacing-{size} in @theme | 16-03 |
+| Numeric tokens inlined | --space-0 through --space-2-5 replaced with literal px values | 16-03 |
 
 ### Pending Todos
 
@@ -53,6 +55,6 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completed 16-02-PLAN.md (Color Token Migration)
+Stopped at: Completed 16-03-PLAN.md (Spacing Token Migration)
 Resume file: None
-Next action: Execute 16-03-PLAN.md
+Next action: Execute 16-04-PLAN.md
