@@ -11,11 +11,11 @@ See: .planning/PROJECT.md (updated 2026-01-27)
 
 Milestone: v2.0
 Phase: 16 of 17 (Config & Token Migration)
-Plan: 5 of 6
-Status: In progress
-Last activity: 2026-01-27 -- Completed 16-05-PLAN.md (Visual Token Migration)
+Plan: 6 of 6
+Status: Phase complete
+Last activity: 2026-01-27 -- Completed 16-06-PLAN.md (Breakpoints & Animations Migration)
 
-Progress: [###############.........] 88% (15/17 phases complete)
+Progress: [################........] 94% (16/17 phases complete)
 
 ## Performance Metrics
 
@@ -47,6 +47,8 @@ Recent decisions affecting current work:
 | Font families keep --font-* | --font-sans/mono already correct for Tailwind v4 | 16-04 |
 | Radius/shadow in @theme | --radius-* and --shadow-* map to Tailwind v4 namespaces | 16-05 |
 | Glow/border-width/transition in :root | No Tailwind v4 namespace mapping | 16-05 |
+| Color-specific keyframes in @theme | Add all variants (tealPulse, orangePulse, etc.) to @theme with unique names | 16-06 |
+| Breakpoints in @theme | --breakpoint-2xs/xs/mobile for custom responsive breakpoints | 16-06 |
 
 ### Pending Todos
 
@@ -59,6 +61,6 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completed 16-05-PLAN.md (Visual Token Migration)
+Stopped at: Completed 16-06-PLAN.md (Breakpoints & Animations Migration) -- Phase 16 complete
 Resume file: None
-Next action: Execute 16-06-PLAN.md
+Next action: Begin Phase 17
