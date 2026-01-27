@@ -11,9 +11,9 @@ See: .planning/PROJECT.md (updated 2026-01-27)
 
 Milestone: v2.0
 Phase: 16 of 17 (Config & Token Migration)
-Plan: 3 of 6
+Plan: 4 of 6
 Status: In progress
-Last activity: 2026-01-27 -- Completed 16-03-PLAN.md (Spacing Token Migration)
+Last activity: 2026-01-27 -- Completed 16-04-PLAN.md (Typography Token Migration)
 
 Progress: [###############.........] 88% (15/17 phases complete)
 
@@ -43,6 +43,8 @@ Recent decisions affecting current work:
 | --color-*: initial | Clear Tailwind default color utilities to avoid conflicts | 16-02 |
 | --spacing-* namespace | Named spacing tokens use --spacing-{size} in @theme | 16-03 |
 | Numeric tokens inlined | --space-0 through --space-2-5 replaced with literal px values | 16-03 |
+| --font-weight-* namespace | Font weights renamed from --font-* to --font-weight-* to avoid family collision | 16-04 |
+| Font families keep --font-* | --font-sans/mono already correct for Tailwind v4 | 16-04 |
 
 ### Pending Todos
 
@@ -55,6 +57,6 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completed 16-03-PLAN.md (Spacing Token Migration)
+Stopped at: Completed 16-04-PLAN.md (Typography Token Migration)
 Resume file: None
-Next action: Execute 16-04-PLAN.md
+Next action: Execute 16-05-PLAN.md
