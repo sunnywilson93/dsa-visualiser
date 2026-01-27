@@ -1,12 +1,12 @@
 .controls {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   justify-content: center;
   align-items: center;
 }
 
 .btnPrimary {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--gradient-brand);
@@ -24,7 +24,7 @@
 }
 
 .btnSecondary {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-xs);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);
@@ -49,7 +49,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-sm);
+  padding: var(--spacing-sm);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
@@ -67,11 +67,11 @@
 
 @media (max-width: 640px) {
   .controls {
-    gap: var(--space-xs);
+    gap: var(--spacing-xs);
   }
 
   .btnSecondary {
-    padding: var(--space-sm) var(--space-sm);
+    padding: var(--spacing-sm) var(--spacing-sm);
     font-size: var(--text-2xs);
   }
 }

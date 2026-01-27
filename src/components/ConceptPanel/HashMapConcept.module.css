@@ -2,14 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
   width: 100%;
   color: var(--color-text-bright);
 }
 
 .annotations {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -18,7 +18,7 @@
   font-size: var(--text-xs);
   font-weight: var(--font-medium);
   color: var(--color-brand-light);
-  padding: var(--space-1) var(--space-2-5);
+  padding: 3px 10px;
   background: var(--color-neon-viz-18);
   border: var(--border-width-1) solid var(--color-neon-viz-25);
   border-radius: var(--radius-full);
@@ -29,7 +29,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .sectionLabel {
@@ -45,18 +45,18 @@
   align-items: flex-end;
   justify-content: center;
   flex-wrap: wrap;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .elementWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-0-5);
+  gap: 2px;
 }
 
 .pointerPlaceholder {
-  height: var(--space-xl);
+  height: var(--spacing-xl);
 }
 
 .currentPointer {
@@ -65,7 +65,7 @@
   font-weight: var(--font-semibold);
   font-family: var(--font-mono);
   color: var(--color-white);
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   background: var(--color-blue-400);
   border-radius: var(--radius-sm);
   box-shadow: var(--glow-md) var(--color-accent-blue-40);
@@ -89,7 +89,7 @@
   justify-content: center;
   min-width: 36px;
   height: 36px;
-  padding: 0 var(--space-sm);
+  padding: 0 var(--spacing-sm);
   background: var(--color-bg-elevated);
   border: var(--border-width-2) solid var(--color-white-15);
   border-radius: var(--radius-md);
@@ -126,7 +126,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
   width: 100%;
 }
 
@@ -141,7 +141,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-black-20);
   border: var(--border-width-1) dashed var(--color-white-15);
   border-radius: var(--radius-lg);
@@ -156,15 +156,15 @@
 .entriesGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: 6px;
   justify-content: center;
 }
 
 .entry {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
-  padding: var(--space-1-5) var(--space-md);
+  gap: var(--spacing-xs);
+  padding: 5px var(--spacing-md);
   background: var(--color-bg-elevated);
   border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
@@ -206,8 +206,8 @@
 .lookupStatus {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-xs) var(--space-md);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-md);
   background: var(--color-black-20);
   border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-lg);
@@ -223,7 +223,7 @@
   font-weight: var(--font-semibold);
   font-family: var(--font-mono);
   color: var(--color-amber-400);
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   background: var(--color-amber-15);
   border: var(--border-width-1) solid var(--color-amber-30);
   border-radius: var(--radius-sm);
@@ -233,7 +233,7 @@
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
   color: var(--difficulty-1);
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   background: var(--color-emerald-15);
   border: var(--border-width-1) solid var(--color-emerald-30);
   border-radius: var(--radius-sm);
@@ -246,7 +246,7 @@
 
 /* Result */
 .result {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-emerald-15);
   border: var(--border-width-1) solid var(--color-emerald-50);
   border-radius: var(--radius-lg);
@@ -263,7 +263,7 @@
 /* Dual Array Layout (for anagram-like problems) */
 .dualArraySection {
   display: flex;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;

@@ -6,12 +6,12 @@
 
 .exampleSelector {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
 }
 
 .exampleBtn {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--color-white-5);
@@ -37,7 +37,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
   flex-wrap: wrap;
 }
 
@@ -59,11 +59,11 @@
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
 }
 
 .description {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
   border-left: 3px solid var(--color-brand-primary);
@@ -103,7 +103,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
   flex-wrap: wrap;
 }
 
@@ -115,7 +115,7 @@
 }
 
 .btnPrimary {
-  padding: var(--space-2-5) var(--space-xl);
+  padding: 10px var(--spacing-xl);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--gradient-brand);
@@ -132,7 +132,7 @@
 }
 
 .btnSecondary {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-base);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);

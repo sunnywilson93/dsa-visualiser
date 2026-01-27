@@ -7,12 +7,12 @@
 /* Example selector */
 .exampleSelector {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
 }
 
 .exampleBtn {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--color-white-5);
@@ -38,23 +38,23 @@
 .listSection {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: var(--space-xl);
+  gap: var(--spacing-xl);
   align-items: start;
 }
 
 .listContainer {
   background: var(--color-black-20);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
 }
 
 .listHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
   flex-wrap: wrap;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--spacing-lg);
 }
 
 .listLabel {
@@ -68,13 +68,13 @@
 .pointerLegend {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: 6px;
 }
 
 .pointerChip {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 6px;
   padding: 0.2rem 0.55rem;
   border-radius: var(--radius-full);
   border: var(--border-width-1) solid var(--color-white-10);
@@ -84,8 +84,8 @@
 }
 
 .pointerDot {
-  width: var(--space-sm);
-  height: var(--space-sm);
+  width: var(--spacing-sm);
+  height: var(--spacing-sm);
   border-radius: var(--radius-full);
 }
 
@@ -105,7 +105,7 @@
   align-items: center;
   gap: 0.6rem;
   flex-wrap: wrap;
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   background: var(--color-black-30);
   border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-lg);
@@ -122,12 +122,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-1-5);
+  gap: 5px;
 }
 
 .pointerTags {
   display: flex;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -174,7 +174,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--space-2) var(--space-2-5);
+  padding: 6px 10px;
   min-width: 70px;
 }
 
@@ -193,7 +193,7 @@
 
 .connector {
   width: 26px;
-  height: var(--space-0-5);
+  height: 2px;
   background: rgba(255, 255, 255, 0.2);
   position: relative;
   flex-shrink: 0;
@@ -219,8 +219,8 @@
 }
 
 .detachedSection {
-  margin-top: var(--space-lg);
-  padding: var(--space-md);
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md);
   background: rgba(0, 0, 0, 0.25);
   border-radius: var(--radius-lg);
   border: 1px dashed var(--color-white-10);
@@ -231,20 +231,20 @@
   color: var(--color-gray-600);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 .detachedRow {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
 }
 
 /* Output section */
 .outputSection {
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
   min-width: 120px;
 }
 
@@ -254,7 +254,7 @@
   color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 .output {
@@ -279,8 +279,8 @@
 .description {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
   border-left: 3px solid var(--color-brand-primary);
@@ -292,7 +292,7 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   border-radius: var(--radius-sm);
   color: white;
 }
@@ -308,7 +308,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
 }
 
 .stepCounter {
@@ -319,7 +319,7 @@
 }
 
 .btnPrimary {
-  padding: var(--space-2-5) var(--space-xl);
+  padding: 10px var(--spacing-xl);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--gradient-brand);
@@ -336,7 +336,7 @@
 }
 
 .btnSecondary {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-base);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);
@@ -358,7 +358,7 @@
 
 /* Insight */
 .insight {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-brand-primary-10);
   border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);

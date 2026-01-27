@@ -3,7 +3,7 @@
   --js-viz-border: var(--color-white-10);
   --js-viz-muted: var(--color-gray-500);
 
-  padding: var(--space-md) var(--space-md);
+  padding: var(--spacing-md) var(--spacing-md);
   background: var(--js-viz-surface-2);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-lg);
@@ -14,12 +14,12 @@
 
 .stepBadge {
   display: inline-block;
-  padding: var(--space-0-5) var(--space-xs);
+  padding: 2px var(--spacing-xs);
   background: var(--color-brand-primary-10);
   border: var(--border-width-1) solid var(--color-brand-primary-30);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
   color: var(--color-brand-light);
-  margin-right: var(--space-sm);
+  margin-right: var(--spacing-sm);
 }

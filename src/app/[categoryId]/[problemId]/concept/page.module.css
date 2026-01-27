@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
   background: var(--color-bg-primary);
 }
 
@@ -11,22 +11,22 @@
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
-  gap: var(--space-lg);
-  margin-bottom: var(--space-lg);
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
 }
 
 .headerLeft {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
 }
 
 .backBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--space-2xl);
-  height: var(--space-2xl);
+  width: var(--spacing-2xl);
+  height: var(--spacing-2xl);
   border-radius: var(--radius-md);
   background: var(--color-bg-tertiary);
   border: var(--border-width-1) solid var(--color-border-primary);
@@ -44,7 +44,7 @@
 .problemInfo {
   display: flex;
   flex-direction: column;
-  gap: var(--space-0-5);
+  gap: 2px;
 }
 
 .title {
@@ -88,7 +88,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
   max-width: 600px;
   margin: 0 auto;
   width: 100%;
@@ -102,8 +102,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-sm);
-  padding: var(--space-md) var(--space-xl);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
   background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-purple));
   border-radius: var(--radius-md);
   color: white;
@@ -125,7 +125,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
   color: var(--color-gray-500);
   background: var(--color-bg-primary);
 }
@@ -133,7 +133,7 @@
 .backLink {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   color: var(--color-accent-blue);
   text-decoration: none;
 }
@@ -141,14 +141,14 @@
 /* Responsive */
 @media (max-width: 768px) {
   .page {
-    padding: var(--space-sm);
+    padding: var(--spacing-sm);
   }
 
   .header {
     flex-direction: row;
     align-items: center;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-sm);
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
   }
 
   .headerLeft {
@@ -157,7 +157,7 @@
   }
 
   .title {
-    font-size: var(--space-lg);
+    font-size: var(--spacing-lg);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -168,11 +168,11 @@
   }
 
   .main {
-    gap: var(--space-sm);
+    gap: var(--spacing-sm);
   }
 
   .practiceLink {
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--spacing-sm) var(--spacing-md);
     font-size: 13px;
   }
 }

@@ -4,14 +4,14 @@
   gap: 1.25rem;
   max-width: 1400px;
   margin: 0 auto;
-  padding: var(--space-xl);
+  padding: var(--spacing-xl);
   color: var(--js-viz-text);
 }
 
 /* Header */
 .header {
   text-align: center;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 .title {
@@ -34,10 +34,10 @@
 .exampleSelector {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
   flex-wrap: wrap;
   justify-content: center;
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   background: var(--js-viz-surface-2);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-lg);
@@ -53,7 +53,7 @@
 
 .exampleButtons {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
 }
 
@@ -92,7 +92,7 @@
 .editorSection {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
   min-height: 500px;
 }
 
@@ -100,7 +100,7 @@
   background: var(--js-viz-surface);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--js-viz-radius);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
   overflow: auto;
 }
 
@@ -117,7 +117,7 @@
 
 .emptyIcon {
   font-size: 3rem;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--spacing-lg);
 }
 
 .emptyState p {
@@ -132,7 +132,7 @@
 
 /* Warnings */
 .warnings {
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   background: var(--color-amber-8);
   border: 1px solid var(--color-amber-20);
   border-radius: var(--radius-lg);
@@ -141,11 +141,11 @@
 .warningsHeader {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 6px;
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
   color: var(--difficulty-2);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 .warningsList {
@@ -164,8 +164,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-md);
-  padding: var(--space-md);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
   background: var(--js-viz-surface-2);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-lg);
@@ -220,15 +220,15 @@
 .description {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--js-viz-surface-2);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-lg);
 }
 
 .phaseBadge {
-  padding: var(--space-xs) var(--space-2-5);
+  padding: var(--spacing-xs) 10px;
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
@@ -274,7 +274,7 @@
 
 @media (max-width: 600px) {
   .container {
-    padding: var(--space-lg);
+    padding: var(--spacing-lg);
   }
 
   .title {

@@ -2,14 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   width: 100%;
   color: var(--color-text-bright);
 }
 
 .annotations {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -29,8 +29,8 @@
   align-items: flex-end;
   justify-content: center;
   flex-wrap: wrap;
-  gap: var(--space-1);
-  padding: var(--space-sm);
+  gap: 3px;
+  padding: var(--spacing-sm);
   max-width: 100%;
 }
 
@@ -38,7 +38,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-0-5);
+  gap: 2px;
 }
 
 .pointerArea {
@@ -47,7 +47,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--space-0-5);
+  gap: 2px;
 }
 
 .pointer {
@@ -114,18 +114,18 @@
 .directionIndicator {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
-  margin-top: var(--space-xs);
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
 }
 
 .arrow {
-  font-size: var(--space-lg);
+  font-size: var(--spacing-lg);
   font-weight: bold;
   filter: drop-shadow(0 0 4px currentColor);
 }
 
 .directionText {
-  font-size: var(--space-2-5);
+  font-size: 10px;
   font-weight: var(--font-medium);
   color: var(--color-gray-500);
   text-transform: uppercase;
@@ -133,11 +133,11 @@
 }
 
 .result {
-  font-size: var(--space-md);
+  font-size: var(--spacing-md);
   font-weight: var(--font-medium);
   color: var(--color-gray-400);
-  margin-top: var(--space-sm);
-  padding: var(--space-xs) var(--space-sm);
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
   background: rgba(16, 185, 128, 0.15);
   border: 1px solid rgba(16, 185, 128, 0.4);
   border-radius: var(--radius-md);

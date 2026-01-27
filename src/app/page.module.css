@@ -7,7 +7,7 @@
 
 .header {
   text-align: center;
-  padding: var(--space-2xl) var(--space-2xl) var(--space-lg);
+  padding: var(--spacing-2xl) var(--spacing-2xl) var(--spacing-lg);
 }
 
 .title {
@@ -17,19 +17,19 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin: 0 0 var(--space-sm);
+  margin: 0 0 var(--spacing-sm);
   filter: drop-shadow(var(--glow-neon-text));
 }
 
 .subtitle {
   color: var(--color-text-secondary);
   font-size: var(--text-md);
-  margin: var(--space-0);
+  margin: 0px;
 }
 
 .main {
   flex: 1;
-  padding: var(--space-xl) var(--space-2xl) var(--space-2xl);
+  padding: var(--spacing-xl) var(--spacing-2xl) var(--spacing-2xl);
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
@@ -37,24 +37,24 @@
 
 /* Sections */
 .section {
-  margin-bottom: var(--space-3xl);
+  margin-bottom: var(--spacing-3xl);
 }
 
 .sectionHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--spacing-xl);
 }
 
 .sectionTitle {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
   color: var(--color-text-bright);
-  margin: var(--space-0);
+  margin: 0px;
 }
 
 .sectionNumber {
@@ -73,7 +73,7 @@
 .sectionDescription {
   font-size: var(--text-base);
   color: var(--color-text-secondary);
-  margin: var(--space-xs) 0 0;
+  margin: var(--spacing-xs) 0 0;
 }
 
 .sectionDescription strong {
@@ -84,7 +84,7 @@
   font-size: var(--text-base);
   color: var(--theme-cyan);
   text-decoration: none;
-  padding: var(--space-sm) var(--space-0);
+  padding: var(--spacing-sm) 0px;
 }
 
 .viewAllLink:hover {
@@ -95,7 +95,7 @@
 .conceptsGrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 .conceptsGridCollapsed {
@@ -106,8 +106,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-xl) var(--space-lg);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xl) var(--spacing-lg);
   background: var(--surface-card);
   border: var(--border-width-1) solid var(--border-card);
   border-radius: var(--radius-xl);
@@ -137,20 +137,20 @@
   font-size: var(--text-md);
   font-weight: var(--font-semibold);
   color: var(--color-text-bright);
-  margin: 0 0 var(--space-xs);
+  margin: 0 0 var(--spacing-xs);
 }
 
 .conceptDescription {
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
-  margin: var(--space-0);
+  margin: 0px;
   line-height: var(--leading-snug);
 }
 
 .conceptBadge {
   font-size: var(--text-2xs);
   text-transform: uppercase;
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
   background: var(--color-brand-primary-15);
   border-radius: var(--radius-sm);
   color: var(--color-brand-light);
@@ -160,14 +160,14 @@
 .conceptCategoryGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 .conceptCategoryCard {
   position: relative;
   background: var(--card-gradient-bg);
   border-radius: var(--radius-2xl);
-  padding: var(--space-0-5);
+  padding: 2px;
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-slow);
@@ -179,7 +179,7 @@
   position: absolute;
   inset: 0;
   border-radius: var(--radius-2xl);
-  padding: var(--space-0-5);
+  padding: 2px;
   background: var(--card-gradient-border);
   -webkit-mask:
     linear-gradient(var(--color-white) 0 0) content-box,
@@ -202,10 +202,10 @@
 .conceptCategoryCardInner {
   background: var(--color-bg-page-secondary);
   border-radius: var(--radius-xl);
-  padding: var(--space-xl);
+  padding: var(--spacing-xl);
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
 }
 
 .conceptCategoryHeader {
@@ -224,7 +224,7 @@
 .conceptCategoryBadge {
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  padding: var(--space-1) var(--space-md);
+  padding: 3px var(--spacing-md);
   background: var(--theme-cyan-15);
   border-radius: var(--radius-3xl);
   color: var(--theme-cyan);
@@ -234,26 +234,26 @@
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
   color: var(--color-text-bright);
-  margin: var(--space-0);
+  margin: 0px;
 }
 
 .conceptCategoryDescription {
   font-size: var(--text-base);
   color: var(--color-text-secondary);
-  margin: var(--space-0);
+  margin: 0px;
   line-height: var(--leading-normal);
 }
 
 .conceptCategoryTopics {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-top: var(--space-xs);
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-xs);
 }
 
 .topicTag {
   font-size: var(--text-xs);
-  padding: var(--space-xs) var(--space-2-5);
+  padding: var(--spacing-xs) 10px;
   background: var(--theme-cyan-15);
   border: var(--border-width-1) solid var(--theme-cyan-30);
   border-radius: var(--radius-xl);
@@ -262,7 +262,7 @@
 
 .topicMore {
   font-size: var(--text-xs);
-  padding: var(--space-xs) var(--space-2-5);
+  padding: var(--spacing-xs) 10px;
   color: var(--color-text-muted);
 }
 
@@ -271,7 +271,7 @@
   position: relative;
   background: var(--card-gradient-bg);
   border-radius: var(--radius-2xl);
-  padding: var(--space-0-5);
+  padding: 2px;
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-slow);
@@ -284,7 +284,7 @@
   position: absolute;
   inset: 0;
   border-radius: var(--radius-2xl);
-  padding: var(--space-0-5);
+  padding: 2px;
   background: var(--card-gradient-border);
   -webkit-mask:
     linear-gradient(var(--color-white) 0 0) content-box,
@@ -307,10 +307,10 @@
 .buildCardInner {
   background: var(--color-bg-page-secondary);
   border-radius: var(--radius-xl);
-  padding: var(--space-xl);
+  padding: var(--spacing-xl);
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
   height: 100%;
   min-height: 200px;
 }
@@ -331,22 +331,22 @@
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
   color: var(--color-text-bright);
-  margin: var(--space-xs) 0 0;
+  margin: var(--spacing-xs) 0 0;
 }
 
 .buildDescription {
   font-size: var(--text-base);
   color: var(--color-text-secondary);
-  margin: var(--space-0);
+  margin: 0px;
   line-height: var(--leading-normal);
   flex: 1;
 }
 
 .buildCardFooter {
   display: flex;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
   margin-top: auto;
-  padding-top: var(--space-md);
+  padding-top: var(--spacing-md);
   border-top: var(--border-width-1) solid var(--border-card);
 }
 
@@ -362,7 +362,7 @@
   display: block;
   background: var(--card-gradient-bg);
   border-radius: var(--radius-2xl);
-  padding: var(--space-0-5);
+  padding: 2px;
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-slow);
@@ -373,7 +373,7 @@
   position: absolute;
   inset: 0;
   border-radius: var(--radius-2xl);
-  padding: var(--space-0-5);
+  padding: 2px;
   background: var(--card-gradient-border);
   -webkit-mask:
     linear-gradient(var(--color-white) 0 0) content-box,
@@ -396,20 +396,20 @@
 .dsaBannerInner {
   background: var(--color-bg-page-secondary);
   border-radius: var(--radius-xl);
-  padding: var(--space-xl);
+  padding: var(--spacing-xl);
 }
 
 .dsaContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--spacing-lg);
 }
 
 .dsaLeft {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 .dsaIcon {
@@ -423,18 +423,18 @@
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
   color: var(--color-text-bright);
-  margin: 0 0 var(--space-xs);
+  margin: 0 0 var(--spacing-xs);
 }
 
 .dsaDescription {
   font-size: var(--text-base);
   color: var(--color-text-secondary);
-  margin: var(--space-0);
+  margin: 0px;
 }
 
 .dsaRight {
   display: flex;
-  gap: var(--space-2xl);
+  gap: var(--spacing-2xl);
 }
 
 .dsaStats {
@@ -462,13 +462,13 @@
 .dsaTopics {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
 }
 
 .dsaTopic {
   font-size: var(--text-sm);
-  padding: var(--space-1) var(--space-md);
+  padding: 3px var(--spacing-md);
   background: var(--theme-cyan-15);
   border: var(--border-width-1) solid var(--theme-cyan-30);
   border-radius: var(--radius-3xl);
@@ -477,13 +477,13 @@
 
 .dsaMore {
   font-size: var(--text-sm);
-  padding: var(--space-1) var(--space-md);
+  padding: 3px var(--spacing-md);
   color: var(--color-text-muted);
 }
 
 .dsaCta {
   display: inline-block;
-  padding: var(--space-2-5) var(--space-xl);
+  padding: 10px var(--spacing-xl);
   background: linear-gradient(135deg, var(--theme-cyan), var(--theme-teal));
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
@@ -494,7 +494,7 @@
 /* Footer */
 .footer {
   text-align: center;
-  padding: var(--space-xl) var(--space-2xl);
+  padding: var(--spacing-xl) var(--spacing-2xl);
   color: var(--color-text-muted);
   font-size: var(--text-base);
   border-top: var(--border-width-1) solid var(--border-card);
@@ -513,20 +513,20 @@
   .dsaContent {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-lg);
+    gap: var(--spacing-lg);
   }
 
   .dsaRight {
     width: 100%;
     justify-content: flex-start;
-    gap: var(--space-3xl);
+    gap: var(--spacing-3xl);
   }
 }
 
 /* Mobile */
 @media (max-width: 640px) {
   .header {
-    padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-lg);
   }
 
   .title {
@@ -534,7 +534,7 @@
   }
 
   .main {
-    padding: var(--space-lg);
+    padding: var(--spacing-lg);
   }
 
   .sectionTitle {
@@ -543,20 +543,20 @@
 
   .conceptCategoryGrid {
     grid-template-columns: 1fr;
-    gap: var(--space-lg);
+    gap: var(--spacing-lg);
   }
 
   .conceptCategoryCard {
-    padding: var(--space-xl);
+    padding: var(--spacing-xl);
   }
 
   .buildCardInner {
-    padding: var(--space-xl);
+    padding: var(--spacing-xl);
     min-height: 180px;
   }
 
   .dsaBanner {
-    padding: var(--space-xl);
+    padding: var(--spacing-xl);
   }
 
   .conceptCategoryTitle {
@@ -565,7 +565,7 @@
 
   .conceptsGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-md);
+    gap: var(--spacing-md);
   }
 
   .conceptsGridCollapsed {
@@ -573,7 +573,7 @@
   }
 
   .conceptCard {
-    padding: var(--space-lg) var(--space-md);
+    padding: var(--spacing-lg) var(--spacing-md);
   }
 
   .conceptIcon {
@@ -601,7 +601,7 @@
   }
 
   .footer {
-    padding: var(--space-lg);
+    padding: var(--spacing-lg);
   }
 }
 
@@ -617,13 +617,13 @@
   .conceptCard {
     flex-direction: row;
     text-align: left;
-    gap: var(--space-lg);
+    gap: var(--spacing-lg);
   }
 
   .conceptBadge {
     position: absolute;
-    top: var(--space-sm);
-    right: var(--space-sm);
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
   }
 
   .conceptCard {

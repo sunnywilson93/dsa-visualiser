@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-white-3);
   border-bottom: var(--border-width-1) solid var(--js-viz-border);
 }
@@ -20,8 +20,8 @@
 .title {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1-5);
-  padding: var(--space-1) var(--space-md);
+  gap: 5px;
+  padding: 3px var(--spacing-md);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
   text-transform: uppercase;
@@ -35,8 +35,8 @@
 .analyzeBtn {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-md);
+  gap: 6px;
+  padding: 6px var(--spacing-md);
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
   background: var(--gradient-brand);
@@ -73,8 +73,8 @@
 .errorPanel {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-red-10);
   border-top: var(--border-width-1) solid var(--color-red-30);
   color: var(--color-accent-red);
@@ -85,8 +85,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--space-lg);
-  height: var(--space-lg);
+  width: var(--spacing-lg);
+  height: var(--spacing-lg);
   background: var(--color-accent-red);
   color: white;
   border-radius: var(--radius-full);
@@ -101,6 +101,6 @@
 
 .currentLineGlyph {
   background: var(--color-brand-primary);
-  border-radius: var(--space-0-5);
-  margin-left: var(--space-1);
+  border-radius: 2px;
+  margin-left: 3px;
 }

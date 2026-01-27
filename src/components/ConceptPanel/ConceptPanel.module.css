@@ -3,8 +3,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-0);
-  padding: var(--space-1);
+  gap: 0px;
+  padding: 3px;
   background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-secondary));
   border-radius: var(--radius-xl);
 }
@@ -12,8 +12,8 @@
 .containerInner {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
-  padding: var(--space-md);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
   background: var(--color-bg-page-secondary);
   border-radius: var(--radius-xl);
 }
@@ -21,13 +21,13 @@
 .header {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .titleRow {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .icon {
@@ -39,13 +39,13 @@
   font-size: var(--text-base);
   font-weight: var(--font-semibold);
   color: var(--color-text-bright);
-  margin: var(--space-0);
+  margin: 0px;
 }
 
 .description {
   font-size: var(--text-sm);
   color: var(--color-gray-400);
-  margin: var(--space-0);
+  margin: 0px;
   line-height: var(--leading-snug);
 }
 
@@ -54,14 +54,14 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
-  padding: var(--space-1);
+  gap: var(--spacing-xs);
+  padding: 3px;
   background: linear-gradient(135deg, var(--color-amber-400), var(--color-orange-500));
   border-radius: var(--radius-lg);
 }
 
 .insightBoxInner {
-  padding: var(--space-sm);
+  padding: var(--spacing-sm);
   background: var(--color-bg-page-secondary);
   border-radius: var(--radius-lg);
 }
@@ -78,7 +78,7 @@
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--color-text-bright);
-  margin: var(--space-0);
+  margin: 0px;
   font-family: var(--font-mono);
 }
 
@@ -88,7 +88,7 @@
   min-height: 180px;
   display: flex;
   flex-direction: column;
-  padding: var(--space-1);
+  padding: 3px;
   background: var(--gradient-brand);
   border-radius: var(--radius-lg);
 }
@@ -99,26 +99,26 @@
   flex-direction: column;
   background: var(--color-bg-page-secondary);
   border-radius: var(--radius-lg);
-  padding: var(--space-sm);
+  padding: var(--spacing-sm);
 }
 
 .stepContent {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .stepHeader {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .stepNumber {
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   background: var(--color-brand-primary-30);
   border: var(--border-width-1) solid var(--color-brand-primary-50);
   color: var(--color-brand-light);
@@ -137,7 +137,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-sm);
+  padding: var(--spacing-sm);
   background: var(--color-black-30);
   border: var(--border-width-1) dashed var(--color-white-10);
   border-radius: var(--radius-lg);
@@ -147,7 +147,7 @@
 .stepDescription {
   font-size: var(--text-sm);
   color: var(--color-gray-400);
-  margin: var(--space-0);
+  margin: 0px;
   line-height: var(--leading-normal);
 }
 
@@ -156,15 +156,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-md);
-  padding-top: var(--space-sm);
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-sm);
   border-top: var(--border-width-1) solid var(--color-white-10);
 }
 
 .playbackControls {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .controlBtn {
@@ -211,13 +211,13 @@
 .progress {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex: 1;
 }
 
 .progressBar {
   flex: 1;
-  height: var(--space-xs);
+  height: var(--spacing-xs);
   background: var(--color-white-10);
   border-radius: var(--radius-xs);
   overflow: hidden;
@@ -242,7 +242,7 @@
 .speedControl {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .speedLabel {
@@ -254,15 +254,15 @@
 
 .speedButtons {
   display: flex;
-  gap: var(--space-0-5);
+  gap: 2px;
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-full);
-  padding: var(--space-1);
+  padding: 3px;
 }
 
 .speedBtn {
-  padding: var(--space-xs) var(--space-2-5);
+  padding: var(--spacing-xs) 10px;
   font-size: var(--text-2xs);
   font-weight: var(--font-medium);
   color: var(--color-gray-600);
@@ -287,7 +287,7 @@
 /* Mobile responsive */
 @media (max-width: 768px) {
   .containerInner {
-    padding: var(--space-sm);
+    padding: var(--spacing-sm);
   }
 
   .insightText {
@@ -300,12 +300,12 @@
 
   .visualization {
     min-height: 80px;
-    padding: var(--space-xs);
+    padding: var(--spacing-xs);
   }
 
   .controls {
     flex-wrap: wrap;
-    gap: var(--space-sm);
+    gap: var(--spacing-sm);
   }
 
   .playbackControls {

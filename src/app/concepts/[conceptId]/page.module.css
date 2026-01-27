@@ -19,7 +19,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
   color: var(--color-gray-500);
 }
 
@@ -35,15 +35,15 @@
 .backBtn {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) 0;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) 0;
   background: none;
   border: none;
   color: var(--color-gray-500);
   font-size: var(--text-base);
   cursor: pointer;
   transition: color 0.2s;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--spacing-lg);
 }
 
 .backBtn:hover {
@@ -53,8 +53,8 @@
 .titleRow {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-lg);
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
 }
 
 .icon {
@@ -74,7 +74,7 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: var(--space-xs) var(--space-2-5);
+  padding: var(--spacing-xs) 10px;
   border-radius: var(--radius-sm);
   color: white;
 }
@@ -117,7 +117,7 @@
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-xl);
-  padding: var(--space-xl);
+  padding: var(--spacing-xl);
   min-height: 300px;
 }
 
@@ -159,7 +159,7 @@
 .examples {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: var(--spacing-xl);
 }
 
 .example {
@@ -174,14 +174,14 @@
   font-weight: var(--font-semibold);
   color: var(--color-white);
   margin: 0;
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-brand-primary-15);
   border-bottom: var(--border-width-1) solid var(--color-white-8);
 }
 
 .code {
   margin: 0;
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
   background: var(--color-black-40);
   overflow-x: auto;
   font-family: 'Fira Code', 'Monaco', monospace;
@@ -196,7 +196,7 @@
 
 .explanation {
   margin: 0;
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   font-size: var(--text-base);
   color: var(--color-gray-400);
   line-height: var(--leading-relaxed);
@@ -211,7 +211,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .mistakes li {
@@ -238,7 +238,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .tips li {
@@ -269,14 +269,14 @@
 .problemsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--space-md);
+  gap: var(--spacing-md);
 }
 
 .problemCard {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
-  padding: var(--space-md) var(--space-lg);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-white-3);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-lg);
@@ -294,7 +294,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .problemTitle {
@@ -309,7 +309,7 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   border-radius: var(--radius-sm);
   color: white;
 }
@@ -337,14 +337,14 @@
 .relatedConcepts {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 .relatedCard {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-lg);
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
   background: var(--color-white-3);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-lg);
@@ -387,7 +387,7 @@
 /* Mobile */
 @media (max-width: 768px) {
   .main {
-    padding: var(--space-lg);
+    padding: var(--spacing-lg);
   }
 
   .titleRow {
@@ -408,11 +408,11 @@
 
   .code {
     font-size: var(--text-sm);
-    padding: var(--space-md);
+    padding: var(--spacing-md);
   }
 
   .vizContainer {
-    padding: var(--space-lg);
+    padding: var(--spacing-lg);
     min-height: 200px;
   }
 }

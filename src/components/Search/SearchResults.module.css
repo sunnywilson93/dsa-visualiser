@@ -1,14 +1,14 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .item {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-md);
-  padding: var(--space-md);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
   border-radius: var(--radius-lg);
   text-decoration: none;
   color: inherit;
@@ -21,10 +21,10 @@
 
 .itemCompact {
   display: grid;
-  grid-template-columns: var(--space-xl) 1fr auto;
+  grid-template-columns: var(--spacing-xl) 1fr auto;
   align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-md);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-md);
   border-radius: var(--radius-md);
   text-decoration: none;
   color: inherit;
@@ -43,7 +43,7 @@
 
 .itemCompact .icon {
   font-size: var(--text-lg);
-  width: var(--space-xl);
+  width: var(--spacing-xl);
   text-align: center;
   display: flex;
   align-items: center;
@@ -63,7 +63,7 @@
 .titleRow {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
 }
 
@@ -87,7 +87,7 @@
 .badges {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: 3px;
   flex-shrink: 0;
 }
 
@@ -98,13 +98,13 @@
 .sourceBadge {
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  padding: var(--space-0-5) var(--space-1);
+  padding: 2px 3px;
   border-radius: var(--radius-sm);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   background: var(--color-brand-primary-30);
   color: var(--color-brand-light);
-  min-width: var(--space-2xl);
+  min-width: var(--spacing-2xl);
   text-align: center;
 }
 
@@ -116,7 +116,7 @@
 .difficultyBadge {
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  padding: var(--space-0-5) var(--space-1);
+  padding: 2px 3px;
   border-radius: var(--radius-sm);
   text-transform: uppercase;
   letter-spacing: 0.3px;
@@ -126,7 +126,7 @@
 .description {
   font-size: var(--text-base);
   color: var(--color-gray-400);
-  margin: var(--space-xs) 0 0;
+  margin: var(--spacing-xs) 0 0;
   line-height: var(--leading-snug);
 }
 
@@ -135,14 +135,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-2xl) var(--space-lg);
+  padding: var(--spacing-2xl) var(--spacing-lg);
   text-align: center;
   color: var(--color-gray-600);
 }
 
 .emptyIcon {
   font-size: var(--text-3xl);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--spacing-sm);
   opacity: 0.5;
 }
 
@@ -152,10 +152,10 @@
 }
 
 .moreResults {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-sm);
   color: var(--color-gray-400);
   text-align: center;
   border-top: var(--border-width-1) solid var(--border-card);
-  margin-top: var(--space-xs);
+  margin-top: var(--spacing-xs);
 }

@@ -27,7 +27,7 @@
 .neonBox {
   position: relative;
   border-radius: var(--radius-xl);
-  padding: var(--space-1);
+  padding: 3px;
   background: linear-gradient(135deg, var(--neon-start), var(--neon-end));
 }
 
@@ -35,7 +35,7 @@
   background: var(--color-bg-page-secondary);
   border-radius: var(--radius-lg);
   min-height: 100px;
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   padding-top: 1.5rem;
 }
 
@@ -44,7 +44,7 @@
   top: -1px;
   left: 50%;
   transform: translateX(-50%);
-  padding: var(--space-1-5) var(--space-lg);
+  padding: 5px var(--spacing-lg);
   background: var(--color-bg-tertiary);
   border-radius: 0 0 8px 8px;
   font-size: var(--text-sm);
@@ -65,7 +65,7 @@
   background: rgba(0, 0, 0, 0.35);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-xl);
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -83,13 +83,13 @@
 .optionsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  gap: var(--space-2);
+  gap: 6px;
 }
 
 .operatorGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  gap: var(--space-2);
+  gap: 6px;
 }
 
 .optionBtn {
@@ -131,7 +131,7 @@
 .resultGrid {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 /* Equation Card - Neon Box Green/Cyan */
@@ -151,20 +151,20 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-2);
+  gap: 6px;
   font-family: var(--font-mono);
   font-size: var(--text-base);
   color: var(--color-white);
 }
 
 .valueChip {
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
   background: var(--color-white-8);
   border-radius: var(--radius-lg);
 }
 
 .operatorChip {
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
   background: rgba(118, 75, 162, 0.35);
   border-radius: var(--radius-lg);
   font-weight: var(--font-bold);
@@ -183,11 +183,11 @@
 .typeRow {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: 6px;
 }
 
 .typeBadge {
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   text-transform: uppercase;
@@ -197,7 +197,7 @@
 }
 
 .typeBadgeAccent {
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   text-transform: uppercase;
@@ -209,7 +209,7 @@
 .truthinessRow {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
   font-size: var(--text-xs);
   color: #b0b4bb;
 }
@@ -232,7 +232,7 @@
   line-height: var(--leading-relaxed);
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 6px;
 }
 
 @media (max-width: 900px) {

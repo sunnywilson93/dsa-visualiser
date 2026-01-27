@@ -1,13 +1,13 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 /* Tab Selector */
 .tabSelector {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   justify-content: center;
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-8);
@@ -16,7 +16,7 @@
 }
 
 .tabBtn {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   background: var(--color-white-4);
@@ -43,7 +43,7 @@
 .timelineContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 .timeline {
@@ -57,9 +57,9 @@
   left: 0.5rem;
   top: 0.5rem;
   bottom: 0.5rem;
-  width: var(--space-0-5);
+  width: 2px;
   background: linear-gradient(to bottom, var(--color-amber-500), var(--color-emerald-500), var(--color-blue-500), var(--color-brand-primary), var(--color-brand-secondary));
-  border-radius: var(--space-0-5);
+  border-radius: 2px;
 }
 
 .timelineEvent {
@@ -71,8 +71,8 @@
   position: absolute;
   left: -1.65rem;
   top: 1rem;
-  width: var(--space-md);
-  height: var(--space-md);
+  width: var(--spacing-md);
+  height: var(--spacing-md);
   border-radius: var(--radius-full);
   box-shadow: 0 0 8px currentColor;
 }
@@ -81,7 +81,7 @@
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-lg);
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
 }
 
 .timelineYear {
@@ -107,12 +107,12 @@
 .paradigmsContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 .paradigmSelector {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -120,8 +120,8 @@
 .paradigmBtn {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-sm) var(--space-lg);
+  gap: 6px;
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   background: var(--color-white-4);
@@ -142,8 +142,8 @@
 }
 
 .paradigmDot {
-  width: var(--space-sm);
-  height: var(--space-sm);
+  width: var(--spacing-sm);
+  height: var(--spacing-sm);
   border-radius: var(--radius-full);
 }
 
@@ -156,7 +156,7 @@
   background: var(--color-black-40);
   border: 2px solid;
   border-radius: var(--radius-xl);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
   max-width: 400px;
   width: 100%;
 }
@@ -176,7 +176,7 @@
 .paradigmCode {
   background: var(--color-black-40);
   border-radius: var(--radius-lg);
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   margin: 0;
   overflow-x: auto;
 }
@@ -192,21 +192,21 @@
 .principlesContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 .principleGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .principleCard {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-md);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
   background: var(--color-black-30);
   border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-lg);
@@ -223,8 +223,8 @@
 }
 
 .principleIcon {
-  width: var(--space-2-5);
-  height: var(--space-2-5);
+  width: 10px;
+  height: 10px;
   border-radius: var(--radius-full);
 }
 
@@ -239,7 +239,7 @@
   background: var(--color-black-40);
   border: 2px solid;
   border-radius: var(--radius-xl);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
   text-align: center;
 }
 
@@ -261,7 +261,7 @@
   font-size: var(--text-sm);
   color: var(--difficulty-1);
   background: var(--color-black-40);
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   border-radius: var(--radius-md);
 }
 
@@ -269,8 +269,8 @@
 .insight {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-sm);
-  padding: var(--space-md) var(--space-lg);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-amber-10);
   border: 1px solid var(--color-amber-30);
   border-radius: var(--radius-lg);

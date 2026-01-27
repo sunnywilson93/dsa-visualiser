@@ -7,12 +7,12 @@
 /* Example selector */
 .exampleSelector {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
 }
 
 .exampleBtn {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--color-white-5);
@@ -38,13 +38,13 @@
 .hashSection {
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
 }
 
 .hashFunction {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .hashLabel {
@@ -58,7 +58,7 @@
 .hashFormula {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
   flex-wrap: wrap;
 }
 
@@ -67,7 +67,7 @@
   font-size: var(--text-lg);
   color: var(--difficulty-2);
   background: var(--color-amber-10);
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-sm);
 }
 
@@ -107,7 +107,7 @@
 .bucketsContainer {
   background: var(--color-black-20);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
 }
 
 .bucketsLabel {
@@ -122,7 +122,7 @@
 .buckets {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .bucket {
@@ -155,7 +155,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .empty {
@@ -192,8 +192,8 @@
 .description {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
   border-left: 3px solid var(--color-brand-primary);
@@ -205,7 +205,7 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   border-radius: var(--radius-sm);
   color: white;
 }
@@ -221,7 +221,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
 }
 
 .stepCounter {
@@ -232,7 +232,7 @@
 }
 
 .btnPrimary {
-  padding: var(--space-2-5) var(--space-xl);
+  padding: 10px var(--spacing-xl);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--gradient-brand);
@@ -249,7 +249,7 @@
 }
 
 .btnSecondary {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-base);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);
@@ -271,7 +271,7 @@
 
 /* Insight */
 .insight {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-brand-primary-10);
   border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);

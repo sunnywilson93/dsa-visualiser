@@ -1,18 +1,18 @@
 .section {
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--spacing-2xl);
 }
 
 .sectionTitle {
   font-size: var(--text-xl);
   font-weight: var(--font-semibold);
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--spacing-lg);
   color: var(--color-text-primary);
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 @media (min-width: 640px) {
@@ -26,7 +26,7 @@
   background: var(--surface-card);
   border: var(--border-width-1) solid var(--border-card);
   border-radius: var(--radius-xl);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
   transition: all var(--transition-fast);
 }
 
@@ -45,13 +45,13 @@
 
 .link:focus-visible {
   outline: var(--border-width-2) solid var(--color-brand-primary-50);
-  outline-offset: var(--space-0-5);
+  outline-offset: 2px;
 }
 
 .srOnly {
   position: absolute;
-  width: var(--space-px);
-  height: var(--space-px);
+  width: 1px;
+  height: 1px;
   padding: 0;
   margin: -1px;
   overflow: hidden;
@@ -68,7 +68,7 @@
   font-weight: var(--font-medium);
   color: var(--color-white);
   font-size: var(--text-base);
-  margin: 0 0 var(--space-sm) 0;
+  margin: 0 0 var(--spacing-sm) 0;
 }
 
 .description {
@@ -80,7 +80,7 @@
 
 @media (max-width: 768px) {
   .card {
-    padding: var(--space-md);
+    padding: var(--spacing-md);
   }
 
   .name {

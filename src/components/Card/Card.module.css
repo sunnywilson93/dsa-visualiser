@@ -18,7 +18,7 @@
   position: relative;
   background: var(--card-gradient-bg);
   border-radius: var(--radius-2xl);
-  padding: var(--space-0-5);
+  padding: 2px;
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-slow);
@@ -31,7 +31,7 @@
   position: absolute;
   inset: 0;
   border-radius: var(--radius-2xl);
-  padding: var(--space-0-5);
+  padding: 2px;
   background: var(--card-gradient-border);
   -webkit-mask:
     linear-gradient(var(--color-white) 0 0) content-box,
@@ -58,10 +58,10 @@
 .cardInner {
   background: var(--color-bg-page-secondary);
   border-radius: var(--radius-xl);
-  padding: var(--space-xl);
+  padding: var(--spacing-xl);
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
   height: 100%;
   min-height: 200px;
 }
@@ -82,22 +82,22 @@
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
   color: var(--color-text-bright);
-  margin: var(--space-xs) 0 0;
+  margin: var(--spacing-xs) 0 0;
 }
 
 .cardDescription {
   font-size: var(--text-base);
   color: var(--color-text-secondary);
-  margin: var(--space-0);
+  margin: 0px;
   line-height: var(--leading-normal);
   flex: 1;
 }
 
 .cardFooter {
   display: flex;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
   margin-top: auto;
-  padding-top: var(--space-md);
+  padding-top: var(--spacing-md);
   border-top: var(--border-width-1) solid var(--border-card);
 }
 
@@ -116,11 +116,11 @@
 
 @media (max-width: 480px) {
   .cardWrapper {
-    flex: 0 0 calc(100vw - var(--space-2xl));
+    flex: 0 0 calc(100vw - var(--spacing-2xl));
   }
 
   .cardInner {
-    padding: var(--space-xl);
+    padding: var(--spacing-xl);
     min-height: 180px;
   }
 

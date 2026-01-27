@@ -18,15 +18,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   background: var(--surface-card);
 }
 
 .panelTitle {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-1) var(--space-sm);
+  gap: 3px;
+  padding: 3px var(--spacing-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
   text-transform: uppercase;
@@ -39,13 +39,13 @@
 
 .code {
   margin: 0;
-  padding: var(--space-sm) 0;
+  padding: var(--spacing-sm) 0;
   overflow-y: auto;
 }
 
 .codeLine {
   display: flex;
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   transition: background var(--transition-fast);
 }
 
@@ -54,13 +54,13 @@
 }
 
 .lineNum {
-  width: var(--space-xl);
+  width: var(--spacing-xl);
   color: var(--color-gray-800);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   text-align: right;
   user-select: none;
-  margin-right: var(--space-sm);
+  margin-right: var(--spacing-sm);
 }
 
 .lineCode {

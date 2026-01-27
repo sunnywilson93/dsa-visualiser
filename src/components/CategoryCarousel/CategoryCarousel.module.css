@@ -8,8 +8,8 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  width: var(--space-3xl);
-  height: var(--space-3xl);
+  width: var(--spacing-3xl);
+  height: var(--spacing-3xl);
   border-radius: var(--radius-full);
   border: none;
   background: var(--color-black-50);
@@ -39,22 +39,22 @@
 }
 
 .navLeft {
-  left: -var(--space-md);
+  left: -var(--spacing-md);
 }
 
 .navRight {
-  right: -var(--space-md);
+  right: -var(--spacing-md);
 }
 
 /* Scroll container */
 .scrollContainer {
   display: flex;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding: var(--space-lg) var(--space-sm) var(--space-xl);
-  margin: 0 calc(-1 * var(--space-sm));
+  padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-xl);
+  margin: 0 calc(-1 * var(--spacing-sm));
 
   /* Hide scrollbar */
   scrollbar-width: none;
@@ -89,13 +89,13 @@
 .dots {
   display: flex;
   justify-content: center;
-  gap: var(--space-sm);
-  margin-top: var(--space-md);
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
 }
 
 .dot {
-  width: var(--space-2);
-  height: var(--space-2);
+  width: 6px;
+  height: 6px;
   border-radius: var(--radius-full);
   border: none;
   background: var(--theme-cyan-30);
@@ -122,14 +122,14 @@
   }
 
   .navButton {
-    width: var(--space-3xl);
-    height: var(--space-3xl);
+    width: var(--spacing-3xl);
+    height: var(--spacing-3xl);
   }
 }
 
 @media (max-width: 480px) {
   .cardWrapper {
-    flex: 0 0 calc(100vw - var(--space-2xl));
+    flex: 0 0 calc(100vw - var(--spacing-2xl));
   }
 
   .navButton {
@@ -137,7 +137,7 @@
   }
 
   .scrollContainer {
-    padding: var(--space-sm) 0 var(--space-lg);
+    padding: var(--spacing-sm) 0 var(--spacing-lg);
     margin: 0;
   }
 }

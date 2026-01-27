@@ -1,12 +1,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 .tabSelector {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   justify-content: center;
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-8);
@@ -15,7 +15,7 @@
 }
 
 .tabBtn {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   background: var(--color-white-4);
@@ -41,14 +41,14 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 .sliderRow {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
-  padding: var(--space-md);
+  gap: var(--spacing-lg);
+  padding: var(--spacing-md);
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
 }
@@ -65,7 +65,7 @@
   height: 6px;
   -webkit-appearance: none;
   background: var(--color-white-10);
-  border-radius: var(--space-1);
+  border-radius: 3px;
   outline: none;
 }
 
@@ -87,13 +87,13 @@
 
 .code {
   margin: 0;
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
 }
 
 .codeLine {
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   color: var(--color-gray-500);
   transition: all var(--transition-fast);
 }
@@ -107,8 +107,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-sm);
-  padding: var(--space-md);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
   background: var(--color-emerald-10);
   border: var(--border-width-1) solid var(--color-emerald-30);
   border-radius: var(--radius-lg);
@@ -131,8 +131,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-sm);
-  padding: var(--space-lg);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
   background: var(--color-black-30);
   border-radius: var(--radius-xl);
   flex-wrap: wrap;
@@ -142,7 +142,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .ternaryLabel {
@@ -155,7 +155,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-base);
   color: var(--color-gray-500);
-  padding: var(--space-1-5) var(--space-2-5);
+  padding: 5px 10px;
   background: var(--color-black-30);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
@@ -194,14 +194,14 @@
 .falsyGrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .falsyItem {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-2-5);
+  padding: 10px;
   background: var(--color-black-30);
   border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-lg);
@@ -227,8 +227,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-md);
-  padding: var(--space-md);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
 }
@@ -263,21 +263,21 @@
 
 .legend {
   display: flex;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
   justify-content: center;
 }
 
 .legendItem {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 6px;
   font-size: var(--text-xs);
   color: var(--color-gray-500);
 }
 
 .legendDot {
-  width: var(--space-sm);
-  height: var(--space-sm);
+  width: var(--spacing-sm);
+  height: var(--spacing-sm);
   border-radius: var(--radius-full);
 }
 

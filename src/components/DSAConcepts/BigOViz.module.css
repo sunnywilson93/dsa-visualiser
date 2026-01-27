@@ -8,7 +8,7 @@
 .scaleToggle {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   justify-content: center;
 }
 
@@ -47,14 +47,14 @@
 .toggles {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .toggle {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-white-5);
   border: var(--border-width-2) solid transparent;
   border-radius: var(--radius-lg);
@@ -67,8 +67,8 @@
 }
 
 .toggleDot {
-  width: var(--space-2-5);
-  height: var(--space-2-5);
+  width: 10px;
+  height: 10px;
   border-radius: var(--radius-full);
 }
 
@@ -88,7 +88,7 @@
 .chartContainer {
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
   position: relative;
 }
 
@@ -113,7 +113,7 @@
 
 .chartXLabel {
   text-align: center;
-  margin-top: var(--space-sm);
+  margin-top: var(--spacing-sm);
   font-size: var(--text-xs);
   color: var(--color-gray-700);
   text-transform: uppercase;
@@ -125,8 +125,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-lg);
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
   background: var(--color-black-20);
   border-radius: var(--radius-lg);
 }
@@ -134,7 +134,7 @@
 .sliderHeader {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .sliderLabel {
@@ -147,7 +147,7 @@
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
   color: var(--color-brand-primary);
-  min-width: var(--space-3xl);
+  min-width: var(--spacing-3xl);
 }
 
 .slider {
@@ -156,7 +156,7 @@
   height: 6px;
   appearance: none;
   background: var(--color-white-10);
-  border-radius: var(--space-1);
+  border-radius: 3px;
   outline: none;
   cursor: pointer;
 }
@@ -186,7 +186,7 @@
 }
 
 .animateBtn {
-  padding: var(--space-2-5) var(--space-xl);
+  padding: 10px var(--spacing-xl);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--gradient-brand);
@@ -221,7 +221,7 @@
 
 .table th,
 .table td {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   text-align: left;
   border-bottom: 1px solid var(--color-white-5);
 }
@@ -262,7 +262,7 @@
 
 /* Insight */
 .insight {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-brand-primary-10);
   border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);
@@ -288,7 +288,7 @@
   }
 
   .toggle {
-    padding: var(--space-2) var(--space-2-5);
+    padding: 6px 10px;
   }
 
   .toggleName {
@@ -301,7 +301,7 @@
 
   .table th,
   .table td {
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--spacing-sm) var(--spacing-md);
     font-size: var(--text-base);
   }
 

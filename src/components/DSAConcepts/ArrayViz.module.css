@@ -7,12 +7,12 @@
 /* Example selector */
 .exampleSelector {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
 }
 
 .exampleBtn {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--color-white-5);
@@ -38,16 +38,16 @@
 .memorySection {
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
 }
 
 .memoryHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--spacing-lg);
   flex-wrap: wrap;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .memoryLabel {
@@ -63,13 +63,13 @@
   font-size: var(--text-base);
   color: var(--color-blue-400);
   background: var(--color-sky-10);
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-sm);
 }
 
 .memoryBlocks {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   overflow-x: auto;
   padding-bottom: 0.5rem;
 }
@@ -126,7 +126,7 @@
 .pointerRow {
   position: relative;
   height: 30px;
-  margin-top: var(--space-sm);
+  margin-top: var(--spacing-sm);
 }
 
 .pointer {
@@ -142,8 +142,8 @@
 .output {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-black-30);
   border: 2px solid var(--color-emerald-500);
   border-radius: var(--radius-lg);
@@ -165,8 +165,8 @@
 .description {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
   border-left: 3px solid var(--color-brand-primary);
@@ -178,7 +178,7 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   border-radius: var(--radius-sm);
   color: white;
 }
@@ -194,7 +194,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
 }
 
 .stepCounter {
@@ -205,7 +205,7 @@
 }
 
 .btnPrimary {
-  padding: var(--space-2-5) var(--space-xl);
+  padding: 10px var(--spacing-xl);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--gradient-brand);
@@ -222,7 +222,7 @@
 }
 
 .btnSecondary {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-base);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);
@@ -244,7 +244,7 @@
 
 /* Insight */
 .insight {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-brand-primary-10);
   border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);
@@ -265,7 +265,7 @@
 
   .blockValue {
     font-size: var(--text-md);
-    padding: var(--space-sm);
+    padding: var(--spacing-sm);
   }
 
   .blockAddress {

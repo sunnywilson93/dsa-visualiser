@@ -2,17 +2,17 @@
   position: relative;
   flex: 1;
   max-width: 320px;
-  margin: 0 var(--space-lg);
+  margin: 0 var(--spacing-lg);
 }
 
 .inputWrapper {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);
-  padding: var(--space-1) var(--space-md);
+  padding: 3px var(--spacing-md);
   transition: all var(--transition-fast);
 }
 
@@ -57,7 +57,7 @@
   border: none;
   color: var(--color-gray-600);
   cursor: pointer;
-  padding: var(--space-0-5);
+  padding: 2px;
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
 }
@@ -69,7 +69,7 @@
 
 .shortcut {
   font-size: var(--text-2xs);
-  padding: var(--space-0-5) var(--space-1);
+  padding: 2px 3px;
   border-radius: var(--radius-sm);
   background: var(--color-white-10);
   color: var(--color-gray-600);
@@ -80,24 +80,24 @@
 
 .dropdown {
   position: absolute;
-  top: calc(100% + var(--space-sm));
+  top: calc(100% + var(--spacing-sm));
   left: 0;
   right: 0;
   background: var(--color-bg-page-secondary);
   border: var(--border-width-1) solid var(--color-brand-primary-30);
   border-radius: var(--radius-lg);
   box-shadow:
-    0 var(--space-xs) var(--space-xl) var(--color-black-40),
+    0 var(--spacing-xs) var(--spacing-xl) var(--color-black-40),
     var(--glow-2xl) var(--color-brand-primary-10);
   max-height: 400px;
   overflow-y: auto;
   z-index: 1000;
-  padding: var(--space-sm);
+  padding: var(--spacing-sm);
 }
 
 /* Scrollbar styling */
 .dropdown::-webkit-scrollbar {
-  width: var(--space-2);
+  width: 6px;
 }
 
 .dropdown::-webkit-scrollbar-track {
@@ -117,7 +117,7 @@
 @media (max-width: 768px) {
   .container {
     max-width: 200px;
-    margin: 0 var(--space-sm);
+    margin: 0 var(--spacing-sm);
   }
 
   .shortcut {
@@ -129,7 +129,7 @@
   }
 
   .inputWrapper {
-    padding: var(--space-xs) var(--space-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
   }
 }
 

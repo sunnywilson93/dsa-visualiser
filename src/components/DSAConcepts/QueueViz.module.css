@@ -7,12 +7,12 @@
 /* Example selector */
 .exampleSelector {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
 }
 
 .exampleBtn {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--color-white-5);
@@ -38,14 +38,14 @@
 .queueSection {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: var(--space-xl);
+  gap: var(--spacing-xl);
   align-items: start;
 }
 
 .queueContainer {
   background: var(--color-black-20);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
 }
 
 .queueLabel {
@@ -60,22 +60,22 @@
 .queue {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .queueLegend {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-xs) 0;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xs) 0;
 }
 
 .queueEnd {
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
-  padding: var(--space-1-5) var(--space-2-5);
+  padding: 5px 10px;
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-md);
   color: var(--color-gray-600);
@@ -116,10 +116,10 @@
 
 .queueItems {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   align-items: center;
   min-height: 120px;
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   background: var(--color-black-30);
   border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-lg);
@@ -130,7 +130,7 @@
   color: var(--color-gray-700);
   font-size: var(--text-base);
   text-align: center;
-  padding: var(--space-2xl);
+  padding: var(--spacing-2xl);
   width: 100%;
 }
 
@@ -139,7 +139,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
   min-width: 70px;
   padding: 0.75rem 0.9rem;
   background: var(--color-black-30);
@@ -176,7 +176,7 @@
 .outputSection {
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
   min-width: 120px;
 }
 
@@ -186,7 +186,7 @@
   color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 .output {
@@ -211,8 +211,8 @@
 .description {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
   border-left: 3px solid var(--color-brand-primary);
@@ -224,7 +224,7 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   border-radius: var(--radius-sm);
   color: white;
 }
@@ -240,7 +240,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
 }
 
 .stepCounter {
@@ -251,7 +251,7 @@
 }
 
 .btnPrimary {
-  padding: var(--space-2-5) var(--space-xl);
+  padding: 10px var(--spacing-xl);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--gradient-brand);
@@ -268,7 +268,7 @@
 }
 
 .btnSecondary {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-base);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);
@@ -290,7 +290,7 @@
 
 /* Insight */
 .insight {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-brand-primary-10);
   border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);
@@ -311,7 +311,7 @@
 
   .queueLegend {
     grid-template-columns: 1fr;
-    gap: var(--space-sm);
+    gap: var(--spacing-sm);
   }
 
   .queueEnd {

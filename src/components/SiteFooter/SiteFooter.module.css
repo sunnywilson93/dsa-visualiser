@@ -1,26 +1,26 @@
 .footer {
   border-top: var(--border-width-1) solid var(--border-card);
   background: var(--color-black-30);
-  padding: var(--space-2xl) 0 var(--space-xl);
+  padding: var(--spacing-2xl) 0 var(--spacing-xl);
   margin-top: auto;
 }
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 var(--space-2xl);
+  padding: 0 var(--spacing-2xl);
 }
 
 .nav {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-2xl);
+  gap: var(--spacing-2xl);
 }
 
 .column {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
 }
 
 .columnTitle {
@@ -29,14 +29,14 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
-  margin-bottom: var(--space-xs);
+  margin-bottom: var(--spacing-xs);
 }
 
 .linkList {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .link {
@@ -51,8 +51,8 @@
 }
 
 .bottom {
-  margin-top: var(--space-2xl);
-  padding-top: var(--space-lg);
+  margin-top: var(--spacing-2xl);
+  padding-top: var(--spacing-lg);
   border-top: var(--border-width-1) solid var(--border-card);
   text-align: center;
 }
@@ -65,14 +65,14 @@
 @media (max-width: 768px) {
   .nav {
     grid-template-columns: 1fr;
-    gap: var(--space-xl);
+    gap: var(--spacing-xl);
   }
 
   .container {
-    padding: 0 var(--space-lg);
+    padding: 0 var(--spacing-lg);
   }
 
   .footer {
-    padding: var(--space-xl) 0;
+    padding: var(--spacing-xl) 0;
   }
 }

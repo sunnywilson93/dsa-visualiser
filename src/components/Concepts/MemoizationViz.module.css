@@ -1,13 +1,13 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 /* Level Selector */
 .levelSelector {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   justify-content: center;
   margin-bottom: 0.25rem;
   background: var(--color-black-30);
@@ -19,8 +19,8 @@
 .levelBtn {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-md);
+  gap: 6px;
+  padding: 6px var(--spacing-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   background: var(--color-white-4);
@@ -44,15 +44,15 @@
 }
 
 .levelDot {
-  width: var(--space-sm);
-  height: var(--space-sm);
+  width: var(--spacing-sm);
+  height: var(--spacing-sm);
   border-radius: var(--radius-full);
 }
 
 /* Example Selector */
 .exampleSelector {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
   justify-content: center;
   background: var(--color-black-30);
@@ -62,7 +62,7 @@
 }
 
 .exampleBtn {
-  padding: var(--space-2) var(--space-md);
+  padding: 6px var(--spacing-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   background: var(--color-white-4);
@@ -97,7 +97,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--color-gray-500);
@@ -105,7 +105,7 @@
 }
 
 .phaseBadge {
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
@@ -114,14 +114,14 @@
 
 .code {
   margin: 0;
-  padding: var(--space-sm) 0;
+  padding: var(--spacing-sm) 0;
   max-height: 200px;
   overflow-y: auto;
 }
 
 .codeLine {
   display: flex;
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   transition: background 0.2s;
 }
 
@@ -152,34 +152,34 @@
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-xl);
-  padding: var(--space-md);
+  padding: var(--spacing-md);
 }
 
 .cacheHeader {
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--color-gray-400);
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--spacing-md);
   text-align: center;
 }
 
 .cacheGrid {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .emptyCache {
   text-align: center;
   color: var(--color-gray-600);
-  padding: var(--space-md);
+  padding: var(--spacing-md);
 }
 
 .cacheEntry {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-black-40);
   border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-lg);
@@ -216,8 +216,8 @@
 .hitBadge,
 .newBadge {
   position: absolute;
-  right: var(--space-sm);
-  padding: var(--space-0-5) var(--space-xs);
+  right: var(--spacing-sm);
+  padding: 2px var(--spacing-xs);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   font-weight: var(--font-bold);
@@ -242,7 +242,7 @@
 }
 
 .callHeader {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--color-gray-500);
@@ -250,17 +250,17 @@
 }
 
 .callContent {
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-lg);
+  gap: var(--spacing-lg);
 }
 
 .callArgs,
 .callResult {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .callLabel {
@@ -271,7 +271,7 @@
 .callValue {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   background: var(--color-white-5);
   border-radius: var(--radius-md);
 }
@@ -294,7 +294,7 @@
 }
 
 .outputHeader {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--color-gray-500);
@@ -302,7 +302,7 @@
 }
 
 .output {
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   min-height: 50px;
 }
 
@@ -323,7 +323,7 @@
   background: var(--color-brand-primary-10);
   border: var(--border-width-1) solid var(--color-brand-primary-30);
   border-radius: var(--radius-lg);
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   font-size: var(--text-sm);
   color: var(--color-gray-300);
   line-height: var(--leading-normal);
@@ -332,24 +332,24 @@
 .stepBadge {
   display: inline-block;
   background: var(--color-brand-primary-30);
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
   color: var(--color-brand-light);
-  margin-right: var(--space-sm);
+  margin-right: var(--spacing-sm);
 }
 
 /* Controls */
 .controls {
   display: flex;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
   justify-content: center;
 }
 
 .btnPrimary,
 .btnSecondary {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   border-radius: var(--radius-full);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
@@ -393,7 +393,7 @@
   background: var(--color-emerald-10);
   border: var(--border-width-1) solid var(--color-emerald-30);
   border-radius: var(--radius-lg);
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   font-size: var(--text-sm);
   color: var(--color-gray-300);
   line-height: var(--leading-normal);

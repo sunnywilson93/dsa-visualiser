@@ -7,12 +7,12 @@
 /* Example selector */
 .exampleSelector {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
 }
 
 .exampleBtn {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--color-white-5);
@@ -38,7 +38,7 @@
 .inputSection {
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
 }
 
 .inputLabel {
@@ -52,7 +52,7 @@
 
 .inputChars {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   justify-content: center;
 }
 
@@ -61,8 +61,8 @@
   font-size: var(--text-2xl);
   font-weight: var(--font-semibold);
   color: var(--color-gray-300);
-  width: var(--space-3xl);
-  height: var(--space-3xl);
+  width: var(--spacing-3xl);
+  height: var(--spacing-3xl);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,14 +84,14 @@
 .stackSection {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: var(--space-xl);
+  gap: var(--spacing-xl);
   align-items: start;
 }
 
 .stackContainer {
   background: var(--color-black-20);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
 }
 
 .stackLabel {
@@ -106,22 +106,22 @@
 .stack {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .stackTop,
 .stackBottom {
   font-size: var(--text-xs);
   color: var(--color-gray-800);
-  padding: var(--space-xs) 0;
+  padding: var(--spacing-xs) 0;
 }
 
 .stackItems {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1-5);
+  gap: 5px;
   min-height: 180px;
-  padding: var(--space-md);
+  padding: var(--spacing-md);
   background: var(--color-black-30);
   border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-lg);
@@ -131,15 +131,15 @@
   color: var(--color-gray-700);
   font-size: var(--text-base);
   text-align: center;
-  padding: var(--space-2xl);
+  padding: var(--spacing-2xl);
 }
 
 .stackItem {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-sm);
-  padding: var(--space-md) var(--space-lg);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-black-30);
   border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-md);
@@ -166,7 +166,7 @@
 .outputSection {
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--spacing-lg);
   min-width: 100px;
 }
 
@@ -176,7 +176,7 @@
   color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 .output {
@@ -201,8 +201,8 @@
 .description {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-black-30);
   border-radius: var(--radius-lg);
   border-left: 3px solid var(--color-brand-primary);
@@ -214,7 +214,7 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: var(--space-0-5) var(--space-sm);
+  padding: 2px var(--spacing-sm);
   border-radius: var(--radius-sm);
   color: white;
 }
@@ -230,7 +230,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
 }
 
 .stepCounter {
@@ -241,7 +241,7 @@
 }
 
 .btnPrimary {
-  padding: var(--space-2-5) var(--space-xl);
+  padding: 10px var(--spacing-xl);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: var(--gradient-brand);
@@ -258,7 +258,7 @@
 }
 
 .btnSecondary {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-base);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);
@@ -280,7 +280,7 @@
 
 /* Insight */
 .insight {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-brand-primary-10);
   border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);

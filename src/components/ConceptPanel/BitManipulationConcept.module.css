@@ -2,21 +2,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   width: 100%;
   --label-width: 60px;
-  --decimal-width: var(--space-3xl);
-  --equals-width: var(--space-md);
+  --decimal-width: var(--spacing-3xl);
+  --equals-width: var(--spacing-md);
   color: var(--color-text-bright);
 }
 
 .empty {
   color: var(--color-gray-500);
-  font-size: var(--space-md);
+  font-size: var(--spacing-md);
 }
 
 .operatorBadge {
-  font-size: var(--space-2-5);
+  font-size: 10px;
   font-weight: var(--font-semibold);
   padding: 3px 10px;
   background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-secondary));
@@ -29,8 +29,8 @@
 .visualization {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
-  padding: var(--space-sm);
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm);
   background: var(--color-black-30);
   border: 1px dashed var(--color-white-10);
   border-radius: var(--radius-lg);
@@ -39,18 +39,18 @@
 .bitRow {
   display: grid;
   grid-template-columns: var(--label-width) var(--decimal-width) var(--equals-width) auto;
-  column-gap: var(--space-sm);
+  column-gap: var(--spacing-sm);
   align-items: center;
   font-family: var(--font-mono);
 }
 
 .resultRow {
-  margin-top: var(--space-xs);
+  margin-top: var(--spacing-xs);
 }
 
 .label {
   width: var(--label-width);
-  font-size: var(--space-2-5);
+  font-size: 10px;
   color: var(--color-accent-cyan);
   font-weight: var(--font-medium);
   text-align: right;
@@ -69,13 +69,13 @@
 
 .equals {
   color: var(--color-gray-500);
-  font-size: var(--space-2-5);
+  font-size: 10px;
   text-align: center;
 }
 
 .bits {
   display: flex;
-  gap: var(--space-0-5);
+  gap: 2px;
 }
 
 .bit {
@@ -84,7 +84,7 @@
   justify-content: center;
   width: 20px;
   height: 22px;
-  font-size: var(--space-md);
+  font-size: var(--spacing-md);
   font-weight: var(--font-semibold);
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
@@ -129,12 +129,12 @@
 .operatorRow {
   display: grid;
   grid-template-columns: var(--label-width) var(--decimal-width) var(--equals-width) auto;
-  column-gap: var(--space-sm);
+  column-gap: var(--spacing-sm);
   align-items: center;
 }
 
 .operatorSymbol {
-  font-size: var(--space-md);
+  font-size: var(--spacing-md);
   font-weight: var(--font-bold);
   color: var(--color-brand-light);
   grid-column: 2;
@@ -152,7 +152,7 @@
 .bitPositions {
   display: grid;
   grid-template-columns: var(--label-width) var(--decimal-width) var(--equals-width) auto;
-  column-gap: var(--space-sm);
+  column-gap: var(--spacing-sm);
   align-items: center;
 }
 
@@ -162,13 +162,13 @@
 
 .bitPositionsRow {
   display: flex;
-  gap: var(--space-0-5);
+  gap: 2px;
 }
 
 .bitPosition {
   width: 20px;
   text-align: center;
-  font-size: var(--space-sm);
+  font-size: var(--spacing-sm);
   font-family: var(--font-mono);
   color: #4b5563;
 }
@@ -181,13 +181,13 @@
 
 .annotations {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .annotation {
-  font-size: var(--space-2-5);
+  font-size: 10px;
   font-weight: var(--font-medium);
   color: var(--color-brand-light);
   padding: 3px 10px;
@@ -197,10 +197,10 @@
 }
 
 .resultDisplay {
-  font-size: var(--space-md);
+  font-size: var(--spacing-md);
   font-weight: var(--font-semibold);
   color: var(--difficulty-1);
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
   background: rgba(16, 185, 128, 0.15);
   border: 1px solid rgba(16, 185, 128, 0.4);
   border-radius: var(--radius-md);

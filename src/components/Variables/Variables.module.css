@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-bg-tertiary);
   border-bottom: var(--border-width-1) solid var(--color-border-primary);
 }
@@ -28,14 +28,14 @@
 .content {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-sm);
+  padding: var(--spacing-sm);
 }
 
 .empty {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xl);
+  padding: var(--spacing-xl);
   color: var(--color-text-muted);
   font-size: var(--text-base);
   text-align: center;
@@ -43,7 +43,7 @@
 
 /* Scope section */
 .scope {
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--spacing-sm);
   background: var(--color-bg-tertiary);
   border: var(--border-width-1) solid var(--color-border-primary);
   border-radius: var(--radius-md);
@@ -57,9 +57,9 @@
 .scopeHeader {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   width: 100%;
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   background: transparent;
   border: none;
   color: var(--color-text-primary);
@@ -80,7 +80,7 @@
 .scopeType {
   font-size: var(--text-2xs);
   color: var(--color-text-muted);
-  padding: var(--space-px) var(--space-2);
+  padding: 1px 6px;
   background: var(--color-bg-primary);
   border-radius: var(--radius-sm);
   text-transform: uppercase;
@@ -93,7 +93,7 @@
 }
 
 .scopeContent {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   border-top: var(--border-width-1) solid var(--color-border-secondary);
   overflow: hidden;
 }
@@ -102,8 +102,8 @@
 .variableRow {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-0);
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) 0px;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
 }
@@ -150,16 +150,16 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .expandBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--space-lg);
-  height: var(--space-lg);
-  padding: var(--space-0);
+  width: var(--spacing-lg);
+  height: var(--spacing-lg);
+  padding: 0px;
   background: transparent;
   border: none;
   color: var(--color-text-muted);
@@ -173,10 +173,10 @@
 
 .expandedContent {
   width: 100%;
-  padding-left: var(--space-md);
+  padding-left: var(--spacing-md);
   border-left: var(--border-width-1) solid var(--color-border-secondary);
-  margin-left: var(--space-xs);
-  margin-top: var(--space-xs);
+  margin-left: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
   overflow: hidden;
 }
 
@@ -184,18 +184,18 @@
 .arrayItems {
   display: flex;
   flex-direction: column;
-  gap: var(--space-0-5);
+  gap: 2px;
 }
 
 .arrayItem {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .index {
   color: var(--color-text-muted);
-  min-width: var(--space-xl);
+  min-width: var(--spacing-xl);
   flex-shrink: 0;
 }
 
@@ -203,13 +203,13 @@
 .objectProps {
   display: flex;
   flex-direction: column;
-  gap: var(--space-0-5);
+  gap: 2px;
 }
 
 .objectProp {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .propKey {

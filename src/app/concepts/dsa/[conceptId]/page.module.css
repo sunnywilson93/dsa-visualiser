@@ -15,7 +15,7 @@
 
 .complexityTable th,
 .complexityTable td {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
@@ -62,13 +62,13 @@
 .relatedProblems {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-md);
+  gap: var(--spacing-md);
 }
 
 .problemLink {
   display: inline-flex;
   align-items: center;
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   background: var(--color-brand-primary-10);
   border: var(--border-width-1) solid var(--color-brand-primary-30);
   border-radius: var(--radius-3xl);
@@ -89,7 +89,7 @@
 @media (max-width: 640px) {
   .complexityTable th,
   .complexityTable td {
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--spacing-sm) var(--spacing-md);
     font-size: var(--text-base);
   }
 
