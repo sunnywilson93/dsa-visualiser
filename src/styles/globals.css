@@ -168,6 +168,19 @@
   /* === Border colors === */
   --color-border-primary: #30363d;
   --color-border-secondary: #21262d;
+
+  /* === Spacing === */
+  --spacing: 4px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 40px;
+  --spacing-4xl: 48px;
+  --spacing-5xl: 64px;
+  --spacing-6xl: 80px;
 }
 
 @layer base {
@@ -239,25 +252,6 @@
   --stack-frame-3: #3fb950;
   --stack-frame-4: #d29922;
   --stack-frame-5: #f85149;
-
-  /* Spacing scale */
-  --space-0: 0px;
-  --space-px: 1px;
-  --space-0-5: 2px;
-  --space-1: 3px;
-  --space-1-5: 5px;
-  --space-2: 6px;
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-2-5: 10px;
-  --space-md: 12px;
-  --space-lg: 16px;
-  --space-xl: 24px;
-  --space-2xl: 32px;
-  --space-3xl: 40px;
-  --space-4xl: 48px;
-  --space-5xl: 64px;
-  --space-6xl: 80px;
 
   /* Responsive breakpoints (documentation only - cannot use in @media) */
   /* sm: 640px - Mobile landscape, large phones */
