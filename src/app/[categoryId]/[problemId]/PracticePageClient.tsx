@@ -125,9 +125,9 @@ export default function PracticePageClient() {
         {hasConcept && (
           <Link
             href={`/${categoryId}/${problemId}/concept`}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-brand-primary bg-brand-primary/10 border border-brand-primary/20 rounded-lg hover:bg-brand-primary/20 transition-colors"
+            className="flex items-center px-3 py-1.5 text-sm font-medium text-brand-primary bg-brand-primary/10 border border-brand-primary/20 rounded-lg hover:bg-brand-primary/20 transition-colors"
           >
-            <span>💡 Concept</span>
+            <span>Concept</span>
           </Link>
         )}
       </header>
@@ -159,10 +159,7 @@ export default function PracticePageClient() {
           
           {/* Code editor */}
           <div className="flex-1 min-h-0 p-4">
-            <CodeEditor 
-              readOnly 
-              conceptLink={hasConcept ? `/${categoryId}/${problemId}/concept` : undefined} 
-            />
+            <CodeEditor readOnly />
           </div>
         </div>
 

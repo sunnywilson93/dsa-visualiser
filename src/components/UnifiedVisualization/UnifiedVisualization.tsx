@@ -273,10 +273,38 @@ export function UnifiedVisualization() {
   const status = useExecutionStore(state => state.status)
   const isIdle = status === 'idle'
   
+  // On mobile, show a compact placeholder when idle
   if (isIdle) {
     return (
-      <div className="h-full p-6">
-        <EmptyState />
+      <div className="h-full flex flex-col">
+        {/* Mobile: show compact hint */}
+        <div className="lg:hidden flex items-center justify-center gap-2 p-3 bg-bg-tertiary/50 border-b border-border-primary text-sm text-text-muted">
+          <BarChart3 size={16} className="text-brand-primary" />
+          <span>Tap <span className="text-brand-primary font-medium">Analyze</span> to see visualization</span>
+        </div>
+        
+        {/* Desktop: show full empty state */}
+        <div className="hidden lg:flex flex-1 items-center justify-center p-6">
+          <EmptyState />
+        </div>
+        
+        {/* Mobile: show variable placeholders */}
+        <div className="lg:hidden flex-1 p-4 space-y-3 overflow-y-auto">
+          <div className="bg-bg-secondary rounded-lg border border-border-primary p-3">
+            <div className="flex items-center gap-2 text-xs text-text-muted uppercase mb-2">
+              <Box size={14} />
+              <span>Variables</span>
+            </div>
+            <p className="text-sm text-text-muted">Run code to see variables</p>
+          </div>
+          <div className="bg-bg-secondary rounded-lg border border-border-primary p-3">
+            <div className="flex items-center gap-2 text-xs text-text-muted uppercase mb-2">
+              <Terminal size={14} />
+              <span>Output</span>
+            </div>
+            <p className="text-sm text-text-muted">Console output will appear here</p>
+          </div>
+        </div>
       </div>
     )
   }
