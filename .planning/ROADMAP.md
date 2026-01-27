@@ -313,7 +313,14 @@ Plans:
   2. Preflight overrides are in place to prevent Tailwind v4 defaults from altering unmigrated component styles (buttons, borders, placeholders)
   3. `npm run build` passes with zero errors and `npm run lint` produces no new warnings
   4. Every page renders identically to the pre-migration state at 360px, 768px, and 1440px viewports
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 17-01-PLAN.md -- Static analysis tooling (check-vars, check-keyframes, tokens-audit scripts)
+- [ ] 17-02-PLAN.md -- Preflight surgical overrides in globals.css
+- [ ] 17-03-PLAN.md -- Run analysis, fix issues, verify build/lint clean
+- [ ] 17-04-PLAN.md -- Playwright visual regression infrastructure and tests
+- [ ] 17-05-PLAN.md -- Final comprehensive verification and human sign-off
 
 ## Progress
 
@@ -338,8 +345,8 @@ Phases 1-15 complete (v1.0-v1.2). Phase 16 then 17 (v2.0).
 | 14. Page Consistency | v1.2 | 1/1 | Complete | 2026-01-25 |
 | 15. Responsive Implementation | v1.2 | 3/3 | Complete | 2026-01-25 |
 | 16. Config & Token Migration | v2.0 | 6/6 | Complete | 2026-01-27 |
-| 17. Compatibility Verification | v2.0 | 0/TBD | Not started | - |
+| 17. Compatibility Verification | v2.0 | 0/5 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-27 -- Phase 16 complete (6/6 plans, verified)*
+*Last updated: 2026-01-27 -- Phase 17 planned (5 plans in 3 waves)*
