@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './HashTableViz.module.css'
 
 interface Bucket {
   index: number
@@ -146,13 +145,13 @@ export function HashTableViz() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-5">
       {/* Example selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex flex-wrap gap-2">
         {examples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white ${exampleIndex === i ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -161,21 +160,21 @@ export function HashTableViz() {
       </div>
 
       {/* Hash function visualization */}
-      <div className={styles.hashSection}>
-        <div className={styles.hashFunction}>
-          <div className={styles.hashLabel}>Hash Function</div>
-          <div className={styles.hashFormula}>
-            <span className={styles.hashKey}>&quot;{currentStep.key}&quot;</span>
-            <span className={styles.hashArrow}>→</span>
-            <span className={styles.hashCalc}>
+      <div className="bg-black/30 rounded-lg p-4">
+        <div className="flex flex-col gap-2">
+          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Hash Function</div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="font-mono text-lg text-amber-400 bg-amber-500/10 px-2 py-1 rounded">&quot;{currentStep.key}&quot;</span>
+            <span className="text-gray-600 text-xl">→</span>
+            <span className="font-mono text-[0.95rem] text-gray-300">
               {currentStep.hashValue !== undefined && (
                 <>
-                  <span className={styles.hashSum}>{currentStep.hashValue}</span>
-                  <span className={styles.hashMod}> % {BUCKET_COUNT}</span>
-                  <span className={styles.hashEquals}> = </span>
+                  <span className="text-blue-400">{currentStep.hashValue}</span>
+                  <span className="text-gray-500"> % {BUCKET_COUNT}</span>
+                  <span className="text-gray-600"> = </span>
                   <motion.span
                     key={currentStep.id}
-                    className={styles.hashResult}
+                    className="text-xl font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded"
                     initial={{ scale: 1.5, color: '#f59e0b' }}
                     animate={{ scale: 1, color: '#10b981' }}
                   >
@@ -189,13 +188,13 @@ export function HashTableViz() {
       </div>
 
       {/* Buckets visualization */}
-      <div className={styles.bucketsContainer}>
-        <div className={styles.bucketsLabel}>Buckets (Array)</div>
-        <div className={styles.buckets}>
+      <div className="bg-black/20 rounded-lg p-4">
+        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Buckets (Array)</div>
+        <div className="grid grid-cols-7 max-sm:grid-cols-4 max-[400px]:grid-cols-3 gap-2">
           {buckets.map((bucket, i) => (
             <motion.div
               key={i}
-              className={`${styles.bucket} ${currentStep.bucketIndex === i ? styles.activeBucket : ''}`}
+              className={`bg-black/30 border-2 border-white/10 rounded-lg min-h-[80px] max-sm:min-h-[70px] flex flex-col transition-all duration-200 ${currentStep.bucketIndex === i ? 'shadow-[0_0_20px_rgba(var(--color-brand-primary-rgb),0.3)]' : ''}`}
               animate={{
                 borderColor: currentStep.bucketIndex === i
                   ? getActionColor(currentStep.action)
@@ -205,26 +204,26 @@ export function HashTableViz() {
                   : 'rgba(0,0,0,0.3)'
               }}
             >
-              <div className={styles.bucketIndex}>{i}</div>
-              <div className={styles.bucketItems}>
+              <div className="px-1.5 py-1 text-xs font-semibold text-brand-primary text-center bg-brand-primary/10 border-b border-white/5">{i}</div>
+              <div className="flex-1 p-1 flex flex-col items-center gap-1">
                 <AnimatePresence mode="popLayout">
                   {bucket.items.length === 0 ? (
-                    <span className={styles.empty}>—</span>
+                    <span className="text-gray-600 text-base">—</span>
                   ) : (
                     bucket.items.map((item, j) => (
                       <motion.div
                         key={`${item.key}-${j}`}
-                        className={styles.bucketItem}
+                        className="flex items-center gap-0.5 px-1 py-0.5 bg-emerald-500/15 border border-emerald-500/30 rounded font-mono text-[10px]"
                         initial={{ opacity: 0, scale: 0.8, y: -10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         layout
                       >
-                        <span className={styles.itemKey}>{item.key}</span>
+                        <span className="text-amber-400 font-semibold">{item.key}</span>
                         {item.value && (
                           <>
-                            <span className={styles.itemArrow}>:</span>
-                            <span className={styles.itemValue}>{item.value}</span>
+                            <span className="text-gray-600">:</span>
+                            <span className="text-emerald-400">{item.value}</span>
                           </>
                         )}
                       </motion.div>
@@ -241,32 +240,36 @@ export function HashTableViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="flex items-start gap-3 p-3 px-4 bg-black/30 rounded-lg border-l-[3px] border-brand-primary"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
           style={{ borderLeftColor: getActionColor(currentStep.action) }}
         >
           <span
-            className={styles.actionBadge}
+            className="flex-shrink-0 text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded text-white"
             style={{ background: getActionColor(currentStep.action) }}
           >
             {currentStep.action}
           </span>
-          <span className={styles.stepText}>{currentStep.description}</span>
+          <span className="text-base text-gray-300 leading-normal">{currentStep.description}</span>
         </motion.div>
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
+      <div className="flex items-center justify-center gap-3">
+        <button 
+          className="px-3 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed" 
+          onClick={handlePrev} 
+          disabled={stepIndex === 0}
+        >
           ← Prev
         </button>
-        <span className={styles.stepCounter}>
+        <span className="text-base text-gray-600 min-w-[50px] text-center">
           {stepIndex + 1} / {currentExample.steps.length}
         </span>
         <motion.button
-          className={styles.btnPrimary}
+          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-brand-primary to-brand-secondary border-0 rounded-md text-white cursor-pointer transition-opacity duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
@@ -274,14 +277,17 @@ export function HashTableViz() {
         >
           {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
         </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button 
+          className="px-3 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white" 
+          onClick={handleReset}
+        >
           ↻
         </button>
       </div>
 
       {/* Key insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="p-3 px-4 bg-brand-primary/10 border border-brand-primary/20 rounded-lg text-base text-gray-300 leading-normal">
+        <strong className="text-brand-light">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

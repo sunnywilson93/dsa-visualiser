@@ -6,7 +6,6 @@ import { useCurrentStep, useExecutionStore } from '@/store'
 import type { ArrayValue, RuntimeValue, ExecutionStep } from '@/types'
 import { ArrayVisualization } from './ArrayVisualization'
 import { BinaryVisualization } from './BinaryVisualization'
-import styles from './VisualizationPanel.module.css'
 
 interface DetectedArray {
   name: string
@@ -94,38 +93,34 @@ export function VisualizationPanel() {
   const hasContent = arrays.length > 0 || showBitwise
   const isEmpty = status === 'idle' || !hasContent
 
+  // Don't render if empty - save space
+  if (isEmpty) {
+    return null
+  }
+
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <span className={styles.title}>Visualization</span>
-        <div className={styles.badges}>
+    <div className="flex flex-col h-full bg-bg-secondary border border-border-primary rounded-lg overflow-hidden">
+      <div className="flex items-center justify-between py-2 px-3 bg-bg-tertiary border-b border-border-primary">
+        <span className="text-sm font-semibold uppercase tracking-tight text-text-secondary">
+          Visualization
+        </span>
+        <div className="flex gap-1">
           {arrays.length > 0 && (
-            <span className={styles.badge}>{arrays.length} array{arrays.length !== 1 ? 's' : ''}</span>
+            <span className="text-xs font-medium py-0.5 px-2 rounded-sm bg-bg-elevated text-text-muted">
+              {arrays.length} array{arrays.length !== 1 ? 's' : ''}
+            </span>
           )}
           {showBitwise && (
-            <span className={`${styles.badge} ${styles.bitwise}`}>Binary</span>
+            <span className="text-xs font-medium py-0.5 px-2 rounded-sm bg-brand-primary-20 text-accent-purple">
+              Binary
+            </span>
           )}
         </div>
       </div>
 
-      <div className={styles.content}>
-        {isEmpty && status === 'idle' && (
-          <div className={styles.empty}>
-            <div className={styles.emptyIcon}>
-              <BarChart3 size={32} />
-            </div>
-            <p>Run code to visualize data structures</p>
-          </div>
-        )}
-
-        {isEmpty && status !== 'idle' && (
-          <div className={styles.empty}>
-            <p>No visualizations for current step</p>
-          </div>
-        )}
-
-        {!isEmpty && currentStep && (
-          <div className={styles.visualizations}>
+      <div className="flex-1 overflow-y-auto p-3">
+        {currentStep && (
+          <div className="flex flex-col gap-2">
             {/* Binary visualization for bitwise operations */}
             {showBitwise && (
               <BinaryVisualization step={currentStep} />

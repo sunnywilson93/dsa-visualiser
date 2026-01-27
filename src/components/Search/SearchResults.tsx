@@ -5,7 +5,6 @@ import { Search } from 'lucide-react'
 import type { SearchResult } from '@/lib/search'
 import { ConceptIcon } from '@/components/Icons'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
-import styles from './SearchResults.module.css'
 
 const sourceLabels = {
   js: 'JS',
@@ -22,10 +21,12 @@ export function SearchResultItem({ result, onClick, compact = false }: SearchRes
   const { item } = result
 
   const badges = (
-    <div className={styles.badges}>
+    <div className="flex items-center gap-[3px] shrink-0 [&:not(.compact)]:ml-auto">
       <span
-        className={styles.sourceBadge}
-        data-source={item.source}
+        className={`
+          text-2xs font-semibold py-0.5 px-[3px] rounded-sm uppercase tracking-tight min-w-8 text-center
+          ${item.source === 'dsa' ? 'bg-brand-secondary-30 text-brand-secondary' : 'bg-brand-primary-30 text-brand-light'}
+        `}
       >
         {sourceLabels[item.source]}
       </span>
@@ -38,13 +39,15 @@ export function SearchResultItem({ result, onClick, compact = false }: SearchRes
     return (
       <Link
         href={item.href}
-        className={styles.itemCompact}
+        className="grid grid-cols-[24px_1fr_auto] items-center gap-3 py-3 px-3 rounded-md no-underline text-inherit transition-colors duration-fast hover:bg-brand-primary-20"
         onClick={onClick}
       >
-        <span className={styles.icon}>
+        <span className="text-lg w-6 text-center flex items-center justify-center shrink-0 leading-none">
           <ConceptIcon conceptId={item.id} size={18} />
         </span>
-        <span className={styles.title}>{item.title}</span>
+        <span className="text-base text-text-bright whitespace-nowrap overflow-hidden text-ellipsis">
+          {item.title}
+        </span>
         {badges}
       </Link>
     )
@@ -54,18 +57,18 @@ export function SearchResultItem({ result, onClick, compact = false }: SearchRes
   return (
     <Link
       href={item.href}
-      className={styles.item}
+      className="flex items-start gap-3 p-3 rounded-lg no-underline text-inherit transition-colors duration-fast hover:bg-brand-primary-15"
       onClick={onClick}
     >
-      <span className={styles.icon}>
+      <span className="text-xl leading-none shrink-0">
         <ConceptIcon conceptId={item.id} size={22} />
       </span>
-      <div className={styles.content}>
-        <div className={styles.titleRow}>
-          <span className={styles.title}>{item.title}</span>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-base font-medium text-text-bright">{item.title}</span>
           {badges}
         </div>
-        <p className={styles.description}>{item.shortDescription}</p>
+        <p className="text-base text-gray-400 mt-1 m-0 leading-snug">{item.shortDescription}</p>
       </div>
     </Link>
   )
@@ -90,17 +93,17 @@ export function SearchResultsList({
 
   if (results.length === 0) {
     return (
-      <div className={styles.empty}>
-        <span className={styles.emptyIcon}>
+      <div className="flex flex-col items-center justify-center py-8 px-4 text-center text-gray-600">
+        <span className="text-3xl mb-2 opacity-50">
           <Search size={24} />
         </span>
-        <p>{emptyMessage}</p>
+        <p className="m-0 text-base">{emptyMessage}</p>
       </div>
     )
   }
 
   return (
-    <div className={styles.list}>
+    <div className="flex flex-col gap-1">
       {displayedResults.map((result) => (
         <SearchResultItem
           key={`${result.item.source}-${result.item.id}`}
@@ -110,7 +113,7 @@ export function SearchResultsList({
         />
       ))}
       {maxItems && results.length > maxItems && (
-        <div className={styles.moreResults}>
+        <div className="py-2 px-3 text-sm text-gray-400 text-center border-t border-white-8 mt-1">
           +{results.length - maxItems} more results
         </div>
       )}

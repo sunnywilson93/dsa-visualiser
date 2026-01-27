@@ -14,7 +14,6 @@ import {
 } from 'lucide-react'
 import { useExecutionStore, useExecutionProgress, useCurrentStep } from '@/store'
 import type { PlaybackSpeed } from '@/types'
-import styles from './Controls.module.css'
 
 const SPEED_MS: Record<PlaybackSpeed, number> = {
   slow: 1000,
@@ -132,40 +131,28 @@ export function Controls() {
   const canStepBackward = !isIdle && current > 0
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-3 p-3 px-4 bg-bg-secondary border border-border-primary rounded-lg">
       {/* Main controls */}
-      <div className={styles.mainControls}>
-        {/* Run and Debug buttons (only when idle) */}
+      <div className="flex items-center justify-center gap-2">
+        {/* Single Run button (only when idle) */}
         {isIdle && (
-          <div className={styles.startButtons}>
-            <motion.button
-              className={styles.runButton}
-              onClick={handleRun}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              title="Execute code and show result"
-            >
-              <Zap size={16} />
-              <span>Run</span>
-            </motion.button>
-            <motion.button
-              className={styles.visualizeButton}
-              onClick={handleVisualize}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              title="Step through code line by line"
-            >
-              <Eye size={16} />
-              <span>Visualize</span>
-            </motion.button>
-          </div>
+          <motion.button
+            className="flex items-center gap-2 py-2 px-6 font-semibold text-base rounded-md border-none cursor-pointer transition-all duration-fast text-white bg-gradient-to-br from-accent-blue to-accent-purple hover:brightness-110 hover:-translate-y-0.5"
+            onClick={handleVisualize}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            title="Run and visualize code step by step"
+          >
+            <Play size={18} />
+            <span>Run & Visualize</span>
+          </motion.button>
         )}
 
         {/* Playback controls (when running) */}
         {!isIdle && (
           <>
             <button
-              className={styles.iconBtn}
+              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-fast hover:bg-bg-elevated hover:text-text-primary"
               onClick={reset}
               title="Reset (Esc)"
             >
@@ -173,7 +160,7 @@ export function Controls() {
             </button>
 
             <button
-              className={styles.iconBtn}
+              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-fast hover:bg-bg-elevated hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={stepBackward}
               disabled={!canStepBackward}
               title="Step Back (←)"
@@ -182,7 +169,7 @@ export function Controls() {
             </button>
 
             <button
-              className={`${styles.iconBtn} ${styles.primary}`}
+              className="flex items-center justify-center w-12 h-12 bg-accent-blue border border-accent-blue text-white rounded-md cursor-pointer transition-all duration-fast hover:brightness-115 disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={togglePlayback}
               disabled={isCompleted}
               title={isPlaying ? 'Pause (Space)' : 'Play (Space)'}
@@ -191,7 +178,7 @@ export function Controls() {
             </button>
 
             <button
-              className={styles.iconBtn}
+              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-fast hover:bg-bg-elevated hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={stepForward}
               disabled={!canStepForward}
               title="Step Forward (→)"
@@ -200,7 +187,7 @@ export function Controls() {
             </button>
 
             <button
-              className={styles.iconBtn}
+              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-fast hover:bg-bg-elevated hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={runToCompletion}
               disabled={isCompleted}
               title="Run to End"
@@ -213,29 +200,29 @@ export function Controls() {
 
       {/* Timeline slider */}
       {!isIdle && (
-        <div className={styles.timeline}>
-          <div className={styles.timelineInfo}>
-            <span className={styles.stepCounter}>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between gap-3">
+            <span className="font-mono text-sm font-semibold text-accent-blue whitespace-nowrap">
               Step {current + 1} / {total}
             </span>
             {currentStep && (
-              <span className={styles.stepDescription}>
+              <span className="text-sm text-text-secondary text-right overflow-hidden text-ellipsis whitespace-nowrap">
                 {currentStep.description}
               </span>
             )}
           </div>
 
-          <div className={styles.sliderContainer}>
+          <div className="relative h-1.5 bg-bg-tertiary rounded-sm overflow-hidden">
             <input
               type="range"
               min={0}
               max={Math.max(0, total - 1)}
               value={current}
               onChange={handleSliderChange}
-              className={styles.slider}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-[1]"
             />
             <div
-              className={styles.sliderProgress}
+              className="absolute top-0 left-0 h-full bg-gradient-to-r from-accent-blue to-accent-purple rounded-sm transition-[width] duration-100 pointer-events-none"
               style={{ width: `${percentage}%` }}
             />
           </div>
@@ -244,14 +231,16 @@ export function Controls() {
 
       {/* Speed control */}
       {!isIdle && (
-        <div className={styles.speedControl}>
-          <span className={styles.speedLabel}>Speed:</span>
-          <div className={styles.speedButtons}>
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-semibold uppercase text-text-muted">Speed:</span>
+          <div className="flex gap-0.5 bg-bg-tertiary rounded-sm p-0.5">
             {(['slow', 'medium', 'fast'] as PlaybackSpeed[]).map(speed => (
               <button
                 key={speed}
-                className={`${styles.speedBtn} ${
-                  playbackSpeed === speed ? styles.active : ''
+                className={`py-1 px-2.5 text-xs font-medium rounded-sm border-none cursor-pointer transition-all duration-fast ${
+                  playbackSpeed === speed
+                    ? 'bg-accent-blue text-white'
+                    : 'bg-transparent text-text-muted hover:text-text-secondary'
                 }`}
                 onClick={() => setPlaybackSpeed(speed)}
               >

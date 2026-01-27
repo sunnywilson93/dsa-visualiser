@@ -9,7 +9,6 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { RelatedPatterns } from '@/components/CrossLinks'
 import { codeExamples, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
 import { getConceptForProblem, getConceptSteps } from '@/data/algorithmConcepts'
-import styles from './page.module.css'
 
 export default function ConceptVizPageClient() {
   const params = useParams()
@@ -42,11 +41,17 @@ export default function ConceptVizPageClient() {
     { label: problem?.name || problemId },
   ]
 
+  const difficultyBgColors: Record<string, string> = {
+    easy: 'bg-[rgba(74,222,128,0.15)] text-[#4ade80]',
+    medium: 'bg-[rgba(251,191,36,0.15)] text-[var(--color-amber-400)]',
+    hard: 'bg-[rgba(248,113,113,0.15)] text-[var(--color-red-400)]',
+  }
+
   if (!problem || !hasConcept) {
     return (
-      <div className={styles.notFound}>
+      <div className="flex min-h-screen flex-col items-center justify-center gap-[var(--spacing-lg)] bg-[var(--color-bg-primary)] text-[var(--color-gray-500)]">
         <h2>Concept not found</h2>
-        <Link href="/" className={styles.backLink}>
+        <Link href="/" className="inline-flex items-center gap-2 text-[var(--color-accent-blue)]">
           <ArrowLeft size={16} /> Back to Home
         </Link>
       </div>
@@ -54,26 +59,31 @@ export default function ConceptVizPageClient() {
   }
 
   return (
-    <div className={styles.page}>
+    <div className="flex min-h-screen flex-col gap-[var(--spacing-lg)] bg-[var(--color-bg-primary)] p-[var(--spacing-lg)] max-md:gap-[var(--spacing-sm)] max-md:p-[var(--spacing-sm)]">
       <NavBar breadcrumbs={breadcrumbs} />
 
-      <header className={styles.header}>
-        <div className={styles.headerLeft}>
-          <button onClick={() => router.back()} className={styles.backBtn}>
+      <header className="mb-[var(--spacing-lg)] flex flex-shrink-0 items-center justify-between gap-[var(--spacing-lg)] max-md:mb-[var(--spacing-sm)] max-md:gap-[var(--spacing-sm)]">
+        <div className="flex items-center gap-[var(--spacing-md)] max-md:min-w-0 max-md:flex-1">
+          <button 
+            onClick={() => router.back()} 
+            className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-primary)] bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] transition-all duration-[var(--transition-fast)] hover:border-[var(--color-border-secondary)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)]"
+          >
             <ArrowLeft size={16} />
           </button>
-          <div className={styles.problemInfo}>
-            <h1 className={styles.title}>{problem.name}</h1>
+          <div className="flex flex-col gap-0.5 max-md:min-w-0">
+            <h1 className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold text-[var(--color-text-primary)] max-md:text-[var(--spacing-lg)]">
+              {problem.name}
+            </h1>
           </div>
-          <span className={`${styles.difficulty} ${styles[problem.difficulty]}`}>
+          <span className={`rounded-[var(--radius-sm)] px-2.5 py-1 text-xs font-medium uppercase ${difficultyBgColors[problem.difficulty]}`}>
             {problem.difficulty}
           </span>
         </div>
-        <p className={styles.description}>{problem.description}</p>
+        <p className="m-0 text-[13px] text-[var(--color-text-muted)] max-md:hidden">{problem.description}</p>
       </header>
 
-      <main className={styles.main}>
-        <div className={styles.conceptWrapper}>
+      <main className="mx-auto flex w-full max-w-[600px] flex-1 flex-col items-center gap-[var(--spacing-lg)] max-md:gap-[var(--spacing-sm)]">
+        <div className="w-full">
           <ErrorBoundary>
             <ConceptPanel
               title={categoryConcept!.title}
@@ -88,7 +98,7 @@ export default function ConceptVizPageClient() {
 
         <Link
           href={`/${categoryId}/${problemId}`}
-          className={styles.practiceLink}
+          className="flex items-center justify-center gap-[var(--spacing-sm)] rounded-[var(--radius-md)] bg-gradient-to-br from-[var(--color-accent-blue)] to-[var(--color-accent-purple)] px-[var(--spacing-xl)] py-[var(--spacing-md)] text-sm font-semibold text-white no-underline transition-all duration-[var(--transition-fast)] hover:brightness-110 hover:-translate-y-0.5 max-md:px-[var(--spacing-md)] max-md:py-[var(--spacing-sm)] max-md:text-[13px]"
         >
           <Code size={16} />
           <span>Practice the Code</span>

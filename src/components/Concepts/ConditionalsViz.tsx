@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './ConditionalsViz.module.css'
 
 type Tab = 'ifelse' | 'ternary' | 'truthy'
 
@@ -48,23 +47,35 @@ export function ConditionalsViz() {
   const result = getIfElseResult()
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-5">
       {/* Tab selector */}
-      <div className={styles.tabSelector}>
+      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
         <button
-          className={`${styles.tabBtn} ${activeTab === 'ifelse' ? styles.active : ''}`}
+          className={`px-5 py-2 text-sm font-medium rounded-full transition-all ${
+            activeTab === 'ifelse'
+              ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
+              : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+          }`}
           onClick={() => setActiveTab('ifelse')}
         >
           if / else
         </button>
         <button
-          className={`${styles.tabBtn} ${activeTab === 'ternary' ? styles.active : ''}`}
+          className={`px-5 py-2 text-sm font-medium rounded-full transition-all ${
+            activeTab === 'ternary'
+              ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
+              : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+          }`}
           onClick={() => setActiveTab('ternary')}
         >
           Ternary ? :
         </button>
         <button
-          className={`${styles.tabBtn} ${activeTab === 'truthy' ? styles.active : ''}`}
+          className={`px-5 py-2 text-sm font-medium rounded-full transition-all ${
+            activeTab === 'truthy'
+              ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
+              : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+          }`}
           onClick={() => setActiveTab('truthy')}
         >
           Truthy / Falsy
@@ -78,51 +89,51 @@ export function ConditionalsViz() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className={styles.content}
+            className="flex flex-col gap-5"
           >
-            <div className={styles.sliderRow}>
-              <label className={styles.sliderLabel}>age = {age}</label>
+            <div className="flex items-center gap-5 px-4 py-3 bg-black/30 rounded-lg">
+              <label className="font-mono text-base text-white min-w-20">age = {age}</label>
               <input
                 type="range"
                 min="10"
                 max="30"
                 value={age}
                 onChange={e => setAge(Number(e.target.value))}
-                className={styles.slider}
+                className="flex-1 h-1.5 bg-white/10 rounded outline-none appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500 [&::-webkit-slider-thumb]:cursor-pointer"
               />
             </div>
 
-            <div className={styles.codeCard}>
-              <pre className={styles.code}>
-                <div className={`${styles.codeLine} ${result.highlighted === 'if' ? styles.activeLine : ''}`}>
+            <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
+              <pre className="m-0 p-4 font-mono text-xs">
+                <div className={`px-2 py-0.5 transition-colors ${result.highlighted === 'if' ? 'bg-emerald-500/20 text-emerald-400' : 'text-gray-500'}`}>
                   {`if (age >= 21) {`}
                 </div>
-                <div className={`${styles.codeLine} ${result.highlighted === 'if' ? styles.activeLine : ''}`}>
+                <div className={`px-2 py-0.5 transition-colors ${result.highlighted === 'if' ? 'bg-emerald-500/20 text-emerald-400' : 'text-gray-500'}`}>
                   {`  console.log("Can drink");`}
                 </div>
-                <div className={`${styles.codeLine} ${result.highlighted === 'elseif' ? styles.activeLine : ''}`}>
+                <div className={`px-2 py-0.5 transition-colors ${result.highlighted === 'elseif' ? 'bg-emerald-500/20 text-emerald-400' : 'text-gray-500'}`}>
                   {`} else if (age >= 18) {`}
                 </div>
-                <div className={`${styles.codeLine} ${result.highlighted === 'elseif' ? styles.activeLine : ''}`}>
+                <div className={`px-2 py-0.5 transition-colors ${result.highlighted === 'elseif' ? 'bg-emerald-500/20 text-emerald-400' : 'text-gray-500'}`}>
                   {`  console.log("Can vote");`}
                 </div>
-                <div className={`${styles.codeLine} ${result.highlighted === 'else' ? styles.activeLine : ''}`}>
+                <div className={`px-2 py-0.5 transition-colors ${result.highlighted === 'else' ? 'bg-emerald-500/20 text-emerald-400' : 'text-gray-500'}`}>
                   {`} else {`}
                 </div>
-                <div className={`${styles.codeLine} ${result.highlighted === 'else' ? styles.activeLine : ''}`}>
+                <div className={`px-2 py-0.5 transition-colors ${result.highlighted === 'else' ? 'bg-emerald-500/20 text-emerald-400' : 'text-gray-500'}`}>
                   {`  console.log("Too young");`}
                 </div>
-                <div className={styles.codeLine}>{`}`}</div>
+                <div className="px-2 py-0.5 text-gray-500">{`}`}</div>
               </pre>
             </div>
 
-            <div className={styles.outputBox}>
-              <span className={styles.outputLabel}>Output:</span>
+            <div className="flex items-center justify-center gap-2 px-4 py-3 bg-emerald-500/10 border border-emerald-400/30 rounded-lg">
+              <span className="text-sm text-gray-500">Output:</span>
               <motion.code
                 key={result.output}
                 initial={{ scale: 1.1 }}
                 animate={{ scale: 1 }}
-                className={styles.outputValue}
+                className="font-mono text-lg font-semibold text-emerald-500"
               >
                 &quot;{result.output}&quot;
               </motion.code>
@@ -136,50 +147,56 @@ export function ConditionalsViz() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className={styles.content}
+            className="flex flex-col gap-5"
           >
-            <div className={styles.sliderRow}>
-              <label className={styles.sliderLabel}>age = {ternaryValue}</label>
+            <div className="flex items-center gap-5 px-4 py-3 bg-black/30 rounded-lg">
+              <label className="font-mono text-base text-white min-w-20">age = {ternaryValue}</label>
               <input
                 type="range"
                 min="10"
                 max="30"
                 value={ternaryValue}
                 onChange={e => setTernaryValue(Number(e.target.value))}
-                className={styles.slider}
+                className="flex-1 h-1.5 bg-white/10 rounded outline-none appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500 [&::-webkit-slider-thumb]:cursor-pointer"
               />
             </div>
 
-            <div className={styles.ternaryViz}>
-              <div className={styles.ternaryPart}>
-                <span className={styles.ternaryLabel}>condition</span>
-                <code className={ternaryValue >= 18 ? styles.ternaryTrue : styles.ternaryFalse}>
+            <div className="flex items-center justify-center flex-wrap gap-2 px-5 py-6 bg-black/30 rounded-xl">
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-2xs text-gray-500 uppercase">condition</span>
+                <code className={`px-2.5 py-1 rounded-md font-mono text-base transition-all ${
+                  ternaryValue >= 18 ? 'text-emerald-500 bg-emerald-500/15' : 'text-red-500 bg-red-500/15'
+                }`}>
                   age &gt;= 18
                 </code>
               </div>
-              <span className={styles.ternarySymbol}>?</span>
-              <div className={styles.ternaryPart}>
-                <span className={styles.ternaryLabel}>if true</span>
-                <code className={ternaryValue >= 18 ? styles.ternaryActive : ''}>
+              <span className="text-2xl text-gray-600 font-semibold">?</span>
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-2xs text-gray-500 uppercase">if true</span>
+                <code className={`px-2.5 py-1 rounded-md font-mono text-base transition-all ${
+                  ternaryValue >= 18 ? 'text-white bg-purple-500/20 shadow-[0_0_8px_rgba(168,85,247,0.3)]' : 'text-gray-500 bg-black/30'
+                }`}>
                   &quot;adult&quot;
                 </code>
               </div>
-              <span className={styles.ternarySymbol}>:</span>
-              <div className={styles.ternaryPart}>
-                <span className={styles.ternaryLabel}>if false</span>
-                <code className={ternaryValue < 18 ? styles.ternaryActive : ''}>
+              <span className="text-2xl text-gray-600 font-semibold">:</span>
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-2xs text-gray-500 uppercase">if false</span>
+                <code className={`px-2.5 py-1 rounded-md font-mono text-base transition-all ${
+                  ternaryValue < 18 ? 'text-white bg-purple-500/20 shadow-[0_0_8px_rgba(168,85,247,0.3)]' : 'text-gray-500 bg-black/30'
+                }`}>
                   &quot;minor&quot;
                 </code>
               </div>
             </div>
 
-            <div className={styles.outputBox}>
-              <span className={styles.outputLabel}>Result:</span>
+            <div className="flex items-center justify-center gap-2 px-4 py-3 bg-emerald-500/10 border border-emerald-400/30 rounded-lg">
+              <span className="text-sm text-gray-500">Result:</span>
               <motion.code
                 key={ternaryValue >= 18 ? 'adult' : 'minor'}
                 initial={{ scale: 1.1 }}
                 animate={{ scale: 1 }}
-                className={styles.outputValue}
+                className="font-mono text-lg font-semibold text-emerald-500"
               >
                 &quot;{ternaryValue >= 18 ? 'adult' : 'minor'}&quot;
               </motion.code>
@@ -193,15 +210,19 @@ export function ConditionalsViz() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className={styles.content}
+            className="flex flex-col gap-5"
           >
-            <p className={styles.intro}>Click a value to test it in an if statement:</p>
+            <p className="text-base text-gray-500 text-center m-0">
+              Click a value to test it in an if statement:
+            </p>
 
-            <div className={styles.falsyGrid}>
+            <div className="grid grid-cols-5 sm:grid-cols-5 gap-2 max-sm:grid-cols-3">
               {falsyValues.map(item => (
                 <motion.button
                   key={item.value}
-                  className={`${styles.falsyItem} ${selectedFalsy === item.value ? styles.active : ''}`}
+                  className={`flex items-center justify-center p-2.5 bg-black/30 border-2 rounded-lg cursor-pointer transition-all hover:bg-white/5 ${
+                    selectedFalsy === item.value ? 'bg-white/10' : ''
+                  }`}
                   style={{
                     borderColor: selectedFalsy === item.value
                       ? (item.isFalsy ? '#ef4444' : '#10b981')
@@ -211,7 +232,7 @@ export function ConditionalsViz() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <code>{item.display}</code>
+                  <code className="font-mono text-xs text-gray-300">{item.display}</code>
                 </motion.button>
               ))}
             </div>
@@ -220,23 +241,27 @@ export function ConditionalsViz() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={styles.falsyResult}
+                className="flex items-center justify-center gap-4 px-4 py-3 bg-black/30 rounded-lg"
               >
-                <code>if ({selectedFalsy})</code>
-                <span className={styles.arrow}>→</span>
-                <span className={falsyValues.find(f => f.value === selectedFalsy)?.isFalsy ? styles.falsyTag : styles.truthyTag}>
+                <code className="font-mono text-base text-white">if ({selectedFalsy})</code>
+                <span className="text-gray-600">→</span>
+                <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                  falsyValues.find(f => f.value === selectedFalsy)?.isFalsy
+                    ? 'bg-red-500/15 text-red-400'
+                    : 'bg-emerald-500/15 text-emerald-500'
+                }`}>
                   {falsyValues.find(f => f.value === selectedFalsy)?.isFalsy ? 'FALSY (skips block)' : 'TRUTHY (runs block)'}
                 </span>
               </motion.div>
             )}
 
-            <div className={styles.legend}>
-              <div className={styles.legendItem}>
-                <span className={styles.legendDot} style={{ background: '#ef4444' }} />
+            <div className="flex gap-6 justify-center">
+              <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                <span className="w-2 h-2 rounded-full bg-red-500" />
                 <span>Falsy (6 values)</span>
               </div>
-              <div className={styles.legendItem}>
-                <span className={styles.legendDot} style={{ background: '#10b981' }} />
+              <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
                 <span>Truthy (everything else)</span>
               </div>
             </div>

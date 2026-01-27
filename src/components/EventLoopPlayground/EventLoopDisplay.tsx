@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { RefreshCw } from 'lucide-react'
 import type { EventLoopStep } from '@/engine/eventLoopAnalyzer'
-import styles from './EventLoopDisplay.module.css'
 
 interface EventLoopDisplayProps {
   step: EventLoopStep
@@ -20,27 +19,42 @@ const webApis = [
 
 export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
   const getEventLoopClass = () => {
-    if (step.phase === 'idle') return styles.idle
-    if (step.phase === 'micro' || step.phase === 'macro') return styles.active
+    if (step.phase === 'idle') return 'text-gray-800 animate-none'
+    if (step.phase === 'micro' || step.phase === 'macro')
+      return 'text-sky-400 animate-spin drop-shadow-[0_0_6px_rgba(56,189,248,0.6)]'
     return ''
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-6 h-full">
       {/* Main Visualization Grid */}
-      <div className={styles.vizContainer}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 [&>[style]]:--neon-start:initial [&>[style]]:--neon-end:initial"
+        style={{
+          gridTemplateAreas: `"callstack webapis" "eventloop taskqueue" "microtask microtask"`,
+        }}
+      >
         {/* Call Stack */}
-        <div className={`${styles.neonBox} ${styles.callStackBox}`}>
-          <div className={styles.neonBoxHeader}>Call Stack</div>
-          <div className={styles.neonBoxInner}>
+        <div
+          className="relative rounded-lg p-0.5"
+          style={{
+            gridArea: 'callstack',
+            background: 'linear-gradient(135deg, var(--color-orange-500), var(--color-amber-400))',
+          }}
+        >
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
+            Call Stack
+          </div>
+          <div className="bg-page-secondary rounded-lg min-h-[100px] pt-5 px-2.5 pb-2.5 flex flex-col gap-1 min-h-[140px]">
             <AnimatePresence mode="popLayout">
               {step.callStack.length === 0 ? (
-                <div className={styles.emptyStack}>(empty)</div>
+                <div className="flex items-center justify-center flex-1 text-gray-800 text-xs">
+                  (empty)
+                </div>
               ) : (
                 step.callStack.slice().reverse().map((item, i) => (
                   <motion.div
                     key={item + i}
-                    className={styles.stackItem}
+                    className="px-2.5 py-1.5 bg-brand-primary/15 border border-brand-primary/40 rounded font-mono text-2xs text-brand-light text-center"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
@@ -55,48 +69,80 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
         </div>
 
         {/* Web APIs */}
-        <div className={`${styles.neonBox} ${styles.webApisBox}`}>
-          <div className={styles.neonBoxHeader}>Web APIs</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.webApisGrid}>
+        <div
+          className="relative rounded-lg p-0.5"
+          style={{
+            gridArea: 'webapis',
+            background: 'linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-secondary))',
+          }}
+        >
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
+            Web APIs
+          </div>
+          <div className="bg-page-secondary rounded-lg min-h-[100px] pt-5 px-2.5 pb-2.5 min-h-[140px]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 p-1.5 bg-black/30 border border-dashed border-white/15 rounded-md">
               {webApis.map((api) => (
                 <div
                   key={api.name}
-                  className={`${styles.webApiItem} ${
-                    step.activeWebApi === api.name ? styles.active : ''
-                  } ${api.highlight ? styles.highlight : ''}`}
+                  className={`p-1.5 bg-elevated rounded-sm font-mono text-xs text-center transition-colors ${
+                    step.activeWebApi === api.name
+                      ? 'bg-brand-primary/20 border border-brand-primary/50 text-brand-light'
+                      : 'text-gray-400'
+                  } ${api.highlight ? 'text-difficulty-1' : ''}`}
                 >
                   {api.name}
                 </div>
               ))}
-              <div className={styles.manyMore}>Many more...</div>
+              <div className="col-span-full text-center text-gray-700 text-2xs py-0.5">
+                Many more...
+              </div>
             </div>
           </div>
         </div>
 
         {/* Event Loop */}
-        <div className={`${styles.neonBox} ${styles.eventLoopBox}`}>
-          <div className={styles.neonBoxHeader}>Event Loop</div>
-          <div className={styles.neonBoxInner}>
-            <div className={`${styles.eventLoopIcon} ${getEventLoopClass()}`}>
+        <div
+          className="relative rounded-lg p-0.5"
+          style={{
+            gridArea: 'eventloop',
+            background: 'linear-gradient(135deg, #64748b, #94a3b8)',
+          }}
+        >
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
+            Event Loop
+          </div>
+          <div className="bg-page-secondary rounded-lg min-h-[80px] pt-5 px-2.5 pb-2.5 flex flex-col items-center justify-center gap-1.5">
+            <div
+              className={`animate-spin duration-[3000ms] ${getEventLoopClass()}`}
+            >
               <RefreshCw size={24} />
             </div>
           </div>
         </div>
 
         {/* Task Queue (Macrotasks) */}
-        <div className={`${styles.neonBox} ${styles.taskQueueBox}`}>
-          <div className={styles.neonBoxHeader}>Task Queue</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.queueContent}>
+        <div
+          className="relative rounded-lg p-0.5"
+          style={{
+            gridArea: 'taskqueue',
+            background: 'linear-gradient(135deg, var(--color-brand-secondary), #f43f5e)',
+          }}
+        >
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
+            Task Queue
+          </div>
+          <div className="bg-page-secondary rounded-lg min-h-[80px] pt-5 px-2.5 pb-2.5">
+            <div className="flex flex-col gap-1">
               <AnimatePresence mode="popLayout">
                 {step.macroQueue.length === 0 ? (
-                  <div className={styles.emptyQueue}>(empty)</div>
+                  <div className="text-gray-800 text-xs text-center py-4">
+                    (empty)
+                  </div>
                 ) : (
                   step.macroQueue.map((item, i) => (
                     <motion.div
                       key={item + i}
-                      className={styles.macroItem}
+                      className="px-2.5 py-1.5 bg-amber-500/15 border border-amber-500/40 rounded font-mono text-2xs text-amber-400 text-center"
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
@@ -112,18 +158,28 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
         </div>
 
         {/* Microtask Queue */}
-        <div className={`${styles.neonBox} ${styles.microtaskBox}`}>
-          <div className={styles.neonBoxHeader}>Microtask Queue</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.queueContent}>
+        <div
+          className="relative rounded-lg p-0.5"
+          style={{
+            gridArea: 'microtask',
+            background: 'linear-gradient(135deg, var(--difficulty-1), var(--color-accent-cyan))',
+          }}
+        >
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
+            Microtask Queue
+          </div>
+          <div className="bg-page-secondary rounded-lg min-h-[60px] pt-5 px-2.5 pb-2.5">
+            <div className="flex flex-col gap-1">
               <AnimatePresence mode="popLayout">
                 {step.microQueue.length === 0 ? (
-                  <div className={styles.emptyQueue}>(empty)</div>
+                  <div className="text-gray-800 text-xs text-center py-4">
+                    (empty)
+                  </div>
                 ) : (
                   step.microQueue.map((item, i) => (
                     <motion.div
                       key={item + i}
-                      className={styles.microItem}
+                      className="px-2.5 py-1.5 bg-brand-primary/15 border border-brand-primary/40 rounded font-mono text-2xs text-brand-light text-center"
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
@@ -140,16 +196,18 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
       </div>
 
       {/* Output Section */}
-      <div className={styles.outputSection}>
-        <div className={styles.outputHeader}>Output</div>
-        <div className={styles.outputContent}>
+      <div className="bg-js-viz-surface border border-js-viz-border rounded-js-viz p-2.5 flex-shrink-0">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 mb-1 text-xs font-semibold uppercase tracking-wider text-js-viz-text bg-js-viz-pill-bg border border-js-viz-pill-border rounded-full">
+          Output
+        </div>
+        <div className="font-mono text-xs text-difficulty-1 min-h-[1.2rem]">
           {step.output.length === 0 ? (
-            <span className={styles.outputEmpty}>—</span>
+            <span className="text-gray-800">—</span>
           ) : (
             step.output.map((item, i) => (
               <motion.div
                 key={i}
-                className={styles.outputItem}
+                className="py-0.5"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >

@@ -1,7 +1,5 @@
 'use client'
 
-import styles from './DifficultyIndicator.module.css'
-
 export type DifficultyLevel = 'easy' | 'medium' | 'hard' | 'beginner' | 'intermediate' | 'advanced'
 
 interface DifficultyIndicatorProps {
@@ -25,6 +23,24 @@ const levelToColor: Record<number, string> = {
   3: 'var(--difficulty-3)',
 }
 
+const sizeClasses = {
+  sm: {
+    dot: 'w-[5px] h-[5px]',
+    dotsGap: 'gap-0.5',
+    label: 'text-xs',
+  },
+  md: {
+    dot: 'w-[7px] h-[7px]',
+    dotsGap: 'gap-[3px]',
+    label: 'text-2xs',
+  },
+  lg: {
+    dot: 'w-[9px] h-[9px]',
+    dotsGap: 'gap-1',
+    label: 'text-sm',
+  },
+}
+
 export function DifficultyIndicator({
   level,
   size = 'md',
@@ -33,25 +49,32 @@ export function DifficultyIndicator({
   const numericLevel = levelToNumber[level]
   const color = levelToColor[numericLevel]
   const totalDots = 3
+  const sizes = sizeClasses[size]
 
   return (
     <div
-      className={`${styles.container} ${styles[size]}`}
+      className="inline-flex items-center gap-1.5"
       role="img"
       aria-label={`Difficulty: ${level}`}
       title={level}
     >
-      <div className={styles.dots}>
+      <div className={`flex items-center ${sizes.dotsGap}`}>
         {Array.from({ length: totalDots }, (_, i) => (
           <span
             key={i}
-            className={`${styles.dot} ${i < numericLevel ? styles.filled : styles.empty}`}
-            style={i < numericLevel ? { backgroundColor: color, boxShadow: `0 0 6px ${color}` } : undefined}
+            className={`rounded-full transition-all duration-fast ${sizes.dot} ${
+              i < numericLevel ? '' : 'bg-white-15'
+            }`}
+            style={
+              i < numericLevel
+                ? { backgroundColor: color, boxShadow: `0 0 6px ${color}` }
+                : undefined
+            }
           />
         ))}
       </div>
       {showLabel && (
-        <span className={styles.label} style={{ color }}>
+        <span className={`font-bold tracking-tight ${sizes.label}`} style={{ color }}>
           {numericLevel === 1 ? 'I' : numericLevel === 2 ? 'II' : 'III'}
         </span>
       )}

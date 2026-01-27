@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CodePanel, StepProgress, StepControls } from '@/components/SharedViz'
-import styles from './ObjectsBasicsViz.module.css'
 
 interface StackItem {
   name: string
@@ -1010,30 +1009,30 @@ const examples: Record<Level, ObjectExample[]> = {
         {
           id: 1,
           codeLine: 0,
-          description: 'const config = { theme: "dark" } - Object created with ONLY "theme". No "language" property!',
+          description: 'const config = { theme: "dark" } - Object created with theme property.',
           phase: 'reference',
           stack: [
-            { name: 'config', value: '-> #1', isReference: true, refId: 'config1', highlight: 'new' },
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config', highlight: 'new' },
           ],
           heap: [
-            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1', highlight: 'new' },
+            { id: 'config', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1', highlight: 'new' },
           ],
           output: [],
         },
         {
           id: 2,
           codeLine: 1,
-          description: 'Destructuring "theme" - property exists in object, will use its value.',
+          description: 'const { theme, language = "en" } = config - Extracting theme...',
           phase: 'destructure',
           stack: [
-            { name: 'config', value: '-> #1', isReference: true, refId: 'config1' },
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config' },
           ],
           heap: [
-            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark', highlight: 'changed' }], label: '#1' },
+            { id: 'config', type: 'object', properties: [{ key: 'theme', value: 'dark', highlight: 'changed' }], label: '#1' },
           ],
           output: [],
           destructureState: {
-            sourceRefId: 'config1',
+            sourceRefId: 'config',
             extractedProps: [
               { propKey: 'theme', targetVar: 'theme', value: '"dark"', status: 'extracting' },
               { propKey: 'language', targetVar: 'language', value: '"en" (default)', status: 'pending' },
@@ -1043,17 +1042,17 @@ const examples: Record<Level, ObjectExample[]> = {
         {
           id: 3,
           codeLine: 1,
-          description: '"theme" extracted. Now checking "language" - NOT in object, using default value "en"!',
+          description: '"theme" found on object. Now checking "language"... NOT found on config!',
           phase: 'destructure',
           stack: [
-            { name: 'config', value: '-> #1', isReference: true, refId: 'config1' },
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config' },
           ],
           heap: [
-            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
+            { id: 'config', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
           ],
           output: [],
           destructureState: {
-            sourceRefId: 'config1',
+            sourceRefId: 'config',
             extractedProps: [
               { propKey: 'theme', targetVar: 'theme', value: '"dark"', status: 'complete' },
               { propKey: 'language', targetVar: 'language', value: '"en" (default)', status: 'extracting' },
@@ -1063,52 +1062,52 @@ const examples: Record<Level, ObjectExample[]> = {
         {
           id: 4,
           codeLine: 1,
-          description: 'Complete! "theme" got "dark" from object. "language" got "en" from default (property was missing).',
+          description: 'Default value "en" used for language since config has no language property.',
           phase: 'destructure',
           stack: [
-            { name: 'config', value: '-> #1', isReference: true, refId: 'config1' },
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config' },
             { name: 'theme', value: '"dark"', highlight: 'new' },
             { name: 'language', value: '"en"', highlight: 'new' },
           ],
           heap: [
-            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
+            { id: 'config', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
           ],
           output: [],
         },
         {
           id: 5,
           codeLine: 3,
-          description: 'console.log(theme) outputs "dark" - value from the object.',
+          description: 'console.log(theme) outputs "dark".',
           phase: 'result',
           stack: [
-            { name: 'config', value: '-> #1', isReference: true, refId: 'config1' },
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config' },
             { name: 'theme', value: '"dark"' },
             { name: 'language', value: '"en"' },
           ],
           heap: [
-            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
+            { id: 'config', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
           ],
           output: ['dark'],
         },
         {
           id: 6,
           codeLine: 4,
-          description: 'console.log(language) outputs "en" - the default value, since property was missing.',
+          description: 'console.log(language) outputs "en" (the default).',
           phase: 'result',
           stack: [
-            { name: 'config', value: '-> #1', isReference: true, refId: 'config1' },
+            { name: 'config', value: '-> #1', isReference: true, refId: 'config' },
             { name: 'theme', value: '"dark"' },
             { name: 'language', value: '"en"' },
           ],
           heap: [
-            { id: 'config1', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
+            { id: 'config', type: 'object', properties: [{ key: 'theme', value: 'dark' }], label: '#1' },
           ],
           output: ['dark', 'en'],
         },
       ],
-      insight: 'Default values (= "en") are used only when the property is missing or undefined.',
+      insight: 'Default values provide fallback when destructuring properties that don\'t exist on the object.',
     },
-  ]
+  ],
 }
 
 export function ObjectsBasicsViz() {
@@ -1118,7 +1117,7 @@ export function ObjectsBasicsViz() {
 
   const currentExamples = examples[level]
   const currentExample = currentExamples[exampleIndex]
-  const currentStep = currentExample?.steps[stepIndex]
+  const currentStep = currentExample.steps[stepIndex]
 
   const handleLevelChange = (newLevel: Level) => {
     setLevel(newLevel)
@@ -1131,98 +1130,48 @@ export function ObjectsBasicsViz() {
     setStepIndex(0)
   }
 
-  const getSharedRefWarning = () => {
-    if (!currentStep || currentStep.phase !== 'mutate') return null
-
-    const refCounts = new Map<string, string[]>()
-
-    currentStep.stack.forEach(item => {
-      if (item.isReference && item.refId) {
-        const existing = refCounts.get(item.refId) || []
-        existing.push(item.name)
-        refCounts.set(item.refId, existing)
-      }
-    })
-
-    currentStep.heap.forEach(obj => {
-      obj.properties.forEach(prop => {
-        if (prop.isReference && prop.refId) {
-          const existing = refCounts.get(prop.refId) || []
-          existing.push(`${obj.label}.${prop.key}`)
-          refCounts.set(prop.refId, existing)
-        }
-      })
-    })
-
-    for (const [refId, names] of refCounts) {
-      if (names.length > 1) {
-        const mutatedObj = currentStep.heap.find(h => h.highlight === 'mutated')
-        if (mutatedObj && mutatedObj.id === refId) {
-          return names
-        }
-      }
-    }
-
-    for (const [, names] of refCounts) {
-      if (names.length > 1) {
-        return names
-      }
-    }
-    return null
+  const handleNext = () => {
+    if (stepIndex < currentExample.steps.length - 1) setStepIndex(s => s + 1)
   }
 
-  const sharedRefVars = getSharedRefWarning()
-
-  if (!currentStep) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.levelSelector}>
-          {(Object.keys(levelInfo) as Level[]).map(lvl => (
-            <button
-              key={lvl}
-              className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
-              onClick={() => handleLevelChange(lvl)}
-              disabled={examples[lvl].length === 0}
-              style={{
-                borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-                background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
-              }}
-            >
-              <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }} />
-              {levelInfo[lvl].label}
-            </button>
-          ))}
-        </div>
-        <div className={styles.emptyState}>No examples available for this level yet.</div>
-      </div>
-    )
+  const handlePrev = () => {
+    if (stepIndex > 0) setStepIndex(s => s - 1)
   }
+
+  const handleReset = () => setStepIndex(0)
 
   return (
-    <div className={styles.container}>
-      <div className={styles.levelSelector}>
+    <div className="flex flex-col gap-5" style={{ '--js-viz-accent': '#14b8a6' } as React.CSSProperties}>
+      {/* Level selector */}
+      <div className="flex gap-2 justify-center flex-wrap bg-black/30 border border-white/10 rounded-full p-1.5">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-4 py-1.5 font-mono text-sm font-medium rounded-full transition-all min-h-11 ${
+              level === lvl ? 'text-white' : 'bg-white/5 border border-transparent text-gray-500 hover:bg-white/10 hover:text-gray-300'
+            }`}
             onClick={() => handleLevelChange(lvl)}
-            disabled={examples[lvl].length === 0}
             style={{
               borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+              background: level === lvl ? `${levelInfo[lvl].color}15` : undefined
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }} />
+            <span className="w-2 h-2 rounded-full" style={{ background: levelInfo[lvl].color }} />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
-      <div className={styles.exampleTabs}>
+      {/* Example tabs */}
+      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleTab} ${exampleIndex === i ? styles.activeTab : ''}`}
+            className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all min-h-11 ${
+              exampleIndex === i
+                ? 'bg-teal-500/20 border border-teal-500/70 text-white shadow-[0_0_12px_rgba(20,184,166,0.25)]'
+                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+            }`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -1230,164 +1179,162 @@ export function ObjectsBasicsViz() {
         ))}
       </div>
 
-      <div className={styles.mainGrid}>
+      {/* Main grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* Code Panel */}
         <CodePanel
           code={currentExample.code}
           highlightedLine={currentStep.codeLine}
-          title="Code"
         />
 
-        <div className={styles.memoryPanel}>
-          <div className={styles.stackSection}>
-            <div className={styles.sectionHeader}>Stack</div>
-            <div className={styles.stackItems}>
-              <AnimatePresence mode="popLayout">
-                {currentStep.stack.length === 0 ? (
-                  <div className={styles.emptySection}>(empty)</div>
-                ) : (
-                  currentStep.stack.slice().reverse().map((item) => (
-                    <motion.div
-                      key={item.name}
-                      className={`${styles.stackItem} ${item.isReference ? styles.reference : ''} ${item.highlight === 'new' ? styles.highlightNew : ''}`}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      layout
-                    >
-                      <span className={styles.varName}>{item.name}</span>
-                      <span className={styles.varValue}>{item.value}</span>
-                    </motion.div>
-                  ))
-                )}
-              </AnimatePresence>
+        {/* Memory Panel */}
+        <div className="flex flex-col gap-4">
+          {/* Stack */}
+          <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
+            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">
+              Stack
+            </div>
+            <div className="p-4 flex flex-col gap-2 min-h-[100px]">
+              {currentStep.stack.length === 0 ? (
+                <div className="text-gray-600 italic text-sm text-center py-4">(empty)</div>
+              ) : (
+                currentStep.stack.map((item, i) => (
+                  <motion.div
+                    key={`${item.name}-${i}`}
+                    className={`flex justify-between items-center px-4 py-2 bg-black/30 border rounded-md font-mono text-sm transition-all ${
+                      item.isReference ? 'border-teal-400/40 bg-teal-500/10' : 'border-white/10'
+                    } ${item.highlight === 'new' ? 'border-emerald-500/70 bg-emerald-500/15' : ''}`}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                  >
+                    <span className="text-gray-400">{item.name}</span>
+                    <span className={`${item.isReference ? 'text-teal-400 font-semibold' : 'text-gray-300'}`}>
+                      {item.value}
+                    </span>
+                  </motion.div>
+                ))
+              )}
             </div>
           </div>
 
-          <div className={styles.heapSection}>
-            <div className={styles.sectionHeader}>Heap</div>
-            <div className={styles.heapObjects}>
-              <AnimatePresence>
-                {sharedRefVars && (
+          {/* Heap */}
+          <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
+            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">
+              Heap
+            </div>
+            <div className="p-4 flex flex-col gap-3 min-h-[100px]">
+              {currentStep.heap.length === 0 ? (
+                <div className="text-gray-600 italic text-sm text-center py-4">(empty)</div>
+              ) : (
+                currentStep.heap.map((obj) => (
                   <motion.div
-                    className={styles.warningBadge}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
+                    key={obj.id}
+                    className={`flex flex-col gap-1 p-4 bg-teal-500/10 border-2 rounded-lg font-mono transition-all min-w-0 overflow-x-auto ${
+                      obj.highlight === 'new' ? 'border-emerald-500/70 bg-emerald-500/15' : 'border-teal-400/40'
+                    } ${obj.highlight === 'mutated' ? 'border-teal-400 bg-teal-500/20' : ''}`}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
                   >
-                    <span className={styles.warningIcon}>!</span>
-                    <span className={styles.warningText}>
-                      Both {sharedRefVars.join(' and ')} affected!
-                    </span>
+                    <div className="text-xs font-semibold text-teal-400">{obj.label}</div>
+                    <div className="flex flex-col gap-1">
+                      {obj.properties.map((prop) => (
+                        <div
+                          key={prop.key}
+                          className={`flex gap-2 py-1 font-mono text-sm ${
+                            prop.highlight === 'new' ? 'bg-emerald-500/15 rounded px-2 -mx-2' : ''
+                          } ${prop.highlight === 'changed' ? 'bg-teal-500/15 rounded px-2 -mx-2' : ''}
+                          ${prop.highlight === 'deleted' ? 'line-through opacity-50 bg-red-500/10' : ''}`}
+                        >
+                          <span className="text-gray-500">{prop.key}:</span>
+                          <span className="text-gray-300">
+                            {prop.isReference ? `-> ${prop.value}` : String(prop.value)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </motion.div>
-                )}
-              </AnimatePresence>
-              <AnimatePresence mode="popLayout">
-                {currentStep.heap.length === 0 ? (
-                  <div className={styles.emptySection}>(empty)</div>
-                ) : (
-                  currentStep.heap.map((obj) => (
-                    <motion.div
-                      key={obj.id}
-                      className={`${styles.heapObject} ${obj.highlight === 'mutated' ? styles.highlightMutated : ''} ${obj.highlight === 'new' ? styles.highlightNew : ''}`}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      layout
-                    >
-                      <div className={styles.objectLabel}>{obj.label}</div>
-                      <div className={styles.objectProperties}>
-                        {obj.properties.map(prop => (
-                          <div
-                            key={prop.key}
-                            className={`${styles.property} ${prop.highlight === 'new' ? styles.highlightNew : ''} ${prop.highlight === 'changed' ? styles.highlightChanged : ''} ${prop.highlight === 'deleted' ? styles.highlightDeleted : ''}`}
-                          >
-                            <span className={styles.propKey}>{prop.key}:</span>
-                            <span className={styles.propValue}>
-                              {prop.isReference ? prop.value : JSON.stringify(prop.value)}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  ))
-                )}
-              </AnimatePresence>
+                ))
+              )}
             </div>
           </div>
         </div>
       </div>
 
+      {/* Output */}
+      <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
+        <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">
+          Output
+        </div>
+        <div className="p-4 min-h-[60px]">
+          {currentStep.output.length === 0 ? (
+            <span className="text-gray-600 italic text-sm">(no output)</span>
+          ) : (
+            currentStep.output.map((line, i) => (
+              <motion.div
+                key={i}
+                className="font-mono text-sm text-emerald-500 py-1"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+              >
+                {line}
+              </motion.div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* Destructure panel (if applicable) */}
       {currentStep.destructureState && (
-        <div className={styles.destructurePanel}>
-          <div className={styles.destructureHeader}>
-            <span className={styles.destructureBadge}>Destructuring</span>
-            <span className={styles.sourceRef}>
-              from {currentStep.stack.find(s => s.refId === currentStep.destructureState?.sourceRefId)?.name || 'object'}
+        <div className="bg-black/40 border-2 border-teal-400/50 rounded-xl overflow-hidden">
+          <div className="flex items-center gap-4 px-4 py-2 bg-teal-500/15 border-b border-teal-400/30">
+            <span className="font-mono text-sm font-bold text-white bg-teal-500 px-2.5 py-1 rounded-md">
+              Destructuring
+            </span>
+            <span className="font-mono text-sm text-gray-400">
+              from {currentStep.destructureState.sourceRefId}
             </span>
           </div>
-
-          <div className={styles.extractionList}>
-            {currentStep.destructureState.extractedProps.map((prop, idx) => (
-              <motion.div
-                key={prop.propKey}
-                className={`${styles.extractionItem} ${styles[prop.status]}`}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.1 }}
+          <div className="p-4 flex flex-col gap-2">
+            {currentStep.destructureState.extractedProps.map((prop, i) => (
+              <div
+                key={i}
+                className={`flex items-center gap-4 px-4 py-2 bg-black/30 border rounded-md font-mono text-sm ${
+                  prop.status === 'pending' ? 'opacity-50 border-white/10' : ''
+                } ${prop.status === 'extracting' ? 'border-teal-400 bg-teal-500/10' : ''}
+                ${prop.status === 'complete' ? 'border-emerald-500/50 bg-emerald-500/10' : ''}`}
               >
-                <span className={styles.extractSource}>{prop.propKey}</span>
-                <span className={styles.extractArrow}>
-                  {prop.status === 'extracting' ? '>>>' : '>'}
-                </span>
-                <span className={styles.extractTarget}>{prop.targetVar}</span>
-                <span className={styles.extractValue}>= {prop.value}</span>
+                <span className="text-gray-400 min-w-20">{prop.propKey}</span>
+                <span className="text-teal-400 font-bold">→</span>
+                <span className="text-gray-300 font-semibold min-w-20">{prop.targetVar}</span>
+                <span className="text-emerald-500">{prop.value}</span>
                 {prop.status === 'complete' && (
-                  <span className={styles.extractCheck}>OK</span>
+                  <span className="text-emerald-500 font-bold ml-auto">✓</span>
                 )}
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       )}
 
-      <div className={styles.outputBox}>
-        <div className={styles.boxHeader}>Console Output</div>
-        <div className={styles.outputContent}>
-          <AnimatePresence>
-            {currentStep.output.length === 0 ? (
-              <span className={styles.placeholder}>No output yet</span>
-            ) : (
-              currentStep.output.map((line, i) => (
-                <motion.div
-                  key={i}
-                  className={styles.outputLine}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                >
-                  {line}
-                </motion.div>
-              ))
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-
+      {/* Step progress */}
       <StepProgress
         current={stepIndex}
         total={currentExample.steps.length}
         description={currentStep.description}
       />
 
+      {/* Controls */}
       <StepControls
-        onPrev={() => setStepIndex(s => s - 1)}
-        onNext={() => setStepIndex(s => s + 1)}
-        onReset={() => setStepIndex(0)}
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
         canPrev={stepIndex > 0}
         canNext={stepIndex < currentExample.steps.length - 1}
       />
 
-      <div className={styles.insightBox}>
-        <span className={styles.insightLabel}>Key Insight:</span>
+      {/* Insight */}
+      <div className="px-4 py-2.5 bg-teal-500/10 border border-teal-400/20 rounded-lg text-sm text-gray-400 text-center">
+        <span className="font-semibold text-teal-400 mr-2">Key Insight:</span>
         {currentExample.insight}
       </div>
     </div>

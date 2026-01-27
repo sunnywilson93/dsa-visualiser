@@ -4,7 +4,6 @@ import { useRef, useEffect, useCallback } from 'react'
 import Editor, { OnMount, Monaco } from '@monaco-editor/react'
 import type { editor } from 'monaco-editor'
 import { Zap } from 'lucide-react'
-import styles from './PlaygroundEditor.module.css'
 
 interface PlaygroundEditorProps {
   code: string
@@ -77,8 +76,8 @@ export function PlaygroundEditor({
         range: new monaco.Range(line, 1, line, 1),
         options: {
           isWholeLine: true,
-          className: styles.currentLine,
-          glyphMarginClassName: styles.currentLineGlyph,
+          className: 'bg-brand-primary/20',
+          glyphMarginClassName: 'current-line-glyph',
         },
       })
 
@@ -93,11 +92,13 @@ export function PlaygroundEditor({
   }, [currentLine])
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <span className={styles.title}>Code</span>
+    <div className="flex flex-col bg-js-viz-surface border border-js-viz-border rounded-js-viz overflow-hidden h-full">
+      <div className="flex justify-between items-center px-4 py-2 bg-white/3 border-b border-js-viz-border">
+        <span className="inline-flex items-center gap-1.5 px-3 py-0.5 text-2xs font-semibold uppercase tracking-wider text-js-viz-text bg-js-viz-pill-bg border border-js-viz-pill-border rounded-full">
+          Code
+        </span>
         <button
-          className={styles.analyzeBtn}
+          className="flex items-center gap-1.5 px-4 py-1.5 text-sm font-semibold bg-gradient-brand border-0 rounded-md text-white cursor-pointer transition-all duration-fast hover:-translate-y-px hover:shadow-[0_4px_12px_var(--color-brand-primary-30)] active:translate-y-0"
           onClick={onAnalyze}
           title="Analyze (Ctrl+Enter)"
         >
@@ -106,7 +107,7 @@ export function PlaygroundEditor({
         </button>
       </div>
 
-      <div className={styles.editorWrapper}>
+      <div className="flex-1 min-h-0">
         <Editor
           height="100%"
           defaultLanguage="javascript"
@@ -132,17 +133,31 @@ export function PlaygroundEditor({
           }}
           onMount={handleEditorMount}
           loading={
-            <div className={styles.loading}>Loading editor...</div>
+            <div className="flex items-center justify-center h-full text-js-viz-muted text-base">
+              Loading editor...
+            </div>
           }
         />
       </div>
 
       {error && (
-        <div className={styles.errorPanel}>
-          <span className={styles.errorIcon}>!</span>
+        <div className="flex items-center gap-2 px-4 py-2 bg-red-500/10 border-t border-red-500/30 text-accent-red text-sm">
+          <span className="flex items-center justify-center w-5 h-5 bg-accent-red text-white rounded-full text-2xs font-bold">
+            !
+          </span>
           <span>{error}</span>
         </div>
       )}
+      
+      <style jsx global>{`
+        .current-line-glyph {
+          background: var(--color-brand-primary);
+          border-radius: 2px;
+          margin-left: 3px;
+          width: 4px;
+          height: 100%;
+        }
+      `}</style>
     </div>
   )
 }

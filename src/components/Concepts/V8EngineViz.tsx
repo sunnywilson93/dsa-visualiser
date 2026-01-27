@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './V8EngineViz.module.css'
 
 interface PipelineStage {
   name: string
@@ -608,31 +607,39 @@ export function V8EngineViz() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-[var(--spacing-lg)]">
       {/* Level selector */}
-      <div className={styles.levelSelector}>
+      <div className="flex gap-[var(--spacing-sm)] justify-center mb-1 bg-[var(--color-black-30)] border border-[var(--color-white-8)] rounded-full p-[0.35rem]">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-[var(--spacing-md)] py-1.5 text-sm font-medium rounded-full transition-all duration-fast cursor-pointer
+              ${level === lvl 
+                ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]' 
+                : 'bg-[var(--color-white-4)] border border-[var(--color-white-8)] text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)]'
+              }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
               borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
               background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }}></span>
+            <span className="w-[var(--spacing-sm)] h-[var(--spacing-sm)] rounded-full" style={{ background: levelInfo[lvl].color }} />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
       {/* Example selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex gap-[var(--spacing-sm)] flex-wrap justify-center bg-[var(--color-black-30)] border border-[var(--color-white-8)] rounded-full p-[0.35rem]">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-[var(--spacing-md)] py-1.5 font-mono text-sm rounded-full transition-all duration-fast cursor-pointer
+              ${exampleIndex === i 
+                ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]' 
+                : 'bg-[var(--color-white-4)] border border-[var(--color-white-8)] text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)]'
+              }`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -641,44 +648,53 @@ export function V8EngineViz() {
       </div>
 
       {/* Code panel */}
-      <div className={styles.codePanel}>
-        <div className={styles.panelHeader}>
-          <span>Code</span>
-          <span className={styles.phaseBadge} style={{ background: getPhaseColor(currentStep.phase) }}>
+      <div className="bg-[var(--color-black-40)] border border-[var(--color-white-8)] rounded-xl overflow-hidden">
+        <div className="flex justify-between items-center px-[var(--spacing-md)] py-[var(--spacing-sm)] bg-[var(--color-white-5)]">
+          <span className="text-xs font-semibold text-[var(--color-gray-500)]">Code</span>
+          <span className="px-[var(--spacing-sm)] py-0.5 rounded-full text-2xs font-semibold text-white" style={{ background: getPhaseColor(currentStep.phase) }}>
             {currentStep.phase.charAt(0).toUpperCase() + currentStep.phase.slice(1)}
           </span>
         </div>
-        <pre className={styles.code}>
+        <pre className="m-0 py-[var(--spacing-sm)] max-h-44 overflow-y-auto">
           {currentExample.code.map((line, i) => (
             <div
               key={i}
               ref={el => { lineRefs.current[i] = el }}
-              className={`${styles.codeLine} ${currentStep.codeLine === i ? styles.activeLine : ''}`}
+              className={`flex px-[var(--spacing-sm)] py-0.5 transition-colors ${currentStep.codeLine === i ? 'bg-[var(--color-brand-primary-20)]' : ''}`}
             >
-              <span className={styles.lineNum}>{i + 1}</span>
-              <span className={styles.lineCode}>{line || ' '}</span>
+              <span className="w-6 text-[var(--color-gray-800)] font-mono text-2xs select-none">{i + 1}</span>
+              <span className={`font-mono text-2xs ${currentStep.codeLine === i ? 'text-[var(--color-brand-light)]' : 'text-[var(--color-gray-300)]'}`}>{line || ' '}</span>
             </div>
           ))}
         </pre>
       </div>
 
       {/* Pipeline visualization - Neon Box */}
-      <div className={`${styles.neonBox} ${styles.pipelineBox}`}>
-        <div className={styles.neonBoxHeader}>V8 Pipeline</div>
-        <div className={styles.neonBoxInner}>
-          <div className={styles.pipelineContainer}>
+      <div className="relative rounded-xl p-[3px]"
+        style={{ background: 'linear-gradient(135deg, var(--color-blue-500), var(--color-brand-primary))' }}>
+        <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 px-[var(--spacing-lg)] py-[5px] bg-[var(--color-bg-tertiary)] rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+          V8 Pipeline
+        </div>
+        <div className="bg-[var(--color-bg-page-secondary)] rounded-lg min-h-[60px] p-[var(--spacing-md)] pt-6">
+          <div className="flex gap-[var(--spacing-sm)] flex-wrap justify-center max-sm:flex-col max-sm:items-stretch">
             <AnimatePresence mode="popLayout">
               {currentStep.pipeline.map((stage, i) => (
                 <motion.div
                   key={stage.name + i}
-                  className={`${styles.pipelineStage} ${stage.active ? styles.active : ''} ${stage.optimized ? styles.optimized : ''}`}
+                  className={`p-[var(--spacing-sm)] min-w-[100px] text-center rounded-md transition-all
+                    ${stage.active 
+                      ? stage.optimized 
+                        ? 'bg-[var(--color-emerald-15)] border border-[var(--color-emerald-50)] shadow-[0_0_12px_var(--color-emerald-30)]' 
+                        : 'bg-[var(--color-brand-primary-15)] border border-[var(--color-brand-primary-50)] shadow-[0_0_12px_var(--color-brand-primary-30)]'
+                      : 'bg-[var(--color-white-5)] border border-[var(--color-white-10)]'
+                    }`}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   layout
                 >
-                  <div className={styles.stageName}>{stage.name}</div>
-                  <div className={styles.stageContent}>{stage.content}</div>
+                  <div className={`text-2xs font-semibold mb-1 ${stage.active ? (stage.optimized ? 'text-[var(--difficulty-1)]' : 'text-[var(--color-brand-light)]') : 'text-[var(--color-gray-500)]'}`}>{stage.name}</div>
+                  <div className={`font-mono text-xs whitespace-pre-line ${stage.active ? (stage.optimized ? 'text-[var(--color-emerald-400)]' : 'text-[var(--color-gray-300)]') : 'text-[var(--color-gray-700)]'}`}>{stage.content}</div>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -688,20 +704,23 @@ export function V8EngineViz() {
 
       {/* Call count & hidden class info - Neon Box */}
       {(currentStep.callCount !== undefined || currentStep.hiddenClass) && (
-        <div className={`${styles.neonBox} ${styles.infoBox}`}>
-          <div className={styles.neonBoxHeader}>Runtime Info</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.infoRow}>
+        <div className="relative rounded-xl p-[3px]"
+          style={{ background: 'linear-gradient(135deg, var(--color-orange-500), var(--color-amber-400))' }}>
+          <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 px-[var(--spacing-lg)] py-[5px] bg-[var(--color-bg-tertiary)] rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Runtime Info
+          </div>
+          <div className="bg-[var(--color-bg-page-secondary)] rounded-lg min-h-[60px] p-[var(--spacing-md)] pt-6">
+            <div className="flex gap-[var(--spacing-md)] justify-center flex-wrap">
               {currentStep.callCount !== undefined && (
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Call Count:</span>
-                  <span className={styles.infoValue}>{currentStep.callCount.toLocaleString()}</span>
+                <div className="flex gap-1.5 items-center px-2 py-[0.3rem] bg-[var(--color-white-5)] rounded-md">
+                  <span className="text-[var(--color-gray-500)] text-2xs">Call Count:</span>
+                  <span className="font-mono text-xs text-[var(--difficulty-2)]">{currentStep.callCount.toLocaleString()}</span>
                 </div>
               )}
               {currentStep.hiddenClass && (
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Hidden Class:</span>
-                  <span className={styles.infoValue}>{currentStep.hiddenClass}</span>
+                <div className="flex gap-1.5 items-center px-2 py-[0.3rem] bg-[var(--color-white-5)] rounded-md">
+                  <span className="text-[var(--color-gray-500)] text-2xs">Hidden Class:</span>
+                  <span className="font-mono text-xs text-[var(--difficulty-2)]">{currentStep.hiddenClass}</span>
                 </div>
               )}
             </div>
@@ -711,13 +730,16 @@ export function V8EngineViz() {
 
       {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={`${styles.neonBox} ${styles.outputBox}`}>
-          <div className={styles.neonBoxHeader}>Console Output</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.output}>
-              <span className={styles.outputLabel}>Output:</span>
+        <div className="relative rounded-xl p-[3px]"
+          style={{ background: 'linear-gradient(135deg, var(--difficulty-1), var(--color-accent-cyan))' }}>
+          <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 px-[var(--spacing-lg)] py-[5px] bg-[var(--color-bg-tertiary)] rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Console Output
+          </div>
+          <div className="bg-[var(--color-bg-page-secondary)] rounded-lg min-h-[50px] p-[var(--spacing-md)] pt-6 flex gap-[var(--spacing-sm)] items-center">
+            <div className="flex gap-[var(--spacing-sm)] items-center">
+              <span className="text-[var(--color-gray-500)] text-2xs">Output:</span>
               {currentStep.output.map((item, i) => (
-                <span key={i} className={styles.outputItem}>{item}</span>
+                <span key={i} className="font-mono text-xs text-[var(--difficulty-1)]">{item}</span>
               ))}
             </div>
           </div>
@@ -728,23 +750,29 @@ export function V8EngineViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="px-[var(--spacing-md)] py-2.5 bg-[var(--color-black-30)] border border-[var(--color-white-8)] rounded-lg text-base text-[var(--color-gray-300)] text-center"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentExample.steps.length}</span>
+          <span className="inline-block px-[var(--spacing-xs)] py-0.5 bg-[var(--color-brand-primary-30)] rounded-md text-2xs font-semibold text-[var(--color-brand-light)] mr-[var(--spacing-sm)]">
+            Step {stepIndex + 1}/{currentExample.steps.length}
+          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
+      <div className="flex gap-[var(--spacing-sm)] justify-center">
+        <button 
+          className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-xs bg-[var(--color-white-5)] border border-[var(--color-white-10)] rounded-md text-[var(--color-gray-500)] cursor-pointer transition-all hover:bg-[var(--color-white-10)] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
+          onClick={handlePrev} 
+          disabled={stepIndex === 0}
+        >
           Prev
         </button>
         <motion.button
-          className={styles.btnPrimary}
+          className="px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-base font-medium bg-[var(--gradient-brand)] border-none rounded-md text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
@@ -752,14 +780,17 @@ export function V8EngineViz() {
         >
           {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next'}
         </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button 
+          className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-xs bg-[var(--color-white-5)] border border-[var(--color-white-10)] rounded-md text-[var(--color-gray-500)] cursor-pointer transition-all hover:bg-[var(--color-white-10)] hover:text-white"
+          onClick={handleReset}
+        >
           Reset
         </button>
       </div>
 
       {/* Key insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="px-[var(--spacing-md)] py-[var(--spacing-sm)] bg-[var(--color-brand-primary-8)] border border-[var(--color-brand-primary-20)] rounded-lg text-xs text-[var(--color-gray-500)] text-center">
+        <strong className="text-[var(--color-brand-primary)]">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

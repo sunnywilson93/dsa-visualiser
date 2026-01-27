@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import { Search, X } from 'lucide-react'
 import { useSearch } from '@/lib/search'
 import { SearchResultsList } from './SearchResults'
-import styles from './GlobalSearch.module.css'
 
 export function GlobalSearch() {
   const router = useRouter()
@@ -76,9 +75,19 @@ export function GlobalSearch() {
   }
 
   return (
-    <div ref={containerRef} className={styles.container}>
-      <div className={`${styles.inputWrapper} ${inputFocused ? styles.focused : ''}`}>
-        <Search size={16} className={styles.searchIcon} />
+    <div ref={containerRef} className="relative flex-1 max-w-[320px] mx-4 max-md:max-w-[200px] max-md:mx-2 max-sm:max-w-[100px]">
+      <div
+        className={`
+          flex items-center gap-2 bg-white-5 border border-brand-primary-20 rounded-lg py-[3px] px-3 transition-all duration-fast
+          max-md:py-1 max-md:px-2
+          hover:border-brand-primary-40
+          ${inputFocused ? 'border-brand-primary-50 shadow-[0_0_0_3px_var(--color-brand-primary-15)] bg-white-8' : ''}
+        `}
+      >
+        <Search
+          size={16}
+          className={`text-gray-400 shrink-0 transition-colors ${inputFocused ? 'text-brand-primary' : ''}`}
+        />
         <input
           ref={inputRef}
           type="text"
@@ -87,24 +96,31 @@ export function GlobalSearch() {
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           placeholder="Search concepts..."
-          className={styles.input}
+          className="flex-1 bg-transparent border-none outline-none text-base text-text-bright min-w-0 placeholder:text-gray-600 max-sm:placeholder:overflow-hidden max-sm:placeholder:text-ellipsis"
           aria-label="Search concepts"
         />
         {query && (
           <button
             type="button"
             onClick={handleClear}
-            className={styles.clearButton}
+            className="flex items-center justify-center bg-transparent border-none text-gray-600 cursor-pointer p-0.5 rounded-sm transition-all duration-fast hover:text-text-bright hover:bg-white-10"
             aria-label="Clear search"
           >
             <X size={14} />
           </button>
         )}
-        <kbd className={styles.shortcut}>⌘K</kbd>
+        <kbd className="text-2xs py-0.5 px-[3px] rounded-sm bg-white-10 text-gray-600 font-inherit border border-white-8 shrink-0 max-md:hidden">
+          ⌘K
+        </kbd>
       </div>
 
       {showDropdown && (
-        <div className={styles.dropdown}>
+        <div
+          className="absolute top-[calc(100%+8px)] left-0 right-0 bg-bg-page-secondary border border-brand-primary-30 rounded-lg shadow-lg z-[1000] p-2 max-h-[400px] overflow-y-auto [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-brand-primary-30 [&::-webkit-scrollbar-thumb]:rounded-sm [&::-webkit-scrollbar-thumb:hover]:bg-brand-primary-50"
+          style={{
+            boxShadow: '0 4px 24px var(--color-black-40), 0 0 20px var(--color-brand-primary-10)',
+          }}
+        >
           <SearchResultsList
             results={results}
             onItemClick={handleResultClick}

@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect, useCallback, ReactNode } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import styles from './CardCarousel.module.css'
 
 interface CardCarouselProps {
   children: ReactNode
@@ -67,9 +66,9 @@ export function CardCarousel({ children, itemCount }: CardCarouselProps) {
   }
 
   return (
-    <div className={styles.carouselContainer}>
+    <div className="relative group">
       <button
-        className={`${styles.navButton} ${styles.navLeft}`}
+        className="absolute top-1/2 -translate-y-[60%] z-10 w-10 h-10 rounded-full border-none bg-[rgba(15,15,26,0.9)] text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-normal backdrop-blur-[8px] opacity-0 group-hover:opacity-100 left-2 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-9 max-md:h-9 max-sm:hidden"
         onClick={() => scroll('left')}
         disabled={!canScrollLeft}
         aria-label="Previous"
@@ -78,7 +77,7 @@ export function CardCarousel({ children, itemCount }: CardCarouselProps) {
       </button>
 
       <button
-        className={`${styles.navButton} ${styles.navRight}`}
+        className="absolute top-1/2 -translate-y-[60%] z-10 w-10 h-10 rounded-full border-none bg-[rgba(15,15,26,0.9)] text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-normal backdrop-blur-[8px] opacity-0 group-hover:opacity-100 right-2 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-9 max-md:h-9 max-sm:hidden"
         onClick={() => scroll('right')}
         disabled={!canScrollRight}
         aria-label="Next"
@@ -86,15 +85,26 @@ export function CardCarousel({ children, itemCount }: CardCarouselProps) {
         <ChevronRight size={24} />
       </button>
 
-      <div className={styles.scrollContainer} ref={scrollRef}>
+      <div
+        className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth py-4 px-2 -mx-2 scrollbar-hide"
+        ref={scrollRef}
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
+      >
         {children}
       </div>
 
-      <div className={styles.dots}>
+      <div className="flex justify-center gap-2 mt-4 max-sm:mt-3">
         {Array.from({ length: itemCount }).map((_, index) => (
           <button
             key={index}
-            className={`${styles.dot} ${index === activeIndex ? styles.dotActive : ''}`}
+            className={`w-2 h-2 rounded-full border-none cursor-pointer transition-all duration-normal p-0 ${
+              index === activeIndex
+                ? 'bg-gradient-to-br from-brand-primary to-brand-secondary w-6 rounded-sm shadow-[0_0_8px_var(--color-brand-primary-50)]'
+                : 'bg-brand-primary-30 hover:bg-brand-primary-50'
+            }`}
             onClick={() => scrollToIndex(index)}
             aria-label={`Go to item ${index + 1}`}
           />

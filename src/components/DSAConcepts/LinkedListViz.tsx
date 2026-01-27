@@ -2,7 +2,6 @@
 
 import { useState, type CSSProperties } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './LinkedListViz.module.css'
 
 interface ListNode {
   id: number
@@ -294,12 +293,12 @@ export function LinkedListViz(): JSX.Element {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.exampleSelector}>
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-wrap gap-2">
         {examples.map((example: Example, index: number) => (
           <button
             key={example.id}
-            className={`${styles.exampleBtn} ${exampleIndex === index ? styles.active : ''}`}
+            className={`px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white ${exampleIndex === index ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
             onClick={() => handleExampleChange(index)}
           >
             {example.title}
@@ -307,19 +306,19 @@ export function LinkedListViz(): JSX.Element {
         ))}
       </div>
 
-      <div className={styles.listSection}>
-        <div className={styles.listContainer}>
-          <div className={styles.listHeader}>
-            <div className={styles.listLabel}>Linked List</div>
-            <div className={styles.pointerLegend}>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-start">
+        <div className="bg-black/20 rounded-lg p-4">
+          <div className="flex justify-between items-start gap-4 flex-wrap mb-4">
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Linked List</div>
+            <div className="flex flex-wrap gap-1.5">
               {pointerEntries.map((pointerName: PointerName) => (
-                <div key={pointerName} className={styles.pointerChip}>
+                <div key={pointerName} className="flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-white/10 bg-black/30 text-[10px] text-gray-400">
                   <span
-                    className={styles.pointerDot}
+                    className="w-2 h-2 rounded-full"
                     style={{ background: pointerColors[pointerName] }}
                   />
-                  <span className={styles.pointerName}>{pointerLabels[pointerName]}</span>
-                  <span className={styles.pointerValue}>
+                  <span className="font-semibold uppercase tracking-wide">{pointerLabels[pointerName]}</span>
+                  <span className="text-white font-semibold">
                     {getPointerValueLabel(currentStep.pointers[pointerName])}
                   </span>
                 </div>
@@ -327,20 +326,20 @@ export function LinkedListViz(): JSX.Element {
             </div>
           </div>
 
-          <div className={styles.listRow}>
+          <div className="flex items-center flex-wrap gap-1.5 p-3 bg-black/30 border-2 border-white/10 rounded-lg min-h-[160px]">
             {currentStep.nodes.map((node: ListNode, index: number) => {
               const isHighlighted: boolean = highlightSet.has(node.id)
               const pointerTags = pointerTagsByNodeId.get(node.id) ?? []
               const accent = getNodeAccent(node.id)
               return (
-                <div key={node.id} className={styles.nodeGroup}>
-                  <div className={styles.nodeWrapper}>
+                <div key={node.id} className="flex items-center gap-1.5">
+                  <div className="flex flex-col items-center gap-1">
                     {pointerTags.length > 0 && (
-                      <div className={styles.pointerTags}>
+                      <div className="flex gap-1 flex-wrap justify-center">
                         {pointerTags.map((pointerName: PointerName) => (
                           <span
                             key={pointerName}
-                            className={styles.pointerTag}
+                            className="text-xs px-1 py-0.5 border rounded-full uppercase tracking-wide"
                             style={{
                               borderColor: pointerColors[pointerName],
                               color: pointerColors[pointerName],
@@ -353,46 +352,46 @@ export function LinkedListViz(): JSX.Element {
                       </div>
                     )}
                     <motion.div
-                      className={`${styles.nodeCard} ${isHighlighted ? styles.nodeCardActive : ''}`}
+                      className={`flex items-stretch border-2 border-white/10 rounded-lg bg-black/30 min-w-[140px] max-sm:min-w-[120px] overflow-hidden ${isHighlighted ? 'shadow-[0_0_18px_rgba(var(--color-brand-primary-rgb),0.2)]' : ''}`}
                       style={getNodeCardStyle(accent, isHighlighted)}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.2 }}
                       layout
                     >
-                      <div className={styles.nodeValue}>{node.value}</div>
-                      <div className={styles.nodeDivider} />
-                      <div className={styles.nodeNext}>
-                        <span className={styles.nextLabel}>next</span>
-                        <span className={styles.nextValue}>{getNextLabel(node.nextId)}</span>
+                      <div className="min-w-[60px] px-4 py-2.5 font-mono text-[1.2rem] max-sm:text-base font-bold text-white text-center">{node.value}</div>
+                      <div className="w-px bg-white/10" />
+                      <div className="flex flex-col justify-center px-2.5 py-1.5 min-w-[70px]">
+                        <span className="text-xs text-gray-600 uppercase tracking-wide">next</span>
+                        <span className="font-mono text-base text-slate-200">{getNextLabel(node.nextId)}</span>
                       </div>
                     </motion.div>
                   </div>
                   {index < currentStep.nodes.length - 1 && (
-                    <div className={styles.connector} />
+                    <div className="w-6 h-0.5 bg-white/20 relative flex-shrink-0 after:content-[''] after:absolute after:right-0.5 after:-top-1 after:border-[5px] after:border-transparent after:border-l-white/40" />
                   )}
                 </div>
               )
             })}
-            <div className={styles.nullTerminator}>null</div>
+            <div className="text-xs text-gray-600 border border-dashed border-white/20 rounded-full px-2 py-0.5 uppercase tracking-wide">null</div>
           </div>
 
           {currentStep.detachedNode && (
-            <div className={styles.detachedSection}>
-              <div className={styles.detachedLabel}>Detached Node</div>
-              <div className={styles.detachedRow}>
+            <div className="mt-4 p-3 bg-black/40 rounded-lg border border-dashed border-white/10">
+              <div className="text-xs text-gray-600 uppercase tracking-wide mb-2">Detached Node</div>
+              <div className="flex items-center gap-3">
                 <motion.div
-                  className={`${styles.nodeCard} ${currentStep.detachedHighlight ? styles.nodeCardActive : ''}`}
+                  className={`flex items-stretch border-2 border-white/10 rounded-lg bg-black/30 min-w-[140px] max-sm:min-w-[120px] overflow-hidden ${currentStep.detachedHighlight ? 'shadow-[0_0_18px_rgba(var(--color-brand-primary-rgb),0.2)]' : ''}`}
                   style={getNodeCardStyle(actionColor, currentStep.detachedHighlight ?? false)}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className={styles.nodeValue}>{currentStep.detachedNode.value}</div>
-                  <div className={styles.nodeDivider} />
-                  <div className={styles.nodeNext}>
-                    <span className={styles.nextLabel}>next</span>
-                    <span className={styles.nextValue}>
+                  <div className="min-w-[60px] px-4 py-2.5 font-mono text-[1.2rem] max-sm:text-base font-bold text-white text-center">{currentStep.detachedNode.value}</div>
+                  <div className="w-px bg-white/10" />
+                  <div className="flex flex-col justify-center px-2.5 py-1.5 min-w-[70px]">
+                    <span className="text-xs text-gray-600 uppercase tracking-wide">next</span>
+                    <span className="font-mono text-base text-slate-200">
                       {getNextLabel(currentStep.detachedNode.nextId)}
                     </span>
                   </div>
@@ -402,20 +401,20 @@ export function LinkedListViz(): JSX.Element {
           )}
         </div>
 
-        <div className={styles.outputSection}>
-          <div className={styles.outputLabel}>Output</div>
-          <div className={styles.output}>
+        <div className="bg-black/30 rounded-lg p-4 min-w-[120px]">
+          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Output</div>
+          <div className="flex items-center justify-center min-h-[50px]">
             {currentStep.output ? (
               <motion.span
                 key={`${stepIndex}-${currentStep.output}`}
                 initial={{ scale: 1.2, color: '#f59e0b' }}
                 animate={{ scale: 1, color: currentStep.action === 'error' ? '#ef4444' : '#10b981' }}
-                className={styles.outputValue}
+                className="font-mono text-2xl font-bold"
               >
                 {currentStep.output}
               </motion.span>
             ) : (
-              <span className={styles.outputEmpty}>-</span>
+              <span className="text-gray-600 text-xl">-</span>
             )}
           </div>
         </div>
@@ -424,31 +423,35 @@ export function LinkedListViz(): JSX.Element {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="flex items-start gap-3 p-3 px-4 bg-black/30 rounded-lg border-l-[3px] border-brand-primary"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
           style={{ borderLeftColor: actionColor }}
         >
           <span
-            className={styles.actionBadge}
+            className="flex-shrink-0 text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded text-white"
             style={{ background: actionColor }}
           >
             {currentStep.action}
           </span>
-          <span className={styles.stepText}>{currentStep.description}</span>
+          <span className="text-base text-gray-300 leading-normal">{currentStep.description}</span>
         </motion.div>
       </AnimatePresence>
 
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
+      <div className="flex items-center justify-center gap-3">
+        <button 
+          className="px-3 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed" 
+          onClick={handlePrev} 
+          disabled={stepIndex === 0}
+        >
           &lt;- Prev
         </button>
-        <span className={styles.stepCounter}>
+        <span className="text-base text-gray-600 min-w-[50px] text-center">
           {stepIndex + 1} / {currentExample.steps.length}
         </span>
         <motion.button
-          className={styles.btnPrimary}
+          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-brand-primary to-brand-secondary border-0 rounded-md text-white cursor-pointer transition-opacity duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
@@ -456,13 +459,16 @@ export function LinkedListViz(): JSX.Element {
         >
           {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next ->'}
         </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button 
+          className="px-3 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white" 
+          onClick={handleReset}
+        >
           Reset
         </button>
       </div>
 
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="p-3 px-4 bg-brand-primary/10 border border-brand-primary/20 rounded-lg text-base text-gray-300 leading-normal">
+        <strong className="text-brand-light">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

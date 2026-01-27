@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, AlertTriangle, ArrowRight } from 'lucide-react'
-import styles from './AsyncEvolutionViz.module.css'
 
 interface Era {
   id: string
@@ -69,11 +68,12 @@ getUser(userId, function(err, user) {
     getOrderDetails(orders[0].id, function(err, details) {
       if (err) return handleError(err);
 
-      getShippingInfo(details.shipId, function(err, shipping) {
-        if (err) return handleError(err);
+        getShippingInfo(details.shipId, function(err, shipping) {
+          if (err) return handleError(err);
 
-        // Finally! 4 levels deep...
-        displayOrder(user, orders[0], details, shipping);
+          // Finally! 4 levels deep...
+          displayOrder(user, orders[0], details, shipping);
+        });
       });
     });
   });
@@ -294,23 +294,46 @@ export function AsyncEvolutionViz() {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.timeline}>
+    <div className="flex flex-col gap-6">
+      <div className="relative flex justify-between px-2 mb-2">
         {eras.map((e, i) => (
           <button
             key={e.id}
-            className={`${styles.timelineNode} ${i === activeEra ? styles.active : ''} ${i < activeEra ? styles.past : ''}`}
+            className={`relative z-10 flex flex-col items-center gap-1 p-0 bg-transparent border-0 cursor-pointer transition-all duration-200 ${
+              i === activeEra ? 'text-white' : i < activeEra ? 'text-gray-400' : 'text-gray-500'
+            }`}
             onClick={() => setActiveEra(i)}
             style={{ '--era-color': e.color } as React.CSSProperties}
           >
-            <span className={styles.nodeYear}>{e.years.split('-')[0]}</span>
-            <span className={styles.nodeDot} />
-            <span className={styles.nodeLabel}>{e.name}</span>
+            <span className={`text-xs font-medium transition-colors duration-200 ${
+              i === activeEra ? 'text-white font-semibold' : 'text-gray-500 hover:text-gray-300'
+            }`}>
+              {e.years.split('-')[0]}
+            </span>
+            <span
+              className={`w-4 h-4 rounded-full transition-all duration-200 ${
+                i === activeEra
+                  ? 'scale-130'
+                  : i < activeEra
+                  ? ''
+                  : 'bg-[var(--color-bg-elevated)] border-2 border-white/20 hover:border-[var(--era-color)] hover:shadow-[0_0_8px_var(--era-color)]'
+              }`}
+              style={{
+                background: i <= activeEra ? e.color : undefined,
+                borderColor: i <= activeEra ? e.color : undefined,
+                boxShadow: i === activeEra ? `0 0 12px ${e.color}` : undefined
+              }}
+            />
+            <span className={`text-xs whitespace-nowrap max-w-[60px] overflow-hidden text-ellipsis transition-colors duration-200 ${
+              i === activeEra ? 'text-white font-semibold' : 'text-gray-500 hover:text-gray-300'
+            }`}>
+              {e.name}
+            </span>
           </button>
         ))}
-        <div className={styles.timelineLine} />
+        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/10 -translate-y-1/2 z-0" />
         <motion.div
-          className={styles.timelineProgress}
+          className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-primary)] -translate-y-1/2 z-[1]"
           initial={false}
           animate={{ width: `${(activeEra / (eras.length - 1)) * 100}%` }}
           transition={{ duration: 0.3 }}
@@ -320,21 +343,36 @@ export function AsyncEvolutionViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={era.id}
-          className={styles.eraHeader}
+          className="p-6 rounded-xl text-center border border-white/10"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          style={{ '--era-color': era.color } as React.CSSProperties}
+          style={{ 
+            '--era-color': era.color,
+            background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.08))'
+          } as React.CSSProperties}
         >
-          <div className={styles.eraTitle}>
-            <span className={styles.eraNumber}>{activeEra + 1}</span>
-            <h3>{era.name}</h3>
-            <span className={styles.eraYears}>{era.years}</span>
+          <div className="flex items-center justify-center gap-4 mb-2 flex-wrap">
+            <span 
+              className="w-8 h-8 flex items-center justify-center rounded-full text-xs font-bold text-white"
+              style={{ background: era.color }}
+            >
+              {activeEra + 1}
+            </span>
+            <h3 className="text-lg font-semibold text-gray-100 m-0">{era.name}</h3>
+            <span className="text-xs font-medium text-[var(--era-color)] px-2 py-0.5 rounded-full bg-white/5">
+              {era.years}
+            </span>
           </div>
-          <p className={styles.eraDescription}>{era.description}</p>
-          <div className={styles.techTags}>
+          <p className="text-base text-gray-400 m-0 mb-3 leading-snug">{era.description}</p>
+          <div className="flex gap-1.5 justify-center flex-wrap">
             {era.technologies.map(tech => (
-              <span key={tech} className={styles.techTag}>{tech}</span>
+              <span 
+                key={tech} 
+                className="px-2 py-0.5 bg-white/[0.08] border border-white/10 rounded text-[10px] font-mono text-blue-300"
+              >
+                {tech}
+              </span>
             ))}
           </div>
         </motion.div>
@@ -343,37 +381,38 @@ export function AsyncEvolutionViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`code-${era.id}`}
-          className={styles.codePanel}
+          className="rounded-xl overflow-hidden border border-white/[0.08] bg-black/40"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className={styles.codePanelHeader}>
+          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
             <span>Example Code</span>
           </div>
-          <pre className={styles.code}>
+          <pre className="m-0 p-4 max-h-[200px] overflow-y-auto font-mono text-[10px] leading-normal text-gray-300 whitespace-pre-wrap">
             <code>{era.code}</code>
           </pre>
         </motion.div>
       </AnimatePresence>
 
-      <div className={styles.impactGrid}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <AnimatePresence mode="wait">
           <motion.div
             key={`solved-${era.id}`}
-            className={styles.impactCard}
+            className="p-4 rounded-lg bg-emerald-500/[0.08] border border-emerald-500/20"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
           >
-            <div className={styles.impactHeader}>
-              <Check size={16} className={styles.solvedIcon} />
+            <div className="flex items-center gap-1.5 mb-2 text-xs font-semibold text-emerald-400">
+              <Check size={16} className="text-emerald-500" />
               <span>Problems Solved</span>
             </div>
-            <ul className={styles.impactList}>
+            <ul className="m-0 p-0 list-none">
               {era.solved.map((item, i) => (
                 <motion.li
                   key={i}
+                  className="relative pl-3 text-xs text-gray-400 leading-normal mb-1 before:content-[''] before:absolute before:left-0 before:top-[0.45em] before:w-1.5 before:h-1.5 before:rounded-full before:bg-emerald-500"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
@@ -388,19 +427,20 @@ export function AsyncEvolutionViz() {
         <AnimatePresence mode="wait">
           <motion.div
             key={`created-${era.id}`}
-            className={`${styles.impactCard} ${styles.createdCard}`}
+            className="p-4 rounded-lg bg-red-500/[0.08] border border-red-500/20"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
           >
-            <div className={styles.impactHeader}>
-              <AlertTriangle size={16} className={styles.createdIcon} />
+            <div className="flex items-center gap-1.5 mb-2 text-xs font-semibold text-red-400">
+              <AlertTriangle size={16} className="text-red-500" />
               <span>New Challenges</span>
             </div>
-            <ul className={styles.impactList}>
+            <ul className="m-0 p-0 list-none">
               {era.created.map((item, i) => (
                 <motion.li
                   key={i}
+                  className="relative pl-3 text-xs text-gray-400 leading-normal mb-1 before:content-[''] before:absolute before:left-0 before:top-[0.45em] before:w-1.5 before:h-1.5 before:rounded-full before:bg-red-500"
                   initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
@@ -414,25 +454,25 @@ export function AsyncEvolutionViz() {
       </div>
 
       {activeEra < eras.length - 1 && (
-        <div className={styles.nextHint}>
-          <ArrowRight size={14} />
-          <span>These challenges led to: <strong>{eras[activeEra + 1].name}</strong></span>
+        <div className="flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-500/[0.08] border border-dashed border-blue-500/30 rounded-lg text-xs text-gray-400">
+          <ArrowRight size={14} className="text-blue-500 animate-pulse" />
+          <span>These challenges led to: <strong className="text-blue-300">{eras[activeEra + 1].name}</strong></span>
         </div>
       )}
 
-      <div className={styles.controls}>
+      <div className="flex gap-4 justify-center items-center">
         <button
-          className={styles.btnSecondary}
+          className="px-4 py-2 text-sm bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
           onClick={handlePrev}
           disabled={activeEra === 0}
         >
           Previous Era
         </button>
-        <span className={styles.stepIndicator}>
+        <span className="text-sm text-gray-500 font-medium min-w-[3rem] text-center">
           {activeEra + 1} / {eras.length}
         </span>
         <button
-          className={styles.btnPrimary}
+          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-blue-500 to-cyan-500 border-0 rounded-md text-white cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
           onClick={handleNext}
           disabled={activeEra === eras.length - 1}
         >
@@ -440,8 +480,8 @@ export function AsyncEvolutionViz() {
         </button>
       </div>
 
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> Async/await won because it makes async code look synchronous while preserving all Promise capabilities.
+      <div className="px-4 py-2.5 bg-blue-500/[0.08] border border-blue-500/20 rounded-lg text-sm text-gray-400 text-center">
+        <strong className="text-blue-500">Key Insight:</strong> Async/await won because it makes async code look synchronous while preserving all Promise capabilities.
       </div>
     </div>
   )

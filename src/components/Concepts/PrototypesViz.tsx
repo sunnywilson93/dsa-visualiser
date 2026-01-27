@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './PrototypesViz.module.css'
 
 interface HeapObject {
   id: string
@@ -619,31 +618,37 @@ export function PrototypesViz() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-5">
       {/* Level selector */}
-      <div className={styles.levelSelector}>
+      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
+              level === lvl ? 'text-white' : 'bg-white/5 border border-transparent text-gray-500 hover:bg-white/10 hover:text-gray-300'
+            }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
               borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
               background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }}></span>
+            <span className="w-2 h-2 rounded-full" style={{ background: levelInfo[lvl].color }} />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
       {/* Example selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all ${
+              exampleIndex === i
+                ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
+                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+            }`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -652,92 +657,101 @@ export function PrototypesViz() {
       </div>
 
       {/* Property selector */}
-      <div className={styles.propSelector}>
-        <span className={styles.propLabel}>Look up:</span>
+      <div className="flex items-center gap-2 flex-wrap justify-center">
+        <span className="text-sm text-gray-500">Look up:</span>
         {currentExample.lookups.map((lookup, i) => (
           <button
             key={lookup.prop}
-            className={`${styles.propBtn} ${selectedLookup === i ? styles.active : ''}`}
+            className={`px-3 py-1 font-mono text-sm rounded-full transition-all ${
+              selectedLookup === i
+                ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
+                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+            }`}
             onClick={() => handleLookupSelect(i)}
           >
             {lookup.label}
           </button>
         ))}
         {selectedLookup !== null && (
-          <button className={styles.resetBtn} onClick={handleReset}>
+          <button
+            className="px-2.5 py-1 text-xs bg-white/5 border border-white/10 rounded-full text-gray-500 hover:bg-white/10 hover:text-gray-400 transition-colors"
+            onClick={handleReset}
+          >
             ↻ Reset
           </button>
         )}
       </div>
 
       {/* Heap visualization - Neon Box */}
-      <div className={`${styles.neonBox} ${styles.heapBox}`}>
-        <div className={styles.neonBoxHeader}>Prototype Chain</div>
-        <div className={styles.neonBoxInner}>
-          <div className={styles.heap}>
-          {currentExample.heap.map((obj, index) => (
-            <div key={obj.id}>
-              <motion.div
-                className={`${styles.heapObject} ${currentStep?.checkedObjects.includes(obj.id) ? styles.checking : ''} ${currentStep?.foundAt === obj.id ? styles.found : ''}`}
-                style={{
-                  borderColor: currentStep?.checkedObjects.includes(obj.id) ? obj.color : 'rgba(255,255,255,0.1)',
-                }}
-                animate={{
-                  scale: currentStep?.foundAt === obj.id ? 1.02 : 1,
-                }}
-              >
-                <div className={styles.objectHeader} style={{ background: obj.color }}>
-                  {obj.name}
-                </div>
-                <div className={styles.objectContent}>
-                  {obj.type === 'null' ? (
-                    <div className={styles.nullValue}>End of chain</div>
-                  ) : (
-                    <>
-                      <div className={styles.propsSection}>
-                        {obj.props.map(p => (
-                          <div
-                            key={p.name}
-                            className={`${styles.prop} ${currentLookup?.prop === p.name && currentStep?.foundAt === obj.id ? styles.foundProp : ''}`}
-                          >
-                            <span className={styles.propName}>{p.name}:</span>
-                            <span className={styles.propValue}>{p.value}</span>
-                          </div>
-                        ))}
-                      </div>
-                      {obj.protoRef && (
-                        <div className={styles.protoRef}>
-                          __proto__: → {obj.protoRef}
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
-                {currentStep?.foundAt === obj.id && currentStep.foundAt !== 'NOT_FOUND' && (
-                  <motion.div
-                    className={styles.foundBadge}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                  >
-                    ✓ Found!
-                  </motion.div>
-                )}
-              </motion.div>
-              {index < currentExample.heap.length - 1 && (
-                <div
-                  className={styles.arrow}
-                  style={{
-                    color: currentStep?.checkedObjects.includes(obj.id) &&
-                           currentStep?.checkedObjects.includes(currentExample.heap[index + 1].id)
-                      ? obj.color
-                      : '#444',
-                  }}
+      <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899)' }}>
+        <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+          Prototype Chain
+        </div>
+        <div className="bg-gray-900 rounded-lg min-h-[100px] p-4 pt-6">
+          <div className="flex flex-col items-center gap-1">
+            {currentExample.heap.map((obj, index) => (
+              <div key={obj.id} className="w-full max-w-[280px]">
+                <motion.div
+                  className={`w-full bg-black/30 border-2 rounded-lg overflow-hidden transition-all relative ${
+                    currentStep?.checkedObjects.includes(obj.id) ? 'bg-white/5' : 'border-white/10'
+                  } ${currentStep?.foundAt === obj.id ? 'shadow-[0_0_15px_rgba(16,185,129,0.3)]' : ''}`}
+                  style={{ borderColor: currentStep?.checkedObjects.includes(obj.id) ? obj.color : 'rgba(255,255,255,0.1)' }}
+                  animate={{ scale: currentStep?.foundAt === obj.id ? 1.02 : 1 }}
                 >
-                  ↓ __proto__
-                </div>
-              )}
-            </div>
-          ))}
+                  <div className="px-2 py-1 text-2xs font-semibold text-black text-center" style={{ background: obj.color }}>
+                    {obj.name}
+                  </div>
+                  <div className="p-2">
+                    {obj.type === 'null' ? (
+                      <div className="text-center text-xs text-gray-600 italic">End of chain</div>
+                    ) : (
+                      <>
+                        <div className="flex flex-col gap-1 mb-2">
+                          {obj.props.map(p => (
+                            <div
+                              key={p.name}
+                              className={`flex justify-between px-1 py-0.5 bg-black/30 rounded font-mono text-2xs ${
+                                currentLookup?.prop === p.name && currentStep?.foundAt === obj.id ? 'bg-emerald-500/20 outline outline-1 outline-emerald-500' : ''
+                              }`}
+                            >
+                              <span className="text-gray-500">{p.name}:</span>
+                              <span className="text-emerald-500">{p.value}</span>
+                            </div>
+                          ))}
+                        </div>
+                        {obj.protoRef && (
+                          <div className="font-mono text-xs text-purple-400 pt-1 border-t border-white/5">
+                            __proto__: → {obj.protoRef}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                  {currentStep?.foundAt === obj.id && currentStep.foundAt !== 'NOT_FOUND' && (
+                    <motion.div
+                      className="absolute -top-2 right-2 px-1.5 py-0.5 bg-emerald-500 rounded text-xs font-bold text-black"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                    >
+                      ✓ Found!
+                    </motion.div>
+                  )}
+                </motion.div>
+                {index < currentExample.heap.length - 1 && (
+                  <div
+                    className="text-center text-xs py-0.5 transition-colors"
+                    style={{
+                      color: currentStep?.checkedObjects.includes(obj.id) &&
+                             currentStep?.checkedObjects.includes(currentExample.heap[index + 1].id)
+                        ? obj.color
+                        : '#444',
+                    }}
+                  >
+                    ↓ __proto__
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -747,12 +761,18 @@ export function PrototypesViz() {
         <AnimatePresence mode="wait">
           <motion.div
             key={`${level}-${exampleIndex}-${selectedLookup}-${stepIndex}`}
-            className={`${styles.description} ${currentStep.foundAt === 'NOT_FOUND' ? styles.notFound : ''}`}
+            className={`px-4 py-2.5 border rounded-lg text-base text-center ${
+              currentStep.foundAt === 'NOT_FOUND'
+                ? 'bg-red-500/10 border-red-400/20 text-red-400'
+                : 'bg-black/30 border-white/10 text-gray-300'
+            }`}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
           >
-            <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentLookup?.steps.length}</span>
+            <span className="inline-block px-1.5 py-0.5 bg-purple-500/30 rounded text-2xs font-semibold text-purple-300 mr-2">
+              Step {stepIndex + 1}/{currentLookup?.steps.length}
+            </span>
             {currentStep.description}
           </motion.div>
         </AnimatePresence>
@@ -760,9 +780,9 @@ export function PrototypesViz() {
 
       {/* Controls */}
       {currentLookup && (
-        <div className={styles.controls}>
+        <div className="flex gap-3 justify-center">
           <motion.button
-            className={styles.btnPrimary}
+            className="px-6 py-2 text-base font-medium bg-gradient-to-r from-purple-500 to-pink-500 rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleNext}
             disabled={stepIndex >= currentLookup.steps.length - 1}
             whileHover={{ scale: 1.02 }}
@@ -774,8 +794,8 @@ export function PrototypesViz() {
       )}
 
       {/* Insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="px-4 py-2.5 bg-amber-500/10 border border-amber-400/20 rounded-lg text-xs text-gray-500 text-center">
+        <strong className="text-amber-500">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

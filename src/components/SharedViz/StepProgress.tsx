@@ -1,7 +1,6 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './StepProgress.module.css'
 
 export interface StepProgressProps {
   current: number
@@ -18,7 +17,7 @@ export function StepProgress({
 }: StepProgressProps) {
   const content = (
     <>
-      <span className={styles.stepBadge}>
+      <span className="inline-block px-1.5 py-0.5 bg-brand-primary-10 border border-brand-primary-30 rounded-full text-2xs font-semibold text-brand-light mr-2">
         Step {current + 1}/{total}
       </span>
       {description}
@@ -26,14 +25,18 @@ export function StepProgress({
   )
 
   if (!animated) {
-    return <div className={styles.description}>{content}</div>
+    return (
+      <div className="px-3 py-3 bg-black-50 border border-white-10 rounded-lg text-base text-gray-500 text-center">
+        {content}
+      </div>
+    )
   }
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={current}
-        className={styles.description}
+        className="px-3 py-3 bg-black-50 border border-white-10 rounded-lg text-base text-gray-500 text-center"
         initial={{ opacity: 0, y: 5 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -5 }}

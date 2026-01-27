@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './WebWorkersViz.module.css'
 
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
@@ -524,17 +523,21 @@ export function WebWorkersViz() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-6">
       {/* Level Selector */}
-      <div className={styles.levelSelector}>
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
         {(['beginner', 'intermediate', 'advanced'] as Level[]).map((l) => (
           <button
             key={l}
             onClick={() => handleLevelChange(l)}
-            className={`${styles.levelBtn} ${level === l ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full cursor-pointer transition-all duration-200 ${
+              level === l
+                ? 'text-white'
+                : 'bg-white/[0.04] border border-white/[0.08] text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
+            }`}
           >
             <span
-              className={styles.levelDot}
+              className="w-4 h-4 rounded-full"
               style={{
                 background: l === 'beginner' ? '#10b981' : l === 'intermediate' ? '#f59e0b' : '#ef4444'
               }}
@@ -545,12 +548,16 @@ export function WebWorkersViz() {
       </div>
 
       {/* Example Selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
         {data.examples.map((ex, idx) => (
           <button
             key={ex.id}
             onClick={() => handleExampleChange(idx)}
-            className={`${styles.exampleBtn} ${exampleIdx === idx ? styles.active : ''}`}
+            className={`px-4 py-1.5 font-mono text-sm rounded-full cursor-pointer transition-all duration-200 ${
+              exampleIdx === idx
+                ? 'bg-blue-500/20 border border-blue-500/50 text-white shadow-[0_0_12px_rgba(59,130,246,0.25)]'
+                : 'bg-white/[0.04] border border-white/[0.08] text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
+            }`}
           >
             {ex.name}
           </button>
@@ -558,40 +565,46 @@ export function WebWorkersViz() {
       </div>
 
       {/* Code Panel */}
-      <div className={styles.codePanel}>
-        <div className={styles.panelHeader}>
+      <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black/40">
+        <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
           <span>Code</span>
         </div>
-        <pre className={styles.code}>
+        <pre className="m-0 py-2 px-0 max-h-[180px] overflow-y-auto font-mono">
           {codeLines.map((line, idx) => (
             <div
               key={idx}
-              className={`${styles.codeLine} ${idx + 1 === currentStep.activeLine ? styles.activeLine : ''}`}
+              className={`flex px-3 py-0.5 transition-colors duration-200 ${
+                idx + 1 === currentStep.activeLine ? 'bg-blue-500/20' : ''
+              }`}
             >
-              <span className={styles.lineNum}>{idx + 1}</span>
-              <span className={styles.lineCode}>{line}</span>
+              <span className="w-6 text-gray-600 font-mono text-[10px] select-none">{idx + 1}</span>
+              <span className={`font-mono text-[10px] ${idx + 1 === currentStep.activeLine ? 'text-blue-300' : 'text-gray-300'}`}>
+                {line}
+              </span>
             </div>
           ))}
         </pre>
       </div>
 
       {/* Thread Visualization - Neon Box */}
-      <div className={`${styles.neonBox} ${styles.threadsBox}`}>
-        <div className={styles.neonBoxHeader}>Threads</div>
-        <div className={styles.neonBoxInner}>
-          <div className={styles.threadsContainer}>
+      <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #3b82f6, var(--color-brand-primary, #0ea5e9))' }}>
+        <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+          Threads
+        </div>
+        <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[60px] p-4 pt-6">
+          <div className="flex gap-2 items-stretch justify-center">
             {/* Main Thread */}
-            <div className={styles.thread}>
-              <div className={styles.threadHeader}>
+            <div className="flex-1 min-w-[120px] max-w-[200px] bg-white/5 rounded-lg overflow-hidden border-2 border-white/10">
+              <div className="flex justify-between items-center px-2.5 py-1.5 text-[10px] font-semibold text-gray-300 bg-white/5">
                 <span>{currentStep.mainThread.name}</span>
                 <span
-                  className={styles.statusBadge}
+                  className="px-1.5 py-0.5 rounded text-[10px] font-semibold text-white"
                   style={{ background: getStatusColor(currentStep.mainThread.status) }}
                 >
                   {currentStep.mainThread.status}
                 </span>
               </div>
-              <div className={styles.threadContent}>
+              <div className="p-2 min-h-[60px] flex flex-col justify-center">
                 <AnimatePresence mode="wait">
                   {currentStep.mainThread.currentTask && (
                     <motion.div
@@ -599,13 +612,13 @@ export function WebWorkersViz() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className={styles.task}
+                      className="px-2.5 py-1.5 bg-blue-500/15 border border-blue-500/30 rounded-md font-mono text-[10px] text-blue-300 text-center"
                     >
                       {currentStep.mainThread.currentTask}
                       {currentStep.mainThread.progress !== undefined && (
-                        <div className={styles.progressBar}>
+                        <div className="h-2 bg-white/10 rounded-sm mt-1.5 overflow-hidden">
                           <motion.div
-                            className={styles.progressFill}
+                            className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-sm"
                             initial={{ width: 0 }}
                             animate={{ width: `${currentStep.mainThread.progress}%` }}
                           />
@@ -619,19 +632,21 @@ export function WebWorkersViz() {
 
             {/* Message Arrows */}
             {currentStep.messages.length > 0 && (
-              <div className={styles.messagesChannel}>
+              <div className="flex flex-col gap-1 p-2 min-w-[100px] justify-center">
                 <AnimatePresence>
                   {currentStep.messages.map((msg) => (
                     <motion.div
                       key={msg.id}
                       initial={{ opacity: 0, x: msg.from === 'main' ? -20 : 20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className={`${styles.message} ${styles[msg.from]}`}
+                      className={`flex items-center gap-1 px-3 py-1 bg-blue-500/15 border border-blue-500/30 rounded text-[10px] ${
+                        msg.from === 'main' ? 'flex-row' : 'flex-row-reverse'
+                      }`}
                     >
-                      <span className={styles.messageArrow}>
+                      <span className="text-base text-blue-500">
                         {msg.from === 'main' ? '→' : '←'}
                       </span>
-                      <span className={styles.messageData}>{msg.data}</span>
+                      <span className="font-mono text-xs text-blue-300">{msg.data}</span>
                     </motion.div>
                   ))}
                 </AnimatePresence>
@@ -640,17 +655,17 @@ export function WebWorkersViz() {
 
             {/* Worker Thread */}
             {currentStep.workerThread && (
-              <div className={styles.thread}>
-                <div className={styles.threadHeader}>
+              <div className="flex-1 min-w-[120px] max-w-[200px] bg-white/5 rounded-lg overflow-hidden border-2 border-white/10">
+                <div className="flex justify-between items-center px-2.5 py-1.5 text-[10px] font-semibold text-gray-300 bg-white/5">
                   <span>{currentStep.workerThread.name}</span>
                   <span
-                    className={styles.statusBadge}
+                    className="px-1.5 py-0.5 rounded text-[10px] font-semibold text-white"
                     style={{ background: getStatusColor(currentStep.workerThread.status) }}
                   >
                     {currentStep.workerThread.status}
                   </span>
                 </div>
-                <div className={styles.threadContent}>
+                <div className="p-2 min-h-[60px] flex flex-col justify-center">
                   <AnimatePresence mode="wait">
                     {currentStep.workerThread.currentTask && (
                       <motion.div
@@ -658,13 +673,13 @@ export function WebWorkersViz() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className={styles.task}
+                        className="px-2.5 py-1.5 bg-blue-500/15 border border-blue-500/30 rounded-md font-mono text-[10px] text-blue-300 text-center"
                       >
                         {currentStep.workerThread.currentTask}
                         {currentStep.workerThread.progress !== undefined && (
-                          <div className={styles.progressBar}>
+                          <div className="h-2 bg-white/10 rounded-sm mt-1.5 overflow-hidden">
                             <motion.div
-                              className={styles.progressFill}
+                              className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-sm"
                               initial={{ width: 0 }}
                               animate={{ width: `${currentStep.workerThread.progress}%` }}
                             />
@@ -682,19 +697,21 @@ export function WebWorkersViz() {
 
       {/* Shared Buffer - Neon Box (for advanced examples) */}
       {currentStep.sharedBuffer && (
-        <div className={`${styles.neonBox} ${styles.sharedBufferBox}`}>
-          <div className={styles.neonBoxHeader}>SharedArrayBuffer</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.bufferContent}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #f97316, #fbbf24)' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            SharedArrayBuffer
+          </div>
+          <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[60px] p-4 pt-6">
+            <div className="flex gap-3 justify-center">
               {currentStep.sharedBuffer.map((val, idx) => (
                 <motion.div
                   key={idx}
-                  className={styles.bufferCell}
+                  className="flex flex-col items-center px-4 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-md"
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ duration: 0.3 }}
                 >
-                  <span className={styles.cellIndex}>[{idx}]</span>
-                  <span className={styles.cellValue}>{val}</span>
+                  <span className="font-mono text-[10px] text-gray-500">[{idx}]</span>
+                  <span className="font-mono text-base font-semibold text-amber-400">{val}</span>
                 </motion.div>
               ))}
             </div>
@@ -704,17 +721,19 @@ export function WebWorkersViz() {
 
       {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={`${styles.neonBox} ${styles.outputBox}`}>
-          <div className={styles.neonBoxHeader}>Console Output</div>
-          <div className={styles.neonBoxInner}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, var(--difficulty-1, #10b981), var(--color-accent-cyan, #06b6d4))' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Console Output
+          </div>
+          <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[50px] p-4 pt-6">
             <motion.div
-              className={styles.output}
+              className="flex gap-3 items-center flex-wrap"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <span className={styles.outputLabel}>Console:</span>
+              <span className="text-[10px] text-gray-500">Console:</span>
               {currentStep.output.map((item, idx) => (
-                <span key={idx} className={styles.outputItem}>{item}</span>
+                <span key={idx} className="font-mono text-xs text-emerald-500">{item}</span>
               ))}
             </motion.div>
           </div>
@@ -724,32 +743,34 @@ export function WebWorkersViz() {
       {/* Description */}
       <motion.div
         key={step}
-        className={styles.description}
+        className="px-4 py-2.5 bg-blue-500/10 border border-blue-500/20 rounded-lg text-base text-gray-300 text-center"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <span className={styles.stepBadge}>Step {step + 1}/{example.steps.length}</span>
+        <span className="inline-block px-1.5 py-0.5 bg-blue-500/30 rounded text-[10px] font-semibold text-blue-300 mr-2">
+          Step {step + 1}/{example.steps.length}
+        </span>
         {currentStep.description}
       </motion.div>
 
       {/* Controls */}
-      <div className={styles.controls}>
+      <div className="flex gap-2 justify-center">
         <button
-          className={styles.btnSecondary}
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
           onClick={() => setStep(0)}
           disabled={step === 0}
         >
           Reset
         </button>
         <button
-          className={styles.btnSecondary}
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
           onClick={() => setStep(s => s - 1)}
           disabled={step === 0}
         >
           Prev
         </button>
         <button
-          className={styles.btnPrimary}
+          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-blue-500 to-cyan-500 border-0 rounded-md text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={() => setStep(s => s + 1)}
           disabled={step >= example.steps.length - 1}
         >
@@ -758,8 +779,8 @@ export function WebWorkersViz() {
       </div>
 
       {/* Insight */}
-      <div className={styles.insight}>
-        <strong>💡 Key Insight:</strong> {data.insight}
+      <div className="px-4 py-2 bg-blue-500/[0.08] border border-blue-500/20 rounded-lg text-xs text-gray-500 text-center">
+        <strong className="text-blue-500">💡 Key Insight:</strong> {data.insight}
       </div>
     </div>
   )

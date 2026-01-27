@@ -6,7 +6,6 @@ import Editor, { OnMount, Monaco } from '@monaco-editor/react'
 import type { editor } from 'monaco-editor'
 import { Lightbulb } from 'lucide-react'
 import { useExecutionStore, useCurrentStep } from '@/store'
-import styles from './CodeEditor.module.css'
 
 interface CodeEditorProps {
   className?: string
@@ -85,8 +84,8 @@ export function CodeEditor({ className, readOnly = false, conceptLink }: CodeEdi
           range: new monaco.Range(bp.line, 1, bp.line, 1),
           options: {
             isWholeLine: true,
-            className: styles.breakpointLine,
-            glyphMarginClassName: styles.breakpointGlyph,
+            className: 'monaco-breakpoint-line',
+            glyphMarginClassName: 'monaco-breakpoint-glyph',
           },
         })
       }
@@ -100,8 +99,8 @@ export function CodeEditor({ className, readOnly = false, conceptLink }: CodeEdi
         range: new monaco.Range(line, 1, line, 1),
         options: {
           isWholeLine: true,
-          className: styles.currentLine,
-          glyphMarginClassName: styles.currentLineGlyph,
+          className: 'monaco-current-line',
+          glyphMarginClassName: 'monaco-current-line-glyph',
         },
       })
     }
@@ -112,7 +111,7 @@ export function CodeEditor({ className, readOnly = false, conceptLink }: CodeEdi
         range: new monaco.Range(parseError.line, 1, parseError.line, 1),
         options: {
           isWholeLine: true,
-          className: styles.errorLine,
+          className: 'monaco-error-line',
         },
       })
     }
@@ -136,16 +135,22 @@ export function CodeEditor({ className, readOnly = false, conceptLink }: CodeEdi
   const isReadOnly = readOnly || status !== 'idle'
 
   return (
-    <div className={`${styles.container} ${className ?? ''}`}>
-      <div className={styles.header}>
-        <span className={styles.title}>Code Editor</span>
-        <div className={styles.headerRight}>
+    <div className={`flex flex-col h-full bg-bg-secondary border border-border-primary rounded-lg overflow-hidden ${className ?? ''}`}>
+      <div className="flex items-center justify-between py-2 px-3 bg-bg-tertiary border-b border-border-primary">
+        <span className="text-sm font-semibold uppercase tracking-tight text-text-secondary">
+          Code Editor
+        </span>
+        <div className="flex items-center gap-1">
           {conceptLink && (
-            <Link href={conceptLink} className={styles.conceptBtn} title="Learn the concept">
+            <Link
+              href={conceptLink}
+              className="flex items-center justify-center w-6 h-6 rounded-sm bg-amber-30 text-accent-yellow transition-all duration-fast hover:bg-amber-40 hover:scale-105"
+              title="Learn the concept"
+            >
               <Lightbulb size={14} />
             </Link>
           )}
-          <div className={styles.statusBadge}>
+          <div className="text-xs font-medium py-0.5 px-2 rounded-sm bg-bg-elevated text-text-secondary">
             {status === 'idle' && 'Ready'}
             {status === 'running' && 'Running'}
             {status === 'paused' && 'Paused'}
@@ -156,7 +161,7 @@ export function CodeEditor({ className, readOnly = false, conceptLink }: CodeEdi
         </div>
       </div>
 
-      <div className={styles.editorWrapper}>
+      <div className="flex-1 min-h-0">
         <Editor
           height="100%"
           defaultLanguage="javascript"
@@ -183,14 +188,18 @@ export function CodeEditor({ className, readOnly = false, conceptLink }: CodeEdi
           }}
           onMount={handleEditorMount}
           loading={
-            <div className={styles.loading}>Loading editor...</div>
+            <div className="flex items-center justify-center h-full text-text-muted text-base">
+              Loading editor...
+            </div>
           }
         />
       </div>
 
       {parseError && (
-        <div className={styles.errorPanel}>
-          <span className={styles.errorIcon}>!</span>
+        <div className="flex items-center gap-2 py-2 px-3 bg-red-15 border-t border-red-15 text-accent-red text-base">
+          <span className="flex items-center justify-center w-[18px] h-[18px] bg-accent-red text-bg-primary rounded-full text-sm font-bold">
+            !
+          </span>
           <span>
             {parseError.line && `Line ${parseError.line}: `}
             {parseError.message}

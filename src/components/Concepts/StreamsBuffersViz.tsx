@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './StreamsBuffersViz.module.css'
 
 interface StreamState {
   name: string
@@ -485,32 +484,45 @@ export function StreamsBuffersViz() {
   const handleReset = () => setStepIndex(0)
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-6">
       {/* Level selector */}
-      <div className={styles.levelSelector}>
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full cursor-pointer transition-all duration-200 ${
+              level === lvl
+                ? 'text-white'
+                : 'bg-white/[0.04] border border-white/[0.08] text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
+            }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
-              borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+              borderColor: level === lvl ? levelInfo[lvl].color : undefined,
+              background: level === lvl ? `${levelInfo[lvl].color}15` : undefined
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }}></span>
+            <span className="w-4 h-4 rounded-full" style={{ background: levelInfo[lvl].color }} />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
       {/* Example selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-4 py-1.5 font-mono text-sm rounded-full cursor-pointer transition-all duration-200 ${
+              exampleIndex === i
+                ? 'text-white'
+                : 'bg-white/[0.04] border border-white/[0.08] text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
+            }`}
             onClick={() => handleExampleChange(i)}
+            style={{
+              borderColor: exampleIndex === i ? 'rgba(59, 130, 246, 0.7)' : undefined,
+              background: exampleIndex === i ? 'rgba(59, 130, 246, 0.18)' : undefined,
+              boxShadow: exampleIndex === i ? '0 0 20px rgba(59, 130, 246, 0.25)' : undefined
+            }}
           >
             {ex.title}
           </button>
@@ -518,22 +530,28 @@ export function StreamsBuffersViz() {
       </div>
 
       {/* Code panel */}
-      <div className={styles.codePanel}>
-        <div className={styles.panelHeader}>
+      <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black/40">
+        <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
           <span>Code</span>
           {currentStep.backpressure && (
-            <span className={styles.backpressureBadge}>BACKPRESSURE!</span>
+            <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold text-white bg-red-500 animate-pulse">
+              BACKPRESSURE!
+            </span>
           )}
         </div>
-        <pre className={styles.code}>
+        <pre className="m-0 py-2 px-0 max-h-[160px] overflow-y-auto font-mono">
           {currentExample.code.map((line, i) => (
             <div
               key={i}
               ref={el => { lineRefs.current[i] = el }}
-              className={`${styles.codeLine} ${currentStep.codeLine === i ? styles.activeLine : ''}`}
+              className={`flex px-3 py-0.5 transition-colors duration-200 ${
+                currentStep.codeLine === i ? 'bg-blue-500/20' : ''
+              }`}
             >
-              <span className={styles.lineNum}>{i + 1}</span>
-              <span className={styles.lineCode}>{line || ' '}</span>
+              <span className="w-6 text-gray-600 font-mono text-[10px] select-none">{i + 1}</span>
+              <span className={`font-mono text-[10px] ${currentStep.codeLine === i ? 'text-blue-300' : 'text-gray-300'}`}>
+                {line || ' '}
+              </span>
             </div>
           ))}
         </pre>
@@ -541,27 +559,33 @@ export function StreamsBuffersViz() {
 
       {/* Streams visualization - Neon Box */}
       {currentStep.streams.length > 0 && (
-        <div className={`${styles.neonBox} ${styles.streamsBox}`}>
-          <div className={styles.neonBoxHeader}>Stream Pipeline</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.streamsContainer}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #3b82f6, var(--color-brand-primary, #0ea5e9))' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Stream Pipeline
+          </div>
+          <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[60px] p-4 pt-6">
+            <div className="flex gap-2 items-center flex-wrap justify-center">
               {currentStep.streams.map((stream) => (
                 <motion.div
                   key={stream.name}
-                  className={`${styles.stream} ${styles[stream.type]} ${stream.flowing ? styles.flowing : ''} ${stream.paused ? styles.paused : ''}`}
+                  className={`flex-1 min-w-[100px] max-w-[150px] rounded-lg overflow-hidden border-2 relative ${
+                    stream.type === 'readable' ? 'border-blue-500/50 bg-blue-500/[0.08]' :
+                    stream.type === 'transform' ? 'border-blue-400/50 bg-blue-400/[0.08]' :
+                    'border-emerald-500/50 bg-emerald-500/[0.08]'
+                  } ${stream.flowing ? 'shadow-[0_0_12px_rgba(59,130,246,0.3)]' : ''} ${stream.paused ? 'opacity-60 border-red-500/50' : ''}`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  <div className={styles.streamHeader}>
+                  <div className="flex justify-between px-2 py-1 text-[10px] font-semibold text-gray-300 bg-white/5">
                     {stream.name}
-                    <span className={styles.streamType}>{stream.type}</span>
+                    <span className="text-[10px] text-gray-500 font-normal">{stream.type}</span>
                   </div>
-                  <div className={styles.streamContent}>
+                  <div className="p-1.5 min-h-[50px] flex flex-wrap gap-1">
                     <AnimatePresence mode="popLayout">
                       {stream.chunks.map((chunk, j) => (
                         <motion.div
                           key={chunk + j}
-                          className={styles.chunk}
+                          className="px-1.5 py-0.5 bg-blue-500/20 rounded text-[10px] font-mono text-blue-300"
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.8, x: 20 }}
@@ -571,8 +595,8 @@ export function StreamsBuffersViz() {
                       ))}
                     </AnimatePresence>
                   </div>
-                  {stream.flowing && <div className={styles.flowIndicator}>▶</div>}
-                  {stream.paused && <div className={styles.pausedIndicator}>⏸</div>}
+                  {stream.flowing && <div className="absolute right-1 bottom-1 text-xs text-emerald-500">▶</div>}
+                  {stream.paused && <div className="absolute right-1 bottom-1 text-xs text-red-500">⏸</div>}
                 </motion.div>
               ))}
             </div>
@@ -582,21 +606,29 @@ export function StreamsBuffersViz() {
 
       {/* Buffer visualization - Neon Box */}
       {currentStep.buffer.length > 0 && (
-        <div className={`${styles.neonBox} ${styles.bufferBox}`}>
-          <div className={styles.neonBoxHeader}>Internal Buffer</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.bufferHeader}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #f97316, #fbbf24)' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Internal Buffer
+          </div>
+          <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[60px] p-4 pt-6">
+            <div className="text-[10px] text-gray-500 mb-1 text-center">
               ({currentStep.buffer.length}/{currentStep.bufferMax}KB)
             </div>
-            <div className={styles.bufferBar}>
+            <div className="h-4 bg-white/10 rounded overflow-hidden mb-1">
               <div
-                className={`${styles.bufferFill} ${currentStep.backpressure ? styles.full : ''}`}
+                className={`h-full transition-all duration-300 ${
+                  currentStep.backpressure 
+                    ? 'bg-gradient-to-r from-red-500 to-orange-500' 
+                    : 'bg-gradient-to-r from-blue-500 to-cyan-400'
+                }`}
                 style={{ width: `${(currentStep.buffer.length / currentStep.bufferMax) * 100}%` }}
               />
             </div>
-            <div className={styles.bufferContent}>
+            <div className="flex gap-1 flex-wrap">
               {currentStep.buffer.map((item, i) => (
-                <span key={i} className={styles.bufferItem}>{item}</span>
+                <span key={i} className="px-1 py-0.5 bg-blue-500/20 rounded text-[10px] font-mono text-blue-300">
+                  {item}
+                </span>
               ))}
             </div>
           </div>
@@ -605,13 +637,15 @@ export function StreamsBuffersViz() {
 
       {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={`${styles.neonBox} ${styles.outputBox}`}>
-          <div className={styles.neonBoxHeader}>Console Output</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.output}>
-              <span className={styles.outputLabel}>Output:</span>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, var(--difficulty-1, #10b981), var(--color-accent-cyan, #06b6d4))' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Console Output
+          </div>
+          <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[50px] p-4 pt-6 flex items-center gap-3">
+            <div className="flex gap-3 items-center flex-wrap">
+              <span className="text-[10px] text-gray-500">Output:</span>
               {currentStep.output.map((item, i) => (
-                <span key={i} className={styles.outputItem}>{item}</span>
+                <span key={i} className="font-mono text-xs text-emerald-500">{item}</span>
               ))}
             </div>
           </div>
@@ -622,23 +656,29 @@ export function StreamsBuffersViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="px-4 py-2.5 bg-blue-500/10 border border-blue-500/20 rounded-lg text-base text-gray-300 text-center"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentExample.steps.length}</span>
+          <span className="inline-block px-1.5 py-0.5 bg-blue-500/30 rounded text-[10px] font-semibold text-blue-300 mr-2">
+            Step {stepIndex + 1}/{currentExample.steps.length}
+          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
+      <div className="flex gap-2 justify-center">
+        <button 
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
+          onClick={handlePrev} 
+          disabled={stepIndex === 0}
+        >
           Prev
         </button>
         <motion.button
-          className={styles.btnPrimary}
+          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-blue-500 to-cyan-500 border-0 rounded-md text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
@@ -646,14 +686,17 @@ export function StreamsBuffersViz() {
         >
           {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next'}
         </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button 
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white"
+          onClick={handleReset}
+        >
           Reset
         </button>
       </div>
 
       {/* Key insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="px-4 py-2 bg-blue-500/[0.08] border border-blue-500/20 rounded-lg text-xs text-gray-500 text-center">
+        <strong className="text-blue-500">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

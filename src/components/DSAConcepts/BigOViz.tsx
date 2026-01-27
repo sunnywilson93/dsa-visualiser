@@ -2,7 +2,12 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import styles from './BigOViz.module.css'
+import { clsx, type ClassValue } from 'clsx'
+
+// Utility for cleaner tailwind class merging
+function cn(...inputs: ClassValue[]) {
+  return clsx(inputs)
+}
 
 interface Complexity {
   id: string
@@ -131,18 +136,24 @@ export function BigOViz() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-5">
       {/* Scale toggle */}
-      <div className={styles.scaleToggle}>
-        <span className={styles.scaleLabel}>Y-Axis Scale:</span>
+      <div className="flex items-center justify-center gap-2">
+        <span className="text-xs text-gray-500 uppercase tracking-wider">Y-Axis Scale:</span>
         <button
-          className={`${styles.scaleBtn} ${useLogScale ? styles.active : ''}`}
+          className={cn(
+            'px-3 py-1.5 text-sm font-semibold bg-white/5 border border-white/10 rounded-md text-gray-500 transition-all duration-200 hover:bg-white/10 hover:text-gray-300',
+            useLogScale && 'bg-[var(--color-brand-primary-20)] border-[var(--color-brand-primary-50)] text-cyan-200 shadow-[0_0_8px_var(--color-brand-primary-20)]'
+          )}
           onClick={() => setUseLogScale(true)}
         >
           Log
         </button>
         <button
-          className={`${styles.scaleBtn} ${!useLogScale ? styles.active : ''}`}
+          className={cn(
+            'px-3 py-1.5 text-sm font-semibold bg-white/5 border border-white/10 rounded-md text-gray-500 transition-all duration-200 hover:bg-white/10 hover:text-gray-300',
+            !useLogScale && 'bg-[var(--color-brand-primary-20)] border-[var(--color-brand-primary-50)] text-cyan-200 shadow-[0_0_8px_var(--color-brand-primary-20)]'
+          )}
           onClick={() => setUseLogScale(false)}
         >
           Linear
@@ -150,30 +161,33 @@ export function BigOViz() {
       </div>
 
       {/* Complexity toggles */}
-      <div className={styles.toggles}>
+      <div className="flex flex-wrap gap-2">
         {complexities.map(c => (
           <button
             key={c.id}
-            className={`${styles.toggle} ${activeComplexities.has(c.id) ? styles.active : ''}`}
+            className={cn(
+              'flex items-center gap-2 px-4 py-2 bg-white/5 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:bg-white/8',
+              activeComplexities.has(c.id) ? '' : 'border-transparent'
+            )}
             onClick={() => toggleComplexity(c.id)}
             style={{
               borderColor: activeComplexities.has(c.id) ? c.color : 'transparent',
               background: activeComplexities.has(c.id) ? `${c.color}15` : 'rgba(255,255,255,0.05)'
             }}
           >
-            <span className={styles.toggleDot} style={{ background: c.color }} />
-            <span className={styles.toggleName}>{c.name}</span>
-            <span className={styles.toggleLabel}>{c.label}</span>
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: c.color }} />
+            <span className="font-mono text-base font-semibold text-white">{c.name}</span>
+            <span className="text-xs text-gray-500">{c.label}</span>
           </button>
         ))}
       </div>
 
       {/* Chart */}
-      <div className={styles.chartContainer}>
-        <div className={styles.chartLabels}>
+      <div className="relative bg-black/30 rounded-lg p-4">
+        <div className="absolute left-2 top-1/2 -translate-y-1/2 -rotate-90 origin-left text-xs text-gray-700 uppercase tracking-wider">
           <span>Operations {useLogScale && '(log scale)'}</span>
         </div>
-        <svg className={styles.chart} viewBox={`0 0 ${CHART_WIDTH} ${MAX_HEIGHT}`}>
+        <svg className="w-full h-[200px] bg-black/20 rounded-lg" viewBox={`0 0 ${CHART_WIDTH} ${MAX_HEIGHT}`}>
           {/* Grid lines */}
           <defs>
             <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -198,18 +212,18 @@ export function BigOViz() {
             />
           ))}
         </svg>
-        <div className={styles.chartXLabel}>
+        <div className="text-center mt-2 text-xs text-gray-700 uppercase tracking-wider">
           <span>Input Size (n)</span>
         </div>
       </div>
 
       {/* Input size slider */}
-      <div className={styles.sliderSection}>
-        <div className={styles.sliderHeader}>
-          <span className={styles.sliderLabel}>Input Size: n = </span>
+      <div className="flex flex-col items-center gap-4 p-4 bg-black/20 rounded-lg">
+        <div className="flex items-center gap-1">
+          <span className="text-base text-gray-500">Input Size: n = </span>
           <motion.span
             key={inputSize}
-            className={styles.sliderValue}
+            className="font-mono text-2xl font-bold text-[var(--color-brand-primary)] min-w-12"
             initial={{ scale: 1.2 }}
             animate={{ scale: 1 }}
           >
@@ -222,11 +236,11 @@ export function BigOViz() {
           max="50"
           value={inputSize}
           onChange={(e) => setInputSize(Number(e.target.value))}
-          className={styles.slider}
+          className="w-full max-w-[400px] h-1.5 appearance-none bg-white/10 rounded outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[18px] [&::-webkit-slider-thumb]:h-[18px] [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-[var(--color-brand-primary)] [&::-webkit-slider-thumb]:to-[var(--color-brand-secondary)] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-[0_2px_10px_var(--color-brand-primary-40)]"
           disabled={isAnimating}
         />
         <button
-          className={styles.animateBtn}
+          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_15px_var(--color-brand-primary-40)] disabled:opacity-60 disabled:cursor-not-allowed"
           onClick={handleAnimate}
           disabled={isAnimating}
         >
@@ -235,36 +249,36 @@ export function BigOViz() {
       </div>
 
       {/* Operations table */}
-      <div className={styles.tableContainer}>
-        <table className={styles.table}>
+      <div className="bg-black/30 rounded-lg overflow-hidden">
+        <table className="w-full border-collapse">
           <thead>
             <tr>
-              <th>Complexity</th>
-              <th>Operations (n={inputSize})</th>
-              <th>Example</th>
+              <th className="p-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider bg-[var(--color-brand-primary-10)] border-b border-white/5">Complexity</th>
+              <th className="p-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider bg-[var(--color-brand-primary-10)] border-b border-white/5">Operations (n={inputSize})</th>
+              <th className="p-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider bg-[var(--color-brand-primary-10)] border-b border-white/5">Example</th>
             </tr>
           </thead>
           <tbody>
             {complexities.filter(c => activeComplexities.has(c.id)).map(c => {
               const ops = Math.round(c.calculate(inputSize))
               return (
-                <tr key={c.id}>
-                  <td>
-                    <span className={styles.complexityName} style={{ color: c.color }}>
+                <tr key={c.id} className="border-b border-white/5 last:border-b-0 hover:bg-white/5">
+                  <td className="p-4">
+                    <span className="font-mono text-base font-semibold" style={{ color: c.color }}>
                       {c.name}
                     </span>
                   </td>
-                  <td>
+                  <td className="p-4">
                     <motion.span
                       key={`${c.id}-${inputSize}`}
-                      className={styles.opsValue}
+                      className="font-mono text-base font-semibold"
                       initial={{ scale: 1.1, color: '#f59e0b' }}
                       animate={{ scale: 1, color: '#fff' }}
                     >
                       {ops.toLocaleString()}
                     </motion.span>
                   </td>
-                  <td className={styles.exampleCell}>{c.example}</td>
+                  <td className="p-4 text-base text-gray-500 hidden sm:table-cell">{c.example}</td>
                 </tr>
               )
             })}
@@ -273,10 +287,10 @@ export function BigOViz() {
       </div>
 
       {/* Insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> As n grows, the difference between complexities becomes dramatic.
+      <div className="p-4 bg-[var(--color-brand-primary-10)] border border-[var(--color-brand-primary-20)] rounded-lg text-base text-gray-300 leading-normal">
+        <strong className="text-cyan-200">Key Insight:</strong> As n grows, the difference between complexities becomes dramatic.
         At n=50: O(1)=1, O(n)=50, but O(n²)=2,500 operations!
-        {useLogScale && <span className={styles.insightNote}> (Switch to Linear scale to see the true magnitude difference)</span>}
+        {useLogScale && <span className="text-base text-gray-500 italic"> (Switch to Linear scale to see the true magnitude difference)</span>}
       </div>
     </div>
   )

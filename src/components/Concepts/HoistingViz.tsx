@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './HoistingViz.module.css'
 
 interface Variable {
   name: string
@@ -462,31 +461,39 @@ export function HoistingViz() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-6">
       {/* Level selector */}
-      <div className={styles.levelSelector}>
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full cursor-pointer transition-all duration-200 ${
+              level === lvl
+                ? 'text-white'
+                : 'bg-white/[0.04] border border-white/[0.08] text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
+            }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
-              borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+              borderColor: level === lvl ? levelInfo[lvl].color : undefined,
+              background: level === lvl ? `${levelInfo[lvl].color}15` : undefined
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }}></span>
+            <span className="w-4 h-4 rounded-full" style={{ background: levelInfo[lvl].color }} />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
       {/* Example selector */}
-      <div className={styles.selector}>
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.selectorBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-4 py-1.5 font-mono text-sm rounded-full cursor-pointer transition-all duration-200 ${
+              exampleIndex === i
+                ? 'bg-blue-500/20 border border-blue-500/50 text-white shadow-[0_0_12px_rgba(59,130,246,0.25)]'
+                : 'bg-white/[0.04] border border-white/[0.08] text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
+            }`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -495,51 +502,57 @@ export function HoistingViz() {
       </div>
 
       {/* Main visualization */}
-      <div className={styles.mainGrid}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ gridTemplateAreas: '"code variables" "output output"' }}>
         {/* Code panel */}
-        <div className={styles.codePanel}>
-          <div className={styles.panelHeader}>
+        <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black/40" style={{ gridArea: 'code' }}>
+          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
             <span>Code</span>
             <span
-              className={styles.phaseBadge}
+              className="px-2 py-0.5 rounded-full text-[10px] font-semibold text-black"
               style={{ background: currentStep.phase === 'Creation' ? '#60a5fa' : '#10b981' }}
             >
               {currentStep.phase} Phase
             </span>
           </div>
-          <pre className={styles.code}>
+          <pre className="m-0 py-2 px-0 max-h-[180px] overflow-y-auto font-mono">
             {currentExample.code.map((line, i) => (
               <div
                 key={i}
                 ref={el => { lineRefs.current[i] = el }}
-                className={`${styles.codeLine} ${currentStep.codeLine === i ? styles.activeLine : ''}`}
+                className={`flex px-3 py-0.5 transition-colors duration-200 ${
+                  currentStep.codeLine === i ? 'bg-blue-500/20' : ''
+                }`}
               >
-                <span className={styles.lineNum}>{i + 1}</span>
-                <span className={styles.lineCode}>{line || ' '}</span>
+                <span className="w-6 text-gray-600 font-mono text-[10px] select-none">{i + 1}</span>
+                <span className={`font-mono text-xs ${currentStep.codeLine === i ? 'text-blue-300' : 'text-gray-300'}`}>
+                  {line || ' '}
+                </span>
               </div>
             ))}
           </pre>
         </div>
 
         {/* Variables panel - Neon Box */}
-        <div className={`${styles.neonBox} ${styles.variablesBox}`}>
-          <div className={styles.neonBoxHeader}>Variable Environment</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.variables}>
+        <div className="relative rounded-xl p-[3px]" style={{ gridArea: 'variables', background: 'linear-gradient(135deg, #3b82f6, var(--color-brand-primary, #0ea5e9))' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Variable Environment
+          </div>
+          <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[180px] p-4 pt-6">
+            <div className="flex flex-col gap-1.5">
               <AnimatePresence mode="popLayout">
                 {currentStep.variables.map(v => (
                   <motion.div
                     key={v.name}
-                    className={styles.variable}
+                    className="flex items-center gap-3 px-2.5 py-2 bg-black/30 border-l-[3px] rounded-md"
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     style={{ borderColor: getStatusColor(v.status) }}
                     layout
                   >
-                    <span className={styles.varName}>{v.name}</span>
+                    <span className="font-mono text-sm text-blue-300 min-w-[50px]">{v.name}</span>
                     <motion.span
                       key={v.value}
-                      className={styles.varValue}
+                      className="font-mono text-sm font-semibold flex-1"
                       style={{ color: getStatusColor(v.status) }}
                       initial={{ scale: 1.2 }}
                       animate={{ scale: 1 }}
@@ -547,7 +560,7 @@ export function HoistingViz() {
                       {v.value}
                     </motion.span>
                     <span
-                      className={styles.varStatus}
+                      className="px-1.5 py-0.5 rounded text-[10px] font-bold text-black uppercase"
                       style={{ background: getStatusColor(v.status) }}
                     >
                       {v.status === 'tdz' ? 'TDZ' : v.status}
@@ -560,15 +573,17 @@ export function HoistingViz() {
         </div>
 
         {/* Output panel - Neon Box */}
-        <div className={`${styles.neonBox} ${styles.outputBox}`}>
-          <div className={styles.neonBoxHeader}>Output</div>
-          <div className={styles.neonBoxInner}>
+        <div className="relative rounded-xl p-[3px] md:col-span-2" style={{ gridArea: 'output', background: 'linear-gradient(135deg, var(--difficulty-1, #10b981), var(--color-accent-cyan, #06b6d4))' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Output
+          </div>
+          <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[80px] p-4 pt-6 flex flex-col gap-1">
             {currentStep.output.map((line, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, x: -5 }}
                 animate={{ opacity: 1, x: 0 }}
-                className={styles.outputLine}
+                className="font-mono text-base text-emerald-500 py-0.5"
               >
                 {line}
               </motion.div>
@@ -577,13 +592,13 @@ export function HoistingViz() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className={styles.errorLine}
+                className="font-mono text-xs text-red-500 break-words"
               >
                 {currentStep.error}
               </motion.div>
             )}
             {currentStep.output.length === 0 && !currentStep.error && (
-              <span className={styles.placeholder}>—</span>
+              <span className="text-sm text-gray-600">—</span>
             )}
           </div>
         </div>
@@ -593,23 +608,29 @@ export function HoistingViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="px-4 py-2.5 bg-black/30 border border-white/[0.08] rounded-lg text-base text-gray-300 text-center"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentExample.steps.length}</span>
+          <span className="inline-block px-1.5 py-0.5 bg-blue-500/30 rounded text-[10px] font-semibold text-blue-300 mr-2">
+            Step {stepIndex + 1}/{currentExample.steps.length}
+          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
+      <div className="flex gap-2 justify-center">
+        <button 
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
+          onClick={handlePrev} 
+          disabled={stepIndex === 0}
+        >
           Prev
         </button>
         <motion.button
-          className={styles.btnPrimary}
+          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-blue-500 to-cyan-500 border-0 rounded-md text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
@@ -617,23 +638,26 @@ export function HoistingViz() {
         >
           Next
         </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button 
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white"
+          onClick={handleReset}
+        >
           Reset
         </button>
       </div>
 
       {/* Legend */}
-      <div className={styles.legend}>
-        <div className={styles.legendItem}>
-          <span className={styles.legendDot} style={{ background: '#f59e0b' }}></span>
+      <div className="flex gap-6 justify-center flex-wrap">
+        <div className="flex items-center gap-1.5 text-xs text-gray-500">
+          <span className="w-4 h-4 rounded-full" style={{ background: '#f59e0b' }} />
           <span>Hoisted (undefined)</span>
         </div>
-        <div className={styles.legendItem}>
-          <span className={styles.legendDot} style={{ background: '#ef4444' }}></span>
+        <div className="flex items-center gap-1.5 text-xs text-gray-500">
+          <span className="w-4 h-4 rounded-full" style={{ background: '#ef4444' }} />
           <span>TDZ (cannot access)</span>
         </div>
-        <div className={styles.legendItem}>
-          <span className={styles.legendDot} style={{ background: '#10b981' }}></span>
+        <div className="flex items-center gap-1.5 text-xs text-gray-500">
+          <span className="w-4 h-4 rounded-full" style={{ background: '#10b981' }} />
           <span>Initialized</span>
         </div>
       </div>

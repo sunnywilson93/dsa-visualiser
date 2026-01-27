@@ -1,8 +1,8 @@
+'use client'
+
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './NodeEventLoopViz.module.css'
 
-// Action type colors for visual distinction
 const actionColors: Record<string, { bg: string; border: string; text: string }> = {
   setTimeout: { bg: 'rgba(249, 115, 22, 0.2)', border: 'rgba(249, 115, 22, 0.5)', text: '#fb923c' },
   setInterval: { bg: 'rgba(249, 115, 22, 0.2)', border: 'rgba(249, 115, 22, 0.5)', text: '#fb923c' },
@@ -27,7 +27,6 @@ function getActionColor(item: string): { bg: string; border: string; text: strin
       return colors
     }
   }
-  // Default color
   return { bg: 'rgba(139, 92, 246, 0.2)', border: 'rgba(139, 92, 246, 0.3)', text: '#c4b5fd' }
 }
 
@@ -658,12 +657,9 @@ export function NodeEventLoopViz() {
 
   const handleReset = useCallback(() => setStepIndex(0), [])
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Ignore if user is typing in an input
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
-
       if (e.key === 'ArrowRight' || e.key === ' ') {
         e.preventDefault()
         handleNext()
@@ -675,7 +671,6 @@ export function NodeEventLoopViz() {
         handleReset()
       }
     }
-
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleNext, handlePrev, handleReset])
@@ -684,31 +679,37 @@ export function NodeEventLoopViz() {
   const progressPercent = ((stepIndex + 1) / currentExample.steps.length) * 100
 
   return (
-    <div className={styles.container}>
-      {/* Level selector */}
-      <div className={styles.levelSelector}>
+    <div className="flex flex-col gap-6">
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full cursor-pointer transition-all duration-200 ${
+              level === lvl 
+                ? 'text-[var(--color-text-bright)]' 
+                : 'bg-white/4 border border-white/8 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+            }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
               borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+              background: level === lvl ? `${levelInfo[lvl].color}15` : undefined
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }}></span>
+            <span className="w-2 h-2 rounded-full" style={{ background: levelInfo[lvl].color }} />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
-      {/* Example selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-4 py-1.5 font-mono text-sm rounded-full cursor-pointer transition-all duration-200 ${
+              exampleIndex === i 
+                ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[0_0_20px_var(--color-neon-viz-25)]' 
+                : 'bg-white/4 border border-white/8 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+            }`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -716,44 +717,51 @@ export function NodeEventLoopViz() {
         ))}
       </div>
 
-      {/* Code panel */}
-      <div className={styles.codePanel}>
-        <div className={styles.panelHeader}>
+      <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
+        <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
           <span>Code</span>
-          <span className={styles.phaseBadge}>
+          <span className="px-2 py-0.5 rounded-full text-2xs font-semibold text-[var(--difficulty-1)] bg-[var(--color-emerald-20)]">
             {currentStep.currentPhase}
           </span>
         </div>
-        <pre className={styles.code}>
+        <pre className="m-0 py-2 max-h-[160px] overflow-y-auto">
           {currentExample.code.map((line, i) => (
             <div
               key={i}
               ref={el => { lineRefs.current[i] = el }}
-              className={`${styles.codeLine} ${currentStep.codeLine === i ? styles.activeLine : ''}`}
+              className={`flex px-3 py-0.5 transition-colors duration-200 ${
+                currentStep.codeLine === i ? 'bg-[var(--color-brand-primary-20)]' : ''
+              }`}
             >
-              <span className={styles.lineNum}>{i + 1}</span>
-              <span className={styles.lineCode}>{line || ' '}</span>
+              <span className="w-6 text-gray-800 font-mono text-2xs select-none">{i + 1}</span>
+              <span className={`font-mono text-2xs ${
+                currentStep.codeLine === i ? 'text-[var(--color-brand-light)]' : 'text-gray-300'
+              }`}>{line || ' '}</span>
             </div>
           ))}
         </pre>
       </div>
 
-      {/* Priority Queues - Neon Boxes */}
-      <div className={styles.priorityQueues}>
-        <div className={`${styles.neonBox} ${styles.nextTickBox}`}>
-          <div className={styles.neonBoxHeader}>process.nextTick</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.queueContent}>
+      <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+        <div 
+          className="relative rounded-xl p-[3px]"
+          style={{ background: 'linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-secondary))' }}
+        >
+          <div className="bg-[var(--color-bg-page-secondary)] rounded-lg min-h-[60px] p-4 pt-6 relative">
+            <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-[var(--color-bg-tertiary)] rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+              process.nextTick
+            </div>
+            <div className="flex flex-wrap gap-1 min-h-12 justify-center items-center">
               <AnimatePresence mode="popLayout">
                 {currentStep.nextTickQueue.length === 0 ? (
-                  <div className={styles.emptyQueue}>(empty)</div>
+                  <div className="text-gray-800 text-2xs w-full text-center">(empty)</div>
                 ) : (
                   currentStep.nextTickQueue.map((item, i) => {
                     const colors = getActionColor(item)
                     return (
                       <motion.div
                         key={item + i}
-                        className={styles.queueItem}
+                        className="px-2 py-0.5 rounded border font-mono text-xs transition-all duration-200"
                         initial={{ opacity: 0, x: 10, scale: 0.9 }}
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: -10, scale: 0.9 }}
@@ -773,20 +781,25 @@ export function NodeEventLoopViz() {
           </div>
         </div>
 
-        <div className={`${styles.neonBox} ${styles.promiseBox}`}>
-          <div className={styles.neonBoxHeader}>Promise Queue</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.queueContent}>
+        <div 
+          className="relative rounded-xl p-[3px]"
+          style={{ background: 'linear-gradient(135deg, var(--color-brand-secondary), #f43f5e)' }}
+        >
+          <div className="bg-[var(--color-bg-page-secondary)] rounded-lg min-h-[60px] p-4 pt-6 relative">
+            <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-[var(--color-bg-tertiary)] rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+              Promise Queue
+            </div>
+            <div className="flex flex-wrap gap-1 min-h-12 justify-center items-center">
               <AnimatePresence mode="popLayout">
                 {currentStep.promiseQueue.length === 0 ? (
-                  <div className={styles.emptyQueue}>(empty)</div>
+                  <div className="text-gray-800 text-2xs w-full text-center">(empty)</div>
                 ) : (
                   currentStep.promiseQueue.map((item, i) => {
                     const colors = getActionColor(item)
                     return (
                       <motion.div
                         key={item + i}
-                        className={styles.queueItem}
+                        className="px-2 py-0.5 rounded border font-mono text-xs transition-all duration-200"
                         initial={{ opacity: 0, x: 10, scale: 0.9 }}
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: -10, scale: 0.9 }}
@@ -807,43 +820,53 @@ export function NodeEventLoopViz() {
         </div>
       </div>
 
-      {/* Event Loop Phases - Neon Box */}
-      <div className={`${styles.neonBox} ${styles.phasesBox}`}>
-        <div className={styles.neonBoxHeader}>Event Loop Phases</div>
-        <div className={styles.neonBoxInner}>
-          <div className={styles.phasesContainer}>
+      <div 
+        className="relative rounded-xl p-[3px]"
+        style={{ background: 'linear-gradient(135deg, var(--color-blue-500), var(--color-brand-primary))' }}
+      >
+        <div className="bg-[var(--color-bg-page-secondary)] rounded-lg min-h-[60px] p-4 pt-6 relative">
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-[var(--color-bg-tertiary)] rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Event Loop Phases
+          </div>
+          <div className="flex gap-1.5 flex-wrap justify-center">
             {currentStep.phases.map((phase) => (
               <motion.div
                 key={phase.name}
-                className={`${styles.phase} ${phase.active ? styles.activePhase : ''}`}
+                className={`flex-1 min-w-[70px] rounded-md overflow-hidden border transition-all duration-300 max-sm:min-w-auto max-sm:w-full ${
+                  phase.active 
+                    ? 'border-[var(--color-emerald-60)] bg-[var(--color-emerald-10)] shadow-[0_0_10px_var(--color-emerald-20)]' 
+                    : 'border-white/10 bg-white/5'
+                }`}
                 animate={{
                   scale: phase.active ? 1.02 : 1,
-                  boxShadow: phase.active
-                    ? '0 0 20px rgba(16, 185, 129, 0.3)'
-                    : '0 0 0px rgba(0, 0, 0, 0)',
                 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className={styles.phaseName}>{phase.name}</div>
-                <div className={styles.phaseContent}>
+                <div className={`px-1 py-0.5 text-xs font-semibold text-center ${
+                  phase.active 
+                    ? 'text-[var(--difficulty-1)] bg-[var(--color-emerald-15)]' 
+                    : 'text-gray-700 bg-white/5'
+                }`}>
+                  {phase.name}
+                </div>
+                <div className="p-1 min-h-[50px] flex flex-col gap-0.5">
                   <AnimatePresence mode="popLayout">
                     {phase.items.length === 0 ? (
-                      <span className={styles.emptyPhase}>-</span>
+                      <span className="text-gray-700 text-2xs text-center">-</span>
                     ) : (
                       phase.items.map((item, i) => {
                         const colors = getActionColor(item)
                         return (
                           <motion.div
                             key={item + i}
-                            className={styles.phaseItem}
+                            className="px-1 py-0.5 rounded font-mono text-2xs text-center"
                             initial={{ opacity: 0, y: 5 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -5 }}
                             style={{
                               background: colors.bg,
-                              borderColor: colors.border,
-                              color: colors.text,
                               border: `1px solid ${colors.border}`,
+                              color: colors.text,
                             }}
                           >
                             {item}
@@ -859,80 +882,85 @@ export function NodeEventLoopViz() {
         </div>
       </div>
 
-      {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={`${styles.neonBox} ${styles.outputBox}`}>
-          <div className={styles.neonBoxHeader}>Console Output</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.output}>
-              <span className={styles.outputLabel}>Output:</span>
+        <div 
+          className="relative rounded-xl p-[3px]"
+          style={{ background: 'linear-gradient(135deg, var(--difficulty-1), var(--color-accent-cyan))' }}
+        >
+          <div className="bg-[var(--color-bg-page-secondary)] rounded-lg min-h-[50px] p-4 pt-6 flex items-center gap-3 relative">
+            <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-[var(--color-bg-tertiary)] rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+              Console Output
+            </div>
+            <div className="flex gap-3 items-center flex-wrap">
+              <span className="text-gray-500 text-2xs">Output:</span>
               {currentStep.output.map((item, i) => (
-                <span key={i} className={styles.outputItem}>{item}</span>
+                <span key={i} className="font-mono text-xs text-[var(--difficulty-1)]">{item}</span>
               ))}
             </div>
           </div>
         </div>
       )}
 
-      {/* Step description */}
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="px-4 py-2.5 bg-[var(--color-brand-primary-10)] border border-[var(--color-brand-primary-20)] rounded-lg text-base text-gray-300 text-center"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentExample.steps.length}</span>
+          <span className="inline-block px-1.5 py-0.5 bg-[var(--color-brand-primary-30)] rounded text-2xs font-semibold text-[var(--color-brand-light)] mr-2">
+            Step {stepIndex + 1}/{currentExample.steps.length}
+          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>
 
-      {/* Progress Bar */}
-      <div className={styles.progressContainer}>
-        <div className={styles.progressBar}>
+      <div className="flex items-center gap-4">
+        <div className="flex-1 h-1 bg-white/10 rounded-sm overflow-hidden">
           <motion.div
-            className={styles.progressFill}
+            className="h-full bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] rounded-sm"
             initial={{ width: 0 }}
             animate={{ width: `${progressPercent}%` }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
           />
         </div>
-        <span className={styles.progressText}>
+        <span className="text-2xs text-gray-700 whitespace-nowrap">
           Step {stepIndex + 1} / {currentExample.steps.length}
         </span>
       </div>
 
-      {/* Controls */}
-      <div className={styles.controls}>
+      <div className="flex gap-2 justify-center">
         <button
-          className={styles.btnSecondary}
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
           onClick={handlePrev}
           disabled={stepIndex === 0}
         >
           ← Prev
         </button>
         <motion.button
-          className={`${styles.btnPrimary} ${isLastStep ? styles.btnDone : ''}`}
+          className={`px-4 py-2 text-base font-medium border-none rounded-md text-white cursor-pointer ${
+            isLastStep 
+              ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:shadow-[0_4px_12px_var(--color-emerald-40)]' 
+              : 'bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)]'
+          }`}
           onClick={isLastStep ? handleReset : handleNext}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
           {isLastStep ? '✓ Done' : 'Next →'}
         </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white" onClick={handleReset}>
           Reset
         </button>
       </div>
 
-      {/* Keyboard hint */}
-      <div className={styles.keyboardHint}>
-        <span>Use ← → keys to navigate, R to reset</span>
+      <div className="text-center text-2xs text-gray-800">
+        <span className="px-2 py-0.5 bg-white/3 rounded">Use ← → keys to navigate, R to reset</span>
       </div>
 
-      {/* Key insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="px-4 py-2 bg-[var(--color-brand-primary-8)] border border-[var(--color-brand-primary-20)] rounded-lg text-xs text-gray-500 text-center">
+        <strong className="text-[var(--color-brand-primary)]">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

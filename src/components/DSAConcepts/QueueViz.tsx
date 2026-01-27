@@ -2,7 +2,6 @@
 
 import { useState, type CSSProperties } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './QueueViz.module.css'
 
 interface QueueItem {
   id: number
@@ -139,13 +138,13 @@ export function QueueViz(): JSX.Element {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-5">
       {/* Example selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex flex-wrap gap-2">
         {examples.map((ex: Example, i: number) => (
           <button
             key={ex.id}
-            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white ${exampleIndex === i ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -154,33 +153,33 @@ export function QueueViz(): JSX.Element {
       </div>
 
       {/* Queue visualization */}
-      <div className={styles.queueSection}>
-        <div className={styles.queueContainer}>
-          <div className={styles.queueLabel}>Queue</div>
-          <div className={styles.queue}>
-            <div className={styles.queueLegend}>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-start">
+        <div className="bg-black/20 rounded-lg p-4">
+          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Queue</div>
+          <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-[auto_1fr_auto] md:grid-cols-[auto_1fr_auto] items-center gap-3 py-1 max-md:grid-cols-1 max-md:gap-2">
               <div
-                className={`${styles.queueEnd} ${isFrontAction ? styles.queueEndActive : ''}`}
+                className={`flex flex-col gap-0.5 px-2.5 py-1 border border-white/5 rounded-md text-gray-500 text-center min-w-[120px] max-md:min-w-0 transition-all ${isFrontAction ? 'shadow-[0_0_12px_currentColor]' : ''}`}
                 style={frontIndicatorStyle}
               >
-                <span className={styles.queueEndTitle}>Front</span>
-                <span className={styles.queueEndHint}>dequeue / peek</span>
+                <span className="text-xs font-bold uppercase tracking-wide">Front</span>
+                <span className={`text-[10px] uppercase tracking-wide ${isFrontAction ? 'opacity-85' : 'text-gray-600'}`}>dequeue / peek</span>
               </div>
-              <div className={styles.queueOrder}>Oldest -&gt; Newest</div>
+              <div className="text-center text-[10px] text-gray-600 uppercase tracking-wide">Oldest -&gt; Newest</div>
               <div
-                className={`${styles.queueEnd} ${isBackAction ? styles.queueEndActive : ''}`}
+                className={`flex flex-col gap-0.5 px-2.5 py-1 border border-white/5 rounded-md text-gray-500 text-center min-w-[120px] max-md:min-w-0 transition-all ${isBackAction ? 'shadow-[0_0_12px_currentColor]' : ''}`}
                 style={backIndicatorStyle}
               >
-                <span className={styles.queueEndTitle}>Back</span>
-                <span className={styles.queueEndHint}>enqueue</span>
+                <span className="text-xs font-bold uppercase tracking-wide">Back</span>
+                <span className={`text-[10px] uppercase tracking-wide ${isBackAction ? 'opacity-85' : 'text-gray-600'}`}>enqueue</span>
               </div>
             </div>
-            <div className={styles.queueItems}>
+            <div className="flex gap-2 items-center min-h-[120px] p-3 bg-black/30 border-2 border-white/10 rounded-lg overflow-x-auto">
               <AnimatePresence mode="popLayout">
                 {currentStep.queueState.length === 0 ? (
                   <motion.div
                     key="empty"
-                    className={styles.emptyQueue}
+                    className="text-gray-600 text-base text-center p-8 w-full"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -194,7 +193,7 @@ export function QueueViz(): JSX.Element {
                     return (
                       <motion.div
                         key={item.id}
-                        className={`${styles.queueItem} ${isActive ? styles.activeItem : ''}`}
+                        className={`flex flex-col items-center justify-center gap-1 min-w-[70px] px-4 py-3 bg-black/30 border-2 border-white/10 rounded-md transition-all duration-200 ${isActive ? 'shadow-[0_0_15px_rgba(var(--color-brand-primary-rgb),0.2)]' : ''}`}
                         initial={{ opacity: 0, x: 20, scale: 0.9 }}
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: -20, scale: 0.9 }}
@@ -204,9 +203,9 @@ export function QueueViz(): JSX.Element {
                           background: isActive ? `${actionColor}15` : 'rgba(0,0,0,0.3)'
                         }}
                       >
-                        <span className={styles.queueIndex}>#{i + 1}</span>
-                        <span className={styles.queueValue}>{item.value}</span>
-                        {label && <span className={styles.queueItemLabel}>{label}</span>}
+                        <span className="text-[10px] text-slate-400 tracking-wide">#{i + 1}</span>
+                        <span className="font-mono text-xl font-semibold text-white">{item.value}</span>
+                        {label && <span className="text-[10px] text-brand-light uppercase tracking-wide">{label}</span>}
                       </motion.div>
                     )
                   })
@@ -217,20 +216,20 @@ export function QueueViz(): JSX.Element {
         </div>
 
         {/* Output */}
-        <div className={styles.outputSection}>
-          <div className={styles.outputLabel}>Output</div>
-          <div className={styles.output}>
+        <div className="bg-black/30 rounded-lg p-4 min-w-[120px]">
+          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Output</div>
+          <div className="flex items-center justify-center min-h-[50px]">
             {currentStep.output ? (
               <motion.span
                 key={`${stepIndex}-${currentStep.output}`}
                 initial={{ scale: 1.2, color: '#f59e0b' }}
                 animate={{ scale: 1, color: currentStep.action === 'error' ? '#ef4444' : '#10b981' }}
-                className={styles.outputValue}
+                className="font-mono text-2xl font-bold"
               >
                 {currentStep.output}
               </motion.span>
             ) : (
-              <span className={styles.outputEmpty}>-</span>
+              <span className="text-gray-600 text-xl">-</span>
             )}
           </div>
         </div>
@@ -240,32 +239,36 @@ export function QueueViz(): JSX.Element {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="flex items-start gap-3 p-3 px-4 bg-black/30 rounded-lg border-l-[3px] border-brand-primary"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
           style={{ borderLeftColor: actionColor }}
         >
           <span
-            className={styles.actionBadge}
+            className="flex-shrink-0 text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded text-white"
             style={{ background: actionColor }}
           >
             {currentStep.action}
           </span>
-          <span className={styles.stepText}>{currentStep.description}</span>
+          <span className="text-base text-gray-300 leading-normal">{currentStep.description}</span>
         </motion.div>
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
+      <div className="flex items-center justify-center gap-3">
+        <button 
+          className="px-3 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed" 
+          onClick={handlePrev} 
+          disabled={stepIndex === 0}
+        >
           &lt;- Prev
         </button>
-        <span className={styles.stepCounter}>
+        <span className="text-base text-gray-600 min-w-[50px] text-center">
           {stepIndex + 1} / {currentExample.steps.length}
         </span>
         <motion.button
-          className={styles.btnPrimary}
+          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-brand-primary to-brand-secondary border-0 rounded-md text-white cursor-pointer transition-opacity duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
@@ -273,14 +276,17 @@ export function QueueViz(): JSX.Element {
         >
           {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next ->'}
         </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button 
+          className="px-3 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white" 
+          onClick={handleReset}
+        >
           Reset
         </button>
       </div>
 
       {/* Insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="p-3 px-4 bg-brand-primary/10 border border-brand-primary/20 rounded-lg text-base text-gray-300 leading-normal">
+        <strong className="text-brand-light">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

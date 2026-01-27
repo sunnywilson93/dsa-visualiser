@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect, useCallback, ReactNode } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import styles from './CategoryCarousel.module.css'
 
 interface CategoryCarouselProps {
   children: ReactNode[]
@@ -74,10 +73,10 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
   }
 
   return (
-    <div className={styles.carouselContainer}>
+    <div className="relative group">
       {/* Navigation arrows */}
       <button
-        className={`${styles.navButton} ${styles.navLeft}`}
+        className="absolute top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border-none bg-black-50 text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-normal backdrop-blur-[8px] opacity-0 group-hover:opacity-100 -left-3 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-10 max-md:h-10 max-sm:hidden"
         onClick={() => scroll('left')}
         disabled={!canScrollLeft}
         aria-label="Previous category"
@@ -86,7 +85,7 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
       </button>
 
       <button
-        className={`${styles.navButton} ${styles.navRight}`}
+        className="absolute top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border-none bg-black-50 text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-normal backdrop-blur-[8px] opacity-0 group-hover:opacity-100 -right-3 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-10 max-md:h-10 max-sm:hidden"
         onClick={() => scroll('right')}
         disabled={!canScrollRight}
         aria-label="Next category"
@@ -95,11 +94,23 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
       </button>
 
       {/* Scrollable cards */}
-      <div className={styles.scrollContainer} ref={scrollRef}>
+      <div
+        className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth py-4 px-2 -mx-2 scrollbar-hide max-sm:py-2 max-sm:px-0 max-sm:mx-0"
+        ref={scrollRef}
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
+      >
         {children.map((child, index) => (
           <div
             key={index}
-            className={`${styles.cardWrapper} ${index === activeIndex ? styles.active : ''}`}
+            className={`
+              flex-[0_0_340px] snap-start transition-all duration-slow
+              max-md:flex-[0_0_300px]
+              max-sm:flex-[0_0_calc(100vw-32px)]
+              ${index === activeIndex ? 'scale-[1.02]' : 'opacity-75'}
+            `}
           >
             {child}
           </div>
@@ -108,11 +119,15 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
 
       {/* Progress dots */}
       {children.length > 4 && (
-        <div className={styles.dots}>
+        <div className="flex justify-center gap-2 mt-3">
           {children.map((_, index) => (
             <button
               key={index}
-              className={`${styles.dot} ${index === activeIndex ? styles.dotActive : ''}`}
+              className={`w-1.5 h-1.5 rounded-full border-none cursor-pointer transition-all duration-normal p-0 ${
+                index === activeIndex
+                  ? 'bg-gradient-to-br from-brand-primary to-brand-secondary w-[18px] rounded-sm shadow-[0_0_6px_var(--color-brand-primary-50)]'
+                  : 'bg-brand-primary-30 hover:bg-brand-primary-50'
+              }`}
               onClick={() => scrollToIndex(index)}
               aria-label={`Go to category ${index + 1}`}
             />

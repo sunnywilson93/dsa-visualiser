@@ -428,7 +428,19 @@ export class Interpreter {
       this.executeNode(node.init as ASTNode)
     }
 
-    this.recordStep(node, 'loop-start', 'For loop started')
+    // Get loop variable name from init if available
+    const loopVarName = node.init && (node.init as ASTNode).type === 'VariableDeclaration' 
+      ? ((node.init as ASTNode).declarations?.[0] as ASTNode)?.id?.name 
+      : undefined
+    
+    // Get condition expression string for display
+    const conditionExpr = node.test 
+      ? this.getExpressionString(node.test as ASTNode)
+      : 'true'
+
+    this.recordStep(node, 'loop-start', loopVarName 
+      ? `For loop started with ${loopVarName}` 
+      : 'For loop started')
 
     let iterations = 0
     const maxIterations = 1000
@@ -438,13 +450,23 @@ export class Interpreter {
       // Test condition
       if (node.test) {
         const testValue = this.executeNode(node.test as ASTNode)
-        if (!isTruthy(testValue)) {
-          this.recordStep(node, 'loop-end', 'For loop condition false, exiting')
+        const loopVar = loopVarName ? this.getVariable(loopVarName) : undefined
+        const currentI = loopVar?.type === 'primitive' ? loopVar.value : undefined
+        const conditionResult = isTruthy(testValue)
+        
+        if (!conditionResult) {
+          this.recordStep(node, 'loop-end', loopVarName && currentI !== undefined
+            ? `Loop ends: ${loopVarName} = ${currentI}, ${conditionExpr} → false`
+            : 'For loop condition false, exiting')
           break
         }
       }
 
-      this.recordStep(node, 'loop-iteration', `For loop iteration ${iterations + 1}`)
+      const loopVar = loopVarName ? this.getVariable(loopVarName) : undefined
+      const currentI = loopVar?.type === 'primitive' ? loopVar.value : undefined
+      this.recordStep(node, 'loop-iteration', loopVarName && currentI !== undefined
+        ? `Iteration ${iterations + 1}: ${loopVarName} = ${currentI}` 
+        : `For loop iteration ${iterations + 1}`)
 
       // Execute body with break/continue handling
       try {
@@ -472,7 +494,17 @@ export class Interpreter {
 
       // Update
       if (node.update) {
+        const oldVar = loopVarName ? this.getVariable(loopVarName) : undefined
+        const oldValue = oldVar?.type === 'primitive' ? oldVar.value : undefined
         this.executeNode(node.update as ASTNode)
+        const newVar = loopVarName ? this.getVariable(loopVarName) : undefined
+        const newValue = newVar?.type === 'primitive' ? newVar.value : undefined
+        
+        // Record the update step
+        if (loopVarName && oldValue !== undefined && newValue !== undefined) {
+          const updateExpr = this.getExpressionString(node.update as ASTNode)
+          this.recordStep(node.update as ASTNode, 'expression', `${loopVarName}: ${oldValue} ${updateExpr} → ${newValue}`)
+        }
       }
 
       iterations++
@@ -1805,6 +1837,52 @@ export class Interpreter {
     }
 
     this.state.steps.push(step)
+  }
+
+  /**
+   * Convert an AST node to a string representation for display
+   */
+  private getExpressionString(node: ASTNode): string {
+    if (!node) return ''
+    
+    switch (node.type) {
+      case 'Identifier':
+        return node.name || ''
+      case 'Literal':
+        return String(node.value)
+      case 'BinaryExpression':
+      case 'LogicalExpression':
+        return `${this.getExpressionString(node.left as ASTNode)} ${node.operator} ${this.getExpressionString(node.right as ASTNode)}`
+      case 'UnaryExpression':
+        return `${node.operator}${this.getExpressionString(node.argument as ASTNode)}`
+      case 'UpdateExpression':
+        if (node.prefix) {
+          return `${node.operator}${this.getExpressionString(node.argument as ASTNode)}`
+        }
+        return `${this.getExpressionString(node.argument as ASTNode)}${node.operator}`
+      case 'AssignmentExpression':
+        return `${this.getExpressionString(node.left as ASTNode)} ${node.operator} ${this.getExpressionString(node.right as ASTNode)}`
+      case 'MemberExpression':
+        if (node.computed) {
+          return `${this.getExpressionString(node.object as ASTNode)}[${this.getExpressionString(node.property as ASTNode)}]`
+        }
+        return `${this.getExpressionString(node.object as ASTNode)}.${this.getExpressionString(node.property as ASTNode)}`
+      case 'CallExpression':
+        const callee = this.getExpressionString(node.callee as ASTNode)
+        const args = (node.arguments as ASTNode[])?.map(arg => this.getExpressionString(arg)).join(', ') || ''
+        return `${callee}(${args})`
+      case 'ArrayExpression':
+        const elements = (node.elements as ASTNode[])?.map(el => this.getExpressionString(el)).join(', ') || ''
+        return `[${elements}]`
+      case 'ObjectExpression':
+        return '{...}'
+      case 'ConditionalExpression':
+        return `${this.getExpressionString(node.test as ASTNode)} ? ${this.getExpressionString(node.consequent as ASTNode)} : ${this.getExpressionString(node.alternate as ASTNode)}`
+      case 'SequenceExpression':
+        return (node.expressions as ASTNode[])?.map(e => this.getExpressionString(e)).join(', ') || ''
+      default:
+        return node.type || 'expression'
+    }
   }
 
   private cloneCallStack(): StackFrame[] {

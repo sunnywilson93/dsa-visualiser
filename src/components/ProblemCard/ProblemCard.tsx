@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { ConceptIcon } from '@/components/Icons'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import type { CodeExample } from '@/data/examples'
-import styles from './ProblemCard.module.css'
 
 interface ProblemCategory {
   id: string
@@ -41,17 +40,17 @@ export function ProblemCard({
   showCategory = true,
 }: ProblemCardProps) {
   const cardContent = (
-    <div className={styles.content}>
-      <div className={styles.header}>
-        <span className={styles.name}>{problem.name}</span>
+    <div className="relative h-full">
+      <div className="flex justify-between items-start gap-3 mb-2">
+        <span className="font-medium text-white text-base">{problem.name}</span>
         <DifficultyIndicator level={problem.difficulty} size="sm" />
       </div>
       {showCategory && category && (
-        <div className={styles.meta}>
+        <div className="flex items-center gap-2 mb-2">
           {onCategoryClick ? (
             <button
               type="button"
-              className={`${styles.category} ${styles.categoryButton}`}
+              className="relative z-[2] inline-flex items-center gap-[3px] text-xs font-medium text-brand-light bg-brand-primary-10 border border-brand-primary-20 py-0.5 px-2 rounded-md cursor-pointer font-inherit hover:bg-brand-primary-20 hover:border-brand-primary-30"
               onClick={(e) => {
                 e.stopPropagation()
                 onCategoryClick()
@@ -62,21 +61,27 @@ export function ProblemCard({
               {category.name}
             </button>
           ) : (
-            <span className={styles.category}>
+            <span className="inline-flex items-center gap-[3px] text-xs font-medium text-brand-light bg-brand-primary-10 border border-brand-primary-20 py-0.5 px-2 rounded-md">
               <ConceptIcon conceptId={category.id} size={14} />
               {category.name}
             </span>
           )}
         </div>
       )}
-      <p className={styles.description}>{problem.description}</p>
+      <p className="text-gray-500 text-base m-0 leading-snug max-md:text-sm">
+        {problem.description}
+      </p>
     </div>
   )
 
   if (href) {
     return (
-      <div className={styles.card}>
-        <Link href={href} className={styles.link} aria-label={`Open ${problem.name}`} />
+      <div className="relative bg-white-3 border border-white-8 rounded-xl p-4 text-left cursor-pointer transition-all duration-fast w-full font-inherit text-inherit hover:bg-white-8 hover:border-brand-primary-30 focus-visible:outline-2 focus-visible:outline-brand-primary-50 focus-visible:outline-offset-2 max-md:p-3">
+        <Link
+          href={href}
+          className="absolute inset-0 rounded-xl no-underline text-inherit z-[1] focus-visible:outline-2 focus-visible:outline-brand-primary-50 focus-visible:outline-offset-2"
+          aria-label={`Open ${problem.name}`}
+        />
         {cardContent}
       </div>
     )
@@ -85,7 +90,7 @@ export function ProblemCard({
   return (
     <button
       type="button"
-      className={styles.card}
+      className="relative bg-white-3 border border-white-8 rounded-xl p-4 text-left cursor-pointer transition-all duration-fast w-full font-inherit text-inherit hover:bg-white-8 hover:border-brand-primary-30 focus-visible:outline-2 focus-visible:outline-brand-primary-50 focus-visible:outline-offset-2 max-md:p-3"
       onClick={onClick}
       aria-label={`Open ${problem.name}`}
     >

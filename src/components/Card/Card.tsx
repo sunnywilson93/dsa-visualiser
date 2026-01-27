@@ -2,9 +2,7 @@
 
 import { ReactNode } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
-import styles from './Card.module.css'
 
 export interface CardStat {
   label: string
@@ -31,29 +29,48 @@ export function Card({
   difficulty,
   stats,
   meta,
-  index = 0,
   isActive = false,
 }: CardProps) {
   return (
-    <motion.div
-      className={`${styles.cardWrapper} ${isActive ? styles.active : ''}`}
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.05 }}
+    <div
+      className={`
+        flex-[0_0_340px] snap-start transition-all duration-slow
+        max-md:flex-[0_0_300px]
+        max-[480px]:flex-[0_0_calc(100vw-32px)]
+        ${isActive ? 'scale-[1.02]' : 'opacity-75'}
+      `}
     >
-      <Link href={href} className={styles.card}>
-        <div className={styles.cardInner}>
-          <div className={styles.cardHeader}>
-            {icon && <span className={styles.cardIcon}>{icon}</span>}
+      <Link
+        href={href}
+        className="group relative block h-full p-[2px] rounded-2xl no-underline text-inherit transition-all duration-slow hover:-translate-y-1 card-gradient-border"
+        style={{
+          background: 'var(--card-gradient-bg)',
+        }}
+      >
+        <div
+          className="h-full p-6 flex flex-col gap-3 rounded-xl max-[480px]:min-h-[180px]"
+          style={{
+            background: 'var(--color-bg-page-secondary)',
+            minHeight: '200px',
+          }}
+        >
+          <div className="flex items-center justify-between">
+            {icon && (
+              <span
+                className="text-3xl leading-none"
+                style={{ filter: 'drop-shadow(0 0 8px var(--color-white-20))' }}
+              >
+                {icon}
+              </span>
+            )}
             {difficulty && <DifficultyIndicator level={difficulty} size="md" />}
           </div>
-          <h3 className={styles.cardTitle}>{title}</h3>
-          <p className={styles.cardDescription}>{description}</p>
+          <h3 className="text-lg font-semibold text-text-bright mt-1">{title}</h3>
+          <p className="text-base text-text-secondary leading-normal flex-1 m-0">{description}</p>
           {(stats || meta) && (
-            <div className={styles.cardFooter}>
+            <div className="flex gap-4 mt-auto pt-3 border-t border-white-8">
               {stats?.map((stat, i) => (
-                <span key={i} className={styles.stat}>
+                <span key={i} className="text-sm font-medium text-brand-primary">
                   {stat.value} {stat.label}
                 </span>
               ))}
@@ -62,6 +79,6 @@ export function Card({
           )}
         </div>
       </Link>
-    </motion.div>
+    </div>
   )
 }

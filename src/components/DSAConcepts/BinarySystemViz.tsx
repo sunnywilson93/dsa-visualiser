@@ -2,9 +2,14 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { clsx, type ClassValue } from 'clsx'
 import { BitManipulationConcept } from '@/components/ConceptPanel'
 import type { ConceptStep } from '@/types'
-import styles from './BinarySystemViz.module.css'
+
+// Utility for cleaner tailwind class merging
+function cn(...inputs: ClassValue[]) {
+  return clsx(inputs)
+}
 
 interface BinaryExample {
   id: string
@@ -221,12 +226,15 @@ export function BinarySystemViz(): JSX.Element {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.exampleSelector}>
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-wrap gap-2">
         {examples.map((example, index) => (
           <button
             key={example.id}
-            className={`${styles.exampleBtn} ${exampleIndex === index ? styles.active : ''}`}
+            className={cn(
+              'px-4 py-2 text-base font-medium bg-white/5 border border-white/10 rounded-md text-gray-500 transition-all duration-200 hover:bg-white/10 hover:text-white',
+              exampleIndex === index && 'bg-[var(--color-brand-primary-15)] border-[var(--color-brand-primary-40)] text-cyan-200'
+            )}
             onClick={() => handleExampleChange(index)}
           >
             {example.title}
@@ -234,50 +242,53 @@ export function BinarySystemViz(): JSX.Element {
         ))}
       </div>
 
-      <div className={styles.stepHeader}>
-        <span className={styles.stepCount}>
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
           Step {stepIndex + 1} / {currentExample.steps.length}
         </span>
-        <span className={styles.stepTitle}>{currentStep.title}</span>
+        <span className="text-base font-semibold text-white">{currentStep.title}</span>
       </div>
 
-      <div className={styles.visualizationPanel}>
+      <div className="bg-black/30 border border-white/8 rounded-lg p-4">
         <BitManipulationConcept step={currentStep} />
       </div>
 
       <AnimatePresence mode="wait">
         <motion.div
           key={`${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="p-4 bg-black/30 rounded-lg border-l-[3px] border-l-[var(--color-brand-primary)]"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={styles.stepText}>{currentStep.description}</span>
+          <span className="text-base text-gray-300 leading-normal">{currentStep.description}</span>
         </motion.div>
       </AnimatePresence>
 
-      <div className={styles.insightBox}>
-        <span className={styles.insightLabel}>Why it matters</span>
-        <p className={styles.insightText}>{currentExample.insight}</p>
+      <div className="bg-[var(--color-brand-primary-10)] border border-[var(--color-brand-primary-30)] rounded-lg p-4">
+        <span className="inline-block text-xs font-bold tracking-wider uppercase text-cyan-200 mb-2">Why it matters</span>
+        <p className="m-0 text-base text-gray-300 leading-normal">{currentExample.insight}</p>
       </div>
 
-      <div className={styles.controls}>
+      <div className="flex items-center justify-center gap-4 flex-wrap">
         <button
-          className={styles.btnSecondary}
+          className="px-4 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
           onClick={handlePrev}
           disabled={stepIndex === 0}
         >
           Prev
         </button>
-        <span className={styles.stepCounter}>
+        <span className="text-base text-gray-700 min-w-[60px] text-center">
           {stepIndex + 1} / {currentExample.steps.length}
         </span>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button 
+          className="px-4 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 transition-all duration-200 hover:bg-white/10 hover:text-white"
+          onClick={handleReset}
+        >
           Reset
         </button>
         <button
-          className={styles.btnPrimary}
+          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-opacity duration-200 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex === currentExample.steps.length - 1}
         >

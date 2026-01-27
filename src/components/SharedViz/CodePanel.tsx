@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
-import styles from './CodePanel.module.css'
 
 export interface CodePanelProps {
   code: string[]
@@ -36,24 +35,36 @@ export function CodePanel({
   }, [highlightedLine])
 
   return (
-    <div className={styles.codePanel}>
-      <div className={styles.panelHeader}>
-        <span className={styles.panelTitle}>{title}</span>
+    <div className="bg-bg-page-secondary border border-white-10 rounded-lg shadow-lg overflow-hidden">
+      <div className="flex justify-between items-center px-3 py-2 bg-surface-card">
+        <span className="inline-flex items-center gap-[3px] px-1.5 py-[3px] text-2xs font-semibold uppercase tracking-[0.08em] text-gray-200 bg-brand-primary-10 border border-brand-primary-30 rounded-full">
+          {title}
+        </span>
         {rightElement}
       </div>
-      <pre className={styles.code} style={{ maxHeight }}>
+      <pre className="m-0 py-2 overflow-y-auto" style={{ maxHeight }}>
         {code.map((line, i) => (
           <div
             key={i}
             ref={(el) => {
               lineRefs.current[i] = el
             }}
-            className={`${styles.codeLine} ${highlightedLine === i ? styles.activeLine : ''}`}
+            className={`flex px-2 py-[2px] transition-colors duration-fast ${
+              highlightedLine === i ? 'bg-brand-primary-20' : ''
+            }`}
           >
             {showLineNumbers && (
-              <span className={styles.lineNum}>{i + 1}</span>
+              <span className="w-6 text-gray-800 font-mono text-2xs text-right select-none mr-2">
+                {i + 1}
+              </span>
             )}
-            <span className={styles.lineCode}>{line || ' '}</span>
+            <span
+              className={`font-mono text-2xs ${
+                highlightedLine === i ? 'text-brand-light' : 'text-gray-300'
+              }`}
+            >
+              {line || ' '}
+            </span>
           </div>
         ))}
       </pre>

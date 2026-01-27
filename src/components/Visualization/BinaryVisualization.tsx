@@ -1,7 +1,8 @@
+'use client'
+
 import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import type { ExecutionStep } from '@/types'
-import styles from './BinaryVisualization.module.css'
 
 interface BinaryVisualizationProps {
   step: ExecutionStep
@@ -15,13 +16,9 @@ interface BitOperation {
   type: 'binary' | 'unary' | 'shift'
 }
 
-/**
- * Parse step description to extract bit operation details
- */
 function parseBitOperation(step: ExecutionStep): BitOperation | null {
   const desc = step.description
 
-  // Match binary operations: "a ^ b: 5 ^ 3 → 6" or "result ^ nums[i]: 0 ^ 4 → 4"
   const binaryMatch = desc.match(
     /([^:]+):\s*(-?\d+)\s*(\^|&|\|)\s*(-?\d+)\s*→\s*(-?\d+)/
   )
@@ -37,7 +34,6 @@ function parseBitOperation(step: ExecutionStep): BitOperation | null {
     }
   }
 
-  // Match shift operations: "n >> 1: 5 >> 1 → 2"
   const shiftMatch = desc.match(
     /([^:]+):\s*(-?\d+)\s*(<<|>>|>>>)\s*(\d+)\s*→\s*(-?\d+)/
   )
@@ -53,18 +49,16 @@ function parseBitOperation(step: ExecutionStep): BitOperation | null {
     }
   }
 
-  // Match unary NOT: "~n → -6"
   const unaryMatch = desc.match(/~\s*(\w+).*→\s*(-?\d+)/)
   if (unaryMatch) {
     return {
       operator: '~',
-      operand1: { name: unaryMatch[1], value: 0 }, // We don't have the original value easily
+      operand1: { name: unaryMatch[1], value: 0 },
       result: parseInt(unaryMatch[2]),
       type: 'unary',
     }
   }
 
-  // Check if description mentions bit operations
   if (desc.includes('XOR') || desc.includes('^')) {
     const nums = desc.match(/-?\d+/g)
     if (nums && nums.length >= 2) {
@@ -81,20 +75,13 @@ function parseBitOperation(step: ExecutionStep): BitOperation | null {
   return null
 }
 
-/**
- * Convert number to binary string with padding
- */
 function toBinary(num: number, bits: number = 8): string {
   if (num < 0) {
-    // Handle negative numbers (two's complement)
     return (num >>> 0).toString(2).slice(-bits).padStart(bits, '1')
   }
   return num.toString(2).padStart(bits, '0')
 }
 
-/**
- * Get bits that are set (1) in a number
- */
 function getSetBits(num: number, bits: number): Set<number> {
   const setBits = new Set<number>()
   for (let i = 0; i < bits; i++) {
@@ -117,17 +104,30 @@ function BinaryRow({ label, value, bits, highlightBits, highlightType = 'active'
   const binary = toBinary(value, bits)
 
   return (
-    <div className={styles.binaryRow}>
-      <span className={styles.label}>{label}</span>
-      <span className={styles.decimal}>{value}</span>
-      <span className={styles.equals}>=</span>
-      <div className={styles.bits}>
+    <div className="flex items-center gap-2 font-mono">
+      <span className="min-w-16 text-xs text-accent-cyan font-medium text-right overflow-hidden text-ellipsis whitespace-nowrap">
+        {label}
+      </span>
+      <span className="min-w-10 text-xs text-text-primary font-semibold text-right">
+        {value}
+      </span>
+      <span className="text-text-muted text-xs">=</span>
+      <div className="flex gap-px">
         {binary.split('').map((bit, idx) => {
           const isHighlighted = highlightBits?.has(idx)
+          const baseClass = bit === '1'
+            ? 'bg-accent-blue-20 text-accent-blue border-accent-blue'
+            : 'bg-bg-secondary text-text-muted border-border-primary'
+          const highlightClass = isHighlighted
+            ? highlightType === 'result'
+              ? 'bg-accent-green-20 text-accent-green border-accent-green scale-105 shadow-[0_0_8px_var(--color-accent-green-40)]'
+              : 'scale-105 shadow-[0_0_8px_var(--color-accent-blue-40)]'
+            : ''
+
           return (
             <motion.span
               key={idx}
-              className={`${styles.bit} ${bit === '1' ? styles.one : styles.zero} ${isHighlighted ? styles[highlightType] : ''}`}
+              className={`flex items-center justify-center w-[18px] h-5 text-xs font-semibold rounded-xs border transition-all duration-fast ${baseClass} ${highlightClass}`}
               initial={{ scale: 1 }}
               animate={{
                 scale: isHighlighted ? [1, 1.2, 1] : 1,
@@ -150,15 +150,13 @@ export function BinaryVisualization({ step }: BinaryVisualizationProps) {
     return null
   }
 
-  // Determine number of bits to display
   const maxVal = Math.max(
     Math.abs(operation.operand1.value),
     Math.abs(operation.operand2?.value || 0),
     Math.abs(operation.result)
   )
-  const bits = Math.max(8, Math.ceil(Math.log2(maxVal + 1) / 4) * 4) // Round up to nearest 4
+  const bits = Math.max(8, Math.ceil(Math.log2(maxVal + 1) / 4) * 4)
 
-  // Calculate which bits to highlight
   const op1SetBits = getSetBits(operation.operand1.value, bits)
   const op2SetBits = operation.operand2 ? getSetBits(operation.operand2.value, bits) : new Set<number>()
   const resultSetBits = getSetBits(operation.result, bits)
@@ -178,18 +176,19 @@ export function BinaryVisualization({ step }: BinaryVisualizationProps) {
 
   return (
     <motion.div
-      className={styles.container}
+      className="flex flex-col gap-1 p-2 bg-bg-tertiary rounded-md"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
     >
-      <div className={styles.header}>
-        <span className={styles.title}>Bitwise Operation</span>
-        <span className={styles.operatorBadge}>{getOperatorSymbol(operation.operator)}</span>
+      <div className="flex items-center justify-between gap-1">
+        <span className="text-xs font-semibold text-text-secondary">Bitwise Operation</span>
+        <span className="text-xs font-semibold py-px px-1.5 rounded-sm bg-accent-purple text-white tracking-tight">
+          {getOperatorSymbol(operation.operator)}
+        </span>
       </div>
 
-      <div className={styles.visualization}>
-        {/* First operand */}
+      <div className="flex flex-col gap-0.5 p-2 bg-bg-primary rounded-sm overflow-x-auto">
         <BinaryRow
           label={operation.operand1.name}
           value={operation.operand1.value}
@@ -198,14 +197,14 @@ export function BinaryVisualization({ step }: BinaryVisualizationProps) {
           highlightType="active"
         />
 
-        {/* Operator line */}
         {operation.operand2 && (
           <>
-            <div className={styles.operatorRow}>
-              <span className={styles.operatorSymbol}>{operation.operator}</span>
+            <div className="flex items-center pl-16 ml-2">
+              <span className="text-sm font-bold text-accent-purple min-w-10 text-right pr-2">
+                {operation.operator}
+              </span>
             </div>
 
-            {/* Second operand */}
             <BinaryRow
               label={operation.operand2.name}
               value={operation.operand2.value}
@@ -216,10 +215,14 @@ export function BinaryVisualization({ step }: BinaryVisualizationProps) {
           </>
         )}
 
-        {/* Divider */}
-        <div className={styles.divider} />
+        <div
+          className="h-px my-0.5"
+          style={{
+            background: 'linear-gradient(90deg, transparent, var(--color-accent-green), transparent)',
+            marginLeft: 'calc(64px + 8px)',
+          }}
+        />
 
-        {/* Result */}
         <BinaryRow
           label="result"
           value={operation.result}
@@ -229,28 +232,18 @@ export function BinaryVisualization({ step }: BinaryVisualizationProps) {
         />
       </div>
 
-      {/* Bit position labels */}
-      <div className={styles.bitLabels}>
-        <span className={styles.bitLabelSpacer} />
-        <div className={styles.bitPositions}>
-          {Array.from({ length: bits }, (_, i) => (
-            <span key={i} className={styles.bitPosition}>{bits - 1 - i}</span>
-          ))}
-        </div>
-      </div>
-
       {/* Legend */}
-      <div className={styles.legend}>
-        <div className={styles.legendItem}>
-          <span className={`${styles.legendDot} ${styles.one}`} />
+      <div className="flex justify-center gap-3 pt-1 border-t border-border-secondary">
+        <div className="flex items-center gap-1 text-2xs text-text-muted">
+          <span className="w-2 h-2 rounded-xs bg-accent-blue-30 border border-accent-blue" />
           <span>1 bit</span>
         </div>
-        <div className={styles.legendItem}>
-          <span className={`${styles.legendDot} ${styles.zero}`} />
+        <div className="flex items-center gap-1 text-2xs text-text-muted">
+          <span className="w-2 h-2 rounded-xs bg-bg-secondary border border-border-primary" />
           <span>0 bit</span>
         </div>
-        <div className={styles.legendItem}>
-          <span className={`${styles.legendDot} ${styles.result}`} />
+        <div className="flex items-center gap-1 text-2xs text-text-muted">
+          <span className="w-2 h-2 rounded-xs bg-accent-green-30 border border-accent-green" />
           <span>Result</span>
         </div>
       </div>

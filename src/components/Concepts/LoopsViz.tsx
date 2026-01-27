@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CodePanel, StepProgress, StepControls } from '@/components/SharedViz'
-import styles from './LoopsViz.module.css'
 
 type Level = 'beginner' | 'intermediate' | 'advanced'
 type LoopPhase = 'init' | 'condition' | 'body' | 'update' | 'done'
@@ -1588,30 +1587,38 @@ export function LoopsViz() {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.levelSelector}>
+    <div className="flex flex-col gap-[var(--spacing-lg)]">
+      <div className="flex gap-[var(--spacing-sm)] justify-center flex-wrap bg-[var(--color-black-30)] border border-[var(--js-viz-border)] rounded-full p-[0.35rem] max-md:rounded-lg">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-[var(--spacing-md)] py-1.5 font-mono text-sm font-medium rounded-full transition-all duration-fast cursor-pointer min-h-[44px] touch-manipulation
+              ${level === lvl 
+                ? 'text-white' 
+                : 'bg-[var(--color-white-4)] border-2 border-transparent text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)] disabled:opacity-40 disabled:cursor-not-allowed'
+              }`}
             onClick={() => handleLevelChange(lvl)}
             disabled={examples[lvl].length === 0}
             style={{
               borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+              background: level === lvl ? `${levelInfo[lvl].color}15` : level === lvl ? undefined : 'var(--color-white-4)'
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }} />
+            <span className="w-[var(--spacing-sm)] h-[var(--spacing-sm)] rounded-full" style={{ background: levelInfo[lvl].color }} />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
-      <div className={styles.exampleTabs}>
+      <div className="flex gap-[var(--spacing-sm)] flex-wrap justify-center bg-[var(--color-black-30)] border border-[var(--js-viz-border)] rounded-full p-[0.35rem] max-md:rounded-lg">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleTab} ${exampleIndex === i ? styles.activeTab : ''}`}
+            className={`px-[var(--spacing-md)] py-1.5 font-mono text-sm rounded-full transition-all duration-fast cursor-pointer min-h-[44px] touch-manipulation
+              ${exampleIndex === i 
+                ? 'bg-[var(--color-emerald-18)] border border-[var(--color-emerald-70)] text-white shadow-[var(--glow-xl)_var(--color-emerald-25)]' 
+                : 'bg-[var(--color-white-4)] border border-[var(--js-viz-border)] text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)]'
+              }`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -1619,40 +1626,40 @@ export function LoopsViz() {
         ))}
       </div>
 
-      <div className={styles.mainGrid}>
+      <div className="grid grid-cols-2 gap-[var(--spacing-lg)] max-md:grid-cols-1">
         <CodePanel
           code={currentExample.code}
           highlightedLine={currentStep.codeLine}
           title="Code"
         />
 
-        <div className={styles.loopStateBox}>
-          <div className={styles.boxHeader}>Loop State</div>
-          <div className={styles.boxContent}>
-            <div className={styles.stateRow}>
-              <span className={styles.stateLabel}>Iteration:</span>
+        <div className="bg-[var(--color-black-40)] border border-[var(--js-viz-border)] rounded-xl overflow-hidden">
+          <div className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-xs font-semibold text-[var(--color-gray-500)] bg-[var(--color-white-5)] uppercase tracking-wider">Loop State</div>
+          <div className="p-[var(--spacing-md)]">
+            <div className="flex justify-between items-center py-[var(--spacing-sm)] border-b border-[var(--js-viz-border)]">
+              <span className="text-[var(--color-gray-500)] font-mono text-sm">Iteration:</span>
               <motion.span
                 key={currentStep.loopState.iteration}
-                className={styles.stateValue}
+                className="text-[var(--difficulty-1)] font-mono text-sm font-semibold"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
               >
                 {currentStep.loopState.iteration}
               </motion.span>
             </div>
-            <div className={styles.stateRow}>
-              <span className={styles.stateLabel}>{currentStep.loopState.variable}:</span>
+            <div className="flex justify-between items-center py-[var(--spacing-sm)] border-b border-[var(--js-viz-border)]">
+              <span className="text-[var(--color-gray-500)] font-mono text-sm">{currentStep.loopState.variable}:</span>
               <motion.span
                 key={String(currentStep.loopState.value)}
-                className={styles.stateValue}
+                className="text-[var(--difficulty-1)] font-mono text-sm font-semibold"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
               >
                 {currentStep.loopState.value}
               </motion.span>
             </div>
-            <div className={styles.conditionRow}>
-              <span className={`${styles.condition} ${currentStep.loopState.conditionMet ? styles.conditionTrue : styles.conditionFalse}`}>
+            <div className="mt-[var(--spacing-sm)] pt-[var(--spacing-sm)] border-t border-[var(--js-viz-border)] text-center">
+              <span className={`inline-block font-mono text-sm px-[var(--spacing-md)] py-[var(--spacing-xs)] rounded-md transition-all ${currentStep.loopState.conditionMet ? 'bg-[var(--color-emerald-15)] text-[var(--color-emerald-500)] border border-[var(--color-emerald-30)]' : 'bg-[var(--color-red-15)] text-[var(--color-red-500)] border border-[var(--color-red-30)]'}`}>
                 {currentStep.loopState.condition} = {currentStep.loopState.conditionMet ? 'true' : 'false'}
               </span>
             </div>
@@ -1660,17 +1667,17 @@ export function LoopsViz() {
         </div>
       </div>
 
-      <div className={styles.outputBox}>
-        <div className={styles.boxHeader}>Console Output</div>
-        <div className={styles.outputContent}>
+      <div className="bg-[var(--color-black-40)] border border-[var(--js-viz-border)] rounded-xl overflow-hidden">
+        <div className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-xs font-semibold text-[var(--color-gray-500)] bg-[var(--color-white-5)] uppercase tracking-wider">Console Output</div>
+        <div className="p-[var(--spacing-md)] min-h-[60px]">
           <AnimatePresence>
             {currentStep.output.length === 0 ? (
-              <span className={styles.placeholder}>No output yet</span>
+              <span className="text-sm text-[var(--color-gray-800)] italic">No output yet</span>
             ) : (
               currentStep.output.map((line, i) => (
                 <motion.div
                   key={i}
-                  className={`${styles.outputLine} ${i === currentStep.currentOutputIndex ? styles.currentOutput : ''}`}
+                  className={`font-mono text-sm text-[var(--difficulty-1)] py-[var(--spacing-xs)] transition-all ${i === currentStep.currentOutputIndex ? 'bg-[var(--color-emerald-10)] border-l-2 border-[var(--color-emerald-500)] pl-[var(--spacing-sm)] -ml-[var(--spacing-sm)]' : ''}`}
                   initial={i === currentStep.currentOutputIndex ? { opacity: 0, x: -10 } : undefined}
                   animate={{ opacity: 1, x: 0 }}
                 >
@@ -1683,28 +1690,29 @@ export function LoopsViz() {
       </div>
 
       {currentStep.bindings && (
-        <div className={styles.bindingsPanel}>
-          <div className={styles.boxHeader}>
+        <div className="bg-[var(--color-black-40)] border border-[var(--js-viz-border)] rounded-xl overflow-hidden">
+          <div className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-xs font-semibold text-[var(--color-gray-500)] bg-[var(--color-white-5)] uppercase tracking-wider">
             {currentStep.bindings.length === 1 ? 'Shared Binding (var)' : 'Per-Iteration Bindings (let)'}
           </div>
-          <div className={styles.bindingsGrid}>
+          <div className="flex gap-[var(--spacing-sm)] p-[var(--spacing-md)] flex-wrap justify-center">
             {currentStep.bindings.map((binding, i) => (
               <motion.div
                 key={`${binding.iteration}-${binding.value}`}
-                className={`${styles.bindingBox} ${currentStep.bindings!.length === 1 ? styles.sharedBinding : styles.separateBinding}`}
+                className={`px-[var(--spacing-md)] py-[var(--spacing-sm)] rounded-lg min-w-[100px] text-center
+                  ${currentStep.bindings!.length === 1 ? 'bg-[var(--color-red-15)] border border-[var(--color-red-30)]' : 'bg-[var(--color-emerald-15)] border border-[var(--color-emerald-30)]'}`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
               >
-                <div className={styles.bindingIteration}>
+                <div className="text-xs text-[var(--color-gray-500)] mb-[var(--spacing-xs)]">
                   {currentStep.bindings!.length === 1 ? 'All iterations' : `Iteration ${binding.iteration}`}
                 </div>
-                <div className={styles.bindingValue}>
+                <div className="font-mono text-sm font-semibold text-white">
                   {binding.variableName} = {binding.value}
                 </div>
                 {binding.callbacks && binding.callbacks.length > 0 && (
-                  <div className={styles.callbackRefs}>
+                  <div className="flex gap-[var(--spacing-xs)] mt-[var(--spacing-xs)] justify-center flex-wrap">
                     {binding.callbacks.map(cb => (
-                      <span key={cb} className={styles.callbackRef}>{cb}</span>
+                      <span key={cb} className="text-[10px] text-[var(--color-gray-400)] px-1.5 py-0.5 bg-[var(--color-white-10)] rounded-md">{cb}</span>
                     ))}
                   </div>
                 )}
@@ -1728,8 +1736,8 @@ export function LoopsViz() {
         canNext={stepIndex < currentExample.steps.length - 1}
       />
 
-      <div className={styles.insightBox}>
-        <span className={styles.insightLabel}>Key Insight:</span>
+      <div className="px-[var(--spacing-md)] py-[var(--spacing-sm)] rounded-lg bg-[var(--color-emerald-8)] border border-[var(--color-emerald-20)] text-sm text-[var(--color-gray-400)] text-center">
+        <span className="font-semibold text-[var(--color-emerald-500)] mr-[var(--spacing-sm)]">Key Insight:</span>
         {currentExample.insight}
       </div>
     </div>

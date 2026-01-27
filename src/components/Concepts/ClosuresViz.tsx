@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './ClosuresViz.module.css'
 
 interface ExecutionContext {
   id: string
@@ -649,31 +648,39 @@ export function ClosuresViz() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-6">
       {/* Level selector */}
-      <div className={styles.levelSelector}>
+      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
+              level === lvl
+                ? 'text-white'
+                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+            }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
               borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
               background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }}></span>
+            <span className="w-2 h-2 rounded-full" style={{ background: levelInfo[lvl].color }} />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
       {/* Example selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all ${
+              exampleIndex === i
+                ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
+                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+            }`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -682,63 +689,67 @@ export function ClosuresViz() {
       </div>
 
       {/* Code panel */}
-      <div className={styles.codePanel}>
-        <div className={styles.codeHeader}>
+      <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
+        <div className="flex justify-between items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white/5">
           <span>Code</span>
-          <span className={styles.phaseBadge} style={{ background: getPhaseColor(currentStep.phase) }}>
+          <span className="px-2 py-0.5 rounded-full text-2xs font-semibold text-black" style={{ background: getPhaseColor(currentStep.phase) }}>
             {currentStep.phase} Phase
           </span>
         </div>
-        <pre className={styles.code}>
+        <pre className="m-0 py-2 max-h-[200px] overflow-y-auto">
           {currentExample.code.map((line, i) => (
             <div
               key={i}
               ref={el => { lineRefs.current[i] = el }}
-              className={`${styles.codeLine} ${currentStep.highlightLines.includes(i) ? styles.activeLine : ''}`}
+              className={`flex px-3 py-0.5 transition-colors ${currentStep.highlightLines.includes(i) ? 'bg-purple-500/20' : ''}`}
             >
-              <span className={styles.lineNum}>{i + 1}</span>
-              <span className={styles.lineCode}>{line || ' '}</span>
+              <span className="w-6 text-gray-600 font-mono text-2xs select-none">{i + 1}</span>
+              <span className={`font-mono text-xs ${currentStep.highlightLines.includes(i) ? 'text-white' : 'text-gray-300'}`}>{line || ' '}</span>
             </div>
           ))}
         </pre>
       </div>
 
       {/* Memory visualization */}
-      <div className={styles.memoryContainer}>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-4">
         {/* Call Stack - Neon Box */}
-        <div className={`${styles.neonBox} ${styles.callStackBox}`}>
-          <div className={styles.neonBoxHeader}>Call Stack</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.stack}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #f97316, #fbbf24)' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Call Stack
+          </div>
+          <div className="bg-gray-900 rounded-lg min-h-[180px] p-4 pt-6">
+            <div className="flex flex-col gap-1.5">
               <AnimatePresence mode="popLayout">
                 {currentStep.callStack.slice().reverse().map((ec) => (
                   <motion.div
                     key={ec.id}
-                    className={`${styles.executionContext} ${ec.id === 'global' ? styles.globalEc : ''}`}
+                    className={`rounded-md overflow-hidden ${ec.id === 'global' ? 'bg-purple-500/10 border border-purple-500/30' : 'bg-sky-500/10 border border-sky-400/30'}`}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
                     layout
                   >
-                    <div className={styles.ecHeader}>{ec.name}</div>
-                    <div className={styles.ecContent}>
-                      <div className={styles.ecSection}>
-                        <span className={styles.ecLabel}>Variables:</span>
+                    <div className={`px-2 py-1 text-2xs font-semibold ${ec.id === 'global' ? 'text-purple-300 bg-purple-500/15' : 'text-blue-400 bg-sky-500/15'}`}>
+                      {ec.name}
+                    </div>
+                    <div className="p-2">
+                      <div className="mb-1">
+                        <span className="text-xs text-gray-400 uppercase tracking-wider">Variables:</span>
                         {ec.variables.length > 0 ? (
                           ec.variables.map(v => (
-                            <div key={v.name} className={styles.ecVar}>
-                              <span className={styles.ecVarName}>{v.name}</span>
-                              <span className={styles.ecVarValue}>{v.value}</span>
+                            <div key={v.name} className="flex justify-between items-center px-1 py-0.5 bg-black/20 rounded mt-1">
+                              <span className="font-mono text-2xs text-gray-500">{v.name}</span>
+                              <span className="font-mono text-2xs text-emerald-500 font-medium">{v.value}</span>
                             </div>
                           ))
                         ) : (
-                          <span className={styles.ecEmpty}>(none)</span>
+                          <span className="text-xs text-gray-600 italic">(none)</span>
                         )}
                       </div>
                       {ec.outerRef && (
-                        <div className={styles.ecSection}>
-                          <span className={styles.ecLabel}>Outer:</span>
-                          <span className={styles.ecRef}>→ {ec.outerRef}</span>
+                        <div className="mt-1">
+                          <span className="text-xs text-gray-400 uppercase tracking-wider">Outer:</span>
+                          <span className="font-mono text-2xs text-purple-400 ml-1">→ {ec.outerRef}</span>
                         </div>
                       )}
                     </div>
@@ -750,33 +761,37 @@ export function ClosuresViz() {
         </div>
 
         {/* Heap Memory - Neon Box */}
-        <div className={`${styles.neonBox} ${styles.heapBox}`}>
-          <div className={styles.neonBoxHeader}>Heap Memory</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.heap}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899)' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Heap Memory
+          </div>
+          <div className="bg-gray-900 rounded-lg min-h-[180px] p-4 pt-6">
+            <div className="flex flex-col gap-3">
               <AnimatePresence mode="popLayout">
                 {currentStep.heap.length === 0 ? (
-                  <motion.div key="empty" className={styles.emptyHeap} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <motion.div key="empty" className="text-gray-600 text-xs text-center py-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                     (empty)
                   </motion.div>
                 ) : (
                   currentStep.heap.map((obj) => (
                     <motion.div
                       key={obj.id}
-                      className={`${styles.heapBlock} ${obj.type === 'scope' ? styles.scopeBlock : styles.functionBlock}`}
+                      className={`p-3 rounded-md relative ${obj.type === 'scope' ? 'bg-amber-500/10 border border-amber-400/40' : 'bg-purple-500/10 border border-purple-500/40'}`}
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       layout
                     >
-                      <div className={styles.heapLabel}>{obj.label}</div>
-                      <div className={styles.heapVars}>
+                      <div className={`text-2xs font-semibold mb-1 ${obj.type === 'scope' ? 'text-amber-500' : 'text-purple-400'}`}>
+                        {obj.label}
+                      </div>
+                      <div className="flex flex-col gap-0.5">
                         {obj.vars.map((v) => (
-                          <div key={v.name} className={styles.heapVar}>
-                            <span className={styles.heapVarName}>{v.name}:</span>
+                          <div key={v.name} className="flex items-center gap-1 font-mono text-2xs">
+                            <span className="text-gray-500">{v.name}:</span>
                             <motion.span
                               key={v.value}
-                              className={styles.heapVarValue}
+                              className={`font-medium ${v.name === '[[Scope]]' ? 'text-purple-400' : 'text-emerald-500'}`}
                               initial={{ scale: 1.2, color: '#f59e0b' }}
                               animate={{ scale: 1, color: v.name === '[[Scope]]' ? '#a855f7' : '#10b981' }}
                             >
@@ -786,7 +801,9 @@ export function ClosuresViz() {
                         ))}
                       </div>
                       {obj.label.includes('CLOSED') && (
-                        <div className={styles.closureBadge}>Closure!</div>
+                        <div className="absolute -top-1.5 right-1.5 px-1.5 py-0.5 bg-amber-500 rounded text-xs font-bold text-black">
+                          Closure!
+                        </div>
                       )}
                     </motion.div>
                   ))
@@ -797,15 +814,17 @@ export function ClosuresViz() {
         </div>
 
         {/* Output - Neon Box */}
-        <div className={`${styles.neonBox} ${styles.outputBox}`}>
-          <div className={styles.neonBoxHeader}>Output</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.output}>
+        <div className="relative rounded-xl p-[3px] md:col-span-2" style={{ background: 'linear-gradient(135deg, #10b981, #06b6d4)' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Output
+          </div>
+          <div className="bg-gray-900 rounded-lg min-h-[60px] p-4 pt-6">
+            <div className="font-mono text-base text-emerald-500">
               {currentStep.output.length === 0 ? (
-                <span className={styles.emptyOutput}>—</span>
+                <span className="text-gray-600">—</span>
               ) : (
                 currentStep.output.map((o, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className={styles.outputLine}>
+                  <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="py-0.5">
                     {o}
                   </motion.div>
                 ))
@@ -819,23 +838,29 @@ export function ClosuresViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-base text-gray-300 text-center"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentExample.steps.length}</span>
+          <span className="inline-block px-1.5 py-0.5 bg-purple-500/30 rounded text-2xs font-semibold text-purple-300 mr-2">
+            Step {stepIndex + 1}/{currentExample.steps.length}
+          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
+      <div className="flex gap-3 justify-center">
+        <button
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          onClick={handlePrev}
+          disabled={stepIndex === 0}
+        >
           ← Prev
         </button>
         <motion.button
-          className={styles.btnPrimary}
+          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-purple-500 to-pink-500 rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
@@ -843,14 +868,17 @@ export function ClosuresViz() {
         >
           {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
         </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white transition-colors"
+          onClick={handleReset}
+        >
           ↻ Reset
         </button>
       </div>
 
       {/* Key insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="px-4 py-2.5 bg-purple-500/10 border border-purple-500/20 rounded-lg text-sm text-gray-400 leading-relaxed">
+        <strong className="text-purple-400">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

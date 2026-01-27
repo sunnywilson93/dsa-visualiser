@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './CriticalRenderPathViz.module.css'
 
 interface PipelineStage {
   name: string
@@ -549,31 +548,39 @@ export function CriticalRenderPathViz() {
   const handleReset = () => setStepIndex(0)
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-6">
       {/* Level selector */}
-      <div className={styles.levelSelector}>
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full cursor-pointer transition-all duration-200 ${
+              level === lvl
+                ? 'text-white'
+                : 'bg-white/[0.04] border border-white/[0.08] text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
+            }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
-              borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+              borderColor: level === lvl ? levelInfo[lvl].color : undefined,
+              background: level === lvl ? `${levelInfo[lvl].color}15` : undefined
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }}></span>
+            <span className="w-4 h-4 rounded-full" style={{ background: levelInfo[lvl].color }} />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
       {/* Example selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-4 py-1.5 font-mono text-sm rounded-full cursor-pointer transition-all duration-200 ${
+              exampleIndex === i
+                ? 'bg-blue-500/20 border border-blue-500/50 text-white shadow-[0_0_12px_rgba(59,130,246,0.25)]'
+                : 'bg-white/[0.04] border border-white/[0.08] text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
+            }`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -582,36 +589,58 @@ export function CriticalRenderPathViz() {
       </div>
 
       {/* Code panel */}
-      <div className={styles.codePanel}>
-        <div className={styles.panelHeader}>Code</div>
-        <pre className={styles.code}>
+      <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black/40">
+        <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">Code</div>
+        <pre className="m-0 py-2 px-0 max-h-[150px] overflow-y-auto font-mono">
           {currentExample.code.map((line, i) => (
             <div
               key={i}
               ref={el => { lineRefs.current[i] = el }}
-              className={`${styles.codeLine} ${currentStep.codeLine === i ? styles.activeLine : ''}`}
+              className={`flex px-3 py-0.5 transition-colors duration-200 ${
+                currentStep.codeLine === i ? 'bg-blue-500/20' : ''
+              }`}
             >
-              <span className={styles.lineNum}>{i + 1}</span>
-              <span className={styles.lineCode}>{line || ' '}</span>
+              <span className="w-6 text-gray-600 font-mono text-[10px] select-none">{i + 1}</span>
+              <span className={`font-mono text-[10px] ${currentStep.codeLine === i ? 'text-blue-300' : 'text-gray-300'}`}>
+                {line || ' '}
+              </span>
             </div>
           ))}
         </pre>
       </div>
 
       {/* Pipeline visualization - Neon Box */}
-      <div className={`${styles.neonBox} ${styles.pipelineBox}`}>
-        <div className={styles.neonBoxHeader}>Render Pipeline</div>
-        <div className={styles.neonBoxInner}>
-          <div className={styles.pipelineContainer}>
+      <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #3b82f6, var(--color-brand-primary, #0ea5e9))' }}>
+        <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+          Render Pipeline
+        </div>
+        <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[60px] p-4 pt-6">
+          <div className="flex gap-1.5 flex-wrap justify-center">
             {currentStep.pipeline.map((stage) => (
               <motion.div
                 key={stage.name}
-                className={`${styles.pipelineStage} ${styles[stage.status]} ${stage.blocking ? styles.blocking : ''}`}
+                className={`flex-1 min-w-[70px] p-2 rounded-md text-center relative border-2 ${
+                  stage.status === 'pending'
+                    ? 'opacity-50 bg-white/5 border-white/10'
+                    : stage.status === 'active'
+                    ? 'border-blue-500/60 bg-blue-500/10 shadow-[0_0_10px_rgba(59,130,246,0.3)]'
+                    : stage.blocking
+                    ? 'border-red-500/60 bg-red-500/10'
+                    : 'border-emerald-500/60 bg-emerald-500/10'
+                }`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
               >
-                <div className={styles.stageName}>{stage.name}</div>
-                {stage.blocking && <div className={styles.blockingBadge}>BLOCKING</div>}
+                <div className={`text-[10px] font-semibold ${
+                  stage.status === 'active' ? 'text-blue-300' :
+                  stage.status === 'done' ? 'text-emerald-400' :
+                  stage.blocking ? 'text-red-400' : 'text-gray-500'
+                }`}>{stage.name}</div>
+                {stage.blocking && (
+                  <div className="absolute -top-1.5 -right-1.5 px-1 py-0.5 text-[8px] font-semibold text-white bg-red-500 rounded">
+                    BLOCKING
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
@@ -620,38 +649,40 @@ export function CriticalRenderPathViz() {
 
       {/* Trees - Neon Box */}
       {(currentStep.domTree.length > 0 || currentStep.cssomTree.length > 0 || currentStep.renderTree.length > 0) && (
-        <div className={`${styles.neonBox} ${styles.treesBox}`}>
-          <div className={styles.neonBoxHeader}>DOM & Render Trees</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.treesContainer}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #f97316, #fbbf24)' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            DOM & Render Trees
+          </div>
+          <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[60px] p-4 pt-6">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-2">
               {currentStep.domTree.length > 0 && (
-                <div className={styles.tree}>
-                  <div className={styles.treeHeader}>DOM Tree</div>
-                  <div className={styles.treeContent}>
+                <div className="bg-white/5 rounded-md overflow-hidden border border-white/10">
+                  <div className="px-2 py-1 text-[10px] font-semibold text-amber-400 bg-amber-500/10 text-center">DOM Tree</div>
+                  <div className="p-1.5 min-h-[50px]">
                     {currentStep.domTree.map((node, i) => (
-                      <div key={i} className={styles.treeNode}>{node}</div>
+                      <div key={i} className="font-mono text-xs text-gray-300 py-0.5 whitespace-pre">{node}</div>
                     ))}
                   </div>
                 </div>
               )}
 
               {currentStep.cssomTree.length > 0 && (
-                <div className={styles.tree}>
-                  <div className={styles.treeHeader}>CSSOM</div>
-                  <div className={styles.treeContent}>
+                <div className="bg-white/5 rounded-md overflow-hidden border border-white/10">
+                  <div className="px-2 py-1 text-[10px] font-semibold text-amber-400 bg-amber-500/10 text-center">CSSOM</div>
+                  <div className="p-1.5 min-h-[50px]">
                     {currentStep.cssomTree.map((rule, i) => (
-                      <div key={i} className={styles.treeNode}>{rule}</div>
+                      <div key={i} className="font-mono text-xs text-gray-300 py-0.5">{rule}</div>
                     ))}
                   </div>
                 </div>
               )}
 
               {currentStep.renderTree.length > 0 && (
-                <div className={styles.tree}>
-                  <div className={styles.treeHeader}>Render Tree</div>
-                  <div className={styles.treeContent}>
+                <div className="bg-white/5 rounded-md overflow-hidden border border-white/10">
+                  <div className="px-2 py-1 text-[10px] font-semibold text-amber-400 bg-amber-500/10 text-center">Render Tree</div>
+                  <div className="p-1.5 min-h-[50px]">
                     {currentStep.renderTree.map((node, i) => (
-                      <div key={i} className={styles.treeNode}>{node}</div>
+                      <div key={i} className="font-mono text-xs text-gray-300 py-0.5">{node}</div>
                     ))}
                   </div>
                 </div>
@@ -663,11 +694,13 @@ export function CriticalRenderPathViz() {
 
       {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={`${styles.neonBox} ${styles.outputBox}`}>
-          <div className={styles.neonBoxHeader}>Console Output</div>
-          <div className={styles.neonBoxInner}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, var(--difficulty-1, #10b981), var(--color-accent-cyan, #06b6d4))' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Console Output
+          </div>
+          <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[50px] p-4 pt-6 flex gap-3 items-center flex-wrap">
             {currentStep.output.map((item, i) => (
-              <span key={i} className={styles.outputItem}>{item}</span>
+              <span key={i} className="font-mono text-xs text-emerald-500">{item}</span>
             ))}
           </div>
         </div>
@@ -677,23 +710,29 @@ export function CriticalRenderPathViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="px-4 py-2.5 bg-blue-500/10 border border-blue-500/20 rounded-lg text-base text-gray-300 text-center"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentExample.steps.length}</span>
+          <span className="inline-block px-1.5 py-0.5 bg-blue-500/30 rounded text-[10px] font-semibold text-blue-300 mr-2">
+            Step {stepIndex + 1}/{currentExample.steps.length}
+          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
+      <div className="flex gap-2 justify-center">
+        <button 
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
+          onClick={handlePrev} 
+          disabled={stepIndex === 0}
+        >
           Prev
         </button>
         <motion.button
-          className={styles.btnPrimary}
+          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-blue-500 to-cyan-500 border-0 rounded-md text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
@@ -701,14 +740,17 @@ export function CriticalRenderPathViz() {
         >
           {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next'}
         </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button 
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white"
+          onClick={handleReset}
+        >
           Reset
         </button>
       </div>
 
       {/* Key insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="px-4 py-2 bg-blue-500/[0.08] border border-blue-500/20 rounded-lg text-xs text-gray-500 text-center">
+        <strong className="text-blue-500">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

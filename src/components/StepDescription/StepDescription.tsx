@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCurrentStep, useExecutionStore, useExecutionProgress } from '@/store'
 import type { StepType } from '@/types'
-import styles from './StepDescription.module.css'
 
 function getStepTypeLabel(type: StepType, description: string): string {
   // Check for console.log specifically
@@ -66,9 +65,9 @@ export function StepDescription() {
 
   if (status === 'idle') {
     return (
-      <div className={styles.container}>
-        <div className={styles.idle}>
-          Press <kbd>Space</kbd> to run code
+      <div className="p-[var(--spacing-md)] bg-[var(--color-black-30)] rounded-[var(--radius-lg)] border border-[var(--color-white-8)]">
+        <div className="text-center text-[var(--color-gray-700)] text-[var(--text-base)]">
+          Press <kbd className="inline-block px-[var(--spacing-xs)] py-[2px] bg-[var(--color-white-10)] border border-[var(--color-white-20)] rounded-[var(--radius-sm)] font-mono text-[var(--text-xs)] text-[var(--color-gray-500)]">Space</kbd> to run code
         </div>
       </div>
     )
@@ -79,31 +78,31 @@ export function StepDescription() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="p-[var(--spacing-md)] bg-[var(--color-black-30)] rounded-[var(--radius-lg)] border border-[var(--color-white-8)]">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentStep.id}
-          className={styles.content}
+          className="flex flex-col gap-[var(--spacing-sm)]"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
           transition={{ duration: 0.15 }}
         >
-          <div className={styles.badges}>
-            <span className={styles.stepBadge}>
+          <div className="flex items-center gap-[var(--spacing-sm)] flex-wrap">
+            <span className="px-[var(--spacing-sm)] py-[2px] bg-[var(--color-brand-primary-20)] border border-[var(--color-brand-primary-30)] rounded-[var(--radius-sm)] text-[var(--text-2xs)] font-semibold text-[var(--color-brand-light)]">
               Step {current}/{total}
             </span>
             <span
-              className={styles.typeBadge}
+              className="px-[var(--spacing-sm)] py-[2px] rounded-[var(--radius-sm)] text-[var(--text-2xs)] font-semibold text-[var(--color-black)]"
               style={{ background: getStepTypeColor(currentStep.type, currentStep.description) }}
             >
               {getStepTypeLabel(currentStep.type, currentStep.description)}
             </span>
-            <span className={styles.lineBadge}>
+            <span className="px-[var(--spacing-sm)] py-[2px] bg-[var(--color-white-5)] border border-[var(--color-white-10)] rounded-[var(--radius-sm)] text-[var(--text-2xs)] font-medium text-[var(--color-gray-700)] font-mono">
               Line {currentStep.location.line}
             </span>
           </div>
-          <div className={styles.description}>
+          <div className="text-[var(--text-base)] text-[var(--color-gray-300)] leading-[var(--leading-snug)] [&_code]:font-mono [&_code]:bg-[var(--color-brand-primary-15)] [&_code]:px-[3px] [&_code]:py-[2px] [&_code]:rounded-[var(--radius-sm)] [&_code]:text-[var(--color-brand-light)]">
             {currentStep.description}
           </div>
         </motion.div>

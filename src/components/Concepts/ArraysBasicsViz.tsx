@@ -1,7 +1,8 @@
+'use client'
+
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CodePanel, StepProgress, StepControls } from '@/components/SharedViz'
-import styles from './ArraysBasicsViz.module.css'
 
 interface StackItem {
   name: string
@@ -85,9 +86,7 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 0,
           description: 'let a = 5 - Primitive value stored directly in the stack.',
           phase: 'setup',
-          stack: [
-            { name: 'a', value: '5', highlight: 'new' },
-          ],
+          stack: [{ name: 'a', value: '5', highlight: 'new' }],
           heap: [],
           output: [],
         },
@@ -96,10 +95,7 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 1,
           description: 'let b = a - The VALUE 5 is COPIED to b. They are independent.',
           phase: 'setup',
-          stack: [
-            { name: 'a', value: '5' },
-            { name: 'b', value: '5', highlight: 'new' },
-          ],
+          stack: [{ name: 'a', value: '5' }, { name: 'b', value: '5', highlight: 'new' }],
           heap: [],
           output: [],
         },
@@ -108,10 +104,7 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 2,
           description: 'b = 10 - Only b changes. a is still 5 because they have separate copies.',
           phase: 'setup',
-          stack: [
-            { name: 'a', value: '5' },
-            { name: 'b', value: '10', highlight: 'changed' },
-          ],
+          stack: [{ name: 'a', value: '5' }, { name: 'b', value: '10', highlight: 'changed' }],
           heap: [],
           output: [],
         },
@@ -120,10 +113,7 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 3,
           description: 'console.log(a, b) outputs: 5, 10. Primitives are independent!',
           phase: 'result',
-          stack: [
-            { name: 'a', value: '5' },
-            { name: 'b', value: '10' },
-          ],
+          stack: [{ name: 'a', value: '5' }, { name: 'b', value: '10' }],
           heap: [],
           output: ['5 10'],
         },
@@ -137,9 +127,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'b', value: '10' },
             { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' },
           ],
-          heap: [
-            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' },
-          ],
+          heap: [{ id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' }],
           output: ['5 10'],
         },
         {
@@ -153,9 +141,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1' },
             { name: 'arr2', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' },
           ],
-          heap: [
-            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1' },
-          ],
+          heap: [{ id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1' }],
           output: ['5 10'],
         },
         {
@@ -169,9 +155,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1' },
             { name: 'arr2', value: '-> #1', isReference: true, refId: 'array1' },
           ],
-          heap: [
-            { id: 'array1', type: 'array', elements: [1, 2, 3, 4], label: '#1', highlight: 'mutated' },
-          ],
+          heap: [{ id: 'array1', type: 'array', elements: [1, 2, 3, 4], label: '#1', highlight: 'mutated' }],
           output: ['5 10'],
         },
         {
@@ -185,9 +169,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1' },
             { name: 'arr2', value: '-> #1', isReference: true, refId: 'array1' },
           ],
-          heap: [
-            { id: 'array1', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
-          ],
+          heap: [{ id: 'array1', type: 'array', elements: [1, 2, 3, 4], label: '#1' }],
           output: ['5 10', '[1, 2, 3, 4]'],
         },
       ],
@@ -220,12 +202,8 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 0,
           description: 'let original = [1, 2, 3] - Array created in heap, original points to it.',
           phase: 'reference',
-          stack: [
-            { name: 'original', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
-          ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' },
-          ],
+          stack: [{ name: 'original', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' }],
+          heap: [{ id: 'arr', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' }],
           output: [],
         },
         {
@@ -237,9 +215,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'original', value: '-> #1', isReference: true, refId: 'arr' },
             { name: 'copy', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
           ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [1, 2, 3], label: '#1' },
-          ],
+          heap: [{ id: 'arr', type: 'array', elements: [1, 2, 3], label: '#1' }],
           output: [],
         },
         {
@@ -251,9 +227,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'original', value: '-> #1', isReference: true, refId: 'arr' },
             { name: 'copy', value: '-> #1', isReference: true, refId: 'arr' },
           ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [99, 2, 3], label: '#1', highlight: 'mutated' },
-          ],
+          heap: [{ id: 'arr', type: 'array', elements: [99, 2, 3], label: '#1', highlight: 'mutated' }],
           output: [],
         },
         {
@@ -265,9 +239,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'original', value: '-> #1', isReference: true, refId: 'arr' },
             { name: 'copy', value: '-> #1', isReference: true, refId: 'arr' },
           ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [99, 2, 3], label: '#1' },
-          ],
+          heap: [{ id: 'arr', type: 'array', elements: [99, 2, 3], label: '#1' }],
           output: ['99'],
         },
         {
@@ -279,9 +251,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'original', value: '-> #1', isReference: true, refId: 'arr' },
             { name: 'copy', value: '-> #1', isReference: true, refId: 'arr' },
           ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [99, 2, 3], label: '#1' },
-          ],
+          heap: [{ id: 'arr', type: 'array', elements: [99, 2, 3], label: '#1' }],
           output: ['99', '99'],
         },
       ],
@@ -317,12 +287,8 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 0,
           description: 'let data = [10, 20, 30] - Array created in heap.',
           phase: 'reference',
-          stack: [
-            { name: 'data', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
-          ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1', highlight: 'new' },
-          ],
+          stack: [{ name: 'data', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' }],
+          heap: [{ id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1', highlight: 'new' }],
           output: [],
         },
         {
@@ -334,9 +300,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'data', value: '-> #1', isReference: true, refId: 'arr' },
             { name: 'ref1', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
           ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1' },
-          ],
+          heap: [{ id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1' }],
           output: [],
         },
         {
@@ -349,9 +313,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'ref1', value: '-> #1', isReference: true, refId: 'arr' },
             { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
           ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1' },
-          ],
+          heap: [{ id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1' }],
           output: [],
         },
         {
@@ -365,9 +327,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr' },
             { name: 'ref3', value: '-> #1', isReference: true, refId: 'arr', highlight: 'new' },
           ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1' },
-          ],
+          heap: [{ id: 'arr', type: 'array', elements: [10, 20, 30], label: '#1' }],
           output: [],
         },
         {
@@ -381,9 +341,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr' },
             { name: 'ref3', value: '-> #1', isReference: true, refId: 'arr' },
           ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1', highlight: 'mutated' },
-          ],
+          heap: [{ id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1', highlight: 'mutated' }],
           output: [],
         },
         {
@@ -397,9 +355,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr' },
             { name: 'ref3', value: '-> #1', isReference: true, refId: 'arr' },
           ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1' },
-          ],
+          heap: [{ id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1' }],
           output: ['999'],
         },
         {
@@ -413,9 +369,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr' },
             { name: 'ref3', value: '-> #1', isReference: true, refId: 'arr' },
           ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1' },
-          ],
+          heap: [{ id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1' }],
           output: ['999', '999'],
         },
         {
@@ -429,9 +383,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'ref2', value: '-> #1', isReference: true, refId: 'arr' },
             { name: 'ref3', value: '-> #1', isReference: true, refId: 'arr' },
           ],
-          heap: [
-            { id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1' },
-          ],
+          heap: [{ id: 'arr', type: 'array', elements: [10, 999, 30], label: '#1' }],
           output: ['999', '999', '999'],
         },
       ],
@@ -466,12 +418,8 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 0,
           description: 'let arr1 = [1, 2, 3] - Array created in heap as #1.',
           phase: 'reference',
-          stack: [
-            { name: 'arr1', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' },
-          ],
-          heap: [
-            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' },
-          ],
+          stack: [{ name: 'arr1', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' }],
+          heap: [{ id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' }],
           output: [],
         },
         {
@@ -566,12 +514,8 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 0,
           description: 'let original = [1, 2, 3] - Array created in heap.',
           phase: 'reference',
-          stack: [
-            { name: 'original', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' },
-          ],
-          heap: [
-            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' },
-          ],
+          stack: [{ name: 'original', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' }],
+          heap: [{ id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' }],
           output: [],
         },
         {
@@ -583,9 +527,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'original', value: '-> #1', isReference: true, refId: 'array1' },
             { name: 'refCopy', value: '-> #1', isReference: true, refId: 'array1', highlight: 'new' },
           ],
-          heap: [
-            { id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1' },
-          ],
+          heap: [{ id: 'array1', type: 'array', elements: [1, 2, 3], label: '#1' }],
           output: [],
         },
         {
@@ -682,9 +624,7 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 0,
           description: 'let matrix = [[1, 2], [3, 4]] - Nested arrays! Outer array #1 contains references to inner arrays #2 and #3.',
           phase: 'reference',
-          stack: [
-            { name: 'matrix', value: '-> #1', isReference: true, refId: 'outer1', highlight: 'new' },
-          ],
+          stack: [{ name: 'matrix', value: '-> #1', isReference: true, refId: 'outer1', highlight: 'new' }],
           heap: [
             { id: 'outer1', type: 'array', elements: ['-> #2', '-> #3'], label: '#1', highlight: 'new' },
             { id: 'inner1', type: 'array', elements: [1, 2], label: '#2', highlight: 'new' },
@@ -789,12 +729,8 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 0,
           description: 'const nums = [1, 2, 3] - Source array created in heap.',
           phase: 'reference',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums', highlight: 'new' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums', highlight: 'new' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1', highlight: 'new' }],
           output: [],
         },
         {
@@ -802,54 +738,30 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 1,
           description: 'map() starts - Processing index 0. Callback receives 1, returns 1 * 2 = 2.',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'map',
-            currentIndex: 0,
-            resultArray: [2],
-          },
+          iterationState: { method: 'map', currentIndex: 0, resultArray: [2] },
         },
         {
           id: 3,
           codeLine: 1,
           description: 'map() continues - Processing index 1. Callback receives 2, returns 2 * 2 = 4.',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'map',
-            currentIndex: 1,
-            resultArray: [2, 4],
-          },
+          iterationState: { method: 'map', currentIndex: 1, resultArray: [2, 4] },
         },
         {
           id: 4,
           codeLine: 1,
           description: 'map() continues - Processing index 2. Callback receives 3, returns 3 * 2 = 6.',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'map',
-            currentIndex: 2,
-            resultArray: [2, 4, 6],
-          },
+          iterationState: { method: 'map', currentIndex: 2, resultArray: [2, 4, 6] },
         },
         {
           id: 5,
@@ -908,12 +820,8 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 0,
           description: 'const nums = [1, 2, 3, 4, 5] - Source array created in heap.',
           phase: 'reference',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums', highlight: 'new' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1', highlight: 'new' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums', highlight: 'new' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1', highlight: 'new' }],
           output: [],
         },
         {
@@ -921,95 +829,50 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 1,
           description: 'filter() starts - Index 0: 1 % 2 === 0 is FALSE. Element REJECTED.',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'filter',
-            currentIndex: 0,
-            resultArray: [],
-            rejected: [0],
-          },
+          iterationState: { method: 'filter', currentIndex: 0, resultArray: [], rejected: [0] },
         },
         {
           id: 3,
           codeLine: 1,
           description: 'filter() continues - Index 1: 2 % 2 === 0 is TRUE. Element KEPT!',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'filter',
-            currentIndex: 1,
-            resultArray: [2],
-            rejected: [0],
-          },
+          iterationState: { method: 'filter', currentIndex: 1, resultArray: [2], rejected: [0] },
         },
         {
           id: 4,
           codeLine: 1,
           description: 'filter() continues - Index 2: 3 % 2 === 0 is FALSE. Element REJECTED.',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'filter',
-            currentIndex: 2,
-            resultArray: [2],
-            rejected: [0, 2],
-          },
+          iterationState: { method: 'filter', currentIndex: 2, resultArray: [2], rejected: [0, 2] },
         },
         {
           id: 5,
           codeLine: 1,
           description: 'filter() continues - Index 3: 4 % 2 === 0 is TRUE. Element KEPT!',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'filter',
-            currentIndex: 3,
-            resultArray: [2, 4],
-            rejected: [0, 2],
-          },
+          iterationState: { method: 'filter', currentIndex: 3, resultArray: [2, 4], rejected: [0, 2] },
         },
         {
           id: 6,
           codeLine: 1,
           description: 'filter() continues - Index 4: 5 % 2 === 0 is FALSE. Element REJECTED.',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4, 5], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'filter',
-            currentIndex: 4,
-            resultArray: [2, 4],
-            rejected: [0, 2, 4],
-          },
+          iterationState: { method: 'filter', currentIndex: 4, resultArray: [2, 4], rejected: [0, 2, 4] },
         },
         {
           id: 7,
@@ -1068,12 +931,8 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 0,
           description: 'const nums = [1, 2, 3, 4] - Source array created in heap.',
           phase: 'reference',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums', highlight: 'new' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1', highlight: 'new' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums', highlight: 'new' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1', highlight: 'new' }],
           output: [],
         },
         {
@@ -1081,72 +940,40 @@ const examples: Record<Level, ArrayExample[]> = {
           codeLine: 1,
           description: 'reduce() starts with initial value 0. Index 0: acc=0, n=1. Returns 0 + 1 = 1.',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'reduce',
-            currentIndex: 0,
-            accumulator: 1,
-          },
+          iterationState: { method: 'reduce', currentIndex: 0, accumulator: 1 },
         },
         {
           id: 3,
           codeLine: 1,
           description: 'reduce() continues - Index 1: acc=1, n=2. Returns 1 + 2 = 3.',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'reduce',
-            currentIndex: 1,
-            accumulator: 3,
-          },
+          iterationState: { method: 'reduce', currentIndex: 1, accumulator: 3 },
         },
         {
           id: 4,
           codeLine: 1,
           description: 'reduce() continues - Index 2: acc=3, n=3. Returns 3 + 3 = 6.',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'reduce',
-            currentIndex: 2,
-            accumulator: 6,
-          },
+          iterationState: { method: 'reduce', currentIndex: 2, accumulator: 6 },
         },
         {
           id: 5,
           codeLine: 1,
           description: 'reduce() continues - Index 3: acc=6, n=4. Returns 6 + 4 = 10.',
           phase: 'iterate',
-          stack: [
-            { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
-          ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
-          ],
+          stack: [{ name: 'nums', value: '-> #1', isReference: true, refId: 'nums' }],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' }],
           output: [],
-          iterationState: {
-            method: 'reduce',
-            currentIndex: 3,
-            accumulator: 10,
-          },
+          iterationState: { method: 'reduce', currentIndex: 3, accumulator: 10 },
         },
         {
           id: 6,
@@ -1157,9 +984,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
             { name: 'sum', value: '10', highlight: 'new' },
           ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
-          ],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' }],
           output: [],
         },
         {
@@ -1171,9 +996,7 @@ const examples: Record<Level, ArrayExample[]> = {
             { name: 'nums', value: '-> #1', isReference: true, refId: 'nums' },
             { name: 'sum', value: '10' },
           ],
-          heap: [
-            { id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' },
-          ],
+          heap: [{ id: 'nums', type: 'array', elements: [1, 2, 3, 4], label: '#1' }],
           output: ['10'],
         },
       ],
@@ -1204,7 +1027,6 @@ export function ArraysBasicsViz() {
 
   const getSharedRefWarning = () => {
     if (!currentStep || currentStep.phase !== 'mutate') return null
-
     const refCounts = new Map<string, string[]>()
     currentStep.stack.forEach(item => {
       if (item.isReference && item.refId) {
@@ -1213,11 +1035,8 @@ export function ArraysBasicsViz() {
         refCounts.set(item.refId, existing)
       }
     })
-
     for (const [, names] of refCounts) {
-      if (names.length > 1) {
-        return names
-      }
+      if (names.length > 1) return names
     }
     return null
   }
@@ -1226,87 +1045,111 @@ export function ArraysBasicsViz() {
 
   if (!currentStep) {
     return (
-      <div className={styles.container}>
-        <div className={styles.levelSelector}>
+      <div className="flex flex-col gap-6">
+        <div className="flex gap-2 justify-center flex-wrap p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full">
           {(Object.keys(levelInfo) as Level[]).map(lvl => (
             <button
               key={lvl}
-              className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+              className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full cursor-pointer transition-all duration-200 ${
+                level === lvl 
+                  ? 'text-white' 
+                  : 'bg-white/4 border border-transparent text-gray-500 hover:bg-white/8 hover:text-gray-300'
+              }`}
               onClick={() => handleLevelChange(lvl)}
               disabled={examples[lvl].length === 0}
               style={{
                 borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-                background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+                background: level === lvl ? `${levelInfo[lvl].color}15` : undefined
               }}
             >
-              <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }} />
+              <span className="w-2 h-2 rounded-full" style={{ background: levelInfo[lvl].color }} />
               {levelInfo[lvl].label}
             </button>
           ))}
         </div>
-        <div className={styles.emptyState}>No examples available for this level yet.</div>
+        <div className="p-8 text-center text-gray-500 italic">No examples available for this level yet.</div>
       </div>
     )
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.levelSelector}>
+    <div className="flex flex-col gap-6">
+      <div className="flex gap-2 justify-center flex-wrap p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full max-md:rounded-lg">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-4 py-1.5 font-mono text-sm font-medium rounded-full cursor-pointer transition-all duration-200 min-h-11 max-md:px-2.5 max-md:py-1 max-md:text-xs ${
+              level === lvl 
+                ? 'text-white' 
+                : 'bg-white/4 border border-transparent text-gray-500 hover:bg-white/8 hover:text-gray-300'
+            }`}
             onClick={() => handleLevelChange(lvl)}
             disabled={examples[lvl].length === 0}
             style={{
               borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+              background: level === lvl ? `${levelInfo[lvl].color}15` : undefined
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }} />
+            <span className="w-2 h-2 rounded-full" style={{ background: levelInfo[lvl].color }} />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
-      <div className={styles.exampleTabs}>
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full max-md:rounded-lg">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleTab} ${exampleIndex === i ? styles.activeTab : ''}`}
+            className={`px-4 py-1.5 font-mono text-sm rounded-full cursor-pointer transition-all duration-200 min-h-11 max-md:px-2.5 max-md:py-1 max-md:text-xs ${
+              exampleIndex === i 
+                ? 'text-white shadow-[0_0_12px_rgba(249,115,22,0.25)]' 
+                : 'bg-white/4 border border-white/8 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+            }`}
             onClick={() => handleExampleChange(i)}
+            style={{
+              borderColor: exampleIndex === i ? 'rgba(249, 115, 22, 0.7)' : undefined,
+              background: exampleIndex === i ? 'rgba(249, 115, 22, 0.18)' : undefined
+            }}
           >
             {ex.title}
           </button>
         ))}
       </div>
 
-      <div className={styles.mainGrid}>
+      <div className="grid grid-cols-2 gap-6 max-md:grid-cols-1">
         <CodePanel
           code={currentExample.code}
           highlightedLine={currentStep.codeLine}
           title="Code"
         />
 
-        <div className={styles.memoryPanel}>
-          <div className={styles.stackSection}>
-            <div className={styles.sectionHeader}>Stack</div>
-            <div className={styles.stackItems}>
+        <div className="flex flex-col gap-4">
+          <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
+            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">Stack</div>
+            <div className="p-4 flex flex-col gap-2 min-h-[100px]">
               <AnimatePresence mode="popLayout">
                 {currentStep.stack.length === 0 ? (
-                  <div className={styles.emptySection}>(empty)</div>
+                  <div className="text-gray-700 italic text-sm text-center p-4">(empty)</div>
                 ) : (
                   currentStep.stack.slice().reverse().map((item) => (
                     <motion.div
                       key={item.name}
-                      className={`${styles.stackItem} ${item.isReference ? styles.reference : ''} ${item.highlight === 'new' ? styles.highlightNew : ''}`}
+                      className={`flex justify-between items-center px-4 py-2 bg-[var(--color-black-30)] border rounded-md font-mono text-sm transition-all duration-200 ${
+                        item.isReference 
+                          ? 'border-orange-500/40 bg-orange-500/8' 
+                          : item.highlight === 'new'
+                            ? 'border-emerald-500/70 bg-emerald-500/12'
+                            : 'border-white/8'
+                      }`}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       layout
                     >
-                      <span className={styles.varName}>{item.name}</span>
-                      <span className={styles.varValue}>{item.value}</span>
+                      <span className="text-gray-400">{item.name}</span>
+                      <span className={`${item.isReference ? 'text-orange-500 font-semibold' : 'text-gray-300'}`}>
+                        {item.value}
+                      </span>
                     </motion.div>
                   ))
                 )}
@@ -1314,41 +1157,43 @@ export function ArraysBasicsViz() {
             </div>
           </div>
 
-          <div className={styles.heapSection}>
-            <div className={styles.sectionHeader}>Heap</div>
-            <div className={styles.heapObjects}>
+          <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
+            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">Heap</div>
+            <div className="p-4 flex flex-col gap-2 min-h-[100px]">
               <AnimatePresence>
                 {sharedRefVars && (
                   <motion.div
-                    className={styles.warningBadge}
+                    className="flex items-center gap-2 px-4 py-2 bg-amber-500/15 border border-amber-500/50 rounded-lg font-mono text-sm text-amber-500 mb-2 animate-pulse"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                   >
-                    <span className={styles.warningIcon}>!</span>
-                    <span className={styles.warningText}>
-                      Both {sharedRefVars.join(' and ')} affected!
-                    </span>
+                    <span className="text-base">!</span>
+                    <span className="font-semibold">Both {sharedRefVars.join(' and ')} affected!</span>
                   </motion.div>
                 )}
               </AnimatePresence>
               <AnimatePresence mode="popLayout">
                 {currentStep.heap.length === 0 ? (
-                  <div className={styles.emptySection}>(empty)</div>
+                  <div className="text-gray-700 italic text-sm text-center p-4">(empty)</div>
                 ) : (
                   currentStep.heap.map((obj) => (
                     <motion.div
                       key={obj.id}
-                      className={`${styles.heapObject} ${obj.highlight === 'mutated' ? styles.highlightMutated : ''} ${obj.highlight === 'new' ? styles.highlightNew : ''}`}
+                      className={`flex flex-col gap-1 p-4 bg-orange-500/8 border-2 rounded-lg font-mono transition-all duration-200 ${
+                        obj.highlight === 'mutated'
+                          ? 'border-orange-500 bg-orange-500/20'
+                          : obj.highlight === 'new'
+                            ? 'border-emerald-500/70 bg-emerald-500/12'
+                            : 'border-orange-500/40'
+                      }`}
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.8 }}
                       layout
                     >
-                      <div className={styles.objectLabel}>{obj.label}</div>
-                      <div className={styles.arrayElements}>
-                        [{obj.elements.join(', ')}]
-                      </div>
+                      <div className="text-xs font-semibold text-orange-500">{obj.label}</div>
+                      <div className="text-sm text-gray-300">[{obj.elements.join(', ')}]</div>
                     </motion.div>
                   ))
                 )}
@@ -1359,20 +1204,20 @@ export function ArraysBasicsViz() {
       </div>
 
       {currentStep.iterationState && (
-        <div className={styles.iterationPanel}>
-          <div className={styles.iterationHeader}>
-            <span className={styles.methodBadge}>
+        <div className="bg-[var(--color-black-40)] border-2 border-orange-500/50 rounded-xl overflow-hidden">
+          <div className="flex items-center gap-4 px-4 py-2 bg-orange-500/12 border-b border-orange-500/30">
+            <span className="font-mono text-sm font-bold text-white bg-orange-500 px-2 py-1 rounded-md">
               {currentStep.iterationState.method}()
             </span>
-            <span className={styles.iterationIndex}>
+            <span className="font-mono text-sm text-gray-400">
               Index {currentStep.iterationState.currentIndex}
             </span>
           </div>
 
-          <div className={styles.iterationContent}>
-            <div className={styles.sourceArraySection}>
-              <div className={styles.iterationLabel}>Source Array</div>
-              <div className={styles.sourceElements}>
+          <div className="p-4 flex flex-col gap-4">
+            <div>
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Source Array</div>
+              <div className="flex flex-nowrap gap-2 overflow-x-auto">
                 {currentStep.heap[0]?.elements.map((el, idx) => {
                   const isCurrent = idx === currentStep.iterationState!.currentIndex
                   const isRejected = currentStep.iterationState!.rejected?.includes(idx)
@@ -1380,15 +1225,25 @@ export function ArraysBasicsViz() {
                   return (
                     <motion.div
                       key={idx}
-                      className={`${styles.sourceElement} ${isCurrent ? styles.currentElement : ''} ${isRejected ? styles.rejectedElement : ''} ${isPast && !isRejected ? styles.processedElement : ''}`}
+                      className={`flex flex-col items-center gap-0.5 p-2 bg-[var(--color-black-30)] border-2 rounded-md font-mono min-w-[50px] relative transition-all duration-200 max-sm:min-w-[42px] max-sm:p-1 max-sm:flex-shrink-0 ${
+                        isCurrent 
+                          ? 'border-orange-500 bg-orange-500/15 shadow-[0_0_12px_rgba(249,115,22,0.4)]' 
+                          : isRejected 
+                            ? 'border-red-500/50 bg-red-500/8 opacity-60' 
+                            : isPast 
+                              ? 'border-emerald-500/50 bg-emerald-500/8' 
+                              : 'border-white/8'
+                      }`}
                       animate={isCurrent ? { scale: [1, 1.1, 1] } : { scale: 1 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <span className={styles.elementIndex}>[{idx}]</span>
-                      <span className={styles.elementValue}>{el}</span>
+                      <span className={`text-xs text-gray-600 max-sm:text-[10px]`}>[{idx}]</span>
+                      <span className={`text-base font-semibold text-gray-300 max-sm:text-sm ${isRejected ? 'line-through text-gray-600' : ''}`}>
+                        {el}
+                      </span>
                       {currentStep.iterationState!.method === 'filter' && isPast && (
-                        <span className={isRejected ? styles.filterMark : styles.filterKeep}>
-                          {isRejected ? '\u00D7' : '\u2713'}
+                        <span className={`absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center rounded-full text-sm font-bold text-white ${isRejected ? 'bg-red-500/90' : 'bg-emerald-500/90'}`}>
+                          {isRejected ? '×' : '✓'}
                         </span>
                       )}
                     </motion.div>
@@ -1398,10 +1253,10 @@ export function ArraysBasicsViz() {
             </div>
 
             {currentStep.iterationState.method === 'reduce' && currentStep.iterationState.accumulator !== undefined && (
-              <div className={styles.accumulatorSection}>
-                <div className={styles.iterationLabel}>Accumulator</div>
+              <div className="flex flex-col items-center">
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Accumulator</div>
                 <motion.div
-                  className={styles.accumulatorValue}
+                  className="font-mono text-4xl font-bold text-orange-500 px-6 py-3 bg-orange-500/12 border-2 border-orange-500/50 rounded-lg min-w-[100px] text-center max-sm:text-3xl max-sm:px-4 max-sm:py-2 max-sm:min-w-[80px]"
                   key={currentStep.iterationState.accumulator}
                   initial={{ scale: 1.2, opacity: 0.5 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -1412,28 +1267,28 @@ export function ArraysBasicsViz() {
             )}
 
             {(currentStep.iterationState.method === 'map' || currentStep.iterationState.method === 'filter') && currentStep.iterationState.resultArray && (
-              <div className={styles.resultArraySection}>
-                <div className={styles.iterationLabel}>Result Array</div>
-                <div className={styles.resultElements}>
-                  <span className={styles.bracket}>[</span>
+              <div className="flex flex-col">
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Result Array</div>
+                <div className="flex items-center flex-nowrap gap-0 font-mono text-base px-4 py-2 bg-emerald-500/8 border border-emerald-500/30 rounded-md min-h-12 overflow-x-auto max-sm:text-sm max-sm:p-1">
+                  <span className="text-gray-500 font-semibold">[</span>
                   <AnimatePresence mode="popLayout">
                     {currentStep.iterationState.resultArray.map((el, idx) => (
                       <motion.span
                         key={`${idx}-${el}`}
-                        className={styles.resultElement}
+                        className="text-emerald-500 font-semibold"
                         initial={{ opacity: 0, scale: 0.5, x: -10 }}
                         animate={{ opacity: 1, scale: 1, x: 0 }}
                         exit={{ opacity: 0 }}
                       >
-                        {idx > 0 && <span className={styles.comma}>, </span>}
+                        {idx > 0 && <span className="text-gray-500">, </span>}
                         {el}
                       </motion.span>
                     ))}
                   </AnimatePresence>
                   {currentStep.iterationState.resultArray.length === 0 && (
-                    <span className={styles.emptyResult}>empty</span>
+                    <span className="text-gray-600 italic text-sm">empty</span>
                   )}
-                  <span className={styles.bracket}>]</span>
+                  <span className="text-gray-500 font-semibold">]</span>
                 </div>
               </div>
             )}
@@ -1441,17 +1296,17 @@ export function ArraysBasicsViz() {
         </div>
       )}
 
-      <div className={styles.outputBox}>
-        <div className={styles.boxHeader}>Console Output</div>
-        <div className={styles.outputContent}>
+      <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
+        <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">Console Output</div>
+        <div className="p-4 min-h-[60px]">
           <AnimatePresence>
             {currentStep.output.length === 0 ? (
-              <span className={styles.placeholder}>No output yet</span>
+              <span className="text-sm text-gray-800 italic">No output yet</span>
             ) : (
               currentStep.output.map((line, i) => (
                 <motion.div
                   key={i}
-                  className={styles.outputLine}
+                  className="font-mono text-sm text-emerald-500 py-1"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                 >
@@ -1477,8 +1332,8 @@ export function ArraysBasicsViz() {
         canNext={stepIndex < currentExample.steps.length - 1}
       />
 
-      <div className={styles.insightBox}>
-        <span className={styles.insightLabel}>Key Insight:</span>
+      <div className="px-4 py-2 bg-orange-500/8 border border-orange-500/20 rounded-lg text-sm text-gray-400 text-center">
+        <span className="font-semibold text-orange-500 mr-2">Key Insight:</span>
         {currentExample.insight}
       </div>
     </div>

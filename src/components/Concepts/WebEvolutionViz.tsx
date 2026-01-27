@@ -1,7 +1,8 @@
+'use client'
+
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, AlertTriangle, ArrowRight } from 'lucide-react'
-import styles from './WebEvolutionViz.module.css'
 
 interface Era {
   id: string
@@ -271,90 +272,126 @@ export function WebEvolutionViz() {
   }
 
   return (
-    <div className={styles.container}>
-      {/* Timeline */}
-      <div className={styles.timeline}>
+    <div className="flex flex-col gap-6">
+      <div className="relative flex justify-between px-2 mb-2 max-md:overflow-x-auto max-md:pb-2 max-md:justify-start max-md:gap-6">
         {eras.map((e, i) => (
           <button
             key={e.id}
-            className={`${styles.timelineNode} ${i === activeEra ? styles.active : ''} ${i < activeEra ? styles.past : ''}`}
+            className="relative z-10 flex flex-col items-center gap-1 p-0 bg-transparent border-none cursor-pointer transition-all duration-200 max-md:flex-shrink-0 group"
             onClick={() => setActiveEra(i)}
             style={{ '--era-color': e.color } as React.CSSProperties}
           >
-            <span className={styles.nodeYear}>{e.years.split('-')[0]}</span>
-            <span className={styles.nodeDot} />
-            <span className={styles.nodeLabel}>{e.name}</span>
+            <span className={`text-xs font-medium transition-colors duration-200 max-md:hidden group-hover:text-gray-300 ${
+              i === activeEra ? 'text-white' : i < activeEra ? 'text-gray-300' : 'text-gray-700'
+            }`}>
+              {e.years.split('-')[0]}
+            </span>
+            <span 
+              className={`w-4 h-4 rounded-full bg-[var(--color-bg-elevated)] border-2 border-white/20 transition-all duration-200 max-md:group-hover:border-[var(--era-color)] max-md:group-hover:shadow-[0_0_8px_var(--era-color)] ${
+                i === activeEra 
+                  ? 'scale-[1.3] shadow-[0_0_12px_var(--era-color)]' 
+                  : i < activeEra 
+                    ? '' 
+                    : ''
+              }`}
+              style={{
+                backgroundColor: i === activeEra || i < activeEra ? e.color : undefined,
+                borderColor: i === activeEra || i < activeEra ? e.color : undefined
+              }}
+            />
+            <span className={`text-xs whitespace-nowrap max-w-[60px] overflow-hidden text-ellipsis transition-colors duration-200 max-md:max-w-[50px] max-md:text-2xs max-md:group-hover:text-gray-300 ${
+              i === activeEra 
+                ? 'text-white font-semibold max-md:block max-md:absolute max-md:top-full max-md:mt-1 max-md:max-w-none' 
+                : i < activeEra 
+                  ? 'text-gray-300' 
+                  : 'text-gray-700 max-md:hidden'
+            }`}>
+              {e.name}
+            </span>
           </button>
         ))}
-        <div className={styles.timelineLine} />
+        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/10 -translate-y-1/2 -z-0" />
         <motion.div
-          className={styles.timelineProgress}
+          className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-primary)] -translate-y-1/2 z-[1]"
           initial={false}
           animate={{ width: `${(activeEra / (eras.length - 1)) * 100}%` }}
           transition={{ duration: 0.3 }}
         />
       </div>
 
-      {/* Era Header */}
       <AnimatePresence mode="wait">
         <motion.div
           key={era.id}
-          className={styles.eraHeader}
+          className="p-6 bg-gradient-to-br from-[var(--color-brand-primary-8)] to-[var(--color-brand-primary-8)] border border-white/10 rounded-xl text-center"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           style={{ '--era-color': era.color } as React.CSSProperties}
         >
-          <div className={styles.eraTitle}>
-            <span className={styles.eraNumber}>{activeEra + 1}</span>
-            <h3>{era.name}</h3>
-            <span className={styles.eraYears}>{era.years}</span>
+          <div className="flex items-center justify-center gap-4 mb-2 flex-wrap max-md:flex-wrap">
+            <span 
+              className="w-8 h-8 flex items-center justify-center rounded-full text-xs font-bold text-white"
+              style={{ backgroundColor: era.color }}
+            >
+              {activeEra + 1}
+            </span>
+            <h3 className="m-0 text-lg font-semibold text-[var(--color-text-bright)] max-md:text-base">{era.name}</h3>
+            <span 
+              className="text-xs font-medium px-2 py-0.5 rounded-full bg-white/5"
+              style={{ color: era.color }}
+            >
+              {era.years}
+            </span>
           </div>
-          <p className={styles.eraDescription}>{era.description}</p>
-          <div className={styles.techTags}>
+          <p className="m-0 mb-3 text-base text-gray-400 leading-snug">{era.description}</p>
+          <div className="flex gap-1.5 justify-center flex-wrap">
             {era.technologies.map(tech => (
-              <span key={tech} className={styles.techTag}>{tech}</span>
+              <span 
+                key={tech} 
+                className="px-2 py-0.5 bg-white/8 border border-white/10 rounded text-2xs font-mono text-[var(--color-brand-light)]"
+              >
+                {tech}
+              </span>
             ))}
           </div>
         </motion.div>
       </AnimatePresence>
 
-      {/* Code Example */}
       <AnimatePresence mode="wait">
         <motion.div
           key={`code-${era.id}`}
-          className={styles.codePanel}
+          className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className={styles.codePanelHeader}>
+          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
             <span>Example Code</span>
           </div>
-          <pre className={styles.code}>
+          <pre className="m-0 p-4 max-h-[200px] overflow-y-auto font-mono text-2xs leading-normal text-gray-300 whitespace-pre-wrap">
             <code>{era.code}</code>
           </pre>
         </motion.div>
       </AnimatePresence>
 
-      {/* Problems Solved / Created */}
-      <div className={styles.impactGrid}>
+      <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
         <AnimatePresence mode="wait">
           <motion.div
             key={`solved-${era.id}`}
-            className={styles.impactCard}
+            className="p-4 bg-[var(--color-emerald-8)] border border-[var(--color-emerald-20)] rounded-lg"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
           >
-            <div className={styles.impactHeader}>
-              <Check size={16} className={styles.solvedIcon} />
-              <span>Problems Solved</span>
+            <div className="flex items-center gap-1.5 mb-2 text-xs font-semibold">
+              <Check size={16} className="text-[var(--difficulty-1)]" />
+              <span className="text-[var(--color-emerald-400)]">Problems Solved</span>
             </div>
-            <ul className={styles.impactList}>
+            <ul className="m-0 p-0 list-none">
               {era.solved.map((item, i) => (
                 <motion.li
                   key={i}
+                  className="relative pl-3 text-xs text-gray-400 leading-normal mb-1 before:content-[''] before:absolute before:left-0 before:top-[0.45em] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[var(--difficulty-1)]"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
@@ -369,19 +406,20 @@ export function WebEvolutionViz() {
         <AnimatePresence mode="wait">
           <motion.div
             key={`created-${era.id}`}
-            className={`${styles.impactCard} ${styles.createdCard}`}
+            className="p-4 bg-[var(--color-red-8)] border border-[var(--color-red-20)] rounded-lg"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
           >
-            <div className={styles.impactHeader}>
-              <AlertTriangle size={16} className={styles.createdIcon} />
-              <span>New Challenges</span>
+            <div className="flex items-center gap-1.5 mb-2 text-xs font-semibold">
+              <AlertTriangle size={16} className="text-[var(--color-accent-red)]" />
+              <span className="text-[var(--color-red-400)]">New Challenges</span>
             </div>
-            <ul className={styles.impactList}>
+            <ul className="m-0 p-0 list-none">
               {era.created.map((item, i) => (
                 <motion.li
                   key={i}
+                  className="relative pl-3 text-xs text-gray-400 leading-normal mb-1 before:content-[''] before:absolute before:left-0 before:top-[0.45em] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[var(--color-accent-red)]"
                   initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
@@ -394,28 +432,26 @@ export function WebEvolutionViz() {
         </AnimatePresence>
       </div>
 
-      {/* Navigation hint */}
       {activeEra < eras.length - 1 && (
-        <div className={styles.nextHint}>
-          <ArrowRight size={14} />
-          <span>These challenges led to: <strong>{eras[activeEra + 1].name}</strong></span>
+        <div className="flex items-center justify-center gap-1.5 p-2 bg-[var(--color-brand-primary-8)] border border-dashed border-[var(--color-brand-primary-30)] rounded-lg text-xs text-gray-400">
+          <ArrowRight size={14} className="text-[var(--color-brand-primary)] animate-pulse" />
+          <span>These challenges led to: <strong className="text-[var(--color-brand-light)]">{eras[activeEra + 1].name}</strong></span>
         </div>
       )}
 
-      {/* Controls */}
-      <div className={styles.controls}>
+      <div className="flex gap-4 justify-center items-center">
         <button
-          className={styles.btnSecondary}
+          className="px-4 py-2 text-sm bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
           onClick={handlePrev}
           disabled={activeEra === 0}
         >
           Previous Era
         </button>
-        <span className={styles.stepIndicator}>
+        <span className="text-sm text-gray-700 font-medium min-w-[3rem] text-center">
           {activeEra + 1} / {eras.length}
         </span>
         <button
-          className={styles.btnPrimary}
+          className="px-4 py-2 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-all duration-200 hover:-translate-y-px hover:shadow-[0_4px_12px_var(--color-brand-primary-40)] disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={activeEra === eras.length - 1}
         >
@@ -423,9 +459,8 @@ export function WebEvolutionViz() {
         </button>
       </div>
 
-      {/* Key Insight */}
-      <div className={styles.insight}>
-        <strong>Pattern:</strong> Each era solves previous problems but creates new ones, driving the next evolution.
+      <div className="px-4 py-2.5 bg-[var(--color-brand-primary-8)] border border-[var(--color-brand-primary-20)] rounded-lg text-sm text-gray-400 text-center">
+        <strong className="text-[var(--color-brand-primary)]">Pattern:</strong> Each era solves previous problems but creates new ones, driving the next evolution.
       </div>
     </div>
   )

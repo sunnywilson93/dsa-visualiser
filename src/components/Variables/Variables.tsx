@@ -6,7 +6,6 @@ import { ChevronRight, ChevronDown } from 'lucide-react'
 import { useCurrentScopes, useExecutionStore } from '@/store'
 import { formatValue } from '@/engine'
 import type { RuntimeValue, Scope } from '@/types'
-import styles from './Variables.module.css'
 
 interface ValueDisplayProps {
   value: RuntimeValue
@@ -18,55 +17,63 @@ function ValueDisplay({ value, expanded, onToggle }: ValueDisplayProps) {
   const isExpandable = value.type === 'array' || value.type === 'object'
 
   if (!isExpandable) {
-    return (
-      <span className={`${styles.value} ${styles[value.type]}`}>
-        {formatValue(value)}
-      </span>
-    )
+    const valueClass =
+      value.type === 'primitive'
+        ? 'text-accent-yellow'
+        : value.type === 'function'
+        ? 'text-accent-green italic'
+        : value.type === 'null' || value.type === 'undefined'
+        ? 'text-text-muted italic'
+        : 'text-text-secondary'
+
+    return <span className={`break-all ${valueClass}`}>{formatValue(value)}</span>
   }
 
+  const typeClass = value.type === 'array' || value.type === 'object' ? 'text-accent-purple' : 'text-text-secondary'
+
   return (
-    <div className={styles.expandableValue}>
-      <button className={styles.expandBtn} onClick={onToggle}>
+    <div className="flex flex-wrap items-start gap-1">
+      <button
+        className="flex items-center justify-center w-4 h-4 p-0 bg-transparent border-none text-text-muted cursor-pointer shrink-0 hover:text-text-primary"
+        onClick={onToggle}
+      >
         {expanded ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
       </button>
-      <span className={`${styles.value} ${styles[value.type]}`}>
-        {expanded ? '' : formatValue(value, true)}
-      </span>
+      <span className={`break-all ${typeClass}`}>{expanded ? '' : formatValue(value, true)}</span>
 
       <AnimatePresence>
         {expanded && (
           <motion.div
-            className={styles.expandedContent}
+            className="w-full pl-4 border-l border-border-secondary ml-1 mt-1 overflow-hidden"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.15 }}
           >
             {value.type === 'array' && (
-              <div className={styles.arrayItems}>
+              <div className="flex flex-col gap-0.5">
                 {value.elements.map((el, i) => (
-                  <div key={i} className={styles.arrayItem}>
-                    <span className={styles.index}>[{i}]</span>
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="text-text-muted min-w-6 shrink-0">[{i}]</span>
                     <ValueDisplay value={el} />
                   </div>
                 ))}
                 {value.elements.length === 0 && (
-                  <span className={styles.empty}>empty array</span>
+                  <span className="text-text-muted italic text-xs">empty array</span>
                 )}
               </div>
             )}
 
             {value.type === 'object' && (
-              <div className={styles.objectProps}>
+              <div className="flex flex-col gap-0.5">
                 {Object.entries(value.properties).map(([key, val]) => (
-                  <div key={key} className={styles.objectProp}>
-                    <span className={styles.propKey}>{key}:</span>
+                  <div key={key} className="flex items-start gap-2">
+                    <span className="text-accent-orange shrink-0">{key}:</span>
                     <ValueDisplay value={val} />
                   </div>
                 ))}
                 {Object.keys(value.properties).length === 0 && (
-                  <span className={styles.empty}>empty object</span>
+                  <span className="text-text-muted italic text-xs">empty object</span>
                 )}
               </div>
             )}
@@ -86,14 +93,10 @@ function VariableRow({ name, value }: VariableRowProps) {
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <div className={styles.variableRow}>
-      <span className={styles.varName}>{name}</span>
-      <span className={styles.equals}>=</span>
-      <ValueDisplay
-        value={value}
-        expanded={expanded}
-        onToggle={() => setExpanded(!expanded)}
-      />
+    <div className="flex items-start gap-1 py-1 font-mono text-sm">
+      <span className="text-accent-cyan font-medium shrink-0">{name}</span>
+      <span className="text-text-muted shrink-0">=</span>
+      <ValueDisplay value={value} expanded={expanded} onToggle={() => setExpanded(!expanded)} />
     </div>
   )
 }
@@ -110,21 +113,27 @@ function ScopeSection({ scope, isActive }: ScopeSectionProps) {
   if (variables.length === 0) return null
 
   return (
-    <div className={`${styles.scope} ${isActive ? styles.active : ''}`}>
+    <div
+      className={`mb-2 bg-bg-tertiary border border-border-primary rounded-md overflow-hidden ${
+        isActive ? 'border-accent-blue' : ''
+      }`}
+    >
       <button
-        className={styles.scopeHeader}
+        className="flex items-center gap-2 w-full py-2 px-3 bg-transparent border-none text-text-primary cursor-pointer text-left transition-colors duration-fast hover:bg-bg-elevated"
         onClick={() => setCollapsed(!collapsed)}
       >
         {collapsed ? <ChevronRight size={14} /> : <ChevronDown size={14} />}
-        <span className={styles.scopeName}>{scope.name}</span>
-        <span className={styles.scopeType}>{scope.type}</span>
-        <span className={styles.varCount}>{variables.length}</span>
+        <span className="font-semibold text-sm">{scope.name}</span>
+        <span className="text-2xs text-text-muted py-px px-1.5 bg-bg-primary rounded-sm uppercase">
+          {scope.type}
+        </span>
+        <span className="ml-auto text-xs text-text-muted">{variables.length}</span>
       </button>
 
       <AnimatePresence>
         {!collapsed && (
           <motion.div
-            className={styles.scopeContent}
+            className="py-2 px-3 border-t border-border-secondary overflow-hidden"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -147,20 +156,22 @@ export function Variables() {
   const isEmpty = scopes.length === 0 || scopes.every(s => Object.keys(s.variables).length === 0)
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <span className={styles.title}>Variables</span>
+    <div className="flex flex-col h-full bg-bg-secondary border border-border-primary rounded-lg overflow-hidden">
+      <div className="flex items-center justify-between py-2 px-3 bg-bg-tertiary border-b border-border-primary">
+        <span className="text-sm font-semibold uppercase tracking-tight text-text-secondary">
+          Variables
+        </span>
       </div>
 
-      <div className={styles.content}>
+      <div className="flex-1 overflow-y-auto p-2">
         {status === 'idle' && (
-          <div className={styles.empty}>
+          <div className="flex items-center justify-center p-6 text-text-muted text-base text-center">
             <p>Run code to see variables</p>
           </div>
         )}
 
         {status !== 'idle' && isEmpty && (
-          <div className={styles.empty}>
+          <div className="flex items-center justify-center p-6 text-text-muted text-base text-center">
             <p>No variables in scope</p>
           </div>
         )}

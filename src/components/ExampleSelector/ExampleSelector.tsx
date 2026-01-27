@@ -5,7 +5,6 @@ import { useExecutionStore } from '@/store'
 import { ConceptIcon } from '@/components/Icons'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import { codeExamples, exampleCategories, type CodeExample } from '@/data/examples'
-import styles from './ExampleSelector.module.css'
 
 type Difficulty = 'all' | 'easy' | 'medium' | 'hard'
 
@@ -63,52 +62,52 @@ export function ExampleSelector() {
   }, [])
 
   return (
-    <div className={styles.container}>
+    <div className="relative">
       <button
-        className={styles.trigger}
+        className="flex items-center gap-[var(--spacing-sm)] px-[var(--spacing-md)] py-[var(--spacing-xs)] bg-[var(--color-bg-tertiary)] border border-[var(--color-border-primary)] rounded-[var(--radius-md)] text-[var(--color-text-secondary)] text-[var(--text-base)] font-medium cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] max-[480px]:p-[var(--spacing-sm)]"
         onClick={() => setIsOpen(!isOpen)}
         title="Browse problems"
         aria-label="Browse problems"
         aria-expanded={isOpen}
       >
         <Code size={16} />
-        <span className={styles.triggerText}>Problems</span>
-        <span className={styles.count}>{codeExamples.length}</span>
+        <span className="max-[480px]:hidden">Problems</span>
+        <span className="bg-[var(--color-accent-blue)] text-[var(--color-white)] px-[6px] py-[2px] rounded-[var(--radius-sm)] text-[var(--text-xs)] font-semibold">{codeExamples.length}</span>
         <ChevronDown
           size={14}
-          className={`${styles.chevron} ${isOpen ? styles.open : ''}`}
+          className={`transition-transform duration-[var(--transition-fast)] max-[480px]:hidden ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
 
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className={styles.dropdown}
+            className="absolute top-[calc(100%+var(--spacing-sm))] right-0 w-[400px] max-w-[calc(100vw-var(--spacing-2xl))] bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] overflow-hidden z-[100] max-[480px]:fixed max-[480px]:top-auto max-[480px]:bottom-0 max-[480px]:left-0 max-[480px]:right-0 max-[480px]:w-full max-[480px]:max-w-full max-[480px]:rounded-t-[var(--radius-lg)] max-[480px]:max-h-[80vh]"
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.15 }}
           >
             {/* Search bar with filters */}
-            <div className={styles.searchBar}>
-              <Search size={14} className={styles.searchIcon} />
+            <div className="flex items-center gap-[var(--spacing-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] border-b border-[var(--color-border-primary)] bg-[var(--color-bg-tertiary)] max-[480px]:flex-wrap max-[480px]:gap-[var(--spacing-xs)] max-[480px]:p-[var(--spacing-sm)]">
+              <Search size={14} className="text-[var(--color-text-muted)] flex-shrink-0 max-[480px]:order-0" />
               <input
                 type="text"
                 placeholder="Search problems..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={styles.searchInput}
+                className="flex-1 min-w-[var(--spacing-6xl)] px-0 py-[var(--spacing-xs)] bg-transparent border-none outline-none text-[var(--color-text-primary)] text-[var(--text-base)] placeholder:text-[var(--color-text-muted)] max-[480px]:order-1 max-[480px]:flex-[1_1_60%] max-[480px]:min-w-[100px]"
                 aria-label="Search problems"
               />
 
-              <div className={styles.divider} />
+              <div className="w-px h-[var(--spacing-lg)] bg-[var(--color-border-primary)] flex-shrink-0 max-[480px]:hidden" />
 
-              <div className={styles.filterChips}>
+              <div className="flex items-center gap-[2px] flex-shrink-0 max-[480px]:order-3 max-[480px]:flex-[1_1_100%] max-[480px]:mt-[var(--spacing-xs)] max-[480px]:justify-start">
                 {(['all', 'easy', 'medium', 'hard'] as const).map(diff => (
                   <button
                     key={diff}
                     type="button"
-                    className={`${styles.chip} ${selectedDifficulty === diff ? styles.chipActive : ''}`}
+                    className={`flex items-center justify-center bg-transparent border-none text-[var(--color-text-muted)] text-[var(--text-xs)] font-medium px-[var(--spacing-sm)] py-[var(--spacing-xs)] rounded-[var(--radius-sm)] cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-brand-primary-5)] hover:text-[var(--color-text-secondary)] max-[480px]:text-[var(--text-xs)] max-[480px]:px-[6px] max-[480px]:py-[3px] ${selectedDifficulty === diff ? 'bg-[var(--color-brand-primary-20)] text-[var(--color-brand-light)]' : ''} ${selectedDifficulty === diff && diff === 'easy' ? '!bg-[var(--difficulty-easy-bg)] !text-[var(--difficulty-easy)]' : ''} ${selectedDifficulty === diff && diff === 'medium' ? '!bg-[var(--difficulty-medium-bg)] !text-[var(--difficulty-medium)]' : ''} ${selectedDifficulty === diff && diff === 'hard' ? '!bg-[var(--difficulty-hard-bg)] !text-[var(--difficulty-hard)]' : ''}`}
                     onClick={() => setSelectedDifficulty(diff)}
                     data-difficulty={diff}
                   >
@@ -118,13 +117,13 @@ export function ExampleSelector() {
               </div>
 
               {(searchQuery || selectedDifficulty !== 'all') && (
-                <span className={styles.resultCount}>{filteredExamples.length}</span>
+                <span className="text-[var(--text-xs)] font-medium text-[var(--color-text-muted)] bg-[var(--color-brand-primary-10)] px-[6px] py-[2px] rounded-[var(--radius-sm)] flex-shrink-0 max-[480px]:order-4">{filteredExamples.length}</span>
               )}
 
               {(searchQuery || selectedDifficulty !== 'all') && (
                 <button
                   type="button"
-                  className={styles.clearButton}
+                  className="flex items-center justify-center bg-transparent border-none text-[var(--color-text-muted)] cursor-pointer p-[var(--spacing-xs)] rounded-[var(--radius-sm)] transition-all duration-[var(--transition-fast)] flex-shrink-0 hover:text-[var(--difficulty-hard)] hover:bg-[var(--difficulty-hard-bg)] max-[480px]:order-2"
                   onClick={() => {
                     setSearchQuery('')
                     setSelectedDifficulty('all')
@@ -137,9 +136,9 @@ export function ExampleSelector() {
             </div>
 
             {/* Categories */}
-            <div className={styles.categories}>
+            <div className="flex flex-wrap gap-[var(--spacing-xs)] p-[var(--spacing-sm)] bg-[var(--color-bg-tertiary)] border-b border-[var(--color-border-primary)] max-h-[120px] overflow-y-auto max-[480px]:p-[var(--spacing-md)] max-[480px]:gap-[var(--spacing-sm)] max-[480px]:max-h-[100px] max-[480px]:flex-nowrap max-[480px]:overflow-x-auto max-[480px]:[-webkit-overflow-scrolling:touch]">
               <button
-                className={`${styles.categoryBtn} ${!selectedCategory ? styles.active : ''}`}
+                className={`flex items-center gap-[var(--spacing-xs)] px-[10px] py-[var(--spacing-xs)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] rounded-[var(--radius-sm)] text-[var(--color-text-muted)] text-[var(--text-xs)] font-medium cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-secondary)] max-[480px]:flex-shrink-0 max-[480px]:px-[var(--spacing-md)] max-[480px]:py-[6px] max-[480px]:text-[var(--text-sm)] ${!selectedCategory ? 'bg-[var(--color-accent-blue)] !border-[var(--color-accent-blue)] !text-[var(--color-white)]' : ''}`}
                 onClick={() => setSelectedCategory(null)}
               >
                 All ({codeExamples.length})
@@ -147,32 +146,32 @@ export function ExampleSelector() {
               {exampleCategories.map(cat => (
                 <button
                   key={cat.id}
-                  className={`${styles.categoryBtn} ${selectedCategory === cat.id ? styles.active : ''}`}
+                  className={`flex items-center gap-[var(--spacing-xs)] px-[10px] py-[var(--spacing-xs)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] rounded-[var(--radius-sm)] text-[var(--color-text-muted)] text-[var(--text-xs)] font-medium cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-secondary)] max-[480px]:flex-shrink-0 max-[480px]:px-[var(--spacing-md)] max-[480px]:py-[6px] max-[480px]:text-[var(--text-sm)] ${selectedCategory === cat.id ? 'bg-[var(--color-accent-blue)] !border-[var(--color-accent-blue)] !text-[var(--color-white)]' : ''}`}
                   onClick={() => setSelectedCategory(cat.id)}
                 >
                   <ConceptIcon conceptId={cat.id} size={16} />
                   <span>{cat.name}</span>
-                  <span className={styles.catCount}>({categoryCount[cat.id] || 0})</span>
+                  <span className="opacity-70 text-[var(--text-xs)]">({categoryCount[cat.id] || 0})</span>
                 </button>
               ))}
             </div>
 
             {/* Examples list */}
-            <div className={styles.examples}>
+            <div className="max-h-[350px] overflow-y-auto p-[var(--spacing-xs)] max-[480px]:max-h-[calc(80vh-200px)] max-[480px]:p-[var(--spacing-sm)]">
               {filteredExamples.length === 0 ? (
-                <div className={styles.noResults}>No problems found</div>
+                <div className="p-[var(--spacing-lg)] text-center text-[var(--color-text-muted)] text-[var(--text-base)]">No problems found</div>
               ) : (
                 filteredExamples.map(example => (
                   <button
                     key={example.id}
-                    className={styles.exampleBtn}
+                    className="block w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] bg-transparent border-none rounded-[var(--radius-md)] text-left cursor-pointer transition-colors duration-[var(--transition-fast)] hover:bg-[var(--color-bg-tertiary)] max-[480px]:p-[var(--spacing-md)]"
                     onClick={() => handleSelectExample(example)}
                   >
-                    <div className={styles.exampleHeader}>
-                      <span className={styles.exampleName}>{example.name}</span>
+                    <div className="flex items-center justify-between gap-[var(--spacing-sm)] mb-[2px]">
+                      <span className="text-[var(--text-base)] font-semibold text-[var(--color-text-primary)] max-[480px]:text-[var(--text-base)]">{example.name}</span>
                       <DifficultyIndicator level={example.difficulty} size="sm" />
                     </div>
-                    <div className={styles.exampleDesc}>{example.description}</div>
+                    <div className="text-[var(--text-xs)] text-[var(--color-text-muted)] max-[480px]:text-[var(--text-sm)] max-[480px]:mt-[var(--spacing-xs)]">{example.description}</div>
                   </button>
                 ))
               )}
@@ -184,7 +183,7 @@ export function ExampleSelector() {
       {/* Backdrop to close */}
       {isOpen && (
         <div
-          className={styles.backdrop}
+          className="fixed inset-0 z-[99]"
           onClick={() => {
             setIsOpen(false)
             setSelectedCategory(null)

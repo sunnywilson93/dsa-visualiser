@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './RecursionViz.module.css'
 
 interface StackFrame {
   fn: string
@@ -339,31 +338,37 @@ export function RecursionViz() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-5">
       {/* Level selector */}
-      <div className={styles.levelSelector}>
+      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
+              level === lvl ? 'text-white' : 'bg-white/5 border border-transparent text-gray-500 hover:bg-white/10 hover:text-gray-300'
+            }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
               borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
               background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }}></span>
+            <span className="w-2 h-2 rounded-full" style={{ background: levelInfo[lvl].color }} />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
       {/* Example selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all ${
+              exampleIndex === i
+                ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
+                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+            }`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -372,58 +377,57 @@ export function RecursionViz() {
       </div>
 
       {/* Main grid */}
-      <div className={styles.mainGrid}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Code panel */}
-        <div className={styles.codePanel}>
-          <div className={styles.panelHeader}>
+        <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
+          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">
             <span>Code</span>
-            <span className={styles.phaseBadge} style={{ background: getPhaseColor(currentStep.phase) }}>
+            <span className="px-2 py-0.5 rounded-full text-2xs font-semibold text-black" style={{ background: getPhaseColor(currentStep.phase) }}>
               {currentStep.phase === 'calling' ? 'Calling ↓' :
                currentStep.phase === 'returning' ? 'Returning ↑' : 'Complete ✓'}
             </span>
           </div>
-          <pre className={styles.code}>
+          <pre className="m-0 py-2 max-h-[220px] overflow-y-auto">
             {currentExample.code.map((line, i) => (
               <div
                 key={i}
-                className={`${styles.codeLine} ${currentStep.codeLine === i ? styles.activeLine : ''}`}
+                className={`flex px-3 py-0.5 transition-colors ${currentStep.codeLine === i ? 'bg-purple-500/20' : ''}`}
               >
-                <span className={styles.lineNum}>{i + 1}</span>
-                <span className={styles.lineCode}>{line || ' '}</span>
+                <span className="w-6 text-gray-600 font-mono text-2xs select-none">{i + 1}</span>
+                <span className={`font-mono text-2xs ${currentStep.codeLine === i ? 'text-white' : 'text-gray-300'}`}>{line || ' '}</span>
               </div>
             ))}
           </pre>
         </div>
 
         {/* Call Stack - Neon Box */}
-        <div className={`${styles.neonBox} ${styles.stackBox}`}>
-          <div className={styles.neonBoxHeader}>Call Stack ({currentStep.stack.length})</div>
-          <div className={styles.neonBoxInner}>
-            <div className={styles.stack}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #f97316, #fbbf24)' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Call Stack ({currentStep.stack.length})
+          </div>
+          <div className="bg-gray-900 rounded-lg min-h-[200px] p-4 pt-6">
+            <div className="min-h-[180px] max-h-[220px] overflow-y-auto flex flex-col gap-1.5">
               <AnimatePresence mode="popLayout">
                 {currentStep.stack.length === 0 ? (
-                  <div className={styles.emptyStack}>Stack empty</div>
+                  <div className="text-gray-600 text-sm text-center py-10 italic">Stack empty</div>
                 ) : (
                   currentStep.stack.slice().reverse().map((frame, i) => (
                     <motion.div
                       key={`${frame.fn}-${frame.args}-${i}`}
-                      className={styles.stackFrame}
+                      className="px-3 py-2 bg-black/30 border-l-3 rounded flex flex-col gap-0.5"
                       style={{ borderLeftColor: getStatusColor(frame.status) }}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 20 }}
                       layout
                     >
-                      <div className={styles.frameFn}>{frame.fn}({frame.args})</div>
+                      <div className="font-mono text-xs text-gray-300">{frame.fn}({frame.args})</div>
                       {frame.returnValue && (
-                        <div className={styles.frameReturn}>
+                        <div className="font-mono text-xs text-emerald-500 font-semibold">
                           → {frame.returnValue}
                         </div>
                       )}
-                      <div
-                        className={styles.frameStatus}
-                        style={{ color: getStatusColor(frame.status) }}
-                      >
+                      <div className="text-xs font-semibold uppercase tracking-wider" style={{ color: getStatusColor(frame.status) }}>
                         {frame.status}
                       </div>
                     </motion.div>
@@ -437,11 +441,15 @@ export function RecursionViz() {
 
       {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className={`${styles.neonBox} ${styles.outputBox}`}>
-          <div className={styles.neonBoxHeader}>Output</div>
-          <div className={styles.neonBoxInner}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #10b981, #06b6d4)' }}>
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
+            Output
+          </div>
+          <div className="bg-gray-900 rounded-lg min-h-[60px] p-4 pt-6 flex items-center flex-wrap gap-2">
             {currentStep.output.map((o, i) => (
-              <span key={i} className={styles.outputItem}>{o}</span>
+              <span key={i} className="font-mono text-sm text-emerald-500 px-1.5 py-0.5 bg-emerald-500/15 rounded">
+                {o}
+              </span>
             ))}
           </div>
         </div>
@@ -451,23 +459,29 @@ export function RecursionViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-base text-gray-300 text-center"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentExample.steps.length}</span>
+          <span className="inline-block px-1.5 py-0.5 bg-purple-500/30 rounded text-2xs font-semibold text-purple-300 mr-2">
+            Step {stepIndex + 1}/{currentExample.steps.length}
+          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
+      <div className="flex gap-3 justify-center">
+        <button
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          onClick={handlePrev}
+          disabled={stepIndex === 0}
+        >
           ← Prev
         </button>
         <motion.button
-          className={styles.btnPrimary}
+          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-purple-500 to-pink-500 rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
@@ -475,14 +489,17 @@ export function RecursionViz() {
         >
           {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
         </motion.button>
-        <button className={styles.btnSecondary} onClick={() => setStepIndex(0)}>
+        <button
+          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white transition-colors"
+          onClick={() => setStepIndex(0)}
+        >
           ↻ Reset
         </button>
       </div>
 
       {/* Key insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="px-4 py-2.5 bg-amber-500/10 border border-amber-400/20 rounded-lg text-xs text-gray-500 text-center">
+        <strong className="text-amber-500">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

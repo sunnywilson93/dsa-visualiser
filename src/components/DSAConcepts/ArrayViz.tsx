@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './ArrayViz.module.css'
 
 interface ArrayItem {
   id: number
@@ -270,13 +269,13 @@ export function ArrayViz() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-5">
       {/* Example selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex flex-wrap gap-2">
         {examples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white ${exampleIndex === i ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -285,19 +284,19 @@ export function ArrayViz() {
       </div>
 
       {/* Memory visualization */}
-      <div className={styles.memorySection}>
-        <div className={styles.memoryHeader}>
-          <span className={styles.memoryLabel}>Memory Layout (Contiguous)</span>
+      <div className="bg-black/30 rounded-lg p-4">
+        <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Memory Layout (Contiguous)</span>
           {currentStep.formula && (
-            <span className={styles.formula}>{currentStep.formula}</span>
+            <span className="font-mono text-sm text-blue-400 bg-sky-500/10 px-2 py-0.5 rounded">{currentStep.formula}</span>
           )}
         </div>
-        <div className={styles.memoryBlocks}>
+        <div className="flex gap-2 overflow-x-auto pb-2">
           <AnimatePresence mode="popLayout">
             {currentStep.array.map((item, i) => (
               <motion.div
                 key={`${item.id}-${i}`}
-                className={`${styles.memoryBlock} ${isHighlighted(i) ? styles.highlighted : ''}`}
+                className={`flex-shrink-0 w-[70px] max-sm:w-[60px] bg-black/30 border-2 border-white/10 rounded-lg overflow-hidden transition-all duration-200 ${isHighlighted(i) ? 'shadow-[0_0_20px_rgba(var(--color-brand-primary-rgb),0.4)]' : ''}`}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{
                   opacity: 1,
@@ -312,23 +311,23 @@ export function ArrayViz() {
                 exit={{ opacity: 0, scale: 0.8 }}
                 layout
               >
-                <div className={styles.blockAddress}>{item.address}</div>
-                <div className={styles.blockValue}>
+                <div className="px-1.5 py-1 font-mono text-[10px] text-gray-500 text-center bg-white/5 border-b border-white/5">{item.address}</div>
+                <div className="px-2 py-3 font-mono text-xl max-sm:text-base max-sm:p-2 font-bold text-white text-center">
                   {item.value === -1 ? (
-                    <span className={styles.gap}>GAP</span>
+                    <span className="text-xs text-red-400 font-semibold">GAP</span>
                   ) : (
                     item.value
                   )}
                 </div>
-                <div className={styles.blockIndex}>[{i}]</div>
+                <div className="px-1.5 py-1 font-mono text-xs text-brand-primary text-center bg-brand-primary/10">[{i}]</div>
               </motion.div>
             ))}
           </AnimatePresence>
         </div>
         {currentStep.pointer !== undefined && (
-          <div className={styles.pointerRow}>
+          <div className="relative h-8 mt-2">
             <motion.div
-              className={styles.pointer}
+              className="absolute text-xs text-emerald-400 font-semibold text-center -translate-x-1/2"
               animate={{ left: `${currentStep.pointer * 80 + 30}px` }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             >
@@ -341,13 +340,13 @@ export function ArrayViz() {
       {/* Output */}
       {currentStep.output && (
         <motion.div
-          className={styles.output}
+          className="flex items-center gap-3 p-3 px-4 bg-black/30 border-2 border-emerald-500 rounded-lg"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           style={{ borderColor: getActionColor(currentStep.action) }}
         >
-          <span className={styles.outputLabel}>Result:</span>
-          <span className={styles.outputValue}>{currentStep.output}</span>
+          <span className="text-base text-gray-500">Result:</span>
+          <span className="font-mono text-xl font-bold text-emerald-400">{currentStep.output}</span>
         </motion.div>
       )}
 
@@ -355,32 +354,36 @@ export function ArrayViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="flex items-start gap-3 p-3 px-4 bg-black/30 rounded-lg border-l-[3px] border-brand-primary"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
           style={{ borderLeftColor: getActionColor(currentStep.action) }}
         >
           <span
-            className={styles.actionBadge}
+            className="flex-shrink-0 text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded text-white"
             style={{ background: getActionColor(currentStep.action) }}
           >
             {currentStep.action}
           </span>
-          <span className={styles.stepText}>{currentStep.description}</span>
+          <span className="text-base text-gray-300 leading-normal">{currentStep.description}</span>
         </motion.div>
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
+      <div className="flex items-center justify-center gap-3">
+        <button 
+          className="px-3 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed" 
+          onClick={handlePrev} 
+          disabled={stepIndex === 0}
+        >
           ← Prev
         </button>
-        <span className={styles.stepCounter}>
+        <span className="text-base text-gray-600 min-w-[50px] text-center">
           {stepIndex + 1} / {currentExample.steps.length}
         </span>
         <motion.button
-          className={styles.btnPrimary}
+          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-brand-primary to-brand-secondary border-0 rounded-md text-white cursor-pointer transition-opacity duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
@@ -388,14 +391,17 @@ export function ArrayViz() {
         >
           {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
         </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button 
+          className="px-3 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white" 
+          onClick={handleReset}
+        >
           ↻
         </button>
       </div>
 
       {/* Insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="p-3 px-4 bg-brand-primary/10 border border-brand-primary/20 rounded-lg text-base text-gray-300 leading-normal">
+        <strong className="text-brand-light">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

@@ -1,8 +1,9 @@
+'use client'
+
 import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import type { RuntimeValue, ArrayValue, ExecutionStep } from '@/types'
 import { formatValue } from '@/engine'
-import styles from './ArrayVisualization.module.css'
 
 interface ArrayVisualizationProps {
   array: ArrayValue
@@ -56,16 +57,12 @@ function parseStepForHighlights(step: ExecutionStep, varName: string): {
 
   // Categorize based on step type
   if (stepType === 'comparison' && resolvedIndices.length >= 2) {
-    // Comparison step - first two indices are being compared
     comparing.push(...resolvedIndices.slice(0, 2))
   } else if (stepType === 'array-modify' && resolvedIndices.length > 0) {
-    // Modification step
     swapping.push(resolvedIndices[0])
   } else if (stepType === 'array-access' && resolvedIndices.length > 0) {
-    // Access step
     accessed.push(...resolvedIndices)
   } else if (resolvedIndices.length > 0) {
-    // Fallback: check description for clues
     if (desc.includes('>') || desc.includes('<') || desc.includes('===') || desc.includes('==')) {
       comparing.push(...resolvedIndices)
     } else if (desc.includes('=') && !desc.includes('==')) {
@@ -82,7 +79,6 @@ function parseStepForHighlights(step: ExecutionStep, varName: string): {
  * Look up a variable's value from the step's scopes and call stack
  */
 function lookupVariable(name: string, step: ExecutionStep): number | null {
-  // Try to find the variable in current scopes
   for (const scope of step.scopes) {
     if (name in scope.variables) {
       const val = scope.variables[name]
@@ -92,7 +88,6 @@ function lookupVariable(name: string, step: ExecutionStep): number | null {
     }
   }
 
-  // Check call stack frame params/locals
   for (const frame of step.callStack) {
     if (name in frame.params) {
       const val = frame.params[name]
@@ -112,20 +107,17 @@ function lookupVariable(name: string, step: ExecutionStep): number | null {
 }
 
 /**
- * Resolve an index expression (could be a number, variable, or simple expression like "j + 1")
+ * Resolve an index expression
  */
 function resolveIndex(expr: string, step: ExecutionStep): number | null {
   expr = expr.trim()
 
-  // If it's already a number
   const num = parseInt(expr, 10)
   if (!isNaN(num) && String(num) === expr) return num
 
-  // If it's a simple variable
   const simpleVar = lookupVariable(expr, step)
   if (simpleVar !== null) return simpleVar
 
-  // Try to evaluate simple expressions like "j + 1" or "i - 1"
   const exprMatch = expr.match(/^(\w+)\s*([+\-])\s*(\d+)$/)
   if (exprMatch) {
     const [, varName, operator, numStr] = exprMatch
@@ -137,7 +129,6 @@ function resolveIndex(expr: string, step: ExecutionStep): number | null {
     }
   }
 
-  // Try expression like "n - i - 1"
   const complexMatch = expr.match(/^(\w+)\s*-\s*(\w+)\s*-\s*(\d+)$/)
   if (complexMatch) {
     const [, var1, var2, numStr] = complexMatch
@@ -154,23 +145,20 @@ function resolveIndex(expr: string, step: ExecutionStep): number | null {
 }
 
 /**
- * Detect pointer variables (i, j, left, right, etc.) that reference array indices
+ * Detect pointer variables
  */
 function detectPointers(step: ExecutionStep, arrayLength: number): Pointer[] {
   const pointers: Pointer[] = []
   const seen = new Set<string>()
 
-  // Common pointer variable names
   const pointerNames = ['i', 'j', 'k', 'l', 'left', 'right', 'start', 'end', 'low', 'high', 'mid', 'slow', 'fast', 'p1', 'p2']
   const primaryPointers = new Set(['i', 'left', 'start', 'low', 'slow', 'p1'])
 
-  // Check all scopes for pointer variables
   for (const scope of step.scopes) {
     for (const [name, value] of Object.entries(scope.variables)) {
       if (pointerNames.includes(name) && !seen.has(name)) {
         if (value.type === 'primitive' && value.dataType === 'number') {
           const idx = value.value as number
-          // Only include if it's a valid array index
           if (idx >= 0 && idx < arrayLength) {
             seen.add(name)
             pointers.push({
@@ -184,7 +172,6 @@ function detectPointers(step: ExecutionStep, arrayLength: number): Pointer[] {
     }
   }
 
-  // Check call stack frame params/locals
   for (const frame of step.callStack) {
     for (const [name, value] of Object.entries(frame.params)) {
       if (pointerNames.includes(name) && !seen.has(name)) {
@@ -232,7 +219,6 @@ export function ArrayVisualization({ array, step, varName }: ArrayVisualizationP
     [step, array.elements.length]
   )
 
-  // Group pointers by index for rendering
   const pointersByIndex = useMemo(() => {
     const map = new Map<number, Pointer[]>()
     for (const ptr of pointers) {
@@ -257,7 +243,6 @@ export function ArrayVisualization({ array, step, varName }: ArrayVisualizationP
     return { value, index, state }
   })
 
-  // Calculate bar heights for numeric arrays
   const isNumeric = array.elements.every(
     el => el.type === 'primitive' && el.dataType === 'number'
   )
@@ -269,13 +254,13 @@ export function ArrayVisualization({ array, step, varName }: ArrayVisualizationP
     : 1
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <span className={styles.varName}>{varName}</span>
-        <span className={styles.length}>[{array.elements.length}]</span>
+    <div className="flex flex-col gap-1 p-2 bg-bg-tertiary rounded-md">
+      <div className="flex items-center gap-1 font-mono text-xs">
+        <span className="text-accent-cyan font-semibold">{varName}</span>
+        <span className="text-text-muted">[{array.elements.length}]</span>
       </div>
 
-      <div className={styles.arrayContainer}>
+      <div className="flex items-end gap-[3px] min-h-20 p-2 pt-6 bg-bg-primary rounded-sm overflow-x-auto">
         {elements.map(({ value, index, state }) => {
           const numericValue = value.type === 'primitive' && value.dataType === 'number'
             ? (value.value as number)
@@ -287,10 +272,18 @@ export function ArrayVisualization({ array, step, varName }: ArrayVisualizationP
 
           const elementPointers = pointersByIndex.get(index) || []
 
+          const stateClasses = {
+            default: '',
+            comparing: '[&_.bar]:bg-accent-yellow [&_.value]:bg-accent-yellow-30 [&_.value]:border-accent-yellow [&_.value]:text-accent-yellow',
+            swapping: '[&_.bar]:bg-accent-green [&_.value]:bg-accent-green-20 [&_.value]:border-accent-green [&_.value]:text-accent-green',
+            accessed: '[&_.bar]:bg-accent-purple [&_.value]:bg-accent-purple-20 [&_.value]:border-accent-purple [&_.value]:text-accent-purple',
+            sorted: '[&_.bar]:bg-accent-green [&_.bar]:opacity-60',
+          }
+
           return (
             <motion.div
               key={index}
-              className={`${styles.element} ${styles[state]}`}
+              className={`flex flex-col items-center min-w-8 flex-1 max-w-12 relative ${stateClasses[state]}`}
               layout
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{
@@ -303,13 +296,14 @@ export function ArrayVisualization({ array, step, varName }: ArrayVisualizationP
                 layout: { duration: 0.3 },
               }}
             >
-              {/* Pointer labels above element */}
               {elementPointers.length > 0 && (
-                <div className={styles.pointers}>
+                <div className="absolute -top-[18px] flex gap-px z-10">
                   {elementPointers.map((ptr) => (
                     <motion.span
                       key={ptr.name}
-                      className={`${styles.pointer} ${styles[ptr.type]}`}
+                      className={`font-mono text-2xs font-semibold py-px px-1 rounded-xs whitespace-nowrap animate-pointer-pulse ${
+                        ptr.type === 'primary' ? 'bg-accent-blue text-white' : 'bg-accent-purple text-white'
+                      }`}
                       initial={{ opacity: 0, y: 5 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.15 }}
@@ -320,40 +314,37 @@ export function ArrayVisualization({ array, step, varName }: ArrayVisualizationP
                 </div>
               )}
 
-              {/* Bar visualization for numeric values */}
               {isNumeric && (
                 <motion.div
-                  className={styles.bar}
+                  className="bar w-full min-h-1 bg-accent-blue rounded-t-xs transition-colors duration-fast"
                   initial={{ height: 0 }}
                   animate={{ height: `${heightPercent}%` }}
                   transition={{ duration: 0.2 }}
                 />
               )}
 
-              {/* Value label */}
-              <div className={styles.value}>
+              <div className="value py-px px-1 font-mono text-xs font-semibold text-text-primary bg-bg-secondary border border-border-primary rounded-xs mt-0.5 transition-all duration-fast">
                 {formatValue(value, true)}
               </div>
 
-              {/* Index label */}
-              <div className={styles.index}>{index}</div>
+              <div className="font-mono text-2xs text-text-muted mt-px">{index}</div>
             </motion.div>
           )
         })}
       </div>
 
       {/* Legend */}
-      <div className={styles.legend}>
-        <div className={styles.legendItem}>
-          <div className={`${styles.legendDot} ${styles.comparing}`} />
+      <div className="flex justify-center gap-3 pt-1 border-t border-border-secondary">
+        <div className="flex items-center gap-1 text-2xs text-text-muted">
+          <div className="w-2 h-2 rounded-xs bg-accent-yellow" />
           <span>Comparing</span>
         </div>
-        <div className={styles.legendItem}>
-          <div className={`${styles.legendDot} ${styles.swapping}`} />
+        <div className="flex items-center gap-1 text-2xs text-text-muted">
+          <div className="w-2 h-2 rounded-xs bg-accent-green" />
           <span>Modifying</span>
         </div>
-        <div className={styles.legendItem}>
-          <div className={`${styles.legendDot} ${styles.accessed}`} />
+        <div className="flex items-center gap-1 text-2xs text-text-muted">
+          <div className="w-2 h-2 rounded-xs bg-accent-purple" />
           <span>Accessed</span>
         </div>
       </div>

@@ -16,7 +16,7 @@ import {
   getExamplesByCategory,
   type CodeExample,
 } from '@/data/examples'
-import styles from './page.module.css'
+
 
 const subcategoryToConcept: Record<string, { id: string; name: string }> = {
   'bit-manipulation': { id: 'binary-system', name: 'Binary & Bit Manipulation' },
@@ -80,11 +80,11 @@ export default function CategoryPageClient() {
 
   if (!category) {
     return (
-      <div className={styles.container}>
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-bg-page from-0% to-bg-page-secondary to-100%">
         <NavBar />
-        <div className={styles.notFound}>
+        <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 text-gray-500">
           <h2>Category not found</h2>
-          <Link href="/" className={styles.backLink}>
+          <Link href="/" className="text-brand-primary no-underline text-base">
             Back to Home
           </Link>
         </div>
@@ -94,9 +94,9 @@ export default function CategoryPageClient() {
 
   const renderDsaSubcategories = isDsa ? (
     <>
-      <div className={styles.subcategories}>
+      <div className="py-4 px-8 flex gap-2 flex-wrap max-w-[1200px] mx-auto w-full max-lg:py-3 max-lg:px-6 max-md:py-3 max-md:px-4">
         <button
-          className={`${styles.subcatBtn} ${!selectedSubcategory ? styles.active : ''}`}
+          className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-white-10 bg-transparent text-gray-500 text-sm cursor-pointer transition-all duration-150 hover:border-white-20 hover:text-gray-300 ${!selectedSubcategory ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
           onClick={() => setSelectedSubcategory(null)}
         >
           All Topics
@@ -104,7 +104,7 @@ export default function CategoryPageClient() {
         {dsaSubcategories.map((sub) => (
           <button
             key={sub.id}
-            className={`${styles.subcatBtn} ${selectedSubcategory === sub.id ? styles.active : ''}`}
+            className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-white-10 bg-transparent text-gray-500 text-sm cursor-pointer transition-all duration-150 hover:border-white-20 hover:text-gray-300 ${selectedSubcategory === sub.id ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
             onClick={() => setSelectedSubcategory(sub.id)}
           >
             <ConceptIcon conceptId={sub.id} size={16} />
@@ -114,14 +114,14 @@ export default function CategoryPageClient() {
       </div>
 
       {selectedSubcategory && subcategoryToConcept[selectedSubcategory] && (
-        <div className={styles.conceptLinkWrapper}>
+        <div className="py-3 px-8 max-w-[1200px] mx-auto w-full max-lg:px-6 max-md:px-4">
           <Link
             href={`/concepts/dsa/${subcategoryToConcept[selectedSubcategory].id}`}
-            className={styles.conceptLink}
+            className="inline-flex items-center gap-2 py-2 px-3.5 bg-brand-primary-10 border border-brand-primary-25 rounded-md text-brand-light text-base font-medium no-underline transition-all duration-150 hover:bg-brand-primary-20 hover:border-brand-primary-40 hover:text-brand-light group"
           >
             <BookOpen size={14} />
             <span>Learn {subcategoryToConcept[selectedSubcategory].name}</span>
-            <span className={styles.conceptLinkArrow}>→</span>
+            <span className="opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100">→</span>
           </Link>
         </div>
       )}
@@ -129,12 +129,12 @@ export default function CategoryPageClient() {
   ) : null
 
   const comingSoonState = isComingSoon ? (
-    <div className={styles.comingSoon}>
-      <div className={styles.comingSoonIcon}>
+    <div className="flex flex-col items-center justify-center py-16 px-8 text-center bg-gradient-to-br from-brand-primary-8 to-brand-primary-8 border border-dashed border-brand-primary-30 rounded-2xl">
+      <div className="text-brand-primary-50 mb-4">
         <Clock size={48} strokeWidth={1.5} />
       </div>
-      <h3 className={styles.comingSoonTitle}>Coming Soon</h3>
-      <p className={styles.comingSoonText}>
+      <h3 className="text-xl font-semibold text-brand-light m-0 mb-2">Coming Soon</h3>
+      <p className="text-base text-gray-400 m-0 leading-relaxed">
         We&apos;re working on adding{' '}
         {dsaSubcategories.find((s) => s.id === selectedSubcategory)?.name || 'these'}{' '}
         problems.

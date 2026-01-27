@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { Play, Pause } from 'lucide-react'
-import styles from './StepControls.module.css'
 
 export interface StepControlsProps {
   onPrev: () => void
@@ -49,9 +48,9 @@ export function StepControls({
   }
 
   return (
-    <div className={styles.controls}>
+    <div className="flex gap-2 justify-center items-center sm:gap-1.5">
       <button
-        className={styles.btnSecondary}
+        className="px-3 py-2 text-xs bg-white-5 border border-white-10 rounded-md text-gray-500 cursor-pointer min-h-[44px] touch-manipulation hover:not-disabled:bg-white-10 hover:not-disabled:text-white disabled:opacity-50 disabled:cursor-not-allowed sm:px-2 sm:text-2xs"
         onClick={handlePrev}
         disabled={!canPrev}
       >
@@ -60,7 +59,7 @@ export function StepControls({
 
       {showPlayPause && onPlayPause && (
         <button
-          className={styles.playPauseBtn}
+          className="flex items-center justify-center p-2 bg-white-5 border border-white-10 rounded-md text-gray-500 cursor-pointer min-w-[44px] min-h-[44px] touch-manipulation hover:bg-white-10 hover:text-white"
           onClick={onPlayPause}
           aria-label={isPlaying ? 'Pause' : 'Play'}
         >
@@ -69,7 +68,7 @@ export function StepControls({
       )}
 
       <motion.button
-        className={styles.btnPrimary}
+        className="px-4 py-2 text-base font-medium bg-gradient-brand border-none rounded-md text-white cursor-pointer min-h-[44px] touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={handleNext}
         disabled={!canNext}
         whileHover={{ scale: 1.02 }}
@@ -79,7 +78,7 @@ export function StepControls({
       </motion.button>
 
       <button
-        className={styles.btnSecondary}
+        className="px-3 py-2 text-xs bg-white-5 border border-white-10 rounded-md text-gray-500 cursor-pointer min-h-[44px] touch-manipulation hover:not-disabled:bg-white-10 hover:not-disabled:text-white disabled:opacity-50 disabled:cursor-not-allowed sm:px-2 sm:text-2xs"
         onClick={handleReset}
       >
         Reset

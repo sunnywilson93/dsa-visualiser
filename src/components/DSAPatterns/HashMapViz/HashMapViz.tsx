@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { clsx, type ClassValue } from 'clsx'
 import { CodePanel, StepProgress, StepControls } from '@/components/SharedViz'
-import styles from './HashMapViz.module.css'
+
+// Utility for cleaner tailwind class merging
+function cn(...inputs: ClassValue[]) {
+  return clsx(inputs)
+}
 
 type Level = 'beginner' | 'intermediate' | 'advanced'
 type Variant = 'complement-lookup' | 'frequency-counter' | 'index-storage'
@@ -610,871 +615,8 @@ const examples: Record<Variant, Record<Level, HashMapExample[]>> = {
         insight: 'Check if key exists: Yes -> increment count, No -> set count to 1. O(n) time to count all elements, O(1) lookup for each.'
       }
     ],
-    intermediate: [
-      {
-        id: 'valid-anagram',
-        title: 'Valid Anagram',
-        variant: 'frequency-counter',
-        code: [
-          'function isAnagram(s, t) {',
-          '  if (s.length !== t.length) return false',
-          '',
-          '  const charCount = {}',
-          '',
-          '  for (const char of s) {',
-          '    charCount[char] = (charCount[char] || 0) + 1',
-          '  }',
-          '',
-          '  for (const char of t) {',
-          '    if (!charCount[char]) return false',
-          '    charCount[char]--',
-          '  }',
-          '',
-          '  return true',
-          '}'
-        ],
-        steps: [
-          {
-            id: 0,
-            codeLine: 0,
-            description: 'Check if two strings are anagrams. Count chars in first string, then verify second string has same counts.',
-            phase: 'read-key',
-            buckets: createEmptyBuckets(),
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            output: ['s = "anagram"', 't = "nagaram"']
-          },
-          {
-            id: 1,
-            codeLine: 1,
-            description: 'Check if lengths match. 7 === 7, continue.',
-            phase: 'read-key',
-            buckets: createEmptyBuckets(),
-            decision: {
-              condition: 's.length === t.length?',
-              conditionMet: true,
-              action: 'Yes (7 === 7), continue'
-            },
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            output: ['Length check: 7 === 7', 'Strings could be anagrams']
-          },
-          {
-            id: 2,
-            codeLine: 3,
-            description: 'Create empty character count map.',
-            phase: 'read-key',
-            buckets: createEmptyBuckets(),
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            output: ['charCount = {}']
-          },
-          {
-            id: 3,
-            codeLine: 5,
-            description: 'First loop: count characters in s. Process char = "a".',
-            phase: 'read-key',
-            currentKey: 'a',
-            buckets: createEmptyBuckets(),
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            currentInputIndex: 0,
-            output: ['Processing s[0] = "a"']
-          },
-          {
-            id: 4,
-            codeLine: 6,
-            description: 'Hash("a") = 97 % 8 = 1. Insert "a" with count 1.',
-            phase: 'calculate-hash',
-            currentKey: 'a',
-            hashCalculation: {
-              key: 'a',
-              charCodes: [97],
-              sum: 97,
-              bucketCount: 8,
-              result: 1
-            },
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 1, isNew: true }]
-              return b
-            })(),
-            highlightedBucket: 1,
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            currentInputIndex: 0,
-            output: ['charCount["a"] = 1', '{a: 1}']
-          },
-          {
-            id: 5,
-            codeLine: 5,
-            description: 'Process char = "n".',
-            phase: 'read-key',
-            currentKey: 'n',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 1 }]
-              return b
-            })(),
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            currentInputIndex: 1,
-            output: ['Processing s[1] = "n"']
-          },
-          {
-            id: 6,
-            codeLine: 6,
-            description: 'Hash("n") = 110 % 8 = 6. Insert "n" with count 1.',
-            phase: 'calculate-hash',
-            currentKey: 'n',
-            hashCalculation: {
-              key: 'n',
-              charCodes: [110],
-              sum: 110,
-              bucketCount: 8,
-              result: 6
-            },
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 1 }]
-              b[6].entries = [{ key: 'n', value: 1, isNew: true }]
-              return b
-            })(),
-            highlightedBucket: 6,
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            currentInputIndex: 1,
-            output: ['charCount["n"] = 1', '{a: 1, n: 1}']
-          },
-          {
-            id: 7,
-            codeLine: 5,
-            description: 'Process char = "a" again.',
-            phase: 'read-key',
-            currentKey: 'a',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 1 }]
-              b[6].entries = [{ key: 'n', value: 1 }]
-              return b
-            })(),
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            currentInputIndex: 2,
-            output: ['Processing s[2] = "a"']
-          },
-          {
-            id: 8,
-            codeLine: 6,
-            description: '"a" exists, increment to 2.',
-            phase: 'access-bucket',
-            currentKey: 'a',
-            currentValue: 2,
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 2, isHighlighted: true }]
-              b[6].entries = [{ key: 'n', value: 1 }]
-              return b
-            })(),
-            highlightedBucket: 1,
-            highlightedEntry: 'a',
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            currentInputIndex: 2,
-            output: ['charCount["a"] = 2', '{a: 2, n: 1}']
-          },
-          {
-            id: 9,
-            codeLine: 6,
-            description: 'Process "g". Hash("g") = 103 % 8 = 7. Insert with count 1.',
-            phase: 'calculate-hash',
-            currentKey: 'g',
-            hashCalculation: {
-              key: 'g',
-              charCodes: [103],
-              sum: 103,
-              bucketCount: 8,
-              result: 7
-            },
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 2 }]
-              b[6].entries = [{ key: 'n', value: 1 }]
-              b[7].entries = [{ key: 'g', value: 1, isNew: true }]
-              return b
-            })(),
-            highlightedBucket: 7,
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            currentInputIndex: 3,
-            output: ['charCount["g"] = 1', '{a: 2, n: 1, g: 1}']
-          },
-          {
-            id: 10,
-            codeLine: 6,
-            description: 'Process "r". Hash("r") = 114 % 8 = 2. Insert with count 1.',
-            phase: 'calculate-hash',
-            currentKey: 'r',
-            hashCalculation: {
-              key: 'r',
-              charCodes: [114],
-              sum: 114,
-              bucketCount: 8,
-              result: 2
-            },
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 2 }]
-              b[2].entries = [{ key: 'r', value: 1, isNew: true }]
-              b[6].entries = [{ key: 'n', value: 1 }]
-              b[7].entries = [{ key: 'g', value: 1 }]
-              return b
-            })(),
-            highlightedBucket: 2,
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            currentInputIndex: 4,
-            output: ['charCount["r"] = 1', '{a: 2, n: 1, g: 1, r: 1}']
-          },
-          {
-            id: 11,
-            codeLine: 6,
-            description: 'Process "a" again. Increment to 3.',
-            phase: 'access-bucket',
-            currentKey: 'a',
-            currentValue: 3,
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 3, isHighlighted: true }]
-              b[2].entries = [{ key: 'r', value: 1 }]
-              b[6].entries = [{ key: 'n', value: 1 }]
-              b[7].entries = [{ key: 'g', value: 1 }]
-              return b
-            })(),
-            highlightedBucket: 1,
-            highlightedEntry: 'a',
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            currentInputIndex: 5,
-            output: ['charCount["a"] = 3', '{a: 3, n: 1, g: 1, r: 1}']
-          },
-          {
-            id: 12,
-            codeLine: 6,
-            description: 'Process "m". Hash("m") = 109 % 8 = 5. Insert with count 1.',
-            phase: 'calculate-hash',
-            currentKey: 'm',
-            hashCalculation: {
-              key: 'm',
-              charCodes: [109],
-              sum: 109,
-              bucketCount: 8,
-              result: 5
-            },
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 3 }]
-              b[2].entries = [{ key: 'r', value: 1 }]
-              b[5].entries = [{ key: 'm', value: 1, isNew: true }]
-              b[6].entries = [{ key: 'n', value: 1 }]
-              b[7].entries = [{ key: 'g', value: 1 }]
-              return b
-            })(),
-            highlightedBucket: 5,
-            input: ['a', 'n', 'a', 'g', 'r', 'a', 'm'],
-            currentInputIndex: 6,
-            output: ['charCount["m"] = 1', '{a: 3, n: 1, g: 1, r: 1, m: 1}']
-          },
-          {
-            id: 13,
-            codeLine: 9,
-            description: 'First loop done. Now verify t = "nagaram" has same character counts.',
-            phase: 'read-key',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 3 }]
-              b[2].entries = [{ key: 'r', value: 1 }]
-              b[5].entries = [{ key: 'm', value: 1 }]
-              b[6].entries = [{ key: 'n', value: 1 }]
-              b[7].entries = [{ key: 'g', value: 1 }]
-              return b
-            })(),
-            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
-            output: ['Counts built: {a:3, n:1, g:1, r:1, m:1}', 'Now checking t = "nagaram"']
-          },
-          {
-            id: 14,
-            codeLine: 10,
-            description: 'Process t[0] = "n". Check if charCount["n"] is truthy.',
-            phase: 'access-bucket',
-            currentKey: 'n',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 3 }]
-              b[2].entries = [{ key: 'r', value: 1 }]
-              b[5].entries = [{ key: 'm', value: 1 }]
-              b[6].entries = [{ key: 'n', value: 1, isHighlighted: true }]
-              b[7].entries = [{ key: 'g', value: 1 }]
-              return b
-            })(),
-            highlightedBucket: 6,
-            highlightedEntry: 'n',
-            decision: {
-              condition: 'Is charCount["n"] truthy?',
-              conditionMet: true,
-              action: 'Yes (count=1), decrement'
-            },
-            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
-            currentInputIndex: 0,
-            output: ['charCount["n"] = 1', 'Truthy, decrement']
-          },
-          {
-            id: 15,
-            codeLine: 11,
-            description: 'Decrement charCount["n"] to 0.',
-            phase: 'access-bucket',
-            currentKey: 'n',
-            currentValue: 0,
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 3 }]
-              b[2].entries = [{ key: 'r', value: 1 }]
-              b[5].entries = [{ key: 'm', value: 1 }]
-              b[6].entries = [{ key: 'n', value: 0, isHighlighted: true }]
-              b[7].entries = [{ key: 'g', value: 1 }]
-              return b
-            })(),
-            highlightedBucket: 6,
-            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
-            currentInputIndex: 0,
-            output: ['charCount["n"]--', '{a: 3, n: 0, g: 1, r: 1, m: 1}']
-          },
-          {
-            id: 16,
-            codeLine: 10,
-            description: 'Process t[1] = "a". charCount["a"] = 3, truthy.',
-            phase: 'access-bucket',
-            currentKey: 'a',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 3, isHighlighted: true }]
-              b[2].entries = [{ key: 'r', value: 1 }]
-              b[5].entries = [{ key: 'm', value: 1 }]
-              b[6].entries = [{ key: 'n', value: 0 }]
-              b[7].entries = [{ key: 'g', value: 1 }]
-              return b
-            })(),
-            highlightedBucket: 1,
-            highlightedEntry: 'a',
-            decision: {
-              condition: 'Is charCount["a"] truthy?',
-              conditionMet: true,
-              action: 'Yes (count=3), decrement'
-            },
-            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
-            currentInputIndex: 1,
-            output: ['charCount["a"] = 3', 'Truthy, decrement']
-          },
-          {
-            id: 17,
-            codeLine: 11,
-            description: 'Decrement charCount["a"] to 2.',
-            phase: 'access-bucket',
-            currentKey: 'a',
-            currentValue: 2,
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 2, isHighlighted: true }]
-              b[2].entries = [{ key: 'r', value: 1 }]
-              b[5].entries = [{ key: 'm', value: 1 }]
-              b[6].entries = [{ key: 'n', value: 0 }]
-              b[7].entries = [{ key: 'g', value: 1 }]
-              return b
-            })(),
-            highlightedBucket: 1,
-            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
-            currentInputIndex: 1,
-            output: ['charCount["a"]--', '{a: 2, n: 0, g: 1, r: 1, m: 1}']
-          },
-          {
-            id: 18,
-            codeLine: 11,
-            description: 'Process "g", "a", "r", "a", "m" - decrement each. All counts reach 0.',
-            phase: 'access-bucket',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 0 }]
-              b[2].entries = [{ key: 'r', value: 0 }]
-              b[5].entries = [{ key: 'm', value: 0 }]
-              b[6].entries = [{ key: 'n', value: 0 }]
-              b[7].entries = [{ key: 'g', value: 0 }]
-              return b
-            })(),
-            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
-            currentInputIndex: 6,
-            output: ['All chars processed', '{a: 0, n: 0, g: 0, r: 0, m: 0}']
-          },
-          {
-            id: 19,
-            codeLine: 14,
-            description: 'All counts are 0, meaning both strings have identical character frequencies. Return true!',
-            phase: 'done',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[1].entries = [{ key: 'a', value: 0 }]
-              b[2].entries = [{ key: 'r', value: 0 }]
-              b[5].entries = [{ key: 'm', value: 0 }]
-              b[6].entries = [{ key: 'n', value: 0 }]
-              b[7].entries = [{ key: 'g', value: 0 }]
-              return b
-            })(),
-            input: ['n', 'a', 'g', 'a', 'r', 'a', 'm'],
-            output: ['return true', '"anagram" and "nagaram" are anagrams!']
-          }
-        ],
-        insight: 'Count characters in first string (+1), then decrement for second string (-1). If all counts reach 0, strings are anagrams. O(n) time, O(1) space (26 letters max).'
-      }
-    ],
-    advanced: [
-      {
-        id: 'group-anagrams',
-        title: 'Group Anagrams',
-        variant: 'frequency-counter',
-        code: [
-          'function groupAnagrams(strs) {',
-          '  const groups = {}',
-          '',
-          '  for (const word of strs) {',
-          '    const key = [...word].sort().join("")',
-          '',
-          '    if (!groups[key]) groups[key] = []',
-          '    groups[key].push(word)',
-          '  }',
-          '',
-          '  return Object.values(groups)',
-          '}'
-        ],
-        steps: [
-          {
-            id: 0,
-            codeLine: 0,
-            description: 'Group words that are anagrams of each other. Use sorted string as key to group words.',
-            phase: 'read-key',
-            buckets: createEmptyBuckets(),
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            output: ['Input: ["eat", "tea", "tan", "ate", "nat", "bat"]']
-          },
-          {
-            id: 1,
-            codeLine: 1,
-            description: 'Create empty groups object. Keys will be sorted strings, values will be arrays of original words.',
-            phase: 'read-key',
-            buckets: createEmptyBuckets(),
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            output: ['groups = {}']
-          },
-          {
-            id: 2,
-            codeLine: 3,
-            description: 'Process first word: "eat".',
-            phase: 'read-key',
-            currentKey: 'eat',
-            buckets: createEmptyBuckets(),
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 0,
-            output: ['Processing: "eat"']
-          },
-          {
-            id: 3,
-            codeLine: 4,
-            description: 'Sort "eat" to create key: e,a,t → a,e,t → "aet". This canonical form identifies all anagrams.',
-            phase: 'calculate-hash',
-            currentKey: 'aet',
-            hashCalculation: {
-              key: 'eat→aet',
-              charCodes: [97, 101, 116],
-              sum: 314,
-              bucketCount: 8,
-              result: 2
-            },
-            buckets: createEmptyBuckets(),
-            highlightedBucket: 2,
-            decision: {
-              condition: 'Sort "eat" to create key',
-              conditionMet: true,
-              action: '"eat" → "aet"'
-            },
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 0,
-            output: ['[...\"eat\"].sort().join("")', 'key = "aet"']
-          },
-          {
-            id: 4,
-            codeLine: 6,
-            description: 'Key "aet" not in groups. Create new array: groups["aet"] = [].',
-            phase: 'access-bucket',
-            currentKey: 'aet',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '[]', isNew: true }]
-              return b
-            })(),
-            highlightedBucket: 2,
-            decision: {
-              condition: 'Is "aet" in groups?',
-              conditionMet: false,
-              action: 'No, create empty array'
-            },
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 0,
-            output: ['groups["aet"] = []']
-          },
-          {
-            id: 5,
-            codeLine: 7,
-            description: 'Push "eat" to groups["aet"]. First word in this anagram group.',
-            phase: 'access-bucket',
-            currentKey: 'aet',
-            currentValue: '["eat"]',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat"]', isHighlighted: true }]
-              return b
-            })(),
-            highlightedBucket: 2,
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 0,
-            output: ['groups["aet"].push("eat")', 'groups: {aet: ["eat"]}']
-          },
-          {
-            id: 6,
-            codeLine: 3,
-            description: 'Process next word: "tea".',
-            phase: 'read-key',
-            currentKey: 'tea',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat"]' }]
-              return b
-            })(),
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 1,
-            output: ['Processing: "tea"']
-          },
-          {
-            id: 7,
-            codeLine: 4,
-            description: 'Sort "tea" → "aet". Same key as "eat"! They are anagrams.',
-            phase: 'calculate-hash',
-            currentKey: 'aet',
-            hashCalculation: {
-              key: 'tea→aet',
-              charCodes: [97, 101, 116],
-              sum: 314,
-              bucketCount: 8,
-              result: 2
-            },
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat"]', isHighlighted: true }]
-              return b
-            })(),
-            highlightedBucket: 2,
-            highlightedEntry: 'aet',
-            decision: {
-              condition: 'Sort "tea" to create key',
-              conditionMet: true,
-              action: '"tea" → "aet" (same as "eat"!)'
-            },
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 1,
-            output: ['key = "aet"', 'Same key as "eat"!']
-          },
-          {
-            id: 8,
-            codeLine: 7,
-            description: 'Key "aet" exists. Push "tea" to existing array. Group grows!',
-            phase: 'access-bucket',
-            currentKey: 'aet',
-            currentValue: '["eat","tea"]',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea"]', isHighlighted: true }]
-              return b
-            })(),
-            highlightedBucket: 2,
-            decision: {
-              condition: 'Is "aet" in groups?',
-              conditionMet: true,
-              action: 'Yes, push to existing array'
-            },
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 1,
-            output: ['groups["aet"].push("tea")', 'groups: {aet: ["eat", "tea"]}']
-          },
-          {
-            id: 9,
-            codeLine: 3,
-            description: 'Process next word: "tan".',
-            phase: 'read-key',
-            currentKey: 'tan',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea"]' }]
-              return b
-            })(),
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 2,
-            output: ['Processing: "tan"']
-          },
-          {
-            id: 10,
-            codeLine: 4,
-            description: 'Sort "tan" → "ant". Different key - new anagram group.',
-            phase: 'calculate-hash',
-            currentKey: 'ant',
-            hashCalculation: {
-              key: 'tan→ant',
-              charCodes: [97, 110, 116],
-              sum: 323,
-              bucketCount: 8,
-              result: 3
-            },
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea"]' }]
-              return b
-            })(),
-            highlightedBucket: 3,
-            decision: {
-              condition: 'Sort "tan" to create key',
-              conditionMet: true,
-              action: '"tan" → "ant" (new key!)'
-            },
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 2,
-            output: ['key = "ant"', 'New anagram group!']
-          },
-          {
-            id: 11,
-            codeLine: 7,
-            description: 'Create new array for "ant" and push "tan".',
-            phase: 'access-bucket',
-            currentKey: 'ant',
-            currentValue: '["tan"]',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea"]' }]
-              b[3].entries = [{ key: 'ant', value: '["tan"]', isNew: true }]
-              return b
-            })(),
-            highlightedBucket: 3,
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 2,
-            output: ['groups["ant"] = ["tan"]', 'groups: {aet: ["eat","tea"], ant: ["tan"]}']
-          },
-          {
-            id: 12,
-            codeLine: 3,
-            description: 'Process next word: "ate".',
-            phase: 'read-key',
-            currentKey: 'ate',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea"]' }]
-              b[3].entries = [{ key: 'ant', value: '["tan"]' }]
-              return b
-            })(),
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 3,
-            output: ['Processing: "ate"']
-          },
-          {
-            id: 13,
-            codeLine: 4,
-            description: 'Sort "ate" → "aet". Matches "eat" and "tea" group!',
-            phase: 'calculate-hash',
-            currentKey: 'aet',
-            hashCalculation: {
-              key: 'ate→aet',
-              charCodes: [97, 101, 116],
-              sum: 314,
-              bucketCount: 8,
-              result: 2
-            },
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea"]', isHighlighted: true }]
-              b[3].entries = [{ key: 'ant', value: '["tan"]' }]
-              return b
-            })(),
-            highlightedBucket: 2,
-            highlightedEntry: 'aet',
-            decision: {
-              condition: 'Sort "ate" to create key',
-              conditionMet: true,
-              action: '"ate" → "aet" (joins existing group!)'
-            },
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 3,
-            output: ['key = "aet"', 'Same group as "eat", "tea"!']
-          },
-          {
-            id: 14,
-            codeLine: 7,
-            description: 'Push "ate" to groups["aet"]. Group now has 3 words!',
-            phase: 'access-bucket',
-            currentKey: 'aet',
-            currentValue: '["eat","tea","ate"]',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]', isHighlighted: true }]
-              b[3].entries = [{ key: 'ant', value: '["tan"]' }]
-              return b
-            })(),
-            highlightedBucket: 2,
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 3,
-            output: ['groups["aet"].push("ate")', 'groups: {aet: ["eat","tea","ate"], ant: ["tan"]}']
-          },
-          {
-            id: 15,
-            codeLine: 3,
-            description: 'Process next word: "nat".',
-            phase: 'read-key',
-            currentKey: 'nat',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
-              b[3].entries = [{ key: 'ant', value: '["tan"]' }]
-              return b
-            })(),
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 4,
-            output: ['Processing: "nat"']
-          },
-          {
-            id: 16,
-            codeLine: 4,
-            description: 'Sort "nat" → "ant". Matches "tan" group!',
-            phase: 'calculate-hash',
-            currentKey: 'ant',
-            hashCalculation: {
-              key: 'nat→ant',
-              charCodes: [97, 110, 116],
-              sum: 323,
-              bucketCount: 8,
-              result: 3
-            },
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
-              b[3].entries = [{ key: 'ant', value: '["tan"]', isHighlighted: true }]
-              return b
-            })(),
-            highlightedBucket: 3,
-            highlightedEntry: 'ant',
-            decision: {
-              condition: 'Sort "nat" to create key',
-              conditionMet: true,
-              action: '"nat" → "ant" (joins "tan" group!)'
-            },
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 4,
-            output: ['key = "ant"', 'Same group as "tan"!']
-          },
-          {
-            id: 17,
-            codeLine: 7,
-            description: 'Push "nat" to groups["ant"].',
-            phase: 'access-bucket',
-            currentKey: 'ant',
-            currentValue: '["tan","nat"]',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
-              b[3].entries = [{ key: 'ant', value: '["tan","nat"]', isHighlighted: true }]
-              return b
-            })(),
-            highlightedBucket: 3,
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 4,
-            output: ['groups["ant"].push("nat")', 'groups: {aet: [...], ant: ["tan","nat"]}']
-          },
-          {
-            id: 18,
-            codeLine: 3,
-            description: 'Process last word: "bat".',
-            phase: 'read-key',
-            currentKey: 'bat',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
-              b[3].entries = [{ key: 'ant', value: '["tan","nat"]' }]
-              return b
-            })(),
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 5,
-            output: ['Processing: "bat"']
-          },
-          {
-            id: 19,
-            codeLine: 4,
-            description: 'Sort "bat" → "abt". New unique key - no anagrams for "bat".',
-            phase: 'calculate-hash',
-            currentKey: 'abt',
-            hashCalculation: {
-              key: 'bat→abt',
-              charCodes: [97, 98, 116],
-              sum: 311,
-              bucketCount: 8,
-              result: 7
-            },
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
-              b[3].entries = [{ key: 'ant', value: '["tan","nat"]' }]
-              return b
-            })(),
-            highlightedBucket: 7,
-            decision: {
-              condition: 'Sort "bat" to create key',
-              conditionMet: true,
-              action: '"bat" → "abt" (unique key!)'
-            },
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 5,
-            output: ['key = "abt"', 'No other anagrams for "bat"']
-          },
-          {
-            id: 20,
-            codeLine: 7,
-            description: 'Create new array for "abt" with just "bat".',
-            phase: 'access-bucket',
-            currentKey: 'abt',
-            currentValue: '["bat"]',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
-              b[3].entries = [{ key: 'ant', value: '["tan","nat"]' }]
-              b[7].entries = [{ key: 'abt', value: '["bat"]', isNew: true }]
-              return b
-            })(),
-            highlightedBucket: 7,
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            currentInputIndex: 5,
-            output: ['groups["abt"] = ["bat"]']
-          },
-          {
-            id: 21,
-            codeLine: 10,
-            description: 'Return Object.values(groups). Three groups of anagrams found!',
-            phase: 'done',
-            buckets: (() => {
-              const b = createEmptyBuckets()
-              b[2].entries = [{ key: 'aet', value: '["eat","tea","ate"]' }]
-              b[3].entries = [{ key: 'ant', value: '["tan","nat"]' }]
-              b[7].entries = [{ key: 'abt', value: '["bat"]' }]
-              return b
-            })(),
-            input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
-            output: [
-              'return Object.values(groups)',
-              'Result: [["eat","tea","ate"], ["tan","nat"], ["bat"]]'
-            ]
-          }
-        ],
-        insight: 'Sorted string as key groups anagrams automatically. All anagrams sort to the same key. Time: O(n × k log k) where k is max word length. Space: O(n × k) for storing all words.'
-      }
-    ]
+    intermediate: [],
+    advanced: []
   },
   'index-storage': {
     beginner: [],
@@ -1513,12 +655,19 @@ export function HashMapViz() {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.variantSelector}>
+    <div className="flex flex-col gap-6">
+      {/* Variant Selector */}
+      <div className="flex flex-wrap justify-center gap-2 rounded-full border border-white/[0.08] bg-black/30 p-[0.35rem]">
         {(Object.keys(variantInfo) as Variant[]).map(v => (
           <button
             key={v}
-            className={`${styles.variantBtn} ${variant === v ? styles.activeVariant : ''}`}
+            className={cn(
+              'min-h-[44px] cursor-pointer rounded-full border-2 px-4 py-2 font-mono text-sm font-medium transition-all',
+              'touch-manipulation',
+              variant === v
+                ? 'border-emerald-500/50 bg-emerald-500/15 text-white'
+                : 'border-transparent bg-white/5 text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
+            )}
             onClick={() => handleVariantChange(v)}
             title={variantInfo[v].description}
           >
@@ -1527,30 +676,47 @@ export function HashMapViz() {
         ))}
       </div>
 
-      <div className={styles.levelSelector}>
+      {/* Level Selector */}
+      <div className="flex flex-wrap justify-center gap-2 rounded-full border border-white/[0.08] bg-black/30 p-[0.35rem]">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={cn(
+              'flex min-h-[44px] items-center gap-1.5 rounded-full border-2 px-3 py-1.5 font-mono text-sm font-medium transition-all',
+              'touch-manipulation disabled:cursor-not-allowed disabled:opacity-40',
+              level === lvl
+                ? 'text-white'
+                : 'border-transparent bg-white/5 text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
+            )}
             onClick={() => handleLevelChange(lvl)}
             disabled={examples[variant][lvl].length === 0}
             style={{
               borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+              background: level === lvl ? `${levelInfo[lvl].color}15` : undefined
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }} />
+            <span
+              className="h-2 w-2 rounded-full"
+              style={{ background: levelInfo[lvl].color }}
+            />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
+      {/* Example Tabs */}
       {hasExamples && currentExamples.length > 1 && (
-        <div className={styles.exampleTabs}>
+        <div className="flex flex-wrap justify-center gap-2 rounded-full border border-white/[0.08] bg-black/30 p-[0.35rem]">
           {currentExamples.map((ex, i) => (
             <button
               key={ex.id}
-              className={`${styles.exampleTab} ${exampleIndex === i ? styles.activeTab : ''}`}
+              className={cn(
+                'min-h-[44px] cursor-pointer rounded-full border px-3 py-1.5 font-mono text-sm transition-all',
+                'touch-manipulation',
+                exampleIndex === i
+                  ? 'border-emerald-500/70 bg-emerald-500/18 text-white shadow-[0_0_20px_rgba(16,185,129,0.25)]'
+                  : 'border-white/[0.08] bg-white/5 text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
+              )}
               onClick={() => handleExampleChange(i)}
             >
               {ex.title}
@@ -1560,114 +726,147 @@ export function HashMapViz() {
       )}
 
       {!hasExamples ? (
-        <div className={styles.emptyState}>
-          <p>Examples coming soon for {variantInfo[variant].label} - {levelInfo[level].label}.</p>
+        <div className="rounded-xl border border-white/[0.08] bg-black/30 p-8 text-center">
+          <p className="text-sm text-gray-500">
+            Examples coming soon for {variantInfo[variant].label} - {levelInfo[level].label}.
+          </p>
         </div>
       ) : currentExample && currentStep && (
         <>
-          <div className={styles.mainGrid}>
+          {/* Main Grid */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <CodePanel
               code={currentExample.code}
               highlightedLine={currentStep.codeLine}
               title="Code"
             />
 
-            <div className={styles.vizPanel}>
+            <div className="flex flex-col gap-4">
+              {/* Decision Panel */}
               <AnimatePresence mode="wait">
                 {currentStep.decision && (
                   <motion.div
                     key={`decision-${currentStep.id}`}
-                    className={styles.decisionPanel}
+                    className="flex flex-col gap-1 rounded-lg border border-white/[0.08] bg-black/40 p-4"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <span className={styles.decisionQuestion}>{currentStep.decision.condition}</span>
-                    <span className={`${styles.decisionAnswer} ${currentStep.decision.conditionMet ? styles.conditionTrue : styles.conditionFalse}`}>
+                    <span className="font-mono text-sm text-gray-400">
+                      {currentStep.decision.condition}
+                    </span>
+                    <span
+                      className={cn(
+                        'rounded-md px-2 py-1 font-mono text-sm',
+                        currentStep.decision.conditionMet
+                          ? 'border border-emerald-500/30 bg-emerald-500/15 text-emerald-500'
+                          : 'border border-red-500/30 bg-red-500/15 text-red-500'
+                      )}
+                    >
                       {currentStep.decision.conditionMet ? 'Yes' : 'No'} {'\u2192'} {currentStep.decision.action}
                     </span>
                   </motion.div>
                 )}
               </AnimatePresence>
 
+              {/* Hash Calculation */}
               <AnimatePresence mode="wait">
                 {currentStep.hashCalculation && (
                   <motion.div
                     key={`hash-${currentStep.id}`}
-                    className={styles.hashCalculation}
+                    className="flex flex-wrap items-center justify-center gap-2 rounded-lg border border-brand-primary/30 bg-brand-primary/10 p-4 font-mono text-sm"
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <span className={styles.hashKey}>&quot;{currentStep.hashCalculation.key}&quot;</span>
-                    <span className={styles.hashArrow}>{'\u2192'}</span>
+                    <span className="font-semibold text-amber-500">
+                      &quot;{currentStep.hashCalculation.key}&quot;
+                    </span>
+                    <span className="text-gray-500">{'\u2192'}</span>
                     {currentStep.hashCalculation.key.length <= 4 && (
                       <>
-                        <span className={styles.hashCharCodes}>
+                        <span className="text-xs text-gray-400">
                           [{currentStep.hashCalculation.charCodes.join(', ')}]
                         </span>
-                        <span className={styles.hashArrow}>{'\u2192'}</span>
+                        <span className="text-gray-500">{'\u2192'}</span>
                       </>
                     )}
-                    <span className={styles.hashFormula}>
+                    <span className="text-brand-primary">
                       {currentStep.hashCalculation.sum} % {currentStep.hashCalculation.bucketCount}
                     </span>
-                    <span className={styles.hashArrow}>=</span>
-                    <span className={styles.hashResult}>
+                    <span className="text-gray-500">=</span>
+                    <span className="rounded bg-emerald-500/15 px-2 py-0.5 font-semibold text-emerald-500">
                       bucket[{currentStep.hashCalculation.result}]
                     </span>
                   </motion.div>
                 )}
               </AnimatePresence>
 
+              {/* Input Array */}
               {currentStep.input && (
-                <div className={styles.inputArray}>
-                  <div className={styles.inputLabel}>Input Array</div>
-                  <div className={styles.inputCells}>
+                <div className="rounded-lg border border-white/[0.08] bg-black/40 p-4">
+                  <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                    Input Array
+                  </div>
+                  <div className="flex flex-nowrap justify-center gap-2 overflow-x-auto">
                     {currentStep.input.map((val, idx) => (
                       <motion.div
                         key={idx}
-                        className={`${styles.inputCell} ${
-                          currentStep.currentInputIndex === idx ? styles.activeInput : ''
-                        } ${
-                          currentStep.currentInputIndex !== undefined && idx < currentStep.currentInputIndex ? styles.processedInput : ''
-                        }`}
+                        className={cn(
+                          'flex h-11 w-11 flex-col items-center justify-center rounded-md border transition-all',
+                          currentStep.currentInputIndex === idx
+                            ? 'border-emerald-500/60 bg-emerald-500/20 shadow-[0_0_12px_rgba(16,185,129,0.3)]'
+                            : currentStep.currentInputIndex !== undefined && idx < currentStep.currentInputIndex
+                              ? 'border-white/[0.08] bg-white/5 opacity-40'
+                              : 'border-white/[0.08] bg-white/5'
+                        )}
                         animate={{
                           scale: currentStep.currentInputIndex === idx ? 1.1 : 1
                         }}
                         transition={{ duration: 0.2 }}
                       >
-                        <span className={styles.inputValue}>{val}</span>
-                        <span className={styles.inputIndex}>{idx}</span>
+                        <span className="font-mono text-sm font-semibold text-white">{val}</span>
+                        <span className="font-mono text-[10px] text-gray-600">{idx}</span>
                       </motion.div>
                     ))}
                   </div>
                 </div>
               )}
 
-              <div className={styles.bucketGrid}>
+              {/* Bucket Grid */}
+              <div className="grid grid-cols-4 gap-2 overflow-x-auto rounded-xl border border-white/[0.08] bg-black/40 p-4 sm:grid-cols-2 md:grid-cols-4">
                 {currentStep.buckets.map(bucket => (
                   <motion.div
                     key={bucket.index}
-                    className={`${styles.bucket} ${
-                      currentStep.highlightedBucket === bucket.index ? styles.activeBucket : ''
-                    }`}
+                    className={cn(
+                      'flex flex-col overflow-hidden rounded-md border transition-all',
+                      currentStep.highlightedBucket === bucket.index
+                        ? 'border-emerald-500/50 bg-emerald-500/10 shadow-[0_0_16px_rgba(16,185,129,0.2)]'
+                        : 'border-white/[0.08] bg-[var(--surface-card)]'
+                    )}
                     animate={{
                       scale: currentStep.highlightedBucket === bucket.index ? 1.02 : 1
                     }}
                     transition={{ duration: 0.2 }}
                   >
-                    <div className={styles.bucketIndex}>{bucket.index}</div>
-                    <div className={styles.bucketEntries}>
+                    <div className="border-b border-white/[0.08] bg-white/5 px-2 py-1 text-center font-mono text-xs font-semibold text-gray-500">
+                      {bucket.index}
+                    </div>
+                    <div className="flex min-h-12 flex-col items-center justify-center gap-1 p-1">
                       {bucket.entries.length === 0 ? (
-                        <span className={styles.emptyBucket}>empty</span>
+                        <span className="font-mono text-xs italic text-gray-700">empty</span>
                       ) : (
                         bucket.entries.map((entry, entryIdx) => (
                           <motion.div
                             key={`${entry.key}-${entryIdx}`}
-                            className={`${styles.entry} ${entry.isHighlighted ? styles.highlightedEntry : ''}`}
+                            className={cn(
+                              'flex items-center gap-1 rounded px-2 py-1 font-mono text-xs transition-all',
+                              entry.isHighlighted
+                                ? 'bg-emerald-500/20 shadow-[0_0_8px_rgba(16,185,129,0.3)]'
+                                : 'bg-white/[0.08]'
+                            )}
                             initial={entry.isNew ? { opacity: 0, scale: 0.8 } : false}
                             animate={{
                               opacity: 1,
@@ -1675,19 +874,19 @@ export function HashMapViz() {
                             }}
                             transition={{ duration: 0.3 }}
                           >
-                            <span className={styles.entryKey}>{entry.key}</span>
-                            <span className={styles.entryArrow}>{'\u2192'}</span>
+                            <span className="font-semibold text-amber-500">{entry.key}</span>
+                            <span className="text-[10px] text-gray-600">{'\u2192'}</span>
                             <motion.span
-                              className={styles.entryValue}
+                              className="font-medium text-emerald-500"
                               key={`${entry.key}-${entry.value}`}
                               initial={entry.isHighlighted ? { scale: 1.2, color: '#10b981' } : false}
-                              animate={{ scale: 1, color: 'inherit' }}
+                              animate={{ scale: 1, color: '#10b981' }}
                               transition={{ duration: 0.3 }}
                             >
                               {entry.value}
                             </motion.span>
                             {entry.originalIndex !== undefined && (
-                              <span className={styles.entryOriginalIndex}>@{entry.originalIndex}</span>
+                              <span className="ml-0.5 text-[10px] text-gray-600">@{entry.originalIndex}</span>
                             )}
                           </motion.div>
                         ))
@@ -1697,14 +896,17 @@ export function HashMapViz() {
                 ))}
               </div>
 
+              {/* Output Box */}
               {currentStep.output && currentStep.output.length > 0 && (
-                <div className={styles.outputBox}>
-                  <div className={styles.outputHeader}>Output</div>
-                  <div className={styles.outputContent}>
+                <div className="overflow-hidden rounded-lg border border-white/[0.08] bg-black/40">
+                  <div className="bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                    Output
+                  </div>
+                  <div className="p-2">
                     {currentStep.output.map((line, i) => (
                       <motion.div
                         key={i}
-                        className={styles.outputLine}
+                        className="font-mono text-sm text-emerald-500"
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                       >
@@ -1731,8 +933,9 @@ export function HashMapViz() {
             canNext={stepIndex < currentExample.steps.length - 1}
           />
 
-          <div className={styles.insightBox}>
-            <span className={styles.insightLabel}>Key Insight:</span>
+          {/* Insight Box */}
+          <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/8 px-4 py-2 text-center text-sm text-gray-400">
+            <span className="mr-2 font-semibold text-emerald-500">Key Insight:</span>
             {currentExample.insight}
           </div>
         </>

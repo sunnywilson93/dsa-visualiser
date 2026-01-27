@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import styles from './SiteFooter.module.css'
 
 const footerLinks = {
   concepts: {
@@ -31,16 +30,21 @@ const footerLinks = {
 
 export function SiteFooter() {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.container}>
-        <nav className={styles.nav}>
+    <footer className="border-t border-white-8 bg-black-30 py-8 px-0 mt-auto">
+      <div className="max-w-[1400px] mx-auto py-0 px-8">
+        <nav className="grid grid-cols-3 gap-8 max-md:grid-cols-1 max-md:gap-6 max-md:px-0">
           {Object.entries(footerLinks).map(([key, category]) => (
-            <div key={key} className={styles.column}>
-              <h3 className={styles.columnTitle}>{category.title}</h3>
-              <ul className={styles.linkList}>
+            <div key={key} className="flex flex-col gap-3">
+              <h3 className="text-xs font-semibold uppercase tracking-widest text-text-muted mb-1">
+                {category.title}
+              </h3>
+              <ul className="list-none flex flex-col gap-2">
                 {category.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className={styles.link}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-text-secondary no-underline transition-colors duration-fast hover:text-brand-primary"
+                    >
                       {link.label}
                     </Link>
                   </li>
@@ -49,8 +53,8 @@ export function SiteFooter() {
             </div>
           ))}
         </nav>
-        <div className={styles.bottom}>
-          <p className={styles.tagline}>
+        <div className="mt-8 pt-4 border-t border-white-8 text-center">
+          <p className="text-xs text-text-muted">
             JS Interview Prep - Master JavaScript with Interactive Visualization
           </p>
         </div>

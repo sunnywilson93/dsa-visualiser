@@ -11,8 +11,6 @@ import { ConceptIcon } from '@/components/Icons'
 import { getConceptById, getRelatedConcepts, getRelatedProblems } from '@/data/concepts'
 import { codeExamples } from '@/data/examples'
 
-import styles from './page.module.css'
-
 // Lazy load visualizations - each loads only when its concept page is visited
 const visualizations: Record<string, React.ComponentType> = {
   // Beginner
@@ -66,11 +64,11 @@ export default function ConceptPageClient(): JSX.Element {
 
   if (!concept) {
     return (
-      <div className={styles.page}>
+      <div className="flex min-h-screen flex-col bg-[var(--gradient-page)]">
         <NavBar />
-        <div className={styles.notFound}>
+        <div className="flex flex-1 flex-col items-center justify-center gap-[var(--spacing-lg)] text-[var(--color-gray-500)]">
           <h1>Concept not found</h1>
-          <Link href="/concepts">Back to Concepts</Link>
+          <Link href="/concepts" className="text-[var(--color-brand-primary)]">Back to Concepts</Link>
         </div>
       </div>
     )
@@ -79,7 +77,7 @@ export default function ConceptPageClient(): JSX.Element {
   const Visualization = visualizations[concept.id]
 
   return (
-    <div className={styles.page}>
+    <div className="flex min-h-screen flex-col bg-[var(--gradient-page)]">
       <NavBar
         breadcrumbs={[
           { label: 'Concepts', path: '/concepts' },
@@ -87,43 +85,50 @@ export default function ConceptPageClient(): JSX.Element {
         ]}
       />
 
-      <main className={styles.main}>
+      <main className="mx-auto w-full max-w-[900px] flex-1 px-8 pb-12 pt-6 max-md:px-[var(--spacing-lg)]">
         {/* Header */}
-        <header className={styles.header}>
-          <button className={styles.backBtn} onClick={() => router.push('/concepts')}>
+        <header className="mb-8">
+          <button 
+            className="mb-[var(--spacing-lg)] inline-flex items-center gap-[var(--spacing-sm)] border-0 bg-transparent p-0 py-[var(--spacing-sm)] text-base text-[var(--color-gray-500)] transition-colors duration-200 hover:text-[var(--color-brand-primary)]" 
+            onClick={() => router.push('/concepts')}
+          >
             <ArrowLeft size={18} />
             <span>All Concepts</span>
           </button>
 
-          <div className={styles.titleRow}>
-            <span className={styles.icon}>
+          <div className="mb-[var(--spacing-lg)] flex items-center gap-[var(--spacing-md)] max-md:flex-wrap">
+            <span className="text-4xl leading-none">
               <ConceptIcon conceptId={concept.id} size={32} />
             </span>
-            <h1 className={styles.title}>{concept.title}</h1>
+            <h1 className="m-0 text-[var(--text-3xl)] font-bold text-white max-md:text-[var(--text-2xl)]">
+              {concept.title}
+            </h1>
             <span
-              className={styles.difficulty}
+              className="rounded-[var(--radius-sm)] px-2.5 py-[var(--spacing-xs)] text-[var(--text-xs)] font-semibold uppercase tracking-wide text-white"
               style={{ background: difficultyColors[concept.difficulty] }}
             >
               {concept.difficulty}
             </span>
           </div>
 
-          <p className={styles.description}>{concept.description}</p>
+          <p className="m-0 text-[var(--text-md)] leading-[1.7] text-[var(--color-gray-400)] max-md:text-base">
+            {concept.description}
+          </p>
         </header>
 
         {/* Interactive Visualization */}
-        <section className={styles.vizSection}>
-          <h2 className={styles.sectionTitle}>
-            <Gamepad2 size={20} className={styles.sectionIconSvg} />
+        <section className="mb-10">
+          <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+            <Gamepad2 size={20} className="text-[var(--color-brand-primary)]" />
             Interactive Visualization
           </h2>
-          <div className={styles.vizContainer}>
+          <div className="min-h-[300px] rounded-[var(--radius-xl)] border border-[var(--color-white-10)] bg-[var(--color-black-30)] p-[var(--spacing-xl)] max-md:min-h-[200px] max-md:p-[var(--spacing-lg)]">
             {Visualization ? (
               <ErrorBoundary>
                 <Visualization />
               </ErrorBoundary>
             ) : (
-              <div className={styles.vizPlaceholder}>
+              <div className="flex h-[250px] items-center justify-center text-[var(--color-gray-700)]">
                 Visualization coming soon
               </div>
             )}
@@ -131,15 +136,16 @@ export default function ConceptPageClient(): JSX.Element {
         </section>
 
         {/* Key Points */}
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>
-            <Lightbulb size={20} className={styles.sectionIconSvg} />
+        <section className="mb-10">
+          <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+            <Lightbulb size={20} className="text-[var(--color-brand-primary)]" />
             Key Points
           </h2>
-          <ul className={styles.keyPoints}>
+          <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
             {concept.keyPoints.map((point, i) => (
               <motion.li
                 key={i}
+                className="relative pl-6 leading-[var(--leading-normal)] text-[var(--color-gray-300)] before:absolute before:left-0 before:font-bold before:text-[var(--color-brand-primary)] before:content-['→']"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
@@ -151,25 +157,29 @@ export default function ConceptPageClient(): JSX.Element {
         </section>
 
         {/* Code Examples */}
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>
-            <Code2 size={20} className={styles.sectionIconSvg} />
+        <section className="mb-10">
+          <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+            <Code2 size={20} className="text-[var(--color-brand-primary)]" />
             Code Examples
           </h2>
-          <div className={styles.examples}>
+          <div className="flex flex-col gap-[var(--spacing-xl)]">
             {concept.examples.map((example, i) => (
               <motion.div
                 key={i}
-                className={styles.example}
+                className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-white-8)] bg-[var(--color-white-3)]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
               >
-                <h3 className={styles.exampleTitle}>{example.title}</h3>
-                <pre className={styles.code}>
-                  <code>{example.code}</code>
+                <h3 className="m-0 border-b border-[var(--color-white-8)] bg-[var(--color-brand-primary-15)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-[0.95rem] font-semibold text-white">
+                  {example.title}
+                </h3>
+                <pre className="m-0 overflow-x-auto bg-[var(--color-black-40)] p-[var(--spacing-lg)] font-mono text-base leading-[var(--leading-relaxed)] text-[#e0e0e0] max-md:p-[var(--spacing-md)] max-md:text-[var(--text-sm)]">
+                  <code className="whitespace-pre">{example.code}</code>
                 </pre>
-                <p className={styles.explanation}>{example.explanation}</p>
+                <p className="m-0 border-t border-[var(--color-white-5)] bg-[var(--color-brand-primary-5)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-base leading-[var(--leading-relaxed)] text-[var(--color-gray-400)]">
+                  {example.explanation}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -177,14 +187,19 @@ export default function ConceptPageClient(): JSX.Element {
 
         {/* Common Mistakes */}
         {concept.commonMistakes && concept.commonMistakes.length > 0 && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>
-              <AlertTriangle size={20} className={styles.sectionIconSvg} />
+          <section className="mb-10">
+            <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+              <AlertTriangle size={20} className="text-[var(--color-brand-primary)]" />
               Common Mistakes
             </h2>
-            <ul className={styles.mistakes}>
+            <ul className="m-0 flex list-none flex-col gap-[var(--spacing-sm)] p-0">
               {concept.commonMistakes.map((mistake, i) => (
-                <li key={i}>{mistake}</li>
+                <li 
+                  key={i} 
+                  className="relative rounded-r-md border-l-4 border-l-[var(--color-red-500)] bg-[var(--color-red-10)] py-1.5 pl-8 pr-3 text-base text-[#f8a0a0] before:absolute before:left-2.5 before:text-[var(--color-accent-red)] before:content-['✗']"
+                >
+                  {mistake}
+                </li>
               ))}
             </ul>
           </section>
@@ -192,14 +207,19 @@ export default function ConceptPageClient(): JSX.Element {
 
         {/* Interview Tips */}
         {concept.interviewTips && concept.interviewTips.length > 0 && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>
-              <Award size={20} className={styles.sectionIconSvg} />
+          <section className="mb-10">
+            <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+              <Award size={20} className="text-[var(--color-brand-primary)]" />
               Interview Tips
             </h2>
-            <ul className={styles.tips}>
+            <ul className="m-0 flex list-none flex-col gap-[var(--spacing-sm)] p-0">
               {concept.interviewTips.map((tip, i) => (
-                <li key={i}>{tip}</li>
+                <li 
+                  key={i} 
+                  className="relative rounded-r-md border-l-4 border-l-[var(--color-emerald-500)] bg-[var(--color-emerald-10)] py-1.5 pl-8 pr-3 text-base text-[var(--color-emerald-400)] before:absolute before:left-2.5 before:text-[var(--difficulty-1)] before:content-['✓']"
+                >
+                  {tip}
+                </li>
               ))}
             </ul>
           </section>
@@ -213,28 +233,34 @@ export default function ConceptPageClient(): JSX.Element {
             .filter((p): p is typeof codeExamples[0] => p !== undefined)
           if (problems.length === 0) return null
           return (
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>
-                <Hammer size={20} className={styles.sectionIconSvg} />
+            <section className="mb-10">
+              <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+                <Hammer size={20} className="text-[var(--color-brand-primary)]" />
                 Practice Problems
               </h2>
-              <p className={styles.sectionSubtitle}>
+              <p className="mb-4 -mt-2 text-base text-[var(--color-gray-500)]">
                 Apply this concept by solving these {problems.length} problems
               </p>
-              <div className={styles.problemsGrid}>
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-[var(--spacing-md)]">
                 {problems.map((problem) => (
                   <Link
                     key={problem.id}
                     href={`/${problem.category}/${problem.id}`}
-                    className={styles.problemCard}
+                    className="flex flex-col gap-[var(--spacing-sm)] rounded-[var(--radius-lg)] border border-[var(--color-white-8)] bg-[var(--color-white-3)] p-[var(--spacing-md)] px-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:-translate-y-0.5 hover:border-[var(--color-brand-primary-30)] hover:bg-[var(--color-brand-primary-10)]"
                   >
-                    <div className={styles.problemHeader}>
-                      <h3 className={styles.problemTitle}>{problem.name}</h3>
-                      <span className={`${styles.problemDifficulty} ${styles[problem.difficulty]}`}>
+                    <div className="flex items-center justify-between gap-[var(--spacing-sm)]">
+                      <h3 className="m-0 text-[0.95rem] font-semibold text-white">{problem.name}</h3>
+                      <span className={`rounded-[var(--radius-sm)] px-2 py-0.5 text-[var(--text-2xs)] font-semibold uppercase tracking-wide text-white ${
+                        problem.difficulty === 'easy' ? 'bg-[var(--color-emerald-500)]' : 
+                        problem.difficulty === 'medium' ? 'bg-[var(--color-amber-500)]' : 
+                        'bg-[var(--color-red-500)]'
+                      }`}>
                         {problem.difficulty}
                       </span>
                     </div>
-                    <p className={styles.problemDesc}>{problem.description}</p>
+                    <p className="m-0 text-[var(--text-sm)] leading-[var(--leading-snug)] text-[var(--color-gray-500)]">
+                      {problem.description}
+                    </p>
                   </Link>
                 ))}
               </div>
@@ -247,24 +273,26 @@ export default function ConceptPageClient(): JSX.Element {
           const relatedConcepts = getRelatedConcepts(concept.id)
           if (relatedConcepts.length === 0) return null
           return (
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>
-                <Link2 size={20} className={styles.sectionIconSvg} />
+            <section className="mb-10">
+              <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+                <Link2 size={20} className="text-[var(--color-brand-primary)]" />
                 Related Concepts
               </h2>
-              <div className={styles.relatedConcepts}>
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-[var(--spacing-lg)]">
                 {relatedConcepts.map((related) => (
                   <Link
                     key={related.id}
                     href={`/concepts/${related.id}`}
-                    className={styles.relatedCard}
+                    className="flex items-center gap-[var(--spacing-md)] rounded-[var(--radius-lg)] border border-[var(--color-white-8)] bg-[var(--color-white-3)] p-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:-translate-y-0.5 hover:border-[var(--color-brand-primary-30)] hover:bg-[var(--color-brand-primary-10)]"
                   >
-                    <span className={styles.relatedIcon}>
+                    <span className="text-[1.75rem] leading-none">
                       <ConceptIcon conceptId={related.id} size={24} />
                     </span>
-                    <div className={styles.relatedInfo}>
-                      <h3 className={styles.relatedTitle}>{related.title}</h3>
-                      <p className={styles.relatedDesc}>{related.shortDescription}</p>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="mb-1 text-[0.95rem] font-semibold text-white">{related.title}</h3>
+                      <p className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-[var(--text-base)] text-[var(--color-gray-500)]">
+                        {related.shortDescription}
+                      </p>
                     </div>
                   </Link>
                 ))}

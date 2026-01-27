@@ -1,6 +1,7 @@
+'use client'
+
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from './CompositionViz.module.css'
 
 interface FunctionBox {
   id: string
@@ -13,7 +14,7 @@ interface FunctionBox {
 
 interface DataFlow {
   value: string
-  position: number // 0-100 representing position in the pipeline
+  position: number
 }
 
 interface Step {
@@ -592,83 +593,105 @@ export function CompositionViz() {
   }
 
   return (
-    <div className={styles.container}>
-      {/* Level selector */}
-      <div className={styles.levelSelector}>
+    <div className="flex flex-col gap-6">
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`${styles.levelBtn} ${level === lvl ? styles.activeLevel : ''}`}
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full cursor-pointer transition-all duration-200 ${
+              level === lvl 
+                ? 'text-[var(--color-text-bright)] shadow-[0_0_20px_var(--color-neon-viz-25)]' 
+                : 'bg-white/4 border border-white/8 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+            }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
-              borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-              background: level === lvl ? `${levelInfo[lvl].color}15` : 'transparent'
+              borderColor: level === lvl ? levelInfo[lvl].color : undefined,
+              background: level === lvl ? `${levelInfo[lvl].color}15` : undefined
             }}
           >
-            <span className={styles.levelDot} style={{ background: levelInfo[lvl].color }}></span>
+            <span 
+              className="w-2 h-2 rounded-full" 
+              style={{ background: levelInfo[lvl].color }}
+            />
             {levelInfo[lvl].label}
           </button>
         ))}
       </div>
 
-      {/* Example selector */}
-      <div className={styles.exampleSelector}>
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`${styles.exampleBtn} ${exampleIndex === i ? styles.active : ''}`}
+            className={`px-4 py-1.5 font-mono text-sm rounded-full cursor-pointer transition-all duration-200 ${
+              exampleIndex === i 
+                ? 'text-[var(--color-text-bright)] shadow-[0_0_20px_var(--color-neon-viz-25)]' 
+                : 'bg-white/4 border border-white/8 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+            }`}
             onClick={() => handleExampleChange(i)}
+            style={{
+              borderColor: exampleIndex === i ? 'var(--color-neon-viz-70)' : undefined,
+              background: exampleIndex === i ? 'var(--color-neon-viz-18)' : undefined
+            }}
           >
             {ex.title}
           </button>
         ))}
       </div>
 
-      {/* Code panel */}
-      <div className={styles.codePanel}>
-        <div className={styles.codeHeader}>
+      <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
+        <div className="flex justify-between items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white/5">
           <span>Code</span>
-          <span className={styles.phaseBadge} style={{ background: getPhaseColor(currentStep.phase) }}>
+          <span 
+            className="px-2 py-0.5 rounded-full text-2xs font-semibold text-black"
+            style={{ background: getPhaseColor(currentStep.phase) }}
+          >
             {currentStep.phase}
           </span>
         </div>
-        <pre className={styles.code}>
+        <pre className="m-0 py-2 max-h-[200px] overflow-y-auto">
           {currentExample.code.map((line, i) => (
             <div
               key={i}
               ref={el => { lineRefs.current[i] = el }}
-              className={`${styles.codeLine} ${currentStep.highlightLines.includes(i) ? styles.activeLine : ''}`}
+              className={`flex px-3 py-0.5 transition-colors duration-200 ${
+                currentStep.highlightLines.includes(i) ? 'bg-[var(--color-brand-primary-20)]' : ''
+              }`}
             >
-              <span className={styles.lineNum}>{i + 1}</span>
-              <span className={styles.lineCode}>{line || ' '}</span>
+              <span className="w-6 text-gray-800 font-mono text-2xs select-none">{i + 1}</span>
+              <span className={`font-mono text-xs ${
+                currentStep.highlightLines.includes(i) ? 'text-[var(--color-brand-light)]' : 'text-gray-300'
+              }`}>{line || ' '}</span>
             </div>
           ))}
         </pre>
       </div>
 
-      {/* Function Pipeline Visualization */}
-      <div className={styles.pipelineContainer}>
-        <div className={styles.pipelineHeader}>Function Pipeline</div>
-        <div className={styles.pipeline}>
+      <div className="bg-[var(--color-black-30)] border border-white/8 rounded-xl p-4 relative">
+        <div className="text-sm font-medium text-gray-400 mb-4 text-center">Function Pipeline</div>
+        <div className="flex flex-wrap gap-3 justify-center items-center relative min-h-[100px] p-4">
           <AnimatePresence mode="popLayout">
             {currentStep.functions.map((fn, idx) => (
               <motion.div
                 key={fn.id}
-                className={`${styles.functionBox} ${fn.isActive ? styles.activeFn : ''}`}
+                className={`relative min-w-[120px] p-4 bg-[var(--color-black-40)] border-2 rounded-lg text-center transition-all duration-300 ${
+                  fn.isActive 
+                    ? 'border-[var(--color-brand-light)] shadow-[0_0_20px_rgba(167,139,250,0.4)] bg-[rgba(167,139,250,0.1)]' 
+                    : 'border-[rgba(167,139,250,0.3)]'
+                }`}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 layout
               >
-                <div className={styles.fnName}>{fn.name}</div>
+                <div className="font-mono text-sm font-bold text-[var(--color-brand-light)] mb-1">{fn.name}</div>
                 {fn.args && (
-                  <div className={styles.fnArgs}>
+                  <div className="font-mono text-xs text-gray-400">
                     ({fn.filledArgs ? fn.filledArgs.join(', ') : fn.args.join(', ')})
                   </div>
                 )}
                 {fn.result && (
                   <motion.div
-                    className={styles.fnResult}
+                    className="mt-1 font-mono text-xs text-emerald-500"
                     initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
                   >
@@ -676,39 +699,39 @@ export function CompositionViz() {
                   </motion.div>
                 )}
                 {idx < currentStep.functions.length - 1 && (
-                  <div className={styles.arrow}>→</div>
+                  <div className="absolute -right-5 top-1/2 -translate-y-1/2 text-lg text-gray-500">→</div>
                 )}
               </motion.div>
             ))}
           </AnimatePresence>
 
-          {/* Data flow indicator */}
           {currentStep.dataFlow && (
             <motion.div
-              className={styles.dataFlow}
+              className="absolute -bottom-1 -translate-x-1/2 z-10"
               initial={{ left: '0%' }}
               animate={{ left: `${currentStep.dataFlow.position}%` }}
               transition={{ type: 'spring', stiffness: 100 }}
             >
-              <span className={styles.dataValue}>{currentStep.dataFlow.value}</span>
+              <span className="inline-block px-2 py-0.5 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] rounded-full font-mono text-xs text-white whitespace-nowrap">
+                {currentStep.dataFlow.value}
+              </span>
             </motion.div>
           )}
         </div>
       </div>
 
-      {/* Output */}
-      <div className={styles.outputPanel}>
-        <div className={styles.outputHeader}>Output</div>
-        <div className={styles.output}>
+      <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
+        <div className="px-4 py-2 text-sm font-medium text-gray-500 bg-white/5">Output</div>
+        <div className="p-4 min-h-[50px]">
           {currentStep.output.length === 0 ? (
-            <span className={styles.emptyOutput}>—</span>
+            <span className="text-gray-700">—</span>
           ) : (
             currentStep.output.map((o, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                className={styles.outputLine}
+                className="font-mono text-sm text-emerald-500 py-0.5"
               >
                 {o}
               </motion.div>
@@ -717,27 +740,31 @@ export function CompositionViz() {
         </div>
       </div>
 
-      {/* Step description */}
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className={styles.description}
+          className="bg-[var(--color-brand-primary-10)] border border-[var(--color-brand-primary-30)] rounded-lg p-4 text-sm text-gray-300 leading-normal"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentExample.steps.length}</span>
+          <span className="inline-block bg-[var(--color-brand-primary-30)] px-2 py-0.5 rounded-full text-2xs font-semibold text-[var(--color-brand-light)] mr-2">
+            Step {stepIndex + 1}/{currentExample.steps.length}
+          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>
 
-      {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
+      <div className="flex gap-4 justify-center">
+        <button 
+          className="px-4 py-2 text-sm bg-white/5 border border-white/10 rounded-full font-medium text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-[var(--color-text-bright)] disabled:opacity-50 disabled:cursor-not-allowed" 
+          onClick={handlePrev} 
+          disabled={stepIndex === 0}
+        >
           ← Prev
         </button>
         <motion.button
-          className={styles.btnPrimary}
+          className="px-4 py-2 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-full text-sm font-medium text-white cursor-pointer transition-all duration-200 hover:shadow-[0_0_20px_var(--color-brand-primary-40)] disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={stepIndex >= currentExample.steps.length - 1}
           whileHover={{ scale: 1.02 }}
@@ -745,14 +772,16 @@ export function CompositionViz() {
         >
           {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
         </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
+        <button 
+          className="px-4 py-2 text-sm bg-white/5 border border-white/10 rounded-full font-medium text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-[var(--color-text-bright)]" 
+          onClick={handleReset}
+        >
           ↻ Reset
         </button>
       </div>
 
-      {/* Key insight */}
-      <div className={styles.insight}>
-        <strong>Key Insight:</strong> {currentExample.insight}
+      <div className="bg-[var(--color-emerald-10)] border border-[var(--color-emerald-30)] rounded-lg p-4 text-sm text-gray-300 leading-normal">
+        <strong className="text-emerald-500">Key Insight:</strong> {currentExample.insight}
       </div>
     </div>
   )

@@ -6,7 +6,7 @@ import { analyzeEventLoop, EventLoopStep, AnalyzerWarning } from '@/engine/event
 import { NavBar } from '@/components/NavBar'
 import { PlaygroundEditor } from '@/components/EventLoopPlayground/PlaygroundEditor'
 import { EventLoopDisplay } from '@/components/EventLoopPlayground/EventLoopDisplay'
-import styles from './page.module.css'
+
 
 interface Example {
   id: string
@@ -207,22 +207,22 @@ export default function EventLoopPlaygroundClient() {
         { label: 'Playground' },
         { label: 'Event Loop' }
       ]} />
-      <div className={styles.container}>
-        <header className={styles.header}>
-        <h1 className={styles.title}>Event Loop Playground</h1>
-        <p className={styles.subtitle}>
+      <div className="flex flex-col gap-5 max-w-[1400px] mx-auto p-6 text-text-primary max-[600px]:p-4">
+        <header className="text-center mb-2">
+        <h1 className="text-2xl font-bold m-0 mb-2 bg-gradient-to-br from-brand-primary from-0% to-brand-secondary to-100% bg-clip-text text-transparent">Event Loop Playground</h1>
+        <p className="text-base text-text-secondary m-0">
           Write JavaScript code and visualize how the event loop processes it
         </p>
       </header>
 
       {/* Example selector */}
-      <div className={styles.exampleSelector}>
-        <span className={styles.exampleLabel}>Examples:</span>
-        <div className={styles.exampleButtons}>
+      <div className="flex items-center gap-3 flex-wrap justify-center p-3 bg-bg-secondary border border-border-secondary rounded-lg">
+        <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">Examples:</span>
+        <div className="flex gap-2 flex-wrap max-[600px]:justify-center">
           {examples.map(ex => (
             <button
               key={ex.id}
-              className={`${styles.exampleBtn} ${selectedExample === ex.id ? styles.active : ''}`}
+              className={`py-1 px-3 font-sans text-xs bg-white-4 border border-border-secondary rounded-full text-text-muted cursor-pointer transition-all duration-150 hover:bg-white-8 hover:text-text-primary ${selectedExample === ex.id ? 'bg-brand-primary-20 border-brand-primary-50 text-text-bright shadow-[0_0_10px_var(--color-brand-primary-20)]' : ''}`}
               onClick={() => handleExampleChange(ex.id)}
             >
               {ex.title}
@@ -232,9 +232,9 @@ export default function EventLoopPlaygroundClient() {
       </div>
 
       {/* Main content */}
-      <div className={styles.mainContent}>
+      <div className="grid grid-cols-2 gap-5 min-h-[500px] max-[900px]:grid-cols-1">
         {/* Left side: Editor */}
-        <div className={styles.editorSection}>
+        <div className="flex flex-col gap-3 min-h-[500px] max-[900px]:min-h-[350px]">
           <PlaygroundEditor
             code={code}
             onChange={setCode}
@@ -245,12 +245,12 @@ export default function EventLoopPlaygroundClient() {
 
           {/* Warnings */}
           {warnings.length > 0 && (
-            <div className={styles.warnings}>
-              <div className={styles.warningsHeader}>
+            <div className="p-3 bg-amber-8 border border-amber-20 rounded-lg">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-500 mb-2">
                 <AlertTriangle size={14} />
                 <span>Limitations</span>
               </div>
-              <ul className={styles.warningsList}>
+              <ul className="m-0 pl-5 text-xs text-text-secondary [&>li]:my-0.5">
                 {warnings.map((w, i) => (
                   <li key={i}>{w.message}</li>
                 ))}
@@ -260,14 +260,14 @@ export default function EventLoopPlaygroundClient() {
         </div>
 
         {/* Right side: Visualization */}
-        <div className={styles.vizSection}>
+        <div className="bg-bg-secondary border border-border-secondary rounded-lg p-4 overflow-auto max-[900px]:min-h-[450px]">
           {steps.length > 0 && currentStep ? (
             <EventLoopDisplay step={currentStep} />
           ) : (
-            <div className={styles.emptyState}>
-              <div className={styles.emptyIcon}>⚡</div>
+            <div className="flex flex-col items-center justify-center h-full text-center text-text-secondary">
+              <div className="text-5xl mb-6">⚡</div>
               <p>Click <strong>Analyze</strong> to visualize the event loop</p>
-              <p className={styles.emptyHint}>
+              <p className="text-sm opacity-70">
                 Or select an example above to get started
               </p>
             </div>
@@ -277,16 +277,16 @@ export default function EventLoopPlaygroundClient() {
 
       {/* Controls */}
       {steps.length > 0 && (
-        <div className={styles.controls}>
+        <div className="flex items-center justify-center gap-3 p-3 bg-bg-secondary border border-border-secondary rounded-lg">
           <button
-            className={styles.controlBtn}
+            className="flex items-center justify-center w-9 h-9 bg-white-5 border border-border-secondary rounded-lg text-text-muted cursor-pointer transition-all duration-150 hover:bg-white-10 hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
             onClick={handleReset}
             title="Reset"
           >
             <RotateCcw size={16} />
           </button>
           <button
-            className={styles.controlBtn}
+            className="flex items-center justify-center w-9 h-9 bg-white-5 border border-border-secondary rounded-lg text-text-muted cursor-pointer transition-all duration-150 hover:bg-white-10 hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
             onClick={handlePrev}
             disabled={currentStepIndex === 0}
             title="Previous step"
@@ -294,21 +294,21 @@ export default function EventLoopPlaygroundClient() {
             <SkipBack size={16} />
           </button>
           <button
-            className={`${styles.controlBtn} ${styles.playBtn}`}
+            className="flex items-center justify-center w-11 h-11 bg-gradient-to-br from-brand-primary to-brand-secondary border-none text-white cursor-pointer transition-all duration-150 hover:brightness-110 hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed"
             onClick={togglePlay}
             title={isPlaying ? 'Pause' : 'Play'}
           >
             {isPlaying ? <Pause size={18} /> : <Play size={18} />}
           </button>
           <button
-            className={styles.controlBtn}
+            className="flex items-center justify-center w-9 h-9 bg-white-5 border border-border-secondary rounded-lg text-text-muted cursor-pointer transition-all duration-150 hover:bg-white-10 hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
             onClick={handleNext}
             disabled={currentStepIndex >= steps.length - 1}
             title="Next step"
           >
             <SkipForward size={16} />
           </button>
-          <div className={styles.stepCounter}>
+          <div className="text-sm font-medium text-text-muted min-w-20 text-center">
             Step {currentStepIndex + 1} / {steps.length}
           </div>
         </div>
@@ -316,13 +316,13 @@ export default function EventLoopPlaygroundClient() {
 
         {/* Step description */}
         {steps.length > 0 && currentStep && (
-          <div className={styles.description}>
-            <span className={styles.phaseBadge} data-phase={currentStep.phase}>
+          <div className="flex items-center gap-3 p-3 px-4 bg-bg-secondary border border-border-secondary rounded-lg">
+            <span className="py-0.5 px-2.5 rounded-full text-2xs font-semibold text-white flex-shrink-0 [&[data-phase='sync']]:bg-brand-primary [&[data-phase='micro']]:bg-brand-primary [&[data-phase='macro']]:bg-amber-500 [&[data-phase='idle']]:bg-gray-800" data-phase={currentStep.phase}>
               {currentStep.phase === 'sync' ? 'Sync' :
                currentStep.phase === 'micro' ? 'Microtask' :
                currentStep.phase === 'macro' ? 'Macrotask' : 'Idle'}
             </span>
-            <span className={styles.descriptionText}>{currentStep.description}</span>
+            <span className="text-base text-text-primary">{currentStep.description}</span>
           </div>
         )}
       </div>

@@ -1,7 +1,5 @@
 'use client'
 
-import styles from './ReadOnlyCode.module.css'
-
 interface ReadOnlyCodeProps {
   code: string
   className?: string
@@ -9,13 +7,13 @@ interface ReadOnlyCodeProps {
 
 export function ReadOnlyCode({ code, className }: ReadOnlyCodeProps) {
   return (
-    <div className={`${styles.container} ${className ?? ''}`}>
-      <div className={styles.header}>
-        <span className={styles.title}>Code</span>
-        <span className={styles.badge}>Read Only</span>
+    <div className={`flex flex-col h-full bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] overflow-hidden ${className ?? ''}`}>
+      <div className="flex items-center justify-between px-[var(--spacing-md)] py-[var(--spacing-sm)] bg-[var(--color-bg-tertiary)] border-b border-[var(--color-border-primary)] flex-shrink-0">
+        <span className="text-[var(--text-sm)] font-semibold uppercase tracking-[0.5px] text-[var(--color-text-secondary)]">Code</span>
+        <span className="text-[var(--text-xs)] font-medium px-[6px] py-[2px] rounded-[var(--radius-sm)] bg-[var(--color-bg-elevated)] text-[var(--color-text-muted)] uppercase tracking-[0.3px]">Read Only</span>
       </div>
-      <pre className={styles.codeBlock}>
-        <code>{code}</code>
+      <pre className="flex-1 m-0 p-[var(--spacing-md)] font-mono text-[var(--text-base)] leading-[var(--leading-normal)] text-[var(--color-text-primary)] overflow-auto whitespace-pre [-webkit-overflow-scrolling:touch]">
+        <code className="block">{code}</code>
       </pre>
     </div>
   )

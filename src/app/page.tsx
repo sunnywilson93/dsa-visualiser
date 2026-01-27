@@ -7,7 +7,7 @@ import { exampleCategories, getExamplesByCategory, getAllJsExamples } from '@/da
 import { concepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
 import { dsaPatterns } from '@/data/dsaPatterns'
-import styles from './page.module.css'
+
 
 // JS implementation categories (exclude DSA - it gets its own section)
 const jsCategories = exampleCategories.filter(c => c.id !== 'dsa')
@@ -17,77 +17,77 @@ const allJsProblems = getAllJsExamples()
 
 export default function HomePage() {
   return (
-    <div className={styles.container}>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-bg-page from-0% to-bg-page-secondary to-100%">
       <NavBar />
 
-      <header className={styles.header}>
-        <h1 className={styles.title}>JS Interview Prep</h1>
-        <p className={styles.subtitle}>
+      <header className="text-center py-8 px-8 pt-8">
+        <h1 className="text-3xl font-bold bg-gradient-to-br from-brand-primary from-0% to-brand-secondary to-100% bg-clip-text text-transparent m-0 mb-3 drop-shadow-[0_0_20px_var(--color-brand-primary-30)]">JS Interview Prep</h1>
+        <p className="text-text-secondary text-md m-0">
           Master JavaScript for frontend interviews with interactive visualizations
         </p>
       </header>
 
-      <main className={styles.main}>
+      <main className="flex-1 py-6 px-8 pb-8 max-w-[1200px] mx-auto w-full">
         {/* Section 1: UNDERSTAND - Concepts */}
-        <section className={styles.section}>
-          <div className={styles.sectionHeader}>
+        <section className="mb-10">
+          <div className="flex justify-between items-start mb-6">
             <div>
-              <h2 className={styles.sectionTitle}>
-                <span className={styles.sectionNumber}>1</span>
+              <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
+                <span className="inline-flex items-center justify-center w-7 h-7 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-base font-bold text-white">1</span>
                 Understand
               </h2>
-              <p className={styles.sectionDescription}>
+              <p className="text-base text-text-secondary mt-1 mb-0">
                 What interviewers ask you to <strong>explain</strong>
               </p>
             </div>
-            <Link href="/concepts" className={styles.viewAllLink}>
+            <Link href="/concepts" className="text-base text-brand-primary no-underline py-2 px-0 hover:text-brand-secondary transition-colors duration-250">
               View All →
             </Link>
           </div>
 
           {/* Two concept category cards */}
-          <div className={styles.conceptCategoryGrid}>
-            <Link href="/concepts/js" className={styles.conceptCategoryCard}>
-              <div className={styles.conceptCategoryCardInner}>
-                <div className={styles.conceptCategoryHeader}>
-                  <span className={styles.conceptCategoryIcon}>
+          <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1 max-md:gap-4">
+            <Link href="/concepts/js" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-350 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)]">
+              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center justify-center text-brand-primary">
                     <ConceptIcon conceptId="js-core" size={28} />
                   </span>
-                  <span className={styles.conceptCategoryBadge}>{concepts.length} topics</span>
+                  <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{concepts.length} topics</span>
                 </div>
-                <h3 className={styles.conceptCategoryTitle}>JavaScript Deep Dive</h3>
-                <p className={styles.conceptCategoryDescription}>
+                <h3 className="text-xl font-bold text-text-bright m-0">JavaScript Deep Dive</h3>
+                <p className="text-base text-text-secondary m-0 leading-normal">
                   Closures, Event Loop, Prototypes, This, V8 Engine
                 </p>
-                <div className={styles.conceptCategoryTopics}>
+                <div className="flex flex-wrap gap-2 mt-1">
                   {concepts.slice(0, 4).map(c => (
-                    <span key={c.id} className={styles.topicTag}>{c.title}</span>
+                    <span key={c.id} className="text-xs py-0.5 px-2.5 bg-brand-primary-15 border border-brand-primary-30 rounded-xl text-brand-primary">{c.title}</span>
                   ))}
                   {concepts.length > 4 && (
-                    <span className={styles.topicMore}>+{concepts.length - 4}</span>
+                    <span className="text-xs py-0.5 px-2.5 text-text-muted">+{concepts.length - 4}</span>
                   )}
                 </div>
               </div>
             </Link>
 
-            <Link href="/concepts/dsa" className={styles.conceptCategoryCard}>
-              <div className={styles.conceptCategoryCardInner}>
-                <div className={styles.conceptCategoryHeader}>
-                  <span className={styles.conceptCategoryIcon}>
+            <Link href="/concepts/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-350 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)]">
+              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center justify-center text-brand-primary">
                     <ConceptIcon conceptId="data-structures" size={28} />
                   </span>
-                  <span className={styles.conceptCategoryBadge}>{dsaConcepts.length + dsaPatterns.length} topics</span>
+                  <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{dsaConcepts.length + dsaPatterns.length} topics</span>
                 </div>
-                <h3 className={styles.conceptCategoryTitle}>DSA Fundamentals</h3>
-                <p className={styles.conceptCategoryDescription}>
+                <h3 className="text-xl font-bold text-text-bright m-0">DSA Fundamentals</h3>
+                <p className="text-base text-text-secondary m-0 leading-normal">
                   Big O, Arrays, Hash Tables, Stacks, Queues, Linked Lists
                 </p>
-                <div className={styles.conceptCategoryTopics}>
+                <div className="flex flex-wrap gap-2 mt-1">
                   {dsaConcepts.slice(0, 4).map(c => (
-                    <span key={c.id} className={styles.topicTag}>{c.title}</span>
+                    <span key={c.id} className="text-xs py-0.5 px-2.5 bg-brand-primary-15 border border-brand-primary-30 rounded-xl text-brand-primary">{c.title}</span>
                   ))}
                   {(dsaConcepts.length + dsaPatterns.length) > 4 && (
-                    <span className={styles.topicMore}>+{dsaConcepts.length + dsaPatterns.length - 4}</span>
+                    <span className="text-xs py-0.5 px-2.5 text-text-muted">+{dsaConcepts.length + dsaPatterns.length - 4}</span>
                   )}
                 </div>
               </div>
@@ -96,18 +96,18 @@ export default function HomePage() {
         </section>
 
         {/* Section 2: BUILD - JavaScript Implementations */}
-        <section className={styles.section}>
-          <div className={styles.sectionHeader}>
+        <section className="mb-10">
+          <div className="flex justify-between items-start mb-6">
             <div>
-              <h2 className={styles.sectionTitle}>
-                <span className={styles.sectionNumber}>2</span>
+              <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
+                <span className="inline-flex items-center justify-center w-7 h-7 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-base font-bold text-white">2</span>
                 Build
               </h2>
-              <p className={styles.sectionDescription}>
+              <p className="text-base text-text-secondary mt-1 mb-0">
                 What interviewers ask you to <strong>implement</strong>
               </p>
             </div>
-            <Link href="/js-problems" className={styles.viewAllLink}>
+            <Link href="/js-problems" className="text-base text-brand-primary no-underline py-2 px-0 hover:text-brand-secondary transition-colors duration-250">
               All {allJsProblems.length} Problems →
             </Link>
           </div>
@@ -122,11 +122,11 @@ export default function HomePage() {
                 <Link
                   key={category.id}
                   href={`/${category.id}`}
-                  className={styles.buildCard}
+                  className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-350 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border h-full hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)]"
                 >
-                  <div className={styles.buildCardInner}>
-                    <div className={styles.buildCardHeader}>
-                      <span className={styles.buildIcon}>
+                  <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full min-h-[200px] max-md:min-h-[180px]">
+                    <div className="flex items-center justify-between">
+                      <span className="text-3xl leading-none drop-shadow-[0_0_8px_var(--color-white-20)]">
                         <ConceptIcon conceptId={category.id} size={32} />
                       </span>
                       <DifficultyIndicator
@@ -134,11 +134,11 @@ export default function HomePage() {
                         size="md"
                       />
                     </div>
-                    <h3 className={styles.buildTitle}>{category.name}</h3>
-                    <p className={styles.buildDescription}>{category.description}</p>
-                    <div className={styles.buildCardFooter}>
-                      <span className={styles.buildStat}>{problems.length} problems</span>
-                      <span className={styles.buildStat}>
+                    <h3 className="text-lg font-semibold text-text-bright mt-1 mb-0">{category.name}</h3>
+                    <p className="text-base text-text-secondary m-0 leading-normal flex-1">{category.description}</p>
+                    <div className="flex gap-4 mt-auto pt-3 border-t border-border-card">
+                      <span className="text-sm text-brand-primary font-medium">{problems.length} problems</span>
+                      <span className="text-sm text-brand-primary font-medium">
                         {easyCount > 0 && `${easyCount} easy`}
                         {mediumCount > 0 && ` · ${mediumCount} med`}
                         {hardCount > 0 && ` · ${hardCount} hard`}
@@ -152,57 +152,57 @@ export default function HomePage() {
         </section>
 
         {/* Section 3: SOLVE - Data Structures & Algorithms */}
-        <section className={styles.section}>
-          <div className={styles.sectionHeader}>
+        <section className="mb-10">
+          <div className="flex justify-between items-start mb-6">
             <div>
-              <h2 className={styles.sectionTitle}>
-                <span className={styles.sectionNumber}>3</span>
+              <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
+                <span className="inline-flex items-center justify-center w-7 h-7 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-base font-bold text-white">3</span>
                 Solve
               </h2>
-              <p className={styles.sectionDescription}>
+              <p className="text-base text-text-secondary mt-1 mb-0">
                 For <strong>algorithm-focused</strong> interview rounds
               </p>
             </div>
           </div>
 
-          <Link href="/dsa" className={styles.dsaBanner}>
-            <div className={styles.dsaBannerInner}>
-              <div className={styles.dsaContent}>
-                <div className={styles.dsaLeft}>
-                  <span className={styles.dsaIcon}>
+          <Link href="/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-350 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)]">
+            <div className="bg-bg-page-secondary rounded-xl p-6">
+              <div className="flex justify-between items-center mb-4 max-lg:flex-col max-lg:items-start max-lg:gap-4">
+                <div className="flex items-center gap-4">
+                  <span className="flex items-center justify-center text-brand-primary">
                     <ConceptIcon conceptId="dsa" size={32} />
                   </span>
                   <div>
-                    <h3 className={styles.dsaTitle}>Data Structures & Algorithms</h3>
-                    <p className={styles.dsaDescription}>
+                    <h3 className="text-2xl font-bold text-text-bright m-0 mb-1 max-md:text-xl">Data Structures & Algorithms</h3>
+                    <p className="text-base text-text-secondary m-0">
                       Arrays, Trees, Graphs, Dynamic Programming, and more
                     </p>
                   </div>
                 </div>
-                <div className={styles.dsaRight}>
-                  <div className={styles.dsaStats}>
-                    <span className={styles.dsaCount}>{dsaProblems.length}</span>
-                    <span className={styles.dsaLabel}>Problems</span>
+                <div className="flex gap-8 max-lg:w-full max-lg:justify-start max-lg:gap-10">
+                  <div className="text-center">
+                    <span className="block text-3xl font-bold bg-gradient-to-br from-brand-primary to-brand-secondary bg-clip-text text-transparent leading-none">{dsaProblems.length}</span>
+                    <span className="text-sm text-text-secondary uppercase tracking-wide">Problems</span>
                   </div>
-                  <div className={styles.dsaStats}>
-                    <span className={styles.dsaCount}>19</span>
-                    <span className={styles.dsaLabel}>Topics</span>
+                  <div className="text-center">
+                    <span className="block text-3xl font-bold bg-gradient-to-br from-brand-primary to-brand-secondary bg-clip-text text-transparent leading-none">19</span>
+                    <span className="text-sm text-text-secondary uppercase tracking-wide">Topics</span>
                   </div>
                 </div>
               </div>
-              <div className={styles.dsaTopics}>
+              <div className="flex flex-wrap gap-2 mb-4 max-md:hidden">
                 {['Arrays', 'Two Pointers', 'Binary Search', 'Trees', 'Graphs', 'DP'].map(topic => (
-                  <span key={topic} className={styles.dsaTopic}>{topic}</span>
+                  <span key={topic} className="text-sm py-0.5 px-3 bg-brand-primary-15 border border-brand-primary-30 rounded-3xl text-brand-primary">{topic}</span>
                 ))}
-                <span className={styles.dsaMore}>+13 more</span>
+                <span className="text-sm py-0.5 px-3 text-text-muted">+13 more</span>
               </div>
-              <span className={styles.dsaCta}>Explore DSA Problems →</span>
+              <span className="inline-block py-2.5 px-6 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-base font-semibold text-white">Explore DSA Problems →</span>
             </div>
           </Link>
         </section>
       </main>
 
-      <footer className={styles.footer}>
+      <footer className="text-center py-6 px-8 text-text-muted text-base border-t border-border-card max-md:py-4 max-md:px-4">
         <p>Understand concepts → Build implementations → Solve problems</p>
       </footer>
     </div>
