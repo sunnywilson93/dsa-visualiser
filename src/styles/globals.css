@@ -211,6 +211,27 @@
   --leading-snug: 1.4;
   --leading-normal: 1.5;
   --leading-relaxed: 1.6;
+
+  /* === Border Radius === */
+  --radius-*: initial;
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-DEFAULT: 5px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 20px;
+  --radius-4xl: 24px;
+  --radius-full: 999px;
+
+  /* === Shadows === */
+  --shadow-*: initial;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 @layer base {
@@ -296,25 +317,6 @@
    * @media (min-width: 768px) - tablet and up (tablet+)
    * @media (min-width: 1024px) - desktop and up
    */
-
-  /* Border radius scale */
-  --radius-none: 0;
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-DEFAULT: 5px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
-  --radius-3xl: 20px;
-  --radius-4xl: 24px;
-  --radius-full: 999px;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.5);
-  --shadow-xl: 0 4px 12px rgba(0, 0, 0, 0.5);
 
   /* Glow effects (for interactive elements) */
   --glow-xs: 0 0 4px;
