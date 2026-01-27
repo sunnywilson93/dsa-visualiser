@@ -114,7 +114,7 @@ export function PageSearchControls({
       </div>
 
       {(isSearching || hasActiveFilters) && (
-        <span className="text-xs font-medium text-text-muted bg-accent-primary/10 px-2 py-1 rounded shrink-0 order-4 md:order-4">
+        <span className="text-xs font-medium text-text-primary bg-bg-tertiary px-2 py-1 rounded-md shrink-0 order-4 md:order-4 min-w-[1.5rem] text-center tabular-nums">
           {results.length}
         </span>
       )}
