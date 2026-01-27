@@ -3,14 +3,14 @@
 **Defined:** 2026-01-25
 **Core Value:** Learners can step through code execution visually, seeing exactly how algorithms and JavaScript work under the hood
 
-## v2.0 Requirements — Design System Foundation
+## v2.0 Requirements -- Design System Foundation
 
-Establish Tailwind v4 `@theme` as single source of truth for all design tokens. Existing CSS Modules continue working via `@theme`-generated custom properties. No component migration — foundation only.
+Establish Tailwind v4 `@theme` as single source of truth for all design tokens. Existing CSS Modules continue working via `@theme`-generated custom properties. No component migration -- foundation only.
 
 ### Tailwind v4 Configuration
 
 - [ ] **TW-01**: Replace `@tailwind base/components/utilities` directives with `@import "tailwindcss"`
-- [ ] **TW-02**: Delete `tailwind.config.js` — no JS config file exists
+- [ ] **TW-02**: Delete `tailwind.config.js` -- no JS config file exists
 - [ ] **TW-03**: Remove `autoprefixer` from PostCSS config and `package.json`
 - [ ] **TW-04**: Install `clsx` for conditional className composition
 
@@ -33,7 +33,7 @@ Establish Tailwind v4 `@theme` as single source of truth for all design tokens. 
 ## v1.2 Requirements (Complete)
 
 <details>
-<summary>v1.2 Polish & Production — All 13 requirements complete</summary>
+<summary>v1.2 Polish & Production -- All 13 requirements complete</summary>
 
 ### Responsive Design
 
@@ -100,10 +100,10 @@ Explicitly excluded. Documented to prevent scope creep.
 | Feature | Reason |
 |---------|--------|
 | `@apply` usage | Tailwind v4 discourages it; use utility classes or `@layer components` |
-| Component migration | Deferred to v2.1+ — foundation only in v2.0 |
+| Component migration | Deferred to v2.1+ -- foundation only in v2.0 |
 | Visual redesign | Maintain current appearance exactly |
 | `tailwind-merge` / `prettier-plugin-tailwindcss` | Evaluate post-foundation |
-| New component features | Foundation scope only — no new functionality |
+| New component features | Foundation scope only -- no new functionality |
 
 ## Traceability
 
@@ -111,20 +111,20 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TW-01 | TBD | Pending |
-| TW-02 | TBD | Pending |
-| TW-03 | TBD | Pending |
-| TW-04 | TBD | Pending |
-| TOK-01 | TBD | Pending |
-| TOK-02 | TBD | Pending |
-| TOK-03 | TBD | Pending |
-| TOK-04 | TBD | Pending |
-| TOK-05 | TBD | Pending |
-| TOK-06 | TBD | Pending |
-| VER-01 | TBD | Pending |
-| VER-02 | TBD | Pending |
-| VER-03 | TBD | Pending |
-| VER-04 | TBD | Pending |
+| TW-01 | Phase 16 | Pending |
+| TW-02 | Phase 16 | Pending |
+| TW-03 | Phase 16 | Pending |
+| TW-04 | Phase 16 | Pending |
+| TOK-01 | Phase 16 | Pending |
+| TOK-02 | Phase 16 | Pending |
+| TOK-03 | Phase 16 | Pending |
+| TOK-04 | Phase 16 | Pending |
+| TOK-05 | Phase 16 | Pending |
+| TOK-06 | Phase 16 | Pending |
+| VER-01 | Phase 17 | Pending |
+| VER-02 | Phase 17 | Pending |
+| VER-03 | Phase 17 | Pending |
+| VER-04 | Phase 17 | Pending |
 | RESP-01 | Phase 11 | Complete |
 | RESP-02 | Phase 15 | Complete |
 | RESP-03 | Phase 15 | Complete |
@@ -141,9 +141,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 **Coverage:**
 - v2.0 requirements: 14 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 14
+- Mapped to phases: 14
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-25*
-*Last updated: 2026-01-27 — v2.0 rescoped to Design System Foundation (14 requirements)*
+*Last updated: 2026-01-27 -- v2.0 traceability complete (14/14 mapped)*

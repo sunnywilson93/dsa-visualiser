@@ -5,7 +5,7 @@
 - [x] **v1.0 JS Concept Visualizations** - Phases 1-6 (shipped 2026-01-24)
 - [x] **v1.1 DSA Pattern Visualizations** - Phases 7-10 (shipped 2026-01-25)
 - [x] **v1.2 Polish & Production** - Phases 11-15 (shipped 2026-01-25)
-- [ ] **v2.0 Tailwind Migration** - Phases 16-23 (in progress)
+- [ ] **v2.0 Design System Foundation** - Phases 16-17 (in progress)
 
 ## Phases
 
@@ -269,124 +269,48 @@ Plans:
 
 </details>
 
-### v2.0 Tailwind Migration (In Progress)
+### v2.0 Design System Foundation (In Progress)
 
-**Milestone Goal:** Migrate entire CSS architecture from CSS Modules to Tailwind v4 utility classes. Single design system source of truth via `@theme`. Zero user-facing visual changes -- full parity at all breakpoints.
+**Milestone Goal:** Establish Tailwind v4 `@theme` as the single source of truth for all design tokens. Existing CSS Modules continue working via `@theme`-generated custom properties. No component migration -- foundation only.
 
-**Execution Order:**
-Phase 16 first (foundation). Then Phases 17, 18, 20, 21 run in parallel (independent component groups). Phase 19 depends on Phase 17. Phase 22 depends on all component phases (17-21). Phase 23 depends on Phase 22.
+**Execution Order:** Phase 16 first (config + tokens), then Phase 17 (verification + hardening). Sequential -- Phase 17 depends on Phase 16.
 
 ```
-16 -> [17, 18, 20, 21] (parallel) -> 19 (after 17) -> 22 (after all) -> 23
+16 -> 17
 ```
 
-- [ ] **Phase 16: Foundation & Configuration** - Tailwind v4 CSS-first config as single source of truth
-- [ ] **Phase 17: Leaf Component Migration** - 14 simple leaf components converted to utility classes
-- [ ] **Phase 18: Medium Component Migration** - 12 responsive/pseudo-element components converted
-- [ ] **Phase 19: NavBar & Complex Layout Migration** - NavBar checkbox hack refactored, complex layouts converted
-- [ ] **Phase 20: Concepts Visualization Migration** - 30 Concepts Viz components with shared @utility patterns
-- [ ] **Phase 21: DSA & Visualization Migration** - 17 DSA pattern and visualization components converted
-- [ ] **Phase 22: App Page Layout Migration** - 9 page-level CSS modules converted
-- [ ] **Phase 23: Cleanup & Verification** - Zero CSS Module files remain, full visual regression
+- [ ] **Phase 16: Config & Token Migration** - Tailwind v4 CSS-first config with all 246 tokens mapped to @theme
+- [ ] **Phase 17: Compatibility Verification** - Existing CSS Modules resolve correctly, preflight hardened, visual parity confirmed
 
 ## Phase Details
 
-### Phase 16: Foundation & Configuration
-**Goal**: Tailwind v4 CSS-first config is the single source of truth for design tokens
+### Phase 16: Config & Token Migration
+**Goal**: Tailwind v4 CSS-first config exists with all design tokens mapped to @theme namespaces
 **Depends on**: Phase 15 (v1.2 complete)
-**Requirements**: TW-01, TW-02, TW-03, TW-04
+**Requirements**: TW-01, TW-02, TW-03, TW-04, TOK-01, TOK-02, TOK-03, TOK-04, TOK-05, TOK-06
 **Success Criteria** (what must be TRUE):
-  1. `@theme` block in globals.css defines all design tokens (colors, spacing, typography, shadows, radius, animations) with correct namespaces
-  2. `@import "tailwindcss"` replaces legacy `@tailwind base/components/utilities` directives
-  3. `tailwind.config.js` is deleted -- no JS config file exists
-  4. `autoprefixer` is removed from PostCSS config and package.json
-  5. `clsx` is installed and available for conditional className composition
-  6. `npm run build` succeeds with zero errors
-  7. All pages render identically to pre-migration state
+  1. `@import "tailwindcss"` replaces legacy `@tailwind base/components/utilities` directives in globals.css
+  2. `tailwind.config.js` is deleted and no JS config file exists in the project
+  3. `autoprefixer` is removed from PostCSS config and package.json; `clsx` is installed
+  4. `@theme` block defines all color tokens (`--color-*`), spacing tokens (`--spacing-*`), typography tokens (font families, sizes, weights, line heights), shadow/radius/border tokens, and custom breakpoints (480px, 400px, 360px)
+  5. All keyframe animations are consolidated into the `@theme` block (no scattered `@keyframes` outside of it)
 **Plans**: TBD
 
-### Phase 17: Leaf Component Migration
-**Goal**: All simple leaf components use Tailwind utility classes instead of CSS Modules
+### Phase 17: Compatibility Verification
+**Goal**: All existing CSS Modules resolve correctly from @theme-generated properties with zero visual changes
 **Depends on**: Phase 16
-**Requirements**: MIG-01, MIG-02
+**Requirements**: VER-01, VER-02, VER-03, VER-04
 **Success Criteria** (what must be TRUE):
-  1. All 14 leaf component CSS module files are deleted (ErrorBoundary, Console, Variables, CallStack, Controls, DifficultyIndicator, StepDescription, ReadOnlyCode, ExampleSelector, SiteFooter, RelatedPatterns, RelatedProblems, StepControls, StepProgress)
-  2. Components render identically to pre-migration state at all breakpoints
-  3. Dynamic bracket-notation class access patterns (`styles[variable]`) replaced with typed mapping objects
-**Plans**: TBD
-
-### Phase 18: Medium Component Migration
-**Goal**: Responsive and pseudo-element components migrated to Tailwind utility classes
-**Depends on**: Phase 16
-**Requirements**: MIG-03, MIG-04, MIG-05
-**Success Criteria** (what must be TRUE):
-  1. All 12 medium component CSS module files are deleted (Card system, Carousels, Search, CodePanel, ProblemCard, ProblemListingLayout, ExpandableGrid)
-  2. Gradient border pseudo-element patterns extracted to `@layer components` rules
-  3. Desktop-first media queries converted to Tailwind responsive prefixes
-  4. Components render identically including hover states, gradients, and responsive layouts
-**Plans**: TBD
-
-### Phase 19: NavBar & Complex Layout Migration
-**Goal**: NavBar mobile menu uses React state, all complex layout components migrated to Tailwind
-**Depends on**: Phase 17
-**Requirements**: MIG-06, MIG-07
-**Success Criteria** (what must be TRUE):
-  1. CSS-only checkbox hack in NavBar replaced with React `useState` toggle
-  2. NavBar, CodeEditor, ConceptPanel, and PlaygroundEditor CSS module files are deleted
-  3. Mobile menu opens/closes identically to pre-migration behavior
-  4. Keyboard accessibility preserved (focus management, escape to close)
-**Plans**: TBD
-
-### Phase 20: Concepts Visualization Migration
-**Goal**: All 30 Concepts Viz components use Tailwind with shared `@utility` patterns
-**Depends on**: Phase 16
-**Requirements**: MIG-08, MIG-09
-**Success Criteria** (what must be TRUE):
-  1. Shared viz patterns (level selector, example selector, step controls) extracted to `@utility` directives
-  2. All 30 Concepts Viz CSS module files are deleted
-  3. Concept pages render identically including animations, color coding, and responsive behavior
-  4. Structural duplication eliminated via shared utility patterns instead of duplicated CSS
-**Plans**: TBD
-
-### Phase 21: DSA & Visualization Migration
-**Goal**: All DSA pattern and visualization components migrated to Tailwind
-**Depends on**: Phase 16
-**Requirements**: MIG-10, MIG-11
-**Success Criteria** (what must be TRUE):
-  1. All 17 DSA pattern viz and visualization component CSS module files are deleted
-  2. Dynamic `styles[state]` and `styles[width${n}]` patterns replaced with typed mapping objects
-  3. `--js-viz-*` scoped CSS variables preserved where set by parent inline styles
-  4. DSA pattern pages render identically including pointer animations and bit grids
-**Plans**: TBD
-
-### Phase 22: App Page Layout Migration
-**Goal**: All page-level CSS modules migrated to Tailwind utility classes
-**Depends on**: Phase 17, Phase 18, Phase 19, Phase 20, Phase 21
-**Requirements**: MIG-12
-**Success Criteria** (what must be TRUE):
-  1. All 9 page-level CSS module files are deleted
-  2. All routes render identically including responsive grid layouts
-  3. Page-level responsive behavior preserved across 360px, 768px, and 1440px viewports
-**Plans**: TBD
-
-### Phase 23: Cleanup & Verification
-**Goal**: Zero CSS Module files remain, full visual regression passes
-**Depends on**: Phase 22
-**Requirements**: MIG-13, MIG-14, MIG-15, MIG-16
-**Success Criteria** (what must be TRUE):
-  1. No `*.module.css` files exist anywhere in the project
-  2. No orphaned `styles` imports remain in any TSX file
-  3. No legacy CSS variable aliases remain in globals.css
-  4. `npm run build` passes with zero errors
-  5. `npm run lint` passes with zero errors
-  6. `npm run test:run` passes with zero failures
-  7. Visual regression confirms identical rendering at 360px, 768px, and 1440px for all routes
+  1. All 8,500+ `var()` references in CSS Modules resolve correctly -- no missing or broken custom properties
+  2. Preflight overrides are in place to prevent Tailwind v4 defaults from altering unmigrated component styles (buttons, borders, placeholders)
+  3. `npm run build` passes with zero errors and `npm run lint` produces no new warnings
+  4. Every page renders identically to the pre-migration state at 360px, 768px, and 1440px viewports
 **Plans**: TBD
 
 ## Progress
 
 **Execution Order:**
-Phase 16 first. Phases 17, 18, 20, 21 in parallel. Phase 19 after 17. Phase 22 after all component phases. Phase 23 last.
+Phases 1-15 complete (v1.0-v1.2). Phase 16 then 17 (v2.0).
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -405,15 +329,9 @@ Phase 16 first. Phases 17, 18, 20, 21 in parallel. Phase 19 after 17. Phase 22 a
 | 13. Cross-Linking | v1.2 | 3/3 | Complete | 2026-01-25 |
 | 14. Page Consistency | v1.2 | 1/1 | Complete | 2026-01-25 |
 | 15. Responsive Implementation | v1.2 | 3/3 | Complete | 2026-01-25 |
-| 16. Foundation & Configuration | v2.0 | 0/TBD | Not started | - |
-| 17. Leaf Component Migration | v2.0 | 0/TBD | Not started | - |
-| 18. Medium Component Migration | v2.0 | 0/TBD | Not started | - |
-| 19. NavBar & Complex Layout | v2.0 | 0/TBD | Not started | - |
-| 20. Concepts Viz Migration | v2.0 | 0/TBD | Not started | - |
-| 21. DSA & Viz Migration | v2.0 | 0/TBD | Not started | - |
-| 22. App Page Layout Migration | v2.0 | 0/TBD | Not started | - |
-| 23. Cleanup & Verification | v2.0 | 0/TBD | Not started | - |
+| 16. Config & Token Migration | v2.0 | 0/TBD | Not started | - |
+| 17. Compatibility Verification | v2.0 | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-27 — v2.0 Tailwind Migration phases 16-23 added*
+*Last updated: 2026-01-27 -- v2.0 rescoped to Design System Foundation (2 phases, 14 requirements)*
