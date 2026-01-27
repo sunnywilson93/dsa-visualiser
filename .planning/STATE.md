@@ -11,9 +11,9 @@ See: .planning/PROJECT.md (updated 2026-01-27)
 
 Milestone: v2.0
 Phase: 17 of 17 (Compatibility Verification)
-Plan: 02 of 5 (Preflight Overrides)
+Plan: 02 of 5 (Preflight Overrides + Static Analysis Scripts)
 Status: In progress
-Last activity: 2026-01-27 -- Completed 17-02-PLAN.md
+Last activity: 2026-01-27 -- Completed 17-01-PLAN.md and 17-02-PLAN.md
 
 Progress: [################........] 94% (16/17 phases complete)
 
@@ -49,6 +49,7 @@ Recent decisions affecting current work:
 | Glow/border-width/transition in :root | No Tailwind v4 namespace mapping | 16-05 |
 | Color-specific keyframes in @theme | Add all variants (tealPulse, orangePulse, etc.) to @theme with unique names | 16-06 |
 | Breakpoints in @theme | --breakpoint-2xs/xs/mobile for custom responsive breakpoints | 16-06 |
+| Cross-module CSS inheritance in check:vars | Resolve var() refs from any module file, not just local scope | 17-01 |
 
 ### Pending Todos
 
@@ -61,6 +62,6 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completed 17-02-PLAN.md
+Stopped at: Completed 17-01-PLAN.md and 17-02-PLAN.md
 Resume file: None
 Next action: Execute 17-03-PLAN.md
