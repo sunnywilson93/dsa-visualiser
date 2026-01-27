@@ -8,15 +8,16 @@ A visual learning platform for JavaScript concepts and DSA interview preparation
 
 Learners can step through code execution visually, seeing exactly how algorithms and JavaScript work under the hood — not just reading about them.
 
-## Current Milestone: v1.2 Polish & Production
+## Current Milestone: v2.0 Tailwind Migration
 
-**Goal:** Make the platform production-ready with responsive design, consistent page structure, cross-linking between pattern and problem pages, and SEO optimization.
+**Goal:** Full migration from CSS Modules to Tailwind v4, controlling the entire design system from one place.
 
 **Target features:**
-- Mobile responsive layouts for all page types (phone to desktop)
-- Consistent headers across DSA pattern pages
-- Bidirectional cross-linking (pattern ↔ problem pages)
-- SEO meta tags and OpenGraph images
+- Install and configure Tailwind v4 with CSS-first @theme configuration
+- Migrate all design tokens (colors, spacing, typography) to Tailwind @theme
+- Replace ALL CSS Module files with Tailwind utility classes
+- Remove CSS Modules infrastructure entirely
+- Maintain visual parity — no user-facing changes
 
 ## Requirements
 
@@ -35,39 +36,39 @@ Learners can step through code execution visually, seeing exactly how algorithms
 - ✓ TwoPointersViz with pattern page, difficulty levels, variants — v1.1
 - ✓ HashMapViz with bucket visualization, frequency counting — v1.1
 - ✓ BitManipulationViz with binary grid, bit operations — v1.1
+- ✓ Mobile responsive layouts (phone, tablet, desktop) — v1.2
+- ✓ Consistent headers on DSA pattern pages — v1.2
+- ✓ Bidirectional cross-linking (pattern ↔ problem pages) — v1.2
+- ✓ SEO meta tags and OpenGraph images — v1.2
 
 ### Active
 
-- [ ] Mobile responsive layouts (phone, tablet, desktop)
-- [ ] Consistent headers on DSA pattern pages
-- [ ] Pattern → Problem cross-links ("Practice this pattern")
-- [ ] Problem → Pattern cross-links ("Learn the pattern")
-- [ ] SEO meta tags for all pages
-- [ ] OpenGraph images for social sharing
+(Defined in REQUIREMENTS.md)
 
 ### Out of Scope
 
 - New DSA patterns (Sliding Window, Binary Search, etc.) — future milestone
 - Interpreter feature additions — unless needed for visualizations
 - Advanced interactivity (prediction prompts, quizzes) — future milestone
+- Visual redesign — migration must maintain current appearance
 
 ## Context
 
 **Current state:**
-- Full visualization infrastructure complete (JS concepts + DSA patterns)
-- Desktop-optimized layouts throughout
-- Pattern pages exist but lack consistent headers
-- No cross-linking between pattern and problem pages
-- Basic meta tags, no OpenGraph images
+- Full platform complete (JS concepts + DSA patterns + responsive + SEO)
+- 50+ CSS Module files across components
+- Semantic CSS variable system in globals.css (colors, spacing, typography)
+- Framer Motion for animations
+- CSS-only responsive patterns (media queries, checkbox hack for mobile nav)
 
-**Gap:** Platform works well on desktop but needs polish for production: responsive design, consistent structure, discoverability, and SEO.
+**Gap:** Design system scattered across CSS Modules and CSS variables. No single source of truth for design tokens. Tailwind v4 consolidates everything under @theme.
 
 ## Constraints
 
-- **Tech stack**: React + TypeScript + Framer Motion + CSS Modules (existing patterns)
-- **Responsive approach**: CSS-first, minimal JS for responsive behavior
-- **SEO**: Next.js metadata API for static generation
-- **Performance**: Maintain lazy loading, optimize images
+- **Tech stack**: React + TypeScript + Framer Motion + Tailwind v4 (migrating from CSS Modules)
+- **Visual parity**: Zero user-facing changes — migration only
+- **Tailwind v4**: CSS-first config, @theme directive, no tailwind.config.js
+- **Performance**: Maintain lazy loading, optimize bundle size
 
 ## Key Decisions
 
@@ -78,8 +79,10 @@ Learners can step through code execution visually, seeing exactly how algorithms
 | SharedViz components for reuse | Avoid duplication across visualizations | ✓ Good |
 | Pattern pages for DSA (not problem-specific) | Matches JS concept structure, teaches transferable skills | ✓ Good |
 | 3 DSA patterns first (Two Pointers, Hash Map, Bit Manipulation) | Establish design before expanding | ✓ Good |
-| CSS-first responsive | Avoid layout shift, use media queries | — Pending |
-| Bidirectional cross-linking | Both directions for discoverability | — Pending |
+| CSS-first responsive | Avoid layout shift, use media queries | ✓ Good |
+| Bidirectional cross-linking | Both directions for discoverability | ✓ Good |
+| Tailwind v4 full migration | CSS-first config, single design system source | — Pending |
+| Remove all CSS Modules | Full replacement, no hybrid approach | — Pending |
 
 ---
-*Last updated: 2026-01-25 after v1.2 milestone start*
+*Last updated: 2026-01-27 after v2.0 milestone start*
