@@ -1,236 +1,363 @@
-# Stack Research: Polish & Production
+# Stack Research: CSS Module to Tailwind v4 Migration
 
-**Project:** DSA Visualizer - Polish & Production Features
-**Researched:** 2026-01-25
-**Focus:** Responsive design, SEO optimization, cross-linking
+**Project:** DSA Visualiser
+**Researched:** 2026-01-27
+**Focus:** Tailwind v4 configuration, migration tooling, CSS Modules coexistence
 **Confidence:** HIGH
 
-## Executive Summary
+## Executive Decision: Use CSS-First @theme, NOT tailwind.config.js
 
-The existing stack (Next.js 14, React 18, CSS Modules, Framer Motion, Zustand) already provides robust foundations for the polish features. **No new dependencies are required.** All needed capabilities exist in the current stack or as built-in Next.js features.
+**Verdict:** Delete `tailwind.config.js`. Move all design tokens into `@theme` blocks in `globals.css`. This is the canonical Tailwind v4 approach.
+
+**Why:**
+1. Tailwind v4 does NOT auto-detect `tailwind.config.js` -- it requires an explicit `@config` directive to load it, making it a legacy compatibility path, not a first-class citizen.
+2. The project already defines all design tokens as CSS custom properties in `globals.css :root`. The `tailwind.config.js` is just a mirror that wraps those same variables in `var()` calls. This is double-bookkeeping that `@theme` eliminates entirely.
+3. The `@theme` directive simultaneously creates CSS custom properties AND generates utility classes. One definition, two outputs -- exactly what the current setup tries to achieve with two files.
+4. v4's CSS-first config gives 3-10x faster full builds and up to 100x faster incremental builds vs the JS config path.
 
 ---
 
-## Recommended Additions
+## Current State Analysis
 
-### 1. Dynamic OG Image Generation (Built-in)
+### What is installed (CORRECT)
 
-**What:** Use Next.js built-in `ImageResponse` from `next/og` for dynamic OpenGraph images.
+| Package | Version | Status |
+|---------|---------|--------|
+| `tailwindcss` | ^4.1.18 | Correct -- v4 package |
+| `@tailwindcss/postcss` | ^4.1.18 | Correct -- v4 PostCSS integration |
+| `postcss` | ^8.5.6 | Correct -- required by @tailwindcss/postcss |
 
-**Why:** The project currently has a static SVG OG image (`public/og-image.svg`), but OpenGraph requires PNG/JPG format. Social media platforms (Twitter, LinkedIn, Facebook) need properly formatted images to display rich previews. Dynamic generation allows unique images per page.
+### What needs CHANGING
 
-**Implementation:**
-- Create `opengraph-image.tsx` files in dynamic route folders
-- Use `ImageResponse` constructor from `next/og`
-- No npm install required - built into Next.js 14
+| Item | Current (WRONG for v4) | Target (CORRECT for v4) |
+|------|------------------------|-------------------------|
+| `globals.css` imports | `@tailwind base; @tailwind components; @tailwind utilities;` | `@import "tailwindcss";` |
+| Design tokens | Separate `:root` block + `tailwind.config.js` mirror | Single `@theme` block |
+| PostCSS config | Includes `autoprefixer` | Remove `autoprefixer` (v4 handles vendor prefixing) |
+| `tailwind.config.js` | Exists with `content` + `theme.extend` | DELETE entirely |
+| Content paths | Manually specified in config | v4 auto-discovers (uses `.gitignore` for exclusions) |
 
-```typescript
-// Example: src/app/concepts/[conceptId]/opengraph-image.tsx
-import { ImageResponse } from 'next/og'
+### What to REMOVE
 
-export const size = { width: 1200, height: 630 }
-export const contentType = 'image/png'
+| Package | Why Remove |
+|---------|-----------|
+| `autoprefixer` | Tailwind v4 includes vendor prefixing via Lightning CSS. Keeping it adds redundant processing. |
 
-export default async function Image({ params }: { params: { conceptId: string } }) {
-  return new ImageResponse(
-    <div style={{ /* flexbox layout */ }}>
-      {/* JSX for OG image */}
-    </div>,
-    { ...size }
-  )
+```bash
+npm uninstall autoprefixer
+```
+
+### What to KEEP as-is
+
+| Package | Why Keep |
+|---------|---------|
+| `postcss` | Still required by `@tailwindcss/postcss` |
+| `@tailwindcss/postcss` | Correct v4 PostCSS plugin for Next.js |
+| `tailwindcss` | Core framework |
+
+### What NOT to add
+
+| Package | Why NOT |
+|---------|---------|
+| `@tailwindcss/vite` | Project uses Next.js (webpack/turbopack), not Vite. The PostCSS path is correct. |
+| `prettier-plugin-tailwindcss` | Nice-to-have but not needed for migration. Add post-migration if desired. |
+| `tailwind-merge` | Only needed if dynamically composing class strings in JS. Evaluate post-migration. |
+| `clsx` / `classnames` | Same rationale -- evaluate after migration, not during. |
+| `@tailwindcss/upgrade` | Do NOT install as dependency. Run with `npx` only if needed (see Migration Tooling). |
+
+---
+
+## Required Configuration Changes
+
+### 1. PostCSS Config (postcss.config.js)
+
+**Before:**
+```js
+module.exports = {
+  plugins: {
+    '@tailwindcss/postcss': {},
+    autoprefixer: {},
+  },
 }
 ```
 
-**Limitations (documented):**
-- Only flexbox layouts supported
-- Limited CSS subset (no grid, no complex selectors)
-- Maximum 500KB bundle size
-- Only ttf, otf, woff fonts
+**After:**
+```js
+module.exports = {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+}
+```
 
-**Confidence:** HIGH (verified via [Next.js Official Documentation](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image))
+### 2. globals.css -- Replace @tailwind with @import and @theme
 
----
-
-### 2. Responsive Design (No New Tools)
-
-**What:** Continue using CSS Modules with media queries; optionally add container queries for component-level responsiveness.
-
-**Why:** The project already has responsive patterns in place (see `NavBar.module.css`, `page.module.css`). Container queries are now baseline-supported (since 2023) and complement media queries well for component-based design.
-
-**Current State (already implemented):**
-- Media queries at 1024px, 768px, 640px, 480px, 400px breakpoints
-- Responsive grids using `grid-template-columns`
-- Text truncation and hiding on mobile
-- NavBar responsive behavior (logo text hidden, search width reduced)
-
-**Enhancement Path:**
+**Before (current):**
 ```css
-/* Container queries for component-level responsiveness */
-.vizContainer {
-  container-type: inline-size;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+:root {
+  --bg-primary: #0f1419;
+  --text-primary: #e6edf3;
+  --color-primary: #a855f7;
+  /* ...200+ CSS variables... */
 }
-
-@container (max-width: 400px) {
-  .cell {
-    width: 32px;
-    height: 32px;
-  }
-}
-```
-
-**Do NOT add Tailwind CSS.** The project uses CSS Modules consistently (80+ module files). Converting would be disruptive and unnecessary.
-
-**Confidence:** HIGH (CSS container queries have baseline support since 2023, per [LogRocket Container Queries 2026](https://blog.logrocket.com/container-queries-2026/))
-
----
-
-### 3. SEO Metadata (Already Implemented)
-
-**What:** The project already has comprehensive SEO infrastructure.
-
-**Current Implementation (verified in codebase):**
-- Root `layout.tsx`: Full Metadata object with OpenGraph, Twitter cards, JSON-LD structured data
-- Dynamic `generateMetadata` in: `[conceptId]/page.tsx`, `[problemId]/page.tsx`, `[categoryId]/page.tsx`
-- `sitemap.ts`: Generates sitemap for all routes
-- `robots.ts`: Robots configuration
-- Structured data: FAQPage, BreadcrumbList, Article schemas
-- `StructuredData` component for page-specific schema injection
-
-**What's Missing:**
-- Dynamic OG images (addressed above)
-- Consistent page-specific Twitter images
-
-**No new libraries needed.**
-
-**Confidence:** HIGH (directly verified from codebase)
-
----
-
-### 4. Cross-Linking Infrastructure (Partially Implemented)
-
-**What:** The project has `relatedProblems` and `relatedConcepts` data fields. Need UI components to display them.
-
-**Current State:**
-- `Concept` type has `relatedProblems?: string[]`
-- `getRelatedConcepts()` and `getRelatedProblems()` functions exist in `concepts.ts`
-- DSA patterns have `relatedConcepts` field
-- Data structures exist but UI rendering is incomplete
-
-**What's Needed (no new dependencies):**
-1. `RelatedContent` component using existing patterns
-2. `CrossLinkCard` component for consistent styling
-3. Populate `relatedProblems` and `relatedConcepts` data fields across all content
-
-**Implementation Pattern:**
-```typescript
-// src/components/RelatedContent/RelatedContent.tsx
-interface RelatedContentProps {
-  concepts?: string[]
-  problems?: string[]
-}
-
-export function RelatedContent({ concepts, problems }: RelatedContentProps) {
-  // Use existing Link, motion components
-  // Style with CSS Modules
 }
 ```
 
-**Confidence:** HIGH (verified existing infrastructure in `concepts.ts`, `dsaConcepts.ts`, `dsaPatterns.ts`)
+**After (target):**
+```css
+@import "tailwindcss";
+
+@theme {
+  /* Colors -- generates bg-*, text-*, border-* utilities */
+  --color-brand-primary: #a855f7;
+  --color-brand-secondary: #ec4899;
+  --color-brand-light: #c4b5fd;
+
+  --color-bg-primary: #0f1419;
+  --color-bg-secondary: #1a1f26;
+  --color-bg-tertiary: #242b33;
+  --color-bg-elevated: #2d353f;
+  --color-bg-page: #0f0f1a;
+  --color-bg-page-secondary: #1a1a2e;
+
+  --color-text-primary: #e6edf3;
+  --color-text-secondary: #8b949e;
+  --color-text-muted: #6e7681;
+  --color-text-bright: #f5f7ff;
+
+  --color-accent-blue: #58a6ff;
+  --color-accent-green: #3fb950;
+  --color-accent-yellow: #d29922;
+  --color-accent-red: #f85149;
+  --color-accent-purple: #a371f7;
+  --color-accent-cyan: #39c5cf;
+  --color-accent-orange: #db6d28;
+
+  --color-border-primary: #30363d;
+  --color-border-secondary: #21262d;
+
+  /* Spacing -- generates p-*, m-*, gap-*, w-*, h-* utilities */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 40px;
+  --spacing-4xl: 48px;
+  --spacing-5xl: 64px;
+  --spacing-6xl: 80px;
+
+  /* Border radius -- generates rounded-* utilities */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 20px;
+  --radius-4xl: 24px;
+  --radius-full: 999px;
+
+  /* Shadows -- generates shadow-* utilities */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+  /* Fonts -- generates font-* utilities */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+}
+
+/* Variables that should NOT generate utility classes stay in :root */
+:root {
+  /* Gradients (not a @theme namespace) */
+  --gradient-brand: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
+  --gradient-brand-subtle: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+
+  /* Opacity variants for glows/backgrounds */
+  --color-primary-20: rgba(168, 85, 247, 0.2);
+  --color-primary-30: rgba(168, 85, 247, 0.3);
+  /* ...other computed/composite tokens... */
+
+  /* Glows/Shadows (complex composite values) */
+  --glow-brand: 0 0 20px rgba(168, 85, 247, 0.2), 0 0 40px rgba(236, 72, 153, 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* Execution state colors (domain-specific, no utility needed) */
+  --exec-current: #388bfd33;
+  --exec-breakpoint: #f8514933;
+  --exec-return: #3fb95033;
+}
+```
+
+### Critical: @theme Namespace Conventions
+
+Variables in `@theme` MUST follow Tailwind's namespace convention to generate utilities:
+
+| Namespace | Generates | Example Variable | Example Utility |
+|-----------|-----------|-----------------|-----------------|
+| `--color-*` | `bg-*`, `text-*`, `border-*`, `fill-*` | `--color-accent-blue` | `bg-accent-blue` |
+| `--spacing-*` | `p-*`, `m-*`, `gap-*`, `w-*`, `h-*` | `--spacing-lg` | `p-lg`, `gap-lg` |
+| `--radius-*` | `rounded-*` | `--radius-lg` | `rounded-lg` |
+| `--shadow-*` | `shadow-*` | `--shadow-md` | `shadow-md` |
+| `--font-*` | `font-*` | `--font-mono` | `font-mono` |
+| `--text-*` | Font size | `--text-xl` | `text-xl` |
+| `--font-weight-*` | Font weight | `--font-weight-bold` | `font-bold` |
+| `--breakpoint-*` | Responsive variants | `--breakpoint-md` | `md:*` |
+
+Variables that don't follow these namespaces (gradients, opacity variants, transitions, glows) belong in `:root`, not `@theme`.
+
+### Important Naming Impact
+
+The current variable `--bg-primary` becomes `--color-bg-primary` in `@theme`. This changes the generated utility from what was `bg-primary` (via tailwind.config.js mapping) to `bg-bg-primary` -- OR the naming can be restructured. Recommended approach:
+
+**Option A (minimal rename):** Keep semantic grouping, accept `bg-bg-*` pattern
+- `--color-bg-primary` generates `bg-bg-primary`
+
+**Option B (restructure):** Use flat color names, reference semantically
+- `--color-surface-primary` generates `bg-surface-primary`
+- `--color-content-primary` generates `text-content-primary`
+
+**Recommendation:** Option B is cleaner. Rename during the `@theme` migration to avoid `bg-bg-*` stuttering.
+
+### 3. Delete tailwind.config.js
+
+The entire file becomes unnecessary once `@theme` is set up. Every mapping it currently defines will be handled by namespace conventions.
 
 ---
 
-## Integration Points
+## Migration Tooling
 
-| Feature | Integrates With | Notes |
-|---------|-----------------|-------|
-| OG Images | `generateMetadata`, route folders | Co-located with page.tsx |
-| Responsive | Existing CSS Modules | Add container queries as enhancement |
-| Cross-links | `concepts.ts`, `dsaConcepts.ts` data | Component renders existing data fields |
-| SEO | Existing `layout.tsx`, page metadata | Already structured correctly |
+### Official Upgrade Tool
 
----
+```bash
+npx @tailwindcss/upgrade
+```
 
-## What NOT to Add
+**What it does:**
+- Converts `@tailwind` directives to `@import "tailwindcss"`
+- Migrates `tailwind.config.js` theme values to `@theme` CSS blocks
+- Updates template files (e.g., `!flex` to `flex!`, gradient class renames)
+- Updates PostCSS config to remove autoprefixer
 
-### Tailwind CSS
-**Why avoid:** Project has 80+ CSS Module files with established patterns and CSS custom properties design system. Migration cost is high, benefit is zero. CSS Modules provide component scoping already.
+**What it does NOT do:**
+- Convert CSS Module files to Tailwind utility classes
+- Handle complex computed tokens or dynamic theme references
+- Restructure CSS variable naming to match `@theme` namespaces optimally
 
-### next-seo Package
-**Why avoid:** Next.js 14 has built-in Metadata API that's already fully utilized in this codebase. `next-seo` adds redundant abstraction over native features that are already implemented.
+**Limitation for this project:** The tool is designed for v3-to-v4 config migration. However, this project's config wraps `var()` references (not raw values), which may not convert cleanly. The upgrade tool expects static values in `tailwind.config.js`, not `var()` indirection.
 
-### React Responsive / react-device-detect
-**Why avoid:** CSS media queries and container queries handle responsive design better. JavaScript-based detection causes hydration mismatches with SSR and adds unnecessary bundle size.
+**Recommendation:** Run `npx @tailwindcss/upgrade` on a branch to see what it produces, but expect to manually refine the `@theme` block. The tool will correctly handle the `@tailwind` to `@import` conversion and PostCSS cleanup.
 
-### Sharp (for OG images)
-**Why avoid:** `ImageResponse` from `next/og` handles all OG image needs without additional dependencies. Sharp is for general image processing which isn't required.
+**Requirement:** Node.js 20+.
 
-### Schema.org / react-schemaorg Libraries
-**Why avoid:** Project already implements JSON-LD structured data manually in `layout.tsx` and via `StructuredData` component. No additional abstraction needed.
+### No Automated CSS-Module-to-Utility Converter Exists
 
-### CSS-in-JS Libraries (styled-components, emotion)
-**Why avoid:** CSS Modules are already established with 80+ files. Adding another styling solution would create inconsistency and increase bundle size.
+There is no reliable tool that reads `.module.css` files and converts them to Tailwind utility classes. This is inherently manual because:
+1. CSS properties map to multiple possible Tailwind utilities
+2. Responsive breakpoints need manual mapping to Tailwind variants
+3. Pseudo-selectors and state classes need variant mapping
+4. Animation/keyframe CSS and complex selectors cannot be expressed purely in utility classes
+5. Context-dependent decisions (when to use component classes vs utilities)
 
----
-
-## Version Verification
-
-| Technology | Current Version | Status | Notes |
-|------------|-----------------|--------|-------|
-| Next.js | ^14.2.0 | Current | Has built-in ImageResponse |
-| React | ^18.3.1 | Current | No upgrade needed |
-| Framer Motion | ^11.0.0 | Current | All animation needs met |
-| TypeScript | ~5.5.0 | Current | Full type safety |
-
-All versions are current and support the required features. No upgrades needed.
+**TWShift** (twshift.com) is an AI-powered tool for v3-to-v4 class syntax changes, not CSS-to-utility conversion.
 
 ---
 
-## Feature-Specific Stack Summary
+## CSS Modules Coexistence Strategy
 
-### Responsive Design
-| Need | Solution | Source |
-|------|----------|--------|
-| Viewport-based layouts | Media queries (existing) | CSS Modules |
-| Component-based layouts | Container queries (CSS native) | No library |
-| Smooth transitions | Framer Motion (existing) | Already installed |
+During migration (which will span multiple phases), CSS Modules and Tailwind will coexist. Here is the approach.
 
-### SEO Optimization
-| Need | Solution | Source |
-|------|----------|--------|
-| Page metadata | generateMetadata (existing) | Next.js built-in |
-| OG images | ImageResponse | next/og (built-in) |
-| Structured data | JSON-LD (existing pattern) | Manual implementation |
-| Sitemap | sitemap.ts (existing) | Next.js built-in |
+### The @reference Directive
 
-### Cross-Linking
-| Need | Solution | Source |
-|------|----------|--------|
-| Data structure | relatedProblems, relatedConcepts (existing) | concepts.ts |
-| UI component | New RelatedContent component | React + CSS Modules |
-| Navigation | Next.js Link (existing) | Already used |
+CSS Module files in Tailwind v4 are each compiled independently. They have no access to `@theme` tokens unless explicitly imported. If any CSS Module file needs `@apply`:
+
+```css
+/* Component.module.css */
+@reference "tailwindcss";
+
+.myClass {
+  @apply bg-surface-primary text-content-primary;
+}
+```
+
+### Why to AVOID @apply in CSS Modules
+
+Each CSS Module file that references Tailwind triggers a separate Tailwind compilation pass. With 74 CSS Module files, this means 74 separate Tailwind runs during build -- catastrophic for build performance.
+
+**Correct coexistence strategy:**
+1. **Files being migrated:** Convert to inline Tailwind utility classes in JSX, DELETE the `.module.css` file entirely
+2. **Files not yet migrated:** Leave as CSS Modules using `var()` references directly (these work without Tailwind processing and cost zero build overhead)
+3. **Never add `@apply` or `@reference` to existing CSS Module files** -- this pulls them into Tailwind's compilation pipeline for no benefit
+
+### The var() Bridge
+
+Because `@theme` variables are also CSS custom properties, existing CSS Modules can reference them via `var()` without any Tailwind processing:
+
+```css
+/* Already works -- no @reference needed */
+.container {
+  background: var(--color-surface-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+}
+```
+
+This means the migration is non-breaking: update `@theme`, rename variables, update `var()` references in CSS Modules, then progressively convert modules to utility classes.
 
 ---
 
-## Summary Recommendation
+## Migration Sequence for Config
 
-**Zero new npm dependencies required.**
+**Phase 0 (config foundation):**
+1. Run `npx @tailwindcss/upgrade` on a branch, inspect output
+2. Replace `@tailwind` directives with `@import "tailwindcss"`
+3. Create `@theme` block with properly namespaced variables
+4. Move non-utility variables to `:root`
+5. Update PostCSS config (remove autoprefixer)
+6. Delete `tailwind.config.js`
+7. Run `npm uninstall autoprefixer`
+8. Update all `var()` references in existing CSS Modules to use new variable names
+9. Verify build passes, no visual regressions
 
-All polish & production features can be implemented with:
-1. **Built-in Next.js features:** `ImageResponse` for OG images, Metadata API for SEO
-2. **Modern CSS features:** Container queries (baseline 2023), existing media query patterns
-3. **Existing codebase patterns:** CSS Modules, React components, data structures already defined
+**Phase 1+ (progressive migration):**
+- Convert CSS Modules to Tailwind utilities one component at a time
+- Delete `.module.css` files as components are converted
+- Each conversion reduces build overhead
 
-This is an ideal scenario - the existing stack is well-chosen and complete for the planned features.
+---
+
+## Confidence Assessment
+
+| Decision | Confidence | Source |
+|----------|-----------|--------|
+| Use `@theme` over `tailwind.config.js` | HIGH | Official Tailwind v4 docs, upgrade guide |
+| Remove `autoprefixer` | HIGH | Official upgrade guide states v4 handles prefixing |
+| `@import "tailwindcss"` replaces `@tailwind` | HIGH | Official docs, verified |
+| No automated CSS-to-utility converter exists | HIGH | Ecosystem survey, no credible tool found |
+| `@reference` directive for coexistence | HIGH | Official compatibility docs |
+| Variable namespace conventions | HIGH | Official @theme documentation |
+| Performance impact of CSS modules + Tailwind | MEDIUM | Official compatibility page warning, not benchmarked for this project |
+| Upgrade tool handling of var() config | MEDIUM | Tool expects static values; var() indirection is edge case |
 
 ---
 
 ## Sources
 
-- [Next.js Metadata and OG Images Documentation](https://nextjs.org/docs/app/getting-started/metadata-and-og-images)
-- [Next.js opengraph-image File Convention](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image)
-- [Next.js generateMetadata API](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
-- [Container Queries in 2026 - LogRocket](https://blog.logrocket.com/container-queries-2026/)
-- [Responsive Design Best Practices 2026 - PxlPeak](https://pxlpeak.com/blog/web-design/responsive-design-best-practices)
-- [Internal Linking Strategy Guide 2026 - IdeaMagix](https://www.ideamagix.com/blog/internal-linking-strategy-seo-guide-2026/)
-- [Internal Linking Structure 2026 - ClickRank](https://www.clickrank.ai/effective-internal-linking-structure/)
-- Project codebase analysis (package.json, layout.tsx, concepts.ts, 80+ CSS module files)
+- [Tailwind CSS v4 Upgrade Guide](https://tailwindcss.com/docs/upgrade-guide) -- Official migration steps
+- [Tailwind CSS v4 Theme Documentation](https://tailwindcss.com/docs/theme) -- @theme namespace reference
+- [Tailwind CSS Compatibility Page](https://tailwindcss.com/docs/compatibility) -- CSS Modules guidance, @reference directive
+- [Tailwind CSS v4 Blog Post](https://tailwindcss.com/blog/tailwindcss-v4) -- Performance claims, architecture overview
+- [GitHub Discussion: CSS Modules with Tailwind v4](https://github.com/tailwindlabs/tailwindcss/discussions/17342) -- Community experience with modules
+- [GitHub Discussion: v4 config file status](https://github.com/tailwindlabs/tailwindcss/discussions/17168) -- Confirms JS config is legacy path
+- [GitHub Discussion: Migration still needing config](https://github.com/tailwindlabs/tailwindcss/discussions/16642) -- Edge cases for JS config retention

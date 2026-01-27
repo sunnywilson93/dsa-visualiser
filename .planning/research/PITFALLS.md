@@ -1,547 +1,472 @@
-# Pitfalls Research: Polish & Production
+# Domain Pitfalls: CSS Modules to Tailwind v4 Migration
 
-**Domain:** Adding responsive design, SEO, and cross-linking to existing Next.js educational platform
-**Researched:** 2026-01-25
-**Confidence:** HIGH (verified against codebase patterns and official documentation)
+**Domain:** Migrating 74 CSS Module files (~25,000 lines) to Tailwind v4 utility classes in Next.js 14
+**Researched:** 2026-01-27
+**Confidence:** HIGH (verified against codebase patterns, Tailwind v4 official docs, and community reports)
 
 ---
 
-## Responsive Design Pitfalls
+## Critical Pitfalls
 
-### Pitfall 1: Monaco Editor Mobile Incompatibility (CRITICAL)
+Mistakes that cause rewrites, broken layouts, or blocked progress.
 
-**What goes wrong:** Monaco Editor (currently used via `@monaco-editor/react`) does not support mobile browsers. Users on mobile devices experience broken or unusable code editors, with touch interactions failing and layouts breaking.
+---
 
-**Why it happens:** Monaco is designed for desktop VS Code experience. It has a 5-10MB bundle size and zero mobile optimization. The codebase currently uses Monaco in `CodeEditor.tsx` and `PlaygroundEditor.tsx`.
+### Pitfall 1: `@apply` Is Broken in CSS Module Files Without `@reference` (CRITICAL)
+
+**What goes wrong:** During incremental migration, you keep some `.module.css` files and try to use `@apply` with Tailwind v4 utilities inside them. Every `@apply` call fails with `Cannot apply unknown utility class`. Custom theme classes (e.g., `@apply text-brand-primary`) and dark mode variants (`@apply dark:bg-blue-500`) silently break or always apply the dark variant.
+
+**Why it happens:** Tailwind v4 moved to CSS-first configuration. Each CSS file is now independently compiled. Unlike v3, CSS module files have no implicit access to the Tailwind theme or utilities. The module file does not know about `@theme` variables defined in `globals.css`.
+
+**Consequences:** Every CSS module file that uses `@apply` during the transition period will produce build errors or silently broken styles. This blocks incremental migration entirely if not addressed.
 
 **Warning signs:**
-- Code editor doesn't respond to touch
-- Layout shifts on mobile when editor mounts
-- Extremely slow initial load on mobile devices
-- Bundle size exceeds 5MB on practice pages
+- Build errors: `Cannot apply unknown utility class: text-primary`
+- Dark mode variants always stuck in one mode
+- Styles that worked in v3 `@apply` silently produce no output
 
-**Prevention strategy:**
-1. Accept read-only code display on mobile (use syntax-highlighted `<pre>` blocks)
-2. Hide code editor entirely below 768px breakpoint (existing pattern in `page.module.css` already hides `.visualizationWrapper` on mobile)
-3. If editing is required on mobile, evaluate CodeMirror 6 migration (300KB vs 5MB, native mobile support)
+**Prevention:**
+1. If keeping any `.module.css` file during transition, add `@reference "tailwindcss";` at the top of each file
+2. For files using custom `@theme` variables, use `@reference "../app/globals.css";` instead (points to the file with `@theme` definitions)
+3. Better approach: skip `@apply` entirely during migration -- convert CSS module classes directly to inline utility classes in JSX
 
-**Which phase should address it:** Phase 1 (Responsive Layout) - must decide mobile editor strategy before restructuring layouts
+**Detection:** Run `npm run build` after any CSS module change. Check for `Cannot apply unknown utility class` errors.
 
-**Confidence:** HIGH - documented limitation, verified in codebase dependency
+**Which phase should address it:** Phase 1 (Foundation) -- establish the migration pattern before touching any component files
+
+**Confidence:** HIGH -- [verified via Tailwind v4 issue #15814](https://github.com/tailwindlabs/tailwindcss/issues/15814) and [discussion #16429](https://github.com/tailwindlabs/tailwindcss/discussions/16429)
 
 ---
 
-### Pitfall 2: SSR Hydration Mismatch with Responsive Detection (CRITICAL)
+### Pitfall 2: Dynamic CSS Module Class Access Breaks with Tailwind (CRITICAL)
 
-**What goes wrong:** Using JavaScript-based media queries (e.g., `window.matchMedia` or `useMediaQuery` hooks) to conditionally render different component trees causes React hydration mismatches. Server renders one version, client renders another based on actual viewport.
+**What goes wrong:** The codebase uses dynamic bracket notation to apply CSS module classes: `styles[problem.difficulty]`, `styles[state]`, `styles[ptr.type]`, `styles[highlightType]`, `styles[\`width${bitWidth}\`]`. These patterns have no direct Tailwind equivalent. Moving to utility classes loses the ability to dynamically select a class by runtime string key.
 
-**Why it happens:** SSR doesn't have access to `window` or viewport dimensions. Server must send a single HTML document. Existing codebase uses CSS media queries in `.module.css` files (correct pattern), but adding responsive logic risks introducing JS-based detection.
+**Why it happens:** CSS Modules export an object where keys are class names. You can access any key dynamically via `styles[variable]`. Tailwind utility classes are strings in JSX -- you cannot "look up" a Tailwind class by variable name without a mapping object.
+
+**Consequences:** 10+ components use this pattern. Naive migration (delete module file, add Tailwind classes) will break all dynamic styling in visualization components, difficulty badges, and call stack displays.
+
+**Affected files (verified in codebase):**
+- `ArrayVisualization.tsx` -- `styles[state]` for element highlight states
+- `BinaryVisualization.tsx` -- `styles[highlightType]` for bit highlight types
+- `BitManipulationViz.tsx` -- `styles[`width${bitWidth}`]` for dynamic widths
+- `CallStack.tsx` -- `styles[type]` for variable type colors
+- `Variables.tsx` -- `styles[value.type]` for value type styling
+- `PracticePageClient.tsx` / `ConceptVizPageClient.tsx` -- `styles[problem.difficulty]` for difficulty badges
+
+**Prevention:**
+1. Create a mapping utility pattern before migration:
+   ```tsx
+   const difficultyStyles = {
+     easy: 'text-accent-green bg-accent-green/10',
+     medium: 'text-accent-yellow bg-accent-yellow/10',
+     hard: 'text-accent-red bg-accent-red/10',
+   } as const
+   // Usage: className={difficultyStyles[problem.difficulty]}
+   ```
+2. Identify ALL dynamic class access patterns before starting migration
+3. Create mapping objects as the FIRST step for each affected component
+4. Consider `clsx` or `cva` (class-variance-authority) for complex variant mapping
+
+**Detection:** Search codebase for `styles[` (bracket notation) -- every instance needs a migration plan.
+
+**Which phase should address it:** Phase 1 (Foundation) -- document the pattern; Phase 2+ (per-component migration) -- implement mappings
+
+**Confidence:** HIGH -- verified 10 instances in codebase via grep
+
+---
+
+### Pitfall 3: CSS-Only Checkbox Hack for Mobile Navigation (CRITICAL)
+
+**What goes wrong:** The NavBar uses a CSS-only checkbox hack for the mobile menu. Selectors like `.mobileMenuToggle:checked + .hamburgerBtn .hamburgerIcon` and `.mobileMenuToggle:checked ~ .mobileNav` rely on CSS sibling combinators and the `:checked` pseudo-class targeting a hidden input. This pattern cannot be expressed as Tailwind utility classes.
+
+**Why it happens:** Tailwind provides `peer-checked:` variants, but they require specific DOM structure (`peer` class on the input, sibling relationship). The existing hamburger-to-X animation uses `::before` and `::after` pseudo-elements with `transform` on `:checked`, combined with `content: ''` and absolute positioning. This level of CSS interplay does not translate to utilities.
+
+**Consequences:** Attempting to migrate the NavBar CSS module to Tailwind utilities will either break the mobile menu entirely or require a complete rewrite of the navigation approach (e.g., converting to React state-based toggle).
 
 **Warning signs:**
-- Console errors about hydration mismatch
-- Components "flickering" on initial load
-- Different content appearing after JavaScript loads
-- Layout "jumping" after hydration
+- Mobile menu stops opening/closing
+- Hamburger icon animation breaks
+- Overlay no longer appears when menu is open
 
-**Prevention strategy:**
-1. Continue using CSS-only media queries (existing pattern)
-2. Never conditionally render different component trees based on viewport in React
-3. Use CSS `display: none` to hide elements, not conditional React rendering
-4. If JS-based detection needed, use `useEffect` with initial SSR-safe value
+**Prevention:**
+1. **Option A (recommended):** Keep `NavBar.module.css` as a hybrid file -- migrate simple layout utilities to Tailwind but keep the checkbox hack selectors in CSS
+2. **Option B:** Rewrite to React state-based mobile menu (adds JS, loses CSS-only benefit, but cleaner Tailwind integration). This changes behavior and should be a deliberate decision, not a side effect of migration
+3. Do NOT attempt to convert the checkbox hack to Tailwind `peer-checked:` without a working prototype first
 
-**Which phase should address it:** All phases - establish as coding standard before any responsive work
+**Detection:** Test mobile menu after any NavBar CSS changes on actual narrow viewports (< 767px).
 
-**Confidence:** HIGH - documented Next.js SSR limitation
+**Which phase should address it:** Dedicated NavBar migration phase -- do NOT bundle with other component migrations
+
+**Confidence:** HIGH -- verified complex selector chain in `NavBar.module.css` (lines 188-319)
 
 ---
 
-### Pitfall 3: Breaking Desktop Three-Column Grid Layout
+### Pitfall 4: Loss of CSS Scoping Causes Style Collisions (CRITICAL)
 
-**What goes wrong:** Responsive modifications to the practice page (`/[categoryId]/[problemId]/page.module.css`) inadvertently break the carefully tuned desktop grid layout (`grid-template-columns: 1fr 400px 320px`).
+**What goes wrong:** CSS Modules automatically scope class names (`.container` becomes `.NavBar_container_a1b2c3`). Two components can both have `.container` without conflict. Tailwind utilities are global. If you partially migrate (some components use Tailwind, some still use modules), the global Tailwind utilities and remaining module styles can interact unexpectedly.
 
-**Why it happens:** The existing CSS already has media queries at 1200px, 1024px, and 768px. Adding new breakpoints or modifying existing ones without understanding the full cascade causes unintended side effects.
+**Why it happens:** CSS Modules guarantee isolation. Tailwind's global utilities have flat specificity. During incremental migration, you have both systems active. A global reset or Tailwind's preflight can override module styles you haven't migrated yet.
+
+**Consequences:** Components that haven't been migrated yet suddenly look different because Tailwind's preflight CSS (base resets) changed their default styles. Buttons lose cursor: pointer (v4 preflight changes `cursor` to `default`). Placeholder text changes color (v4 uses `currentColor` at 50% opacity instead of `gray-400`).
 
 **Warning signs:**
-- Desktop layout looks different after "mobile-only" changes
-- Grid columns overlap or have wrong proportions
-- Visualization panels truncated or overflowing
+- Unmigrated components suddenly look different
+- Buttons have default cursor instead of pointer
+- Placeholder text color changes
+- Border colors change (v4 defaults differ from v3)
 
-**Prevention strategy:**
-1. Document existing breakpoint behavior before modifications
-2. Test at all existing breakpoints (1200px, 1024px, 768px) plus mobile (480px)
-3. Use mobile-first approach for NEW styles only; don't refactor existing desktop-first code
-4. Add `/* RESPONSIVE: affects desktop */` comments when modifying shared properties
+**Prevention:**
+1. Be aware that Tailwind v4 preflight changes defaults: buttons use `cursor: default`, placeholders use `currentColor` at 50% opacity, borders no longer default to `gray-200`
+2. Add explicit `cursor-pointer` to all interactive elements during migration
+3. Test unmigrated components after each migration batch -- not just the migrated ones
+4. Consider adding global overrides for preflight differences to maintain visual parity during transition
 
-**Which phase should address it:** Phase 1 - audit existing breakpoints first
+**Detection:** Visual comparison of ALL pages after each migration batch, not just the pages with migrated components.
 
-**Confidence:** HIGH - verified in codebase at `/src/app/[categoryId]/[problemId]/page.module.css`
+**Which phase should address it:** Phase 1 (Foundation) -- add preflight overrides before any component migration
+
+**Confidence:** HIGH -- [verified in Tailwind v4 upgrade guide](https://tailwindcss.com/docs/upgrade-guide)
 
 ---
 
-### Pitfall 4: Visualization Components with Fixed Pixel Dimensions
+### Pitfall 5: 8,500+ CSS Variable References Need `@theme` Mapping (CRITICAL)
 
-**What goes wrong:** Visualization components (array bars, hash table cells, pointer labels) use hardcoded pixel values that don't scale properly on smaller screens, causing overflow or illegibly small elements.
+**What goes wrong:** The codebase has 8,529 references to CSS custom properties (`var(--...)`) across module files. These reference 246+ variables defined in globals.css. When migrating to Tailwind utilities, every `var(--text-primary)` must map to a Tailwind utility like `text-text-primary`. If the `@theme` configuration is wrong or incomplete, utilities for custom tokens simply do not exist.
 
-**Why it happens:** Components like `ArrayVisualization.module.css` use fixed dimensions (`min-width: 32px`, `max-width: 50px`, `height: 48px`). The `TwoPointersViz.module.css` has fixed `.cell` dimensions (`width: 48px; height: 48px`).
+**Why it happens:** The existing `tailwind.config.js` maps CSS variables to Tailwind tokens, but Tailwind v4 replaces `tailwind.config.js` with `@theme` in CSS. The migration from JS config to CSS `@theme` must be exact -- any missing namespace means missing utility classes.
+
+**Consequences:** Hundreds of components reference custom design tokens. If `@theme` is incomplete, you will discover missing utilities only when you try to use them, creating a drip-feed of errors throughout the entire migration.
 
 **Warning signs:**
-- Arrays with many elements overflow horizontally
-- Pointer labels overlap or become unreadable
-- Touch targets too small (< 44px on iOS)
+- `text-text-primary` class has no effect (token not in `@theme`)
+- Colors revert to browser defaults
+- Spacing values produce no output
 
-**Prevention strategy:**
-1. Use `clamp()` for responsive sizing: `width: clamp(32px, 8vw, 50px)`
-2. Add `overflow-x: auto` containers (already present in some places)
-3. Reduce element count on mobile or use pagination
-4. Test with arrays of 10+ elements on 320px viewport
+**Prevention:**
+1. Convert `tailwind.config.js` to `@theme` block FIRST, before any component migration
+2. Verify every token namespace:
+   - `--color-brand-*` -> generates `bg-brand-*`, `text-brand-*`, etc.
+   - `--color-text-*` -> generates `text-text-*` (note the double "text" -- may want to rename)
+   - `--color-bg-*` -> generates `bg-bg-*` (awkward -- consider renaming to `--color-surface-*`)
+   - `--spacing-*` -> generates spacing utilities
+   - `--radius-*` -> generates rounded utilities
+   - `--shadow-*` -> generates shadow utilities
+   - `--font-*` -> generates font-family utilities
+3. Write a verification test: for each token in globals.css, confirm the corresponding Tailwind utility exists
+4. Consider the naming conflict: Tailwind has built-in `text-primary` for text color AND the project has `--text-primary`. The `@theme` namespace `--color-text-primary` generates `text-text-primary` which is verbose. Plan the naming strategy before migrating.
 
-**Which phase should address it:** Phase 1 - after grid layout, before content styling
+**Detection:** Create a token audit spreadsheet mapping every CSS variable to its Tailwind v4 `@theme` equivalent before writing any code.
 
-**Confidence:** HIGH - verified in codebase CSS files
+**Which phase should address it:** Phase 1 (Foundation) -- this is THE foundation task
 
----
-
-### Pitfall 5: Framer Motion Layout Animations on Mobile
-
-**What goes wrong:** Layout animations that work in desktop browsers and mobile emulators fail on actual mobile devices, especially iOS with "Reduced Motion" or "Low Power Mode" enabled.
-
-**Why it happens:** The codebase uses `framer-motion` (v11). Mobile devices may disable animations for battery/accessibility. Also, layout animations within scrollable containers require `layoutScroll` prop.
-
-**Warning signs:**
-- Animations work in Chrome DevTools mobile view but not on real devices
-- Sudden jumps instead of smooth transitions
-- Carousel/expandable sections behave differently on mobile
-
-**Prevention strategy:**
-1. Use `useReducedMotion` hook and provide instant fallbacks
-2. Add `layoutScroll` prop to scrollable animation containers
-3. Test on real iOS and Android devices, not just emulators
-4. Keep animations under 300ms on mobile
-
-**Which phase should address it:** Phase 1 - establish animation patterns early
-
-**Confidence:** MEDIUM - framer-motion documented issue, not verified in this codebase
+**Confidence:** HIGH -- verified 8,529 `var(--` references and current `tailwind.config.js` structure
 
 ---
 
-## SEO Pitfalls
+## Moderate Pitfalls
 
-### Pitfall 6: Missing Page-Specific Metadata (CRITICAL)
-
-**What goes wrong:** Dynamic pages (category pages, problem pages) inherit generic metadata from root layout instead of having unique, descriptive titles and descriptions. Google may not index these pages properly.
-
-**Why it happens:** The root `layout.tsx` has excellent base metadata, but individual page files need `generateMetadata` functions. The concept pages (`/concepts/[conceptId]/page.tsx`) correctly implement this, but other dynamic routes may not.
-
-**Warning signs:**
-- All pages show same title in browser tab
-- Search results show generic descriptions
-- Google Search Console reports "Duplicate meta descriptions"
-
-**Prevention strategy:**
-1. Audit all dynamic route pages for `generateMetadata` function
-2. Use pattern from `/concepts/[conceptId]/page.tsx` as template
-3. Each page needs: unique title (< 60 chars), unique description (< 160 chars), canonical URL
-4. Include problem name/category in titles: "Two Sum - Arrays & Hashing | JS Interview Prep"
-
-**Which phase should address it:** Phase 2 (SEO) - first task
-
-**Confidence:** HIGH - verified `/concepts/[conceptId]/page.tsx` has correct pattern, need to verify others
+Mistakes that cause delays, rework, or accumulated technical debt.
 
 ---
 
-### Pitfall 7: Missing metadataBase Breaking OG Images
+### Pitfall 6: Pseudo-Elements Cannot Be Fully Expressed in Tailwind
 
-**What goes wrong:** Social sharing previews show broken images or no images. OG image URLs become relative paths that platforms can't fetch.
+**What goes wrong:** The codebase uses `::before` and `::after` pseudo-elements extensively for decorative effects (gradient overlays on cards, list markers, hamburger icon lines). While Tailwind supports `before:` and `after:` prefixes, complex pseudo-element patterns with multiple CSS properties become extremely long class strings that are harder to read and maintain than CSS.
 
-**Why it happens:** The root layout correctly sets `metadataBase: new URL('https://jsinterview.dev')`, but if any page overrides metadata without including base URL, OG images break.
+**Verified patterns that are problematic:**
+- Card gradient borders using `::before` with `background: var(--card-gradient-border)` + mask technique (page.module.css lines 177-198)
+- List item custom markers with `::before` content, absolute positioning, width, height, background, border-radius (conceptId page.module.css lines 150-160)
+- Hamburger icon lines with `::before`/`::after` with transform animations on `:checked` state
 
-**Warning signs:**
-- Twitter/LinkedIn previews show no image
-- Facebook debugger shows "Could not fetch og:image"
-- OG image URLs start with `/` instead of `https://`
+**Prevention:**
+1. Accept that some pseudo-element patterns should remain in CSS (either a small utility CSS file or kept in module)
+2. For simple `::before`/`::after` (content only), use Tailwind: `before:content-[''] before:absolute before:bg-blue-500`
+3. For complex patterns (3+ properties on pseudo-element), keep in a `@utility` block or a thin CSS file
+4. Establish a threshold: if a pseudo-element needs more than 4 Tailwind classes, keep it in CSS
 
-**Prevention strategy:**
-1. Verify `metadataBase` in root layout (already correct)
-2. When using `generateMetadata`, don't override `metadataBase`
-3. Use relative paths for images in metadata (Next.js resolves against base)
-4. Test with social sharing debuggers after deployment
+**Which phase should address it:** Phase 2+ (per-component migration) -- decide per component
 
-**Which phase should address it:** Phase 2 (SEO) - verify during metadata implementation
-
-**Confidence:** HIGH - verified correct base setup exists in codebase
+**Confidence:** HIGH -- verified 40+ pseudo-element usages in codebase
 
 ---
 
-### Pitfall 8: Client-Side Rendered Critical Content
+### Pitfall 7: Non-Standard Media Query Breakpoints
 
-**What goes wrong:** Important content (problem descriptions, concept explanations) renders only after JavaScript loads, making it invisible to search engine crawlers that don't execute JS.
+**What goes wrong:** The codebase uses media queries at non-Tailwind breakpoints: `max-width: 1200px`, `900px`, `480px`, `400px`, `360px`, `767px`. Tailwind's default breakpoints are `640px (sm)`, `768px (md)`, `1024px (lg)`, `1280px (xl)`. Converting to Tailwind responsive prefixes (`sm:`, `md:`, `lg:`) shifts breakpoint boundaries, causing visual regressions at specific viewport widths.
 
-**Why it happens:** Using client components (`'use client'`) for pages that contain SEO-critical text. The codebase has `*Client.tsx` components that handle interactivity, but content should be in server components.
+**Why it happens:** The CSS modules use desktop-first `max-width` queries. Tailwind uses mobile-first `min-width` by default. The logic must be inverted AND the breakpoint values aligned.
 
-**Warning signs:**
-- "View Source" shows empty content areas
-- Google Search Console shows "Crawled - currently not indexed"
-- Content appears after page load delay
+**Consequences:** Layouts that currently break at 1200px will break at 1280px (Tailwind `xl`). The 767px/768px split for mobile menu will work differently with Tailwind's `md:` (768px min-width). Subtle layout shifts at every breakpoint.
 
-**Prevention strategy:**
-1. Keep text content in server components (the page.tsx files)
-2. Pass data as props to client components
-3. Use the existing pattern: `page.tsx` (server) renders `*Client.tsx` (client)
-4. Check `/[categoryId]/[problemId]/page.tsx` loads problem data server-side
+**Prevention:**
+1. Map existing breakpoints to nearest Tailwind equivalents:
+   - `max-width: 1200px` -> use custom breakpoint or accept `xl:` (1280px)
+   - `max-width: 1024px` -> `lg:` (exact match)
+   - `max-width: 768px` -> `md:` (exact match, but inverted direction)
+   - `max-width: 640px` -> `sm:` (exact match, but inverted direction)
+   - `max-width: 480px`, `400px`, `360px` -> need custom breakpoints in `@theme`
+2. Add custom breakpoints to `@theme` for non-standard values
+3. Remember to invert the logic: `max-width: 768px { display: none }` becomes visible by default, hidden below md -> `md:block hidden` (mobile-first)
+4. Test at EVERY existing breakpoint value, not just Tailwind defaults
 
-**Which phase should address it:** Phase 2 (SEO) - audit during metadata implementation
+**Detection:** Resize browser slowly through all current breakpoint values. Compare before/after at each pixel threshold.
 
-**Confidence:** HIGH - verified existing pattern separates server/client correctly
+**Which phase should address it:** Phase 1 (Foundation) -- define custom breakpoints in `@theme`
 
----
-
-### Pitfall 9: Missing Sitemap and Robots.txt
-
-**What goes wrong:** Search engines don't discover all pages efficiently. New pages take weeks to get indexed.
-
-**Why it happens:** No automated sitemap generation for dynamic routes. Manual sitemap quickly becomes outdated as content grows.
-
-**Warning signs:**
-- Google Search Console shows few indexed pages
-- New problems/concepts not appearing in search
-- "Discovered - currently not indexed" status
-
-**Prevention strategy:**
-1. Implement `app/sitemap.ts` using Next.js Metadata API
-2. Generate sitemap dynamically from `exampleCategories`, `concepts`, `dsaConcepts`
-3. Include `lastModified` dates for priority pages
-4. Add `app/robots.ts` allowing all crawlers
-
-**Which phase should address it:** Phase 2 (SEO) - after page metadata
-
-**Confidence:** HIGH - standard Next.js SEO requirement
+**Confidence:** HIGH -- verified 30+ non-standard media queries in codebase
 
 ---
 
-### Pitfall 10: Duplicate Content from Trailing Slashes
+### Pitfall 8: Complex Grid Layouts Become Unreadable in Tailwind
 
-**What goes wrong:** `/concepts/closures` and `/concepts/closures/` indexed as separate pages, diluting SEO value and causing duplicate content penalties.
+**What goes wrong:** The practice page has a responsive three-column grid that changes at three breakpoints:
+```css
+/* Desktop: 3 columns */
+grid-template-columns: 1fr 400px 320px;
+/* 1200px: narrower sidebars */
+grid-template-columns: 1fr 280px 300px;
+/* 1024px: 2 columns with row spanning */
+grid-template-columns: 1fr 280px;
+grid-template-rows: 1fr auto;
+grid-column: 2; grid-row: 1 / 3;
+/* 768px: single column, 3 rows */
+grid-template-columns: 1fr;
+grid-template-rows: auto auto auto;
+```
 
-**Why it happens:** Next.js by default treats these as different routes. Without explicit canonical URLs, both get indexed.
+Expressing this as Tailwind utilities on a single element produces an unreadable class string with 15+ responsive grid utilities.
 
-**Warning signs:**
-- Google Search Console shows duplicate URLs
-- Same content ranking for both variants
-- Internal links inconsistent (some with slash, some without)
+**Why it happens:** Grid layouts with named areas, row spanning, and multiple breakpoint changes are inherently complex. Tailwind utilities are optimized for single-property changes, not multi-property responsive reconfiguration.
 
-**Prevention strategy:**
-1. Set `trailingSlash: false` in `next.config.js` (or `true` - pick one)
-2. Ensure all `<Link>` hrefs consistent
-3. Always include canonical URL in page metadata
-4. Redirect the non-canonical variant
+**Prevention:**
+1. Keep complex grid layouts in CSS (either `@utility` blocks or a thin `layout.css` file)
+2. Use Tailwind for the content INSIDE grid cells, not the grid structure itself
+3. Alternatively, use Tailwind's arbitrary values: `grid-cols-[1fr_400px_320px]` but accept reduced readability
+4. For the practice page specifically, consider a dedicated `practiceLayout` utility class defined in `@utility`
 
-**Which phase should address it:** Phase 2 (SEO) - configuration task
+**Which phase should address it:** Per-page migration phases -- the practice page layout should be migrated last due to complexity
 
-**Confidence:** HIGH - standard Next.js SEO configuration
-
----
-
-## Cross-Linking Pitfalls
-
-### Pitfall 11: Orphaned Pages (No Internal Links)
-
-**What goes wrong:** New concept or problem pages have no internal links pointing to them. Search engines can't discover them, and users can't navigate to them except via direct URL.
-
-**Why it happens:** Pages added to data files but not linked from anywhere. Category pages may filter or paginate, hiding new entries.
-
-**Warning signs:**
-- Page only accessible via direct URL
-- Google Search Console shows page as "Discovered - not indexed"
-- Analytics shows zero pageviews for new content
-
-**Prevention strategy:**
-1. Every new page must be linked from at least 2 places
-2. Category pages show all items (not just featured)
-3. Add "Related concepts" sections to concept pages
-4. Add "Similar problems" to problem pages
-
-**Which phase should address it:** Phase 3 (Cross-Linking)
-
-**Confidence:** HIGH - verified some pages are deeply nested in codebase
+**Confidence:** HIGH -- verified in `/src/app/[categoryId]/[problemId]/page.module.css`
 
 ---
 
-### Pitfall 12: Generic Anchor Text ("Click Here", "Learn More")
+### Pitfall 9: Keyframe Animations Require `@theme` or `@utility` Definitions
 
-**What goes wrong:** Internal links use vague anchor text instead of descriptive keywords. Search engines can't understand what the linked page is about.
+**What goes wrong:** The codebase defines 15+ `@keyframes` animations in CSS module files (`pulse`, `fadeIn`, `float`, `pointerPulse`, `borderPulse`, `warningPulse`, `extractPulse`, etc.). These cannot be expressed as Tailwind utility classes. They must be defined somewhere in CSS.
 
-**Why it happens:** Reusable "View All" or "Learn More" link patterns. Current codebase uses "View All →" which is better but still generic.
+**Why it happens:** Tailwind provides `animate-spin`, `animate-bounce`, `animate-pulse`, `animate-ping` out of the box, but custom keyframes require CSS definition. In v4, custom keyframes go in `@theme` (for the animation name/timing) and a regular CSS block for the `@keyframes` rule.
 
-**Warning signs:**
-- Same anchor text points to different pages
-- Links say "here" or "more" instead of topic name
-- No keyword context around links
+**Prevention:**
+1. Collect all custom `@keyframes` into a single `animations.css` file or define them in `globals.css`
+2. Register animation names in `@theme`:
+   ```css
+   @theme {
+     --animate-pulse-custom: pulse-custom 1.5s ease-in-out infinite;
+   }
+   ```
+3. Keep `@keyframes` definitions alongside `@theme` in globals.css
+4. Components can then use `animate-pulse-custom` as a Tailwind utility
+5. Note: same-named keyframes in different modules (e.g., multiple files define `@keyframes pulse` with different values) will conflict when consolidated -- rename them to be unique
 
-**Prevention strategy:**
-1. Use descriptive text: "View all Arrays & Hashing problems" not "View All"
-2. Include topic name in anchor: "Learn about closures" not "Learn more"
-3. Vary anchor text for same destination (don't always use exact same phrase)
+**Detection:** Search for `@keyframes` in all module files. Check for naming collisions.
 
-**Which phase should address it:** Phase 3 (Cross-Linking)
+**Which phase should address it:** Phase 1 (Foundation) -- consolidate keyframes before component migration
 
-**Confidence:** MEDIUM - verified generic patterns exist but impact unclear
-
----
-
-### Pitfall 13: Excessive Cross-Links Diluting Value
-
-**What goes wrong:** Adding too many internal links to every page makes none of them stand out. "Link equity" gets spread too thin.
-
-**Why it happens:** Enthusiasm for cross-linking leads to linking everything to everything. Footer mega-menus with 50+ links.
-
-**Warning signs:**
-- Pages have 20+ internal links
-- Every page links to every other page
-- Navigation becomes overwhelming
-
-**Prevention strategy:**
-1. Limit to 5-10 contextual links per page
-2. Link to directly related content only
-3. Use hierarchical structure: pillar pages link to topic pages, topic pages link back
-4. Distinguish between navigation links and content links
-
-**Which phase should address it:** Phase 3 (Cross-Linking) - establish link budget
-
-**Confidence:** MEDIUM - SEO best practice, not codebase-specific
+**Confidence:** HIGH -- verified 15+ keyframe definitions with naming collisions (3 files define different `pulse` keyframes)
 
 ---
 
-### Pitfall 14: Broken Links After Refactoring
+### Pitfall 10: `!important` Overrides in CSS Modules
 
-**What goes wrong:** Renaming routes, reorganizing data structures, or changing URL slugs creates broken internal links. Old URLs 404.
+**What goes wrong:** The codebase uses `!important` in 10+ places, primarily for overriding Monaco Editor internal styles and forcing mobile menu display states. Tailwind v4 uses CSS cascade layers, which changes how `!important` interacts with utility specificity.
 
-**Why it happens:** Links hardcoded as strings throughout codebase. No central URL generation utility.
+**Why it happens:** CSS Modules have predictable specificity (single class). Monaco Editor injects its own styles that must be overridden. The mobile menu uses `display: none !important` to force-hide on desktop. Tailwind v4's cascade layers mean that `@layer utilities` styles have lower specificity than un-layered styles.
 
-**Warning signs:**
-- 404 errors after deployment
-- Google Search Console reports broken links
-- Users report "page not found"
+**Affected patterns:**
+- `CodeEditor.module.css` -- overriding Monaco Editor internal styles (6 instances)
+- `NavBar.module.css` -- `display: none !important` for mobile menu on desktop
+- `CardCarousel.module.css` -- `opacity: 0 !important`
 
-**Prevention strategy:**
-1. Create URL helper functions in `@/utils/urls.ts`
-2. Generate all URLs from data (concept IDs, category IDs)
-3. Add redirects for changed URLs in `next.config.js`
-4. Run link checker before deployment
+**Prevention:**
+1. For Monaco Editor overrides: keep in a dedicated CSS file outside of Tailwind's layer system. Un-layered CSS beats Tailwind's layered utilities.
+2. For mobile menu: if keeping CSS-only approach, keep `!important` rules in CSS
+3. Use Tailwind's `!` prefix for important utilities: `!hidden` generates `display: none !important`
+4. Be aware that `@layer` changes mean un-layered CSS > Tailwind utilities in specificity
 
-**Which phase should address it:** Phase 3 (Cross-Linking) - establish URL utilities first
+**Which phase should address it:** Phase 1 (Foundation) -- identify which `!important` rules must stay in CSS
 
-**Confidence:** HIGH - common issue, no URL utilities exist in codebase
-
----
-
-## Page Consistency Pitfalls
-
-### Pitfall 15: Inconsistent NavBar Usage Across Pages
-
-**What goes wrong:** Some pages use NavBar, some don't. Some pages have custom headers. User loses navigation context.
-
-**Why it happens:** Pages developed at different times with different patterns. Practice page has custom header in `page.module.css`, concept pages use NavBar component.
-
-**Warning signs:**
-- Navigation looks different on different pages
-- Back button behavior inconsistent
-- Users can't find their way back to home
-
-**Prevention strategy:**
-1. Audit all pages for header/navigation usage
-2. Create consistent header pattern:
-   - NavBar on all browse/landing pages
-   - Simplified header with back button on "workspace" pages (practice, playground)
-3. Use Next.js layouts for consistent structure
-4. Document which header variant each page type uses
-
-**Which phase should address it:** Phase 4 (Page Consistency) - first audit task
-
-**Confidence:** HIGH - verified inconsistency between practice page header and NavBar component
+**Confidence:** HIGH -- verified 10+ `!important` usages in codebase
 
 ---
 
-### Pitfall 16: Layout Re-renders on Navigation
+### Pitfall 11: Framer Motion + Tailwind Class Merging Issues
 
-**What goes wrong:** Shared components (NavBar, footer) re-render and lose state when navigating between pages. Scroll position resets, search input clears.
+**What goes wrong:** 60 components use Framer Motion. When a `motion.div` has both a `className` with Tailwind utilities and Framer Motion's `style` prop for animations, the inline `style` always wins. This is correct behavior, but during migration, if you move properties from CSS modules to Tailwind utilities that Framer Motion also animates (e.g., `opacity`, `transform`, `background`), the Tailwind class gets overridden by Framer Motion's inline style.
 
-**Why it happens:** Not using Next.js layout pattern correctly. Each page renders its own NavBar instead of sharing through layout.
+**Why it happens:** Framer Motion applies animations via the `style` attribute, which has higher specificity than class-based styles. In CSS Modules, this was fine because the module styles were "base" styles. With Tailwind, the same properties are still class-based and still get overridden, but the mental model changes -- you expect to "see" the Tailwind class working.
 
-**Warning signs:**
-- Flash of content on navigation
-- Search query clears when changing pages
-- Scroll position jumps to top unexpectedly
+**Prevention:**
+1. Do not put animation-target properties in Tailwind classes if Framer Motion animates them
+2. Use Framer Motion's `initial` prop for initial states rather than Tailwind classes for animated properties
+3. Use Tailwind for non-animated properties (layout, typography, colors that don't animate)
+4. Keep the existing pattern: CSS module provides base styles, Framer Motion overrides for animation
 
-**Prevention strategy:**
-1. Move NavBar to appropriate layout files
-2. Use Next.js `layout.tsx` for truly shared components
-3. Distinguish between page-specific headers and app-wide navigation
-4. Test navigation state persistence
+**Which phase should address it:** All component migration phases -- check for Framer Motion usage before migrating each component
 
-**Which phase should address it:** Phase 4 (Page Consistency)
-
-**Confidence:** HIGH - verified NavBar imported separately in each page
+**Confidence:** MEDIUM -- logical inference from how both systems work, not a reported bug
 
 ---
 
-### Pitfall 17: Inconsistent Spacing and Typography Scale
+### Pitfall 12: Tailwind v4 Renamed Utility Classes
 
-**What goes wrong:** New pages use different spacing values or font sizes than existing pages. Visual rhythm feels "off".
+**What goes wrong:** You use familiar Tailwind v3 class names during migration and they produce wrong results. `shadow-sm` in v3 became `shadow-xs` in v4. `rounded-sm` became `rounded-xs`. The old names now map to DIFFERENT values.
 
-**Why it happens:** The codebase has CSS variables (`--space-xs` through `--space-2xl`, `--text-xs` through `--text-3xl`) but not all components use them consistently.
+**Renamed utilities (v3 -> v4):**
+- `shadow-sm` -> `shadow-xs` (old `shadow-sm` is now what was `shadow`)
+- `shadow` -> `shadow-sm`
+- `rounded-sm` -> `rounded-xs`
+- `rounded` -> `rounded-sm`
+- `outline-none` -> `outline-hidden`
+- `ring` -> `ring-3`
 
-**Warning signs:**
-- Pages feel "different" without obvious reason
-- Inconsistent padding/margins
-- Font sizes don't match design system
+**Why it happens:** Tailwind v4 standardized naming. The migration tool handles this in existing codebases but you are WRITING NEW Tailwind code during migration. If you reference v3 documentation or your muscle memory uses v3 names, you get subtly wrong values.
 
-**Prevention strategy:**
-1. Always use CSS variables for spacing and typography
-2. Create spacing/typography audit checklist
-3. Review new CSS against index.css variable definitions
-4. Add ESLint rule to warn on hardcoded pixel values (optional)
+**Prevention:**
+1. Use Tailwind v4 documentation exclusively (not v3)
+2. Bookmark https://tailwindcss.com/docs/upgrade-guide for the rename table
+3. If using a Tailwind IntelliSense VS Code extension, ensure it is updated to v4
+4. Add a codebase-level comment or doc noting the rename gotchas
 
-**Which phase should address it:** Phase 1 (Responsive) - establish during audit
+**Detection:** Visual comparison -- shadows and border-radius will be slightly different sizes than expected.
 
-**Confidence:** HIGH - verified CSS variables exist and should be used consistently
+**Which phase should address it:** All phases -- developer awareness
 
----
-
-## Integration Pitfalls
-
-### Pitfall 18: Modifying Shared CSS Affecting Multiple Components
-
-**What goes wrong:** Changing a shared CSS variable or global style (in `index.css`) breaks components you didn't intend to modify.
-
-**Why it happens:** Global CSS variables control many components. Changing `--bg-secondary` affects panels, badges, and many other elements.
-
-**Warning signs:**
-- "I only changed one thing" causes multiple visual regressions
-- Components in unrelated areas look different
-- Hard to track down which change caused issue
-
-**Prevention strategy:**
-1. Never modify global CSS variables without full audit
-2. Add new variants instead of changing existing: `--bg-mobile-panel` instead of modifying `--bg-secondary`
-3. Use CSS Module local overrides instead of global changes
-4. Add visual regression tests for key pages
-
-**Which phase should address it:** All phases - establish as process
-
-**Confidence:** HIGH - verified extensive CSS variable usage in codebase
+**Confidence:** HIGH -- [documented in official upgrade guide](https://tailwindcss.com/docs/upgrade-guide)
 
 ---
 
-### Pitfall 19: z-index Conflicts with Sticky/Fixed Elements
+### Pitfall 13: Custom Scrollbar Styles Cannot Be Tailwind Utilities
 
-**What goes wrong:** New sticky headers or mobile navigation overlaps with existing modals, tooltips, or floating elements.
+**What goes wrong:** The codebase has custom scrollbar styling using `::-webkit-scrollbar`, `::-webkit-scrollbar-track`, `::-webkit-scrollbar-thumb`, and `scrollbar-width`. These are vendor-prefixed pseudo-elements with no Tailwind utility equivalent.
 
-**Why it happens:** NavBar uses `z-index: 100`. Other components may use arbitrary z-index values. No documented z-index scale.
+**Affected files:**
+- `globals.css` -- global scrollbar theme
+- `CardCarousel.module.css` -- hidden scrollbar for horizontal scroll
+- `ErrorBoundary.module.css` -- custom scrollbar for stack trace
 
-**Warning signs:**
-- Modals appear behind navigation
-- Tooltips cut off by sticky headers
-- Search dropdown hidden by other elements
+**Prevention:**
+1. Keep scrollbar styles in CSS (globals.css or component-specific CSS files)
+2. Use the `scrollbar-*` standard properties where possible (Firefox supports them)
+3. These are "keep in CSS" patterns -- do not attempt to convert
 
-**Prevention strategy:**
-1. Document z-index scale:
-   - Base content: auto/0
-   - Sticky headers: 100
-   - Dropdowns/popovers: 200
-   - Modals: 300
-   - Tooltips: 400
-2. Review all z-index usage before adding new sticky elements
-3. Use CSS variables for z-index layers
+**Which phase should address it:** Mark as "no migration needed" during planning
 
-**Which phase should address it:** Phase 1 (Responsive) - when adding mobile navigation
-
-**Confidence:** HIGH - verified NavBar has z-index: 100
+**Confidence:** HIGH -- no Tailwind scrollbar utilities exist
 
 ---
 
-### Pitfall 20: Performance Regression from Responsive Images
+## Minor Pitfalls
 
-**What goes wrong:** Adding responsive images significantly increases page weight. LCP (Largest Contentful Paint) regresses.
-
-**Why it happens:** Not using Next.js `<Image>` component, or not configuring proper sizing. Loading full-size images on mobile.
-
-**Warning signs:**
-- Core Web Vitals scores drop after changes
-- Mobile PageSpeed Insights shows large image warnings
-- LCP > 2.5s on mobile
-
-**Prevention strategy:**
-1. Always use `next/image` for images
-2. Specify `sizes` prop for responsive images
-3. Use WebP format (Next.js does this automatically)
-4. Run Lighthouse before/after responsive changes
-
-**Which phase should address it:** Phase 1 (Responsive) - if adding any images
-
-**Confidence:** MEDIUM - no significant images in current codebase, but relevant if added
+Mistakes that cause annoyance but are quickly fixable.
 
 ---
 
-## Summary: Phase-Specific Pitfall Checklist
+### Pitfall 14: CSS Variable Arbitrary Value Syntax Changed in v4
 
-### Phase 1: Responsive Layout
-- [ ] Decide Monaco Editor mobile strategy (Pitfall 1)
-- [ ] Audit existing breakpoints (Pitfall 3)
-- [ ] Check visualization fixed dimensions (Pitfall 4)
-- [ ] Establish animation patterns with `useReducedMotion` (Pitfall 5)
-- [ ] Document z-index scale (Pitfall 19)
-- [ ] SSR-safe responsive detection only (Pitfall 2)
+**What goes wrong:** In v3, you could write `bg-[--brand-color]`. In v4, the syntax is `bg-(--brand-color)` (parentheses instead of square brackets). Using the old syntax silently fails.
 
-### Phase 2: SEO
-- [ ] Implement `generateMetadata` on all dynamic routes (Pitfall 6)
-- [ ] Verify OG images work (Pitfall 7)
-- [ ] Audit client vs server content (Pitfall 8)
-- [ ] Add sitemap.ts and robots.ts (Pitfall 9)
-- [ ] Configure trailing slash behavior (Pitfall 10)
+**Prevention:**
+1. Use v4 syntax: `bg-(--brand-color)` with parentheses
+2. For complex values, still use square brackets: `bg-[var(--brand-color)]`
+3. Update any Tailwind snippets or templates to v4 syntax
 
-### Phase 3: Cross-Linking
-- [ ] Audit for orphaned pages (Pitfall 11)
-- [ ] Review anchor text quality (Pitfall 12)
-- [ ] Establish link budget per page (Pitfall 13)
-- [ ] Create URL utility functions (Pitfall 14)
+**Which phase should address it:** Phase 1 (Foundation) -- developer onboarding
 
-### Phase 4: Page Consistency
-- [ ] Audit NavBar usage patterns (Pitfall 15)
-- [ ] Move shared components to layouts (Pitfall 16)
-- [ ] Verify CSS variable usage (Pitfall 17)
+**Confidence:** HIGH -- [documented in official upgrade guide](https://tailwindcss.com/docs/upgrade-guide)
 
-### All Phases
-- [ ] Never modify global CSS variables without audit (Pitfall 18)
-- [ ] Use CSS-only media queries, not JS conditional rendering (Pitfall 2)
+---
+
+### Pitfall 15: `transition: all` Pattern Is Wasteful in Tailwind
+
+**What goes wrong:** The codebase uses `transition: all var(--transition-fast)` extensively (15+ instances). Migrating this to Tailwind's `transition-all` works but is a known anti-pattern -- it transitions ALL properties including layout properties, causing jank.
+
+**Prevention:**
+1. During migration, replace `transition: all` with specific property transitions: `transition-colors`, `transition-opacity`, `transition-transform`
+2. This is an opportunity to IMPROVE during migration, not just replicate
+3. Audit each `transition: all` to determine which properties actually animate
+
+**Which phase should address it:** Per-component migration -- low priority improvement
+
+**Confidence:** HIGH -- performance best practice
+
+---
+
+### Pitfall 16: Gradient Behavior Changed in v4
+
+**What goes wrong:** In v3, overriding part of a gradient with a variant would reset the entire gradient. In v4, partial values are preserved. If you have hover states that change one gradient stop, the result differs from v3.
+
+**Prevention:**
+1. Test all gradient hover states after migration
+2. Use `via-none` to explicitly unset a three-stop gradient if needed
+3. This codebase uses CSS variable-based gradients (`var(--gradient-neon)`) which are unaffected -- only Tailwind gradient utilities are impacted
+
+**Which phase should address it:** Per-component migration -- test during each component
+
+**Confidence:** MEDIUM -- codebase uses CSS variable gradients, not Tailwind gradient utilities
+
+---
+
+## Phase-Specific Warning Matrix
+
+| Phase | Likely Pitfall | Severity | Mitigation |
+|-------|---------------|----------|------------|
+| Foundation (Phase 1) | `@theme` config incomplete (P5) | CRITICAL | Audit all 246 CSS variables, map to `@theme` namespaces |
+| Foundation (Phase 1) | Preflight style changes (P4) | CRITICAL | Add preflight overrides before component work |
+| Foundation (Phase 1) | Keyframe name collisions (P9) | MODERATE | Rename all `pulse` variants to unique names |
+| Foundation (Phase 1) | Non-standard breakpoints (P7) | MODERATE | Define custom breakpoints in `@theme` |
+| Component Migration | Dynamic class access breaks (P2) | CRITICAL | Create mapping objects before converting each component |
+| Component Migration | Pseudo-element complexity (P6) | MODERATE | Keep complex pseudo-elements in CSS |
+| Component Migration | Framer Motion conflicts (P11) | MODERATE | Check for animation overlap before converting |
+| NavBar Migration | Checkbox hack breaks (P3) | CRITICAL | Keep in CSS or explicitly rewrite to React state |
+| Practice Page | Grid layout unreadable (P8) | MODERATE | Keep grid structure in `@utility`, use Tailwind for content |
+| All Phases | Renamed utility classes (P12) | LOW | Use v4 docs, not v3 |
+| All Phases | Style collision during transition (P4) | CRITICAL | Test ALL pages after each batch, not just migrated ones |
+
+---
+
+## Pre-Migration Checklist
+
+Before starting any component migration:
+
+- [ ] `@theme` block configured with ALL design tokens from globals.css (P5)
+- [ ] Preflight differences documented and overridden if needed (P4)
+- [ ] Custom breakpoints added to `@theme` for 480px, 400px, 360px (P7)
+- [ ] All `@keyframes` consolidated with unique names (P9)
+- [ ] Dynamic class access patterns inventoried with migration strategy per component (P2)
+- [ ] Decision made on NavBar mobile menu approach (P3)
+- [ ] Monaco Editor CSS override strategy decided (P10)
+- [ ] Renamed utility class reference card created (P12)
+- [ ] CSS variable arbitrary value syntax documented as v4 `()` not v3 `[]` (P14)
+- [ ] Visual baseline screenshots taken for ALL pages at ALL breakpoints
 
 ---
 
 ## Sources
 
-### Responsive Design
-- [Next.js SSR and Responsive Design](https://medium.com/fredwong-it/react-nextjs-ssr-and-responsive-design-ae33e658975c)
-- [Monaco Editor Mobile Limitations](https://dev.to/suraj975/monaco-vs-codemirror-in-react-5kf)
-- [CodeMirror vs Monaco Editor Comparison](https://agenthicks.com/research/codemirror-vs-monaco-editor-comparison)
-- [CSS Media Query Breakpoints Guide](https://www.browserstack.com/guide/what-are-css-and-media-query-breakpoints)
-- [Mobile-First CSS](https://zellwk.com/blog/how-to-write-mobile-first-css/)
-- [Framer Motion Mobile Optimization](https://app.studyraid.com/en/read/7850/206068/optimizing-animations-for-mobile-devices)
+### Tailwind v4 Official
+- [Tailwind CSS v4 Upgrade Guide](https://tailwindcss.com/docs/upgrade-guide)
+- [Tailwind CSS v4 Theme Variables](https://tailwindcss.com/docs/theme)
+- [Tailwind CSS v4 Release Blog](https://tailwindcss.com/blog/tailwindcss-v4)
 
-### SEO
-- [Next.js SEO Guide](https://strapi.io/blog/nextjs-seo)
-- [JavaScript SEO in 2026](https://zumeirah.com/javascript-seo-in-2026/)
-- [Next.js SEO Pitfalls](https://focusreactive.com/typical-next-js-seo-pitfalls-to-avoid-in-2024/)
-- [Complete Next.js SEO Guide](https://www.adeelhere.com/blog/2025-12-09-complete-nextjs-seo-guide-from-zero-to-hero)
+### Known Issues and Discussions
+- [v4 @apply broken in CSS Modules -- Issue #15814](https://github.com/tailwindlabs/tailwindcss/issues/15814)
+- [@apply broken in v4 -- Discussion #16429](https://github.com/tailwindlabs/tailwindcss/discussions/16429)
+- [Using Tailwind v4 with Next CSS modules -- Discussion #17342](https://github.com/tailwindlabs/tailwindcss/discussions/17342)
+- [Missing defaults and broken dark mode -- Discussion #16517](https://github.com/tailwindlabs/tailwindcss/discussions/16517)
+- [Still need tailwind.config.js in v4 -- Discussion #16642](https://github.com/tailwindlabs/tailwindcss/discussions/16642)
 
-### Internal Linking
-- [Internal Linking Mistakes](https://linkstorm.io/resources/internal-linking-mistakes)
-- [SEMrush Internal Linking Mistakes](https://www.semrush.com/blog/internal-linking-mistakes/)
-- [Internal Linking for SEO](https://yoast.com/internal-linking-for-seo-why-and-how/)
-
-### Next.js Layouts
-- [Next.js Pages and Layouts](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts)
-- [Persistent Layout Patterns](https://adamwathan.me/2019/10/17/persistent-layout-patterns-in-nextjs/)
-- [Next.js Layouts Guide](https://blog.logrocket.com/guide-next-js-layouts-nested-layouts/)
-
-### CSS Variables
-- [CSS Variables Pitfalls](https://blog.pixelfreestudio.com/css-variables-gone-wrong-pitfalls-to-watch-out-for/)
-- [CSS Variables in Media Queries](https://css-tricks.com/responsive-designs-and-css-custom-properties-defining-variables-and-breakpoints/)
+### Migration Guides
+- [Tailwind v4 Migration: JS Config to CSS-First](https://medium.com/better-dev-nextjs-react/tailwind-v4-migration-from-javascript-config-to-css-first-in-2025-ff3f59b215ca)
+- [Complete Developer's Migration Guide](https://dev.to/elechipro/migrating-from-tailwind-css-v3-to-v4-a-complete-developers-guide-cjd)
+- [v4 Migration Fix for @apply in Next.js](https://iifx.dev/en/articles/460064634/v4-migration-guide-the-essential-fix-for-tailwind-s-apply-error-in-next-js-projects)
