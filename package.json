@@ -12,7 +12,9 @@
     "test:coverage": "vitest run --coverage",
     "check:vars": "npx tsx scripts/check-vars.ts",
     "check:keyframes": "npx tsx scripts/check-keyframes.ts",
-    "tokens:audit": "npx tsx scripts/tokens-audit.ts"
+    "tokens:audit": "npx tsx scripts/tokens-audit.ts",
+    "test:visual": "npx playwright test",
+    "test:visual:update": "npx playwright test --update-snapshots"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
@@ -28,6 +30,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
