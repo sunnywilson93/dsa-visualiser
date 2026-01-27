@@ -84,48 +84,44 @@ export default function PracticePageClient() {
   return (
     <div className="flex h-screen flex-col bg-bg-primary overflow-hidden">
       {/* Header */}
-      <header className="flex items-center justify-between gap-4 px-4 py-3 border-b border-border-primary bg-bg-secondary/50">
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={() => router.back()} 
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border-primary bg-bg-tertiary text-text-secondary hover:text-text-primary hover:bg-bg-secondary transition-colors"
-          >
-            <ArrowLeft size={16} />
-          </button>
-          
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <h1 className="text-lg font-semibold text-text-primary">{problem.name}</h1>
-              <span className={`text-xs font-medium px-2 py-0.5 rounded border ${difficultyClasses[problem.difficulty]}`}>
-                {problem.difficulty}
-              </span>
-            </div>
-            <div className="flex items-center gap-1 text-xs text-text-muted">
-              <Link href="/" className="hover:text-text-secondary">Home</Link>
-              <span>/</span>
-              {mainCategory && (
-                <>
-                  <Link href={`/${mainCategory.id}`} className="hover:text-text-secondary">{mainCategory.name}</Link>
-                  {subcategoryName && (
-                    <>
-                      <span>/</span>
-                      <span className="text-text-secondary">{subcategoryName}</span>
-                    </>
-                  )}
-                </>
-              )}
-            </div>
+      <header className="flex items-center gap-4 px-4 py-3 border-b border-border-primary bg-bg-secondary/50">
+        <button 
+          onClick={() => router.back()} 
+          className="flex h-9 w-9 items-center justify-center rounded-lg border border-border-primary bg-bg-tertiary text-text-secondary hover:text-text-primary hover:bg-bg-secondary transition-colors flex-shrink-0"
+        >
+          <ArrowLeft size={16} />
+        </button>
+        
+        <div className="flex flex-col min-w-0">
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg font-semibold text-text-primary truncate">{problem.name}</h1>
+            <span className={`text-xs font-medium px-2 py-0.5 rounded border flex-shrink-0 ${difficultyClasses[problem.difficulty]}`}>
+              {problem.difficulty}
+            </span>
+          </div>
+          <div className="flex items-center gap-1 text-xs text-text-muted">
+            <Link href="/" className="hover:text-text-secondary">Home</Link>
+            <span>/</span>
+            {mainCategory && (
+              <>
+                <Link href={`/${mainCategory.id}`} className="hover:text-text-secondary truncate">{mainCategory.name}</Link>
+                {subcategoryName && (
+                  <>
+                    <span>/</span>
+                    <span className="text-text-secondary">{subcategoryName}</span>
+                  </>
+                )}
+              </>
+            )}
           </div>
         </div>
 
-        <p className="hidden md:block text-sm text-text-muted max-w-md truncate">
-          {problem.description}
-        </p>
+        <div className="flex-1" />
 
         {hasConcept && (
           <Link
             href={`/${categoryId}/${problemId}/concept`}
-            className="flex items-center px-3 py-1.5 text-sm font-medium text-brand-primary bg-brand-primary/10 border border-brand-primary/20 rounded-lg hover:bg-brand-primary/20 transition-colors"
+            className="flex items-center px-3 py-1.5 text-sm font-medium text-brand-primary bg-brand-primary/10 border border-brand-primary/20 rounded-lg hover:bg-brand-primary/20 transition-colors flex-shrink-0"
           >
             <span>Concept</span>
           </Link>
