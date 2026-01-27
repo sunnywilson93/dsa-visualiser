@@ -10,7 +10,9 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "check:vars": "npx tsx scripts/check-vars.ts"
+    "check:vars": "npx tsx scripts/check-vars.ts",
+    "check:keyframes": "npx tsx scripts/check-keyframes.ts",
+    "tokens:audit": "npx tsx scripts/tokens-audit.ts"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
