@@ -11,9 +11,9 @@ See: .planning/PROJECT.md (updated 2026-01-27)
 
 Milestone: v2.0
 Phase: 16 of 17 (Config & Token Migration)
-Plan: 1 of 6
+Plan: 2 of 6
 Status: In progress
-Last activity: 2026-01-27 -- Completed 16-01-PLAN.md (Config Teardown)
+Last activity: 2026-01-27 -- Completed 16-02-PLAN.md (Color Token Migration)
 
 Progress: [###############.........] 88% (15/17 phases complete)
 
@@ -38,6 +38,9 @@ Recent decisions affecting current work:
 | No @apply usage | Use utility classes or @layer components instead | v2.0 research |
 | Component migration deferred | Foundation only in v2.0, components in v2.1+ | v2.0 scoping |
 | Empty @theme placement | After @import, before @layer blocks | 16-01 |
+| --color-* namespace for colors | All color tokens use --color-{category}-{name} in @theme | 16-02 |
+| Brand token naming | --color-primary/secondary renamed to --color-brand-primary/secondary | 16-02 |
+| --color-*: initial | Clear Tailwind default color utilities to avoid conflicts | 16-02 |
 
 ### Pending Todos
 
@@ -50,6 +53,6 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completed 16-01-PLAN.md (Config Teardown)
+Stopped at: Completed 16-02-PLAN.md (Color Token Migration)
 Resume file: None
-Next action: Execute 16-02-PLAN.md
+Next action: Execute 16-03-PLAN.md
