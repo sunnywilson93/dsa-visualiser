@@ -9,19 +9,19 @@ Establish Tailwind v4 `@theme` as single source of truth for all design tokens. 
 
 ### Tailwind v4 Configuration
 
-- [ ] **TW-01**: Replace `@tailwind base/components/utilities` directives with `@import "tailwindcss"`
-- [ ] **TW-02**: Delete `tailwind.config.js` -- no JS config file exists
-- [ ] **TW-03**: Remove `autoprefixer` from PostCSS config and `package.json`
-- [ ] **TW-04**: Install `clsx` for conditional className composition
+- [x] **TW-01**: Replace `@tailwind base/components/utilities` directives with `@import "tailwindcss"`
+- [x] **TW-02**: Delete `tailwind.config.js` -- no JS config file exists
+- [x] **TW-03**: Remove `autoprefixer` from PostCSS config and `package.json`
+- [x] **TW-04**: Install `clsx` for conditional className composition
 
 ### Design Token Migration
 
-- [ ] **TOK-01**: Map all color tokens to `@theme` with correct namespace (`--color-*`)
-- [ ] **TOK-02**: Map all spacing tokens to `@theme` (`--spacing-*`)
-- [ ] **TOK-03**: Map all typography tokens to `@theme` (font families, sizes, weights, line heights)
-- [ ] **TOK-04**: Map shadow, radius, and border tokens to `@theme`
-- [ ] **TOK-05**: Consolidate keyframe animations into `@theme` block
-- [ ] **TOK-06**: Define custom breakpoints in `@theme` (480px, 400px, 360px)
+- [x] **TOK-01**: Map all color tokens to `@theme` with correct namespace (`--color-*`)
+- [x] **TOK-02**: Map all spacing tokens to `@theme` (`--spacing-*`)
+- [x] **TOK-03**: Map all typography tokens to `@theme` (font families, sizes, weights, line heights)
+- [x] **TOK-04**: Map shadow, radius, and border tokens to `@theme`
+- [x] **TOK-05**: Consolidate keyframe animations into `@theme` block
+- [x] **TOK-06**: Define custom breakpoints in `@theme` (480px, 400px, 360px)
 
 ### Compatibility & Verification
 
@@ -111,16 +111,16 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TW-01 | Phase 16 | Pending |
-| TW-02 | Phase 16 | Pending |
-| TW-03 | Phase 16 | Pending |
-| TW-04 | Phase 16 | Pending |
-| TOK-01 | Phase 16 | Pending |
-| TOK-02 | Phase 16 | Pending |
-| TOK-03 | Phase 16 | Pending |
-| TOK-04 | Phase 16 | Pending |
-| TOK-05 | Phase 16 | Pending |
-| TOK-06 | Phase 16 | Pending |
+| TW-01 | Phase 16 | Complete |
+| TW-02 | Phase 16 | Complete |
+| TW-03 | Phase 16 | Complete |
+| TW-04 | Phase 16 | Complete |
+| TOK-01 | Phase 16 | Complete |
+| TOK-02 | Phase 16 | Complete |
+| TOK-03 | Phase 16 | Complete |
+| TOK-04 | Phase 16 | Complete |
+| TOK-05 | Phase 16 | Complete |
+| TOK-06 | Phase 16 | Complete |
 | VER-01 | Phase 17 | Pending |
 | VER-02 | Phase 17 | Pending |
 | VER-03 | Phase 17 | Pending |
@@ -146,4 +146,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-25*
-*Last updated: 2026-01-27 -- v2.0 traceability complete (14/14 mapped)*
+*Last updated: 2026-01-27 -- Phase 16 requirements complete (TW-01..04, TOK-01..06)*

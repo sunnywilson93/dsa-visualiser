@@ -279,7 +279,7 @@ Plans:
 16 -> 17
 ```
 
-- [ ] **Phase 16: Config & Token Migration** - Tailwind v4 CSS-first config with all 246 tokens mapped to @theme
+- [x] **Phase 16: Config & Token Migration** - Tailwind v4 CSS-first config with all 246 tokens mapped to @theme
 - [ ] **Phase 17: Compatibility Verification** - Existing CSS Modules resolve correctly, preflight hardened, visual parity confirmed
 
 ## Phase Details
@@ -297,12 +297,12 @@ Plans:
 **Plans**: 6 plans
 
 Plans:
-- [ ] 16-01-PLAN.md -- Config teardown: delete JS config, replace directives, remove autoprefixer, install clsx
-- [ ] 16-02-PLAN.md -- Color tokens: migrate ~130 colors to @theme --color-*, rename --text-* to --color-text-*
-- [ ] 16-03-PLAN.md -- Spacing tokens: migrate to @theme --spacing-* with 4px base multiplier
-- [ ] 16-04-PLAN.md -- Typography tokens: migrate fonts, sizes, weights, line heights; rename --font-* weights to --font-weight-*
-- [ ] 16-05-PLAN.md -- Visual tokens: migrate radius and shadow to @theme --radius-* and --shadow-*
-- [ ] 16-06-PLAN.md -- Breakpoints and animations: add custom breakpoints, consolidate 26 @keyframes into @theme
+- [x] 16-01-PLAN.md -- Config teardown: delete JS config, replace directives, remove autoprefixer, install clsx
+- [x] 16-02-PLAN.md -- Color tokens: migrate ~130 colors to @theme --color-*, rename --text-* to --color-text-*
+- [x] 16-03-PLAN.md -- Spacing tokens: migrate to @theme --spacing-* with 4px base multiplier
+- [x] 16-04-PLAN.md -- Typography tokens: migrate fonts, sizes, weights, line heights; rename --font-* weights to --font-weight-*
+- [x] 16-05-PLAN.md -- Visual tokens: migrate radius and shadow to @theme --radius-* and --shadow-*
+- [x] 16-06-PLAN.md -- Breakpoints and animations: add custom breakpoints, consolidate 26 @keyframes into @theme
 
 ### Phase 17: Compatibility Verification
 **Goal**: All existing CSS Modules resolve correctly from @theme-generated properties with zero visual changes
@@ -337,9 +337,9 @@ Phases 1-15 complete (v1.0-v1.2). Phase 16 then 17 (v2.0).
 | 13. Cross-Linking | v1.2 | 3/3 | Complete | 2026-01-25 |
 | 14. Page Consistency | v1.2 | 1/1 | Complete | 2026-01-25 |
 | 15. Responsive Implementation | v1.2 | 3/3 | Complete | 2026-01-25 |
-| 16. Config & Token Migration | v2.0 | 0/6 | Not started | - |
+| 16. Config & Token Migration | v2.0 | 6/6 | Complete | 2026-01-27 |
 | 17. Compatibility Verification | v2.0 | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-27 -- Phase 16 planned (6 plans in 6 waves)*
+*Last updated: 2026-01-27 -- Phase 16 complete (6/6 plans, verified)*
