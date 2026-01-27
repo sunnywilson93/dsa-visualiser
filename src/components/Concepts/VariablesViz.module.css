@@ -257,10 +257,6 @@
   animation: pulse 1s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
-}
 
 .scopeSearched {
   border-color: var(--color-emerald-30);
@@ -522,10 +518,6 @@
   animation: float 1s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
 
 @media (max-width: 768px) {
   .mainGrid {

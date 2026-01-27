@@ -162,7 +162,7 @@
 .stackItem.highlightNew {
   border-color: var(--color-emerald-70);
   background: var(--color-emerald-12);
-  animation: fadeIn 0.3s ease-out;
+  animation: fadeInScale 0.3s ease-out;
 }
 
 .varName {
@@ -193,33 +193,13 @@
 .heapObject.highlightNew {
   border-color: var(--color-emerald-70);
   background: var(--color-emerald-12);
-  animation: fadeIn 0.3s ease-out;
+  animation: fadeInScale 0.3s ease-out;
 }
 
 .heapObject.highlightMutated {
   border-color: rgba(249, 115, 22, 1);
   background: rgba(249, 115, 22, 0.2);
-  animation: pulse 0.5s ease-in-out;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 var(--color-orange-50);
-  }
-  50% {
-    box-shadow: 0 0 20px 4px rgba(249, 115, 22, 0.4);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  animation: orangePulse 0.5s ease-in-out;
 }
 
 .objectLabel {
@@ -493,7 +473,7 @@
   font-size: var(--text-sm);
   color: var(--color-amber-500);
   margin-bottom: var(--spacing-sm);
-  animation: warningPulse 1.5s ease-in-out infinite;
+  animation: amberWarningPulse 1.5s ease-in-out infinite;
 }
 
 .warningIcon {
@@ -504,49 +484,15 @@
   font-weight: var(--font-weight-semibold);
 }
 
-@keyframes warningPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 var(--color-amber-30);
-  }
-  50% {
-    box-shadow: 0 0 12px 2px var(--color-amber-20);
-  }
-}
-
 .spreadSource {
   animation: spreadOut 0.5s ease-out;
 }
 
-@keyframes spreadOut {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px var(--color-orange-50);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
 
 .spreadTarget {
   animation: spreadIn 0.6s ease-out;
 }
 
-@keyframes spreadIn {
-  0% {
-    opacity: 0;
-    transform: translateX(-20px) scale(0.8);
-  }
-  50% {
-    transform: translateX(5px) scale(1.05);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-}
 
 @media (max-width: 768px) {
   .mainGrid {

@@ -162,7 +162,7 @@
 .stackItem.highlightNew {
   border-color: var(--color-emerald-70);
   background: var(--color-emerald-12);
-  animation: fadeIn 0.3s ease-out;
+  animation: fadeInScale 0.3s ease-out;
 }
 
 .varName {
@@ -196,33 +196,13 @@
 .heapObject.highlightNew {
   border-color: var(--color-emerald-70);
   background: var(--color-emerald-12);
-  animation: fadeIn 0.3s ease-out;
+  animation: fadeInScale 0.3s ease-out;
 }
 
 .heapObject.highlightMutated {
   border-color: rgba(20, 184, 166, 1);
   background: rgba(20, 184, 166, 0.2);
-  animation: pulse 0.5s ease-in-out;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 20px 4px rgba(20, 184, 166, 0.4);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  animation: tealPulse 0.5s ease-in-out;
 }
 
 .objectLabel {
@@ -344,7 +324,7 @@
   font-size: var(--text-sm);
   color: var(--color-amber-500);
   margin-bottom: var(--spacing-sm);
-  animation: warningPulse 1.5s ease-in-out infinite;
+  animation: amberWarningPulse 1.5s ease-in-out infinite;
 }
 
 .warningIcon {
@@ -353,15 +333,6 @@
 
 .warningText {
   font-weight: var(--font-weight-semibold);
-}
-
-@keyframes warningPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 var(--color-amber-30);
-  }
-  50% {
-    box-shadow: 0 0 12px 2px var(--color-amber-20);
-  }
 }
 
 .destructurePanel {
@@ -422,21 +393,12 @@
 .extractionItem.extracting {
   border-color: var(--js-viz-accent);
   background: rgba(20, 184, 166, 0.1);
-  animation: extractPulse 0.8s ease-in-out infinite;
+  animation: tealExtractPulse 0.8s ease-in-out infinite;
 }
 
 .extractionItem.complete {
   border-color: var(--color-emerald-50);
   background: var(--color-emerald-8);
-}
-
-@keyframes extractPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 12px 2px rgba(20, 184, 166, 0.3);
-  }
 }
 
 .extractSource {

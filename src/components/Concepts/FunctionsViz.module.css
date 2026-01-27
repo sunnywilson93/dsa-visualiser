@@ -312,10 +312,6 @@
   color: var(--color-emerald-500);
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
 
 .argument,
 .parameter {

@@ -304,10 +304,6 @@
   color: var(--color-brand-light);
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
 
 /* Controls */
 .controls {

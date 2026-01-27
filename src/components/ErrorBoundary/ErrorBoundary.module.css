@@ -3,16 +3,7 @@
   padding: 3px;
   border-radius: var(--radius-2xl);
   background: linear-gradient(135deg, var(--color-accent-red), var(--color-orange-500));
-  animation: borderPulse 2s ease-in-out infinite;
-}
-
-@keyframes borderPulse {
-  0%, 100% {
-    box-shadow: var(--glow-2xl) var(--color-accent-red-30);
-  }
-  50% {
-    box-shadow: 0 0 30px var(--color-accent-red-30);
-  }
+  animation: redBorderPulse 2s ease-in-out infinite;
 }
 
 .content {
@@ -37,14 +28,6 @@
   animation: iconPulse 1.5s ease-in-out infinite;
 }
 
-@keyframes iconPulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
 
 .icon {
   color: var(--color-accent-red);
