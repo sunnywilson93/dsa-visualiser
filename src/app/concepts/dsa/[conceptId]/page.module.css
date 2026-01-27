@@ -2,8 +2,8 @@
 
 /* Complexity Table */
 .complexityTable {
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -21,14 +21,14 @@
 }
 
 .complexityTable th {
-  background: var(--color-primary-15);
+  background: var(--color-brand-primary-15);
   color: var(--color-white);
   font-weight: var(--font-semibold);
   font-size: var(--text-base);
 }
 
 .complexityTable td {
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   font-size: var(--text-base);
 }
 
@@ -37,23 +37,23 @@
 }
 
 .complexityTable tr:hover td {
-  background: var(--white-2);
+  background: var(--color-white-2);
 }
 
 .complexityCell {
-  color: var(--emerald-500) !important;
+  color: var(--color-emerald-500) !important;
   font-family: var(--font-mono);
   font-weight: var(--font-medium);
 }
 
 .complexityCellWorse {
-  color: var(--amber-500) !important;
+  color: var(--color-amber-500) !important;
   font-family: var(--font-mono);
   font-weight: var(--font-medium);
 }
 
 .complexityCellBest {
-  color: var(--emerald-500) !important;
+  color: var(--color-emerald-500) !important;
   font-family: var(--font-mono);
   font-weight: var(--font-medium);
 }
@@ -69,10 +69,10 @@
   display: inline-flex;
   align-items: center;
   padding: var(--space-sm) var(--space-lg);
-  background: var(--color-primary-10);
-  border: var(--border-width-1) solid var(--color-primary-30);
+  background: var(--color-brand-primary-10);
+  border: var(--border-width-1) solid var(--color-brand-primary-30);
   border-radius: var(--radius-3xl);
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
   text-decoration: none;
   font-size: var(--text-base);
   font-weight: var(--font-medium);
@@ -80,8 +80,8 @@
 }
 
 .problemLink:hover {
-  background: var(--color-primary-20);
-  border-color: var(--color-primary-50);
+  background: var(--color-brand-primary-20);
+  border-color: var(--color-brand-primary-50);
   transform: translateY(-1px);
 }
 

@@ -32,7 +32,7 @@
 }
 
 .neonBoxInner {
-  background: var(--bg-page-secondary);
+  background: var(--color-bg-page-secondary);
   border-radius: var(--radius-lg);
   min-height: 100px;
   padding: var(--space-md);
@@ -45,7 +45,7 @@
   left: 50%;
   transform: translateX(-50%);
   padding: var(--space-1-5) var(--space-lg);
-  background: var(--bg-tertiary);
+  background: var(--color-bg-tertiary);
   border-radius: 0 0 8px 8px;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
@@ -63,7 +63,7 @@
 
 .controlGroup {
   background: rgba(0, 0, 0, 0.35);
-  border: var(--border-width-1) solid var(--white-8);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-xl);
   padding: var(--space-md);
   display: flex;
@@ -93,8 +93,8 @@
 }
 
 .optionBtn {
-  background: var(--white-3);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-white-3);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-lg);
   padding: 0.45rem 0.4rem;
   cursor: pointer;
@@ -106,14 +106,14 @@
 }
 
 .optionBtn:hover {
-  border-color: var(--color-primary-50);
-  background: var(--color-primary-8);
+  border-color: var(--color-brand-primary-50);
+  background: var(--color-brand-primary-8);
 }
 
 .optionBtnActive {
   border-color: rgba(130, 100, 255, 0.9);
-  background: var(--neon-viz-18);
-  box-shadow: var(--glow-xl) var(--neon-viz-25);
+  background: var(--color-neon-viz-18);
+  box-shadow: var(--glow-xl) var(--color-neon-viz-25);
 }
 
 .optionLabel {
@@ -137,7 +137,7 @@
 /* Equation Card - Neon Box Green/Cyan */
 .equationBox {
   --neon-start: var(--difficulty-1);
-  --neon-end: var(--accent-cyan);
+  --neon-end: var(--color-accent-cyan);
 }
 
 .equationBox .neonBoxInner {
@@ -159,7 +159,7 @@
 
 .valueChip {
   padding: var(--space-xs) var(--space-sm);
-  background: var(--white-8);
+  background: var(--color-white-8);
   border-radius: var(--radius-lg);
 }
 
@@ -192,7 +192,7 @@
   font-size: var(--text-2xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  background: var(--white-5);
+  background: var(--color-white-5);
   color: #9aa0a6;
 }
 
@@ -202,7 +202,7 @@
   font-size: var(--text-2xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  background: var(--emerald-40);
+  background: var(--color-emerald-40);
   color: var(--difficulty-1);
 }
 

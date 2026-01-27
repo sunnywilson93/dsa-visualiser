@@ -1,11 +1,11 @@
 .codePanel {
-  --js-viz-surface: var(--bg-page-secondary);
-  --js-viz-border: var(--white-10);
-  --js-viz-text: var(--gray-200);
-  --js-viz-muted: var(--gray-500);
+  --js-viz-surface: var(--color-bg-page-secondary);
+  --js-viz-border: var(--color-white-10);
+  --js-viz-text: var(--color-gray-200);
+  --js-viz-muted: var(--color-gray-500);
   --js-viz-radius: var(--radius-lg);
-  --js-viz-pill-bg: var(--color-primary-10);
-  --js-viz-pill-border: var(--color-primary-30);
+  --js-viz-pill-bg: var(--color-brand-primary-10);
+  --js-viz-pill-border: var(--color-brand-primary-30);
 
   background: var(--js-viz-surface);
   border: var(--border-width-1) solid var(--js-viz-border);
@@ -50,12 +50,12 @@
 }
 
 .codeLine.activeLine {
-  background: var(--color-primary-20);
+  background: var(--color-brand-primary-20);
 }
 
 .lineNum {
   width: var(--space-xl);
-  color: var(--gray-800);
+  color: var(--color-gray-800);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   text-align: right;
@@ -66,9 +66,9 @@
 .lineCode {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
 }
 
 .activeLine .lineCode {
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
 }

@@ -75,15 +75,15 @@
   padding: var(--space-xs) var(--space-md);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   text-decoration: none;
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
 }
 
 .navLink:hover {
-  color: var(--text-bright);
-  background: var(--white-5);
+  color: var(--color-text-bright);
+  background: var(--color-white-5);
 }
 
 .searchWrapper {
@@ -102,7 +102,7 @@
 .breadcrumbLink {
   display: flex;
   align-items: center;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   text-decoration: none;
   transition: color var(--transition-normal);
   white-space: nowrap;
@@ -111,16 +111,16 @@
 }
 
 .breadcrumbLink:hover {
-  color: var(--text-bright);
+  color: var(--color-text-bright);
 }
 
 .separator {
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   flex-shrink: 0;
 }
 
 .breadcrumbCurrent {
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   font-weight: var(--font-medium);
   white-space: nowrap;
   overflow: hidden;
@@ -208,7 +208,7 @@
   display: block;
   width: var(--space-xl);
   height: var(--space-0-5);
-  background: var(--text-secondary);
+  background: var(--color-text-secondary);
   position: relative;
   transition: background 0.3s ease;
 }
@@ -220,7 +220,7 @@
   left: 0;
   width: var(--space-xl);
   height: var(--space-0-5);
-  background: var(--text-secondary);
+  background: var(--color-text-secondary);
   transition: transform 0.3s ease;
 }
 
@@ -252,7 +252,7 @@
   right: -100%;
   width: 280px;
   height: 100vh;
-  background: var(--bg-secondary);
+  background: var(--color-bg-secondary);
   border-left: var(--border-width-1) solid var(--border-card);
   padding-top: 70px;
   transition: right 0.3s ease;
@@ -275,15 +275,15 @@
   padding: var(--space-md) var(--space-lg);
   min-height: 44px;
   font-size: var(--text-base);
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   border-bottom: var(--border-width-1) solid var(--border-card);
   text-decoration: none;
   transition: color var(--transition-fast), background var(--transition-fast);
 }
 
 .mobileNavLink:hover {
-  color: var(--text-bright);
-  background: var(--white-5);
+  color: var(--color-text-bright);
+  background: var(--color-white-5);
 }
 
 /* Overlay to close menu */
@@ -291,7 +291,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: var(--black-50);
+  background: var(--color-black-50);
   z-index: 199;
 }
 

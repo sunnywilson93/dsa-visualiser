@@ -25,7 +25,7 @@
   padding: var(--space-sm) 0;
   background: none;
   border: none;
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   font-size: var(--text-base);
   cursor: pointer;
   transition: color 0.2s;
@@ -33,7 +33,7 @@
 }
 
 .backBtn:hover {
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
 }
 
 .titleRow {
@@ -46,7 +46,7 @@
 .icon {
   font-size: 2.5rem;
   line-height: 1;
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
 }
 
 .title {
@@ -67,8 +67,8 @@
   font-weight: var(--font-semibold);
   padding: var(--space-xs) var(--space-2-5);
   border-radius: var(--radius-sm);
-  background: var(--color-primary-15);
-  color: var(--color-primary);
+  background: var(--color-brand-primary-15);
+  color: var(--color-brand-primary);
 }
 
 .description {
@@ -89,10 +89,10 @@
   gap: 0.375rem;
   font-size: 0.875rem;
   color: var(--text-muted, #888);
-  background: var(--white-5);
+  background: var(--color-white-5);
   padding: 0.375rem 0.75rem;
   border-radius: 0.375rem;
-  border: var(--border-width-1) solid var(--white-10);
+  border: var(--border-width-1) solid var(--color-white-10);
 }
 
 /* Sections */
@@ -123,7 +123,7 @@
 }
 
 .listIcon {
-  color: var(--emerald-500);
+  color: var(--color-emerald-500);
   flex-shrink: 0;
   margin-top: 0.125rem;
 }
@@ -135,8 +135,8 @@
 }
 
 .variantCard {
-  background: var(--white-3);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-3);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: 0.5rem;
   padding: 1.25rem;
 }
@@ -166,8 +166,8 @@
 
 /* Visualization placeholder */
 .vizPlaceholder {
-  background: var(--color-primary-10);
-  border: 1px dashed var(--color-primary-30);
+  background: var(--color-brand-primary-10);
+  border: 1px dashed var(--color-brand-primary-30);
   border-radius: 0.5rem;
   padding: var(--space-2xl);
   text-align: center;

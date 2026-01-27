@@ -8,8 +8,8 @@
   display: flex;
   gap: var(--space-sm);
   justify-content: center;
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
@@ -18,24 +18,24 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  background: var(--white-4);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-white-4);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .tabBtn:hover {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .tabBtn.active {
-  background: var(--neon-viz-18);
-  border-color: var(--neon-viz-70);
-  color: var(--text-bright);
-  box-shadow: var(--glow-xl) var(--neon-viz-25);
+  background: var(--color-neon-viz-18);
+  border-color: var(--color-neon-viz-70);
+  color: var(--color-text-bright);
+  box-shadow: var(--glow-xl) var(--color-neon-viz-25);
 }
 
 .content {
@@ -52,27 +52,27 @@
 
 .opItem {
   padding: var(--space-2-5);
-  background: var(--black-30);
-  border: 2px solid var(--white-8);
+  background: var(--color-black-30);
+  border: 2px solid var(--color-white-8);
   border-radius: var(--radius-lg);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .opItem:hover {
-  background: var(--white-5);
+  background: var(--color-white-5);
   border-color: rgba(255, 255, 255, 0.15);
 }
 
 .opItem.active {
-  background: var(--neon-viz-18);
+  background: var(--color-neon-viz-18);
   border-color: rgba(130, 100, 255, 0.5);
 }
 
 .opExpression {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
 }
 
 .resultCard {
@@ -81,20 +81,20 @@
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-xl);
-  background: var(--black-40);
-  border: 2px solid var(--color-primary-30);
+  background: var(--color-black-40);
+  border: 2px solid var(--color-brand-primary-30);
   border-radius: var(--radius-xl);
 }
 
 .expression {
   font-family: var(--font-mono);
   font-size: var(--text-xl);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
 }
 
 .equals {
   font-size: var(--text-2xl);
-  color: var(--gray-800);
+  color: var(--color-gray-800);
 }
 
 .result {
@@ -109,19 +109,19 @@
 }
 
 .resultFalse {
-  color: var(--accent-red);
+  color: var(--color-accent-red);
 }
 
 .explanation {
   font-size: var(--text-base);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   margin: 0.5rem 0 0;
 }
 
 .tip {
   padding: var(--space-md) var(--space-lg);
-  background: var(--amber-10);
-  border: 1px solid var(--amber-30);
+  background: var(--color-amber-10);
+  border: 1px solid var(--color-amber-30);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
   color: var(--difficulty-2);
@@ -129,7 +129,7 @@
 }
 
 .tip code {
-  background: var(--black-30);
+  background: var(--color-black-30);
   padding: 0.1rem 0.3rem;
   border-radius: var(--space-1);
 }

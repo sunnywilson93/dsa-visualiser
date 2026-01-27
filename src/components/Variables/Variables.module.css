@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--bg-secondary);
-  border: var(--border-width-1) solid var(--border-primary);
+  background: var(--color-bg-secondary);
+  border: var(--border-width-1) solid var(--color-border-primary);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -13,8 +13,8 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-sm) var(--space-md);
-  background: var(--bg-tertiary);
-  border-bottom: var(--border-width-1) solid var(--border-primary);
+  background: var(--color-bg-tertiary);
+  border-bottom: var(--border-width-1) solid var(--color-border-primary);
 }
 
 .title {
@@ -22,7 +22,7 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .content {
@@ -36,7 +36,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-xl);
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   font-size: var(--text-base);
   text-align: center;
 }
@@ -44,14 +44,14 @@
 /* Scope section */
 .scope {
   margin-bottom: var(--space-sm);
-  background: var(--bg-tertiary);
-  border: var(--border-width-1) solid var(--border-primary);
+  background: var(--color-bg-tertiary);
+  border: var(--border-width-1) solid var(--color-border-primary);
   border-radius: var(--radius-md);
   overflow: hidden;
 }
 
 .scope.active {
-  border-color: var(--accent-blue);
+  border-color: var(--color-accent-blue);
 }
 
 .scopeHeader {
@@ -62,14 +62,14 @@
   padding: var(--space-sm) var(--space-md);
   background: transparent;
   border: none;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   cursor: pointer;
   text-align: left;
   transition: background var(--transition-fast);
 }
 
 .scopeHeader:hover {
-  background: var(--bg-elevated);
+  background: var(--color-bg-elevated);
 }
 
 .scopeName {
@@ -79,9 +79,9 @@
 
 .scopeType {
   font-size: var(--text-2xs);
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   padding: var(--space-px) var(--space-2);
-  background: var(--bg-primary);
+  background: var(--color-bg-primary);
   border-radius: var(--radius-sm);
   text-transform: uppercase;
 }
@@ -89,12 +89,12 @@
 .varCount {
   margin-left: auto;
   font-size: var(--text-xs);
-  color: var(--text-muted);
+  color: var(--color-text-muted);
 }
 
 .scopeContent {
   padding: var(--space-sm) var(--space-md);
-  border-top: var(--border-width-1) solid var(--border-secondary);
+  border-top: var(--border-width-1) solid var(--color-border-secondary);
   overflow: hidden;
 }
 
@@ -109,39 +109,39 @@
 }
 
 .varName {
-  color: var(--accent-cyan);
+  color: var(--color-accent-cyan);
   font-weight: var(--font-medium);
   flex-shrink: 0;
 }
 
 .equals {
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   flex-shrink: 0;
 }
 
 /* Value display */
 .value {
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   word-break: break-all;
 }
 
 .value.primitive {
-  color: var(--accent-yellow);
+  color: var(--color-accent-yellow);
 }
 
 .value.array,
 .value.object {
-  color: var(--accent-purple);
+  color: var(--color-accent-purple);
 }
 
 .value.function {
-  color: var(--accent-green);
+  color: var(--color-accent-green);
   font-style: italic;
 }
 
 .value.null,
 .value.undefined {
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -162,19 +162,19 @@
   padding: var(--space-0);
   background: transparent;
   border: none;
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .expandBtn:hover {
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 .expandedContent {
   width: 100%;
   padding-left: var(--space-md);
-  border-left: var(--border-width-1) solid var(--border-secondary);
+  border-left: var(--border-width-1) solid var(--color-border-secondary);
   margin-left: var(--space-xs);
   margin-top: var(--space-xs);
   overflow: hidden;
@@ -194,7 +194,7 @@
 }
 
 .index {
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   min-width: var(--space-xl);
   flex-shrink: 0;
 }
@@ -213,13 +213,13 @@
 }
 
 .propKey {
-  color: var(--accent-orange);
+  color: var(--color-accent-orange);
   flex-shrink: 0;
 }
 
 /* Empty indicator */
 .emptyIndicator {
   font-style: italic;
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   font-size: var(--text-xs);
 }

@@ -1,7 +1,7 @@
 .container {
-  --js-viz-bg: var(--bg-primary);
-  --js-viz-border: var(--white-8);
-  --js-viz-accent: var(--blue-500);
+  --js-viz-bg: var(--color-bg-primary);
+  --js-viz-border: var(--color-white-8);
+  --js-viz-accent: var(--color-blue-500);
 
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
   gap: var(--space-sm);
   justify-content: center;
   flex-wrap: wrap;
-  background: var(--black-30);
+  background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
   padding: 0.35rem;
@@ -27,10 +27,10 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  background: var(--white-4);
+  background: var(--color-white-4);
   border: var(--border-width-2) solid transparent;
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 44px;
@@ -38,8 +38,8 @@
 }
 
 .levelBtn:hover:not(:disabled) {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .levelBtn:disabled {
@@ -62,7 +62,7 @@
   gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
-  background: var(--black-30);
+  background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
   padding: 0.35rem;
@@ -72,10 +72,10 @@
   padding: var(--space-2) var(--space-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  background: var(--white-4);
+  background: var(--color-white-4);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 44px;
@@ -83,8 +83,8 @@
 }
 
 .exampleTab:hover {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .exampleTab.activeTab {
@@ -101,7 +101,7 @@
 }
 
 .variablesBox {
-  background: var(--black-40);
+  background: var(--color-black-40);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -111,8 +111,8 @@
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
-  background: var(--white-5);
+  color: var(--color-gray-500);
+  background: var(--color-white-5);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -147,11 +147,11 @@
 .varName {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
 }
 
 .varEquals {
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   font-size: var(--text-sm);
 }
 
@@ -175,15 +175,15 @@
   font-size: var(--text-xs);
   padding: 0.1rem 0.35rem;
   border-radius: var(--radius-sm);
-  background: var(--white-8);
-  color: var(--gray-500);
+  background: var(--color-white-8);
+  color: var(--color-gray-500);
 }
 
 .scopeChainPanel {
-  --neon-start: var(--color-primary);
-  --neon-end: var(--blue-500);
+  --neon-start: var(--color-brand-primary);
+  --neon-end: var(--color-blue-500);
 
-  background: linear-gradient(135deg, var(--color-primary-8), rgba(59, 130, 246, 0.08));
+  background: linear-gradient(135deg, var(--color-brand-primary-8), rgba(59, 130, 246, 0.08));
   border: 1px solid;
   border-image: linear-gradient(135deg, var(--neon-start), var(--neon-end)) 1;
   border-radius: var(--radius-xl);
@@ -223,36 +223,36 @@
   letter-spacing: 0.05em;
   padding: var(--space-0-5) var(--space-xs);
   border-radius: var(--radius-sm);
-  background: var(--white-5);
+  background: var(--color-white-5);
 }
 
 .scopeLabel.global {
-  color: var(--emerald-500);
-  background: var(--emerald-15);
+  color: var(--color-emerald-500);
+  background: var(--color-emerald-15);
 }
 
 .scopeLabel.function {
-  color: var(--blue-500);
-  background: var(--blue-15);
+  color: var(--color-blue-500);
+  background: var(--color-blue-15);
 }
 
 .scopeLabel.block {
-  color: var(--amber-500);
-  background: var(--amber-15);
+  color: var(--color-amber-500);
+  background: var(--color-amber-15);
 }
 
 .scopeName {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
 }
 
 .searchingIndicator {
   font-size: var(--text-sm);
-  color: var(--emerald-500);
+  color: var(--color-emerald-500);
   margin-left: auto;
   padding: var(--space-0-5) var(--space-xs);
-  background: var(--emerald-15);
+  background: var(--color-emerald-15);
   border-radius: var(--radius-sm);
   animation: pulse 1s ease-in-out infinite;
 }
@@ -263,12 +263,12 @@
 }
 
 .scopeSearched {
-  border-color: var(--emerald-30);
+  border-color: var(--color-emerald-30);
 }
 
 .scopeCurrentSearch {
-  border-color: var(--emerald-500) !important;
-  box-shadow: 0 0 15px var(--emerald-40);
+  border-color: var(--color-emerald-500) !important;
+  box-shadow: 0 0 15px var(--color-emerald-40);
 }
 
 .scopeVariables {
@@ -280,18 +280,18 @@
 .scopeVar {
   font-family: var(--font-mono);
   font-size: var(--text-base);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
   padding: 0.25rem 0.5rem;
-  background: var(--black-20);
+  background: var(--color-black-20);
   border-radius: var(--radius-sm);
 }
 
 .scopeVarName {
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
 }
 
 .scopeVarValue {
-  color: var(--emerald-500);
+  color: var(--color-emerald-500);
   font-weight: var(--font-medium);
 }
 
@@ -303,7 +303,7 @@
 }
 
 .outputBox {
-  background: var(--black-40);
+  background: var(--color-black-40);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -323,31 +323,31 @@
 }
 
 .currentOutput {
-  background: var(--emerald-10);
-  border-left: 2px solid var(--emerald-500);
+  background: var(--color-emerald-10);
+  border-left: 2px solid var(--color-emerald-500);
   padding-left: var(--space-sm);
   margin-left: calc(-1 * var(--space-sm));
 }
 
 .placeholder {
   font-size: var(--text-sm);
-  color: var(--gray-800);
+  color: var(--color-gray-800);
   font-style: italic;
 }
 
 .insightBox {
   padding: var(--space-sm) var(--space-md);
   background: rgba(59, 130, 246, 0.08);
-  border: 1px solid var(--blue-20);
+  border: 1px solid var(--color-blue-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
   text-align: center;
 }
 
 .insightLabel {
   font-weight: var(--font-semibold);
-  color: var(--blue-500);
+  color: var(--color-blue-500);
   margin-right: var(--space-sm);
 }
 
@@ -357,7 +357,7 @@
   justify-content: center;
   flex-wrap: wrap;
   padding: var(--space-sm);
-  background: var(--black-20);
+  background: var(--color-black-20);
   border-radius: var(--radius-lg);
 }
 
@@ -371,7 +371,7 @@
 .legendTitle {
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -381,7 +381,7 @@
   align-items: center;
   gap: var(--space-2);
   font-size: var(--text-xs);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 .legendDot {
@@ -397,7 +397,7 @@
 }
 
 .codePanelWrapper {
-  background: var(--black-40);
+  background: var(--color-black-40);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -410,8 +410,8 @@
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
-  background: var(--white-5);
+  color: var(--color-gray-500);
+  background: var(--color-white-5);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -428,10 +428,10 @@
 
 .creatingIndicator {
   font-size: var(--text-sm);
-  color: var(--blue-400);
+  color: var(--color-blue-400);
   margin-left: auto;
   padding: var(--space-0-5) var(--space-xs);
-  background: var(--sky-15);
+  background: var(--color-sky-15);
   border-radius: var(--radius-sm);
   animation: pulse 1s ease-in-out infinite;
   text-transform: none;
@@ -440,7 +440,7 @@
 }
 
 .errorPanel {
-  background: linear-gradient(135deg, var(--red-15), rgba(239, 68, 68, 0.05));
+  background: linear-gradient(135deg, var(--color-red-15), rgba(239, 68, 68, 0.05));
   border: 2px solid rgba(239, 68, 68, 0.5);
   border-radius: var(--radius-xl);
   padding: var(--space-xl);
@@ -450,7 +450,7 @@
 .errorIcon {
   width: var(--space-3xl);
   height: var(--space-3xl);
-  background: var(--red-500);
+  background: var(--color-red-500);
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -464,15 +464,15 @@
 .errorType {
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
-  color: var(--red-500);
+  color: var(--color-red-500);
   margin-bottom: var(--space-sm);
 }
 
 .errorMessage {
   font-family: var(--font-mono);
   font-size: var(--text-base);
-  color: var(--gray-300);
-  background: var(--black-30);
+  color: var(--color-gray-300);
+  background: var(--color-black-30);
   padding: var(--space-sm) var(--space-lg);
   border-radius: var(--radius-md);
   display: inline-block;
@@ -481,12 +481,12 @@
 
 .errorHint {
   font-size: var(--text-base);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   font-style: italic;
 }
 
 .hoistingAnimation {
-  background: var(--amber-10);
+  background: var(--color-amber-10);
   border: 2px dashed rgba(245, 158, 11, 0.5);
   border-radius: var(--radius-lg);
   padding: 1rem;
@@ -495,7 +495,7 @@
 
 .hoistingLabel {
   font-size: var(--text-sm);
-  color: var(--amber-500);
+  color: var(--color-amber-500);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: var(--space-sm);
@@ -504,20 +504,20 @@
 .hoistingVar {
   font-family: var(--font-mono);
   font-size: var(--text-base);
-  color: var(--gray-300);
-  background: var(--black-30);
+  color: var(--color-gray-300);
+  background: var(--color-black-30);
   padding: var(--space-sm) var(--space-lg);
   border-radius: var(--radius-md);
   display: inline-block;
 }
 
 .hoistingValue {
-  color: var(--amber-500);
+  color: var(--color-amber-500);
 }
 
 .hoistingArrow {
   font-size: var(--text-2xl);
-  color: var(--amber-500);
+  color: var(--color-amber-500);
   margin-top: var(--space-sm);
   animation: float 1s ease-in-out infinite;
 }

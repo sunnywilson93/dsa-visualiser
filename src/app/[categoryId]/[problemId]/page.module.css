@@ -4,7 +4,7 @@
   height: 100vh;
   padding: var(--space-md);
   gap: var(--space-md);
-  background: var(--bg-primary);
+  background: var(--color-bg-primary);
   overflow: hidden;
 }
 
@@ -30,17 +30,17 @@
   width: var(--space-2xl);
   height: var(--space-2xl);
   border-radius: var(--radius-md);
-  background: var(--bg-tertiary);
-  border: var(--border-width-1) solid var(--border-primary);
-  color: var(--text-secondary);
+  background: var(--color-bg-tertiary);
+  border: var(--border-width-1) solid var(--color-border-primary);
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .backBtn:hover {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  border-color: var(--border-secondary);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-secondary);
 }
 
 .problemInfo {
@@ -57,26 +57,26 @@
 }
 
 .breadcrumbLink {
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   text-decoration: none;
 }
 
 .breadcrumbLink:hover {
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .breadcrumbSep {
-  color: var(--text-muted);
+  color: var(--color-text-muted);
 }
 
 .breadcrumbCurrent {
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .title {
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -105,7 +105,7 @@
 
 .description {
   font-size: var(--text-base);
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -129,9 +129,9 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  background: var(--bg-secondary);
+  background: var(--color-bg-secondary);
   border-radius: var(--radius-lg);
-  color: var(--text-muted);
+  color: var(--color-text-muted);
 }
 
 /* Desktop editor - hidden on mobile */
@@ -198,7 +198,7 @@
   flex-shrink: 0;
   padding: var(--space-sm) 0;
   font-size: var(--text-sm);
-  color: var(--text-muted);
+  color: var(--color-text-muted);
 }
 
 .footer kbd {
@@ -211,10 +211,10 @@
   margin: 0 var(--space-0-5);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  background: var(--bg-tertiary);
-  border: var(--border-width-1) solid var(--border-primary);
+  background: var(--color-bg-tertiary);
+  border: var(--border-width-1) solid var(--color-border-primary);
   border-radius: var(--radius-sm);
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 /* Not found */
@@ -225,15 +225,15 @@
   justify-content: center;
   min-height: 100vh;
   gap: var(--space-lg);
-  color: var(--gray-500);
-  background: var(--bg-primary);
+  color: var(--color-gray-500);
+  background: var(--color-bg-primary);
 }
 
 .backLink {
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
-  color: var(--accent-blue);
+  color: var(--color-accent-blue);
   text-decoration: none;
 }
 

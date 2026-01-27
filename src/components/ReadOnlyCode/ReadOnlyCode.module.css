@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--bg-secondary);
-  border: var(--border-width-1) solid var(--border-primary);
+  background: var(--color-bg-secondary);
+  border: var(--border-width-1) solid var(--color-border-primary);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -13,8 +13,8 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-sm) var(--space-md);
-  background: var(--bg-tertiary);
-  border-bottom: var(--border-width-1) solid var(--border-primary);
+  background: var(--color-bg-tertiary);
+  border-bottom: var(--border-width-1) solid var(--color-border-primary);
   flex-shrink: 0;
 }
 
@@ -23,7 +23,7 @@
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .badge {
@@ -31,8 +31,8 @@
   font-weight: var(--font-medium);
   padding: var(--space-0-5) var(--space-2);
   border-radius: var(--radius-sm);
-  background: var(--bg-elevated);
-  color: var(--text-muted);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
@@ -44,7 +44,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-base);
   line-height: var(--leading-normal);
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   overflow: auto;
   white-space: pre;
   -webkit-overflow-scrolling: touch;

@@ -10,8 +10,8 @@
   gap: var(--space-sm);
   justify-content: center;
   margin-bottom: 0.25rem;
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
@@ -23,24 +23,24 @@
   padding: var(--space-2) var(--space-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  background: var(--white-4);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-white-4);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .levelBtn:hover {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .levelBtn.activeLevel {
-  background: var(--neon-viz-18);
-  border-color: var(--neon-viz-70);
-  color: var(--text-bright);
-  box-shadow: var(--glow-xl) var(--neon-viz-25);
+  background: var(--color-neon-viz-18);
+  border-color: var(--color-neon-viz-70);
+  color: var(--color-text-bright);
+  box-shadow: var(--glow-xl) var(--color-neon-viz-25);
 }
 
 .levelDot {
@@ -55,8 +55,8 @@
   gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
@@ -65,30 +65,30 @@
   padding: var(--space-2) var(--space-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  background: var(--white-4);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-white-4);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .exampleBtn:hover {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .exampleBtn.active {
-  background: var(--neon-viz-18);
-  border-color: var(--neon-viz-70);
-  color: var(--text-bright);
-  box-shadow: var(--glow-xl) var(--neon-viz-25);
+  background: var(--color-neon-viz-18);
+  border-color: var(--color-neon-viz-70);
+  color: var(--color-text-bright);
+  box-shadow: var(--glow-xl) var(--color-neon-viz-25);
 }
 
 /* Code panel */
 .codePanel {
-  background: var(--black-40);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-40);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
@@ -100,8 +100,8 @@
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  color: var(--gray-500);
-  background: var(--white-5);
+  color: var(--color-gray-500);
+  background: var(--color-white-5);
 }
 
 .phaseBadge {
@@ -126,12 +126,12 @@
 }
 
 .codeLine.activeLine {
-  background: var(--color-primary-20);
+  background: var(--color-brand-primary-20);
 }
 
 .lineNum {
   width: 1.5rem;
-  color: var(--gray-800);
+  color: var(--color-gray-800);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   user-select: none;
@@ -140,17 +140,17 @@
 .lineCode {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
 }
 
 .activeLine .lineCode {
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
 }
 
 /* Pipeline Visualization */
 .pipelineContainer {
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-xl);
   padding: var(--space-md);
   position: relative;
@@ -159,7 +159,7 @@
 .pipelineHeader {
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
   margin-bottom: var(--space-md);
   text-align: center;
 }
@@ -179,7 +179,7 @@
   position: relative;
   min-width: 120px;
   padding: var(--space-md);
-  background: var(--black-40);
+  background: var(--color-black-40);
   border: 2px solid rgba(167, 139, 250, 0.3);
   border-radius: var(--radius-lg);
   text-align: center;
@@ -187,7 +187,7 @@
 }
 
 .functionBox.activeFn {
-  border-color: var(--color-primary-light);
+  border-color: var(--color-brand-light);
   box-shadow: 0 0 20px rgba(167, 139, 250, 0.4);
   background: rgba(167, 139, 250, 0.1);
 }
@@ -196,21 +196,21 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--font-bold);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   margin-bottom: var(--space-xs);
 }
 
 .fnArgs {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
 }
 
 .fnResult {
   margin-top: var(--space-xs);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--emerald-500);
+  color: var(--color-emerald-500);
 }
 
 .arrow {
@@ -219,7 +219,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: var(--text-lg);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 /* Data Flow Indicator */
@@ -243,8 +243,8 @@
 
 /* Output Panel */
 .outputPanel {
-  background: var(--black-40);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-40);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
@@ -253,8 +253,8 @@
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  color: var(--gray-500);
-  background: var(--white-5);
+  color: var(--color-gray-500);
+  background: var(--color-white-5);
 }
 
 .output {
@@ -263,35 +263,35 @@
 }
 
 .emptyOutput {
-  color: var(--gray-700);
+  color: var(--color-gray-700);
 }
 
 .outputLine {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--emerald-500);
+  color: var(--color-emerald-500);
   padding: 0.2rem 0;
 }
 
 /* Description */
 .description {
-  background: var(--color-primary-10);
-  border: var(--border-width-1) solid var(--color-primary-30);
+  background: var(--color-brand-primary-10);
+  border: var(--border-width-1) solid var(--color-brand-primary-30);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
   font-size: var(--text-sm);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   line-height: var(--leading-normal);
 }
 
 .stepBadge {
   display: inline-block;
-  background: var(--color-primary-30);
+  background: var(--color-brand-primary-30);
   padding: var(--space-0-5) var(--space-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   margin-right: var(--space-sm);
 }
 
@@ -319,7 +319,7 @@
 }
 
 .btnPrimary:hover:not(:disabled) {
-  box-shadow: 0 0 20px var(--color-primary-40);
+  box-shadow: 0 0 20px var(--color-brand-primary-40);
 }
 
 .btnPrimary:disabled {
@@ -328,14 +328,14 @@
 }
 
 .btnSecondary {
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
-  color: var(--gray-400);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
+  color: var(--color-gray-400);
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: var(--white-10);
-  color: var(--text-bright);
+  background: var(--color-white-10);
+  color: var(--color-text-bright);
 }
 
 .btnSecondary:disabled {
@@ -345,15 +345,15 @@
 
 /* Insight */
 .insight {
-  background: var(--emerald-10);
-  border: var(--border-width-1) solid var(--emerald-30);
+  background: var(--color-emerald-10);
+  border: var(--border-width-1) solid var(--color-emerald-30);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
   font-size: var(--text-sm);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   line-height: var(--leading-normal);
 }
 
 .insight strong {
-  color: var(--emerald-500);
+  color: var(--color-emerald-500);
 }

@@ -14,23 +14,23 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .exampleBtn:hover {
-  background: var(--white-10);
+  background: var(--color-white-10);
   color: var(--color-white);
 }
 
 .exampleBtn.active {
-  background: var(--color-primary-15);
-  border-color: var(--color-primary-40);
-  color: var(--color-primary-light);
+  background: var(--color-brand-primary-15);
+  border-color: var(--color-brand-primary-40);
+  color: var(--color-brand-light);
 }
 
 .stepHeader {
@@ -44,7 +44,7 @@
 .stepCount {
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -56,28 +56,28 @@
 }
 
 .visualizationPanel {
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
 }
 
 .description {
   padding: var(--space-md) var(--space-lg);
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
-  border-left: 3px solid var(--color-primary);
+  border-left: 3px solid var(--color-brand-primary);
 }
 
 .stepText {
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   line-height: var(--leading-normal);
 }
 
 .insightBox {
-  background: var(--color-primary-10);
-  border: var(--border-width-1) solid var(--color-primary-30);
+  background: var(--color-brand-primary-10);
+  border: var(--border-width-1) solid var(--color-brand-primary-30);
   border-radius: var(--radius-lg);
   padding: 0.9rem 1rem;
 }
@@ -88,7 +88,7 @@
   font-weight: var(--font-bold);
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   margin-bottom: 0.4rem;
 }
 
@@ -109,7 +109,7 @@
 
 .stepCounter {
   font-size: var(--text-base);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   min-width: 60px;
   text-align: center;
 }
@@ -134,10 +134,10 @@
 .btnSecondary {
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-base);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }

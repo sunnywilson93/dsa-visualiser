@@ -56,7 +56,7 @@
 }
 
 .cardInner {
-  background: var(--bg-page-secondary);
+  background: var(--color-bg-page-secondary);
   border-radius: var(--radius-xl);
   padding: var(--space-xl);
   display: flex;
@@ -75,19 +75,19 @@
 .cardIcon {
   font-size: var(--text-3xl);
   line-height: var(--leading-none);
-  filter: drop-shadow(var(--glow-md) var(--white-20));
+  filter: drop-shadow(var(--glow-md) var(--color-white-20));
 }
 
 .cardTitle {
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
-  color: var(--text-bright);
+  color: var(--color-text-bright);
   margin: var(--space-xs) 0 0;
 }
 
 .cardDescription {
   font-size: var(--text-base);
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   margin: var(--space-0);
   line-height: var(--leading-normal);
   flex: 1;

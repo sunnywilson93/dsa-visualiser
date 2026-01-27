@@ -1,6 +1,6 @@
 .container {
-  --js-viz-bg: var(--bg-primary);
-  --js-viz-border: var(--white-8);
+  --js-viz-bg: var(--color-bg-primary);
+  --js-viz-border: var(--color-white-8);
   --js-viz-accent: #14b8a6;
 
   display: flex;
@@ -13,7 +13,7 @@
   gap: var(--space-sm);
   justify-content: center;
   flex-wrap: wrap;
-  background: var(--black-30);
+  background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
   padding: 0.35rem;
@@ -27,10 +27,10 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  background: var(--white-4);
+  background: var(--color-white-4);
   border: var(--border-width-2) solid transparent;
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 44px;
@@ -38,8 +38,8 @@
 }
 
 .levelBtn:hover:not(:disabled) {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .levelBtn:disabled {
@@ -62,7 +62,7 @@
   gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
-  background: var(--black-30);
+  background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
   padding: 0.35rem;
@@ -72,10 +72,10 @@
   padding: var(--space-2) var(--space-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  background: var(--white-4);
+  background: var(--color-white-4);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 44px;
@@ -83,8 +83,8 @@
 }
 
 .exampleTab:hover {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .exampleTab.activeTab {
@@ -108,7 +108,7 @@
 
 .stackSection,
 .heapSection {
-  background: var(--black-40);
+  background: var(--color-black-40);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -118,8 +118,8 @@
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
-  background: var(--white-5);
+  color: var(--color-gray-500);
+  background: var(--color-white-5);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -134,7 +134,7 @@
 }
 
 .emptySection {
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   font-style: italic;
   font-size: var(--text-sm);
   text-align: center;
@@ -146,7 +146,7 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--space-sm) var(--space-md);
-  background: var(--black-30);
+  background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-md);
   font-family: var(--font-mono);
@@ -156,21 +156,21 @@
 
 .stackItem.reference {
   border-color: rgba(20, 184, 166, 0.4);
-  background: var(--teal-8);
+  background: var(--color-teal-8);
 }
 
 .stackItem.highlightNew {
-  border-color: var(--emerald-70);
-  background: var(--emerald-12);
+  border-color: var(--color-emerald-70);
+  background: var(--color-emerald-12);
   animation: fadeIn 0.3s ease-out;
 }
 
 .varName {
-  color: var(--gray-400);
+  color: var(--color-gray-400);
 }
 
 .varValue {
-  color: var(--gray-300);
+  color: var(--color-gray-300);
 }
 
 .stackItem.reference .varValue {
@@ -183,7 +183,7 @@
   flex-direction: column;
   gap: var(--space-xs);
   padding: var(--space-md);
-  background: var(--teal-8);
+  background: var(--color-teal-8);
   border: 2px solid rgba(20, 184, 166, 0.4);
   border-radius: var(--radius-lg);
   font-family: var(--font-mono);
@@ -194,8 +194,8 @@
 }
 
 .heapObject.highlightNew {
-  border-color: var(--emerald-70);
-  background: var(--emerald-12);
+  border-color: var(--color-emerald-70);
+  background: var(--color-emerald-12);
   animation: fadeIn 0.3s ease-out;
 }
 
@@ -246,7 +246,7 @@
 }
 
 .property.highlightNew {
-  background: var(--emerald-12);
+  background: var(--color-emerald-12);
   border-radius: var(--radius-sm);
   padding: 0.25rem 0.5rem;
   margin: 0 -0.5rem;
@@ -262,19 +262,19 @@
 .property.highlightDeleted {
   text-decoration: line-through;
   opacity: 0.5;
-  background: var(--red-10);
+  background: var(--color-red-10);
 }
 
 .propKey {
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 .propValue {
-  color: var(--gray-300);
+  color: var(--color-gray-300);
 }
 
 .outputBox {
-  background: var(--black-40);
+  background: var(--color-black-40);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -284,8 +284,8 @@
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
-  background: var(--white-5);
+  color: var(--color-gray-500);
+  background: var(--color-white-5);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -305,17 +305,17 @@
 
 .placeholder {
   font-size: var(--text-sm);
-  color: var(--gray-800);
+  color: var(--color-gray-800);
   font-style: italic;
 }
 
 .insightBox {
   padding: var(--space-sm) var(--space-md);
-  background: var(--teal-8);
+  background: var(--color-teal-8);
   border: 1px solid rgba(20, 184, 166, 0.2);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
   text-align: center;
 }
 
@@ -328,7 +328,7 @@
 .emptyState {
   padding: var(--space-xl);
   text-align: center;
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   font-style: italic;
 }
 
@@ -337,12 +337,12 @@
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
-  background: var(--amber-15);
+  background: var(--color-amber-15);
   border: 1px solid rgba(245, 158, 11, 0.5);
   border-radius: var(--radius-lg);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--amber-500);
+  color: var(--color-amber-500);
   margin-bottom: var(--space-sm);
   animation: warningPulse 1.5s ease-in-out infinite;
 }
@@ -357,15 +357,15 @@
 
 @keyframes warningPulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 var(--amber-30);
+    box-shadow: 0 0 0 0 var(--color-amber-30);
   }
   50% {
-    box-shadow: 0 0 12px 2px var(--amber-20);
+    box-shadow: 0 0 12px 2px var(--color-amber-20);
   }
 }
 
 .destructurePanel {
-  background: var(--black-40);
+  background: var(--color-black-40);
   border: 2px solid rgba(20, 184, 166, 0.5);
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -393,7 +393,7 @@
 .sourceRef {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
 }
 
 .extractionList {
@@ -408,7 +408,7 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-sm) var(--space-md);
-  background: var(--black-30);
+  background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-md);
   font-family: var(--font-mono);
@@ -426,8 +426,8 @@
 }
 
 .extractionItem.complete {
-  border-color: var(--emerald-50);
-  background: var(--emerald-8);
+  border-color: var(--color-emerald-50);
+  background: var(--color-emerald-8);
 }
 
 @keyframes extractPulse {
@@ -440,7 +440,7 @@
 }
 
 .extractSource {
-  color: var(--gray-400);
+  color: var(--color-gray-400);
   min-width: 80px;
 }
 
@@ -450,17 +450,17 @@
 }
 
 .extractTarget {
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   font-weight: var(--font-semibold);
   min-width: 80px;
 }
 
 .extractValue {
-  color: var(--emerald-500);
+  color: var(--color-emerald-500);
 }
 
 .extractCheck {
-  color: var(--emerald-500);
+  color: var(--color-emerald-500);
   font-weight: var(--font-bold);
   margin-left: auto;
 }

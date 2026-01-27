@@ -15,23 +15,23 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .exampleBtn:hover {
-  background: var(--white-10);
+  background: var(--color-white-10);
   color: var(--color-white);
 }
 
 .exampleBtn.active {
-  background: var(--color-primary-15);
-  border-color: var(--color-primary-40);
-  color: var(--color-primary-light);
+  background: var(--color-brand-primary-15);
+  border-color: var(--color-brand-primary-40);
+  color: var(--color-brand-light);
 }
 
 /* Queue section */
@@ -43,7 +43,7 @@
 }
 
 .queueContainer {
-  background: var(--black-20);
+  background: var(--color-black-20);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
 }
@@ -51,7 +51,7 @@
 .queueLabel {
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 0.75rem;
@@ -76,9 +76,9 @@
   flex-direction: column;
   gap: 0.1rem;
   padding: var(--space-1-5) var(--space-2-5);
-  border: var(--border-width-1) solid var(--white-8);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-md);
-  color: var(--gray-600);
+  color: var(--color-gray-600);
   text-align: center;
   min-width: 120px;
 }
@@ -101,7 +101,7 @@
 
 .queueEndHint {
   font-size: var(--text-2xs);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
@@ -109,7 +109,7 @@
 .queueOrder {
   text-align: center;
   font-size: var(--text-2xs);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   text-transform: uppercase;
   letter-spacing: 0.6px;
 }
@@ -120,14 +120,14 @@
   align-items: center;
   min-height: 120px;
   padding: var(--space-md);
-  background: var(--black-30);
-  border: var(--border-width-2) solid var(--white-10);
+  background: var(--color-black-30);
+  border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-lg);
   overflow-x: auto;
 }
 
 .emptyQueue {
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   font-size: var(--text-base);
   text-align: center;
   padding: var(--space-2xl);
@@ -142,14 +142,14 @@
   gap: var(--space-xs);
   min-width: 70px;
   padding: 0.75rem 0.9rem;
-  background: var(--black-30);
-  border: var(--border-width-2) solid var(--white-10);
+  background: var(--color-black-30);
+  border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
 }
 
 .queueItem.activeItem {
-  box-shadow: 0 0 15px var(--color-primary-20);
+  box-shadow: 0 0 15px var(--color-brand-primary-20);
 }
 
 .queueValue {
@@ -167,14 +167,14 @@
 
 .queueItemLabel {
   font-size: var(--text-2xs);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   text-transform: uppercase;
   letter-spacing: 0.6px;
 }
 
 /* Output section */
 .outputSection {
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   min-width: 120px;
@@ -183,7 +183,7 @@
 .outputLabel {
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: var(--space-sm);
@@ -203,7 +203,7 @@
 }
 
 .outputEmpty {
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   font-size: var(--text-xl);
 }
 
@@ -213,9 +213,9 @@
   align-items: flex-start;
   gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
-  border-left: 3px solid var(--color-primary);
+  border-left: 3px solid var(--color-brand-primary);
 }
 
 .actionBadge {
@@ -231,7 +231,7 @@
 
 .stepText {
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   line-height: var(--leading-normal);
 }
 
@@ -245,7 +245,7 @@
 
 .stepCounter {
   font-size: var(--text-base);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   min-width: 50px;
   text-align: center;
 }
@@ -270,16 +270,16 @@
 .btnSecondary {
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-base);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: var(--white-10);
+  background: var(--color-white-10);
   color: var(--color-white);
 }
 
@@ -291,16 +291,16 @@
 /* Insight */
 .insight {
   padding: var(--space-md) var(--space-lg);
-  background: var(--color-primary-10);
-  border: var(--border-width-1) solid var(--color-primary-20);
+  background: var(--color-brand-primary-10);
+  border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   line-height: var(--leading-normal);
 }
 
 .insight strong {
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
 }
 
 /* Mobile */

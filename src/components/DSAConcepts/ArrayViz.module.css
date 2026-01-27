@@ -15,28 +15,28 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .exampleBtn:hover {
-  background: var(--white-10);
+  background: var(--color-white-10);
   color: var(--color-white);
 }
 
 .exampleBtn.active {
-  background: var(--color-primary-15);
-  border-color: var(--color-primary-40);
-  color: var(--color-primary-light);
+  background: var(--color-brand-primary-15);
+  border-color: var(--color-brand-primary-40);
+  color: var(--color-brand-light);
 }
 
 /* Memory visualization */
 .memorySection {
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
 }
@@ -53,7 +53,7 @@
 .memoryLabel {
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -61,8 +61,8 @@
 .formula {
   font-family: var(--font-mono);
   font-size: var(--text-base);
-  color: var(--blue-400);
-  background: var(--sky-10);
+  color: var(--color-blue-400);
+  background: var(--color-sky-10);
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-sm);
 }
@@ -77,25 +77,25 @@
 .memoryBlock {
   flex-shrink: 0;
   width: 70px;
-  background: var(--black-30);
-  border: var(--border-width-2) solid var(--white-10);
+  background: var(--color-black-30);
+  border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all var(--transition-fast);
 }
 
 .memoryBlock.highlighted {
-  box-shadow: 0 0 20px var(--color-primary-40);
+  box-shadow: 0 0 20px var(--color-brand-primary-40);
 }
 
 .blockAddress {
   padding: 0.35rem;
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-align: center;
-  background: var(--white-3);
-  border-bottom: 1px solid var(--white-5);
+  background: var(--color-white-3);
+  border-bottom: 1px solid var(--color-white-5);
 }
 
 .blockValue {
@@ -109,7 +109,7 @@
 
 .gap {
   font-size: var(--text-xs);
-  color: var(--accent-red);
+  color: var(--color-accent-red);
   font-weight: var(--font-semibold);
 }
 
@@ -117,9 +117,9 @@
   padding: 0.35rem;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
   text-align: center;
-  background: var(--color-primary-10);
+  background: var(--color-brand-primary-10);
 }
 
 /* Pointer animation */
@@ -144,14 +144,14 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
-  background: var(--black-30);
-  border: 2px solid var(--emerald-500);
+  background: var(--color-black-30);
+  border: 2px solid var(--color-emerald-500);
   border-radius: var(--radius-lg);
 }
 
 .outputLabel {
   font-size: var(--text-base);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 .outputValue {
@@ -167,9 +167,9 @@
   align-items: flex-start;
   gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
-  border-left: 3px solid var(--color-primary);
+  border-left: 3px solid var(--color-brand-primary);
 }
 
 .actionBadge {
@@ -185,7 +185,7 @@
 
 .stepText {
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   line-height: var(--leading-normal);
 }
 
@@ -199,7 +199,7 @@
 
 .stepCounter {
   font-size: var(--text-base);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   min-width: 50px;
   text-align: center;
 }
@@ -224,16 +224,16 @@
 .btnSecondary {
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-base);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: var(--white-10);
+  background: var(--color-white-10);
   color: var(--color-white);
 }
 
@@ -245,16 +245,16 @@
 /* Insight */
 .insight {
   padding: var(--space-md) var(--space-lg);
-  background: var(--color-primary-10);
-  border: var(--border-width-1) solid var(--color-primary-20);
+  background: var(--color-brand-primary-10);
+  border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   line-height: var(--leading-normal);
 }
 
 .insight strong {
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
 }
 
 /* Mobile */

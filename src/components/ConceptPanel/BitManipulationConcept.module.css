@@ -7,11 +7,11 @@
   --label-width: 60px;
   --decimal-width: var(--space-3xl);
   --equals-width: var(--space-md);
-  color: var(--text-bright);
+  color: var(--color-text-bright);
 }
 
 .empty {
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   font-size: var(--space-md);
 }
 
@@ -19,11 +19,11 @@
   font-size: var(--space-2-5);
   font-weight: var(--font-semibold);
   padding: 3px 10px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-secondary));
   color: white;
   border-radius: var(--radius-full);
   letter-spacing: 0.5px;
-  box-shadow: 0 0 10px var(--color-primary-40);
+  box-shadow: 0 0 10px var(--color-brand-primary-40);
 }
 
 .visualization {
@@ -31,8 +31,8 @@
   flex-direction: column;
   gap: var(--space-xs);
   padding: var(--space-sm);
-  background: var(--black-30);
-  border: 1px dashed var(--white-10);
+  background: var(--color-black-30);
+  border: 1px dashed var(--color-white-10);
   border-radius: var(--radius-lg);
 }
 
@@ -51,7 +51,7 @@
 .label {
   width: var(--label-width);
   font-size: var(--space-2-5);
-  color: var(--accent-cyan);
+  color: var(--color-accent-cyan);
   font-weight: var(--font-medium);
   text-align: right;
   overflow: hidden;
@@ -62,13 +62,13 @@
 .decimal {
   width: var(--decimal-width);
   font-size: 11px;
-  color: var(--text-bright);
+  color: var(--color-text-bright);
   font-weight: var(--font-semibold);
   text-align: right;
 }
 
 .equals {
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   font-size: var(--space-2-5);
   text-align: center;
 }
@@ -91,14 +91,14 @@
 }
 
 .bit.zero {
-  background: var(--bg-elevated);
-  color: var(--gray-500);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-bg-elevated);
+  color: var(--color-gray-500);
+  border: var(--border-width-1) solid var(--color-white-10);
 }
 
 .bit.one {
   background: rgba(96, 165, 250, 0.25);
-  color: var(--blue-400);
+  color: var(--color-blue-400);
   border: 1px solid rgba(96, 165, 250, 0.5);
   box-shadow: 0 0 4px rgba(96, 165, 250, 0.2);
 }
@@ -110,7 +110,7 @@
 
 .bit.highlighted {
   background: rgba(251, 191, 36, 0.25);
-  color: var(--amber-400);
+  color: var(--color-amber-400);
   border-color: rgba(251, 191, 36, 0.5);
   box-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
 }
@@ -136,7 +136,7 @@
 .operatorSymbol {
   font-size: var(--space-md);
   font-weight: var(--font-bold);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   grid-column: 2;
   justify-self: end;
   text-shadow: 0 0 6px rgba(196, 181, 253, 0.4);
@@ -144,7 +144,7 @@
 
 .divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--emerald-500), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-emerald-500), transparent);
   margin: 4px 0;
   box-shadow: 0 0 4px rgba(16, 185, 128, 0.4);
 }
@@ -174,7 +174,7 @@
 }
 
 .bitPosition.activeBitPos {
-  color: var(--blue-400);
+  color: var(--color-blue-400);
   font-weight: var(--font-semibold);
   text-shadow: 0 0 4px rgba(96, 165, 250, 0.4);
 }
@@ -189,10 +189,10 @@
 .annotation {
   font-size: var(--space-2-5);
   font-weight: var(--font-medium);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   padding: 3px 10px;
-  background: var(--neon-viz-18);
-  border: 1px solid var(--neon-viz-25);
+  background: var(--color-neon-viz-18);
+  border: 1px solid var(--color-neon-viz-25);
   border-radius: var(--radius-full);
 }
 

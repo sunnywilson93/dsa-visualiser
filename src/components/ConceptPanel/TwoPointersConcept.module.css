@@ -4,7 +4,7 @@
   align-items: center;
   gap: var(--space-sm);
   width: 100%;
-  color: var(--text-bright);
+  color: var(--color-text-bright);
 }
 
 .annotations {
@@ -17,10 +17,10 @@
 .annotation {
   font-size: 11px;
   font-weight: var(--font-medium);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   padding: 3px 10px;
-  background: var(--neon-viz-18);
-  border: 1px solid var(--neon-viz-25);
+  background: var(--color-neon-viz-18);
+  border: 1px solid var(--color-neon-viz-25);
   border-radius: var(--radius-full);
 }
 
@@ -81,7 +81,7 @@
   min-width: 28px;
   height: 28px;
   padding: 0 4px;
-  background: var(--bg-elevated);
+  background: var(--color-bg-elevated);
   border: 2px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
@@ -89,12 +89,12 @@
 
 .element.highlighted {
   background: rgba(96, 165, 250, 0.2);
-  border-color: var(--blue-400);
+  border-color: var(--color-blue-400);
   box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
 }
 
 .element.hasPointer {
-  border-color: var(--blue-400);
+  border-color: var(--color-blue-400);
   box-shadow: 0 0 6px rgba(96, 165, 250, 0.25);
 }
 
@@ -102,13 +102,13 @@
   font-size: 13px;
   font-weight: var(--font-semibold);
   font-family: var(--font-mono);
-  color: var(--text-bright);
+  color: var(--color-text-bright);
 }
 
 .index {
   font-size: 9px;
   font-family: var(--font-mono);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 .directionIndicator {
@@ -127,7 +127,7 @@
 .directionText {
   font-size: var(--space-2-5);
   font-weight: var(--font-medium);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -135,7 +135,7 @@
 .result {
   font-size: var(--space-md);
   font-weight: var(--font-medium);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
   margin-top: var(--space-sm);
   padding: var(--space-xs) var(--space-sm);
   background: rgba(16, 185, 128, 0.15);

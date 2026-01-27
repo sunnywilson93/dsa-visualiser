@@ -28,14 +28,14 @@ export function TwoPointersConcept({ step, type }: TwoPointersConceptProps) {
     switch (style) {
       case 'left':
       case 'slow':
-        return 'var(--accent-blue)'
+        return 'var(--color-accent-blue)'
       case 'right':
       case 'fast':
-        return 'var(--accent-purple)'
+        return 'var(--color-accent-purple)'
       case 'mid':
-        return 'var(--accent-green)'
+        return 'var(--color-accent-green)'
       default:
-        return 'var(--accent-cyan)'
+        return 'var(--color-accent-cyan)'
     }
   }
 
@@ -115,7 +115,7 @@ export function TwoPointersConcept({ step, type }: TwoPointersConceptProps) {
         <div className={styles.directionIndicator}>
           <motion.span
             className={styles.arrow}
-            style={{ color: 'var(--accent-blue)' }}
+            style={{ color: 'var(--color-accent-blue)' }}
             animate={{ x: [0, 5, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
           >
@@ -124,7 +124,7 @@ export function TwoPointersConcept({ step, type }: TwoPointersConceptProps) {
           <span className={styles.directionText}>converge</span>
           <motion.span
             className={styles.arrow}
-            style={{ color: 'var(--accent-purple)' }}
+            style={{ color: 'var(--color-accent-purple)' }}
             animate={{ x: [0, -5, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
           >
@@ -138,7 +138,7 @@ export function TwoPointersConcept({ step, type }: TwoPointersConceptProps) {
         <div className={styles.directionIndicator}>
           <motion.span
             className={styles.arrow}
-            style={{ color: 'var(--accent-blue)' }}
+            style={{ color: 'var(--color-accent-blue)' }}
             animate={{ x: [0, 5, 0] }}
             transition={{ repeat: Infinity, duration: 1.5, delay: 0.2 }}
           >
@@ -146,7 +146,7 @@ export function TwoPointersConcept({ step, type }: TwoPointersConceptProps) {
           </motion.span>
           <motion.span
             className={styles.arrow}
-            style={{ color: 'var(--accent-purple)' }}
+            style={{ color: 'var(--color-accent-purple)' }}
             animate={{ x: [0, 5, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
           >

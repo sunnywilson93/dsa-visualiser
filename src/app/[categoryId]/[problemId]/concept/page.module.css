@@ -3,7 +3,7 @@
   flex-direction: column;
   min-height: 100vh;
   padding: var(--space-lg);
-  background: var(--bg-primary);
+  background: var(--color-bg-primary);
 }
 
 .header {
@@ -28,17 +28,17 @@
   width: var(--space-2xl);
   height: var(--space-2xl);
   border-radius: var(--radius-md);
-  background: var(--bg-tertiary);
-  border: var(--border-width-1) solid var(--border-primary);
-  color: var(--text-secondary);
+  background: var(--color-bg-tertiary);
+  border: var(--border-width-1) solid var(--color-border-primary);
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .backBtn:hover {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  border-color: var(--border-secondary);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-secondary);
 }
 
 .problemInfo {
@@ -50,7 +50,7 @@
 .title {
   font-size: 18px;
   font-weight: var(--font-semibold);
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -69,17 +69,17 @@
 
 .difficulty.medium {
   background: rgba(251, 191, 36, 0.15);
-  color: var(--amber-400);
+  color: var(--color-amber-400);
 }
 
 .difficulty.hard {
   background: rgba(248, 113, 113, 0.15);
-  color: var(--red-400);
+  color: var(--color-red-400);
 }
 
 .description {
   font-size: 13px;
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -104,7 +104,7 @@
   justify-content: center;
   gap: var(--space-sm);
   padding: var(--space-md) var(--space-xl);
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-purple));
   border-radius: var(--radius-md);
   color: white;
   font-size: 14px;
@@ -126,15 +126,15 @@
   justify-content: center;
   min-height: 100vh;
   gap: var(--space-lg);
-  color: var(--gray-500);
-  background: var(--bg-primary);
+  color: var(--color-gray-500);
+  background: var(--color-bg-primary);
 }
 
 .backLink {
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
-  color: var(--accent-blue);
+  color: var(--color-accent-blue);
   text-decoration: none;
 }
 

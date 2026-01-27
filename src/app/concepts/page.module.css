@@ -30,7 +30,7 @@
 }
 
 .subtitle {
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   font-size: var(--text-md);
   margin: 0;
   line-height: var(--leading-relaxed);
@@ -47,7 +47,7 @@
   gap: var(--space-md);
   font-size: var(--text-xl);
   font-weight: var(--font-semibold);
-  color: var(--text-bright);
+  color: var(--color-text-bright);
   margin: 0 0 1rem;
 }
 
@@ -59,7 +59,7 @@
 .sectionDescription {
   font-size: var(--text-base);
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   margin-left: auto;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .cardInner {
-  background: var(--bg-page-secondary);
+  background: var(--color-bg-page-secondary);
   border-radius: var(--radius-xl);
   padding: 1.25rem;
   display: flex;
@@ -151,20 +151,20 @@
   font-weight: var(--font-semibold);
   padding: var(--space-xs) var(--space-2-5);
   border-radius: var(--radius-full);
-  background: var(--color-primary-30);
-  color: var(--color-primary-light);
+  background: var(--color-brand-primary-30);
+  color: var(--color-brand-light);
 }
 
 .cardTitle {
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
-  color: var(--text-bright);
+  color: var(--color-text-bright);
   margin: 0.25rem 0 0;
 }
 
 .cardDescription {
   font-size: var(--text-base);
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   margin: 0;
   line-height: var(--leading-snug);
   flex: 1;
@@ -181,13 +181,13 @@
 .keyPoints,
 .examples {
   font-size: var(--text-xs);
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
   font-weight: var(--font-medium);
 }
 
 .searchResults {
   background: rgba(26, 26, 46, 0.5);
-  border: var(--border-width-1) solid var(--color-primary-20);
+  border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-xl);
   padding: var(--space-sm);
 }
@@ -221,13 +221,13 @@
 .patternName {
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
-  color: var(--text-bright);
+  color: var(--color-text-bright);
   margin: 0;
 }
 
 .patternDescription {
   font-size: var(--text-sm);
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   margin: 0;
   line-height: var(--leading-normal);
   flex: 1;
@@ -244,14 +244,14 @@
 .patternComplexity,
 .patternVariants {
   font-size: var(--text-xs);
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
   font-weight: var(--font-medium);
 }
 
 .footer {
   text-align: center;
   padding: var(--space-2xl);
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   font-size: var(--text-base);
 }
 

@@ -189,10 +189,10 @@ export function CallStack() {
               style={{
                 backgroundColor:
                   callStack.length > 15
-                    ? 'var(--accent-red)'
+                    ? 'var(--color-accent-red)'
                     : callStack.length > 8
-                    ? 'var(--accent-yellow)'
-                    : 'var(--accent-blue)',
+                    ? 'var(--color-accent-yellow)'
+                    : 'var(--color-accent-blue)',
               }}
             />
           </div>

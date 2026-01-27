@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: var(--space-xs);
   padding: var(--space-sm);
-  background: var(--bg-tertiary);
+  background: var(--color-bg-tertiary);
   border-radius: var(--radius-md);
 }
 
@@ -17,7 +17,7 @@
 .title {
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .operatorBadge {
@@ -25,7 +25,7 @@
   font-weight: var(--font-semibold);
   padding: var(--space-px) var(--space-2);
   border-radius: var(--radius-sm);
-  background: var(--accent-purple);
+  background: var(--color-accent-purple);
   color: var(--color-white);
   letter-spacing: 0.5px;
 }
@@ -35,7 +35,7 @@
   flex-direction: column;
   gap: var(--space-0-5);
   padding: var(--space-sm);
-  background: var(--bg-primary);
+  background: var(--color-bg-primary);
   border-radius: var(--radius-sm);
   overflow-x: auto;
 }
@@ -50,7 +50,7 @@
 .label {
   min-width: var(--space-5xl);
   font-size: var(--text-xs);
-  color: var(--accent-cyan);
+  color: var(--color-accent-cyan);
   font-weight: var(--font-medium);
   text-align: right;
   overflow: hidden;
@@ -61,13 +61,13 @@
 .decimal {
   min-width: var(--space-3xl);
   font-size: var(--text-xs);
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   font-weight: var(--font-semibold);
   text-align: right;
 }
 
 .equals {
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   font-size: var(--text-xs);
 }
 
@@ -89,37 +89,37 @@
 }
 
 .bit.zero {
-  background: var(--bg-secondary);
-  color: var(--text-muted);
-  border: var(--border-width-1) solid var(--border-primary);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-muted);
+  border: var(--border-width-1) solid var(--color-border-primary);
 }
 
 .bit.one {
-  background: var(--accent-blue-20);
-  color: var(--accent-blue);
-  border: var(--border-width-1) solid var(--accent-blue);
+  background: var(--color-accent-blue-20);
+  color: var(--color-accent-blue);
+  border: var(--border-width-1) solid var(--color-accent-blue);
 }
 
 .bit.active {
   transform: scale(1.05);
-  box-shadow: var(--glow-md) var(--accent-blue-40);
+  box-shadow: var(--glow-md) var(--color-accent-blue-40);
 }
 
 .bit.result {
-  background: var(--accent-green-20);
-  color: var(--accent-green);
-  border-color: var(--accent-green);
+  background: var(--color-accent-green-20);
+  color: var(--color-accent-green);
+  border-color: var(--color-accent-green);
 }
 
 .bit.result.one {
-  background: var(--accent-green-30);
-  box-shadow: var(--glow-md) var(--accent-green-40);
+  background: var(--color-accent-green-30);
+  box-shadow: var(--glow-md) var(--color-accent-green-40);
 }
 
 .bit.changed {
-  background: var(--amber-30);
-  color: var(--accent-yellow);
-  border-color: var(--accent-yellow);
+  background: var(--color-amber-30);
+  color: var(--color-accent-yellow);
+  border-color: var(--color-accent-yellow);
 }
 
 .operatorRow {
@@ -132,7 +132,7 @@
 .operatorSymbol {
   font-size: var(--text-sm);
   font-weight: var(--font-bold);
-  color: var(--accent-purple);
+  color: var(--color-accent-purple);
   min-width: var(--space-3xl);
   text-align: right;
   padding-right: var(--space-sm);
@@ -140,7 +140,7 @@
 
 .divider {
   height: var(--space-px);
-  background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-accent-green), transparent);
   margin: var(--space-0-5) 0;
   margin-left: calc(var(--space-5xl) + var(--space-sm));
 }
@@ -162,7 +162,7 @@
   width: 18px;
   text-align: center;
   font-size: var(--text-2xs);
-  color: var(--text-muted);
+  color: var(--color-text-muted);
 }
 
 .legend {
@@ -170,7 +170,7 @@
   justify-content: center;
   gap: var(--space-md);
   padding-top: var(--space-xs);
-  border-top: var(--border-width-1) solid var(--border-secondary);
+  border-top: var(--border-width-1) solid var(--color-border-secondary);
 }
 
 .legendItem {
@@ -178,7 +178,7 @@
   align-items: center;
   gap: var(--space-xs);
   font-size: var(--text-2xs);
-  color: var(--text-muted);
+  color: var(--color-text-muted);
 }
 
 .legendDot {
@@ -188,18 +188,18 @@
 }
 
 .legendDot.one {
-  background: var(--accent-blue-30);
-  border: var(--border-width-1) solid var(--accent-blue);
+  background: var(--color-accent-blue-30);
+  border: var(--border-width-1) solid var(--color-accent-blue);
 }
 
 .legendDot.zero {
-  background: var(--bg-secondary);
-  border: var(--border-width-1) solid var(--border-primary);
+  background: var(--color-bg-secondary);
+  border: var(--border-width-1) solid var(--color-border-primary);
 }
 
 .legendDot.result {
-  background: var(--accent-green-30);
-  border: var(--border-width-1) solid var(--accent-green);
+  background: var(--color-accent-green-30);
+  border: var(--border-width-1) solid var(--color-accent-green);
 }
 
 /* Responsive adjustments */

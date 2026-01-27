@@ -2,21 +2,21 @@
   position: relative;
   padding: var(--space-1);
   border-radius: var(--radius-2xl);
-  background: linear-gradient(135deg, var(--accent-red), var(--orange-500));
+  background: linear-gradient(135deg, var(--color-accent-red), var(--color-orange-500));
   animation: borderPulse 2s ease-in-out infinite;
 }
 
 @keyframes borderPulse {
   0%, 100% {
-    box-shadow: var(--glow-2xl) var(--accent-red-30);
+    box-shadow: var(--glow-2xl) var(--color-accent-red-30);
   }
   50% {
-    box-shadow: 0 0 30px var(--accent-red-30);
+    box-shadow: 0 0 30px var(--color-accent-red-30);
   }
 }
 
 .content {
-  background: var(--bg-page-secondary);
+  background: var(--color-bg-page-secondary);
   border-radius: var(--radius-xl);
   padding: var(--space-2xl);
   display: flex;
@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-red-30);
+  background: var(--color-accent-red-30);
   border-radius: var(--radius-full);
   animation: iconPulse 1.5s ease-in-out infinite;
 }
@@ -47,20 +47,20 @@
 }
 
 .icon {
-  color: var(--accent-red);
+  color: var(--color-accent-red);
 }
 
 .title {
   margin: 0;
   font-size: var(--text-xl);
   font-weight: var(--font-semibold);
-  color: var(--text-bright);
+  color: var(--color-text-bright);
 }
 
 .message {
   margin: 0;
   font-size: var(--text-base);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   max-width: 300px;
 }
 
@@ -79,7 +79,7 @@
   padding: var(--space-md) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary));
+  background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-primary));
   border: none;
   border-radius: var(--radius-lg);
   color: var(--color-white);
@@ -89,7 +89,7 @@
 
 .btnPrimary:hover {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-md) var(--color-primary-40);
+  box-shadow: var(--shadow-md) var(--color-brand-primary-40);
 }
 
 .btnSecondary {
@@ -100,17 +100,17 @@
   font-size: var(--text-base);
   font-weight: var(--font-medium);
   background: transparent;
-  border: var(--border-width-1) solid var(--white-15);
+  border: var(--border-width-1) solid var(--color-white-15);
   border-radius: var(--radius-lg);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .btnSecondary:hover {
-  background: var(--white-5);
-  border-color: var(--white-30);
-  color: var(--gray-300);
+  background: var(--color-white-5);
+  border-color: var(--color-white-30);
+  color: var(--color-gray-300);
 }
 
 .detailsToggle {
@@ -121,13 +121,13 @@
   font-size: var(--text-xs);
   background: transparent;
   border: none;
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   cursor: pointer;
   transition: color var(--transition-fast);
 }
 
 .detailsToggle:hover {
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 .errorDetails {
@@ -135,8 +135,8 @@
   max-width: 400px;
   margin-top: var(--space-sm);
   padding: var(--space-md);
-  background: var(--black-40);
-  border: var(--border-width-1) solid var(--accent-red-30);
+  background: var(--color-black-40);
+  border: var(--border-width-1) solid var(--color-accent-red-30);
   border-radius: var(--radius-lg);
   text-align: left;
 }
@@ -144,7 +144,7 @@
 .errorName {
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: var(--accent-red);
+  color: var(--color-accent-red);
   margin-bottom: var(--space-sm);
   word-break: break-word;
 }
@@ -152,11 +152,11 @@
 .stackTrace {
   margin: 0;
   padding: var(--space-sm);
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   max-height: 150px;
   overflow-y: auto;
   white-space: pre-wrap;
@@ -169,17 +169,17 @@
 }
 
 .stackTrace::-webkit-scrollbar-track {
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-sm);
 }
 
 .stackTrace::-webkit-scrollbar-thumb {
-  background: var(--accent-red-30);
+  background: var(--color-accent-red-30);
   border-radius: var(--radius-sm);
 }
 
 .stackTrace::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-red);
+  background: var(--color-accent-red);
 }
 
 @media (max-width: 480px) {

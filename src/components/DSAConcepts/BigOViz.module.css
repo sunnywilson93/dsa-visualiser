@@ -14,7 +14,7 @@
 
 .scaleLabel {
   font-size: var(--text-sm);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -23,24 +23,24 @@
   padding: 0.4rem 0.75rem;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .scaleBtn:hover {
-  background: var(--white-10);
-  color: var(--gray-300);
+  background: var(--color-white-10);
+  color: var(--color-gray-300);
 }
 
 .scaleBtn.active {
-  background: var(--color-primary-20);
-  border-color: var(--color-primary-50);
-  color: var(--color-primary-light);
-  box-shadow: 0 0 8px var(--color-primary-20);
+  background: var(--color-brand-primary-20);
+  border-color: var(--color-brand-primary-50);
+  color: var(--color-brand-light);
+  box-shadow: 0 0 8px var(--color-brand-primary-20);
 }
 
 /* Complexity toggles */
@@ -55,7 +55,7 @@
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
-  background: var(--white-5);
+  background: var(--color-white-5);
   border: var(--border-width-2) solid transparent;
   border-radius: var(--radius-lg);
   cursor: pointer;
@@ -63,7 +63,7 @@
 }
 
 .toggle:hover {
-  background: var(--white-8);
+  background: var(--color-white-8);
 }
 
 .toggleDot {
@@ -81,12 +81,12 @@
 
 .toggleLabel {
   font-size: var(--text-xs);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 /* Chart */
 .chartContainer {
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   position: relative;
@@ -99,7 +99,7 @@
   transform: rotate(-90deg) translateX(-50%);
   transform-origin: left center;
   font-size: var(--text-xs);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -107,7 +107,7 @@
 .chart {
   width: 100%;
   height: 200px;
-  background: var(--black-20);
+  background: var(--color-black-20);
   border-radius: var(--radius-lg);
 }
 
@@ -115,7 +115,7 @@
   text-align: center;
   margin-top: var(--space-sm);
   font-size: var(--text-xs);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -127,7 +127,7 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-lg);
-  background: var(--black-20);
+  background: var(--color-black-20);
   border-radius: var(--radius-lg);
 }
 
@@ -139,14 +139,14 @@
 
 .sliderLabel {
   font-size: var(--text-base);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 .sliderValue {
   font-family: var(--font-mono);
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
   min-width: var(--space-3xl);
 }
 
@@ -155,7 +155,7 @@
   max-width: 400px;
   height: 6px;
   appearance: none;
-  background: var(--white-10);
+  background: var(--color-white-10);
   border-radius: var(--space-1);
   outline: none;
   cursor: pointer;
@@ -168,7 +168,7 @@
   background: var(--gradient-brand);
   border-radius: var(--radius-full);
   cursor: pointer;
-  box-shadow: 0 2px 10px var(--color-primary-40);
+  box-shadow: 0 2px 10px var(--color-brand-primary-40);
 }
 
 .slider::-moz-range-thumb {
@@ -199,7 +199,7 @@
 
 .animateBtn:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 4px 15px var(--color-primary-40);
+  box-shadow: 0 4px 15px var(--color-brand-primary-40);
 }
 
 .animateBtn:disabled {
@@ -209,7 +209,7 @@
 
 /* Table */
 .tableContainer {
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -223,14 +223,14 @@
 .table td {
   padding: var(--space-md) var(--space-lg);
   text-align: left;
-  border-bottom: 1px solid var(--white-5);
+  border-bottom: 1px solid var(--color-white-5);
 }
 
 .table th {
-  background: var(--color-primary-10);
+  background: var(--color-brand-primary-10);
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -240,7 +240,7 @@
 }
 
 .table tr:hover td {
-  background: var(--white-2);
+  background: var(--color-white-2);
 }
 
 .complexityName {
@@ -257,27 +257,27 @@
 
 .exampleCell {
   font-size: var(--text-base);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 /* Insight */
 .insight {
   padding: var(--space-md) var(--space-lg);
-  background: var(--color-primary-10);
-  border: var(--border-width-1) solid var(--color-primary-20);
+  background: var(--color-brand-primary-10);
+  border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   line-height: var(--leading-normal);
 }
 
 .insight strong {
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
 }
 
 .insightNote {
   font-size: var(--text-base);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   font-style: italic;
 }
 

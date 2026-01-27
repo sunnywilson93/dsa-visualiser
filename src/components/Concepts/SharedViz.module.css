@@ -18,7 +18,7 @@
 
 .subtitle {
   font-size: var(--text-base);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   margin: 0;
 }
 
@@ -35,8 +35,8 @@
   align-items: center;
   gap: 0.3rem;
   padding: var(--space-md);
-  background: var(--white-3);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-3);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-lg);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -48,23 +48,23 @@
 
 .ruleBtn.active {
   border-color: var(--rule-color);
-  background: var(--white-5);
+  background: var(--color-white-5);
 }
 
 .ruleName {
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
 }
 
 .ruleCode {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
 }
 
 .result {
-  background: var(--black-30);
+  background: var(--color-black-30);
   border: 2px solid;
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -90,14 +90,14 @@
 
 .resultLabel {
   font-size: var(--text-sm);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   min-width: 50px;
 }
 
 .resultRow code {
   font-family: var(--font-mono);
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
 }
 
 .resultRow strong {
@@ -106,9 +106,9 @@
 
 .resultExplanation {
   font-size: var(--text-base);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   padding-top: 0.5rem;
-  border-top: 1px solid var(--white-5);
+  border-top: 1px solid var(--color-white-5);
   margin-top: 0.25rem;
 }
 
@@ -120,7 +120,7 @@
 }
 
 .queue {
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
   overflow: hidden;
   min-height: 150px;
@@ -143,11 +143,11 @@
 
 .queueItem {
   padding: 0.35rem 0.5rem;
-  background: var(--white-10);
+  background: var(--color-white-10);
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
 }
 
 .controls {
@@ -169,13 +169,13 @@
 }
 
 .btnSecondary {
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
-  color: var(--gray-500);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
+  color: var(--color-gray-500);
 }
 
 .btnSecondary:hover {
-  background: var(--white-10);
+  background: var(--color-white-10);
   color: var(--color-white);
 }
 
@@ -189,8 +189,8 @@
 
 .protoNode {
   padding: var(--space-md) var(--space-lg);
-  background: var(--color-primary-10);
-  border: var(--border-width-1) solid var(--color-primary-30);
+  background: var(--color-brand-primary-10);
+  border: var(--border-width-1) solid var(--color-brand-primary-30);
   border-radius: var(--radius-lg);
   min-width: 180px;
   text-align: center;
@@ -198,7 +198,7 @@
 
 .protoName {
   font-weight: var(--font-semibold);
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
   font-size: var(--text-base);
   margin-bottom: 0.25rem;
 }
@@ -206,17 +206,17 @@
 .protoProps {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 .protoArrow {
-  color: var(--gray-800);
+  color: var(--color-gray-800);
   font-size: 1.2rem;
 }
 
 /* Code display */
 .codeDisplay {
-  background: var(--black-40);
+  background: var(--color-black-40);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -227,19 +227,19 @@
   font-family: var(--font-mono);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   white-space: pre;
 }
 
 .lineHighlight {
-  background: var(--color-primary-20);
+  background: var(--color-brand-primary-20);
   display: inline;
   padding: 0.1rem 0.25rem;
   border-radius: var(--space-1);
 }
 
 .comment {
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 /* Visual row */
@@ -250,8 +250,8 @@
 }
 
 .backpackBox {
-  background: var(--amber-10);
-  border: 2px solid var(--amber-30);
+  background: var(--color-amber-10);
+  border: 2px solid var(--color-amber-30);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
 }
@@ -272,14 +272,14 @@
   justify-content: center;
   gap: var(--space-md);
   padding: var(--space-sm);
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-md);
 }
 
 .varName {
   font-family: var(--font-mono);
   font-size: var(--text-base);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 .varValue {
@@ -290,7 +290,7 @@
 }
 
 .outputBox {
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -299,8 +299,8 @@
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  color: var(--gray-500);
-  background: var(--white-5);
+  color: var(--color-gray-500);
+  background: var(--color-white-5);
 }
 
 .outputContent {
@@ -312,28 +312,28 @@
 }
 
 .placeholder {
-  color: var(--gray-800);
+  color: var(--color-gray-800);
 }
 
 /* Step description */
 .stepDescription {
   padding: var(--space-md);
-  background: var(--color-primary-10);
-  border: var(--border-width-1) solid var(--color-primary-20);
+  background: var(--color-brand-primary-10);
+  border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   text-align: center;
 }
 
 .stepNumber {
   display: inline-block;
   padding: var(--space-0-5) var(--space-sm);
-  background: var(--color-primary-30);
+  background: var(--color-brand-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   margin-right: var(--space-sm);
 }
 
@@ -357,21 +357,21 @@
 .secondaryBtn {
   padding: 0.6rem 1rem;
   font-size: var(--text-base);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
 }
 
 .secondaryBtn:hover {
-  background: var(--white-10);
+  background: var(--color-white-10);
   color: var(--color-white);
 }
 
 /* Try it yourself */
 .tryIt {
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -380,8 +380,8 @@
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  color: var(--gray-500);
-  background: var(--white-5);
+  color: var(--color-gray-500);
+  background: var(--color-white-5);
 }
 
 .tryItContent {
@@ -405,7 +405,7 @@
 .tryItOutput {
   font-family: var(--font-mono);
   font-size: var(--text-base);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 @media (max-width: 640px) {

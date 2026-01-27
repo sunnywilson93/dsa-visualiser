@@ -29,7 +29,7 @@
 }
 
 .neonBoxInner {
-  background: var(--bg-page-secondary);
+  background: var(--color-bg-page-secondary);
   border-radius: var(--radius-lg);
   min-height: 100px;
   padding: var(--space-2-5);
@@ -42,7 +42,7 @@
   left: 50%;
   transform: translateX(-50%);
   padding: 0.25rem 0.75rem;
-  background: var(--bg-tertiary);
+  background: var(--color-bg-tertiary);
   border-radius: 0 0 6px 6px;
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
@@ -54,8 +54,8 @@
 /* Call Stack */
 .callStackBox {
   grid-area: callstack;
-  --neon-start: var(--orange-500);
-  --neon-end: var(--amber-400);
+  --neon-start: var(--color-orange-500);
+  --neon-end: var(--color-amber-400);
 }
 
 .callStackBox .neonBoxInner {
@@ -67,12 +67,12 @@
 
 .stackItem {
   padding: var(--space-2) var(--space-2-5);
-  background: var(--color-primary-15);
-  border: 1px solid var(--color-primary-40);
+  background: var(--color-brand-primary-15);
+  border: 1px solid var(--color-brand-primary-40);
   border-radius: 5px;
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   text-align: center;
 }
 
@@ -81,15 +81,15 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  color: var(--gray-800);
+  color: var(--color-gray-800);
   font-size: var(--text-xs);
 }
 
 /* Web APIs */
 .webApisBox {
   grid-area: webapis;
-  --neon-start: var(--color-primary);
-  --neon-end: var(--color-secondary);
+  --neon-start: var(--color-brand-primary);
+  --neon-end: var(--color-brand-secondary);
 }
 
 .webApisBox .neonBoxInner {
@@ -101,25 +101,25 @@
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-2);
   padding: 0.4rem;
-  background: var(--black-30);
+  background: var(--color-black-30);
   border: 1px dashed rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-md);
 }
 
 .webApiItem {
   padding: 0.35rem;
-  background: var(--bg-elevated);
+  background: var(--color-bg-elevated);
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
   text-align: center;
 }
 
 .webApiItem.active {
-  background: var(--color-primary-20);
-  border: 1px solid var(--color-primary-50);
-  color: var(--color-primary-light);
+  background: var(--color-brand-primary-20);
+  border: 1px solid var(--color-brand-primary-50);
+  color: var(--color-brand-light);
 }
 
 .webApiItem.highlight {
@@ -129,7 +129,7 @@
 .manyMore {
   grid-column: 1 / -1;
   text-align: center;
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   font-size: var(--text-2xs);
   padding: 0.2rem;
 }
@@ -162,7 +162,7 @@
 
 .eventLoopIcon.idle {
   animation: none;
-  color: var(--gray-800);
+  color: var(--color-gray-800);
 }
 
 @keyframes spin {
@@ -173,7 +173,7 @@
 /* Task Queue (Macrotasks) */
 .taskQueueBox {
   grid-area: taskqueue;
-  --neon-start: var(--color-secondary);
+  --neon-start: var(--color-brand-secondary);
   --neon-end: #f43f5e;
 }
 
@@ -189,17 +189,17 @@
 
 .macroItem {
   padding: var(--space-2) var(--space-2-5);
-  background: var(--amber-15);
-  border: 1px solid var(--amber-40);
+  background: var(--color-amber-15);
+  border: 1px solid var(--color-amber-40);
   border-radius: 5px;
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  color: var(--amber-400);
+  color: var(--color-amber-400);
   text-align: center;
 }
 
 .emptyQueue {
-  color: var(--gray-800);
+  color: var(--color-gray-800);
   font-size: var(--text-xs);
   text-align: center;
   padding: var(--space-md);
@@ -209,7 +209,7 @@
 .microtaskBox {
   grid-area: microtask;
   --neon-start: var(--difficulty-1);
-  --neon-end: var(--accent-cyan);
+  --neon-end: var(--color-accent-cyan);
 }
 
 .microtaskBox .neonBoxInner {
@@ -218,12 +218,12 @@
 
 .microItem {
   padding: var(--space-2) var(--space-2-5);
-  background: var(--color-primary-15);
-  border: 1px solid var(--color-primary-40);
+  background: var(--color-brand-primary-15);
+  border: 1px solid var(--color-brand-primary-40);
   border-radius: 5px;
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   text-align: center;
 }
 
@@ -264,7 +264,7 @@
 }
 
 .outputEmpty {
-  color: var(--gray-800);
+  color: var(--color-gray-800);
 }
 
 /* Responsive */

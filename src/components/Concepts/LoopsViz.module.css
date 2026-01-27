@@ -1,7 +1,7 @@
 .container {
-  --js-viz-bg: var(--bg-primary);
-  --js-viz-border: var(--white-8);
-  --js-viz-accent: var(--emerald-500);
+  --js-viz-bg: var(--color-bg-primary);
+  --js-viz-border: var(--color-white-8);
+  --js-viz-accent: var(--color-emerald-500);
 
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
   gap: var(--space-sm);
   justify-content: center;
   flex-wrap: wrap;
-  background: var(--black-30);
+  background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
   padding: 0.35rem;
@@ -27,10 +27,10 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  background: var(--white-4);
+  background: var(--color-white-4);
   border: var(--border-width-2) solid transparent;
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 44px;
@@ -38,8 +38,8 @@
 }
 
 .levelBtn:hover:not(:disabled) {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .levelBtn:disabled {
@@ -62,7 +62,7 @@
   gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
-  background: var(--black-30);
+  background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
   padding: 0.35rem;
@@ -72,10 +72,10 @@
   padding: var(--space-2) var(--space-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  background: var(--white-4);
+  background: var(--color-white-4);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 44px;
@@ -83,15 +83,15 @@
 }
 
 .exampleTab:hover {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .exampleTab.activeTab {
-  background: var(--emerald-18);
-  border-color: var(--emerald-70);
+  background: var(--color-emerald-18);
+  border-color: var(--color-emerald-70);
   color: var(--color-white);
-  box-shadow: var(--glow-xl) var(--emerald-25);
+  box-shadow: var(--glow-xl) var(--color-emerald-25);
 }
 
 .mainGrid {
@@ -101,7 +101,7 @@
 }
 
 .loopStateBox {
-  background: var(--black-40);
+  background: var(--color-black-40);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -111,8 +111,8 @@
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
-  background: var(--white-5);
+  color: var(--color-gray-500);
+  background: var(--color-white-5);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -134,7 +134,7 @@
 }
 
 .stateLabel {
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
 }
@@ -163,19 +163,19 @@
 }
 
 .conditionTrue {
-  background: var(--emerald-15);
-  color: var(--emerald-500);
-  border: var(--border-width-1) solid var(--emerald-30);
+  background: var(--color-emerald-15);
+  color: var(--color-emerald-500);
+  border: var(--border-width-1) solid var(--color-emerald-30);
 }
 
 .conditionFalse {
-  background: var(--red-15);
-  color: var(--red-500);
-  border: var(--border-width-1) solid var(--red-30);
+  background: var(--color-red-15);
+  color: var(--color-red-500);
+  border: var(--border-width-1) solid var(--color-red-30);
 }
 
 .outputBox {
-  background: var(--black-40);
+  background: var(--color-black-40);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -195,36 +195,36 @@
 }
 
 .currentOutput {
-  background: var(--emerald-10);
-  border-left: 2px solid var(--emerald-500);
+  background: var(--color-emerald-10);
+  border-left: 2px solid var(--color-emerald-500);
   padding-left: var(--space-sm);
   margin-left: calc(-1 * var(--space-sm));
 }
 
 .placeholder {
   font-size: var(--text-sm);
-  color: var(--gray-800);
+  color: var(--color-gray-800);
   font-style: italic;
 }
 
 .insightBox {
   padding: var(--space-sm) var(--space-md);
-  background: var(--emerald-8);
-  border: var(--border-width-1) solid var(--emerald-20);
+  background: var(--color-emerald-8);
+  border: var(--border-width-1) solid var(--color-emerald-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
   text-align: center;
 }
 
 .insightLabel {
   font-weight: var(--font-semibold);
-  color: var(--emerald-500);
+  color: var(--color-emerald-500);
   margin-right: var(--space-sm);
 }
 
 .bindingsPanel {
-  background: var(--black-40);
+  background: var(--color-black-40);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -246,18 +246,18 @@
 }
 
 .sharedBinding {
-  background: var(--red-15);
-  border: var(--border-width-1) solid var(--red-30);
+  background: var(--color-red-15);
+  border: var(--border-width-1) solid var(--color-red-30);
 }
 
 .separateBinding {
-  background: var(--emerald-15);
-  border: var(--border-width-1) solid var(--emerald-30);
+  background: var(--color-emerald-15);
+  border: var(--border-width-1) solid var(--color-emerald-30);
 }
 
 .bindingIteration {
   font-size: var(--text-xs);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   margin-bottom: var(--space-xs);
 }
 
@@ -278,9 +278,9 @@
 
 .callbackRef {
   font-size: var(--space-2-5);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
   padding: 2px 6px;
-  background: var(--white-10);
+  background: var(--color-white-10);
   border-radius: var(--radius-sm);
 }
 

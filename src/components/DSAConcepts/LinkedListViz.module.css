@@ -15,23 +15,23 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .exampleBtn:hover {
-  background: var(--white-10);
+  background: var(--color-white-10);
   color: var(--color-white);
 }
 
 .exampleBtn.active {
-  background: var(--color-primary-15);
-  border-color: var(--color-primary-40);
-  color: var(--color-primary-light);
+  background: var(--color-brand-primary-15);
+  border-color: var(--color-brand-primary-40);
+  color: var(--color-brand-light);
 }
 
 /* List section */
@@ -43,7 +43,7 @@
 }
 
 .listContainer {
-  background: var(--black-20);
+  background: var(--color-black-20);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
 }
@@ -60,7 +60,7 @@
 .listLabel {
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -77,10 +77,10 @@
   gap: var(--space-2);
   padding: 0.2rem 0.55rem;
   border-radius: var(--radius-full);
-  border: var(--border-width-1) solid var(--white-10);
-  background: var(--black-30);
+  border: var(--border-width-1) solid var(--color-white-10);
+  background: var(--color-black-30);
   font-size: var(--text-2xs);
-  color: var(--gray-400);
+  color: var(--color-gray-400);
 }
 
 .pointerDot {
@@ -106,8 +106,8 @@
   gap: 0.6rem;
   flex-wrap: wrap;
   padding: var(--space-md);
-  background: var(--black-30);
-  border: var(--border-width-2) solid var(--white-10);
+  background: var(--color-black-30);
+  border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-lg);
   min-height: 160px;
 }
@@ -144,15 +144,15 @@
 .nodeCard {
   display: flex;
   align-items: stretch;
-  border: var(--border-width-2) solid var(--white-10);
+  border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-lg);
-  background: var(--black-30);
+  background: var(--color-black-30);
   min-width: 140px;
   overflow: hidden;
 }
 
 .nodeCardActive {
-  box-shadow: 0 0 18px var(--color-primary-20);
+  box-shadow: 0 0 18px var(--color-brand-primary-20);
 }
 
 .nodeValue {
@@ -167,7 +167,7 @@
 
 .nodeDivider {
   width: 1px;
-  background: var(--white-10);
+  background: var(--color-white-10);
 }
 
 .nodeNext {
@@ -180,7 +180,7 @@
 
 .nextLabel {
   font-size: var(--text-xs);
-  color: var(--gray-600);
+  color: var(--color-gray-600);
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
@@ -210,7 +210,7 @@
 
 .nullTerminator {
   font-size: var(--text-xs);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   border: 1px dashed rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-full);
   padding: 0.2rem 0.6rem;
@@ -223,12 +223,12 @@
   padding: var(--space-md);
   background: rgba(0, 0, 0, 0.25);
   border-radius: var(--radius-lg);
-  border: 1px dashed var(--white-10);
+  border: 1px dashed var(--color-white-10);
 }
 
 .detachedLabel {
   font-size: var(--text-xs);
-  color: var(--gray-600);
+  color: var(--color-gray-600);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: var(--space-sm);
@@ -242,7 +242,7 @@
 
 /* Output section */
 .outputSection {
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   min-width: 120px;
@@ -251,7 +251,7 @@
 .outputLabel {
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: var(--space-sm);
@@ -271,7 +271,7 @@
 }
 
 .outputEmpty {
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   font-size: var(--text-xl);
 }
 
@@ -281,9 +281,9 @@
   align-items: flex-start;
   gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-lg);
-  border-left: 3px solid var(--color-primary);
+  border-left: 3px solid var(--color-brand-primary);
 }
 
 .actionBadge {
@@ -299,7 +299,7 @@
 
 .stepText {
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   line-height: var(--leading-normal);
 }
 
@@ -313,7 +313,7 @@
 
 .stepCounter {
   font-size: var(--text-base);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   min-width: 50px;
   text-align: center;
 }
@@ -338,16 +338,16 @@
 .btnSecondary {
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-base);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: var(--white-10);
+  background: var(--color-white-10);
   color: var(--color-white);
 }
 
@@ -359,16 +359,16 @@
 /* Insight */
 .insight {
   padding: var(--space-md) var(--space-lg);
-  background: var(--color-primary-10);
-  border: var(--border-width-1) solid var(--color-primary-20);
+  background: var(--color-brand-primary-10);
+  border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   line-height: var(--leading-normal);
 }
 
 .insight strong {
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
 }
 
 /* Mobile */

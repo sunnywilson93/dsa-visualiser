@@ -13,7 +13,7 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--space-sm) var(--space-md);
-  background: var(--white-3);
+  background: var(--color-white-3);
   border-bottom: var(--border-width-1) solid var(--js-viz-border);
 }
 
@@ -49,7 +49,7 @@
 
 .analyzeBtn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px var(--color-primary-30);
+  box-shadow: 0 4px 12px var(--color-brand-primary-30);
 }
 
 .analyzeBtn:active {
@@ -75,9 +75,9 @@
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
-  background: var(--red-10);
-  border-top: var(--border-width-1) solid var(--red-30);
-  color: var(--accent-red);
+  background: var(--color-red-10);
+  border-top: var(--border-width-1) solid var(--color-red-30);
+  color: var(--color-accent-red);
   font-size: var(--text-sm);
 }
 
@@ -87,7 +87,7 @@
   justify-content: center;
   width: var(--space-lg);
   height: var(--space-lg);
-  background: var(--accent-red);
+  background: var(--color-accent-red);
   color: white;
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
@@ -96,11 +96,11 @@
 
 /* Monaco editor line decorations */
 .currentLine {
-  background: var(--color-primary-20) !important;
+  background: var(--color-brand-primary-20) !important;
 }
 
 .currentLineGlyph {
-  background: var(--color-primary);
+  background: var(--color-brand-primary);
   border-radius: var(--space-0-5);
   margin-left: var(--space-1);
 }

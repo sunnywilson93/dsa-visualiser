@@ -10,8 +10,8 @@
   gap: var(--space-sm);
   justify-content: center;
   margin-bottom: 0.25rem;
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
@@ -23,24 +23,24 @@
   padding: var(--space-2) var(--space-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  background: var(--white-4);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-white-4);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .levelBtn:hover {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .levelBtn.activeLevel {
-  background: var(--neon-viz-18);
-  border-color: var(--neon-viz-70);
-  color: var(--text-bright);
-  box-shadow: var(--glow-xl) var(--neon-viz-25);
+  background: var(--color-neon-viz-18);
+  border-color: var(--color-neon-viz-70);
+  color: var(--color-text-bright);
+  box-shadow: var(--glow-xl) var(--color-neon-viz-25);
 }
 
 .levelDot {
@@ -55,8 +55,8 @@
   gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
@@ -65,24 +65,24 @@
   padding: var(--space-2) var(--space-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  background: var(--white-4);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-white-4);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .exampleBtn:hover {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .exampleBtn.active {
-  background: var(--neon-viz-18);
-  border-color: var(--neon-viz-70);
-  color: var(--text-bright);
-  box-shadow: var(--glow-xl) var(--neon-viz-25);
+  background: var(--color-neon-viz-18);
+  border-color: var(--color-neon-viz-70);
+  color: var(--color-text-bright);
+  box-shadow: var(--glow-xl) var(--color-neon-viz-25);
 }
 
 /* ============================================
@@ -96,7 +96,7 @@
 }
 
 .neonBoxInner {
-  background: var(--bg-page-secondary);
+  background: var(--color-bg-page-secondary);
   border-radius: var(--radius-lg);
   min-height: 100px;
   padding: var(--space-md);
@@ -109,7 +109,7 @@
   left: 50%;
   transform: translateX(-50%);
   padding: var(--space-1-5) var(--space-lg);
-  background: var(--bg-tertiary);
+  background: var(--color-bg-tertiary);
   border-radius: 0 0 8px 8px;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
@@ -127,8 +127,8 @@
 
 /* Code Panel */
 .codePanel {
-  background: var(--black-40);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-40);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
@@ -140,8 +140,8 @@
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  color: var(--gray-500);
-  background: var(--white-5);
+  color: var(--color-gray-500);
+  background: var(--color-white-5);
 }
 
 .phaseBadge {
@@ -153,7 +153,7 @@
 }
 
 .stackCount {
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
   font-weight: var(--font-medium);
 }
 
@@ -172,12 +172,12 @@
 }
 
 .codeLine.activeLine {
-  background: var(--color-primary-20);
+  background: var(--color-brand-primary-20);
 }
 
 .lineNum {
   width: 1.5rem;
-  color: var(--gray-800);
+  color: var(--color-gray-800);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   user-select: none;
@@ -186,17 +186,17 @@
 .lineCode {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
 }
 
 .activeLine .lineCode {
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
 }
 
 /* Call Stack - Neon Box Orange/Yellow */
 .stackBox {
-  --neon-start: var(--orange-500);
-  --neon-end: var(--amber-400);
+  --neon-start: var(--color-orange-500);
+  --neon-end: var(--color-amber-400);
 }
 
 .stackBox .neonBoxInner {
@@ -213,7 +213,7 @@
 }
 
 .emptyStack {
-  color: var(--gray-800);
+  color: var(--color-gray-800);
   font-size: var(--text-sm);
   text-align: center;
   padding: var(--space-2xl);
@@ -222,7 +222,7 @@
 
 .stackFrame {
   padding: 0.5rem 0.6rem;
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-left: 3px solid;
   border-radius: var(--radius-sm);
   display: flex;
@@ -233,7 +233,7 @@
 .frameFn {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
 }
 
 .frameReturn {
@@ -253,7 +253,7 @@
 /* Output - Neon Box Green/Cyan */
 .outputBox {
   --neon-start: var(--difficulty-1);
-  --neon-end: var(--accent-cyan);
+  --neon-end: var(--color-accent-cyan);
 }
 
 .outputBox .neonBoxInner {
@@ -282,29 +282,29 @@
   font-size: var(--text-sm);
   color: var(--difficulty-1);
   padding: var(--space-0-5) var(--space-xs);
-  background: var(--emerald-15);
+  background: var(--color-emerald-15);
   border-radius: var(--radius-sm);
 }
 
 /* Description */
 .description {
   padding: var(--space-2-5) var(--space-md);
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   text-align: center;
 }
 
 .stepBadge {
   display: inline-block;
   padding: var(--space-0-5) var(--space-xs);
-  background: var(--color-primary-30);
+  background: var(--color-brand-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   margin-right: var(--space-sm);
 }
 
@@ -334,15 +334,15 @@
 .btnSecondary {
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-xs);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: var(--white-10);
+  background: var(--color-white-10);
   color: var(--color-white);
 }
 
@@ -354,11 +354,11 @@
 /* Insight */
 .insight {
   padding: var(--space-sm) var(--space-md);
-  background: var(--amber-8);
-  border: 1px solid var(--amber-20);
+  background: var(--color-amber-8);
+  border: 1px solid var(--color-amber-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-xs);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-align: center;
 }
 

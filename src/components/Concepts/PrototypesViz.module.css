@@ -10,8 +10,8 @@
   gap: var(--space-sm);
   justify-content: center;
   margin-bottom: 0.25rem;
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
@@ -23,24 +23,24 @@
   padding: var(--space-2) var(--space-md);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  background: var(--white-4);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-white-4);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .levelBtn:hover {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .levelBtn.activeLevel {
-  background: var(--neon-viz-18);
-  border-color: var(--neon-viz-70);
-  color: var(--text-bright);
-  box-shadow: var(--glow-xl) var(--neon-viz-25);
+  background: var(--color-neon-viz-18);
+  border-color: var(--color-neon-viz-70);
+  color: var(--color-text-bright);
+  box-shadow: var(--glow-xl) var(--color-neon-viz-25);
 }
 
 .levelDot {
@@ -55,8 +55,8 @@
   gap: var(--space-sm);
   flex-wrap: wrap;
   justify-content: center;
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
   padding: 0.35rem;
 }
@@ -65,24 +65,24 @@
   padding: var(--space-2) var(--space-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  background: var(--white-4);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-white-4);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .exampleBtn:hover {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .exampleBtn.active {
-  background: var(--neon-viz-18);
-  border-color: var(--neon-viz-70);
-  color: var(--text-bright);
-  box-shadow: var(--glow-xl) var(--neon-viz-25);
+  background: var(--color-neon-viz-18);
+  border-color: var(--color-neon-viz-70);
+  color: var(--color-text-bright);
+  box-shadow: var(--glow-xl) var(--color-neon-viz-25);
 }
 
 /* Property selector */
@@ -96,46 +96,46 @@
 
 .propLabel {
   font-size: var(--text-sm);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 .propBtn {
   padding: 0.4rem 0.7rem;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  background: var(--white-4);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-white-4);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .propBtn:hover {
-  background: var(--white-8);
-  color: var(--gray-300);
+  background: var(--color-white-8);
+  color: var(--color-gray-300);
 }
 
 .propBtn.active {
-  background: var(--neon-viz-18);
-  border-color: var(--neon-viz-70);
-  color: var(--text-bright);
-  box-shadow: var(--glow-xl) var(--neon-viz-25);
+  background: var(--color-neon-viz-18);
+  border-color: var(--color-neon-viz-70);
+  color: var(--color-text-bright);
+  box-shadow: var(--glow-xl) var(--color-neon-viz-25);
 }
 
 .resetBtn {
   padding: var(--space-1-5) var(--space-2-5);
   font-size: var(--text-xs);
-  background: var(--white-5);
-  border: var(--border-width-1) solid var(--white-10);
+  background: var(--color-white-5);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-full);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   cursor: pointer;
 }
 
 .resetBtn:hover {
-  background: var(--white-10);
-  color: var(--gray-500);
+  background: var(--color-white-10);
+  color: var(--color-gray-500);
 }
 
 /* ============================================
@@ -149,7 +149,7 @@
 }
 
 .neonBoxInner {
-  background: var(--bg-page-secondary);
+  background: var(--color-bg-page-secondary);
   border-radius: var(--radius-lg);
   min-height: 100px;
   padding: var(--space-md);
@@ -162,7 +162,7 @@
   left: 50%;
   transform: translateX(-50%);
   padding: var(--space-1-5) var(--space-lg);
-  background: var(--bg-tertiary);
+  background: var(--color-bg-tertiary);
   border-radius: 0 0 8px 8px;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
@@ -173,8 +173,8 @@
 
 /* Heap container - Neon Box Purple/Pink */
 .heapBox {
-  --neon-start: var(--color-primary);
-  --neon-end: var(--color-secondary);
+  --neon-start: var(--color-brand-primary);
+  --neon-end: var(--color-brand-secondary);
 }
 
 .heap {
@@ -188,8 +188,8 @@
 .heapObject {
   width: 100%;
   max-width: 280px;
-  background: var(--black-30);
-  border: var(--border-width-2) solid var(--white-10);
+  background: var(--color-black-30);
+  border: var(--border-width-2) solid var(--color-white-10);
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all var(--transition-fast);
@@ -197,11 +197,11 @@
 }
 
 .heapObject.checking {
-  background: var(--white-5);
+  background: var(--color-white-5);
 }
 
 .heapObject.found {
-  box-shadow: 0 0 15px var(--emerald-30);
+  box-shadow: 0 0 15px var(--color-emerald-30);
 }
 
 .objectHeader {
@@ -219,7 +219,7 @@
 .nullValue {
   text-align: center;
   font-size: var(--text-xs);
-  color: var(--gray-700);
+  color: var(--color-gray-700);
   font-style: italic;
 }
 
@@ -234,7 +234,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0.2rem 0.4rem;
-  background: var(--black-30);
+  background: var(--color-black-30);
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
@@ -242,12 +242,12 @@
 }
 
 .prop.foundProp {
-  background: var(--emerald-20);
-  outline: 1px solid var(--emerald-50);
+  background: var(--color-emerald-20);
+  outline: 1px solid var(--color-emerald-50);
 }
 
 .propName {
-  color: var(--gray-500);
+  color: var(--color-gray-500);
 }
 
 .propValue {
@@ -257,9 +257,9 @@
 .protoRef {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
   padding-top: 0.3rem;
-  border-top: 1px solid var(--white-5);
+  border-top: 1px solid var(--color-white-5);
 }
 
 .foundBadge {
@@ -285,28 +285,28 @@
 /* Description */
 .description {
   padding: var(--space-2-5) var(--space-md);
-  background: var(--black-30);
-  border: var(--border-width-1) solid var(--white-8);
+  background: var(--color-black-30);
+  border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-lg);
   font-size: var(--text-base);
-  color: var(--gray-300);
+  color: var(--color-gray-300);
   text-align: center;
 }
 
 .description.notFound {
-  background: var(--red-10);
-  border-color: var(--red-20);
-  color: var(--red-400);
+  background: var(--color-red-10);
+  border-color: var(--color-red-20);
+  color: var(--color-red-400);
 }
 
 .stepBadge {
   display: inline-block;
   padding: var(--space-0-5) var(--space-xs);
-  background: var(--color-primary-30);
+  background: var(--color-brand-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
-  color: var(--color-primary-light);
+  color: var(--color-brand-light);
   margin-right: var(--space-sm);
 }
 
@@ -336,11 +336,11 @@
 /* Insight */
 .insight {
   padding: var(--space-sm) var(--space-md);
-  background: var(--amber-8);
-  border: 1px solid var(--amber-20);
+  background: var(--color-amber-8);
+  border: 1px solid var(--color-amber-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-xs);
-  color: var(--gray-500);
+  color: var(--color-gray-500);
   text-align: center;
 }
 
