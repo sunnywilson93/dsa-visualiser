@@ -8,7 +8,7 @@
 .btnPrimary {
   padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);

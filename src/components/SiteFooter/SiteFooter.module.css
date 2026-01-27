@@ -25,7 +25,7 @@
 
 .columnTitle {
   font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-muted);

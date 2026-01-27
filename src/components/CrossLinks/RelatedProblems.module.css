@@ -4,7 +4,7 @@
 
 .sectionTitle {
   font-size: var(--text-xl);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   margin-bottom: var(--spacing-lg);
   color: var(--color-text-primary);
 }
@@ -65,7 +65,7 @@
 }
 
 .name {
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   color: var(--color-white);
   font-size: var(--text-base);
   margin: 0 0 var(--spacing-sm) 0;

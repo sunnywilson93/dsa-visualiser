@@ -28,7 +28,7 @@
   gap: 3px;
   padding: 3px var(--spacing-sm);
   font-size: var(--text-2xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--js-viz-text);

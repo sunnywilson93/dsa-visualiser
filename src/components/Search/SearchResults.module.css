@@ -73,7 +73,7 @@
 
 .title {
   font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-bright);
 }
 
@@ -97,7 +97,7 @@
 
 .sourceBadge {
   font-size: var(--text-2xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   padding: 2px 3px;
   border-radius: var(--radius-sm);
   text-transform: uppercase;
@@ -115,7 +115,7 @@
 
 .difficultyBadge {
   font-size: var(--text-2xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   padding: 2px 3px;
   border-radius: var(--radius-sm);
   text-transform: uppercase;

@@ -14,7 +14,7 @@
 .exampleBtn {
   padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
@@ -52,7 +52,7 @@
 
 .memoryLabel {
   font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -102,7 +102,7 @@
   padding: 0.75rem 0.5rem;
   font-family: var(--font-mono);
   font-size: var(--text-xl);
-  font-weight: var(--font-bold);
+  font-weight: var(--font-weight-bold);
   color: var(--color-white);
   text-align: center;
 }
@@ -110,7 +110,7 @@
 .gap {
   font-size: var(--text-xs);
   color: var(--color-accent-red);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
 }
 
 .blockIndex {
@@ -133,7 +133,7 @@
   position: absolute;
   font-size: var(--text-xs);
   color: var(--difficulty-2);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   text-align: center;
   transform: translateX(-50%);
 }
@@ -157,7 +157,7 @@
 .outputValue {
   font-family: var(--font-mono);
   font-size: var(--text-xl);
-  font-weight: var(--font-bold);
+  font-weight: var(--font-weight-bold);
   color: var(--difficulty-1);
 }
 
@@ -175,7 +175,7 @@
 .actionBadge {
   flex-shrink: 0;
   font-size: var(--text-2xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   padding: 2px var(--spacing-sm);
@@ -207,7 +207,7 @@
 .btnPrimary {
   padding: 10px var(--spacing-xl);
   font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);

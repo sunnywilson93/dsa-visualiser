@@ -147,7 +147,7 @@
 
 .cardTitle {
   font-size: 1.2rem;
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-bright);
   margin: 0.25rem 0 0;
 }
@@ -171,7 +171,7 @@
 .stat {
   font-size: var(--text-sm);
   color: var(--color-brand-light);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Progress dots */

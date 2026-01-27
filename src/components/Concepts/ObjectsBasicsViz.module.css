@@ -26,7 +26,7 @@
   padding: 6px var(--spacing-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   background: var(--color-white-4);
   border: var(--border-width-2) solid transparent;
   border-radius: var(--radius-full);
@@ -117,7 +117,7 @@
 .sectionHeader {
   padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-gray-500);
   background: var(--color-white-5);
   text-transform: uppercase;
@@ -175,7 +175,7 @@
 
 .stackItem.reference .varValue {
   color: var(--js-viz-accent);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
 }
 
 .heapObject {
@@ -227,7 +227,7 @@
 
 .objectLabel {
   font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--js-viz-accent);
 }
 
@@ -283,7 +283,7 @@
 .boxHeader {
   padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-gray-500);
   background: var(--color-white-5);
   text-transform: uppercase;
@@ -320,7 +320,7 @@
 }
 
 .insightLabel {
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--js-viz-accent);
   margin-right: var(--spacing-sm);
 }
@@ -352,7 +352,7 @@
 }
 
 .warningText {
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
 }
 
 @keyframes warningPulse {
@@ -383,7 +383,7 @@
 .destructureBadge {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  font-weight: var(--font-bold);
+  font-weight: var(--font-weight-bold);
   color: var(--color-white);
   background: var(--js-viz-accent);
   padding: var(--spacing-xs) 10px;
@@ -446,12 +446,12 @@
 
 .extractArrow {
   color: var(--js-viz-accent);
-  font-weight: var(--font-bold);
+  font-weight: var(--font-weight-bold);
 }
 
 .extractTarget {
   color: var(--color-gray-300);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   min-width: 80px;
 }
 
@@ -461,7 +461,7 @@
 
 .extractCheck {
   color: var(--color-emerald-500);
-  font-weight: var(--font-bold);
+  font-weight: var(--font-weight-bold);
   margin-left: auto;
 }
 

@@ -17,7 +17,7 @@
 .tabBtn {
   padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   background: var(--color-white-4);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
@@ -79,7 +79,7 @@
 
 .typeName {
   font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   color: var(--color-gray-300);
 }
 
@@ -92,7 +92,7 @@
 
 .typeDetail h3 {
   font-size: var(--text-md);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   margin: 0 0 0.75rem;
 }
 
@@ -166,7 +166,7 @@
 
 .compareTitle {
   font-size: var(--text-base);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-white);
   margin: 0 0 0.75rem;
   text-align: center;
@@ -248,7 +248,7 @@
 .btnPrimary {
   padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);

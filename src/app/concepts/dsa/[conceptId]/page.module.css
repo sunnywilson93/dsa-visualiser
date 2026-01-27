@@ -23,7 +23,7 @@
 .complexityTable th {
   background: var(--color-brand-primary-15);
   color: var(--color-white);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   font-size: var(--text-base);
 }
 
@@ -43,19 +43,19 @@
 .complexityCell {
   color: var(--color-emerald-500) !important;
   font-family: var(--font-mono);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
 }
 
 .complexityCellWorse {
   color: var(--color-amber-500) !important;
   font-family: var(--font-mono);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
 }
 
 .complexityCellBest {
   color: var(--color-emerald-500) !important;
   font-family: var(--font-mono);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Related Problems */
@@ -75,7 +75,7 @@
   color: var(--color-brand-primary);
   text-decoration: none;
   font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   transition: all var(--transition-fast);
 }
 

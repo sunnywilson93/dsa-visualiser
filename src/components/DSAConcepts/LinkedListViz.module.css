@@ -14,7 +14,7 @@
 .exampleBtn {
   padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
@@ -59,7 +59,7 @@
 
 .listLabel {
   font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -90,14 +90,14 @@
 }
 
 .pointerName {
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
 
 .pointerValue {
   color: var(--color-white);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
 }
 
 .listRow {
@@ -160,7 +160,7 @@
   padding: 0.6rem 0.9rem;
   font-family: var(--font-mono);
   font-size: 1.2rem;
-  font-weight: var(--font-bold);
+  font-weight: var(--font-weight-bold);
   color: var(--color-white);
   text-align: center;
 }
@@ -250,7 +250,7 @@
 
 .outputLabel {
   font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -267,7 +267,7 @@
 .outputValue {
   font-family: var(--font-mono);
   font-size: var(--text-2xl);
-  font-weight: var(--font-bold);
+  font-weight: var(--font-weight-bold);
 }
 
 .outputEmpty {
@@ -289,7 +289,7 @@
 .actionBadge {
   flex-shrink: 0;
   font-size: var(--text-2xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   padding: 2px var(--spacing-sm);
@@ -321,7 +321,7 @@
 .btnPrimary {
   padding: 10px var(--spacing-xl);
   font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);

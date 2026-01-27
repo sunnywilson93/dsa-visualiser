@@ -19,7 +19,7 @@
 
 .title {
   font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--color-text-secondary);
@@ -27,7 +27,7 @@
 
 .badge {
   font-size: var(--text-xs);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   padding: 2px var(--spacing-sm);
   border-radius: var(--radius-sm);
   background: var(--color-bg-elevated);
@@ -100,7 +100,7 @@
 .frameName {
   font-family: var(--font-mono);
   font-size: var(--text-base);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
 }
 
@@ -125,7 +125,7 @@
 
 .sectionLabel {
   font-size: var(--text-2xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--color-text-muted);
@@ -155,7 +155,7 @@
 }
 
 .varName {
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
 }
 
 .varEquals {
@@ -181,7 +181,7 @@
 
 .returnLabel {
   color: var(--color-accent-green);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
 }
 
 .returnValue {
@@ -218,7 +218,7 @@
 
 .stackBarLabel {
   font-size: var(--text-2xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   color: var(--color-text-muted);
 }

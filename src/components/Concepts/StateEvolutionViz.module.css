@@ -51,7 +51,7 @@
 .nodeYear {
   font-size: var(--text-xs);
   color: var(--color-gray-700);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   transition: color 0.2s;
 }
 
@@ -99,7 +99,7 @@
 .timelineNode.active .nodeYear,
 .timelineNode.active .nodeLabel {
   color: var(--color-white);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
 }
 
 /* Era Header */
@@ -128,21 +128,21 @@
   background: var(--era-color);
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
-  font-weight: var(--font-bold);
+  font-weight: var(--font-weight-bold);
   color: var(--color-white);
 }
 
 .eraTitle h3 {
   margin: 0;
   font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-bright);
 }
 
 .eraYears {
   font-size: var(--text-xs);
   color: var(--era-color);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   padding: 2px var(--spacing-sm);
   background: var(--color-white-5);
   border-radius: var(--radius-full);
@@ -186,7 +186,7 @@
   align-items: center;
   padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-gray-500);
   background: var(--color-white-5);
 }
@@ -228,7 +228,7 @@
   gap: 6px;
   margin-bottom: var(--spacing-sm);
   font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
 }
 
 .solvedIcon {
@@ -320,7 +320,7 @@
 .stepIndicator {
   font-size: var(--text-sm);
   color: var(--color-gray-700);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   min-width: 3rem;
   text-align: center;
 }
@@ -328,7 +328,7 @@
 .btnPrimary {
   padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-md);

@@ -10,7 +10,7 @@
 
 .title {
   font-size: var(--text-md);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-white);
   margin: 0 0 0.25rem;
 }
@@ -48,7 +48,7 @@
   background: var(--color-bg-tertiary);
   border-radius: 0 0 8px 8px;
   font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-white);
   white-space: nowrap;
   z-index: 1;
@@ -74,7 +74,7 @@
 
 .groupTitle {
   font-size: var(--text-2xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #7b8088;
@@ -118,7 +118,7 @@
 
 .optionLabel {
   font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: #f1f3f4;
 }
 
@@ -167,7 +167,7 @@
   padding: var(--spacing-xs) var(--spacing-sm);
   background: rgba(118, 75, 162, 0.35);
   border-radius: var(--radius-lg);
-  font-weight: var(--font-bold);
+  font-weight: var(--font-weight-bold);
 }
 
 .equals {
@@ -175,7 +175,7 @@
 }
 
 .resultValue {
-  font-weight: var(--font-bold);
+  font-weight: var(--font-weight-bold);
   color: var(--difficulty-1);
   font-size: var(--text-md);
 }

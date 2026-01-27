@@ -34,14 +34,14 @@
   background: var(--gradient-neon);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
-  font-weight: var(--font-bold);
+  font-weight: var(--font-weight-bold);
   color: var(--color-white);
   letter-spacing: -0.5px;
 }
 
 .logoText {
   font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   background: var(--gradient-neon);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -74,7 +74,7 @@
 .navLink {
   padding: var(--spacing-xs) var(--spacing-md);
   font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
   text-decoration: none;
   border-radius: var(--radius-md);
@@ -121,7 +121,7 @@
 
 .breadcrumbCurrent {
   color: var(--color-text-secondary);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
