@@ -56,12 +56,17 @@ Learners can step through code execution visually, seeing exactly how algorithms
 
 **Current state:**
 - Full platform complete (JS concepts + DSA patterns + responsive + SEO)
-- 50+ CSS Module files across components
-- Semantic CSS variable system in globals.css (colors, spacing, typography)
+- 74 CSS Module files (~25,000 lines) across components
+- 246 CSS custom properties in globals.css (colors, spacing, typography, shadows)
+- 8,500+ var() references across module files
+- Tailwind v4.1.18 installed but using v3 syntax (tailwind.config.js, @tailwind directives)
+- Zero Tailwind utility classes in TSX files
 - Framer Motion for animations
 - CSS-only responsive patterns (media queries, checkbox hack for mobile nav)
+- 17 dynamic bracket-notation class accesses (styles[variable])
+- 284 template literal className compositions
 
-**Gap:** Design system scattered across CSS Modules and CSS variables. No single source of truth for design tokens. Tailwind v4 consolidates everything under @theme.
+**Gap:** Design system scattered across 74 CSS Modules and 246 CSS variables. No single source of truth for design tokens. Tailwind v4 @theme consolidates everything. Migration is 8 phases (16-23) following leaf-first dependency order.
 
 ## Constraints
 
@@ -81,8 +86,12 @@ Learners can step through code execution visually, seeing exactly how algorithms
 | 3 DSA patterns first (Two Pointers, Hash Map, Bit Manipulation) | Establish design before expanding | ✓ Good |
 | CSS-first responsive | Avoid layout shift, use media queries | ✓ Good |
 | Bidirectional cross-linking | Both directions for discoverability | ✓ Good |
-| Tailwind v4 full migration | CSS-first config, single design system source | — Pending |
-| Remove all CSS Modules | Full replacement, no hybrid approach | — Pending |
+| Tailwind v4 full migration | CSS-first config, single design system source | — In Progress |
+| Remove all CSS Modules | Full replacement, no hybrid approach | — In Progress |
+| No @apply usage | Tailwind v4 discourages it; use utilities or @layer components | — Decided |
+| NavBar checkbox → React state | CSS-only hack has no Tailwind equivalent; useState is idiomatic | — Decided |
+| clsx for className composition | Replaces template literal concatenation cleanly | — Decided |
+| Leaf-first migration order | Migrate components with no dependents first, pages last | — Decided |
 
 ---
-*Last updated: 2026-01-27 after v2.0 milestone start*
+*Last updated: 2026-01-27 — v2.0 research complete, roadmap created (phases 16-23)*

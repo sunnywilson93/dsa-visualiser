@@ -1,11 +1,60 @@
-# Requirements: DSA Visualizer v1.2 Polish & Production
+# Requirements: DSA Visualizer
 
 **Defined:** 2026-01-25
 **Core Value:** Learners can step through code execution visually, seeing exactly how algorithms and JavaScript work under the hood
 
-## v1.2 Requirements
+## v2.0 Requirements — Tailwind Migration
 
-Requirements for production polish. Each maps to roadmap phases.
+Full migration from CSS Modules to Tailwind v4. Single design system source of truth via `@theme`. Visual parity — zero user-facing changes.
+
+### Foundation & Configuration
+
+- [ ] **TW-01**: Convert to Tailwind v4 CSS-first config (`@import "tailwindcss"`, `@theme` block, delete `tailwind.config.js`)
+- [ ] **TW-02**: Map all design tokens to `@theme` namespaces (colors, spacing, typography, shadows, radius, animations)
+- [ ] **TW-03**: Remove `autoprefixer` from PostCSS config (Tailwind v4 handles vendor prefixing)
+- [ ] **TW-04**: Install `clsx` for conditional className composition
+
+### Component Migration — Leaf
+
+- [ ] **MIG-01**: Migrate 14 simple leaf components to Tailwind utility classes (ErrorBoundary, Console, Variables, CallStack, Controls, DifficultyIndicator, StepDescription, ReadOnlyCode, ExampleSelector, SiteFooter, RelatedPatterns, RelatedProblems, StepControls, StepProgress)
+- [ ] **MIG-02**: Replace dynamic bracket-notation class access (`styles[variable]`) with mapping objects
+
+### Component Migration — Medium
+
+- [ ] **MIG-03**: Migrate 12 responsive/pseudo-element components (Card system, Carousels, Search, CodePanel, ProblemCard, ProblemListingLayout, ExpandableGrid)
+- [ ] **MIG-04**: Convert pseudo-element gradient border patterns to `@layer components` rules
+- [ ] **MIG-05**: Convert desktop-first media queries to Tailwind responsive prefixes
+
+### NavBar & Complex Layout
+
+- [ ] **MIG-06**: Refactor NavBar CSS-only checkbox hack to React state for mobile menu
+- [ ] **MIG-07**: Migrate NavBar, CodeEditor, ConceptPanel, PlaygroundEditor CSS modules
+
+### Concepts Visualization
+
+- [ ] **MIG-08**: Extract shared viz patterns (level selector, example selector, step controls) to `@utility` directives
+- [ ] **MIG-09**: Migrate 30 Concepts Viz CSS module files in 6 sub-batches
+
+### DSA & Visualization
+
+- [ ] **MIG-10**: Migrate 17 DSA pattern viz and visualization component CSS modules
+- [ ] **MIG-11**: Handle dynamic `styles[state]` and `styles[width${n}]` patterns with mapping objects
+
+### App Page Layouts
+
+- [ ] **MIG-12**: Migrate 9 app page-level CSS modules to Tailwind utility classes
+
+### Cleanup & Verification
+
+- [ ] **MIG-13**: Delete all `*.module.css` files and remove orphaned imports
+- [ ] **MIG-14**: Remove legacy CSS variable aliases from globals.css
+- [ ] **MIG-15**: Full visual regression — all routes render identically at 360px, 768px, 1440px
+- [ ] **MIG-16**: Build verification passes (`npm run build`, `npm run lint`, `npm run test:run`)
+
+## v1.2 Requirements (Complete)
+
+<details>
+<summary>v1.2 Polish & Production — All 13 requirements complete</summary>
 
 ### Responsive Design
 
@@ -32,7 +81,9 @@ Requirements for production polish. Each maps to roadmap phases.
 - [x] **PAGE-01**: Consistent headers on DSA pattern pages matching concept pages
 - [x] **PAGE-02**: NavBar breadcrumbs present on all page types
 
-## v1.3+ Requirements
+</details>
+
+## v2.1+ Requirements
 
 Deferred to future milestone. Tracked but not in current roadmap.
 
@@ -60,11 +111,11 @@ Explicitly excluded. Documented to prevent scope creep.
 
 | Feature | Reason |
 |---------|--------|
-| Monaco Editor on mobile | Too heavy (5-10MB), poor touch UX — use read-only display instead |
-| Full PWA offline mode | Complexity vs value for v1.2 — defer to v1.3 |
-| CodeMirror migration | Unnecessary if hiding editor on mobile |
-| 3D visualizations | Adds complexity without educational value |
-| Sound effects | Distracting, accessibility concerns |
+| `@apply` usage | Tailwind v4 discourages it; use utility classes or `@layer components` |
+| Hybrid CSS Modules + Tailwind per component | Each component must be fully one or the other during migration |
+| `@reference` for CSS Modules coexistence | Per-file compilation overhead, not recommended |
+| Visual redesign | Migration only — maintain current appearance exactly |
+| New component features | Migration scope only — no new functionality |
 
 ## Traceability
 
@@ -72,6 +123,26 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
+| TW-01 | Phase 16 | Pending |
+| TW-02 | Phase 16 | Pending |
+| TW-03 | Phase 16 | Pending |
+| TW-04 | Phase 16 | Pending |
+| MIG-01 | Phase 17 | Pending |
+| MIG-02 | Phase 17 | Pending |
+| MIG-03 | Phase 18 | Pending |
+| MIG-04 | Phase 18 | Pending |
+| MIG-05 | Phase 18 | Pending |
+| MIG-06 | Phase 19 | Pending |
+| MIG-07 | Phase 19 | Pending |
+| MIG-08 | Phase 20 | Pending |
+| MIG-09 | Phase 20 | Pending |
+| MIG-10 | Phase 21 | Pending |
+| MIG-11 | Phase 21 | Pending |
+| MIG-12 | Phase 22 | Pending |
+| MIG-13 | Phase 23 | Pending |
+| MIG-14 | Phase 23 | Pending |
+| MIG-15 | Phase 23 | Pending |
+| MIG-16 | Phase 23 | Pending |
 | RESP-01 | Phase 11 | Complete |
 | RESP-02 | Phase 15 | Complete |
 | RESP-03 | Phase 15 | Complete |
@@ -87,10 +158,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PAGE-02 | Phase 14 | Complete |
 
 **Coverage:**
-- v1.2 requirements: 13 total
-- Mapped to phases: 13
+- v2.0 requirements: 16 total
+- Mapped to phases: 16
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-25*
-*Last updated: 2026-01-25 — Phase 15 complete (RESP-02, RESP-03, RESP-04) — v1.2 milestone complete*
+*Last updated: 2026-01-27 — v2.0 Tailwind Migration requirements added*
