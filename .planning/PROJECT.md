@@ -8,15 +8,15 @@ A visual learning platform for JavaScript concepts and DSA interview preparation
 
 Learners can step through code execution visually, seeing exactly how algorithms and JavaScript work under the hood — not just reading about them.
 
-## Current Milestone: v2.0 Tailwind Migration
+## Current Milestone: v2.0 Design System Foundation
 
-**Goal:** Full migration from CSS Modules to Tailwind v4, controlling the entire design system from one place.
+**Goal:** Establish Tailwind v4 `@theme` as the single source of truth for all design tokens, with existing CSS Modules resolving from it.
 
 **Target features:**
-- Install and configure Tailwind v4 with CSS-first @theme configuration
-- Migrate all design tokens (colors, spacing, typography) to Tailwind @theme
-- Replace ALL CSS Module files with Tailwind utility classes
-- Remove CSS Modules infrastructure entirely
+- Configure Tailwind v4 CSS-first (`@import "tailwindcss"`, `@theme` block, delete `tailwind.config.js`)
+- Map all 246 design tokens (colors, spacing, typography, shadows, radius, animations) to `@theme` namespaces
+- Existing CSS Module `var()` references continue working via `@theme`-generated custom properties
+- Remove `autoprefixer`, install `clsx`
 - Maintain visual parity — no user-facing changes
 
 ## Requirements
@@ -66,7 +66,7 @@ Learners can step through code execution visually, seeing exactly how algorithms
 - 17 dynamic bracket-notation class accesses (styles[variable])
 - 284 template literal className compositions
 
-**Gap:** Design system scattered across 74 CSS Modules and 246 CSS variables. No single source of truth for design tokens. Tailwind v4 @theme consolidates everything. Migration is 8 phases (16-23) following leaf-first dependency order.
+**Gap:** Design system scattered across 74 CSS Modules and 246 CSS variables. No single source of truth for design tokens. Tailwind v4 `@theme` consolidates tokens into one place. v2.0 establishes the foundation; component migration deferred to v2.1+.
 
 ## Constraints
 
@@ -86,12 +86,11 @@ Learners can step through code execution visually, seeing exactly how algorithms
 | 3 DSA patterns first (Two Pointers, Hash Map, Bit Manipulation) | Establish design before expanding | ✓ Good |
 | CSS-first responsive | Avoid layout shift, use media queries | ✓ Good |
 | Bidirectional cross-linking | Both directions for discoverability | ✓ Good |
-| Tailwind v4 full migration | CSS-first config, single design system source | — In Progress |
-| Remove all CSS Modules | Full replacement, no hybrid approach | — In Progress |
+| Tailwind v4 @theme foundation first | Establish design tokens before component migration | — In Progress |
+| CSS Modules coexist with @theme | Existing var() references resolve from @theme-generated properties | — Decided |
 | No @apply usage | Tailwind v4 discourages it; use utilities or @layer components | — Decided |
-| NavBar checkbox → React state | CSS-only hack has no Tailwind equivalent; useState is idiomatic | — Decided |
 | clsx for className composition | Replaces template literal concatenation cleanly | — Decided |
-| Leaf-first migration order | Migrate components with no dependents first, pages last | — Decided |
+| Component migration deferred to v2.1+ | Foundation first, migrate components later | — Decided |
 
 ---
-*Last updated: 2026-01-27 — v2.0 research complete, roadmap created (phases 16-23)*
+*Last updated: 2026-01-27 — v2.0 rescoped to Design System Foundation*
