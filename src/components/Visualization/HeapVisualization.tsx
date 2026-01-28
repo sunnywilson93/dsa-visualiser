@@ -3,11 +3,12 @@
 import { useMemo } from 'react'
 import { Database, Layers, FunctionSquare, Hash } from 'lucide-react'
 import type { RuntimeValue, ExecutionStep, ArrayValue, ObjectValue } from '@/types'
+import { formatValue } from '@/engine/runtime'
 
 interface HeapObject {
   id: string
   address: string
-  type: 'array' | 'object' | 'function'
+  type: 'array' | 'object' | 'function' | 'map' | 'set'
   name: string
   size: number
   refs: number
@@ -78,16 +79,39 @@ export function HeapVisualization({ step }: HeapVisualizationProps) {
         if (seen.has(addr)) return
         seen.add(addr)
 
+        // Check if it's a Map (has __mapData)
+        const mapData = (value as unknown as Record<string, unknown>).__mapData as Map<string | number, RuntimeValue> | undefined
+        const setData = (value as unknown as Record<string, unknown>).__setData as Set<RuntimeValue> | undefined
+        
+        let displayData: RuntimeValue[] | Record<string, RuntimeValue> | null
+        let displayType: 'array' | 'object' | 'function' | 'map' | 'set' = value.type
+        
+        if (mapData) {
+          // Convert Map to object for display
+          const mapObj: Record<string, RuntimeValue> = {}
+          for (const [k, v] of mapData.entries()) {
+            mapObj[String(k)] = v
+          }
+          displayData = mapObj
+          displayType = 'map'
+        } else if (setData) {
+          // Convert Set to array for display
+          displayData = Array.from(setData)
+          displayType = 'set'
+        } else {
+          displayData = value.type === 'array' 
+            ? (value as ArrayValue).elements 
+            : (value as ObjectValue).properties
+        }
+
         objects.push({
           id: value.id,
           address: addr,
-          type: value.type,
+          type: displayType,
           name,
           size: calculateSize(value),
           refs: refs.get(addr) || 0,
-          data: value.type === 'array' 
-            ? (value as ArrayValue).elements 
-            : (value as ObjectValue).properties
+          data: displayData
         })
 
         // Recursively extract nested objects
@@ -160,6 +184,10 @@ export function HeapVisualization({ step }: HeapVisualizationProps) {
                   <Layers size={14} className="text-accent-blue" />
                 ) : obj.type === 'function' ? (
                   <FunctionSquare size={14} className="text-accent-green" />
+                ) : obj.type === 'map' ? (
+                  <Hash size={14} className="text-brand-primary" />
+                ) : obj.type === 'set' ? (
+                  <Layers size={14} className="text-accent-purple" />
                 ) : (
                   <Hash size={14} className="text-accent-orange" />
                 )}
@@ -175,6 +203,14 @@ export function HeapVisualization({ step }: HeapVisualizationProps) {
             <div className="text-xs text-text-secondary font-mono truncate">
               {obj.type === 'array' && Array.isArray(obj.data) ? (
                 <span className="text-accent-blue">[{obj.data.length} items]</span>
+              ) : obj.type === 'map' && obj.data ? (
+                <span className="text-brand-primary">
+                  {'{ '}{Object.entries(obj.data).map(([k, v]) => `${k}: ${formatValue(v)}`).join(', ')}{' }'}
+                </span>
+              ) : obj.type === 'set' && Array.isArray(obj.data) ? (
+                <span className="text-accent-purple">
+                  {'{ '}{obj.data.map(v => formatValue(v)).join(', ')}{' }'}
+                </span>
               ) : obj.type === 'object' && obj.data ? (
                 <span className="text-accent-orange">
                   {'{ '}{Object.keys(obj.data).join(', ')}{' }'}

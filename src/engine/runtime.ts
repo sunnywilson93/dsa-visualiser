@@ -104,7 +104,21 @@ export function cloneValue(value: RuntimeValue): RuntimeValue {
       for (const [key, val] of Object.entries(value.properties)) {
         clonedProps[key] = cloneValue(val)
       }
-      return { ...value, properties: clonedProps }
+      const clonedObj = { ...value, properties: clonedProps }
+      // Clone Map/Set internal data so each step has its own snapshot
+      const mapData = (value as unknown as Record<string, Map<string | number, RuntimeValue>>).__mapData
+      if (mapData) {
+        const clonedMap = new Map<string | number, RuntimeValue>(mapData.entries())
+        ;(clonedObj as unknown as Record<string, unknown>).__mapData = clonedMap
+        ;(clonedObj as unknown as Record<string, unknown>).__isMap = true
+      }
+      const setData = (value as unknown as Record<string, Set<RuntimeValue>>).__setData
+      if (setData) {
+        const clonedSet = new Set<RuntimeValue>(setData)
+        ;(clonedObj as unknown as Record<string, unknown>).__setData = clonedSet
+        ;(clonedObj as unknown as Record<string, unknown>).__isSet = true
+      }
+      return clonedObj
 
     case 'function':
       return { ...value }

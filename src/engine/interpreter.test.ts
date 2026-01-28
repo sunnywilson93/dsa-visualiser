@@ -477,4 +477,65 @@ describe('Interpreter', () => {
       expect(steps.length).toBeGreaterThan(10)
     })
   })
+
+  describe('Two Sum with Map', () => {
+    it('should return correct indices when solution is found at index 1', () => {
+      const steps = executeCode(`
+        const twoSum = (nums, target) => {
+          const map = new Map()
+          for (let i = 0; i < nums.length; i++) {
+            const num = nums[i]
+            if (map.has(target - num)) {
+              return [map.get(target - num), i]
+            }
+            map.set(num, i)
+          }
+          return [-1, -1]
+        }
+        const result = twoSum([2, 7, 11, 15], 9)
+      `)
+
+      const finalScope = steps[steps.length - 1].scopes[0]
+      const result = finalScope.variables.result as ArrayValue
+      
+      // Should return [0, 1] because 2 + 7 = 9
+      expect(result.type).toBe('array')
+      expect(result.elements.length).toBe(2)
+      expect(getPrimitiveValue(result.elements[0])).toBe(0)
+      expect(getPrimitiveValue(result.elements[1])).toBe(1)
+    })
+
+    it('should only call Map.has twice for [2, 7, 11, 15] with target 9', () => {
+      const steps = executeCode(`
+        const twoSum = (nums, target) => {
+          const map = new Map()
+          for (let i = 0; i < nums.length; i++) {
+            const num = nums[i]
+            if (map.has(target - num)) {
+              return [map.get(target - num), i]
+            }
+            map.set(num, i)
+          }
+          return [-1, -1]
+        }
+        const result = twoSum([2, 7, 11, 15], 9)
+      `)
+
+      // Count Map.has calls
+      const hasCalls = steps.filter(s => s.description?.includes('Map.has'))
+      
+      // Should only call Map.has twice:
+      // - i=0: map.has(7) -> false
+      // - i=1: map.has(2) -> true, then return
+      expect(hasCalls.length).toBe(2)
+      
+      // First call should be Map.has(7) -> false
+      expect(hasCalls[0].description).toContain('Map.has(7)')
+      expect(hasCalls[0].description).toContain('false')
+      
+      // Second call should be Map.has(2) -> true
+      expect(hasCalls[1].description).toContain('Map.has(2)')
+      expect(hasCalls[1].description).toContain('true')
+    })
+  })
 })

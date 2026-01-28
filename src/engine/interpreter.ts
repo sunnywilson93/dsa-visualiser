@@ -38,6 +38,15 @@ class ContinueSignal extends Error {
   }
 }
 
+class ReturnSignal extends Error {
+  value: RuntimeValue
+  constructor(value: RuntimeValue) {
+    super('return')
+    this.name = 'ReturnSignal'
+    this.value = value
+  }
+}
+
 interface InterpreterState {
   steps: ExecutionStep[]
   callStack: StackFrame[]
@@ -196,6 +205,50 @@ export class Interpreter {
       return createPrimitive(Math.max(...nums))
     })
 
+    // Object methods
+    builtins.set('Object.fromEntries', (arg) => {
+      if (arg.type !== 'object') {
+        return createObject({})
+      }
+      // Check if it's a Map (has __mapData)
+      const mapData = (arg as unknown as Record<string, unknown>).__mapData as Map<string | number, RuntimeValue> | undefined
+      if (mapData) {
+        const props: Record<string, RuntimeValue> = {}
+        for (const [key, value] of mapData.entries()) {
+          props[String(key)] = value
+        }
+        return createObject(props)
+      }
+      // Otherwise, return the object's properties
+      return createObject({ ...arg.properties })
+    })
+
+    builtins.set('Object.keys', (arg) => {
+      if (arg.type !== 'object') {
+        return createArray([])
+      }
+      const keys = Object.keys(arg.properties).map(k => createPrimitive(k))
+      return createArray(keys)
+    })
+
+    builtins.set('Object.values', (arg) => {
+      if (arg.type !== 'object') {
+        return createArray([])
+      }
+      const values = Object.values(arg.properties)
+      return createArray(values.map(v => cloneValue(v)))
+    })
+
+    builtins.set('Object.entries', (arg) => {
+      if (arg.type !== 'object') {
+        return createArray([])
+      }
+      const entries = Object.entries(arg.properties).map(([k, v]) => {
+        return createArray([createPrimitive(k), cloneValue(v)])
+      })
+      return createArray(entries)
+    })
+
     return builtins
   }
 
@@ -304,6 +357,8 @@ export class Interpreter {
         return this.executeContinueStatement(node)
       case 'ThisExpression':
         return this.executeThisExpression()
+      case 'NewExpression':
+        return this.executeNewExpression(node)
       default:
         return createUndefined()
     }
@@ -387,7 +442,8 @@ export class Interpreter {
       this.state.callStack[this.state.callStack.length - 1].returnValue = value
     }
 
-    return value
+    // Throw a signal to break out of loops/blocks
+    throw new ReturnSignal(value)
   }
 
   private executeIfStatement(node: ASTNode): RuntimeValue {
@@ -468,7 +524,7 @@ export class Interpreter {
         ? `Iteration ${iterations + 1}: ${loopVarName} = ${currentI}` 
         : `For loop iteration ${iterations + 1}`)
 
-      // Execute body with break/continue handling
+      // Execute body with break/continue/return handling
       try {
         const body = node.body as ASTNode
         if (body.type === 'BlockStatement') {
@@ -487,9 +543,13 @@ export class Interpreter {
         }
         if (e instanceof ContinueSignal) {
           // Continue to update and next iteration
-        } else {
+        }
+        if (e instanceof ReturnSignal) {
+          // Exit loop and propagate return
+          this.popScope()
           throw e
         }
+        throw e
       }
 
       // Update
@@ -555,7 +615,7 @@ export class Interpreter {
 
       this.recordStep(node, 'loop-iteration', `For-of loop iteration ${iterations + 1}`)
 
-      // Execute body with break/continue handling
+      // Execute body with break/continue/return handling
       try {
         const body = node.body as ASTNode
         if (body.type === 'BlockStatement') {
@@ -574,9 +634,13 @@ export class Interpreter {
         }
         if (e instanceof ContinueSignal) {
           // Continue to next iteration
-        } else {
+        }
+        if (e instanceof ReturnSignal) {
+          // Exit loop and propagate return
+          this.popScope()
           throw e
         }
+        throw e
       }
 
       iterations++
@@ -623,6 +687,9 @@ export class Interpreter {
           // Continue to next iteration
           iterations++
           continue
+        }
+        if (e instanceof ReturnSignal) {
+          throw e
         }
         throw e
       }
@@ -697,6 +764,22 @@ export class Interpreter {
       }
     }
 
+    // Check for Object static methods (e.g., Object.fromEntries)
+    if (
+      callee.type === 'MemberExpression' &&
+      (callee.object as ASTNode).type === 'Identifier' &&
+      ((callee.object as ASTNode).name === 'Object')
+    ) {
+      const methodName = (callee.property as ASTNode).name
+      const builtin = this.builtins.get(`Object.${methodName}`)
+      if (builtin) {
+        const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
+        const result = builtin(...args)
+        this.recordStep(node, 'expression', `Object.${methodName}() → ${formatValue(result)}`)
+        return result
+      }
+    }
+
     // Check for array methods
     if (callee.type === 'MemberExpression') {
       const obj = this.executeNode(callee.object as ASTNode)
@@ -741,6 +824,20 @@ export class Interpreter {
         if (method && method.type === 'function') {
           const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
           return this.executePrototypeMethod(method, obj, args, node, methodName)
+        }
+        
+        // Check for Map methods
+        const mapData = (obj as unknown as Record<string, unknown>).__mapData as Map<string | number, RuntimeValue> | undefined
+        if (mapData) {
+          const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
+          return this.executeMapMethod(mapData, methodName, args, node)
+        }
+        
+        // Check for Set methods
+        const setData = (obj as unknown as Record<string, unknown>).__setData as Set<RuntimeValue> | undefined
+        if (setData) {
+          const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
+          return this.executeSetMethod(setData, methodName, args, node)
         }
       }
     }
@@ -801,25 +898,33 @@ export class Interpreter {
     let result: RuntimeValue = createUndefined()
     const body = func.body as ASTNode
 
-    if (body.type === 'BlockStatement') {
-      const statements = body.body as ASTNode[]
-      // First pass: hoist function declarations
-      for (const stmt of statements) {
-        if (stmt.type === 'FunctionDeclaration') {
-          this.declareFunctionHoisted(stmt)
+    try {
+      if (body.type === 'BlockStatement') {
+        const statements = body.body as ASTNode[]
+        // First pass: hoist function declarations
+        for (const stmt of statements) {
+          if (stmt.type === 'FunctionDeclaration') {
+            this.declareFunctionHoisted(stmt)
+          }
         }
-      }
-      // Second pass: execute statements
-      for (const stmt of statements) {
-        result = this.executeNode(stmt)
-        // Check if we hit a return
-        if (frame.returnValue !== undefined) {
-          result = frame.returnValue
-          break
+        // Second pass: execute statements
+        for (const stmt of statements) {
+          result = this.executeNode(stmt)
+          // Check if we hit a return (for returns not in loops)
+          if (frame.returnValue !== undefined) {
+            result = frame.returnValue
+            break
+          }
         }
+      } else {
+        result = this.executeNode(body)
       }
-    } else {
-      result = this.executeNode(body)
+    } catch (e) {
+      if (e instanceof ReturnSignal) {
+        result = e.value
+      } else {
+        throw e
+      }
     }
 
     // Pop function scope and restore original scopes
@@ -1159,6 +1264,33 @@ export class Interpreter {
     return this.getVariable('this')
   }
 
+  private executeNewExpression(node: ASTNode): RuntimeValue {
+    const callee = node.callee as ASTNode
+    
+    if (callee.type === 'Identifier' && callee.name === 'Map') {
+      // Create a new Map instance
+      const mapInstance = createObject({})
+      // Add internal Map storage
+      ;(mapInstance as unknown as Record<string, unknown>).__mapData = new Map<string | number, RuntimeValue>()
+      ;(mapInstance as unknown as Record<string, unknown>).__isMap = true
+      this.recordStep(node, 'expression', 'Created new Map')
+      return mapInstance
+    }
+    
+    if (callee.type === 'Identifier' && callee.name === 'Set') {
+      // Create a new Set instance
+      const setInstance = createObject({})
+      ;(setInstance as unknown as Record<string, unknown>).__setData = new Set<RuntimeValue>()
+      ;(setInstance as unknown as Record<string, unknown>).__isSet = true
+      this.recordStep(node, 'expression', 'Created new Set')
+      return setInstance
+    }
+    
+    // For other constructors, return an empty object
+    this.recordStep(node, 'expression', `Created new ${callee.name || 'object'}`)
+    return createObject({})
+  }
+
   private executeLiteral(node: ASTNode): RuntimeValue {
     const value = node.value
 
@@ -1228,24 +1360,32 @@ export class Interpreter {
     let result: RuntimeValue = createUndefined()
     const body = func.body as ASTNode
 
-    if (body.type === 'BlockStatement') {
-      const statements = body.body as ASTNode[]
-      // First pass: hoist function declarations
-      for (const stmt of statements) {
-        if (stmt.type === 'FunctionDeclaration') {
-          this.declareFunctionHoisted(stmt)
+    try {
+      if (body.type === 'BlockStatement') {
+        const statements = body.body as ASTNode[]
+        // First pass: hoist function declarations
+        for (const stmt of statements) {
+          if (stmt.type === 'FunctionDeclaration') {
+            this.declareFunctionHoisted(stmt)
+          }
         }
-      }
-      // Second pass: execute statements
-      for (const stmt of statements) {
-        result = this.executeNode(stmt)
-        if (frame.returnValue !== undefined) {
-          result = frame.returnValue
-          break
+        // Second pass: execute statements
+        for (const stmt of statements) {
+          result = this.executeNode(stmt)
+          if (frame.returnValue !== undefined) {
+            result = frame.returnValue
+            break
+          }
         }
+      } else {
+        result = this.executeNode(body)
       }
-    } else {
-      result = this.executeNode(body)
+    } catch (e) {
+      if (e instanceof ReturnSignal) {
+        result = e.value
+      } else {
+        throw e
+      }
     }
 
     // Pop function scope and restore original scopes
@@ -1315,24 +1455,32 @@ export class Interpreter {
     let result: RuntimeValue = createUndefined()
     const body = func.body as ASTNode
 
-    if (body.type === 'BlockStatement') {
-      const statements = body.body as ASTNode[]
-      // First pass: hoist function declarations
-      for (const stmt of statements) {
-        if (stmt.type === 'FunctionDeclaration') {
-          this.declareFunctionHoisted(stmt)
+    try {
+      if (body.type === 'BlockStatement') {
+        const statements = body.body as ASTNode[]
+        // First pass: hoist function declarations
+        for (const stmt of statements) {
+          if (stmt.type === 'FunctionDeclaration') {
+            this.declareFunctionHoisted(stmt)
+          }
         }
-      }
-      // Second pass: execute statements
-      for (const stmt of statements) {
-        result = this.executeNode(stmt)
-        if (frame.returnValue !== undefined) {
-          result = frame.returnValue
-          break
+        // Second pass: execute statements
+        for (const stmt of statements) {
+          result = this.executeNode(stmt)
+          if (frame.returnValue !== undefined) {
+            result = frame.returnValue
+            break
+          }
         }
+      } else {
+        result = this.executeNode(body)
       }
-    } else {
-      result = this.executeNode(body)
+    } catch (e) {
+      if (e instanceof ReturnSignal) {
+        result = e.value
+      } else {
+        throw e
+      }
     }
 
     // Pop function scope and restore original scopes
@@ -1623,6 +1771,102 @@ export class Interpreter {
 
       default:
         return null
+    }
+  }
+
+  // Map methods
+  private executeMapMethod(
+    map: Map<string | number, RuntimeValue>,
+    method: string,
+    args: RuntimeValue[],
+    node: ASTNode
+  ): RuntimeValue {
+    switch (method) {
+      case 'set': {
+        const key = args[0]?.type === 'primitive' ? args[0].value : String(args[0])
+        const value = args[1] ?? createUndefined()
+        map.set(key as string | number, value)
+        this.recordStep(node, 'expression', `Map.set(${formatValue(args[0])}, ${formatValue(value)})`)
+        return node.callee ? (this.executeNode((node.callee as ASTNode).object as ASTNode)) : createObject({})
+      }
+      
+      case 'get': {
+        const key = args[0]?.type === 'primitive' ? args[0].value : String(args[0])
+        const value = map.get(key as string | number) ?? createUndefined()
+        this.recordStep(node, 'expression', `Map.get(${formatValue(args[0])}) → ${formatValue(value)}`)
+        return value
+      }
+      
+      case 'has': {
+        const key = args[0]?.type === 'primitive' ? args[0].value : String(args[0])
+        const hasKey = map.has(key as string | number)
+        this.recordStep(node, 'expression', `Map.has(${formatValue(args[0])}) → ${hasKey}`)
+        return createPrimitive(hasKey)
+      }
+      
+      case 'delete': {
+        const key = args[0]?.type === 'primitive' ? args[0].value : String(args[0])
+        const deleted = map.delete(key as string | number)
+        this.recordStep(node, 'expression', `Map.delete(${formatValue(args[0])}) → ${deleted}`)
+        return createPrimitive(deleted)
+      }
+      
+      case 'clear': {
+        map.clear()
+        this.recordStep(node, 'expression', 'Map.clear()')
+        return createUndefined()
+      }
+      
+      case 'size': {
+        return createPrimitive(map.size)
+      }
+      
+      default:
+        return createUndefined()
+    }
+  }
+
+  // Set methods
+  private executeSetMethod(
+    set: Set<RuntimeValue>,
+    method: string,
+    args: RuntimeValue[],
+    node: ASTNode
+  ): RuntimeValue {
+    switch (method) {
+      case 'add': {
+        const value = args[0] ?? createUndefined()
+        set.add(value)
+        this.recordStep(node, 'expression', `Set.add(${formatValue(value)})`)
+        return node.callee ? (this.executeNode((node.callee as ASTNode).object as ASTNode)) : createObject({})
+      }
+      
+      case 'has': {
+        const value = args[0] ?? createUndefined()
+        const hasValue = set.has(value)
+        this.recordStep(node, 'expression', `Set.has(${formatValue(args[0])}) → ${hasValue}`)
+        return createPrimitive(hasValue)
+      }
+      
+      case 'delete': {
+        const value = args[0] ?? createUndefined()
+        const deleted = set.delete(value)
+        this.recordStep(node, 'expression', `Set.delete(${formatValue(args[0])}) → ${deleted}`)
+        return createPrimitive(deleted)
+      }
+      
+      case 'clear': {
+        set.clear()
+        this.recordStep(node, 'expression', 'Set.clear()')
+        return createUndefined()
+      }
+      
+      case 'size': {
+        return createPrimitive(set.size)
+      }
+      
+      default:
+        return createUndefined()
     }
   }
 

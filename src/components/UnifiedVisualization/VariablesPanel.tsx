@@ -97,12 +97,34 @@ function formatValueDetailed(value: RuntimeValue): { short: string; full: string
         short: `[${value.elements.length}]`, 
         full: `[${elements}]` 
       }
-    case 'object':
+    case 'object': {
+      // Check if it's a Map
+      const mapData = (value as unknown as Record<string, Map<string | number, RuntimeValue>>).__mapData
+      if (mapData) {
+        const entries = Array.from(mapData.entries()).map(([k, v]) => 
+          `${k}: ${formatValueDetailed(v).short}`
+        ).join(', ')
+        return { 
+          short: `{${mapData.size}}`, 
+          full: `{ ${entries} }` 
+        }
+      }
+      // Check if it's a Set
+      const setData = (value as unknown as Record<string, Set<RuntimeValue>>).__setData
+      if (setData) {
+        const items = Array.from(setData).map(v => formatValueDetailed(v).short).join(', ')
+        return { 
+          short: `{${setData.size}}`, 
+          full: `{ ${items} }` 
+        }
+      }
+      // Regular object
       const keys = Object.keys(value.properties)
       return { 
         short: `{${keys.length}}`, 
         full: `{ ${keys.join(', ')} }` 
       }
+    }
     default:
       return { short: String(value), full: String(value) }
   }
