@@ -2,39 +2,39 @@
 
 import {
   // DSA Concepts
-  LineChart,
+  TrendingUp,
   Binary,
-  Rows3,
+  TableProperties,
   Hash,
   Layers,
-  ArrowRightLeft,
+  ArrowLeftRight,
   GitBranch,
   // JS Concepts - Beginner Basics
   Lightbulb,
-  Variable,
-  Boxes,
+  Sigma,
+  Package,
   Plus,
   FunctionSquare,
-  GitFork,
+  Split,
   Repeat,
   ListOrdered,
-  Package,
+  Box,
   // JS Concepts - Existing
   ArrowUp,
   Shuffle,
   Lock,
-  Target,
+  Crosshair,
   RotateCw,
   Link2,
   Clock,
   Cpu,
   Gauge,
   Trash2,
-  Activity,
+  Waves,
   Code2,
-  Network,
+  Share2,
   // JS Concepts - Phase 1 Deep Dive
-  Workflow,
+  Combine,
   TimerReset,
   DatabaseZap,
   // JS Concepts - Evolution/History
@@ -45,7 +45,7 @@ import {
   Hammer,
   // JS Concepts - Additional
   ServerCog,
-  PaintBucket,
+  Palette,
   Link,
   // Categories
   CircleDot,
@@ -54,7 +54,6 @@ import {
   Puzzle,
   Zap,
   Compass,
-  Box,
   Sparkles,
   BookOpen,
   // Build categories (exampleCategories)
@@ -73,7 +72,7 @@ import {
   RefreshCw,
   Calculator,
   Coins,
-  CornerUpLeft,
+  Undo2,
   Ruler,
   PanelTop,
   Mountain,
@@ -85,21 +84,21 @@ import {
 // Map concept IDs to Lucide icons
 const conceptIconMap: Record<string, LucideIcon> = {
   // DSA Concepts
-  'big-o-notation': LineChart,      // Growth curves, complexity graphs
+  'big-o-notation': TrendingUp,     // Growth curves, complexity graphs
   'binary-system': Binary,          // Binary/bits
-  'arrays': Rows3,                  // Sequential rows of data
+  'arrays': TableProperties,        // Grid/Table structure
   'hash-tables': Hash,              // Hash symbol
   'stacks': Layers,                 // Stacked layers (LIFO)
-  'queues': ArrowRightLeft,         // Flow in/out (FIFO)
+  'queues': ArrowLeftRight,         // Flow in/out (FIFO)
   'linked-lists': GitBranch,        // Connected nodes
 
   // JS Concepts - Philosophy & Basics
   'js-philosophy': Lightbulb,       // Philosophy/ideas
-  'variables': Variable,            // Variable symbol
-  'data-types': Boxes,              // Different type boxes
+  'variables': Sigma,               // Mathematical variable symbol
+  'data-types': Box,                // Box/container for types
   'operators': Plus,                // Math/operators
   'functions': FunctionSquare,      // Function block
-  'conditionals': GitFork,          // Branching/decisions
+  'conditionals': Split,            // Branching/decisions
   'loops': Repeat,                  // Repeat/iteration
   'arrays-basics': ListOrdered,     // Ordered list
   'objects-basics': Package,        // Package/object container
@@ -108,20 +107,20 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'hoisting': ArrowUp,              // Variables "hoisted" up
   'type-coercion': Shuffle,         // Type conversion/shuffling
   'closures': Lock,                 // Enclosed/captured scope
-  'this-keyword': Target,           // Context target
+  'this-keyword': Crosshair,        // Context target
   'event-loop': RotateCw,           // Circular loop
   'scope-chain': Link2,             // Chained scopes
   'promises': Clock,                // Async/future values
   'memory-model': Cpu,              // Memory/processor
   'v8-engine': Gauge,               // Engine performance
   'garbage-collection': Trash2,     // Memory cleanup
-  'streams-buffers': Activity,      // Data flow/streaming
+  'streams-buffers': Waves,         // Data flow/streaming
   'dom-rendering': Code2,           // Code rendering
-  'web-workers': Network,           // Parallel threads
+  'web-workers': Share2,            // Parallel threads/sharing
 
   // JS Concepts - Phase 1 Deep Dive
   'promises-deep-dive': Clock,      // Async/promises - future values
-  'function-composition': Workflow, // Function pipelines/composition
+  'function-composition': Combine,  // Function pipelines/composition
   'timing-control': TimerReset,     // Debounce/throttle timing
   'memoization': DatabaseZap,       // Caching/storing results
 
@@ -134,7 +133,7 @@ const conceptIconMap: Record<string, LucideIcon> = {
 
   // JS Concepts - Additional
   'nodejs-event-loop': ServerCog,   // Node.js server event loop
-  'critical-render-path': PaintBucket, // Browser rendering
+  'critical-render-path': Palette,  // Browser rendering/painting
   'prototypes': Link,               // Prototype chain links
 
   // Categories - JS
@@ -166,7 +165,7 @@ const conceptIconMap: Record<string, LucideIcon> = {
 
   // DSA subcategories (dsaSubcategories from examples.ts)
   'arrays-hashing': BarChart3,      // Arrays & Hashing - data visualization
-  'two-pointers': ArrowRightLeft,   // Two Pointers - bidirectional movement
+  'two-pointers': ArrowLeftRight,   // Two Pointers - bidirectional movement
   'sliding-window': PanelTop,       // Sliding Window - panel/frame concept
   'stack': Layers,                  // Stack - stacked layers
   'binary-search': Search,          // Binary Search - search algorithm
@@ -176,8 +175,8 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'recursion': RefreshCw,           // Recursion - circular/repeat
   'dynamic-programming': Calculator,// DP - computation/memoization
   'greedy': Coins,                  // Greedy - optimal local choices
-  'backtracking': CornerUpLeft,     // Backtracking - going back
-  'graphs': Network,                // Graphs - network of nodes
+  'backtracking': Undo2,            // Backtracking - going back
+  'graphs': Share2,                 // Graphs - network/connections
   'trees': GitBranch,               // Trees - branching structure
   'trie': GitBranch,                // Trie - prefix tree
   'heap': Mountain,                 // Heap - peak/priority

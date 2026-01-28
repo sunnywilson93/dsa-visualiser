@@ -3,14 +3,8 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Reorder } from 'framer-motion'
-import { 
-  Terminal, 
-  Layers, 
-  Box, 
-  BarChart3, 
-  Settings2,
-  Database,
-} from 'lucide-react'
+import { Settings2 } from 'lucide-react'
+import { PanelIcon } from '@/components/Icons'
 import { useExecutionStore, useCurrentStep, useVisibleConsoleOutput, usePanelStore, PANELS } from '@/store'
 import type { RuntimeValue, ArrayValue, ExecutionStep } from '@/types'
 import { ArrayVisualization } from '@/components/Visualization/ArrayVisualization'
@@ -18,15 +12,6 @@ import { BinaryVisualization } from '@/components/Visualization/BinaryVisualizat
 import { HeapVisualization } from '@/components/Visualization/HeapVisualization'
 import { DraggablePanel, PanelSettings } from './DraggablePanel'
 import { VariablesPanel } from './VariablesPanel'
-
-// --- Icons Map ---
-const ICONS: Record<string, React.ComponentType<{ size?: number | string; className?: string }>> = {
-  Database,
-  BarChart3,
-  Layers,
-  Box,
-  Terminal,
-}
 
 // --- Value Formatting ---
 function formatValue(value: RuntimeValue): string {
@@ -124,7 +109,7 @@ function EmptyState() {
   return (
     <div className="flex flex-col items-center justify-center h-full text-text-muted">
       <div className="w-16 h-16 mb-4 rounded-full bg-brand-primary/10 flex items-center justify-center">
-        <BarChart3 size={32} className="text-brand-primary" />
+        <PanelIcon panelId="visualization" size="xl" className="text-brand-primary" />
       </div>
       <p className="text-lg font-medium text-text-secondary">Click Analyze to visualize</p>
       <p className="text-sm mt-1">See step-by-step execution, variables, and output</p>
@@ -274,7 +259,7 @@ export function UnifiedVisualization() {
       <div className="h-full flex flex-col relative">
         {/* Mobile: show compact hint */}
         <div className="lg:hidden flex items-center justify-center gap-2 p-3 bg-bg-tertiary/50 border-b border-border-primary text-sm text-text-muted">
-          <BarChart3 size={16} className="text-brand-primary" />
+          <PanelIcon panelId="visualization" size="sm" className="text-brand-primary" />
           <span>Tap <span className="text-brand-primary font-medium">Analyze</span> to see visualization</span>
         </div>
         
@@ -287,14 +272,14 @@ export function UnifiedVisualization() {
         <div className="lg:hidden flex-1 p-4 space-y-3 overflow-y-auto">
           <div className="bg-bg-secondary rounded-lg border border-border-primary p-3">
             <div className="flex items-center gap-2 text-xs text-text-muted uppercase mb-2">
-              <Box size={14} />
+              <PanelIcon panelId="variables" size="sm" />
               <span>Variables</span>
             </div>
             <p className="text-sm text-text-muted">Run code to see variables</p>
           </div>
           <div className="bg-bg-secondary rounded-lg border border-border-primary p-3">
             <div className="flex items-center gap-2 text-xs text-text-muted uppercase mb-2">
-              <Terminal size={14} />
+              <PanelIcon panelId="console-output" size="sm" />
               <span>Output</span>
             </div>
             <p className="text-sm text-text-muted">Console output will appear here</p>
@@ -360,7 +345,6 @@ export function UnifiedVisualization() {
                 <DraggablePanel
                   id={panelId}
                   label={panel.label}
-                  icon={panel.icon}
                   isCollapsed={collapsed[panelId]}
                   onToggle={() => toggleCollapsed(panelId)}
                 >

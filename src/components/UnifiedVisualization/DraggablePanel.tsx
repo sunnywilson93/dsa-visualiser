@@ -6,30 +6,17 @@ import {
   GripVertical, 
   ChevronDown, 
   ChevronRight,
-  Database,
-  BarChart3,
-  Layers,
-  Box,
-  Terminal,
   Settings2,
   RotateCcw,
   ChevronUp,
   ChevronDown as ChevronDownIcon
 } from 'lucide-react'
-import { usePanelStore, type PanelType, PANELS } from '@/store'
-
-const ICONS: Record<string, React.ComponentType<{ size?: number | string; className?: string }>> = {
-  Database,
-  BarChart3,
-  Layers,
-  Box,
-  Terminal,
-}
+import { usePanelStore, PANELS } from '@/store'
+import { PanelIcon, getPanelLabel, type PanelType } from '@/components/Icons'
 
 interface DraggablePanelProps {
   id: PanelType
   label: string
-  icon: string
   children: React.ReactNode
   isCollapsed: boolean
   onToggle: () => void
@@ -38,12 +25,10 @@ interface DraggablePanelProps {
 export function DraggablePanel({ 
   id, 
   label, 
-  icon, 
   children, 
   isCollapsed,
   onToggle 
 }: DraggablePanelProps) {
-  const Icon = ICONS[icon] || Box
   
   return (
     <motion.div
@@ -61,7 +46,7 @@ export function DraggablePanel({
             size={14} 
             className="text-text-muted opacity-0 group-hover:opacity-100 transition-opacity cursor-grab" 
           />
-          <Icon size={14} className="text-text-muted" />
+          <PanelIcon panelId={id} size="sm" />
           <span className="text-xs font-semibold uppercase tracking-wider text-text-secondary">
             {label}
           </span>
@@ -99,7 +84,7 @@ interface PanelSettingsProps {
 }
 
 export function PanelSettings({ onClose }: PanelSettingsProps) {
-  const { order, collapsed, movePanel, expandAll, collapseAll, resetToDefault } = usePanelStore()
+  const { order, movePanel, expandAll, collapseAll, resetToDefault } = usePanelStore()
   const [isReordering, setIsReordering] = useState(false)
   
   const handleReorder = (newOrder: PanelType[]) => {
@@ -153,9 +138,7 @@ export function PanelSettings({ onClose }: PanelSettingsProps) {
               className="space-y-1"
             >
               {order.map((panelId) => {
-                const panel = PANELS.find(p => p.id === panelId)
-                if (!panel) return null
-                const Icon = ICONS[panel.icon] || Box
+                const label = getPanelLabel(panelId)
                 
                 return (
                   <Reorder.Item
@@ -164,8 +147,8 @@ export function PanelSettings({ onClose }: PanelSettingsProps) {
                     className="flex items-center gap-2 px-3 py-2 bg-bg-tertiary rounded-lg cursor-grab active:cursor-grabbing"
                   >
                     <GripVertical size={14} className="text-text-muted" />
-                    <Icon size={14} className="text-text-muted" />
-                    <span className="text-sm text-text-secondary">{panel.label}</span>
+                    <PanelIcon panelId={panelId} size="sm" />
+                    <span className="text-sm text-text-secondary">{label}</span>
                   </Reorder.Item>
                 )
               })}
@@ -173,9 +156,7 @@ export function PanelSettings({ onClose }: PanelSettingsProps) {
           ) : (
             <div className="space-y-1">
               {order.map((panelId, index) => {
-                const panel = PANELS.find(p => p.id === panelId)
-                if (!panel) return null
-                const Icon = ICONS[panel.icon] || Box
+                const label = getPanelLabel(panelId)
                 
                 return (
                   <div
@@ -183,8 +164,8 @@ export function PanelSettings({ onClose }: PanelSettingsProps) {
                     className="flex items-center gap-2 px-3 py-2 bg-bg-tertiary/50 rounded-lg"
                   >
                     <span className="text-xs text-text-muted w-4">{index + 1}</span>
-                    <Icon size={14} className="text-text-muted" />
-                    <span className="text-sm text-text-secondary">{panel.label}</span>
+                    <PanelIcon panelId={panelId} size="sm" />
+                    <span className="text-sm text-text-secondary">{label}</span>
                   </div>
                 )
               })}

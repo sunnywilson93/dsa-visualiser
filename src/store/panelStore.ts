@@ -1,26 +1,21 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import type { PanelType } from '@/components/Icons'
 
-export type PanelType = 
-  | 'heap-memory' 
-  | 'visualization' 
-  | 'call-stack' 
-  | 'variables' 
-  | 'console-output'
+export type { PanelType }
 
 export interface PanelConfig {
   id: PanelType
   label: string
-  icon: string
   defaultVisible: boolean
 }
 
 export const PANELS: PanelConfig[] = [
-  { id: 'heap-memory', label: 'Heap Memory', icon: 'Database', defaultVisible: true },
-  { id: 'visualization', label: 'Visualization', icon: 'BarChart3', defaultVisible: true },
-  { id: 'call-stack', label: 'Call Stack', icon: 'Layers', defaultVisible: true },
-  { id: 'variables', label: 'Variables', icon: 'Box', defaultVisible: true },
-  { id: 'console-output', label: 'Output', icon: 'Terminal', defaultVisible: true },
+  { id: 'heap-memory', label: 'Heap Memory', defaultVisible: true },
+  { id: 'visualization', label: 'Visualization', defaultVisible: true },
+  { id: 'call-stack', label: 'Call Stack', defaultVisible: true },
+  { id: 'variables', label: 'Variables', defaultVisible: true },
+  { id: 'console-output', label: 'Output', defaultVisible: true },
 ]
 
 interface PanelState {
