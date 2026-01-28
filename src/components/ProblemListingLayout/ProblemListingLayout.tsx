@@ -124,76 +124,78 @@ export function ProblemListingLayout({
     <div className="min-h-screen bg-gradient-to-br from-bg-page to-bg-page-secondary flex flex-col">
       <NavBar breadcrumbs={config.breadcrumbs} />
 
-      <header className="flex items-center gap-4 py-6 px-8 max-w-[1200px] mx-auto w-full max-lg:py-5 max-lg:px-6 max-md:p-4">
-        <span className="text-[2.5rem] max-md:text-3xl">
-          <ConceptIcon conceptId={config.iconId} size={32} />
-        </span>
-        <div>
-          <h1 className="text-[1.75rem] font-semibold text-white m-0 max-md:text-2xl">{config.title}</h1>
-          <p className="text-gray-500 text-base mt-1 m-0">{config.subtitle}</p>
+      <main className="flex-1 p-8 max-w-[1200px] mx-auto w-full max-md:p-6">
+        <header className="text-center py-4 pb-8">
+          <h1 className="text-[2.5rem] font-bold bg-gradient-to-br from-brand-primary from-0% to-brand-secondary to-100% bg-clip-text text-transparent m-0 mb-3 drop-shadow-[0_0_20px_var(--color-brand-primary-30)] max-lg:text-3xl max-md:text-[1.75rem]">
+            {config.title}
+          </h1>
+          <p className="text-text-secondary text-md m-0 leading-relaxed max-md:text-base">
+            {config.subtitle}
+          </p>
+        </header>
+
+        <div className="group flex items-center gap-3 bg-bg-secondary border border-border-primary rounded-xl px-4 py-3 mb-6 transition-all focus-within:border-accent-primary focus-within:ring-1 focus-within:ring-accent-primary/50 flex-wrap md:flex-nowrap">
+          <Search size={18} className="text-text-muted shrink-0 transition-colors group-focus-within:text-accent-primary order-0" />
+          <input
+            type="text"
+            placeholder="Search problems..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="flex-1 min-w-[120px] md:min-w-0 bg-transparent border-0 outline-none text-base text-text-primary placeholder:text-text-muted order-1 md:order-1"
+            aria-label="Search problems"
+          />
+
+          <div className="hidden md:block w-px h-5 bg-border-primary shrink-0 order-2" />
+
+          <div className="flex items-center gap-1 shrink-0 order-3 md:order-3">
+            {(['all', 'easy', 'medium', 'hard'] as const).map((diff) => (
+              <button
+                key={diff}
+                type="button"
+                className={getDifficultyChipClasses(diff)}
+                onClick={() => {
+                  setSelectedDifficulty(diff)
+                  if (diff !== 'all') setSortOrder('none')
+                }}
+                data-difficulty={diff}
+              >
+                {diff === 'all' ? 'All' : diff.charAt(0).toUpperCase() + diff.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className={`flex items-center justify-center bg-transparent border-0 text-text-muted cursor-pointer p-1.5 rounded-md transition-all shrink-0 hover:text-text-secondary hover:bg-brand-primary-5 order-5 md:order-5 ${sortOrder !== 'none' ? 'text-brand-light bg-brand-primary-10' : ''} ${selectedDifficulty !== 'all' ? 'invisible pointer-events-none' : ''}`}
+            onClick={cycleSortOrder}
+            aria-label={`Sort by difficulty: ${sortOrder === 'none' ? 'unsorted' : sortOrder === 'asc' ? 'easy to hard' : 'hard to easy'}`}
+            title={sortOrder === 'none' ? 'Sort by difficulty' : sortOrder === 'asc' ? 'Easy → Hard' : 'Hard → Easy'}
+            tabIndex={selectedDifficulty !== 'all' ? -1 : undefined}
+          >
+            <SortIcon size={16} />
+          </button>
+
+          {(hasActiveFilters) && (
+            <span className="text-xs font-medium text-text-primary bg-bg-tertiary border border-border-primary px-2 py-1 rounded-md shrink-0 order-4 md:order-4 min-w-[1.5rem] text-center tabular-nums">
+              {filteredProblems.length}
+            </span>
+          )}
+
+          <button
+            type="button"
+            className={`flex items-center justify-center bg-transparent border-0 text-text-muted hover:text-error hover:bg-error/10 cursor-pointer p-1 rounded-md transition-all shrink-0 order-2 md:order-6 ml-auto md:ml-0 ${!hasActiveFilters ? 'invisible pointer-events-none' : ''}`}
+            onClick={clearFilters}
+            aria-label="Clear filters"
+            tabIndex={!hasActiveFilters ? -1 : undefined}
+          >
+            <X size={16} />
+          </button>
         </div>
-      </header>
-
-      <div className="flex items-center gap-3 bg-[rgba(15,15,26,0.8)] border border-brand-primary-25 rounded-xl py-2.5 px-4 my-4 mx-auto max-w-[calc(1200px-4rem)] w-[calc(100%-4rem)] transition-all duration-normal focus-within:border-brand-primary-50 focus-within:shadow-[0_0_0_1px_rgba(168,85,247,0.1),0_0_20px_rgba(168,85,247,0.15)] max-lg:max-w-[calc(100%-3rem)] max-lg:w-[calc(100%-3rem)] max-md:flex-wrap max-md:gap-3 max-md:p-3 max-md:max-w-[calc(100%-2rem)] max-md:w-[calc(100%-2rem)]">
-        <Search size={18} className="text-text-muted flex-shrink-0 transition-colors duration-normal group-focus-within:text-brand-primary max-md:order-0" />
-        <input
-          type="text"
-          placeholder="Search problems..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="flex-1 min-w-[120px] bg-transparent border-none outline-none text-[0.95rem] text-text-bright placeholder:text-text-muted max-md:order-1 max-md:flex-1 max-md:min-w-full"
-          aria-label="Search problems"
-        />
-
-        <div className="w-px h-5 bg-[rgba(255,255,255,0.08)] flex-shrink-0 max-md:hidden" />
-
-        <div className="flex items-center gap-1 flex-shrink-0 max-md:order-3 max-md:flex-1">
-          {(['all', 'easy', 'medium', 'hard'] as const).map((diff) => (
-            <button
-              key={diff}
-              type="button"
-              className={getDifficultyChipClasses(diff)}
-              onClick={() => {
-                setSelectedDifficulty(diff)
-                if (diff !== 'all') setSortOrder('none')
-              }}
-              data-difficulty={diff}
-            >
-              {diff === 'all' ? 'All' : diff.charAt(0).toUpperCase() + diff.slice(1)}
-            </button>
-          ))}
-        </div>
-
-        <button
-          type="button"
-          className={`flex items-center justify-center bg-transparent border-none text-text-muted cursor-pointer p-1.5 rounded-md transition-all duration-fast flex-shrink-0 hover:text-text-secondary hover:bg-brand-primary-5 max-md:order-2 max-md:ml-auto ${sortOrder !== 'none' ? 'text-brand-light bg-brand-primary-10' : ''} ${selectedDifficulty !== 'all' ? 'invisible pointer-events-none' : ''}`}
-          onClick={cycleSortOrder}
-          aria-label={`Sort by difficulty: ${sortOrder === 'none' ? 'unsorted' : sortOrder === 'asc' ? 'easy to hard' : 'hard to easy'}`}
-          title={sortOrder === 'none' ? 'Sort by difficulty' : sortOrder === 'asc' ? 'Easy → Hard' : 'Hard → Easy'}
-          tabIndex={selectedDifficulty !== 'all' ? -1 : undefined}
-        >
-          <SortIcon size={16} />
-        </button>
-
-        <span className={`text-xs font-medium text-text-muted bg-brand-primary-10 py-1 px-2 rounded-sm flex-shrink-0 min-w-8 text-center max-md:order-4 ${!hasActiveFilters ? 'invisible pointer-events-none' : ''}`}>
-          {filteredProblems.length}
-        </span>
-
-        <button
-          type="button"
-          className={`flex items-center justify-center bg-transparent border-none text-text-muted cursor-pointer p-1.5 rounded-md transition-all duration-fast flex-shrink-0 hover:text-[#ef4444] hover:bg-[rgba(239,68,68,0.15)] max-md:order-2 ${!hasActiveFilters ? 'invisible pointer-events-none' : ''}`}
-          onClick={clearFilters}
-          aria-label="Clear filters"
-          tabIndex={!hasActiveFilters ? -1 : undefined}
-        >
-          <X size={16} />
-        </button>
-      </div>
 
       {categoryFilters && categoryFilters.length > 0 && (
-        <div className="py-4 px-8 flex gap-3 flex-wrap max-w-[1200px] mx-auto w-full max-lg:p-4 max-lg:px-6 max-md:p-3 max-md:px-4">
+        <div className="flex gap-2 flex-wrap mb-6">
           <button
-            className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-white-10 bg-transparent text-gray-500 text-sm cursor-pointer transition-all duration-fast hover:border-white-20 hover:text-gray-300 ${!selectedCategory ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
+            className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full border border-border-primary bg-transparent text-text-muted text-sm cursor-pointer transition-all hover:border-border-secondary hover:text-text-secondary ${!selectedCategory ? 'bg-accent-primary/15 border-accent-primary/40 text-accent-primary' : ''}`}
             onClick={() => onCategoryFilterChange?.(null)}
           >
             All Categories
@@ -202,7 +204,7 @@ export function ProblemListingLayout({
           {categoryFilters.map((cat) => (
             <button
               key={cat.id}
-              className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-white-10 bg-transparent text-gray-500 text-sm cursor-pointer transition-all duration-fast hover:border-white-20 hover:text-gray-300 ${selectedCategory === cat.id ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
+              className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full border border-border-primary bg-transparent text-text-muted text-sm cursor-pointer transition-all hover:border-border-secondary hover:text-text-secondary ${selectedCategory === cat.id ? 'bg-accent-primary/15 border-accent-primary/40 text-accent-primary' : ''}`}
               onClick={() => onCategoryFilterChange?.(cat.id)}
             >
               <ConceptIcon conceptId={cat.id} size={16} />
@@ -215,13 +217,19 @@ export function ProblemListingLayout({
 
       {renderBeforeGrid}
 
-      <main className="flex-1 py-6 px-8 pb-8 max-w-[1200px] mx-auto w-full min-h-[400px] max-lg:p-5 max-lg:px-6 max-md:p-4">
-        <div className="text-gray-700 text-base mb-4">
-          {filteredProblems.length} problem{filteredProblems.length !== 1 ? 's' : ''}
-        </div>
+      <section>
+        <h2 className="flex items-center gap-4 text-xl font-semibold text-text-bright m-0 mb-4 max-md:flex-wrap">
+          <span className="text-xl drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]">
+            <ConceptIcon conceptId={config.iconId} size={20} />
+          </span>
+          Problems
+          <span className="text-base font-normal text-text-muted ml-auto max-md:w-full max-md:ml-0 max-md:mt-1">
+            {filteredProblems.length} problem{filteredProblems.length !== 1 ? 's' : ''}
+          </span>
+        </h2>
 
         {filteredProblems.length === 0 ? (
-          emptyState || <div className="text-center py-12 text-gray-700">No problems match your filters</div>
+          emptyState || <div className="text-center py-12 text-text-muted">No problems match your filters</div>
         ) : (
           <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-2 max-md:grid-cols-2 max-sm:grid-cols-1 max-md:gap-3">
             {filteredProblems.map((problem) => {
@@ -248,6 +256,7 @@ export function ProblemListingLayout({
             })}
           </div>
         )}
+      </section>
       </main>
     </div>
   )

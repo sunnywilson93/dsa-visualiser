@@ -6,6 +6,7 @@ import { useCurrentStep, useExecutionStore } from '@/store'
 import type { ArrayValue, RuntimeValue, ExecutionStep } from '@/types'
 import { ArrayVisualization } from './ArrayVisualization'
 import { BinaryVisualization } from './BinaryVisualization'
+import { HeapVisualization } from './HeapVisualization'
 
 interface DetectedArray {
   name: string
@@ -90,7 +91,8 @@ export function VisualizationPanel() {
     [currentStep]
   )
 
-  const hasContent = arrays.length > 0 || showBitwise
+  const showHeap = status !== 'idle' && currentStep !== null
+  const hasContent = arrays.length > 0 || showBitwise || showHeap
   const isEmpty = status === 'idle' || !hasContent
 
   // Don't render if empty - save space
@@ -121,6 +123,11 @@ export function VisualizationPanel() {
       <div className="flex-1 overflow-y-auto p-3">
         {currentStep && (
           <div className="flex flex-col gap-2">
+            {/* Heap memory visualization */}
+            {showHeap && (
+              <HeapVisualization step={currentStep} />
+            )}
+
             {/* Binary visualization for bitwise operations */}
             {showBitwise && (
               <BinaryVisualization step={currentStep} />

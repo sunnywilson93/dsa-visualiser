@@ -80,7 +80,7 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
         <input
           type="checkbox"
           id={menuId}
-          className="absolute opacity-0 w-0 h-0"
+          className="peer absolute opacity-0 w-0 h-0"
           aria-hidden="true"
         />
         <label
@@ -93,7 +93,7 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
 
         {/* Mobile navigation panel */}
         <nav
-          className="fixed top-0 -right-full w-[280px] h-screen bg-bg-secondary border-l border-white-8 pt-[70px] transition-[right] duration-300 z-[200] max-md:peer-checked:right-0"
+          className="fixed top-0 -right-full w-[280px] h-screen bg-bg-secondary border-l border-white-8 pt-[70px] transition-[right] duration-300 z-[200] hidden max-md:block max-md:peer-checked:right-0"
           aria-label="Mobile navigation"
         >
           <div className="flex flex-col p-4">

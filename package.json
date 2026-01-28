@@ -4,6 +4,9 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "next dev",
+    "dev:poll": "WEBPACK_POLLING=1000 next dev",
+    "dev:windows": "set WEBPACK_POLLING=1000 && next dev",
+    "fix:watchers": "sudo ./scripts/fix-watchers.sh",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

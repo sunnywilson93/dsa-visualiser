@@ -1,12 +1,32 @@
 'use client'
 
-import { useMemo } from 'react'
-import { motion } from 'framer-motion'
-import { Terminal, Layers, Box, BarChart3, ChevronDown, ChevronRight } from 'lucide-react'
-import { useExecutionStore, useCurrentStep, useVisibleConsoleOutput } from '@/store'
+import { useState, useMemo } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Reorder } from 'framer-motion'
+import { 
+  Terminal, 
+  Layers, 
+  Box, 
+  BarChart3, 
+  Settings2,
+  Database,
+} from 'lucide-react'
+import { useExecutionStore, useCurrentStep, useVisibleConsoleOutput, usePanelStore, PANELS } from '@/store'
 import type { RuntimeValue, ArrayValue, ExecutionStep } from '@/types'
 import { ArrayVisualization } from '@/components/Visualization/ArrayVisualization'
 import { BinaryVisualization } from '@/components/Visualization/BinaryVisualization'
+import { HeapVisualization } from '@/components/Visualization/HeapVisualization'
+import { DraggablePanel, PanelSettings } from './DraggablePanel'
+import { VariablesPanel } from './VariablesPanel'
+
+// --- Icons Map ---
+const ICONS: Record<string, React.ComponentType<{ size?: number | string; className?: string }>> = {
+  Database,
+  BarChart3,
+  Layers,
+  Box,
+  Terminal,
+}
 
 // --- Value Formatting ---
 function formatValue(value: RuntimeValue): string {
@@ -112,110 +132,67 @@ function EmptyState() {
   )
 }
 
+// Panel Content Components
 function MainVisualization({ step }: { step: ReturnType<typeof useCurrentStep> }) {
   const arrays = useMemo(() => step ? extractArrays(step) : [], [step])
   const showBitwise = useMemo(() => step ? isBitwiseOperation(step) : false, [step])
   const hasContent = arrays.length > 0 || showBitwise
   
-  if (!step || !hasContent) return null
+  if (!step || !hasContent) {
+    return (
+      <div className="p-4 text-center text-sm text-text-muted">
+        No algorithm visualization for this step
+      </div>
+    )
+  }
   
   return (
-    <div className="bg-bg-secondary rounded-xl border border-border-primary overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-2 bg-bg-tertiary border-b border-border-primary">
-        <span className="text-xs font-semibold uppercase tracking-wider text-text-secondary">Visualization</span>
-        {showBitwise && (
-          <span className="text-xs px-2 py-0.5 rounded-full bg-accent-purple/20 text-accent-purple">
-            Bitwise Operation
-          </span>
-        )}
-      </div>
-      <div className="p-4 space-y-4">
-        {showBitwise && <BinaryVisualization step={step} />}
-        {arrays.map(({ name, array }) => (
-          <ArrayVisualization key={array.id} array={array} step={step} varName={name} />
-        ))}
-      </div>
+    <div className="p-4 space-y-4">
+      {showBitwise && <BinaryVisualization step={step} />}
+      {arrays.map(({ name, array }) => (
+        <ArrayVisualization key={array.id} array={array} step={step} varName={name} />
+      ))}
     </div>
   )
 }
 
 function CallStack({ step }: { step: ReturnType<typeof useCurrentStep> }) {
-  if (!step || step.callStack.length === 0) return null
+  if (!step || step.callStack.length === 0) {
+    return (
+      <div className="p-4 text-center text-sm text-text-muted">
+        Call stack is empty
+      </div>
+    )
+  }
   
   return (
-    <div className="bg-bg-secondary rounded-xl border border-border-primary overflow-hidden">
-      <div className="flex items-center gap-2 px-4 py-2 bg-bg-tertiary border-b border-border-primary">
-        <Layers size={14} className="text-text-muted" />
-        <span className="text-xs font-semibold uppercase tracking-wider text-text-secondary">Call Stack</span>
-      </div>
-      <div className="p-3 space-y-2">
-        {step.callStack.map((frame, index) => (
-          <div
-            key={frame.id}
-            className={`p-3 rounded-lg border ${
-              index === 0 
-                ? 'bg-accent-blue/10 border-accent-blue/30' 
-                : 'bg-bg-tertiary/50 border-border-primary'
-            }`}
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-mono text-text-muted">#{index}</span>
-              <span className="font-mono text-sm text-text-primary font-medium">{frame.name}()</span>
-            </div>
-            
-            {Object.entries(frame.params).length > 0 && (
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
-                {Object.entries(frame.params).map(([name, value]) => (
-                  <span key={name} className="font-mono">
-                    <span className="text-text-muted">{name}:</span>{' '}
-                    <span className={getValueColor(value)}>{formatValue(value)}</span>
-                  </span>
-                ))}
-              </div>
-            )}
+    <div className="p-3 space-y-2">
+      {step.callStack.map((frame, index) => (
+        <div
+          key={frame.id}
+          className={`p-3 rounded-lg border ${
+            index === 0 
+              ? 'bg-accent-blue/10 border-accent-blue/30' 
+              : 'bg-bg-tertiary/50 border-border-primary'
+          }`}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs font-mono text-text-muted">#{index}</span>
+            <span className="font-mono text-sm text-text-primary font-medium">{frame.name}()</span>
           </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function Variables({ step }: { step: ReturnType<typeof useCurrentStep> }) {
-  if (!step) return null
-  
-  // Collect all variables from scopes
-  const scopes = step.scopes.map((scope, idx) => ({
-    id: scope.type === 'global' ? 'global' : `scope-${idx}`,
-    name: scope.type === 'global' ? 'Global' : scope.name || 'Local',
-    variables: Object.entries(scope.variables),
-  })).filter(s => s.variables.length > 0)
-  
-  if (scopes.length === 0) return null
-  
-  return (
-    <div className="bg-bg-secondary rounded-xl border border-border-primary overflow-hidden">
-      <div className="flex items-center gap-2 px-4 py-2 bg-bg-tertiary border-b border-border-primary">
-        <Box size={14} className="text-text-muted" />
-        <span className="text-xs font-semibold uppercase tracking-wider text-text-secondary">Variables</span>
-      </div>
-      <div className="p-3 space-y-3">
-        {scopes.map(scope => (
-          <div key={scope.id}>
-            <div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
-              {scope.name}
-            </div>
-            <div className="space-y-1">
-              {scope.variables.map(([name, value]) => (
-                <div key={name} className="flex items-center gap-2 text-sm font-mono">
-                  <span className="text-text-secondary">{name}</span>
-                  <span className="text-text-muted">=</span>
+          
+          {Object.entries(frame.params).length > 0 && (
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
+              {Object.entries(frame.params).map(([name, value]) => (
+                <span key={name} className="font-mono">
+                  <span className="text-text-muted">{name}:</span>{' '}
                   <span className={getValueColor(value)}>{formatValue(value)}</span>
-                </div>
+                </span>
               ))}
             </div>
-          </div>
-        ))}
-      </div>
+          )}
+        </div>
+      ))}
     </div>
   )
 }
@@ -226,43 +203,26 @@ function ConsoleOutput() {
   
   if (status === 'idle') {
     return (
-      <div className="bg-bg-secondary rounded-xl border border-border-primary overflow-hidden">
-        <div className="flex items-center gap-2 px-4 py-2 bg-bg-tertiary border-b border-border-primary">
-          <Terminal size={14} className="text-accent-green" />
-          <span className="text-xs font-semibold uppercase tracking-wider text-text-secondary">Output</span>
-        </div>
-        <div className="p-4 text-sm text-text-muted text-center">
-          Console output will appear here
-        </div>
+      <div className="p-4 text-center text-sm text-text-muted">
+        Console output will appear here
       </div>
     )
   }
   
   return (
-    <div className="bg-bg-secondary rounded-xl border border-border-primary overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-2 bg-bg-tertiary border-b border-border-primary">
-        <div className="flex items-center gap-2">
-          <Terminal size={14} className="text-accent-green" />
-          <span className="text-xs font-semibold uppercase tracking-wider text-text-secondary">Output</span>
+    <div className="p-3 font-mono text-sm max-h-40 overflow-y-auto">
+      {consoleOutput.length === 0 ? (
+        <span className="text-text-muted">No output yet</span>
+      ) : (
+        <div className="space-y-1">
+          {consoleOutput.map((line, idx) => (
+            <div key={idx} className="flex gap-3">
+              <span className="text-text-muted select-none w-6 text-right">{idx + 1}</span>
+              <span className="text-text-primary">{line}</span>
+            </div>
+          ))}
         </div>
-        {consoleOutput.length > 0 && (
-          <span className="text-xs text-text-muted">{consoleOutput.length} lines</span>
-        )}
-      </div>
-      <div className="p-3 font-mono text-sm max-h-40 overflow-y-auto">
-        {consoleOutput.length === 0 ? (
-          <span className="text-text-muted">No output yet</span>
-        ) : (
-          <div className="space-y-1">
-            {consoleOutput.map((line, idx) => (
-              <div key={idx} className="flex gap-3">
-                <span className="text-text-muted select-none w-6 text-right">{idx + 1}</span>
-                <span className="text-text-primary">{line}</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      )}
     </div>
   )
 }
@@ -272,11 +232,46 @@ export function UnifiedVisualization() {
   const currentStep = useCurrentStep()
   const status = useExecutionStore(state => state.status)
   const isIdle = status === 'idle'
+  const [showSettings, setShowSettings] = useState(false)
+  
+  const { order, collapsed, toggleCollapsed, movePanel } = usePanelStore()
+  
+  // Handle reorder from Reorder.Group
+  const handleReorder = (newOrder: typeof order) => {
+    // Find what moved
+    for (let i = 0; i < newOrder.length; i++) {
+      if (newOrder[i] !== order[i]) {
+        const oldIndex = order.indexOf(newOrder[i])
+        if (oldIndex !== -1 && oldIndex !== i) {
+          movePanel(oldIndex, i)
+          break
+        }
+      }
+    }
+  }
+  
+  // Render panel content based on type
+  const renderPanelContent = (panelId: string) => {
+    switch (panelId) {
+      case 'heap-memory':
+        return currentStep ? <HeapVisualization step={currentStep} /> : null
+      case 'visualization':
+        return <MainVisualization step={currentStep} />
+      case 'call-stack':
+        return <CallStack step={currentStep} />
+      case 'variables':
+        return <VariablesPanel step={currentStep} />
+      case 'console-output':
+        return <ConsoleOutput />
+      default:
+        return null
+    }
+  }
   
   // On mobile, show a compact placeholder when idle
   if (isIdle) {
     return (
-      <div className="h-full flex flex-col">
+      <div className="h-full flex flex-col relative">
         {/* Mobile: show compact hint */}
         <div className="lg:hidden flex items-center justify-center gap-2 p-3 bg-bg-tertiary/50 border-b border-border-primary text-sm text-text-muted">
           <BarChart3 size={16} className="text-brand-primary" />
@@ -305,23 +300,82 @@ export function UnifiedVisualization() {
             <p className="text-sm text-text-muted">Console output will appear here</p>
           </div>
         </div>
+        
+        {/* Settings Button (even when idle) */}
+        <button
+          onClick={() => setShowSettings(!showSettings)}
+          className="absolute top-4 right-4 p-2 rounded-lg bg-bg-secondary border border-border-primary text-text-muted hover:text-text-bright hover:border-brand-primary transition-colors"
+          title="Panel Settings"
+        >
+          <Settings2 size={16} />
+        </button>
+        
+        <AnimatePresence>
+          {showSettings && <PanelSettings onClose={() => setShowSettings(false)} />}
+        </AnimatePresence>
       </div>
     )
   }
   
   return (
-    <div className="h-full overflow-y-auto p-4 space-y-4">
-      {/* Main Algorithm Visualization */}
-      <MainVisualization step={currentStep} />
+    <div className="h-full flex flex-col relative">
+      {/* Settings Button */}
+      <div className="absolute top-4 right-4 z-10">
+        <button
+          onClick={() => setShowSettings(!showSettings)}
+          className={`
+            p-2 rounded-lg border transition-all
+            ${showSettings 
+              ? 'bg-brand-primary text-white border-brand-primary' 
+              : 'bg-bg-secondary text-text-muted hover:text-text-bright border-border-primary hover:border-brand-primary'
+            }
+          `}
+          title="Panel Settings"
+        >
+          <Settings2 size={16} />
+        </button>
+      </div>
       
-      {/* Call Stack */}
-      <CallStack step={currentStep} />
+      {/* Draggable Panels */}
+      <div className="flex-1 overflow-y-auto p-4 pt-12">
+        <Reorder.Group 
+          axis="y" 
+          values={order} 
+          onReorder={handleReorder}
+          className="space-y-3"
+        >
+          {order.map((panelId) => {
+            const panel = PANELS.find(p => p.id === panelId)
+            if (!panel) return null
+            
+            const content = renderPanelContent(panelId)
+            if (!content) return null
+            
+            return (
+              <Reorder.Item
+                key={panelId}
+                value={panelId}
+                className="cursor-grab active:cursor-grabbing"
+              >
+                <DraggablePanel
+                  id={panelId}
+                  label={panel.label}
+                  icon={panel.icon}
+                  isCollapsed={collapsed[panelId]}
+                  onToggle={() => toggleCollapsed(panelId)}
+                >
+                  {content}
+                </DraggablePanel>
+              </Reorder.Item>
+            )
+          })}
+        </Reorder.Group>
+      </div>
       
-      {/* Variables */}
-      <Variables step={currentStep} />
-      
-      {/* Console Output */}
-      <ConsoleOutput />
+      {/* Settings Panel */}
+      <AnimatePresence>
+        {showSettings && <PanelSettings onClose={() => setShowSettings(false)} />}
+      </AnimatePresence>
     </div>
   )
 }
