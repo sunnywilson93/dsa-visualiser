@@ -2,6 +2,18 @@
 
 This directory contains the phased implementation plan for breaking down JS concepts into granular, interview-focused learning modules.
 
+## 📋 Process Overview
+
+Each phase follows a strict **4-step workflow**:
+
+1. **🔍 Research** - Identify learning blocks and best presentation approaches
+2. **✅ Research Complete** - All blocks cleared, content scope 100% defined
+3. **📐 Plan** - Structure concepts, define visualizations, create templates
+4. **💻 Implement** - Write content, build visualizations, test, deploy
+
+**📖 Read the full workflow:** [CONTENT-WORKFLOW.md](../CONTENT-WORKFLOW.md)  
+**📊 Current status:** [STATUS-TRACKER.md](./STATUS-TRACKER.md)
+
 ## Quick Navigation
 
 | Phase | Focus | Concepts | Priority | Est. Time |
