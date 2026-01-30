@@ -63,8 +63,8 @@ const visualizations: Record<string, React.ComponentType> = {
   'promises-creation': dynamic(() => import('@/components/Concepts/PromisesCreationViz').then(m => m.PromisesCreationViz)),
   'promises-chaining': dynamic(() => import('@/components/Concepts/PromisesChainingViz').then(m => m.PromisesChainingViz)),
   'promises-then-catch': dynamic(() => import('@/components/Concepts/PromisesThenCatchViz').then(m => m.PromisesThenCatchViz)),
-  'promises-static-methods': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
-  'async-await-basics': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
+  'promises-static-methods': dynamic(() => import('@/components/Concepts/PromisesStaticViz').then(m => m.PromisesStaticViz)),
+  'async-await-basics': dynamic(() => import('@/components/Concepts/AsyncAwaitSyntaxViz').then(m => m.AsyncAwaitSyntaxViz)),
   'async-await-parallel': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
   'async-await-error-handling': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
   
