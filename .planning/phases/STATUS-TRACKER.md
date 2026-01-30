@@ -1,140 +1,161 @@
-# Content Phase Status Tracker
+# Project Status Tracker
 
-> Live tracking of each phase through the 4-step workflow
+> 4-Phase UX & Visualization Improvement Project
 
 **Last Updated:** 2026-01-30  
-**Current Status:** All Phases + Visualizations Complete  
-**Total Concepts:** 91 (expanded from original 31)
-**Total Visualizations:** 91 (100% coverage)
+**Project:** Fix Concept System UX & Visualizations  
+**Total Concepts:** 84 JavaScript concepts
 
 ---
 
-## Quick Status
+## Phase Overview
 
-| Phase | Content Status | Visualization Status | Concept Count |
-|-------|---------------|---------------------|---------------|
-| Phase 1: Scope & Hoisting | ✅ Complete | ✅ Complete | 5 |
-| Phase 2: Async Foundation | ✅ Complete | ✅ Complete | 11 |
-| Phase 3: Array Mastery | ✅ Complete | ✅ Complete | 7 |
-| Phase 4: Closure & Prototypes | ✅ Complete | ✅ Complete | 12 |
-| Phase 5: Event Loop | ✅ Complete | ✅ Complete | 8 |
-| Phase 6: Modern JS | ✅ Complete | ✅ Complete | 7 |
-| Phase 7: Error Handling | ✅ Complete | ✅ Complete | 3 |
-| Phase 8: Type Coercion | ✅ Complete | ✅ Complete | 2 |
+| Phase | Name | Goal | Duration | Status | Dependency |
+|-------|------|------|----------|--------|------------|
+| 1 | Fix Viz Mappings | 100% viz coverage | 2h | ✅ Complete | None |
+| 2 | Subcategories | Clear category structure | 3h | ⏳ Ready to Start | Phase 1 |
+| 3 | Prerequisites | Learning paths | 2h | ⏳ Blocked | Phase 2 |
+| 4 | Content | Standardized depth | 4h | ⏳ Blocked | Phase 3 |
 
-**Total:** 55 new granular concepts + visualizations added
+**Total Estimated Duration:** 11 hours (1.5-2 days)
+**Completed:** 2 hours
+**Remaining:** 9 hours
 
 ---
 
-## Visualization Implementation Summary
+## Current Status
 
-### New Components Created
+### Phase 1: Fix 13 Missing Visualization Mappings
+**Status:** ⏳ Not Started
 
-| Component | Concepts Covered | Location |
-|-----------|-----------------|----------|
-| `ScopeHoistingViz` | scope-basics, hoisting-variables, hoisting-functions, tdz, lexical-scope | New |
-| `ModernJSViz` | destructuring, spread, rest, template-literals, optional-chaining, nullish-coalescing, logical-assignment | New |
-| `ErrorHandlingViz` | try-catch-finally, error-types, custom-errors | New |
-| `AsyncPatternsViz` | callbacks, promises, async-await patterns | New |
-| `ArrayMethodsViz` | mutation, iteration, transformation, searching, sorting, reduce, immutable | New |
-| `EventLoopGranularViz` | call-stack, task-queue, microtask, tick, starvation | New |
+**Goal:** Add visualizations to concepts showing "coming soon"
 
-### Icons Added: 52 new mappings
+**Deliverables:**
+- [ ] All 84 concepts have viz mappings
+- [ ] All icons mapped
+- [ ] Naming inconsistencies fixed
 
-All new concept IDs now have corresponding Lucide icons in `ConceptIcon.tsx`:
-- Phase 1: Layers, ArrowUp, ArrowUpCircle, ShieldAlert, Parentheses
-- Phase 2: MessageSquare, AlertTriangle, GitCommitVertical, GitBranch, Link2, etc.
-- Phase 3: Pencil, Repeat, Shuffle, Search, Minus, Copy
-- Phase 4: Lock, Key, RotateCcw, Database, PieChart, Skull, etc.
-- Phase 5: List, ListOrdered, AlertOctagon
-- Phase 6: UnfoldVertical, Maximize2, Minimize2, Quote, Filter
-- Phase 7: ShieldCheck, AlertCircle, BadgeAlert
-- Phase 8: Bomb
+**Documents:**
+- `PHASE-1-VIZ-MAPPINGS.md` - Full phase plan
 
-### Registration
-
-All 91 concepts now have:
-1. ✅ Icon mapping in `ConceptIcon.tsx`
-2. ✅ Visualization component in `ConceptPageClient.tsx`
-3. ✅ Content in `concepts.ts`
+**Next Action:** Start Step 1 (Research)
 
 ---
 
-## Technical Implementation
+### Phase 2: Reorganize into Subcategories
+**Status:** ⏳ Blocked (waiting Phase 1)
 
-### Pattern Used: Mode-Based Components
+**Goal:** Split "fundamentals" (48 concepts) into logical subcategories
 
-Instead of 50+ separate files, created reusable components with mode props:
+**Deliverables:**
+- [ ] Subcategories defined
+- [ ] Concepts reassigned
+- [ ] UI updated to show subcategories
 
-```tsx
-// Example: One component handles multiple concepts
-<ScopeHoistingViz mode="scope" />        // For scope-basics
-<ScopeHoistingViz mode="hoisting-vars" /> // For hoisting-variables
-<ScopeHoistingViz mode="tdz" />           // For temporal-dead-zone
-```
-
-### Benefits
-- **Maintainability**: Fewer files to maintain
-- **Consistency**: Shared styling and behavior
-- **Performance**: Lazy loaded with Next.js dynamic imports
-- **Type Safety**: Full TypeScript support
+**Documents:**
+- `PHASE-2-SUBCATEGORIES.md` - Full phase plan
 
 ---
 
-## Build Verification
+### Phase 3: Add Prerequisite Learning Paths
+**Status:** ⏳ Blocked (waiting Phase 2)
 
-```bash
-# Last verified: 2026-01-30
-npm run build      # ✅ Success
-npm run test:run   # ✅ 78 passed
-npm run lint       # ✅ No errors
-```
+**Goal:** Every concept has prerequisites and nextConcepts
 
-### Performance
-- Build time: ~30s (acceptable for 91 concepts)
-- Bundle size: ~89KB shared + per-page chunks
-- All pages SSG pre-rendered
+**Deliverables:**
+- [ ] Prerequisites defined for all 84 concepts
+- [ ] NextConcepts defined
+- [ ] Prev/next navigation added
 
----
-
-## Next Steps (Optional)
-
-1. **Content Enhancement**
-   - Add more detailed examples to visualization steps
-   - Expand code playgrounds for interactive learning
-
-2. **Visual Polish**
-   - Add animations to ArrayMethodsViz operations
-   - Improve mobile responsiveness of visualizations
-
-3. **SEO**
-   - Add OpenGraph images for new concept pages
-   - Update sitemap priorities
+**Documents:**
+- `PHASE-3-PREREQUISITES.md` - Full phase plan
 
 ---
 
-## Files Modified
+### Phase 4: Standardize Content Depth
+**Status:** ⏳ Blocked (waiting Phase 3)
 
-### Content
-- `src/data/concepts.ts` - 91 concepts defined
+**Goal:** All concepts have 3+ examples, 5+ key points, 3+ interview tips
 
-### Visualizations
-- `src/components/Concepts/ScopeHoistingViz.tsx` - NEW
-- `src/components/Concepts/ModernJSViz.tsx` - NEW
-- `src/components/Concepts/ErrorHandlingViz.tsx` - NEW
-- `src/components/Concepts/AsyncPatternsViz.tsx` - NEW
-- `src/components/Concepts/ArrayMethodsViz.tsx` - NEW
-- `src/components/Concepts/EventLoopGranularViz.tsx` - NEW
-- `src/components/Concepts/index.ts` - Updated exports
+**Deliverables:**
+- [ ] Content audit complete
+- [ ] Sparse concepts identified
+- [ ] Content added to meet minimums
 
-### Icons
-- `src/components/Icons/ConceptIcon.tsx` - 52 new icon mappings
+**Documents:**
+- `PHASE-4-CONTENT.md` - Full phase plan
 
-### Registration
-- `src/app/concepts/[conceptId]/ConceptPageClient.tsx` - 91 viz mappings
+---
 
-### Documentation
-- `.planning/VISUALIZATION-WORKFLOW.md` - NEW
-- `.planning/phases/VISUALIZATION-RESEARCH.md` - NEW
-- `.planning/phases/VISUALIZATION-PLAN.md` - NEW
-- `.planning/phases/STATUS-TRACKER.md` - Updated
+## How to Use This Project
+
+### 1. Start Phase 1
+- Open `PHASE-1-VIZ-MAPPINGS.md`
+- Complete Step 1 (Research)
+- Get sign-off on Step 2
+- Complete Step 3 (Plan)
+- Execute Step 4 (Implement)
+
+### 2. When Phase 1 Complete
+- Update this file: Phase 1 Status = ✅ Complete
+- Unblock Phase 2
+- Start Phase 2
+
+### 3. Repeat for Phases 2-4
+- Each phase must be complete before next starts
+- Update this tracker after each phase
+
+---
+
+## Phase Completion Definition
+
+A phase is **complete** when:
+1. ✅ All 4 steps (Research, Sign-off, Plan, Implement) done
+2. ✅ Build passes (`npm run build`)
+3. ✅ Tests pass (`npm run test:run`)
+4. ✅ Manual verification complete
+5. ✅ This tracker updated
+
+---
+
+## Quick Links
+
+### Phase Documents
+- [PHASE-1-VIZ-MAPPINGS.md](./PHASE-1-VIZ-MAPPINGS.md)
+- [PHASE-2-SUBCATEGORIES.md](./PHASE-2-SUBCATEGORIES.md)
+- [PHASE-3-PREREQUISITES.md](./PHASE-3-PREREQUISITES.md)
+- [PHASE-4-CONTENT.md](./PHASE-4-CONTENT.md)
+
+### Research Documents
+- [RESEARCH-UX-VIZ-GAPS.md](../RESEARCH-UX-VIZ-GAPS.md) - Full audit
+- [CONCEPT-VIZ-MAPPING.md](../CONCEPT-VIZ-MAPPING.md) - Mappings
+- [ACTION-PLAN-UX-VIZ.md](../ACTION-PLAN-UX-VIZ.md) - Tasks
+
+---
+
+## Project Metrics
+
+| Metric | Current | After Phase 1 | After Phase 4 |
+|--------|---------|---------------|---------------|
+| Viz Coverage | 84% (71/84) | 100% (84/84) | 100% |
+| Category Clarity | Poor (48 in 1) | Same | Good (subcategories) |
+| Learning Paths | None | Same | Yes (prerequisites) |
+| Content Standard | Inconsistent | Same | Standardized |
+
+---
+
+## Blockers
+
+| Phase | Blocker | Resolution |
+|-------|---------|------------|
+| 2 | Waiting Phase 1 | Complete Phase 1 |
+| 3 | Waiting Phase 2 | Complete Phase 2 |
+| 4 | Waiting Phase 3 | Complete Phase 3 |
+
+---
+
+## Ready to Start?
+
+**Next Action:** Open `PHASE-1-VIZ-MAPPINGS.md` and begin Step 1 (Research)
+
+**Estimated Time to Complete All Phases:** 1.5 - 2 days
