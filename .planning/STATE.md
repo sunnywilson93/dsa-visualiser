@@ -42,6 +42,7 @@ Progress: [####______] 9/18 plans (Phase 18: 4/4, Phase 19: 5/5)
 - 18-04: 5 min (PromisesThenCatchViz, PromisesChainingViz)
 
 **v3.0 Phase 19:**
+- 19-02: 9 min (AsyncAwaitSyntaxViz)
 - 19-05: 6 min (EventLoopTickViz)
 
 ## Accumulated Context
@@ -64,6 +65,8 @@ Recent decisions affecting current work:
 | Fork diagram for error/success paths | Side-by-side branches with red/green highlighting | 18-02 |
 | Circular diagram for tick cycle | SVG arcs with phase indicators for event loop | 19-05 |
 | Progressive disclosure by level | Different phases shown per difficulty level | 19-05 |
+| Async function state icons | Play=running, Pause=suspended, CheckCircle=completed | 19-02 |
+| Three-panel layout for async viz | Code+State top, CallStack+MicroQueue bottom | 19-02 |
 
 ### Pending Todos
 
