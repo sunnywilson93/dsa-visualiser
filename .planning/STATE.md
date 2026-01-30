@@ -42,6 +42,7 @@ Progress: [####______] 9/18 plans (Phase 18: 4/4, Phase 19: 5/5)
 - 18-04: 5 min (PromisesThenCatchViz, PromisesChainingViz)
 
 **v3.0 Phase 19:**
+- 19-01: 5 min (PromisesStaticViz)
 - 19-02: 9 min (AsyncAwaitSyntaxViz)
 - 19-03: 11 min (AsyncAwaitErrorsViz, AsyncAwaitParallelViz)
 - 19-05: 6 min (EventLoopTickViz)
@@ -64,6 +65,8 @@ Recent decisions affecting current work:
 | Executor phase indicator pattern | not-started -> running -> complete visualization | 18-03 |
 | Horizontal for value flow, vertical for sequence | ThenCatch=horizontal, Chaining=vertical layouts | 18-04 |
 | Fork diagram for error/success paths | Side-by-side branches with red/green highlighting | 18-02 |
+| 4-column comparison grid for methods | Side-by-side Promise.all/race/allSettled/any | 19-01 |
+| Settlement order badges | Numbered badges on promise cards show settle order | 19-01 |
 | Fork diagram for async error handling | Reuse ErrorFirstCallbacksViz pattern for try/catch | 19-03 |
 | Timeline bars for parallel execution | Animated bars showing start/end times for comparison | 19-03 |
 | Circular diagram for tick cycle | SVG arcs with phase indicators for event loop | 19-05 |
