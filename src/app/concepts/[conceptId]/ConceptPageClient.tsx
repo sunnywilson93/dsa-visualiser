@@ -57,12 +57,12 @@ const visualizations: Record<string, React.ComponentType> = {
   'lexical-scope': dynamic(() => import('@/components/Concepts/ScopeHoistingViz').then(m => m.ScopeHoistingViz)),
   
   // Phase 2: Async Foundation
-  'callbacks-fundamentals': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
+  'callbacks-fundamentals': dynamic(() => import('@/components/Concepts/CallbacksBasicsViz').then(m => m.CallbacksBasicsViz)),
   'error-first-callbacks': dynamic(() => import('@/components/Concepts/ErrorFirstCallbacksViz').then(m => m.ErrorFirstCallbacksViz)),
-  'callback-hell': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
+  'callback-hell': dynamic(() => import('@/components/Concepts/CallbackHellViz').then(m => m.CallbackHellViz)),
   'promises-creation': dynamic(() => import('@/components/Concepts/PromisesCreationViz').then(m => m.PromisesCreationViz)),
-  'promise-chaining': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
-  'promises-then-catch': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
+  'promise-chaining': dynamic(() => import('@/components/Concepts/PromisesChainingViz').then(m => m.PromisesChainingViz)),
+  'promises-then-catch': dynamic(() => import('@/components/Concepts/PromisesThenCatchViz').then(m => m.PromisesThenCatchViz)),
   'promise-static-methods': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
   'async-await-basics': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
   'async-await-parallel': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
