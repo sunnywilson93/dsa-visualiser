@@ -65,8 +65,8 @@ const visualizations: Record<string, React.ComponentType> = {
   'promises-then-catch': dynamic(() => import('@/components/Concepts/PromisesThenCatchViz').then(m => m.PromisesThenCatchViz)),
   'promises-static-methods': dynamic(() => import('@/components/Concepts/PromisesStaticViz').then(m => m.PromisesStaticViz)),
   'async-await-basics': dynamic(() => import('@/components/Concepts/AsyncAwaitSyntaxViz').then(m => m.AsyncAwaitSyntaxViz)),
-  'async-await-parallel': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
-  'async-await-error-handling': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
+  'async-await-parallel': dynamic(() => import('@/components/Concepts/AsyncAwaitParallelViz').then(m => m.AsyncAwaitParallelViz)),
+  'async-await-error-handling': dynamic(() => import('@/components/Concepts/AsyncAwaitErrorsViz').then(m => m.AsyncAwaitErrorsViz)),
   
   // Phase 3: Array Mastery
   'array-mutation-methods': dynamic(() => import('@/components/Concepts/ArrayMethodsViz').then(m => m.ArrayMethodsViz)),
