@@ -58,7 +58,7 @@ const visualizations: Record<string, React.ComponentType> = {
   
   // Phase 2: Async Foundation
   'callbacks-fundamentals': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
-  'error-first-callbacks': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
+  'error-first-callbacks': dynamic(() => import('@/components/Concepts/ErrorFirstCallbacksViz').then(m => m.ErrorFirstCallbacksViz)),
   'callback-hell': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
   'promises-creation': dynamic(() => import('@/components/Concepts/PromisesCreationViz').then(m => m.PromisesCreationViz)),
   'promise-chaining': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
