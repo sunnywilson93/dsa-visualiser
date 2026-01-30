@@ -36,6 +36,7 @@ Progress: [##________] 1/4 phases (Phase 18 complete)
 - Average duration: ~3.0 min
 
 **v3.0 Phase 18:**
+- 18-02: 5 min (ErrorFirstCallbacksViz)
 - 18-03: 5 min (PromisesCreationViz)
 - 18-04: 5 min (PromisesThenCatchViz, PromisesChainingViz)
 
@@ -56,6 +57,7 @@ Recent decisions affecting current work:
 | Reuse PromisesViz.module.css | Consistent styling for promise visualizations | 18-03 |
 | Executor phase indicator pattern | not-started -> running -> complete visualization | 18-03 |
 | Horizontal for value flow, vertical for sequence | ThenCatch=horizontal, Chaining=vertical layouts | 18-04 |
+| Fork diagram for error/success paths | Side-by-side branches with red/green highlighting | 18-02 |
 
 ### Pending Todos
 
