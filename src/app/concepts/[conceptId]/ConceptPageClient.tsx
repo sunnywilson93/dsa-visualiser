@@ -101,8 +101,8 @@ const visualizations: Record<string, React.ComponentType> = {
   // Phase 5: Event Loop
   'call-stack-basics': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
   'web-apis-overview': dynamic(() => import('@/components/Concepts/EventLoopViz').then(m => m.EventLoopViz)),
-  'task-queue-macrotasks': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
-  'microtask-queue': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
+  'task-queue-macrotasks': dynamic(() => import('@/components/Concepts/TaskQueueViz').then(m => m.TaskQueueViz)),
+  'microtask-queue': dynamic(() => import('@/components/Concepts/MicrotaskQueueViz').then(m => m.MicrotaskQueueViz)),
   'event-loop-tick': dynamic(() => import('@/components/Concepts/EventLoopTickViz').then(m => m.EventLoopTickViz)),
   'event-loop-priority': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
   'javascript-runtime-model': dynamic(() => import('@/components/Concepts/EventLoopViz').then(m => m.EventLoopViz)),
