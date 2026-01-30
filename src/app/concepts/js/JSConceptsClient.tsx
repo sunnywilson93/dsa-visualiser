@@ -1,17 +1,87 @@
 'use client'
 
-import { Search } from 'lucide-react'
+import { useState } from 'react'
+import { Search, ChevronDown } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { SearchResultsList } from '@/components/Search'
 import { usePageSearch } from '@/components/Search'
 import { PageSearchControls } from '@/components/Search/PageSearchControls'
 import { ConceptIcon } from '@/components/Icons'
 import { Card, CardCarousel } from '@/components/Card'
-import { concepts, conceptCategories } from '@/data/concepts'
+import { concepts, conceptCategories, subcategories } from '@/data/concepts'
+
+// Subcategory grouping component
+function SubcategoryAccordion({ 
+  subcategoryId, 
+  subcategory, 
+  concepts 
+}: { 
+  subcategoryId: string
+  subcategory: { name: string; description: string; order: number }
+  concepts: typeof import('@/data/concepts').concepts
+}) {
+  const [isOpen, setIsOpen] = useState(subcategory.order === 1) // Open first by default
+
+  if (concepts.length === 0) return null
+
+  return (
+    <div className="mb-6 border border-white/10 rounded-xl overflow-hidden bg-black/20">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between p-4 text-left hover:bg-white/5 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-xl">
+            <ConceptIcon conceptId={concepts[0]?.id || subcategoryId} size={24} />
+          </span>
+          <div>
+            <h3 className="text-lg font-semibold text-white">{subcategory.name}</h3>
+            <p className="text-sm text-gray-400">{subcategory.description}</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-gray-500">{concepts.length} concepts</span>
+          <ChevronDown 
+            size={20} 
+            className={`text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          />
+        </div>
+      </button>
+      
+      {isOpen && (
+        <div className="p-4 pt-0">
+          <CardCarousel itemCount={concepts.length}>
+            {concepts.map((concept, index) => (
+              <Card
+                key={concept.id}
+                href={`/concepts/${concept.id}`}
+                title={concept.title}
+                description={concept.shortDescription}
+                icon={<ConceptIcon conceptId={concept.id} size={32} />}
+                difficulty={concept.difficulty}
+                stats={[
+                  { label: 'key points', value: concept.keyPoints.length },
+                  { label: 'examples', value: concept.examples.length },
+                ]}
+                index={index}
+                isActive={index === 0}
+              />
+            ))}
+          </CardCarousel>
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function JSConceptsClient() {
   const search = usePageSearch('js')
   const hasActiveFilters = search.isSearching || search.filters.difficulty !== 'all'
+
+  // Group fundamentals by subcategory
+  const fundamentalsConcepts = concepts.filter(c => c.category === 'fundamentals')
+  const subcategoriesList = Object.entries(subcategories)
+    .sort((a, b) => a[1].order - b[1].order)
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-bg-page from-0% to-bg-page-secondary to-100%">
@@ -26,7 +96,7 @@ export default function JSConceptsClient() {
             JavaScript Concepts
           </h1>
           <p className="text-text-secondary text-md m-0 leading-relaxed max-md:text-base">
-            Core JS mechanics: Closures, Event Loop, Prototypes, This keyword, and runtime internals.
+            Master JavaScript through organized learning paths. Explore concepts by topic.
           </p>
         </header>
 
@@ -59,6 +129,40 @@ export default function JSConceptsClient() {
               const categoryConcepts = concepts.filter(c => c.category === category.id)
               if (categoryConcepts.length === 0) return null
 
+              // Special handling for fundamentals - use accordion by subcategory
+              if (category.id === 'fundamentals') {
+                return (
+                  <section key={category.id} className="mb-12">
+                    <h2 className="flex items-center gap-4 text-xl font-semibold text-text-bright m-0 mb-4 max-md:flex-wrap">
+                      <span className="text-xl drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]">
+                        <ConceptIcon conceptId={category.id} size={20} />
+                      </span>
+                      {category.name}
+                      <span className="text-base font-normal text-text-muted ml-auto max-md:w-full max-md:ml-0 max-md:mt-1">
+                        {category.description}
+                      </span>
+                    </h2>
+
+                    {subcategoriesList.map(([subcategoryId, subcategory]) => {
+                      const subcategoryConcepts = fundamentalsConcepts.filter(
+                        c => c.subcategory === subcategoryId
+                      )
+                      if (subcategoryConcepts.length === 0) return null
+
+                      return (
+                        <SubcategoryAccordion
+                          key={subcategoryId}
+                          subcategoryId={subcategoryId}
+                          subcategory={subcategory}
+                          concepts={subcategoryConcepts}
+                        />
+                      )
+                    })}
+                  </section>
+                )
+              }
+
+              // Default handling for other categories
               return (
                 <section key={category.id} className="mb-12">
                   <h2 className="flex items-center gap-4 text-xl font-semibold text-text-bright m-0 mb-4 max-md:flex-wrap">

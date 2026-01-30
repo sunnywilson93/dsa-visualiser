@@ -13,13 +13,13 @@
 | Phase | Name | Goal | Duration | Status | Dependency |
 |-------|------|------|----------|--------|------------|
 | 1 | Fix Viz Mappings | 100% viz coverage | 2h | ✅ Complete | None |
-| 2 | Subcategories | Clear category structure | 3h | ⏳ Ready to Start | Phase 1 |
-| 3 | Prerequisites | Learning paths | 2h | ⏳ Blocked | Phase 2 |
+| 2 | Subcategories | Clear category structure | 3h | ✅ Complete | Phase 1 |
+| 3 | Prerequisites | Learning paths | 2h | ⏳ Ready to Start | Phase 2 |
 | 4 | Content | Standardized depth | 4h | ⏳ Blocked | Phase 3 |
 
 **Total Estimated Duration:** 11 hours (1.5-2 days)
-**Completed:** 2 hours
-**Remaining:** 9 hours
+**Completed:** 5 hours (Phases 1-2)
+**Remaining:** 6 hours (Phases 3-4)
 
 ---
 
