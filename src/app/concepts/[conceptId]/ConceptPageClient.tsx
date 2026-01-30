@@ -8,7 +8,8 @@ import { ArrowLeft, Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2, Ham
 import { NavBar } from '@/components/NavBar'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ConceptIcon } from '@/components/Icons'
-import { getConceptById, getRelatedConcepts, getRelatedProblems } from '@/data/concepts'
+import { getConceptById, getRelatedConcepts, getRelatedProblems, concepts as jsConcepts } from '@/data/concepts'
+import { dsaConcepts } from '@/data/dsaConcepts'
 import { codeExamples } from '@/data/examples'
 
 // Lazy load visualizations - each loads only when its concept page is visited
@@ -47,12 +48,94 @@ const visualizations: Record<string, React.ComponentType> = {
   'function-composition': dynamic(() => import('@/components/Concepts/CompositionViz').then(m => m.CompositionViz)),
   'timing-control': dynamic(() => import('@/components/Concepts/TimingViz').then(m => m.TimingViz)),
   'memoization': dynamic(() => import('@/components/Concepts/MemoizationViz').then(m => m.MemoizationViz)),
+  
+  // Phase 1: Scope & Hoisting
+  'scope-basics': dynamic(() => import('@/components/Concepts/ScopeHoistingViz').then(m => m.ScopeHoistingViz)),
+  'hoisting-variables': dynamic(() => import('@/components/Concepts/HoistingViz').then(m => m.HoistingViz)),
+  'hoisting-functions': dynamic(() => import('@/components/Concepts/HoistingViz').then(m => m.HoistingViz)),
+  'temporal-dead-zone': dynamic(() => import('@/components/Concepts/ScopeHoistingViz').then(m => m.ScopeHoistingViz)),
+  'lexical-scope': dynamic(() => import('@/components/Concepts/ScopeHoistingViz').then(m => m.ScopeHoistingViz)),
+  
+  // Phase 2: Async Foundation
+  'callbacks-fundamentals': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
+  'error-first-callbacks': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
+  'callback-hell': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
+  'promises-creation': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
+  'promise-chaining': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
+  'promises-then-catch': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
+  'promise-static-methods': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
+  'async-await-basics': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
+  'async-await-parallel': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
+  'async-await-error-handling': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
+  
+  // Phase 3: Array Mastery
+  'array-mutation-methods': dynamic(() => import('@/components/Concepts/ArrayMethodsViz').then(m => m.ArrayMethodsViz)),
+  'array-iteration-methods': dynamic(() => import('@/components/Concepts/ArrayMethodsViz').then(m => m.ArrayMethodsViz)),
+  'array-transformation': dynamic(() => import('@/components/Concepts/ArrayMethodsViz').then(m => m.ArrayMethodsViz)),
+  'array-searching-sorting': dynamic(() => import('@/components/Concepts/ArrayMethodsViz').then(m => m.ArrayMethodsViz)),
+  'array-reduce-patterns': dynamic(() => import('@/components/Concepts/ArrayMethodsViz').then(m => m.ArrayMethodsViz)),
+  'array-immutable-patterns': dynamic(() => import('@/components/Concepts/ArrayMethodsViz').then(m => m.ArrayMethodsViz)),
+  
+  // Phase 4: Closure & Prototypes
+  'closure-definition': dynamic(() => import('@/components/Concepts/ClosuresViz').then(m => m.ClosuresViz)),
+  'closure-practical-uses': dynamic(() => import('@/components/Concepts/ClosuresViz').then(m => m.ClosuresViz)),
+  'closure-in-loops': dynamic(() => import('@/components/Concepts/ClosuresViz').then(m => m.ClosuresViz)),
+  'closure-memory': dynamic(() => import('@/components/Concepts/ClosuresViz').then(m => m.ClosuresViz)),
+  'closure-patterns': dynamic(() => import('@/components/Concepts/ClosuresViz').then(m => m.ClosuresViz)),
+  'module-pattern': dynamic(() => import('@/components/Concepts/ClosuresViz').then(m => m.ClosuresViz)),
+  'prototype-chain-basics': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
+  'property-lookup': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
+  'class-syntax-sugar': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
+  'instanceof-operator': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
+  'object-create': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
+  'prototype-pollution': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
+  
+  // Phase 5: Event Loop
+  'call-stack-basics': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
+  'web-apis-overview': dynamic(() => import('@/components/Concepts/EventLoopViz').then(m => m.EventLoopViz)),
+  'task-queue-macrotasks': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
+  'microtask-queue': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
+  'event-loop-tick': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
+  'event-loop-priority': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
+  'javascript-runtime-model': dynamic(() => import('@/components/Concepts/EventLoopViz').then(m => m.EventLoopViz)),
+  'event-loop-starvation': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
+  
+  // Phase 6: Modern JS
+  'destructuring-complete': dynamic(() => import('@/components/Concepts/ModernJSViz').then(m => m.ModernJSViz)),
+  'spread-operator-patterns': dynamic(() => import('@/components/Concepts/ModernJSViz').then(m => m.ModernJSViz)),
+  'rest-parameters': dynamic(() => import('@/components/Concepts/ModernJSViz').then(m => m.ModernJSViz)),
+  'template-literals': dynamic(() => import('@/components/Concepts/ModernJSViz').then(m => m.ModernJSViz)),
+  'optional-chaining': dynamic(() => import('@/components/Concepts/ModernJSViz').then(m => m.ModernJSViz)),
+  'nullish-coalescing': dynamic(() => import('@/components/Concepts/ModernJSViz').then(m => m.ModernJSViz)),
+  'logical-assignment': dynamic(() => import('@/components/Concepts/ModernJSViz').then(m => m.ModernJSViz)),
+  
+  // Phase 7: Error Handling
+  'try-catch-finally': dynamic(() => import('@/components/Concepts/ErrorHandlingViz').then(m => m.ErrorHandlingViz)),
+  'error-types-native': dynamic(() => import('@/components/Concepts/ErrorHandlingViz').then(m => m.ErrorHandlingViz)),
+  'throwing-custom-errors': dynamic(() => import('@/components/Concepts/ErrorHandlingViz').then(m => m.ErrorHandlingViz)),
+  
+  // Phase 8: Type Coercion
+  'implicit-coercion-rules': dynamic(() => import('@/components/Concepts/TypeCoercionViz').then(m => m.TypeCoercionViz)),
+  'coercion-edge-cases': dynamic(() => import('@/components/Concepts/TypeCoercionViz').then(m => m.TypeCoercionViz)),
 }
 
 const difficultyColors = {
   beginner: '#10b981',
   intermediate: '#f59e0b',
   advanced: '#ef4444',
+}
+
+// Helper to determine if a concept is a JS concept or DSA concept
+function getConceptParentSection(conceptId: string): { label: string; path: string } {
+  const isJsConcept = jsConcepts.some(c => c.id === conceptId)
+  if (isJsConcept) {
+    return { label: 'JS Concepts', path: '/concepts/js' }
+  }
+  const isDsaConcept = dsaConcepts.some(c => c.id === conceptId)
+  if (isDsaConcept) {
+    return { label: 'DSA Concepts', path: '/concepts/dsa' }
+  }
+  return { label: 'Concepts', path: '/concepts' }
 }
 
 export default function ConceptPageClient(): JSX.Element {
@@ -75,12 +158,14 @@ export default function ConceptPageClient(): JSX.Element {
   }
 
   const Visualization = visualizations[concept.id]
+  const parentSection = getConceptParentSection(concept.id)
 
   return (
     <div className="flex min-h-screen flex-col bg-[var(--gradient-page)]">
       <NavBar
         breadcrumbs={[
           { label: 'Concepts', path: '/concepts' },
+          { label: parentSection.label, path: parentSection.path },
           { label: concept.title },
         ]}
       />
@@ -90,10 +175,10 @@ export default function ConceptPageClient(): JSX.Element {
         <header className="mb-8">
           <button 
             className="mb-[var(--spacing-lg)] inline-flex items-center gap-[var(--spacing-sm)] border-0 bg-transparent p-0 py-[var(--spacing-sm)] text-base text-[var(--color-gray-500)] transition-colors duration-200 hover:text-[var(--color-brand-primary)]" 
-            onClick={() => router.push('/concepts')}
+            onClick={() => router.push(parentSection.path)}
           >
             <ArrowLeft size={18} />
-            <span>All Concepts</span>
+            <span>{parentSection.label}</span>
           </button>
 
           <div className="mb-[var(--spacing-lg)] flex items-center gap-[var(--spacing-md)] max-md:flex-wrap">

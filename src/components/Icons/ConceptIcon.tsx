@@ -76,6 +76,36 @@ import {
   Ruler,
   PanelTop,
   Mountain,
+  // Phase 1-8 New Icons
+  ArrowUpCircle,
+  ShieldAlert,
+  Parentheses,
+  MessageSquare,
+  AlertTriangle,
+  GitCommitVertical,
+  GitFork,
+  Shield,
+  Pencil,
+  Minus,
+  Copy,
+  Key,
+  RotateCcw,
+  Database,
+  PieChart,
+  FileCode,
+  CheckCircle2,
+  Skull,
+  AlertOctagon,
+  UnfoldVertical,
+  Maximize2,
+  Minimize2,
+  Quote,
+  Filter,
+  ShieldCheck,
+  AlertCircle,
+  BadgeAlert,
+  Bomb,
+  LayoutGrid,
   // Fallback
   HelpCircle,
   type LucideIcon,
@@ -183,6 +213,102 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'intervals': Ruler,               // Intervals - measurement/ranges
   'bit-manipulation': Binary,       // Bit Manipulation - binary operations
   'math': Calculator,               // Math & Geometry - calculations
+
+  // ===== PHASE 1-8: NEW CONCEPT ICONS =====
+
+  // Phase 1: Scope & Hoisting
+  'scope-basics': Layers,
+  'hoisting-variables': ArrowUp,
+  'hoisting-functions': ArrowUpCircle,
+  'temporal-dead-zone': ShieldAlert,
+  'lexical-scope': Parentheses,
+
+  // Phase 2: Async Foundation
+  'callbacks-fundamentals': MessageSquare,
+  'error-first-callbacks': AlertTriangle,
+  'callback-hell': GitCommitVertical,
+  'promises-creation': Clock,
+  'promise-chaining': GitBranch,
+  'promises-then-catch': Link2,
+  'promise-static-methods': LayoutGrid,
+  'async-await-basics': Timer,
+  'async-await-parallel': GitFork,
+  'async-await-error-handling': Shield,
+
+  // Phase 3: Array Mastery
+  'array-mutation-methods': Pencil,
+  'array-iteration-methods': Repeat,
+  'array-transformation': Shuffle,
+  'array-searching-sorting': Search,
+  'array-reduce-patterns': Minus,
+  'array-immutable-patterns': Copy,
+
+  // Phase 4: Closure & Prototypes
+  'closure-definition': Lock,
+  'closure-practical-uses': Key,
+  'closure-in-loops': RotateCcw,
+  'closure-memory': Database,
+  'closure-patterns': PieChart,
+  'module-pattern': Package,
+  'prototype-chain-basics': Link,
+  'property-lookup': Search,
+  'class-syntax-sugar': FileCode,
+  'instanceof-operator': CheckCircle2,
+  'object-create': GitBranch,
+  'prototype-pollution': Skull,
+
+  // Phase 5: Event Loop
+  'call-stack-basics': Layers,
+  'web-apis-overview': Cpu,
+  'task-queue-macrotasks': List,
+  'microtask-queue': ListOrdered,
+  'event-loop-tick': RotateCw,
+  'event-loop-priority': AlertOctagon,
+
+  // Phase 6: Modern JS
+  'destructuring-complete': UnfoldVertical,
+  'spread-operator-patterns': Maximize2,
+  'rest-parameters': Minimize2,
+  'template-literals': Quote,
+  'optional-chaining': Link2,
+  'nullish-coalescing': Filter,
+  'logical-assignment': Zap,
+
+  // Phase 7: Error Handling
+  'try-catch-finally': ShieldCheck,
+  'error-types-native': AlertCircle,
+  'throwing-custom-errors': BadgeAlert,
+
+  // Phase 8: Type Coercion
+  'implicit-coercion-rules': Shuffle,
+  'coercion-edge-cases': Bomb,
+
+  // ===== ADDITIONAL MISSING ICONS =====
+  // Array methods (granular)
+  'array-searching': Search,
+  'array-sorting': ArrowUpDown,
+  
+  // Async (additional)
+  'async-await-syntax': Timer,
+  'callbacks-basics': MessageSquare,
+  'promises-chaining': GitBranch,
+  'promises-static-methods': LayoutGrid,
+  
+  // Closure (additional)
+  'closure-loops-classic': RotateCcw,
+  'closure-memory-leaks': Database,
+  'closure-module-pattern': Package,
+  'closure-partial-application': PieChart,
+  
+  // Class/Prototype (additional)
+  'class-syntax-prototypes': FileCode,
+  'prototype-inheritance': GitBranch,
+  
+  // Event Loop (additional)
+  'event-loop-starvation': AlertOctagon,
+  
+  // Runtime
+  'javascript-runtime-model': Cpu,
 }
 
 interface ConceptIconProps {
