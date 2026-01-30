@@ -25,7 +25,7 @@ Add step-through visualizations for all remaining JS concepts — async patterns
 
 ### OOP/Prototype Visualizations
 
-- [ ] **OOP-01**: PrototypeChainBasicsViz — object → prototype → Object.prototype → null chain
+- [ ] **OOP-01**: PrototypeChainBasicsViz — object -> prototype -> Object.prototype -> null chain
 - [ ] **OOP-02**: PropertyLookupViz — property access walking the prototype chain
 - [ ] **OOP-03**: InstanceofViz — instanceof operator checking prototype chain membership
 - [ ] **OOP-04**: ClassSyntaxViz — ES6 class as syntactic sugar over prototypes
@@ -144,16 +144,41 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ASYNC-01..13 | TBD | Pending |
-| OOP-01..06 | TBD | Pending |
-| CLOS-01..06 | TBD | Pending |
-| QUAL-01..04 | All phases | Pending |
+| ASYNC-01 | Phase 18 | Pending |
+| ASYNC-02 | Phase 18 | Pending |
+| ASYNC-03 | Phase 18 | Pending |
+| ASYNC-04 | Phase 18 | Pending |
+| ASYNC-05 | Phase 18 | Pending |
+| ASYNC-06 | Phase 18 | Pending |
+| ASYNC-07 | Phase 19 | Pending |
+| ASYNC-08 | Phase 19 | Pending |
+| ASYNC-09 | Phase 19 | Pending |
+| ASYNC-10 | Phase 19 | Pending |
+| ASYNC-11 | Phase 19 | Pending |
+| ASYNC-12 | Phase 19 | Pending |
+| ASYNC-13 | Phase 19 | Pending |
+| OOP-01 | Phase 20 | Pending |
+| OOP-02 | Phase 20 | Pending |
+| OOP-03 | Phase 20 | Pending |
+| OOP-04 | Phase 20 | Pending |
+| OOP-05 | Phase 20 | Pending |
+| OOP-06 | Phase 20 | Pending |
+| CLOS-01 | Phase 21 | Pending |
+| CLOS-02 | Phase 21 | Pending |
+| CLOS-03 | Phase 21 | Pending |
+| CLOS-04 | Phase 21 | Pending |
+| CLOS-05 | Phase 21 | Pending |
+| CLOS-06 | Phase 21 | Pending |
+| QUAL-01 | All phases | Pending |
+| QUAL-02 | All phases | Pending |
+| QUAL-03 | All phases | Pending |
+| QUAL-04 | All phases | Pending |
 
 **Coverage:**
 - v3.0 requirements: 29 total (25 viz + 4 quality)
-- Mapped to phases: 0
-- Unmapped: 29
+- Mapped to phases: 29
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-30*
-*Last updated: 2026-01-30 — v3.0 requirements defined*
+*Last updated: 2026-01-30 -- Traceability complete for v3.0 phases 18-21*

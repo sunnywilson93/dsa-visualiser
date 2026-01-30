@@ -5,7 +5,8 @@
 - [x] **v1.0 JS Concept Visualizations** - Phases 1-6 (shipped 2026-01-24)
 - [x] **v1.1 DSA Pattern Visualizations** - Phases 7-10 (shipped 2026-01-25)
 - [x] **v1.2 Polish & Production** - Phases 11-15 (shipped 2026-01-25)
-- [ ] **v2.0 Design System Foundation** - Phases 16-17 (in progress)
+- [x] **v2.0 Design System Foundation** - Phases 16-17 (shipped 2026-01-27)
+- [ ] **v3.0 Complete Concept Visualizations** - Phases 18-21 (in progress)
 
 ## Phases
 
@@ -269,7 +270,8 @@ Plans:
 
 </details>
 
-### v2.0 Design System Foundation (In Progress)
+<details>
+<summary>v2.0 Design System Foundation (Phases 16-17) - SHIPPED 2026-01-27</summary>
 
 **Milestone Goal:** Establish Tailwind v4 `@theme` as the single source of truth for all design tokens. Existing CSS Modules continue working via `@theme`-generated custom properties. No component migration -- foundation only.
 
@@ -278,11 +280,6 @@ Plans:
 ```
 16 -> 17
 ```
-
-- [x] **Phase 16: Config & Token Migration** - Tailwind v4 CSS-first config with all 246 tokens mapped to @theme
-- [ ] **Phase 17: Compatibility Verification** - Existing CSS Modules resolve correctly, preflight hardened, visual parity confirmed
-
-## Phase Details
 
 ### Phase 16: Config & Token Migration
 **Goal**: Tailwind v4 CSS-first config exists with all design tokens mapped to @theme namespaces
@@ -316,16 +313,115 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 17-01-PLAN.md -- Static analysis tooling (check-vars, check-keyframes, tokens-audit scripts)
-- [ ] 17-02-PLAN.md -- Preflight surgical overrides in globals.css
-- [ ] 17-03-PLAN.md -- Run analysis, fix issues, verify build/lint clean
-- [ ] 17-04-PLAN.md -- Playwright visual regression infrastructure and tests
-- [ ] 17-05-PLAN.md -- Final comprehensive verification and human sign-off
+- [x] 17-01-PLAN.md -- Static analysis tooling (check-vars, check-keyframes, tokens-audit scripts)
+- [x] 17-02-PLAN.md -- Preflight surgical overrides in globals.css
+- [x] 17-03-PLAN.md -- Run analysis, fix issues, verify build/lint clean
+- [x] 17-04-PLAN.md -- Playwright visual regression infrastructure and tests
+- [x] 17-05-PLAN.md -- Final comprehensive verification and human sign-off
+
+</details>
+
+### v3.0 Complete Concept Visualizations (In Progress)
+
+**Milestone Goal:** Add step-through visualizations for all remaining JS concepts -- async patterns, OOP/prototypes, and closures. Each visualization matches existing quality with beginner/intermediate/advanced difficulty levels, uses SharedViz components, and is mobile responsive.
+
+**Execution Order:** Phase 18 first (callbacks/promises foundation), then Phase 19 (async/await and queues), then Phase 20 (OOP/prototypes), then Phase 21 (closures). Sequential -- each phase builds on patterns established in previous phases.
+
+```
+18 -> 19 -> 20 -> 21
+```
+
+**Quality Requirements (apply to all phases):**
+- QUAL-01: All visualizations have beginner/intermediate/advanced difficulty levels
+- QUAL-02: All visualizations use SharedViz components (CodePanel, StepControls, StepProgress)
+- QUAL-03: Code highlighting synced with visualization step
+- QUAL-04: Mobile responsive layout for all new visualizations
+
+## Phase Details
+
+### Phase 18: Callbacks & Promises Foundation
+**Goal**: Learners can step through callback patterns and promise fundamentals to understand async building blocks
+**Depends on**: Phase 17 (v2.0 complete)
+**Requirements**: ASYNC-01, ASYNC-02, ASYNC-03, ASYNC-04, ASYNC-05, ASYNC-06
+**Template**: EventLoopViz (queue-based), PromisesViz (state-based)
+**Success Criteria** (what must be TRUE):
+  1. User can step through callback function passing and see when callbacks are invoked vs registered
+  2. Callback hell pyramid visualization shows nesting depth and readability degradation
+  3. Error-first callback pattern shows error propagation path through callback chain
+  4. Promise creation visualization shows executor running synchronously, resolve/reject triggering state change
+  5. Promise then/catch chaining shows return values flowing through chain with state transitions
+  6. Sequential promise chaining shows how each .then() waits for previous promise to settle
+
+Plans:
+- [ ] 18-01-PLAN.md - CallbacksBasicsViz and CallbackHellViz (ASYNC-01, ASYNC-02)
+- [ ] 18-02-PLAN.md - ErrorFirstCallbacksViz (ASYNC-03)
+- [ ] 18-03-PLAN.md - PromisesCreationViz (ASYNC-04)
+- [ ] 18-04-PLAN.md - PromisesThenCatchViz and PromisesChainingViz (ASYNC-05, ASYNC-06)
+
+### Phase 19: Async/Await & Event Loop Deep Dive
+**Goal**: Learners can step through async/await syntax and understand microtask/macrotask queue ordering
+**Depends on**: Phase 18
+**Requirements**: ASYNC-07, ASYNC-08, ASYNC-09, ASYNC-10, ASYNC-11, ASYNC-12, ASYNC-13
+**Template**: EventLoopViz (granular queue animations)
+**Success Criteria** (what must be TRUE):
+  1. Promise.all/race/allSettled comparison shows different settlement behaviors with concurrent promises
+  2. Async function visualization shows suspension points where execution pauses at await
+  3. Try/catch with async/await shows error propagation through async call chain
+  4. Parallel async execution shows Promise.all with async/await for concurrent operations
+  5. Microtask queue visualization shows promise callbacks draining completely before any macrotask runs
+  6. Task queue visualization shows setTimeout/setInterval callbacks as macrotasks
+  7. Event loop tick visualization shows granular task selection: check queues -> run one task -> repeat
+
+Plans:
+- [ ] 19-01-PLAN.md - PromisesStaticViz (ASYNC-07)
+- [ ] 19-02-PLAN.md - AsyncAwaitSyntaxViz (ASYNC-08)
+- [ ] 19-03-PLAN.md - AsyncAwaitErrorsViz and AsyncAwaitParallelViz (ASYNC-09, ASYNC-10)
+- [ ] 19-04-PLAN.md - MicrotaskQueueViz and TaskQueueViz (ASYNC-11, ASYNC-12)
+- [ ] 19-05-PLAN.md - EventLoopTickViz (ASYNC-13)
+
+### Phase 20: OOP/Prototype Visualizations
+**Goal**: Learners can step through prototype chain and class syntax to understand JavaScript's object model
+**Depends on**: Phase 19
+**Requirements**: OOP-01, OOP-02, OOP-03, OOP-04, OOP-05, OOP-06
+**Template**: PrototypesViz (chain visualization with arrows)
+**Success Criteria** (what must be TRUE):
+  1. Prototype chain visualization shows object -> prototype -> Object.prototype -> null traversal
+  2. Property lookup visualization shows step-by-step walking up the prototype chain until property found or null reached
+  3. instanceof visualization shows prototype chain membership check with visual chain traversal
+  4. Class syntax visualization shows ES6 class as syntactic sugar with underlying prototype structure visible
+  5. Extends/super visualization shows prototype linking between parent and child classes
+  6. Prototype pollution visualization shows dangers of modifying Object.prototype with affected objects highlighted
+
+Plans:
+- [ ] 20-01-PLAN.md - PrototypeChainBasicsViz and PropertyLookupViz (OOP-01, OOP-02)
+- [ ] 20-02-PLAN.md - InstanceofViz (OOP-03)
+- [ ] 20-03-PLAN.md - ClassSyntaxViz (OOP-04)
+- [ ] 20-04-PLAN.md - PrototypeInheritanceViz and PrototypePollutionViz (OOP-05, OOP-06)
+
+### Phase 21: Closure Visualizations
+**Goal**: Learners can step through closure patterns to understand lexical scope, memory implications, and practical uses
+**Depends on**: Phase 20
+**Requirements**: CLOS-01, CLOS-02, CLOS-03, CLOS-04, CLOS-05, CLOS-06
+**Template**: ClosuresViz (scope chain with [[Scope]] references)
+**Success Criteria** (what must be TRUE):
+  1. Closure definition visualization shows lexical environment capture at function creation with arrows to parent scope
+  2. Practical closures visualization shows data privacy, factory functions, and state encapsulation patterns
+  3. Loop gotcha visualization shows var creating single shared binding vs let creating per-iteration bindings side-by-side
+  4. Memory leak visualization shows reference chains preventing garbage collection with Root -> Closure -> Leaked Object path
+  5. Module pattern visualization shows IIFE creating private scope with returned public interface
+  6. Partial application visualization shows currying with intermediate closures capturing arguments
+
+Plans:
+- [ ] 21-01-PLAN.md - ClosureDefinitionViz (CLOS-01)
+- [ ] 21-02-PLAN.md - ClosurePracticalViz (CLOS-02)
+- [ ] 21-03-PLAN.md - ClosureLoopGotchaViz (CLOS-03)
+- [ ] 21-04-PLAN.md - ClosureMemoryLeaksViz (CLOS-04)
+- [ ] 21-05-PLAN.md - ClosureModulePatternViz and ClosurePartialApplicationViz (CLOS-05, CLOS-06)
 
 ## Progress
 
 **Execution Order:**
-Phases 1-15 complete (v1.0-v1.2). Phase 16 then 17 (v2.0).
+Phases 1-17 complete (v1.0-v2.0). Phases 18-21 (v3.0) in sequence.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -345,8 +441,12 @@ Phases 1-15 complete (v1.0-v1.2). Phase 16 then 17 (v2.0).
 | 14. Page Consistency | v1.2 | 1/1 | Complete | 2026-01-25 |
 | 15. Responsive Implementation | v1.2 | 3/3 | Complete | 2026-01-25 |
 | 16. Config & Token Migration | v2.0 | 6/6 | Complete | 2026-01-27 |
-| 17. Compatibility Verification | v2.0 | 0/5 | Not started | - |
+| 17. Compatibility Verification | v2.0 | 5/5 | Complete | 2026-01-27 |
+| 18. Callbacks & Promises | v3.0 | 0/4 | Not started | - |
+| 19. Async/Await & Queues | v3.0 | 0/5 | Not started | - |
+| 20. OOP/Prototypes | v3.0 | 0/4 | Not started | - |
+| 21. Closures | v3.0 | 0/5 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-27 -- Phase 17 planned (5 plans in 3 waves)*
+*Last updated: 2026-01-30 -- v3.0 phases 18-21 added (25 visualizations across 4 phases)*
