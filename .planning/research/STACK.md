@@ -1,363 +1,324 @@
-# Stack Research: CSS Module to Tailwind v4 Migration
+# Technology Stack: Async/OOP/Closure Visualizations
 
-**Project:** DSA Visualiser
-**Researched:** 2026-01-27
-**Focus:** Tailwind v4 configuration, migration tooling, CSS Modules coexistence
+**Project:** DSA Visualizer - New Visualization Milestone
+**Researched:** 2026-01-30
+**Focus:** Stack additions for ~26 new async/OOP/closure visualizations
 **Confidence:** HIGH
 
-## Executive Decision: Use CSS-First @theme, NOT tailwind.config.js
+## Executive Summary
 
-**Verdict:** Delete `tailwind.config.js`. Move all design tokens into `@theme` blocks in `globals.css`. This is the canonical Tailwind v4 approach.
-
-**Why:**
-1. Tailwind v4 does NOT auto-detect `tailwind.config.js` -- it requires an explicit `@config` directive to load it, making it a legacy compatibility path, not a first-class citizen.
-2. The project already defines all design tokens as CSS custom properties in `globals.css :root`. The `tailwind.config.js` is just a mirror that wraps those same variables in `var()` calls. This is double-bookkeeping that `@theme` eliminates entirely.
-3. The `@theme` directive simultaneously creates CSS custom properties AND generates utility classes. One definition, two outputs -- exactly what the current setup tries to achieve with two files.
-4. v4's CSS-first config gives 3-10x faster full builds and up to 100x faster incremental builds vs the JS config path.
+**Recommendation: No new dependencies required.** The existing stack (Framer Motion ^11.0.0, React, TypeScript, CSS Modules) is fully capable of handling async flow, OOP prototype chains, and closure visualizations. The existing 37+ Viz components demonstrate mature patterns that scale to the new content.
 
 ---
 
-## Current State Analysis
+## Existing Stack Assessment
 
-### What is installed (CORRECT)
+### Current Animation Foundation
 
-| Package | Version | Status |
-|---------|---------|--------|
-| `tailwindcss` | ^4.1.18 | Correct -- v4 package |
-| `@tailwindcss/postcss` | ^4.1.18 | Correct -- v4 PostCSS integration |
-| `postcss` | ^8.5.6 | Correct -- required by @tailwindcss/postcss |
+| Technology | Version | Status | Notes |
+|------------|---------|--------|-------|
+| framer-motion | ^11.0.0 | KEEP | Provides `motion`, `AnimatePresence`, `layout` - all needed features |
+| React | ^18.3.1 | KEEP | Concurrent features support complex viz updates |
+| TypeScript | ~5.5.0 | KEEP | Type-safe step definitions |
+| CSS Modules | (built-in) | KEEP | Scoped styles per viz |
+| Tailwind v4 | ^4.1.18 | KEEP | @theme tokens for consistent design |
+| Zustand | ^4.5.2 | KEEP | Execution store pattern |
 
-### What needs CHANGING
+### Why No New Animation Libraries?
 
-| Item | Current (WRONG for v4) | Target (CORRECT for v4) |
-|------|------------------------|-------------------------|
-| `globals.css` imports | `@tailwind base; @tailwind components; @tailwind utilities;` | `@import "tailwindcss";` |
-| Design tokens | Separate `:root` block + `tailwind.config.js` mirror | Single `@theme` block |
-| PostCSS config | Includes `autoprefixer` | Remove `autoprefixer` (v4 handles vendor prefixing) |
-| `tailwind.config.js` | Exists with `content` + `theme.extend` | DELETE entirely |
-| Content paths | Manually specified in config | v4 auto-discovers (uses `.gitignore` for exclusions) |
+Examined the existing visualizations:
+- `EventLoopViz.tsx` (1269 lines) - Already handles microtask/macrotask queue animations
+- `ClosuresViz.tsx` (886 lines) - Call stack + heap memory with layout animations
+- `PrototypesViz.tsx` (803 lines) - Prototype chain traversal with highlighting
+- `PromisesViz.tsx` (673 lines) - Promise state transitions
+- `MemoryModelViz.tsx` (973 lines) - Stack/heap with GC visualization
 
-### What to REMOVE
+**Pattern established:** Step-based state machine implemented in React hooks (useState/useEffect) with Framer Motion for visual transitions. This works well and doesn't require XState or other state machine libraries.
 
-| Package | Why Remove |
-|---------|-----------|
-| `autoprefixer` | Tailwind v4 includes vendor prefixing via Lightning CSS. Keeping it adds redundant processing. |
+---
 
+## Library Analysis: What NOT to Add
+
+### XState (State Machine Library)
+
+**Verdict: DO NOT ADD**
+
+| Consideration | Assessment |
+|---------------|------------|
+| Bundle size | +15-30KB depending on usage |
+| Complexity | Overkill for linear step sequences |
+| Existing pattern | Current `useState` + step arrays work perfectly |
+| Learning curve | Team must learn actor model concepts |
+
+**Why not?** The existing visualizations use a simple pattern:
+```typescript
+const [stepIndex, setStepIndex] = useState(0)
+const currentStep = example.steps[stepIndex]
+```
+
+This is perfectly adequate for step-through visualizations. XState shines for complex, branching state with parallel states - not needed here.
+
+**Sources:**
+- [XState Documentation](https://stately.ai/docs/xstate)
+- [XState Visualizer](https://stately.ai/viz)
+
+### React Flow (Diagram Library)
+
+**Verdict: DO NOT ADD**
+
+| Consideration | Assessment |
+|---------------|------------|
+| Bundle size | +200KB+ with dependencies |
+| Use case mismatch | Built for user-editable node graphs |
+| Existing pattern | Framer Motion + CSS handles prototype chains |
+
+**Why not?** Looking at `PrototypesViz.tsx`, the prototype chain visualization is achieved with:
+- CSS grid/flex layout for node positioning
+- Motion for highlight animations
+- Simple arrow elements (`__proto__: -> parent`)
+
+React Flow would be massive overkill for static, linear chains.
+
+**Sources:**
+- [React Flow Documentation](https://reactflow.dev)
+
+### Motion One (Standalone)
+
+**Verdict: DO NOT ADD**
+
+| Consideration | Assessment |
+|---------------|------------|
+| Merger status | Framer Motion + Motion One merged into "Motion" |
+| Current setup | Already using `framer-motion` which includes Motion capabilities |
+| Migration needed | Would require package name change |
+
+**Why not?** As of December 2024, Framer Motion and Motion One merged. The current `framer-motion` package provides all needed features. When ready to upgrade, migrate to `motion` package (v12+), but this is not required for the new visualizations.
+
+**Sources:**
+- [Motion.dev - Should I use Framer Motion or Motion One?](https://motion.dev/blog/should-i-use-framer-motion-or-motion-one)
+- [Motion Changelog](https://motion.dev/changelog)
+
+### GSAP (GreenSock)
+
+**Verdict: DO NOT ADD**
+
+| Consideration | Assessment |
+|---------------|------------|
+| Bundle size | +60KB+ for core |
+| Licensing | Free for personal, commercial requires license |
+| React integration | Requires refs and imperative code |
+| Existing pattern | Framer Motion declarative approach is cleaner |
+
+**Why not?** GSAP is powerful but would introduce a different animation paradigm. The codebase is consistent with Framer Motion's declarative approach. Mixing paradigms creates maintenance burden.
+
+---
+
+## Recommended Stack (No Changes)
+
+### Core Framework
+| Technology | Version | Purpose | Status |
+|------------|---------|---------|--------|
+| framer-motion | ^11.0.0 | All animations | KEEP AS-IS |
+| react | ^18.3.1 | Component rendering | KEEP AS-IS |
+| typescript | ~5.5.0 | Type safety | KEEP AS-IS |
+
+### Visualization Infrastructure
+| Technology | Version | Purpose | Status |
+|------------|---------|---------|--------|
+| SharedViz components | (internal) | StepControls, CodePanel, StepProgress | USE & EXTEND |
+| useAutoPlay hook | (internal) | Step auto-advance | USE |
+| CSS Modules | (built-in) | Scoped styling | USE |
+| Tailwind v4 @theme | ^4.1.18 | Design tokens | USE |
+
+### Supporting Libraries
+| Library | Version | Purpose | Status |
+|---------|---------|---------|--------|
+| lucide-react | ^0.400.0 | Icons | KEEP AS-IS |
+| clsx | ^2.1.1 | Class composition | KEEP AS-IS |
+
+---
+
+## Framer Motion Features for New Visualizations
+
+The current `framer-motion@^11.0.0` provides everything needed:
+
+### For Async Visualizations (~14 components)
+
+| Feature | Use Case | Example |
+|---------|----------|---------|
+| `AnimatePresence mode="popLayout"` | Queue items enter/exit | Callback queue animations |
+| `layout` prop | Queue reflow on removal | Task queue management |
+| `stagger` | Sequential reveals | Multiple microtasks appearing |
+| `initial/animate/exit` | State transitions | Promise pending -> fulfilled |
+
+**Already demonstrated in:** `EventLoopViz.tsx`, `PromisesViz.tsx`
+
+### For OOP Visualizations (~6 components)
+
+| Feature | Use Case | Example |
+|---------|----------|---------|
+| `layout` transitions | Prototype chain reorder | Adding inheritance link |
+| `animate={{ scale }}` | Highlight lookup path | Property resolution walk |
+| `AnimatePresence` | Object creation/GC | Instance lifecycle |
+| `initial={{ opacity: 0 }}` | Property discovery | Finding method on prototype |
+
+**Already demonstrated in:** `PrototypesViz.tsx`, `MemoryModelViz.tsx`
+
+### For Closure Visualizations (~6 components)
+
+| Feature | Use Case | Example |
+|---------|----------|---------|
+| `layout` | Scope chain visualization | EC stack growth/shrink |
+| Line/path animations | Scope reference lines | `[[Scope]]` pointer animation |
+| Color transitions | Memory lifecycle | Closure preserved vs GC'd |
+| `AnimatePresence` | EC pop/push | Function call/return |
+
+**Already demonstrated in:** `ClosuresViz.tsx`, `MemoryModelViz.tsx`
+
+---
+
+## Optional Future Upgrade Path
+
+### Motion v12 (When Ready)
+
+**Status:** Available (v12.26.2 as of Jan 2026)
+**Recommendation:** Upgrade when convenient, not blocking for new visualizations
+
+Benefits:
+- Unified package name (`motion` vs `framer-motion`)
+- Enhanced timeline sequencing API
+- Smaller mini bundle option (2.5KB for simple animations)
+- No breaking changes from v11
+
+Migration:
 ```bash
-npm uninstall autoprefixer
+npm uninstall framer-motion
+npm install motion@^12
+# Update imports: 'framer-motion' -> 'motion/react'
 ```
 
-### What to KEEP as-is
+**Priority:** LOW - Current version works fine.
 
-| Package | Why Keep |
-|---------|---------|
-| `postcss` | Still required by `@tailwindcss/postcss` |
-| `@tailwindcss/postcss` | Correct v4 PostCSS plugin for Next.js |
-| `tailwindcss` | Core framework |
-
-### What NOT to add
-
-| Package | Why NOT |
-|---------|---------|
-| `@tailwindcss/vite` | Project uses Next.js (webpack/turbopack), not Vite. The PostCSS path is correct. |
-| `prettier-plugin-tailwindcss` | Nice-to-have but not needed for migration. Add post-migration if desired. |
-| `tailwind-merge` | Only needed if dynamically composing class strings in JS. Evaluate post-migration. |
-| `clsx` / `classnames` | Same rationale -- evaluate after migration, not during. |
-| `@tailwindcss/upgrade` | Do NOT install as dependency. Run with `npx` only if needed (see Migration Tooling). |
+**Sources:**
+- [Motion npm package](https://www.npmjs.com/package/motion) - v12.26.2 latest
+- [Motion Upgrade Guide](https://motion.dev/docs/upgrade-guide)
 
 ---
 
-## Required Configuration Changes
+## Patterns to Reuse from Existing Viz
 
-### 1. PostCSS Config (postcss.config.js)
+### Step Data Structure Pattern
 
-**Before:**
-```js
-module.exports = {
-  plugins: {
-    '@tailwindcss/postcss': {},
-    autoprefixer: {},
-  },
+From `EventLoopViz.tsx`:
+```typescript
+interface Step {
+  description: string
+  codeLine: number
+  callStack: string[]
+  microQueue: string[]
+  macroQueue: string[]
+  output: string[]
+  phase: 'sync' | 'micro' | 'macro' | 'idle'
 }
 ```
 
-**After:**
-```js
-module.exports = {
-  plugins: {
-    '@tailwindcss/postcss': {},
-  },
-}
+Extend for new visualizations - same pattern, different state shapes.
+
+### Level/Example Selector Pattern
+
+All existing viz use:
+```typescript
+type Level = 'beginner' | 'intermediate' | 'advanced'
+const examples: Record<Level, Example[]> = { ... }
 ```
 
-### 2. globals.css -- Replace @tailwind with @import and @theme
+Keep this pattern for consistency.
 
-**Before (current):**
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+### Neon Box Container Pattern
 
-@layer base {
-:root {
-  --bg-primary: #0f1419;
-  --text-primary: #e6edf3;
-  --color-primary: #a855f7;
-  /* ...200+ CSS variables... */
-}
-}
+From `ClosuresViz.tsx`:
+```tsx
+<div className="relative rounded-xl p-[3px]"
+  style={{ background: 'linear-gradient(135deg, #f97316, #fbbf24)' }}>
+  <div className="absolute -top-px left-1/2 -translate-x-1/2 ...">
+    Call Stack
+  </div>
+  <div className="bg-gray-900 rounded-lg ...">
+    {/* content */}
+  </div>
+</div>
 ```
 
-**After (target):**
-```css
-@import "tailwindcss";
+Consider extracting to shared component for reuse across new visualizations.
 
-@theme {
-  /* Colors -- generates bg-*, text-*, border-* utilities */
-  --color-brand-primary: #a855f7;
-  --color-brand-secondary: #ec4899;
-  --color-brand-light: #c4b5fd;
+### SharedViz Components Available
 
-  --color-bg-primary: #0f1419;
-  --color-bg-secondary: #1a1f26;
-  --color-bg-tertiary: #242b33;
-  --color-bg-elevated: #2d353f;
-  --color-bg-page: #0f0f1a;
-  --color-bg-page-secondary: #1a1a2e;
-
-  --color-text-primary: #e6edf3;
-  --color-text-secondary: #8b949e;
-  --color-text-muted: #6e7681;
-  --color-text-bright: #f5f7ff;
-
-  --color-accent-blue: #58a6ff;
-  --color-accent-green: #3fb950;
-  --color-accent-yellow: #d29922;
-  --color-accent-red: #f85149;
-  --color-accent-purple: #a371f7;
-  --color-accent-cyan: #39c5cf;
-  --color-accent-orange: #db6d28;
-
-  --color-border-primary: #30363d;
-  --color-border-secondary: #21262d;
-
-  /* Spacing -- generates p-*, m-*, gap-*, w-*, h-* utilities */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 12px;
-  --spacing-lg: 16px;
-  --spacing-xl: 24px;
-  --spacing-2xl: 32px;
-  --spacing-3xl: 40px;
-  --spacing-4xl: 48px;
-  --spacing-5xl: 64px;
-  --spacing-6xl: 80px;
-
-  /* Border radius -- generates rounded-* utilities */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
-  --radius-3xl: 20px;
-  --radius-4xl: 24px;
-  --radius-full: 999px;
-
-  /* Shadows -- generates shadow-* utilities */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.5);
-  --shadow-xl: 0 4px 12px rgba(0, 0, 0, 0.5);
-
-  /* Fonts -- generates font-* utilities */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', monospace;
-}
-
-/* Variables that should NOT generate utility classes stay in :root */
-:root {
-  /* Gradients (not a @theme namespace) */
-  --gradient-brand: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
-  --gradient-brand-subtle: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
-
-  /* Opacity variants for glows/backgrounds */
-  --color-primary-20: rgba(168, 85, 247, 0.2);
-  --color-primary-30: rgba(168, 85, 247, 0.3);
-  /* ...other computed/composite tokens... */
-
-  /* Glows/Shadows (complex composite values) */
-  --glow-brand: 0 0 20px rgba(168, 85, 247, 0.2), 0 0 40px rgba(236, 72, 153, 0.1);
-
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-normal: 250ms ease;
-  --transition-slow: 350ms ease;
-
-  /* Execution state colors (domain-specific, no utility needed) */
-  --exec-current: #388bfd33;
-  --exec-breakpoint: #f8514933;
-  --exec-return: #3fb95033;
-}
-```
-
-### Critical: @theme Namespace Conventions
-
-Variables in `@theme` MUST follow Tailwind's namespace convention to generate utilities:
-
-| Namespace | Generates | Example Variable | Example Utility |
-|-----------|-----------|-----------------|-----------------|
-| `--color-*` | `bg-*`, `text-*`, `border-*`, `fill-*` | `--color-accent-blue` | `bg-accent-blue` |
-| `--spacing-*` | `p-*`, `m-*`, `gap-*`, `w-*`, `h-*` | `--spacing-lg` | `p-lg`, `gap-lg` |
-| `--radius-*` | `rounded-*` | `--radius-lg` | `rounded-lg` |
-| `--shadow-*` | `shadow-*` | `--shadow-md` | `shadow-md` |
-| `--font-*` | `font-*` | `--font-mono` | `font-mono` |
-| `--text-*` | Font size | `--text-xl` | `text-xl` |
-| `--font-weight-*` | Font weight | `--font-weight-bold` | `font-bold` |
-| `--breakpoint-*` | Responsive variants | `--breakpoint-md` | `md:*` |
-
-Variables that don't follow these namespaces (gradients, opacity variants, transitions, glows) belong in `:root`, not `@theme`.
-
-### Important Naming Impact
-
-The current variable `--bg-primary` becomes `--color-bg-primary` in `@theme`. This changes the generated utility from what was `bg-primary` (via tailwind.config.js mapping) to `bg-bg-primary` -- OR the naming can be restructured. Recommended approach:
-
-**Option A (minimal rename):** Keep semantic grouping, accept `bg-bg-*` pattern
-- `--color-bg-primary` generates `bg-bg-primary`
-
-**Option B (restructure):** Use flat color names, reference semantically
-- `--color-surface-primary` generates `bg-surface-primary`
-- `--color-content-primary` generates `text-content-primary`
-
-**Recommendation:** Option B is cleaner. Rename during the `@theme` migration to avoid `bg-bg-*` stuttering.
-
-### 3. Delete tailwind.config.js
-
-The entire file becomes unnecessary once `@theme` is set up. Every mapping it currently defines will be handled by namespace conventions.
+From `src/components/SharedViz/`:
+- `CodePanel` - Syntax-highlighted code with line highlighting
+- `StepControls` - Prev/Next/Reset/Play buttons
+- `StepProgress` - Visual step indicator
+- `useAutoPlay` - Hook for auto-advancing steps
 
 ---
 
-## Migration Tooling
+## Development Approach
 
-### Official Upgrade Tool
+### For Each New Visualization
 
-```bash
-npx @tailwindcss/upgrade
-```
+1. **Copy closest existing pattern** - Find most similar existing Viz
+2. **Define step interface** - What state changes per step?
+3. **Create step data** - Static array of step states
+4. **Build UI** - Reuse SharedViz + neon box patterns
+5. **Add Framer Motion** - AnimatePresence + layout for transitions
 
-**What it does:**
-- Converts `@tailwind` directives to `@import "tailwindcss"`
-- Migrates `tailwind.config.js` theme values to `@theme` CSS blocks
-- Updates template files (e.g., `!flex` to `flex!`, gradient class renames)
-- Updates PostCSS config to remove autoprefixer
+### Recommended Starting Points
 
-**What it does NOT do:**
-- Convert CSS Module files to Tailwind utility classes
-- Handle complex computed tokens or dynamic theme references
-- Restructure CSS variable naming to match `@theme` namespaces optimally
-
-**Limitation for this project:** The tool is designed for v3-to-v4 config migration. However, this project's config wraps `var()` references (not raw values), which may not convert cleanly. The upgrade tool expects static values in `tailwind.config.js`, not `var()` indirection.
-
-**Recommendation:** Run `npx @tailwindcss/upgrade` on a branch to see what it produces, but expect to manually refine the `@theme` block. The tool will correctly handle the `@tailwind` to `@import` conversion and PostCSS cleanup.
-
-**Requirement:** Node.js 20+.
-
-### No Automated CSS-Module-to-Utility Converter Exists
-
-There is no reliable tool that reads `.module.css` files and converts them to Tailwind utility classes. This is inherently manual because:
-1. CSS properties map to multiple possible Tailwind utilities
-2. Responsive breakpoints need manual mapping to Tailwind variants
-3. Pseudo-selectors and state classes need variant mapping
-4. Animation/keyframe CSS and complex selectors cannot be expressed purely in utility classes
-5. Context-dependent decisions (when to use component classes vs utilities)
-
-**TWShift** (twshift.com) is an AI-powered tool for v3-to-v4 class syntax changes, not CSS-to-utility conversion.
-
----
-
-## CSS Modules Coexistence Strategy
-
-During migration (which will span multiple phases), CSS Modules and Tailwind will coexist. Here is the approach.
-
-### The @reference Directive
-
-CSS Module files in Tailwind v4 are each compiled independently. They have no access to `@theme` tokens unless explicitly imported. If any CSS Module file needs `@apply`:
-
-```css
-/* Component.module.css */
-@reference "tailwindcss";
-
-.myClass {
-  @apply bg-surface-primary text-content-primary;
-}
-```
-
-### Why to AVOID @apply in CSS Modules
-
-Each CSS Module file that references Tailwind triggers a separate Tailwind compilation pass. With 74 CSS Module files, this means 74 separate Tailwind runs during build -- catastrophic for build performance.
-
-**Correct coexistence strategy:**
-1. **Files being migrated:** Convert to inline Tailwind utility classes in JSX, DELETE the `.module.css` file entirely
-2. **Files not yet migrated:** Leave as CSS Modules using `var()` references directly (these work without Tailwind processing and cost zero build overhead)
-3. **Never add `@apply` or `@reference` to existing CSS Module files** -- this pulls them into Tailwind's compilation pipeline for no benefit
-
-### The var() Bridge
-
-Because `@theme` variables are also CSS custom properties, existing CSS Modules can reference them via `var()` without any Tailwind processing:
-
-```css
-/* Already works -- no @reference needed */
-.container {
-  background: var(--color-surface-primary);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
-}
-```
-
-This means the migration is non-breaking: update `@theme`, rename variables, update `var()` references in CSS Modules, then progressively convert modules to utility classes.
-
----
-
-## Migration Sequence for Config
-
-**Phase 0 (config foundation):**
-1. Run `npx @tailwindcss/upgrade` on a branch, inspect output
-2. Replace `@tailwind` directives with `@import "tailwindcss"`
-3. Create `@theme` block with properly namespaced variables
-4. Move non-utility variables to `:root`
-5. Update PostCSS config (remove autoprefixer)
-6. Delete `tailwind.config.js`
-7. Run `npm uninstall autoprefixer`
-8. Update all `var()` references in existing CSS Modules to use new variable names
-9. Verify build passes, no visual regressions
-
-**Phase 1+ (progressive migration):**
-- Convert CSS Modules to Tailwind utilities one component at a time
-- Delete `.module.css` files as components are converted
-- Each conversion reduces build overhead
+| New Visualization | Base From | Key Additions |
+|-------------------|-----------|---------------|
+| Callback Hell | EventLoopViz | Nested callback depth indicator |
+| Promise Chain | PromisesViz | Chain length visualization |
+| Async/Await | EventLoopViz | Continuation markers |
+| Class Syntax | PrototypesViz | Constructor visualization |
+| Module Pattern | ClosuresViz | Exported interface panel |
+| Memory Leaks | MemoryModelViz | Leak detector indicators |
+| Prototype Chain Deep | PrototypesViz | Extended chain, more examples |
+| Partial Application | ClosuresViz | Curried function visualization |
 
 ---
 
 ## Confidence Assessment
 
-| Decision | Confidence | Source |
-|----------|-----------|--------|
-| Use `@theme` over `tailwind.config.js` | HIGH | Official Tailwind v4 docs, upgrade guide |
-| Remove `autoprefixer` | HIGH | Official upgrade guide states v4 handles prefixing |
-| `@import "tailwindcss"` replaces `@tailwind` | HIGH | Official docs, verified |
-| No automated CSS-to-utility converter exists | HIGH | Ecosystem survey, no credible tool found |
-| `@reference` directive for coexistence | HIGH | Official compatibility docs |
-| Variable namespace conventions | HIGH | Official @theme documentation |
-| Performance impact of CSS modules + Tailwind | MEDIUM | Official compatibility page warning, not benchmarked for this project |
-| Upgrade tool handling of var() config | MEDIUM | Tool expects static values; var() indirection is edge case |
+| Assessment | Level | Reason |
+|------------|-------|--------|
+| No new deps needed | HIGH | Analyzed all 5 major existing Viz - patterns cover needs |
+| Framer Motion sufficient | HIGH | Features verified against Motion docs, all needed features in v11 |
+| Pattern reuse works | HIGH | Existing components are well-structured, consistent patterns |
+| SharedViz extensible | HIGH | Clean interface, already in use across codebase |
+| Motion v12 optional | HIGH | No breaking changes, upgrade when convenient |
+
+---
+
+## Summary
+
+**No new dependencies required.** The existing stack is well-suited for the ~26 new visualizations:
+
+1. **Framer Motion ^11.0.0** - All animation features needed are already available
+2. **SharedViz components** - Ready to use for consistent UX
+3. **Established patterns** - Step-based state, level selectors, neon boxes
+4. **React + TypeScript** - Type-safe step definitions
+
+**Action items:**
+- None for stack changes
+- Consider extracting "neon box" pattern to shared component during implementation
+- Optional: Upgrade to Motion v12 after milestone completion
 
 ---
 
 ## Sources
 
-- [Tailwind CSS v4 Upgrade Guide](https://tailwindcss.com/docs/upgrade-guide) -- Official migration steps
-- [Tailwind CSS v4 Theme Documentation](https://tailwindcss.com/docs/theme) -- @theme namespace reference
-- [Tailwind CSS Compatibility Page](https://tailwindcss.com/docs/compatibility) -- CSS Modules guidance, @reference directive
-- [Tailwind CSS v4 Blog Post](https://tailwindcss.com/blog/tailwindcss-v4) -- Performance claims, architecture overview
-- [GitHub Discussion: CSS Modules with Tailwind v4](https://github.com/tailwindlabs/tailwindcss/discussions/17342) -- Community experience with modules
-- [GitHub Discussion: v4 config file status](https://github.com/tailwindlabs/tailwindcss/discussions/17168) -- Confirms JS config is legacy path
-- [GitHub Discussion: Migration still needing config](https://github.com/tailwindlabs/tailwindcss/discussions/16642) -- Edge cases for JS config retention
+- [Motion.dev Documentation](https://motion.dev/docs) - Official Motion (Framer Motion) docs
+- [Motion npm package](https://www.npmjs.com/package/motion) - v12.26.2 latest
+- [Motion Changelog](https://motion.dev/changelog) - Recent features
+- [XState Documentation](https://stately.ai/docs/xstate) - State machine library (evaluated, not recommended)
+- [React Flow](https://reactflow.dev) - Diagram library (evaluated, not recommended)
+- Existing codebase analysis: `EventLoopViz.tsx`, `ClosuresViz.tsx`, `PrototypesViz.tsx`, `PromisesViz.tsx`, `MemoryModelViz.tsx`
