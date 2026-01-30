@@ -11,17 +11,17 @@ See: .planning/PROJECT.md (updated 2026-01-30)
 
 Milestone: v3.0
 Phase: 18 - Callbacks & Promises Foundation
-Plan: 03 of 4 complete
-Status: In progress
-Last activity: 2026-01-30 -- Completed 18-03-PLAN.md (PromisesCreationViz)
+Plan: 04 of 4 complete
+Status: Phase complete
+Last activity: 2026-01-30 -- Completed 18-04-PLAN.md (PromisesThenCatchViz, PromisesChainingViz)
 
-Progress: [_________] 0/4 phases (Phase 18: 3/4 plans)
+Progress: [##________] 1/4 phases (Phase 18 complete)
 
 ## v3.0 Overview
 
 | Phase | Name | Requirements | Plans | Status |
 |-------|------|--------------|-------|--------|
-| 18 | Callbacks & Promises | ASYNC-01..06 (6) | 4 | In progress (3/4) |
+| 18 | Callbacks & Promises | ASYNC-01..06 (6) | 4 | Complete |
 | 19 | Async/Await & Queues | ASYNC-07..13 (7) | 5 | Not started |
 | 20 | OOP/Prototypes | OOP-01..06 (6) | 4 | Not started |
 | 21 | Closures | CLOS-01..06 (6) | 5 | Not started |
@@ -37,6 +37,7 @@ Progress: [_________] 0/4 phases (Phase 18: 3/4 plans)
 
 **v3.0 Phase 18:**
 - 18-03: 5 min (PromisesCreationViz)
+- 18-04: 5 min (PromisesThenCatchViz, PromisesChainingViz)
 
 ## Accumulated Context
 
@@ -54,6 +55,7 @@ Recent decisions affecting current work:
 | Closures show references not values | Arrows to scope objects, include mutation examples | v3.0 research |
 | Reuse PromisesViz.module.css | Consistent styling for promise visualizations | 18-03 |
 | Executor phase indicator pattern | not-started -> running -> complete visualization | 18-03 |
+| Horizontal for value flow, vertical for sequence | ThenCatch=horizontal, Chaining=vertical layouts | 18-04 |
 
 ### Pending Todos
 
@@ -68,6 +70,6 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-30
-Stopped at: Completed 18-03-PLAN.md (PromisesCreationViz)
+Stopped at: Completed 18-04-PLAN.md (Phase 18 complete)
 Resume file: None
-Next action: Execute 18-04-PLAN.md
+Next action: `/gsd:plan-phase 19` or execute Phase 19 plans
