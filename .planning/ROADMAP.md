@@ -353,10 +353,10 @@ Plans:
   6. Sequential promise chaining shows how each .then() waits for previous promise to settle
 
 Plans:
-- [ ] 18-01-PLAN.md - CallbacksBasicsViz and CallbackHellViz (ASYNC-01, ASYNC-02)
-- [ ] 18-02-PLAN.md - ErrorFirstCallbacksViz (ASYNC-03)
-- [ ] 18-03-PLAN.md - PromisesCreationViz (ASYNC-04)
-- [ ] 18-04-PLAN.md - PromisesThenCatchViz and PromisesChainingViz (ASYNC-05, ASYNC-06)
+- [x] 18-01-PLAN.md - CallbacksBasicsViz and CallbackHellViz (ASYNC-01, ASYNC-02)
+- [x] 18-02-PLAN.md - ErrorFirstCallbacksViz (ASYNC-03)
+- [x] 18-03-PLAN.md - PromisesCreationViz (ASYNC-04)
+- [x] 18-04-PLAN.md - PromisesThenCatchViz and PromisesChainingViz (ASYNC-05, ASYNC-06)
 
 ### Phase 19: Async/Await & Event Loop Deep Dive
 **Goal**: Learners can step through async/await syntax and understand microtask/macrotask queue ordering
@@ -442,11 +442,11 @@ Phases 1-17 complete (v1.0-v2.0). Phases 18-21 (v3.0) in sequence.
 | 15. Responsive Implementation | v1.2 | 3/3 | Complete | 2026-01-25 |
 | 16. Config & Token Migration | v2.0 | 6/6 | Complete | 2026-01-27 |
 | 17. Compatibility Verification | v2.0 | 5/5 | Complete | 2026-01-27 |
-| 18. Callbacks & Promises | v3.0 | 0/4 | Not started | - |
+| 18. Callbacks & Promises | v3.0 | 4/4 | Complete | 2026-01-30 |
 | 19. Async/Await & Queues | v3.0 | 0/5 | Not started | - |
 | 20. OOP/Prototypes | v3.0 | 0/4 | Not started | - |
 | 21. Closures | v3.0 | 0/5 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-30 -- v3.0 phases 18-21 added (25 visualizations across 4 phases)*
+*Last updated: 2026-01-30 -- Phase 18 complete (6 async visualizations)*
