@@ -45,6 +45,7 @@ Progress: [####______] 9/18 plans (Phase 18: 4/4, Phase 19: 5/5)
 - 19-01: 5 min (PromisesStaticViz)
 - 19-02: 9 min (AsyncAwaitSyntaxViz)
 - 19-03: 11 min (AsyncAwaitErrorsViz, AsyncAwaitParallelViz)
+- 19-04: 12 min (MicrotaskQueueViz, TaskQueueViz)
 - 19-05: 6 min (EventLoopTickViz)
 
 ## Accumulated Context
@@ -69,6 +70,8 @@ Recent decisions affecting current work:
 | Settlement order badges | Numbered badges on promise cards show settle order | 19-01 |
 | Fork diagram for async error handling | Reuse ErrorFirstCallbacksViz pattern for try/catch | 19-03 |
 | Timeline bars for parallel execution | Animated bars showing start/end times for comparison | 19-03 |
+| Queue drain visualization | Prominent queue gets gradient glow, waiting queue dims | 19-04 |
+| Spawned-during-drain highlighting | Amber color with explicit label | 19-04 |
 | Circular diagram for tick cycle | SVG arcs with phase indicators for event loop | 19-05 |
 | Progressive disclosure by level | Different phases shown per difficulty level | 19-05 |
 | Async function state icons | Play=running, Pause=suspended, CheckCircle=completed | 19-02 |
