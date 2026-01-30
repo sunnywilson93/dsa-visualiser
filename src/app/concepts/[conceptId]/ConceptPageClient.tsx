@@ -103,7 +103,7 @@ const visualizations: Record<string, React.ComponentType> = {
   'web-apis-overview': dynamic(() => import('@/components/Concepts/EventLoopViz').then(m => m.EventLoopViz)),
   'task-queue-macrotasks': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
   'microtask-queue': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
-  'event-loop-tick': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
+  'event-loop-tick': dynamic(() => import('@/components/Concepts/EventLoopTickViz').then(m => m.EventLoopTickViz)),
   'event-loop-priority': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
   'javascript-runtime-model': dynamic(() => import('@/components/Concepts/EventLoopViz').then(m => m.EventLoopViz)),
   'event-loop-starvation': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
