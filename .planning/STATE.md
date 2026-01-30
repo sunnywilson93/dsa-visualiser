@@ -43,6 +43,7 @@ Progress: [####______] 9/18 plans (Phase 18: 4/4, Phase 19: 5/5)
 
 **v3.0 Phase 19:**
 - 19-02: 9 min (AsyncAwaitSyntaxViz)
+- 19-03: 11 min (AsyncAwaitErrorsViz, AsyncAwaitParallelViz)
 - 19-05: 6 min (EventLoopTickViz)
 
 ## Accumulated Context
@@ -63,6 +64,8 @@ Recent decisions affecting current work:
 | Executor phase indicator pattern | not-started -> running -> complete visualization | 18-03 |
 | Horizontal for value flow, vertical for sequence | ThenCatch=horizontal, Chaining=vertical layouts | 18-04 |
 | Fork diagram for error/success paths | Side-by-side branches with red/green highlighting | 18-02 |
+| Fork diagram for async error handling | Reuse ErrorFirstCallbacksViz pattern for try/catch | 19-03 |
+| Timeline bars for parallel execution | Animated bars showing start/end times for comparison | 19-03 |
 | Circular diagram for tick cycle | SVG arcs with phase indicators for event loop | 19-05 |
 | Progressive disclosure by level | Different phases shown per difficulty level | 19-05 |
 | Async function state icons | Play=running, Pause=suspended, CheckCircle=completed | 19-02 |
