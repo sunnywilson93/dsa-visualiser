@@ -60,7 +60,7 @@ const visualizations: Record<string, React.ComponentType> = {
   'callbacks-fundamentals': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
   'error-first-callbacks': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
   'callback-hell': dynamic(() => import('@/components/Concepts/AsyncPatternsViz').then(m => m.AsyncPatternsViz)),
-  'promises-creation': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
+  'promises-creation': dynamic(() => import('@/components/Concepts/PromisesCreationViz').then(m => m.PromisesCreationViz)),
   'promise-chaining': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
   'promises-then-catch': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
   'promise-static-methods': dynamic(() => import('@/components/Concepts/PromisesViz').then(m => m.PromisesViz)),
