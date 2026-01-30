@@ -8,16 +8,16 @@ A visual learning platform for JavaScript concepts and DSA interview preparation
 
 Learners can step through code execution visually, seeing exactly how algorithms and JavaScript work under the hood — not just reading about them.
 
-## Current Milestone: v2.0 Design System Foundation
+## Current Milestone: v3.0 Complete Concept Visualizations
 
-**Goal:** Establish Tailwind v4 `@theme` as the single source of truth for all design tokens, with existing CSS Modules resolving from it.
+**Goal:** Add step-through visualizations for all remaining JS concepts — async patterns, OOP/prototypes, and closures deep-dive.
 
 **Target features:**
-- Configure Tailwind v4 CSS-first (`@import "tailwindcss"`, `@theme` block, delete `tailwind.config.js`)
-- Map all 246 design tokens (colors, spacing, typography, shadows, radius, animations) to `@theme` namespaces
-- Existing CSS Module `var()` references continue working via `@theme`-generated custom properties
-- Remove `autoprefixer`, install `clsx`
-- Maintain visual parity — no user-facing changes
+- ~14 async visualizations (callbacks, promises lifecycle, async/await patterns, event loop granular)
+- ~6 OOP/prototype visualizations (prototype chain, property lookup, instanceof, classes, inheritance)
+- ~6 closure visualizations (definition, practical uses, loop gotchas, memory leaks, module pattern, partial application)
+- Match existing Viz quality: beginner/intermediate/advanced difficulty levels
+- Reuse SharedViz components (CodePanel, StepControls, StepProgress)
 
 ## Requirements
 
@@ -40,6 +40,7 @@ Learners can step through code execution visually, seeing exactly how algorithms
 - ✓ Consistent headers on DSA pattern pages — v1.2
 - ✓ Bidirectional cross-linking (pattern ↔ problem pages) — v1.2
 - ✓ SEO meta tags and OpenGraph images — v1.2
+- ✓ Tailwind v4 @theme design tokens foundation — v2.0
 
 ### Active
 
@@ -50,29 +51,27 @@ Learners can step through code execution visually, seeing exactly how algorithms
 - New DSA patterns (Sliding Window, Binary Search, etc.) — future milestone
 - Interpreter feature additions — unless needed for visualizations
 - Advanced interactivity (prediction prompts, quizzes) — future milestone
-- Visual redesign — migration must maintain current appearance
+- CSS Module to Tailwind utility migration — deferred to v3.1+
+- Visual redesign — maintain current appearance
 
 ## Context
 
 **Current state:**
 - Full platform complete (JS concepts + DSA patterns + responsive + SEO)
-- 74 CSS Module files (~25,000 lines) across components
-- 246 CSS custom properties in globals.css (colors, spacing, typography, shadows)
-- 8,500+ var() references across module files
-- Tailwind v4.1.18 installed but using v3 syntax (tailwind.config.js, @tailwind directives)
-- Zero Tailwind utility classes in TSX files
+- 37 concept Viz components with step-through visualizations
+- 83+ concept definitions in concepts.ts (data exists, some lack Viz)
+- Tailwind v4 @theme design system foundation complete
+- SharedViz components proven (CodePanel, StepControls, StepProgress)
 - Framer Motion for animations
-- CSS-only responsive patterns (media queries, checkbox hack for mobile nav)
-- 17 dynamic bracket-notation class accesses (styles[variable])
-- 284 template literal className compositions
+- CSS Modules for component styling
 
-**Gap:** Design system scattered across 74 CSS Modules and 246 CSS variables. No single source of truth for design tokens. Tailwind v4 `@theme` consolidates tokens into one place. v2.0 establishes the foundation; component migration deferred to v2.1+.
+**Gap:** ~46 concepts have data definitions but no dedicated step-through visualization. Users see static content instead of interactive learning. v3.0 adds visualizations for the missing async, OOP, and closure concepts.
 
 ## Constraints
 
-- **Tech stack**: React + TypeScript + Framer Motion + Tailwind v4 (migrating from CSS Modules)
-- **Visual parity**: Zero user-facing changes — migration only
-- **Tailwind v4**: CSS-first config, @theme directive, no tailwind.config.js
+- **Tech stack**: React + TypeScript + Framer Motion + CSS Modules
+- **Quality parity**: Match existing Viz quality (difficulty levels, step-through, code highlighting)
+- **Reuse SharedViz**: All new Viz use CodePanel, StepControls, StepProgress
 - **Performance**: Maintain lazy loading, optimize bundle size
 
 ## Key Decisions
@@ -86,11 +85,12 @@ Learners can step through code execution visually, seeing exactly how algorithms
 | 3 DSA patterns first (Two Pointers, Hash Map, Bit Manipulation) | Establish design before expanding | ✓ Good |
 | CSS-first responsive | Avoid layout shift, use media queries | ✓ Good |
 | Bidirectional cross-linking | Both directions for discoverability | ✓ Good |
-| Tailwind v4 @theme foundation first | Establish design tokens before component migration | — In Progress |
-| CSS Modules coexist with @theme | Existing var() references resolve from @theme-generated properties | — Decided |
-| No @apply usage | Tailwind v4 discourages it; use utilities or @layer components | — Decided |
-| clsx for className composition | Replaces template literal concatenation cleanly | — Decided |
-| Component migration deferred to v2.1+ | Foundation first, migrate components later | — Decided |
+| Tailwind v4 @theme foundation first | Establish design tokens before component migration | ✓ Good |
+| CSS Modules coexist with @theme | Existing var() references resolve from @theme-generated properties | ✓ Good |
+| No @apply usage | Tailwind v4 discourages it; use utilities or @layer components | ✓ Good |
+| clsx for className composition | Replaces template literal concatenation cleanly | ✓ Good |
+| Component migration deferred to v3.1+ | Add visualizations first, migrate CSS later | — Decided |
+| Reuse SharedViz for all new Viz | Consistent UX, avoid duplication | — Decided |
 
 ---
-*Last updated: 2026-01-27 — v2.0 rescoped to Design System Foundation*
+*Last updated: 2026-01-30 — v3.0 milestone started (Complete Concept Visualizations)*
