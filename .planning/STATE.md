@@ -36,6 +36,7 @@ Progress: [##________] 1/4 phases (Phase 18 complete)
 - Average duration: ~3.0 min
 
 **v3.0 Phase 18:**
+- 18-01: 6 min (CallbacksBasicsViz, CallbackHellViz)
 - 18-02: 5 min (ErrorFirstCallbacksViz)
 - 18-03: 5 min (PromisesCreationViz)
 - 18-04: 5 min (PromisesThenCatchViz, PromisesChainingViz)
