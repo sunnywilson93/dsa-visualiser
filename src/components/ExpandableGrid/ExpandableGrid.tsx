@@ -31,7 +31,7 @@ export function ExpandableGrid({
         {children}
       </div>
       <button
-        className="flex items-center justify-center gap-2 py-2 px-4 bg-white-3 border border-white-10 rounded-lg text-gray-500 text-base cursor-pointer transition-all duration-fast ease-out self-center hover:bg-brand-primary-10 hover:border-brand-primary-30 hover:text-brand-light"
+        className="flex items-center justify-center gap-2 py-2 px-4 bg-white-3 border border-white-10 rounded-lg text-gray-500 text-base cursor-pointer transition-all duration-150 ease-out self-center hover:bg-brand-primary-10 hover:border-brand-primary-30 hover:text-brand-light"
         onClick={() => setIsExpanded(!isExpanded)}
         aria-expanded={isExpanded}
       >

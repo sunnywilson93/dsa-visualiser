@@ -34,7 +34,7 @@ export function Card({
   return (
     <div
       className={`
-        flex-[0_0_340px] snap-start transition-all duration-slow
+        flex-[0_0_340px] snap-start transition-all duration-300
         max-md:flex-[0_0_300px]
         max-[480px]:flex-[0_0_calc(100vw-32px)]
         ${isActive ? 'scale-[1.02]' : 'opacity-75'}
@@ -42,7 +42,7 @@ export function Card({
     >
       <Link
         href={href}
-        className="group relative block h-full p-[2px] rounded-2xl no-underline text-inherit transition-all duration-slow hover:-translate-y-1 card-gradient-border"
+        className="group relative block h-full p-[2px] rounded-2xl no-underline text-inherit transition-all duration-300 hover:-translate-y-1 card-gradient-border"
         style={{
           background: 'var(--card-gradient-bg)',
         }}

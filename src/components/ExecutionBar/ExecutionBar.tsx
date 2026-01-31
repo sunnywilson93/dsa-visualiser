@@ -118,7 +118,7 @@ export function ExecutionBar() {
       {/* Playback controls */}
       <div className="flex items-center gap-1">
         <button
-          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-accent-red hover:bg-red-8 transition-all duration-fast"
+          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-accent-red hover:bg-red-8 transition-all duration-150"
           onClick={reset}
           title="Reset (Esc)"
         >
@@ -126,7 +126,7 @@ export function ExecutionBar() {
         </button>
 
         <button
-          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-brand-primary hover:bg-brand-primary-10 transition-all duration-fast disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent"
+          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-brand-primary hover:bg-brand-primary-10 transition-all duration-150 disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent"
           onClick={stepBackward}
           disabled={!canStepBackward}
           title="Step Back (←)"
@@ -135,7 +135,7 @@ export function ExecutionBar() {
         </button>
 
         <button
-          className="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-brand-primary to-brand-secondary text-white hover:brightness-110 transition-all duration-fast disabled:opacity-50 shadow-lg shadow-brand-primary/25 hover:shadow-brand-primary/40 hover:scale-105 active:scale-95"
+          className="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-brand-primary to-brand-secondary text-white hover:brightness-110 transition-all duration-150 disabled:opacity-50 shadow-lg shadow-brand-primary/25 hover:shadow-brand-primary/40 hover:scale-105 active:scale-95"
           onClick={togglePlayback}
           disabled={isCompleted}
           title={isPlaying ? 'Pause (Space)' : 'Play (Space)'}
@@ -144,7 +144,7 @@ export function ExecutionBar() {
         </button>
 
         <button
-          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-brand-primary hover:bg-brand-primary-10 transition-all duration-fast disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent"
+          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-brand-primary hover:bg-brand-primary-10 transition-all duration-150 disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent"
           onClick={stepForward}
           disabled={!canStepForward}
           title="Step Forward (→)"
@@ -153,7 +153,7 @@ export function ExecutionBar() {
         </button>
 
         <button
-          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-emerald-400 hover:bg-emerald-8 transition-all duration-fast disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent"
+          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-emerald-400 hover:bg-emerald-8 transition-all duration-150 disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent"
           onClick={runToCompletion}
           disabled={isCompleted}
           title="Run to End"

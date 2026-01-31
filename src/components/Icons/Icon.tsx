@@ -44,7 +44,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
         className={cn(
           'shrink-0',
           variantStyles[variant],
-          interactive && 'transition-all duration-fast hover:scale-110',
+          interactive && 'transition-all duration-150 hover:scale-110',
           spin && 'animate-spin',
           className
         )}

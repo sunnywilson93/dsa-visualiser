@@ -583,7 +583,7 @@ export function AsyncAwaitParallelViz() {
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`flex items-center gap-1.5 px-[var(--spacing-md)] py-1.5 text-sm font-medium rounded-full transition-all duration-fast cursor-pointer
+            className={`flex items-center gap-1.5 px-[var(--spacing-md)] py-1.5 text-sm font-medium rounded-full transition-all duration-150 cursor-pointer
               ${level === lvl
                 ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]'
                 : 'bg-[var(--color-white-4)] border border-[var(--js-viz-border)] text-[var(--js-viz-muted)] hover:bg-[var(--color-white-8)] hover:text-[var(--js-viz-text)]'
@@ -605,7 +605,7 @@ export function AsyncAwaitParallelViz() {
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`px-[var(--spacing-md)] py-1.5 font-mono text-sm rounded-full transition-all duration-fast cursor-pointer
+            className={`px-[var(--spacing-md)] py-1.5 font-mono text-sm rounded-full transition-all duration-150 cursor-pointer
               ${exampleIndex === i
                 ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]'
                 : 'bg-[var(--color-white-4)] border border-[var(--js-viz-border)] text-[var(--js-viz-muted)] hover:bg-[var(--color-white-8)] hover:text-[var(--js-viz-text)]'

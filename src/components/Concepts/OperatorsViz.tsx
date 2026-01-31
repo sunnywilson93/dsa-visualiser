@@ -55,7 +55,7 @@ export function OperatorsViz() {
       {/* Tab selector */}
       <div className="flex gap-[var(--spacing-sm)] justify-center bg-[var(--color-black-30)] border border-[var(--color-white-8)] rounded-full p-[0.35rem]">
         <button
-          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-fast cursor-pointer
+          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-150 cursor-pointer
             ${activeTab === 'arithmetic' 
               ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]' 
               : 'bg-[var(--color-white-4)] border border-[var(--color-white-8)] text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)]'
@@ -65,7 +65,7 @@ export function OperatorsViz() {
           Arithmetic
         </button>
         <button
-          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-fast cursor-pointer
+          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-150 cursor-pointer
             ${activeTab === 'comparison' 
               ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]' 
               : 'bg-[var(--color-white-4)] border border-[var(--color-white-8)] text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)]'
@@ -75,7 +75,7 @@ export function OperatorsViz() {
           Comparison
         </button>
         <button
-          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-fast cursor-pointer
+          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-150 cursor-pointer
             ${activeTab === 'logical' 
               ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]' 
               : 'bg-[var(--color-white-4)] border border-[var(--color-white-8)] text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)]'
@@ -99,7 +99,7 @@ export function OperatorsViz() {
             {ops.map((op, i) => (
               <motion.button
                 key={i}
-                className={`p-2.5 bg-[var(--color-black-30)] border-2 rounded-lg cursor-pointer transition-all duration-fast
+                className={`p-2.5 bg-[var(--color-black-30)] border-2 rounded-lg cursor-pointer transition-all duration-150
                   ${selectedOp === i 
                     ? 'bg-[var(--color-neon-viz-18)] border-[rgba(130,100,255,0.5)]' 
                     : 'border-[var(--color-white-8)] hover:bg-[var(--color-white-5)] hover:border-white/15'

@@ -118,7 +118,7 @@ export function TwoPointersConcept({ step, type }: TwoPointersConceptProps) {
               {/* Array element */}
               <motion.div
                 className={`
-                  flex items-center justify-center min-w-7 h-7 px-1 rounded-md transition-all duration-fast
+                  flex items-center justify-center min-w-7 h-7 px-1 rounded-md transition-all duration-150
                   ${isHighlighted 
                     ? 'bg-blue-400/20 border-2 border-blue-400' 
                     : 'bg-[var(--color-bg-elevated)] border-2 border-white/15'

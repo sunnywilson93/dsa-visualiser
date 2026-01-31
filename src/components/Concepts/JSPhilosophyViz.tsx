@@ -112,7 +112,7 @@ export function JSPhilosophyViz() {
       {/* Tab selector */}
       <div className="flex gap-[var(--spacing-sm)] justify-center bg-[var(--color-black-30)] border border-[var(--color-white-8)] rounded-full p-[0.35rem] max-sm:flex-wrap">
         <button
-          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-fast cursor-pointer
+          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-150 cursor-pointer
             ${activeTab === 'timeline' 
               ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]' 
               : 'bg-[var(--color-white-4)] border border-[var(--color-white-8)] text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)]'
@@ -122,7 +122,7 @@ export function JSPhilosophyViz() {
           History
         </button>
         <button
-          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-fast cursor-pointer
+          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-150 cursor-pointer
             ${activeTab === 'paradigms' 
               ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]' 
               : 'bg-[var(--color-white-4)] border border-[var(--color-white-8)] text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)]'
@@ -132,7 +132,7 @@ export function JSPhilosophyViz() {
           Multi-Paradigm
         </button>
         <button
-          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-fast cursor-pointer
+          className={`px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-full transition-all duration-150 cursor-pointer
             ${activeTab === 'principles' 
               ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]' 
               : 'bg-[var(--color-white-4)] border border-[var(--color-white-8)] text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)]'
@@ -193,7 +193,7 @@ export function JSPhilosophyViz() {
               {paradigms.map((p, i) => (
                 <button
                   key={p.id}
-                  className={`flex items-center gap-1.5 px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-lg transition-all duration-fast cursor-pointer
+                  className={`flex items-center gap-1.5 px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-sm font-medium rounded-lg transition-all duration-150 cursor-pointer
                     ${activeParadigm === i 
                       ? 'text-white' 
                       : 'bg-[var(--color-white-4)] border-2 border-transparent text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)]'
@@ -244,7 +244,7 @@ export function JSPhilosophyViz() {
               {principles.map((p, i) => (
                 <motion.button
                   key={p.id}
-                  className={`flex flex-col items-center gap-[var(--spacing-sm)] p-[var(--spacing-md)] bg-[var(--color-black-30)] border-2 rounded-lg cursor-pointer transition-all duration-fast
+                  className={`flex flex-col items-center gap-[var(--spacing-sm)] p-[var(--spacing-md)] bg-[var(--color-black-30)] border-2 rounded-lg cursor-pointer transition-all duration-150
                     ${activePrinciple === i 
                       ? 'bg-[var(--color-white-8)]' 
                       : 'border-[var(--color-white-10)] hover:bg-[var(--color-white-5)]'

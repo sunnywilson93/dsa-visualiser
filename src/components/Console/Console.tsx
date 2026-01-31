@@ -50,7 +50,7 @@ export function Console() {
           {consoleOutput.map((line, index) => (
             <motion.div
               key={index}
-              className="flex gap-3 py-1 px-2 rounded-sm transition-colors duration-fast hover:bg-bg-tertiary"
+              className="flex gap-3 py-1 px-2 rounded-sm transition-colors duration-150 hover:bg-bg-tertiary"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.15 }}

@@ -78,7 +78,7 @@ export function GlobalSearch() {
     <div ref={containerRef} className="relative flex-1 max-w-[320px] mx-4 max-md:max-w-[200px] max-md:mx-2 max-sm:max-w-[100px]">
       <div
         className={`
-          flex items-center gap-2 bg-white-5 border border-brand-primary-20 rounded-lg py-[3px] px-3 transition-all duration-fast
+          flex items-center gap-2 bg-white-5 border border-brand-primary-20 rounded-lg py-[3px] px-3 transition-all duration-150
           max-md:py-1 max-md:px-2
           hover:border-brand-primary-40
           ${inputFocused ? 'border-brand-primary-50 shadow-[0_0_0_3px_var(--color-brand-primary-15)] bg-white-8' : ''}
@@ -103,7 +103,7 @@ export function GlobalSearch() {
           <button
             type="button"
             onClick={handleClear}
-            className="flex items-center justify-center bg-transparent border-none text-gray-600 cursor-pointer p-0.5 rounded-sm transition-all duration-fast hover:text-text-bright hover:bg-white-10"
+            className="flex items-center justify-center bg-transparent border-none text-gray-600 cursor-pointer p-0.5 rounded-sm transition-all duration-150 hover:text-text-bright hover:bg-white-10"
             aria-label="Clear search"
           >
             <X size={14} />

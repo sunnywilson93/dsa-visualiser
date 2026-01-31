@@ -151,7 +151,7 @@ export function HashMapConcept({ step }: HashMapConceptProps) {
 
                   <motion.div
                     className={`
-                      flex items-center justify-center min-w-9 h-9 px-2 bg-[var(--color-bg-elevated)] border-2 rounded-md transition-all duration-fast
+                      flex items-center justify-center min-w-9 h-9 px-2 bg-[var(--color-bg-elevated)] border-2 rounded-md transition-all duration-150
                       ${isHighlighted ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_16px_rgba(16,185,129,0.6)]' : 'border-white/15'}
                       ${isCurrent ? 'border-blue-400 bg-blue-400/20 shadow-[var(--glow-md)_var(--color-accent-blue-30)]' : ''}
                     `}
@@ -189,7 +189,7 @@ export function HashMapConcept({ step }: HashMapConceptProps) {
                   <motion.div
                     key={`${entry.key}-${entry.value}`}
                     className={`
-                      flex items-center gap-1 px-4 py-[5px] bg-[var(--color-bg-elevated)] border rounded-md transition-all duration-fast
+                      flex items-center gap-1 px-4 py-[5px] bg-[var(--color-bg-elevated)] border rounded-md transition-all duration-150
                       ${entry.isNew ? 'bg-[var(--color-brand-primary-20)] border-[var(--color-brand-primary-50)] shadow-[var(--glow-md)_var(--color-brand-primary-30)]' : 'border-white/10'}
                       ${entry.isLookup ? 'bg-amber-500/20 border-amber-400/40 shadow-[var(--glow-md)_var(--color-amber-30)]' : ''}
                       ${entry.isDecrement ? 'bg-orange-500/30 border-orange-400/40 shadow-[var(--glow-md)_var(--color-accent-orange-30)]' : ''}

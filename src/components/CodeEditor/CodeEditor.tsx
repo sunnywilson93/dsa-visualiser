@@ -144,7 +144,7 @@ export function CodeEditor({ className, readOnly = false, conceptLink }: CodeEdi
           {conceptLink && (
             <Link
               href={conceptLink}
-              className="flex items-center justify-center w-6 h-6 rounded-sm bg-amber-30 text-accent-yellow transition-all duration-fast hover:bg-amber-40 hover:scale-105"
+              className="flex items-center justify-center w-6 h-6 rounded-sm bg-amber-30 text-accent-yellow transition-all duration-150 hover:bg-amber-40 hover:scale-105"
               title="Learn the concept"
             >
               <Lightbulb size={14} />

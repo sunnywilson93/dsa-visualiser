@@ -380,7 +380,7 @@ export function StateEvolutionViz() {
         {eras.map((e, i) => (
           <button
             key={e.id}
-            className={`relative z-10 flex flex-col items-center gap-[var(--spacing-xs)] p-0 bg-none border-none cursor-pointer transition-all duration-fast max-md:flex-shrink-0 ${i === activeEra ? 'active' : ''} ${i < activeEra ? 'past' : ''}`}
+            className={`relative z-10 flex flex-col items-center gap-[var(--spacing-xs)] p-0 bg-none border-none cursor-pointer transition-all duration-150 max-md:flex-shrink-0 ${i === activeEra ? 'active' : ''} ${i < activeEra ? 'past' : ''}`}
             onClick={() => setActiveEra(i)}
             style={{ '--era-color': e.color } as React.CSSProperties}
           >

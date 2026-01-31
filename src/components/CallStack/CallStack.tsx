@@ -47,7 +47,7 @@ function StackFrameCard({ frame, isActive, total }: StackFrameCardProps) {
 
   return (
     <motion.div
-      className={`bg-bg-tertiary border border-border-primary rounded-md p-2 px-3 transition-all duration-fast ${
+      className={`bg-bg-tertiary border border-border-primary rounded-md p-2 px-3 transition-all duration-150 ${
         isActive ? 'bg-bg-elevated shadow-[0_0_0_1px_var(--frame-color)]' : ''
       }`}
       initial={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -185,7 +185,7 @@ export function CallStack() {
           <div className="text-2xs font-semibold uppercase text-text-muted">Depth</div>
           <div className="flex-1 h-1 bg-bg-primary rounded-xs overflow-hidden">
             <motion.div
-              className="h-full rounded-xs transition-colors duration-fast"
+              className="h-full rounded-xs transition-colors duration-150"
               initial={{ width: 0 }}
               animate={{
                 width: `${Math.min(100, (callStack.length / 20) * 100)}%`,

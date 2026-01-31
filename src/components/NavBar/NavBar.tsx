@@ -38,7 +38,7 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
             <div className="flex items-center gap-1 text-base min-w-0 overflow-hidden max-md:text-sm">
               <Link
                 href="/"
-                className="flex items-center text-text-secondary no-underline transition-colors duration-normal hover:text-text-bright"
+                className="flex items-center text-text-secondary no-underline transition-colors duration-200 hover:text-text-bright"
               >
                 <Home size={14} />
               </Link>
@@ -48,7 +48,7 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
                   {crumb.path ? (
                     <Link
                       href={crumb.path}
-                      className="flex items-center text-text-secondary no-underline transition-colors duration-normal whitespace-nowrap overflow-hidden text-ellipsis hover:text-text-bright max-md:max-w-[120px] max-sm:max-w-[60px]"
+                      className="flex items-center text-text-secondary no-underline transition-colors duration-200 whitespace-nowrap overflow-hidden text-ellipsis hover:text-text-bright max-md:max-w-[120px] max-sm:max-w-[60px]"
                     >
                       {crumb.label}
                     </Link>
@@ -67,7 +67,7 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
         <div className="flex items-center gap-4 shrink-0">
           <Link
             href="/playground/event-loop"
-            className="hidden md:flex py-1 px-3 text-base font-medium text-text-secondary no-underline rounded-md transition-all duration-fast hover:text-text-bright hover:bg-white-5"
+            className="hidden md:flex py-1 px-3 text-base font-medium text-text-secondary no-underline rounded-md transition-all duration-150 hover:text-text-bright hover:bg-white-5"
           >
             Playground
           </Link>
@@ -99,25 +99,25 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
           <div className="flex flex-col p-4">
             <Link
               href="/"
-              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-fast hover:text-text-bright hover:bg-white-5"
+              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
             >
               Home
             </Link>
             <Link
               href="/concepts"
-              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-fast hover:text-text-bright hover:bg-white-5"
+              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
             >
               JS Concepts
             </Link>
             <Link
               href="/concepts/dsa/patterns/two-pointers"
-              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-fast hover:text-text-bright hover:bg-white-5"
+              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
             >
               DSA Patterns
             </Link>
             <Link
               href="/playground/event-loop"
-              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-fast hover:text-text-bright hover:bg-white-5"
+              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
             >
               Playground
             </Link>

@@ -550,7 +550,7 @@ export function MicrotaskQueueViz() {
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`flex items-center gap-1.5 px-[var(--spacing-md)] py-1.5 text-sm font-medium rounded-full transition-all duration-fast cursor-pointer
+            className={`flex items-center gap-1.5 px-[var(--spacing-md)] py-1.5 text-sm font-medium rounded-full transition-all duration-150 cursor-pointer
               ${level === lvl
                 ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]'
                 : 'bg-[var(--color-white-4)] border border-[var(--js-viz-border)] text-[var(--js-viz-muted)] hover:bg-[var(--color-white-8)] hover:text-[var(--js-viz-text)]'
@@ -572,7 +572,7 @@ export function MicrotaskQueueViz() {
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`px-[var(--spacing-md)] py-1.5 font-mono text-sm rounded-full transition-all duration-fast cursor-pointer
+            className={`px-[var(--spacing-md)] py-1.5 font-mono text-sm rounded-full transition-all duration-150 cursor-pointer
               ${exampleIndex === i
                 ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]'
                 : 'bg-[var(--color-white-4)] border border-[var(--js-viz-border)] text-[var(--js-viz-muted)] hover:bg-[var(--color-white-8)] hover:text-[var(--js-viz-text)]'
@@ -590,7 +590,7 @@ export function MicrotaskQueueViz() {
         <div className="relative rounded-xl p-[3px]"
           style={{
             background: currentStep.currentlyDraining
-              ? 'linear-gradient(135deg, #a855f7, #c084fc)'
+              ? 'var(--gradient-neon-purple)'
               : 'linear-gradient(135deg, #8b5cf6, #a78bfa)'
           }}>
           <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 px-[var(--spacing-lg)] py-[5px] bg-[var(--color-bg-tertiary)] rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10 flex items-center gap-2">
@@ -641,7 +641,7 @@ export function MicrotaskQueueViz() {
           style={{
             background: currentStep.currentlyDraining
               ? 'linear-gradient(135deg, #4b5563, #6b7280)'
-              : 'linear-gradient(135deg, #f59e0b, #fbbf24)'
+              : 'var(--gradient-neon-amber)'
           }}>
           <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 px-[var(--spacing-lg)] py-[5px] bg-[var(--color-bg-tertiary)] rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10 flex items-center gap-2">
             Macrotask Queue

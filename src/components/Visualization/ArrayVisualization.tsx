@@ -316,14 +316,14 @@ export function ArrayVisualization({ array, step, varName }: ArrayVisualizationP
 
               {isNumeric && (
                 <motion.div
-                  className="bar w-full min-h-1 bg-accent-blue rounded-t-xs transition-colors duration-fast"
+                  className="bar w-full min-h-1 bg-accent-blue rounded-t-xs transition-colors duration-150"
                   initial={{ height: 0 }}
                   animate={{ height: `${heightPercent}%` }}
                   transition={{ duration: 0.2 }}
                 />
               )}
 
-              <div className="value py-px px-1 font-mono text-xs font-semibold text-text-primary bg-bg-secondary border border-border-primary rounded-xs mt-0.5 transition-all duration-fast">
+              <div className="value py-px px-1 font-mono text-xs font-semibold text-text-primary bg-bg-secondary border border-border-primary rounded-xs mt-0.5 transition-all duration-150">
                 {formatValue(value, true)}
               </div>
 

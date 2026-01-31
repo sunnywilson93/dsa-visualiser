@@ -62,7 +62,7 @@ export function DifficultyIndicator({
         {Array.from({ length: totalDots }, (_, i) => (
           <span
             key={i}
-            className={`rounded-full transition-all duration-fast ${sizes.dot} ${
+            className={`rounded-full transition-all duration-150 ${sizes.dot} ${
               i < numericLevel ? '' : 'bg-white-15'
             }`}
             style={

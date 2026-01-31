@@ -69,7 +69,7 @@ export function BitManipulationConcept({ step }: BitManipulationConceptProps) {
               <motion.div
                 key={i}
                 className={`
-                  flex items-center justify-center w-5 h-[22px] text-sm font-semibold rounded-sm transition-all duration-fast
+                  flex items-center justify-center w-5 h-[22px] text-sm font-semibold rounded-sm transition-all duration-150
                   ${isOne 
                     ? 'bg-blue-400/25 text-blue-400 border border-blue-400/50 shadow-[0_0_4px_rgba(96,165,250,0.2)]' 
                     : 'bg-[var(--color-bg-elevated)] text-gray-500 border border-white/10'

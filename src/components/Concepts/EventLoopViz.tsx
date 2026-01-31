@@ -986,7 +986,7 @@ export function EventLoopViz() {
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`flex items-center gap-1.5 px-[var(--spacing-md)] py-1.5 text-sm font-medium rounded-full transition-all duration-fast cursor-pointer
+            className={`flex items-center gap-1.5 px-[var(--spacing-md)] py-1.5 text-sm font-medium rounded-full transition-all duration-150 cursor-pointer
               ${level === lvl 
                 ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]' 
                 : 'bg-[var(--color-white-4)] border border-[var(--js-viz-border)] text-[var(--js-viz-muted)] hover:bg-[var(--color-white-8)] hover:text-[var(--js-viz-text)]'
@@ -1008,7 +1008,7 @@ export function EventLoopViz() {
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`px-[var(--spacing-md)] py-1.5 font-mono text-sm rounded-full transition-all duration-fast cursor-pointer
+            className={`px-[var(--spacing-md)] py-1.5 font-mono text-sm rounded-full transition-all duration-150 cursor-pointer
               ${exampleIndex === i 
                 ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[var(--glow-xl)_var(--color-neon-viz-25)]' 
                 : 'bg-[var(--color-white-4)] border border-[var(--js-viz-border)] text-[var(--js-viz-muted)] hover:bg-[var(--color-white-8)] hover:text-[var(--js-viz-text)]'
@@ -1089,7 +1089,7 @@ export function EventLoopViz() {
         <div className="relative rounded-xl p-[3px]"
           style={{ 
             gridArea: 'eventloop',
-            background: 'linear-gradient(135deg, #64748b, #94a3b8)' 
+            background: 'var(--gradient-neon-gray)' 
           }}>
           <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 px-[var(--spacing-lg)] py-[5px] bg-[var(--color-bg-tertiary)] rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Event Loop

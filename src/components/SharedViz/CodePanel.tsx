@@ -49,7 +49,7 @@ export function CodePanel({
             ref={(el) => {
               lineRefs.current[i] = el
             }}
-            className={`flex px-2 py-[2px] transition-colors duration-fast ${
+            className={`flex px-2 py-[2px] transition-colors duration-150 ${
               highlightedLine === i ? 'bg-brand-primary-20' : ''
             }`}
           >

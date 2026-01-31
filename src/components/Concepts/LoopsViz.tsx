@@ -1592,7 +1592,7 @@ export function LoopsViz() {
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
-            className={`flex items-center gap-1.5 px-[var(--spacing-md)] py-1.5 font-mono text-sm font-medium rounded-full transition-all duration-fast cursor-pointer min-h-[44px] touch-manipulation
+            className={`flex items-center gap-1.5 px-[var(--spacing-md)] py-1.5 font-mono text-sm font-medium rounded-full transition-all duration-150 cursor-pointer min-h-[44px] touch-manipulation
               ${level === lvl 
                 ? 'text-white' 
                 : 'bg-[var(--color-white-4)] border-2 border-transparent text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)] disabled:opacity-40 disabled:cursor-not-allowed'
@@ -1614,7 +1614,7 @@ export function LoopsViz() {
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`px-[var(--spacing-md)] py-1.5 font-mono text-sm rounded-full transition-all duration-fast cursor-pointer min-h-[44px] touch-manipulation
+            className={`px-[var(--spacing-md)] py-1.5 font-mono text-sm rounded-full transition-all duration-150 cursor-pointer min-h-[44px] touch-manipulation
               ${exampleIndex === i 
                 ? 'bg-[var(--color-emerald-18)] border border-[var(--color-emerald-70)] text-white shadow-[var(--glow-xl)_var(--color-emerald-25)]' 
                 : 'bg-[var(--color-white-4)] border border-[var(--js-viz-border)] text-[var(--color-gray-500)] hover:bg-[var(--color-white-8)] hover:text-[var(--color-gray-300)]'

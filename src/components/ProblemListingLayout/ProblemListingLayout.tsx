@@ -101,7 +101,7 @@ export function ProblemListingLayout({
   const SortIcon = sortOrder === 'asc' ? ArrowUp : sortOrder === 'desc' ? ArrowDown : ArrowUpDown
 
   const getDifficultyChipClasses = (diff: Difficulty) => {
-    const baseClasses = 'flex items-center justify-center bg-transparent border-none font-medium text-sm py-1 px-2.5 rounded-md cursor-pointer transition-all duration-fast'
+    const baseClasses = 'flex items-center justify-center bg-transparent border-none font-medium text-sm py-1 px-2.5 rounded-md cursor-pointer transition-all duration-150'
     
     if (selectedDifficulty !== diff) {
       return `${baseClasses} text-text-muted hover:bg-brand-primary-5 hover:text-text-secondary`

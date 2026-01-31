@@ -83,7 +83,7 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
     <div className="relative group">
       {/* Navigation arrows */}
       <button
-        className="absolute top-1/2 -translate-y-[60%] z-10 w-10 h-10 rounded-full border-none bg-[rgba(15,15,26,0.9)] text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-normal backdrop-blur-[8px] opacity-0 group-hover:opacity-100 left-2 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-9 max-md:h-9 max-sm:hidden"
+        className="absolute top-1/2 -translate-y-[60%] z-10 w-10 h-10 rounded-full border-none bg-[rgba(15,15,26,0.9)] text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-200 backdrop-blur-[8px] opacity-0 group-hover:opacity-100 left-2 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-9 max-md:h-9 max-sm:hidden"
         onClick={() => scroll('left')}
         disabled={!canScrollLeft}
         aria-label="Previous concept"
@@ -92,7 +92,7 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
       </button>
 
       <button
-        className="absolute top-1/2 -translate-y-[60%] z-10 w-10 h-10 rounded-full border-none bg-[rgba(15,15,26,0.9)] text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-normal backdrop-blur-[8px] opacity-0 group-hover:opacity-100 right-2 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-9 max-md:h-9 max-sm:hidden"
+        className="absolute top-1/2 -translate-y-[60%] z-10 w-10 h-10 rounded-full border-none bg-[rgba(15,15,26,0.9)] text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-200 backdrop-blur-[8px] opacity-0 group-hover:opacity-100 right-2 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-9 max-md:h-9 max-sm:hidden"
         onClick={() => scroll('right')}
         disabled={!canScrollRight}
         aria-label="Next concept"
@@ -108,7 +108,7 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
         {concepts.map((concept, index) => (
           <motion.div
             key={concept.id}
-            className={`flex-none w-[340px] snap-start transition-all duration-slow max-md:w-[300px] max-sm:w-[calc(100vw-2rem)] ${index === activeIndex ? 'scale-[1.02]' : 'opacity-75'}`}
+            className={`flex-none w-[340px] snap-start transition-all duration-300 max-md:w-[300px] max-sm:w-[calc(100vw-2rem)] ${index === activeIndex ? 'scale-[1.02]' : 'opacity-75'}`}
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -116,7 +116,7 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
           >
             <Link 
               href={`${basePath}/${concept.id}`} 
-              className="relative block h-full rounded-2xl p-0.5 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 transition-all duration-slow hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(168,85,247,0.25),0_0_50px_rgba(236,72,153,0.15)] card-gradient-border"
+              className="relative block h-full rounded-2xl p-0.5 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(168,85,247,0.25),0_0_50px_rgba(236,72,153,0.15)] card-gradient-border"
             >
               <div className="bg-bg-page-secondary rounded-[14px] p-6 flex flex-col gap-3 h-full min-h-[200px] max-sm:p-5 max-sm:min-h-[180px]">
                 <div className="flex items-center justify-between">
@@ -146,7 +146,7 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
         {concepts.map((_, index) => (
           <button
             key={index}
-            className={`w-2 h-2 rounded-full border-none cursor-pointer transition-all duration-normal p-0 hover:bg-brand-primary-50 ${index === activeIndex ? 'bg-gradient-to-br from-brand-primary to-brand-secondary w-6 rounded-sm shadow-[0_0_8px_rgba(168,85,247,0.5)]' : 'bg-brand-primary-30'}`}
+            className={`w-2 h-2 rounded-full border-none cursor-pointer transition-all duration-200 p-0 hover:bg-brand-primary-50 ${index === activeIndex ? 'bg-gradient-to-br from-brand-primary to-brand-secondary w-6 rounded-sm shadow-[0_0_8px_rgba(168,85,247,0.5)]' : 'bg-brand-primary-30'}`}
             onClick={() => scrollToIndex(index)}
             aria-label={`Go to concept ${index + 1}`}
           />

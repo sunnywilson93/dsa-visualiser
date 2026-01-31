@@ -39,7 +39,7 @@ export function SearchResultItem({ result, onClick, compact = false }: SearchRes
     return (
       <Link
         href={item.href}
-        className="grid grid-cols-[24px_1fr_auto] items-center gap-3 py-3 px-3 rounded-md no-underline text-inherit transition-colors duration-fast hover:bg-brand-primary-20"
+        className="grid grid-cols-[24px_1fr_auto] items-center gap-3 py-3 px-3 rounded-md no-underline text-inherit transition-colors duration-150 hover:bg-brand-primary-20"
         onClick={onClick}
       >
         <span className="text-lg w-6 text-center flex items-center justify-center shrink-0 leading-none">
@@ -57,7 +57,7 @@ export function SearchResultItem({ result, onClick, compact = false }: SearchRes
   return (
     <Link
       href={item.href}
-      className="flex items-start gap-3 p-3 rounded-lg no-underline text-inherit transition-colors duration-fast hover:bg-brand-primary-15"
+      className="flex items-start gap-3 p-3 rounded-lg no-underline text-inherit transition-colors duration-150 hover:bg-brand-primary-15"
       onClick={onClick}
     >
       <span className="text-xl leading-none shrink-0">

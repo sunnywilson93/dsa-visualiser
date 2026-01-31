@@ -127,7 +127,7 @@ function BinaryRow({ label, value, bits, highlightBits, highlightType = 'active'
           return (
             <motion.span
               key={idx}
-              className={`flex items-center justify-center w-[18px] h-5 text-xs font-semibold rounded-xs border transition-all duration-fast ${baseClass} ${highlightClass}`}
+              className={`flex items-center justify-center w-[18px] h-5 text-xs font-semibold rounded-xs border transition-all duration-150 ${baseClass} ${highlightClass}`}
               initial={{ scale: 1 }}
               animate={{
                 scale: isHighlighted ? [1, 1.2, 1] : 1,

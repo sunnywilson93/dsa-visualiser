@@ -76,7 +76,7 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
     <div className="relative group">
       {/* Navigation arrows */}
       <button
-        className="absolute top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border-none bg-black-50 text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-normal backdrop-blur-[8px] opacity-0 group-hover:opacity-100 -left-3 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-10 max-md:h-10 max-sm:hidden"
+        className="absolute top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border-none bg-black-50 text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-200 backdrop-blur-[8px] opacity-0 group-hover:opacity-100 -left-3 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-10 max-md:h-10 max-sm:hidden"
         onClick={() => scroll('left')}
         disabled={!canScrollLeft}
         aria-label="Previous category"
@@ -85,7 +85,7 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
       </button>
 
       <button
-        className="absolute top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border-none bg-black-50 text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-normal backdrop-blur-[8px] opacity-0 group-hover:opacity-100 -right-3 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-10 max-md:h-10 max-sm:hidden"
+        className="absolute top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border-none bg-black-50 text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-200 backdrop-blur-[8px] opacity-0 group-hover:opacity-100 -right-3 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-10 max-md:h-10 max-sm:hidden"
         onClick={() => scroll('right')}
         disabled={!canScrollRight}
         aria-label="Next category"
@@ -106,7 +106,7 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
           <div
             key={index}
             className={`
-              flex-[0_0_340px] snap-start transition-all duration-slow
+              flex-[0_0_340px] snap-start transition-all duration-300
               max-md:flex-[0_0_300px]
               max-sm:flex-[0_0_calc(100vw-32px)]
               ${index === activeIndex ? 'scale-[1.02]' : 'opacity-75'}
@@ -123,7 +123,7 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
           {children.map((_, index) => (
             <button
               key={index}
-              className={`w-1.5 h-1.5 rounded-full border-none cursor-pointer transition-all duration-normal p-0 ${
+              className={`w-1.5 h-1.5 rounded-full border-none cursor-pointer transition-all duration-200 p-0 ${
                 index === activeIndex
                   ? 'bg-gradient-to-br from-brand-primary to-brand-secondary w-[18px] rounded-sm shadow-[0_0_6px_var(--color-brand-primary-50)]'
                   : 'bg-brand-primary-30 hover:bg-brand-primary-50'

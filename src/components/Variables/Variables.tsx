@@ -119,7 +119,7 @@ function ScopeSection({ scope, isActive }: ScopeSectionProps) {
       }`}
     >
       <button
-        className="flex items-center gap-2 w-full py-2 px-3 bg-transparent border-none text-text-primary cursor-pointer text-left transition-colors duration-fast hover:bg-bg-elevated"
+        className="flex items-center gap-2 w-full py-2 px-3 bg-transparent border-none text-text-primary cursor-pointer text-left transition-colors duration-150 hover:bg-bg-elevated"
         onClick={() => setCollapsed(!collapsed)}
       >
         {collapsed ? <ChevronRight size={14} /> : <ChevronDown size={14} />}

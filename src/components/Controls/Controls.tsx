@@ -137,7 +137,7 @@ export function Controls() {
         {/* Single Run button (only when idle) */}
         {isIdle && (
           <motion.button
-            className="flex items-center gap-2 py-2 px-6 font-semibold text-base rounded-md border-none cursor-pointer transition-all duration-fast text-white bg-gradient-to-br from-accent-blue to-accent-purple hover:brightness-110 hover:-translate-y-0.5"
+            className="flex items-center gap-2 py-2 px-6 font-semibold text-base rounded-md border-none cursor-pointer transition-all duration-150 text-white bg-gradient-to-br from-accent-blue to-accent-purple hover:brightness-110 hover:-translate-y-0.5"
             onClick={handleVisualize}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -152,7 +152,7 @@ export function Controls() {
         {!isIdle && (
           <>
             <button
-              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-fast hover:bg-bg-elevated hover:text-text-primary"
+              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-150 hover:bg-bg-elevated hover:text-text-primary"
               onClick={reset}
               title="Reset (Esc)"
             >
@@ -160,7 +160,7 @@ export function Controls() {
             </button>
 
             <button
-              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-fast hover:bg-bg-elevated hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-150 hover:bg-bg-elevated hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={stepBackward}
               disabled={!canStepBackward}
               title="Step Back (←)"
@@ -169,7 +169,7 @@ export function Controls() {
             </button>
 
             <button
-              className="flex items-center justify-center w-12 h-12 bg-accent-blue border border-accent-blue text-white rounded-md cursor-pointer transition-all duration-fast hover:brightness-115 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center justify-center w-12 h-12 bg-accent-blue border border-accent-blue text-white rounded-md cursor-pointer transition-all duration-150 hover:brightness-115 disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={togglePlayback}
               disabled={isCompleted}
               title={isPlaying ? 'Pause (Space)' : 'Play (Space)'}
@@ -178,7 +178,7 @@ export function Controls() {
             </button>
 
             <button
-              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-fast hover:bg-bg-elevated hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-150 hover:bg-bg-elevated hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={stepForward}
               disabled={!canStepForward}
               title="Step Forward (→)"
@@ -187,7 +187,7 @@ export function Controls() {
             </button>
 
             <button
-              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-fast hover:bg-bg-elevated hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center justify-center w-10 h-10 bg-bg-tertiary border border-border-primary rounded-md text-text-secondary cursor-pointer transition-all duration-150 hover:bg-bg-elevated hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={runToCompletion}
               disabled={isCompleted}
               title="Run to End"
@@ -237,7 +237,7 @@ export function Controls() {
             {(['slow', 'medium', 'fast'] as PlaybackSpeed[]).map(speed => (
               <button
                 key={speed}
-                className={`py-1 px-2.5 text-xs font-medium rounded-sm border-none cursor-pointer transition-all duration-fast ${
+                className={`py-1 px-2.5 text-xs font-medium rounded-sm border-none cursor-pointer transition-all duration-150 ${
                   playbackSpeed === speed
                     ? 'bg-accent-blue text-white'
                     : 'bg-transparent text-text-muted hover:text-text-secondary'
