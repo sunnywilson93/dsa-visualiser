@@ -49,6 +49,7 @@ Progress: [######____] 2.75/4 phases (Phase 18-19 complete, Phase 20 in progress
 - 19-05: 6 min (EventLoopTickViz)
 
 **v3.0 Phase 20:**
+- 20-01: 8 min (PrototypeChainBasicsViz, PropertyLookupViz)
 - 20-02: 3 min (InstanceofViz)
 - 20-03: 5 min (ClassSyntaxViz)
 
@@ -83,6 +84,8 @@ Recent decisions affecting current work:
 | Two-panel instanceof layout | Chain on left, target on right with comparison indicator | 20-02 |
 | Side-by-side class/prototype comparison | Purple for class, amber for prototype, shared chain below | 20-03 |
 | Syntactic Sugar badge pattern | Prominent badge at top with sparkle icons | 20-03 |
+| Progressive node reveal | visibleNodes array controls which chain nodes are shown per step | 20-01 |
+| Explicit shadowing visualization | Grayed/crossed properties with "(shadowed)" label | 20-01 |
 
 ### Pending Todos
 
