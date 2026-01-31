@@ -46,9 +46,9 @@ export default function HomePage() {
           </div>
 
           {/* Two concept category cards */}
-          <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1 max-md:gap-4">
-            <Link href="/concepts/js" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-350 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)]">
-              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3">
+          <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1 max-md:gap-4 items-stretch">
+            <Link href="/concepts/js" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-350 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)] h-full">
+              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
                 <div className="flex items-center justify-between">
                   <span className="flex items-center justify-center text-brand-primary">
                     <ConceptIcon conceptId="js-core" size={28} />
@@ -56,22 +56,22 @@ export default function HomePage() {
                   <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{concepts.length} topics</span>
                 </div>
                 <h3 className="text-xl font-bold text-text-bright m-0">JavaScript Deep Dive</h3>
-                <p className="text-base text-text-secondary m-0 leading-normal">
+                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
                   Closures, Event Loop, Prototypes, This, V8 Engine
                 </p>
-                <div className="flex flex-wrap gap-2 mt-1">
-                  {concepts.slice(0, 4).map(c => (
-                    <span key={c.id} className="text-xs py-0.5 px-2.5 bg-brand-primary-15 border border-brand-primary-30 rounded-xl text-brand-primary">{c.title}</span>
+                <div className="flex flex-wrap gap-2">
+                  {concepts.slice(0, 3).map(c => (
+                    <span key={c.id} className="text-xs py-0.5 px-2.5 bg-brand-primary-15 border border-brand-primary-30 rounded-xl text-brand-primary whitespace-nowrap">{c.title}</span>
                   ))}
-                  {concepts.length > 4 && (
-                    <span className="text-xs py-0.5 px-2.5 text-text-muted">+{concepts.length - 4}</span>
+                  {concepts.length > 3 && (
+                    <span className="text-xs py-0.5 px-2.5 text-text-muted">+{concepts.length - 3}</span>
                   )}
                 </div>
               </div>
             </Link>
 
-            <Link href="/concepts/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-350 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)]">
-              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3">
+            <Link href="/concepts/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-350 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)] h-full">
+              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
                 <div className="flex items-center justify-between">
                   <span className="flex items-center justify-center text-brand-primary">
                     <ConceptIcon conceptId="data-structures" size={28} />
@@ -79,15 +79,15 @@ export default function HomePage() {
                   <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{dsaConcepts.length + dsaPatterns.length} topics</span>
                 </div>
                 <h3 className="text-xl font-bold text-text-bright m-0">DSA Fundamentals</h3>
-                <p className="text-base text-text-secondary m-0 leading-normal">
+                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
                   Big O, Arrays, Hash Tables, Stacks, Queues, Linked Lists
                 </p>
-                <div className="flex flex-wrap gap-2 mt-1">
-                  {dsaConcepts.slice(0, 4).map(c => (
-                    <span key={c.id} className="text-xs py-0.5 px-2.5 bg-brand-primary-15 border border-brand-primary-30 rounded-xl text-brand-primary">{c.title}</span>
+                <div className="flex flex-wrap gap-2">
+                  {dsaConcepts.slice(0, 3).map(c => (
+                    <span key={c.id} className="text-xs py-0.5 px-2.5 bg-brand-primary-15 border border-brand-primary-30 rounded-xl text-brand-primary whitespace-nowrap">{c.title}</span>
                   ))}
-                  {(dsaConcepts.length + dsaPatterns.length) > 4 && (
-                    <span className="text-xs py-0.5 px-2.5 text-text-muted">+{dsaConcepts.length + dsaPatterns.length - 4}</span>
+                  {(dsaConcepts.length + dsaPatterns.length) > 3 && (
+                    <span className="text-xs py-0.5 px-2.5 text-text-muted">+{dsaConcepts.length + dsaPatterns.length - 3}</span>
                   )}
                 </div>
               </div>
