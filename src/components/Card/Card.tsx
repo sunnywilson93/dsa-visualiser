@@ -34,10 +34,10 @@ export function Card({
   return (
     <div
       className={`
-        flex-[0_0_340px] snap-start transition-all duration-300
-        max-md:flex-[0_0_300px]
-        max-[480px]:flex-[0_0_calc(100vw-32px)]
-        ${isActive ? 'scale-[1.02]' : 'opacity-75'}
+        flex-[0_0_calc(25%-12px)] snap-start transition-all duration-300
+        max-lg:flex-[0_0_calc(33.333%-11px)]
+        max-md:flex-[0_0_calc(50%-8px)]
+        max-sm:flex-[0_0_calc(100vw-48px)]
       `}
     >
       <Link

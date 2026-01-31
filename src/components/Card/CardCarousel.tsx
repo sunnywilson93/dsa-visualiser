@@ -22,10 +22,16 @@ export function CardCarousel({ children, itemCount }: CardCarouselProps) {
     setCanScrollLeft(scrollLeft > 10)
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10)
 
-    const cardWidth = container.firstElementChild?.clientWidth || 300
-    const gap = 16
-    const newIndex = Math.round(scrollLeft / (cardWidth + gap))
-    setActiveIndex(Math.min(newIndex, itemCount - 1))
+    const card = container.firstElementChild as HTMLElement | null
+    if (card) {
+      const cardWidth = card.offsetWidth
+      const cardStyle = window.getComputedStyle(card)
+      const cardMarginRight = parseFloat(cardStyle.marginRight) || 0
+      const cardMarginLeft = parseFloat(cardStyle.marginLeft) || 0
+      const gap = cardMarginRight + cardMarginLeft + 16 // 16 is the gap from flex gap-4
+      const newIndex = Math.round(scrollLeft / (cardWidth + gap))
+      setActiveIndex(Math.min(newIndex, itemCount - 1))
+    }
   }, [itemCount])
 
   useEffect(() => {
@@ -42,27 +48,39 @@ export function CardCarousel({ children, itemCount }: CardCarouselProps) {
     const container = scrollRef.current
     if (!container) return
 
-    const cardWidth = container.firstElementChild?.clientWidth || 300
-    const gap = 16
-    const scrollAmount = cardWidth + gap
+    const card = container.firstElementChild as HTMLElement | null
+    if (card) {
+      const cardWidth = card.offsetWidth
+      const cardStyle = window.getComputedStyle(card)
+      const cardMarginRight = parseFloat(cardStyle.marginRight) || 0
+      const cardMarginLeft = parseFloat(cardStyle.marginLeft) || 0
+      const gap = cardMarginRight + cardMarginLeft + 16
+      const scrollAmount = cardWidth + gap
 
-    container.scrollBy({
-      left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth'
-    })
+      container.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
+    }
   }
 
   const scrollToIndex = (index: number) => {
     const container = scrollRef.current
     if (!container) return
 
-    const cardWidth = container.firstElementChild?.clientWidth || 300
-    const gap = 16
+    const card = container.firstElementChild as HTMLElement | null
+    if (card) {
+      const cardWidth = card.offsetWidth
+      const cardStyle = window.getComputedStyle(card)
+      const cardMarginRight = parseFloat(cardStyle.marginRight) || 0
+      const cardMarginLeft = parseFloat(cardStyle.marginLeft) || 0
+      const gap = cardMarginRight + cardMarginLeft + 16
 
-    container.scrollTo({
-      left: index * (cardWidth + gap),
-      behavior: 'smooth'
-    })
+      container.scrollTo({
+        left: index * (cardWidth + gap),
+        behavior: 'smooth'
+      })
+    }
   }
 
   return (
