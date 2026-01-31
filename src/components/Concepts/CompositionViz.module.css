@@ -180,7 +180,7 @@
   min-width: 120px;
   padding: var(--spacing-md);
   background: var(--color-black-40);
-  border: 2px solid rgba(167, 139, 250, 0.3);
+  border: 2px solid var(--color-accent-purple-25);
   border-radius: var(--radius-lg);
   text-align: center;
   transition: all 0.3s;
@@ -188,8 +188,8 @@
 
 .functionBox.activeFn {
   border-color: var(--color-brand-light);
-  box-shadow: 0 0 20px rgba(167, 139, 250, 0.4);
-  background: rgba(167, 139, 250, 0.1);
+  box-shadow: 0 0 20px var(--color-accent-purple-25);
+  background: var(--color-accent-purple-15);
 }
 
 .fnName {

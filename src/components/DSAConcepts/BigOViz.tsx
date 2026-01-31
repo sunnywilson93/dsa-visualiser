@@ -23,7 +23,7 @@ const complexities: Complexity[] = [
     id: 'o1',
     name: 'O(1)',
     label: 'Constant',
-    color: '#10b981',
+    color: 'var(--color-action-success)',
     calculate: () => 1,
     example: 'Array access by index'
   },
@@ -31,7 +31,7 @@ const complexities: Complexity[] = [
     id: 'ologn',
     name: 'O(log n)',
     label: 'Logarithmic',
-    color: '#60a5fa',
+    color: 'var(--color-action-access)',
     calculate: (n) => Math.log2(n) || 1,
     example: 'Binary search'
   },
@@ -39,7 +39,7 @@ const complexities: Complexity[] = [
     id: 'on',
     name: 'O(n)',
     label: 'Linear',
-    color: '#f59e0b',
+    color: 'var(--color-action-search)',
     calculate: (n) => n,
     example: 'Loop through array'
   },
@@ -47,7 +47,7 @@ const complexities: Complexity[] = [
     id: 'onlogn',
     name: 'O(n log n)',
     label: 'Linearithmic',
-    color: '#a855f7',
+    color: 'var(--color-action-compare)',
     calculate: (n) => n * Math.log2(n) || n,
     example: 'Merge sort, Quick sort'
   },
@@ -55,7 +55,7 @@ const complexities: Complexity[] = [
     id: 'on2',
     name: 'O(n²)',
     label: 'Quadratic',
-    color: '#ef4444',
+    color: 'var(--color-action-error)',
     calculate: (n) => n * n,
     example: 'Nested loops'
   },
@@ -272,7 +272,7 @@ export function BigOViz() {
                     <motion.span
                       key={`${c.id}-${inputSize}`}
                       className="font-mono text-base font-semibold"
-                      initial={{ scale: 1.1, color: '#f59e0b' }}
+                      initial={{ scale: 1.1, color: 'var(--color-action-search)' }}
                       animate={{ scale: 1, color: '#fff' }}
                     >
                       {ops.toLocaleString()}

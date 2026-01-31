@@ -177,9 +177,9 @@
 }
 
 .pipelineStage.active {
-  border-color: rgba(59, 130, 246, 0.6);
-  background: rgba(59, 130, 246, 0.1);
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+  border-color: var(--color-blue-500);
+  background: var(--color-blue-10);
+  box-shadow: 0 0 10px var(--color-blue-30);
 }
 
 .pipelineStage.done {
@@ -188,7 +188,7 @@
 }
 
 .pipelineStage.blocking {
-  border-color: rgba(239, 68, 68, 0.6);
+  border-color: var(--color-red-500);
   background: var(--color-red-10);
 }
 
@@ -198,7 +198,7 @@
   color: var(--color-gray-500);
 }
 
-.pipelineStage.active .stageName { color: #93c5fd; }
+.pipelineStage.active .stageName { color: var(--color-blue-400); }
 .pipelineStage.done .stageName { color: var(--color-emerald-400); }
 .pipelineStage.blocking .stageName { color: var(--color-red-400); }
 

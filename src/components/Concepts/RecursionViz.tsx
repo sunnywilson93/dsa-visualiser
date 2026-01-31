@@ -401,7 +401,7 @@ export function RecursionViz() {
         </div>
 
         {/* Call Stack - Neon Box */}
-        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #f97316, #fbbf24)' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-orange)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Call Stack ({currentStep.stack.length})
           </div>
@@ -441,7 +441,7 @@ export function RecursionViz() {
 
       {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #10b981, #06b6d4)' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-emerald)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Output
           </div>

@@ -587,7 +587,7 @@ export function WebWorkersViz() {
       </div>
 
       {/* Thread Visualization - Neon Box */}
-      <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #3b82f6, var(--color-brand-primary, #0ea5e9))' }}>
+      <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-blue)' }}>
         <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
           Threads
         </div>
@@ -697,7 +697,7 @@ export function WebWorkersViz() {
 
       {/* Shared Buffer - Neon Box (for advanced examples) */}
       {currentStep.sharedBuffer && (
-        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #f97316, #fbbf24)' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-orange)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             SharedArrayBuffer
           </div>
@@ -721,7 +721,7 @@ export function WebWorkersViz() {
 
       {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, var(--difficulty-1, #10b981), var(--color-accent-cyan, #06b6d4))' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-emerald)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Console Output
           </div>

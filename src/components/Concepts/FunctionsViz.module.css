@@ -332,12 +332,12 @@
 
 .missingArg {
   border: 1px dashed var(--color-red-500);
-  background: rgba(239, 68, 68, 0.05);
+  background: var(--color-red-8);
 }
 
 .defaultArg {
   border: 1px solid var(--color-amber-500);
-  background: rgba(245, 158, 11, 0.05);
+  background: var(--color-amber-8);
 }
 
 .boundParam {
@@ -432,7 +432,7 @@
 }
 
 .thisValueDisplay.new {
-  background: rgba(236, 72, 153, 0.15);
+  background: var(--color-brand-secondary-15);
   border-color: var(--color-brand-secondary);
   color: var(--color-brand-secondary);
 }
@@ -472,7 +472,7 @@
 }
 
 .ruleBadge.new {
-  background: rgba(236, 72, 153, 0.2);
+  background: var(--color-brand-secondary-15);
   color: var(--color-brand-secondary);
 }
 

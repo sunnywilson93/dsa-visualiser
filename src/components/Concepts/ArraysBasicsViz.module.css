@@ -88,10 +88,10 @@
 }
 
 .exampleTab.activeTab {
-  background: rgba(249, 115, 22, 0.18);
-  border-color: rgba(249, 115, 22, 0.7);
+  background: var(--color-orange-18);
+  border-color: var(--color-orange-70);
   color: var(--color-white);
-  box-shadow: 0 0 12px rgba(249, 115, 22, 0.25);
+  box-shadow: 0 0 12px var(--color-orange-25);
 }
 
 .mainGrid {
@@ -155,7 +155,7 @@
 }
 
 .stackItem.reference {
-  border-color: rgba(249, 115, 22, 0.4);
+  border-color: var(--color-orange-40);
   background: var(--color-orange-8);
 }
 
@@ -184,7 +184,7 @@
   gap: var(--spacing-xs);
   padding: var(--spacing-md);
   background: var(--color-orange-8);
-  border: 2px solid rgba(249, 115, 22, 0.4);
+  border: 2px solid var(--color-orange-40);
   border-radius: var(--radius-lg);
   font-family: var(--font-mono);
   transition: all var(--transition-fast);
@@ -197,8 +197,8 @@
 }
 
 .heapObject.highlightMutated {
-  border-color: rgba(249, 115, 22, 1);
-  background: rgba(249, 115, 22, 0.2);
+  border-color: var(--color-orange-500);
+  background: var(--color-accent-orange-30);
   animation: orangePulse 0.5s ease-in-out;
 }
 
@@ -252,7 +252,7 @@
 .insightBox {
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-orange-8);
-  border: 1px solid rgba(249, 115, 22, 0.2);
+  border: 1px solid var(--color-accent-orange-30);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
   color: var(--color-gray-400);
@@ -284,8 +284,8 @@
   align-items: center;
   gap: var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-md);
-  background: rgba(249, 115, 22, 0.12);
-  border-bottom: 1px solid rgba(249, 115, 22, 0.3);
+  background: var(--color-orange-12);
+  border-bottom: 1px solid var(--color-accent-orange-30);
 }
 
 .methodBadge {
@@ -352,8 +352,8 @@
 
 .sourceElement.currentElement {
   border-color: var(--js-viz-accent);
-  background: rgba(249, 115, 22, 0.15);
-  box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
+  background: var(--color-orange-15);
+  box-shadow: 0 0 12px var(--color-orange-40);
 }
 
 .sourceElement.processedElement {
@@ -399,12 +399,12 @@
 }
 
 .filterMark {
-  background: rgba(239, 68, 68, 0.9);
+  background: var(--color-red-500);
   color: var(--color-white);
 }
 
 .filterKeep {
-  background: rgba(16, 185, 129, 0.9);
+  background: var(--color-emerald-500);
   color: var(--color-white);
 }
 
@@ -418,7 +418,7 @@
   font-weight: var(--font-weight-bold);
   color: var(--js-viz-accent);
   padding: var(--spacing-md) var(--spacing-xl);
-  background: rgba(249, 115, 22, 0.12);
+  background: var(--color-orange-12);
   border: 2px solid var(--color-orange-50);
   border-radius: var(--radius-lg);
   min-width: 100px;

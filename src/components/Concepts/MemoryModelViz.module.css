@@ -223,7 +223,7 @@
 }
 
 .stackItem.reference {
-  border-color: rgba(245, 158, 11, 0.5);
+  border-color: var(--color-amber-40);
   background: var(--color-amber-10);
 }
 
@@ -266,7 +266,7 @@
 }
 
 .heapObject.unmarked {
-  border-color: rgba(239, 68, 68, 0.6);
+  border-color: var(--color-red-500);
   background: var(--color-red-10);
   opacity: 0.7;
 }

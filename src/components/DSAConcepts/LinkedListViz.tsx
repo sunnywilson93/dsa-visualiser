@@ -61,12 +61,12 @@ const pointerLabels: Record<PointerName, string> = {
 }
 
 const pointerColors: Record<PointerName, string> = {
-  head: '#60a5fa',
-  tail: '#f59e0b',
-  current: '#10b981',
-  prev: '#a855f7',
-  slow: '#22d3ee',
-  fast: '#f97316',
+  head: 'var(--color-action-access)',
+  tail: 'var(--color-action-search)',
+  current: 'var(--color-action-success)',
+  prev: 'var(--color-action-compare)',
+  slow: 'var(--color-accent-cyan)',
+  fast: 'var(--color-orange-500)',
 }
 
 const accessList: ListNode[] = createLinearList(['A', 'B', 'C', 'D'], 1)
@@ -248,12 +248,12 @@ export function LinkedListViz(): JSX.Element {
 
   const getActionColor = (action: StepAction): string => {
     switch (action) {
-      case 'visit': return '#60a5fa'
-      case 'insert': return '#10b981'
-      case 'update': return '#f59e0b'
-      case 'found': return '#10b981'
-      case 'error': return '#ef4444'
-      default: return '#888'
+      case 'visit': return 'var(--color-action-visit)'
+      case 'insert': return 'var(--color-action-insert)'
+      case 'update': return 'var(--color-action-update)'
+      case 'found': return 'var(--color-action-success)'
+      case 'error': return 'var(--color-action-error)'
+      default: return 'var(--color-gray-600)'
     }
   }
 
@@ -407,8 +407,8 @@ export function LinkedListViz(): JSX.Element {
             {currentStep.output ? (
               <motion.span
                 key={`${stepIndex}-${currentStep.output}`}
-                initial={{ scale: 1.2, color: '#f59e0b' }}
-                animate={{ scale: 1, color: currentStep.action === 'error' ? '#ef4444' : '#10b981' }}
+                initial={{ scale: 1.2, color: 'var(--color-action-search)' }}
+                animate={{ scale: 1, color: currentStep.action === 'error' ? 'var(--color-action-error)' : 'var(--color-action-success)' }}
                 className="font-mono text-2xl font-bold"
               >
                 {currentStep.output}

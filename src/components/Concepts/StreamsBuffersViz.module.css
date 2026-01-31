@@ -187,11 +187,11 @@
   position: relative;
 }
 
-.stream.readable { border-color: rgba(59, 130, 246, 0.5); background: rgba(59, 130, 246, 0.08); }
+.stream.readable { border-color: var(--color-blue-40); background: var(--color-blue-10); }
 .stream.transform { border-color: var(--color-brand-primary-50); background: var(--color-brand-primary-8); }
 .stream.writable { border-color: var(--color-emerald-50); background: var(--color-emerald-8); }
-.stream.flowing { box-shadow: 0 0 12px rgba(59, 130, 246, 0.3); }
-.stream.paused { opacity: 0.6; border-color: rgba(239, 68, 68, 0.5); }
+.stream.flowing { box-shadow: 0 0 12px var(--color-blue-30); }
+.stream.paused { opacity: 0.6; border-color: var(--color-red-40); }
 
 .streamHeader {
   padding: 3px var(--spacing-sm);
@@ -223,7 +223,7 @@
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: #93c5fd;
+  color: var(--color-blue-400);
 }
 
 .flowIndicator {

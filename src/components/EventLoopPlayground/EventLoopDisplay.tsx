@@ -105,7 +105,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
           className="relative rounded-lg p-0.5"
           style={{
             gridArea: 'eventloop',
-            background: 'linear-gradient(135deg, #64748b, #94a3b8)',
+            background: 'var(--gradient-neon-gray)',
           }}
         >
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">

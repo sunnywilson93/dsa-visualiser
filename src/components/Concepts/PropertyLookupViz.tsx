@@ -852,7 +852,7 @@ export function PropertyLookupViz() {
       </div>
 
       {/* Chain visualization - Neon Box */}
-      <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899)' }}>
+      <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-purple)' }}>
         <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
           Property Lookup
         </div>

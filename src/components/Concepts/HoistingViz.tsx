@@ -533,7 +533,7 @@ export function HoistingViz() {
         </div>
 
         {/* Variables panel - Neon Box */}
-        <div className="relative rounded-xl p-[3px]" style={{ gridArea: 'variables', background: 'linear-gradient(135deg, #3b82f6, var(--color-brand-primary, #0ea5e9))' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ gridArea: 'variables', background: 'var(--gradient-neon-blue)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Variable Environment
           </div>
@@ -573,7 +573,7 @@ export function HoistingViz() {
         </div>
 
         {/* Output panel - Neon Box */}
-        <div className="relative rounded-xl p-[3px] md:col-span-2" style={{ gridArea: 'output', background: 'linear-gradient(135deg, var(--difficulty-1, #10b981), var(--color-accent-cyan, #06b6d4))' }}>
+        <div className="relative rounded-xl p-[3px] md:col-span-2" style={{ gridArea: 'output', background: 'var(--gradient-neon-emerald)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Output
           </div>

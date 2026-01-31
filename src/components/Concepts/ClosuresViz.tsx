@@ -713,7 +713,7 @@ export function ClosuresViz() {
       {/* Memory visualization */}
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-4">
         {/* Call Stack - Neon Box */}
-        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #f97316, #fbbf24)' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-orange)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Call Stack
           </div>
@@ -761,7 +761,7 @@ export function ClosuresViz() {
         </div>
 
         {/* Heap Memory - Neon Box */}
-        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899)' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-purple)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Heap Memory
           </div>
@@ -814,7 +814,7 @@ export function ClosuresViz() {
         </div>
 
         {/* Output - Neon Box */}
-        <div className="relative rounded-xl p-[3px] md:col-span-2" style={{ background: 'linear-gradient(135deg, #10b981, #06b6d4)' }}>
+        <div className="relative rounded-xl p-[3px] md:col-span-2" style={{ background: 'var(--gradient-neon-emerald)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Output
           </div>

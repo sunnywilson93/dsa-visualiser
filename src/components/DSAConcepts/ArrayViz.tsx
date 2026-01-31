@@ -251,14 +251,14 @@ export function ArrayViz() {
 
   const getActionColor = (action: string) => {
     switch (action) {
-      case 'access': return '#60a5fa'
-      case 'search': return '#f59e0b'
-      case 'insert': return '#10b981'
-      case 'delete': return '#ef4444'
-      case 'shift': return '#a855f7'
-      case 'found': return '#10b981'
-      case 'not-found': return '#888'
-      default: return '#888'
+      case 'access': return 'var(--color-action-access)'
+      case 'search': return 'var(--color-action-search)'
+      case 'insert': return 'var(--color-action-insert)'
+      case 'delete': return 'var(--color-action-delete)'
+      case 'shift': return 'var(--color-action-compare)'
+      case 'found': return 'var(--color-action-success)'
+      case 'not-found': return 'var(--color-gray-600)'
+      default: return 'var(--color-gray-600)'
     }
   }
 

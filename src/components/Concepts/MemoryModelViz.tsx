@@ -821,7 +821,7 @@ export function MemoryModelViz() {
       {/* Memory visualization */}
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6">
         {/* Stack - Neon Box */}
-        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #f97316, #fbbf24)' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-orange)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Stack
           </div>
@@ -909,7 +909,7 @@ export function MemoryModelViz() {
 
       {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, var(--difficulty-1, #10b981), var(--color-accent-cyan, #06b6d4))' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-emerald)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Output
           </div>

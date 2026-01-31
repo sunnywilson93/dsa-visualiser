@@ -17,7 +17,7 @@
 
 .subtitle {
   font-size: var(--text-base);
-  color: #9aa0a6;
+  color: var(--color-coercion-text);
   margin: 0;
 }
 
@@ -77,7 +77,7 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #7b8088;
+  color: var(--color-coercion-muted);
 }
 
 .optionsGrid {
@@ -119,12 +119,12 @@
 .optionLabel {
   font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
-  color: #f1f3f4;
+  color: var(--color-text-primary);
 }
 
 .optionType {
   font-size: var(--text-2xs);
-  color: #8b8f97;
+  color: var(--color-coercion-label);
 }
 
 /* Result Grid */
@@ -171,7 +171,7 @@
 }
 
 .equals {
-  color: #a0a4ab;
+  color: var(--color-gray-400);
 }
 
 .resultValue {
@@ -193,7 +193,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   background: var(--color-white-5);
-  color: #9aa0a6;
+  color: var(--color-coercion-text);
 }
 
 .typeBadgeAccent {
@@ -211,13 +211,13 @@
   flex-wrap: wrap;
   gap: var(--spacing-md);
   font-size: var(--text-xs);
-  color: #b0b4bb;
+  color: var(--color-text-secondary);
 }
 
 /* Explain Card - Neon Box Gray */
 .explainBox {
-  --neon-start: #64748b;
-  --neon-end: #94a3b8;
+  --neon-start: var(--color-slate-500);
+  --neon-end: var(--color-slate-400);
 }
 
 .explainBox .neonBoxInner {
@@ -227,7 +227,7 @@
 .explainList {
   margin: 0;
   padding-left: 1rem;
-  color: #b3b7bd;
+  color: var(--color-text-secondary);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
   display: flex;

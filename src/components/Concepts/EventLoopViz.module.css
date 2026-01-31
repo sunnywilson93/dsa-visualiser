@@ -220,8 +220,8 @@
 /* Event Loop Indicator */
 .eventLoopBox {
   grid-area: eventloop;
-  --neon-start: #64748b;
-  --neon-end: #94a3b8;
+  --neon-start: var(--color-slate-500);
+  --neon-end: var(--color-slate-400);
 }
 
 .eventLoopBox .neonBoxInner {
@@ -235,13 +235,13 @@
 
 .eventLoopIcon {
   font-size: 2.5rem;
-  color: #38bdf8;
+  color: var(--color-accent-blue);
   animation: spin 3s linear infinite;
 }
 
 .eventLoopIcon.active {
   animation: spin 1s linear infinite;
-  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+  filter: drop-shadow(0 0 8px var(--color-accent-blue-50));
 }
 
 .eventLoopIcon.idle {

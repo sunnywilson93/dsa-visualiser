@@ -610,7 +610,7 @@ export function CriticalRenderPathViz() {
       </div>
 
       {/* Pipeline visualization - Neon Box */}
-      <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #3b82f6, var(--color-brand-primary, #0ea5e9))' }}>
+      <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-blue)' }}>
         <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
           Render Pipeline
         </div>
@@ -649,7 +649,7 @@ export function CriticalRenderPathViz() {
 
       {/* Trees - Neon Box */}
       {(currentStep.domTree.length > 0 || currentStep.cssomTree.length > 0 || currentStep.renderTree.length > 0) && (
-        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, #f97316, #fbbf24)' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-orange)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             DOM & Render Trees
           </div>
@@ -694,7 +694,7 @@ export function CriticalRenderPathViz() {
 
       {/* Output - Neon Box */}
       {currentStep.output.length > 0 && (
-        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, var(--difficulty-1, #10b981), var(--color-accent-cyan, #06b6d4))' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-neon-emerald)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Console Output
           </div>

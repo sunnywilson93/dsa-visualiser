@@ -2,7 +2,7 @@
  * Shared constants for visualization components.
  *
  * Usage:
- *   import { LEVEL_INFO, getPhaseColor, getStatusColor } from '@/constants'
+ *   import { LEVEL_INFO, getPhaseColor, getStatusColor, getGradient } from '@/constants'
  *
  * All color values reference @theme CSS custom properties defined in globals.css.
  */
@@ -31,3 +31,7 @@ export type {
   ThreadStatus,
   VariableStatus,
 } from './statusColors'
+
+// Gradient constants
+export { GRADIENTS, getGradient } from './gradients'
+export type { GradientType } from './gradients'

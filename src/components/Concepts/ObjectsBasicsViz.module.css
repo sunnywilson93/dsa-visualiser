@@ -1,7 +1,7 @@
 .container {
   --js-viz-bg: var(--color-bg-primary);
   --js-viz-border: var(--color-white-8);
-  --js-viz-accent: #14b8a6;
+  --js-viz-accent: var(--color-teal-500);
 
   display: flex;
   flex-direction: column;
@@ -88,10 +88,10 @@
 }
 
 .exampleTab.activeTab {
-  background: rgba(20, 184, 166, 0.18);
-  border-color: rgba(20, 184, 166, 0.7);
+  background: var(--color-teal-18);
+  border-color: var(--color-teal-70);
   color: var(--color-white);
-  box-shadow: 0 0 12px rgba(20, 184, 166, 0.25);
+  box-shadow: 0 0 12px var(--color-teal-25);
 }
 
 .mainGrid {
@@ -155,7 +155,7 @@
 }
 
 .stackItem.reference {
-  border-color: rgba(20, 184, 166, 0.4);
+  border-color: var(--color-teal-40);
   background: var(--color-teal-8);
 }
 
@@ -184,7 +184,7 @@
   gap: var(--spacing-xs);
   padding: var(--spacing-md);
   background: var(--color-teal-8);
-  border: 2px solid rgba(20, 184, 166, 0.4);
+  border: 2px solid var(--color-teal-40);
   border-radius: var(--radius-lg);
   font-family: var(--font-mono);
   transition: all var(--transition-fast);
@@ -200,8 +200,8 @@
 }
 
 .heapObject.highlightMutated {
-  border-color: rgba(20, 184, 166, 1);
-  background: rgba(20, 184, 166, 0.2);
+  border-color: var(--color-teal-500);
+  background: var(--color-teal-20);
   animation: tealPulse 0.5s ease-in-out;
 }
 
@@ -233,7 +233,7 @@
 }
 
 .property.highlightChanged {
-  background: rgba(20, 184, 166, 0.15);
+  background: var(--color-teal-15);
   border-radius: var(--radius-sm);
   padding: 0.25rem 0.5rem;
   margin: 0 -0.5rem;
@@ -292,7 +292,7 @@
 .insightBox {
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-teal-8);
-  border: 1px solid rgba(20, 184, 166, 0.2);
+  border: 1px solid var(--color-teal-20);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
   color: var(--color-gray-400);
@@ -337,7 +337,7 @@
 
 .destructurePanel {
   background: var(--color-black-40);
-  border: 2px solid rgba(20, 184, 166, 0.5);
+  border: 2px solid var(--color-teal-30);
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
@@ -347,8 +347,8 @@
   align-items: center;
   gap: var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-md);
-  background: rgba(20, 184, 166, 0.12);
-  border-bottom: 1px solid rgba(20, 184, 166, 0.3);
+  background: var(--color-teal-12);
+  border-bottom: 1px solid var(--color-teal-30);
 }
 
 .destructureBadge {
@@ -392,7 +392,7 @@
 
 .extractionItem.extracting {
   border-color: var(--js-viz-accent);
-  background: rgba(20, 184, 166, 0.1);
+  background: var(--color-teal-10);
   animation: tealExtractPulse 0.8s ease-in-out infinite;
 }
 

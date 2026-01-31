@@ -736,7 +736,7 @@ export function InstanceofViz() {
       {/* Main visualization: Chain + Target side by side */}
       <div className="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] gap-4 items-start">
         {/* Left: Prototype Chain */}
-        <div className="relative rounded-xl p-[2px]" style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899)' }}>
+        <div className="relative rounded-xl p-[2px]" style={{ background: 'var(--gradient-neon-purple)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-0.5 bg-gray-900 rounded-b-lg text-xs font-semibold text-white whitespace-nowrap z-10">
             Prototype Chain
           </div>
@@ -883,7 +883,7 @@ export function InstanceofViz() {
         </div>
 
         {/* Right: Target prototype */}
-        <div className="relative rounded-xl p-[2px]" style={{ background: 'linear-gradient(135deg, #06b6d4, #0891b2)' }}>
+        <div className="relative rounded-xl p-[2px]" style={{ background: 'var(--gradient-neon-cyan)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-0.5 bg-gray-900 rounded-b-lg text-xs font-semibold text-white whitespace-nowrap z-10">
             Target (looking for)
           </div>

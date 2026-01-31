@@ -96,12 +96,12 @@ export function QueueViz(): JSX.Element {
 
   const getActionColor = (action: Step['action']): string => {
     switch (action) {
-      case 'enqueue': return '#10b981'
-      case 'dequeue': return '#f59e0b'
-      case 'peek': return '#60a5fa'
-      case 'process': return '#a855f7'
-      case 'error': return '#ef4444'
-      default: return '#888'
+      case 'enqueue': return 'var(--color-action-insert)'
+      case 'dequeue': return 'var(--color-action-search)'
+      case 'peek': return 'var(--color-action-access)'
+      case 'process': return 'var(--color-action-compare)'
+      case 'error': return 'var(--color-action-error)'
+      default: return 'var(--color-gray-600)'
     }
   }
 
@@ -222,8 +222,8 @@ export function QueueViz(): JSX.Element {
             {currentStep.output ? (
               <motion.span
                 key={`${stepIndex}-${currentStep.output}`}
-                initial={{ scale: 1.2, color: '#f59e0b' }}
-                animate={{ scale: 1, color: currentStep.action === 'error' ? '#ef4444' : '#10b981' }}
+                initial={{ scale: 1.2, color: 'var(--color-action-search)' }}
+                animate={{ scale: 1, color: currentStep.action === 'error' ? 'var(--color-action-error)' : 'var(--color-action-success)' }}
                 className="font-mono text-2xl font-bold"
               >
                 {currentStep.output}

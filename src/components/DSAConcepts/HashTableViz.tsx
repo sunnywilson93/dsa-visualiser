@@ -134,13 +134,13 @@ export function HashTableViz() {
 
   const getActionColor = (action: string) => {
     switch (action) {
-      case 'hash': return '#60a5fa'
-      case 'insert': return '#10b981'
-      case 'lookup': return '#f59e0b'
-      case 'collision': return '#ef4444'
-      case 'found': return '#10b981'
-      case 'not-found': return '#888'
-      default: return '#888'
+      case 'hash': return 'var(--color-action-access)'
+      case 'insert': return 'var(--color-action-insert)'
+      case 'lookup': return 'var(--color-action-search)'
+      case 'collision': return 'var(--color-action-error)'
+      case 'found': return 'var(--color-action-success)'
+      case 'not-found': return 'var(--color-gray-600)'
+      default: return 'var(--color-gray-600)'
     }
   }
 
@@ -175,8 +175,8 @@ export function HashTableViz() {
                   <motion.span
                     key={currentStep.id}
                     className="text-xl font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded"
-                    initial={{ scale: 1.5, color: '#f59e0b' }}
-                    animate={{ scale: 1, color: '#10b981' }}
+                    initial={{ scale: 1.5, color: 'var(--color-action-search)' }}
+                    animate={{ scale: 1, color: 'var(--color-action-success)' }}
                   >
                     {currentStep.hashValue % BUCKET_COUNT}
                   </motion.span>

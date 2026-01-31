@@ -985,7 +985,7 @@ export function ClassSyntaxViz() {
         </div>
 
         {/* Prototype Equivalent Panel */}
-        <div className="relative rounded-xl p-[2px]" style={{ background: 'linear-gradient(135deg, #f59e0b, #fbbf24)' }}>
+        <div className="relative rounded-xl p-[2px]" style={{ background: 'var(--gradient-neon-amber)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-gray-900 rounded-b-lg text-xs font-semibold text-amber-400 whitespace-nowrap z-10 flex items-center gap-1.5">
             <Code2 size={12} />
             Prototype Reality
