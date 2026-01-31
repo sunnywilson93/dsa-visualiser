@@ -66,6 +66,9 @@
   --color-accent-purple-15: rgba(167, 139, 250, 0.15);
   --color-accent-purple-20: rgba(167, 139, 250, 0.2);
   --color-accent-purple-25: rgba(167, 139, 250, 0.25);
+  --color-violet-500-50: rgba(130, 100, 255, 0.5);
+  --color-violet-500-90: rgba(130, 100, 255, 0.9);
+  --color-purple-600-35: rgba(118, 75, 162, 0.35);
 
   /* === White opacity === */
   --color-white-2: rgba(255, 255, 255, 0.02);
@@ -84,6 +87,7 @@
   /* === Black opacity === */
   --color-black-20: rgba(0, 0, 0, 0.2);
   --color-black-30: rgba(0, 0, 0, 0.3);
+  --color-black-35: rgba(0, 0, 0, 0.35);
   --color-black-40: rgba(0, 0, 0, 0.4);
   --color-black-50: rgba(0, 0, 0, 0.5);
 
@@ -121,6 +125,7 @@
 
   /* === Blue scale (Info states - Sky tint) === */
   --color-blue-400: #38bdf8;
+  --color-blue-400-30: rgba(96, 165, 250, 0.3);
   --color-blue-500: #0ea5e9;
   --color-blue-600: #0284c7;
   --color-blue-10: rgba(56, 189, 248, 0.1);
@@ -151,6 +156,8 @@
   /* === Red scale (Error states - Rose tint, less aggressive) === */
   --color-red-400: #fb7185;
   --color-red-500: #f43f5e;
+  --color-red-500-5: rgba(239, 68, 68, 0.05);
+  --color-red-500-50: rgba(239, 68, 68, 0.5);
   --color-red-600: #e11d48;
   --color-red-8: rgba(251, 113, 133, 0.08);
   --color-red-10: rgba(251, 113, 133, 0.1);
@@ -162,6 +169,7 @@
   /* === Amber scale (Warning states) === */
   --color-amber-400: #fbbf24;
   --color-amber-500: #f59e0b;
+  --color-amber-500-50: rgba(245, 158, 11, 0.5);
   --color-amber-600: #d97706;
   --color-amber-8: rgba(251, 191, 36, 0.08);
   --color-amber-10: rgba(251, 191, 36, 0.1);
@@ -175,6 +183,8 @@
   --color-slate-500: #64748b;
   --color-slate-400-20: rgba(148, 163, 184, 0.2);
   --color-slate-500-50: rgba(30, 41, 59, 0.5);
+  --color-slate-900-35: rgba(2, 4, 10, 0.35);
+  --color-timeline-track: linear-gradient(90deg, var(--color-white-5), var(--color-white-10), var(--color-white-5));
 
   /* === DSA Action Colors (semantic operation states) === */
   --color-action-access: #60a5fa;

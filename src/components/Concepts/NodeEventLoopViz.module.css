@@ -191,7 +191,7 @@
 /* Promise Queue - Pink/Red */
 .promiseBox {
   --neon-start: var(--color-brand-secondary);
-  --neon-end: #f43f5e;
+  --neon-end: var(--color-red-500);
 }
 
 .queueContent {
@@ -364,7 +364,7 @@
 }
 
 .btnDone {
-  background: linear-gradient(135deg, var(--color-emerald-500), #059669);
+  background: linear-gradient(135deg, var(--color-emerald-500), var(--color-emerald-600));
 }
 
 .btnDone:hover {

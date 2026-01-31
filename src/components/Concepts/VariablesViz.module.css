@@ -436,8 +436,8 @@
 }
 
 .errorPanel {
-  background: linear-gradient(135deg, var(--color-red-15), rgba(239, 68, 68, 0.05));
-  border: 2px solid rgba(239, 68, 68, 0.5);
+  background: linear-gradient(135deg, var(--color-red-15), var(--color-red-500-5));
+  border: 2px solid var(--color-red-500-50);
   border-radius: var(--radius-xl);
   padding: var(--spacing-xl);
   text-align: center;
@@ -483,7 +483,7 @@
 
 .hoistingAnimation {
   background: var(--color-amber-10);
-  border: 2px dashed rgba(245, 158, 11, 0.5);
+  border: 2px dashed var(--color-amber-500-50);
   border-radius: var(--radius-lg);
   padding: 1rem;
   text-align: center;

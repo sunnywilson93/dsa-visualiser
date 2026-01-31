@@ -60,7 +60,7 @@
   height: var(--spacing-md);
   border-radius: var(--radius-full);
   background: var(--color-bg-elevated);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--color-white-20);
   transition: all var(--transition-fast);
 }
 

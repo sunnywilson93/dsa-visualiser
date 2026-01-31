@@ -62,7 +62,7 @@
 }
 
 .controlGroup {
-  background: rgba(0, 0, 0, 0.35);
+  background: var(--color-black-35);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-xl);
   padding: var(--spacing-md);
@@ -111,7 +111,7 @@
 }
 
 .optionBtnActive {
-  border-color: rgba(130, 100, 255, 0.9);
+  border-color: var(--color-violet-500-90);
   background: var(--color-neon-viz-18);
   box-shadow: var(--glow-xl) var(--color-neon-viz-25);
 }
@@ -165,7 +165,7 @@
 
 .operatorChip {
   padding: var(--spacing-xs) var(--spacing-sm);
-  background: rgba(118, 75, 162, 0.35);
+  background: var(--color-purple-600-35);
   border-radius: var(--radius-lg);
   font-weight: var(--font-weight-bold);
 }

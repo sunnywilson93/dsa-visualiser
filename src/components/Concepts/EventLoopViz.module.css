@@ -185,7 +185,7 @@
   gap: var(--spacing-sm);
   padding: var(--spacing-sm);
   background: var(--color-black-30);
-  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border: 1px dashed var(--color-white-15);
   border-radius: var(--radius-lg);
 }
 
@@ -254,7 +254,7 @@
 .taskQueueBox {
   grid-area: taskqueue;
   --neon-start: var(--color-brand-secondary);
-  --neon-end: #f43f5e;
+  --neon-end: var(--color-red-500);
 }
 
 .taskQueueBox .neonBoxInner {
@@ -312,7 +312,7 @@
   background: var(--js-viz-surface);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--js-viz-radius);
-  box-shadow: 0 10px 24px rgba(2, 4, 10, 0.35);
+  box-shadow: 0 10px 24px var(--color-slate-900-35);
   overflow: hidden;
 }
 

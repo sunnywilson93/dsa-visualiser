@@ -61,12 +61,12 @@
 
 .opItem:hover {
   background: var(--color-white-5);
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: var(--color-white-15);
 }
 
 .opItem.active {
   background: var(--color-neon-viz-18);
-  border-color: rgba(130, 100, 255, 0.5);
+  border-color: var(--color-violet-500-50);
 }
 
 .opExpression {
