@@ -125,7 +125,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
           className="relative rounded-lg p-0.5"
           style={{
             gridArea: 'taskqueue',
-            background: 'linear-gradient(135deg, var(--color-brand-secondary), var(--color-red-500)),
+            background: 'linear-gradient(135deg, var(--color-brand-secondary), var(--color-red-500))'
           }}
         >
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
