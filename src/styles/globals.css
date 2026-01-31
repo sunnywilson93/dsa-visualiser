@@ -120,6 +120,8 @@
   --color-blue-10: rgba(56, 189, 248, 0.1);
   --color-blue-15: rgba(56, 189, 248, 0.15);
   --color-blue-20: rgba(56, 189, 248, 0.2);
+  --color-blue-30: rgba(56, 189, 248, 0.3);
+  --color-blue-40: rgba(56, 189, 248, 0.4);
 
   /* === Sky scale (Info highlights) === */
   --color-sky-400: #38bdf8;
@@ -143,6 +145,7 @@
   --color-red-15: rgba(251, 113, 133, 0.15);
   --color-red-20: rgba(251, 113, 133, 0.2);
   --color-red-30: rgba(251, 113, 133, 0.3);
+  --color-red-40: rgba(251, 113, 133, 0.4);
 
   /* === Amber scale (Warning states) === */
   --color-amber-400: #fbbf24;
