@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-31)
 ## Current Position
 
 Milestone: v4.0
-Phase: 22 - Foundation & Audit (1 of 3 plans complete)
-Plan: 01 complete
+Phase: 22 - Foundation & Audit (2 of 3 plans complete)
+Plan: 02 complete
 Status: In progress
-Last activity: 2026-01-31 -- Completed 22-01-PLAN.md
+Last activity: 2026-01-31 -- Completed 22-02-PLAN.md
 
-Progress: [#_________] 1/13 plans (7.7%)
+Progress: [##________] 2/13 plans (15.4%)
 
 ## v4.0 Overview
 
 | Phase | Name | Requirements | Plans | Status |
 |-------|------|--------------|-------|--------|
-| 22 | Foundation & Audit | INFRA-01..04, MIG-04 (5) | 3 | In progress (1/3) |
+| 22 | Foundation & Audit | INFRA-01..04, MIG-04 (5) | 3 | In progress (2/3) |
 | 23 | Level Indicators Migration | MIG-01 (1) | 3 | Planned |
 | 24 | Phase/Status Colors Migration | MIG-02 (1) | 2 | Planned |
 | 25 | Animation Colors Handling | ANIM-01..03 (3) | 2 | Planned |
@@ -38,8 +38,8 @@ Progress: [#_________] 1/13 plans (7.7%)
 
 **v4.0 (current):**
 - Total plans: 13
-- Plans completed: 1
-- Average duration: 5 min (1 sample)
+- Plans completed: 2
+- Average duration: 6 min (2 samples: 5 min + 7 min)
 
 ## Accumulated Context
 
@@ -57,6 +57,9 @@ Recent decisions affecting current work:
 | Visual regression per batch | Verify parity after each migration batch | v4.0 research |
 | Level bg uses 15% opacity | var(--color-{color}-15) for backgrounds | 22-01 |
 | Level border uses 40% opacity | var(--color-{color}-40) for borders | 22-01 |
+| Single Phase union type | Exhaustive union covering all 100+ phases from 20 viz components | 22-02 |
+| Separated status subtypes | HoistingStatus, VariableState, StackFrameStatus, ThreadStatus combined into VariableStatus | 22-02 |
+| Status opacity variants included | STATUS_BG_COLORS (15%) and STATUS_BORDER_COLORS (40%) for badges | 22-02 |
 
 ### Critical Pitfalls (from research)
 
@@ -77,7 +80,7 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-31T13:14:30Z
-Stopped at: Completed 22-01-PLAN.md
+Last session: 2026-01-31T13:16:58Z
+Stopped at: Completed 22-02-PLAN.md
 Resume file: None
-Next action: Execute 22-02-PLAN.md
+Next action: Execute 22-03-PLAN.md
