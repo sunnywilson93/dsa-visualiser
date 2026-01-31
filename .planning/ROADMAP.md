@@ -393,10 +393,10 @@ Plans:
   6. Prototype pollution visualization shows dangers of modifying Object.prototype with affected objects highlighted
 
 Plans:
-- [ ] 20-01-PLAN.md - PrototypeChainBasicsViz and PropertyLookupViz (OOP-01, OOP-02)
-- [ ] 20-02-PLAN.md - InstanceofViz (OOP-03)
-- [ ] 20-03-PLAN.md - ClassSyntaxViz (OOP-04)
-- [ ] 20-04-PLAN.md - PrototypeInheritanceViz and PrototypePollutionViz (OOP-05, OOP-06)
+- [x] 20-01-PLAN.md - PrototypeChainBasicsViz and PropertyLookupViz (OOP-01, OOP-02)
+- [x] 20-02-PLAN.md - InstanceofViz (OOP-03)
+- [x] 20-03-PLAN.md - ClassSyntaxViz (OOP-04)
+- [x] 20-04-PLAN.md - PrototypeInheritanceViz and PrototypePollutionViz (OOP-05, OOP-06)
 
 ### Phase 21: Closure Visualizations
 **Goal**: Learners can step through closure patterns to understand lexical scope, memory implications, and practical uses
@@ -444,9 +444,9 @@ Phases 1-17 complete (v1.0-v2.0). Phases 18-21 (v3.0) in sequence.
 | 17. Compatibility Verification | v2.0 | 5/5 | Complete | 2026-01-27 |
 | 18. Callbacks & Promises | v3.0 | 4/4 | Complete | 2026-01-30 |
 | 19. Async/Await & Queues | v3.0 | 5/5 | Complete | 2026-01-30 |
-| 20. OOP/Prototypes | v3.0 | 0/4 | Not started | - |
+| 20. OOP/Prototypes | v3.0 | 4/4 | Complete | 2026-01-31 |
 | 21. Closures | v3.0 | 0/5 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-30 -- Phase 19 complete (7 async/queue visualizations)*
+*Last updated: 2026-01-31 -- Phase 20 complete (6 OOP/prototype visualizations)*
