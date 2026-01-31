@@ -631,7 +631,7 @@ export function PrototypeInheritanceViz() {
         </div>
 
         {/* Prototype Chain Visualization */}
-        <div className="relative rounded-xl p-[2px]" style={{ background: 'linear-gradient(135deg, #a855f7, #06b6d4)' }}>
+        <div className="relative rounded-xl p-[2px]" style={{ background: 'linear-gradient(135deg, var(--color-purple-500), var(--color-cyan-500))' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-gray-900 rounded-b-lg text-xs font-semibold text-white whitespace-nowrap z-10">
             Prototype Chain
           </div>

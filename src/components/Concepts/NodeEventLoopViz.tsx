@@ -783,7 +783,7 @@ export function NodeEventLoopViz() {
 
         <div 
           className="relative rounded-xl p-[3px]"
-          style={{ background: 'linear-gradient(135deg, var(--color-brand-secondary), #f43f5e)' }}
+          style={{ background: 'linear-gradient(135deg, var(--color-brand-secondary), var(--color-red-500))' }}
         >
           <div className="bg-[var(--color-bg-page-secondary)] rounded-lg min-h-[60px] p-4 pt-6 relative">
             <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-[var(--color-bg-tertiary)] rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">

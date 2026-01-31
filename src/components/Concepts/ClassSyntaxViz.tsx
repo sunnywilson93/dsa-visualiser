@@ -956,7 +956,7 @@ export function ClassSyntaxViz() {
       {/* Side-by-side code comparison */}
       <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
         {/* Class Syntax Panel */}
-        <div className="relative rounded-xl p-[2px]" style={{ background: 'linear-gradient(135deg, #a855f7, #c084fc)' }}>
+        <div className="relative rounded-xl p-[2px]" style={{ background: 'linear-gradient(135deg, var(--color-purple-500), var(--color-purple-400))' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-gray-900 rounded-b-lg text-xs font-semibold text-purple-400 whitespace-nowrap z-10 flex items-center gap-1.5">
             <Code2 size={12} />
             ES6 Class Syntax
@@ -1016,7 +1016,7 @@ export function ClassSyntaxViz() {
 
       {/* Prototype Chain Visualization */}
       {currentStep.chain.length > 0 && (
-        <div className="relative rounded-xl p-[2px]" style={{ background: 'linear-gradient(135deg, #a855f7, #f59e0b)' }}>
+        <div className="relative rounded-xl p-[2px]" style={{ background: 'linear-gradient(135deg, var(--color-purple-500), var(--color-amber-500))' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-gray-900 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Resulting Prototype Chain (Same Either Way!)
           </div>

@@ -756,15 +756,15 @@ export function TimingViz() {
         </div>
         <div className={styles.legend}>
           <span className={styles.legendItem}>
-            <span className={styles.legendDot} style={{ background: '#f59e0b' }}></span>
+            <span className={styles.legendDot} style={{ background: 'var(--color-amber-500)' }}></span>
             Call
           </span>
           <span className={styles.legendItem}>
-            <span className={styles.legendDot} style={{ background: '#10b981' }}></span>
+            <span className={styles.legendDot} style={{ background: 'var(--color-emerald-500)' }}></span>
             Execute
           </span>
           <span className={styles.legendItem}>
-            <span className={styles.legendDot} style={{ background: '#ef4444' }}></span>
+            <span className={styles.legendDot} style={{ background: 'var(--color-red-500)' }}></span>
             Cancelled
           </span>
         </div>

@@ -39,6 +39,7 @@
   --color-accent-red: #fb7185;
   --color-accent-purple: #a78bfa;
   --color-accent-cyan: #22d3ee;
+  --color-cyan-500: #06b6d4;
   --color-accent-orange: #fb923c;
 
   /* === Accent primary (Indigo - Brand Color) === */
@@ -68,7 +69,11 @@
   --color-accent-purple-25: rgba(167, 139, 250, 0.25);
   --color-violet-500-50: rgba(130, 100, 255, 0.5);
   --color-violet-500-90: rgba(130, 100, 255, 0.9);
+  --color-violet-300-40: rgba(196, 181, 253, 0.4);
   --color-purple-600-35: rgba(118, 75, 162, 0.35);
+  --color-purple-500: #a855f7;
+  --color-purple-400: #c084fc;
+  --color-gray-500-tw: #6b7280;
 
   /* === White opacity === */
   --color-white-2: rgba(255, 255, 255, 0.02);
@@ -94,6 +99,7 @@
   /* === Emerald scale (Success states - softer on eyes) === */
   --color-emerald-400: #34d399;
   --color-emerald-500: #10b981;
+  --color-emerald-500-50: rgba(16, 185, 129, 0.5);
   --color-emerald-600: #059669;
   --color-emerald-8: rgba(52, 211, 153, 0.08);
   --color-emerald-10: rgba(52, 211, 153, 0.1);

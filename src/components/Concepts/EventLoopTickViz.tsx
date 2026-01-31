@@ -826,7 +826,7 @@ function CircularDiagram({
                 textAnchor="middle"
                 dominantBaseline="middle"
                 className="text-xs font-medium fill-current"
-                style={{ fill: isActive ? colors.text : '#6b7280' }}
+                style={{ fill: isActive ? colors.text : 'var(--color-gray-500-tw)' }}
               >
                 {phaseLabels[phase]}
               </text>

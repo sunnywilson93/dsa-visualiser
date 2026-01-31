@@ -118,7 +118,7 @@ export function BitManipulationConcept({ step }: BitManipulationConceptProps) {
               >
                 <span 
                   className="text-sm font-bold text-[var(--color-brand-light)] justify-self-end"
-                  style={{ gridColumn: 2, textShadow: '0 0 6px rgba(196, 181, 253, 0.4)' }}
+                  style={{ gridColumn: 2, textShadow: '0 0 6px var(--color-violet-300-40)' }}
                 >
                   {operator}
                 </span>

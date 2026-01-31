@@ -509,7 +509,7 @@ export function HoistingViz() {
             <span>Code</span>
             <span
               className="px-2 py-0.5 rounded-full text-[10px] font-semibold text-black"
-              style={{ background: currentStep.phase === 'Creation' ? '#60a5fa' : '#10b981' }}
+              style={{ background: currentStep.phase === 'Creation' ? 'var(--color-blue-400)' : 'var(--color-emerald-500)' }}
             >
               {currentStep.phase} Phase
             </span>
@@ -649,15 +649,15 @@ export function HoistingViz() {
       {/* Legend */}
       <div className="flex gap-6 justify-center flex-wrap">
         <div className="flex items-center gap-1.5 text-xs text-gray-500">
-          <span className="w-4 h-4 rounded-full" style={{ background: '#f59e0b' }} />
+          <span className="w-4 h-4 rounded-full bg-amber-500" />
           <span>Hoisted (undefined)</span>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-gray-500">
-          <span className="w-4 h-4 rounded-full" style={{ background: '#ef4444' }} />
+          <span className="w-4 h-4 rounded-full bg-red-500" />
           <span>TDZ (cannot access)</span>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-gray-500">
-          <span className="w-4 h-4 rounded-full" style={{ background: '#10b981' }} />
+          <span className="w-4 h-4 rounded-full bg-emerald-500" />
           <span>Initialized</span>
         </div>
       </div>
