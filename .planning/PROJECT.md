@@ -8,16 +8,27 @@ A visual learning platform for JavaScript concepts and DSA interview preparation
 
 Learners can step through code execution visually, seeing exactly how algorithms and JavaScript work under the hood — not just reading about them.
 
-## Current Milestone: v3.0 Complete Concept Visualizations
+## Current Milestone: v4.0 Design Token Consistency
 
-**Goal:** Add step-through visualizations for all remaining JS concepts — async patterns, OOP/prototypes, and closures deep-dive.
+**Goal:** Replace all hardcoded colors with @theme tokens — single source of truth for design consistency.
 
 **Target features:**
-- ~14 async visualizations (callbacks, promises lifecycle, async/await patterns, event loop granular)
-- ~6 OOP/prototype visualizations (prototype chain, property lookup, instanceof, classes, inheritance)
-- ~6 closure visualizations (definition, practical uses, loop gotchas, memory leaks, module pattern, partial application)
-- Match existing Viz quality: beginner/intermediate/advanced difficulty levels
-- Reuse SharedViz components (CodePanel, StepControls, StepProgress)
+- Replace 700+ hardcoded hex colors with @theme CSS custom property references
+- Extract shared color objects (levelInfo, stateColors) to reusable modules
+- Ensure all 56 visualization components use consistent token patterns
+- Validate visual parity before/after migration (no appearance changes)
+
+## Previous Milestone: v3.0 Complete Concept Visualizations (Paused)
+
+**Status:** Paused at Phase 21 (Closures) — 3/4 phases complete
+
+**Completed:**
+- Phase 18: Callbacks & Promises (6 visualizations)
+- Phase 19: Async/Await & Queues (7 visualizations)
+- Phase 20: OOP/Prototypes (6 visualizations)
+
+**Remaining:**
+- Phase 21: Closures (6 visualizations) — deferred to after v4.0
 
 ## Requirements
 
@@ -93,4 +104,4 @@ Learners can step through code execution visually, seeing exactly how algorithms
 | Reuse SharedViz for all new Viz | Consistent UX, avoid duplication | — Decided |
 
 ---
-*Last updated: 2026-01-30 — v3.0 milestone started (Complete Concept Visualizations)*
+*Last updated: 2026-01-31 — v4.0 milestone started (Design Token Consistency), v3.0 paused*
