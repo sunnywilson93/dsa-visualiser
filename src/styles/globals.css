@@ -142,6 +142,7 @@
 
   /* === Sky scale (Info highlights) === */
   --color-sky-400: #38bdf8;
+  --color-sky-400-60: rgba(56, 189, 248, 0.6);
   --color-sky-10: rgba(56, 189, 248, 0.1);
   --color-sky-15: rgba(56, 189, 248, 0.15);
   --color-sky-20: rgba(56, 189, 248, 0.2);

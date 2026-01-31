@@ -21,7 +21,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
   const getEventLoopClass = () => {
     if (step.phase === 'idle') return 'text-gray-800 animate-none'
     if (step.phase === 'micro' || step.phase === 'macro')
-      return 'text-sky-400 animate-spin drop-shadow-[0_0_6px_rgba(56,189,248,0.6)]'
+      return 'text-sky-400 animate-spin drop-shadow-[0_0_6px_var(--color-sky-400-60)]'
     return ''
   }
 
@@ -125,7 +125,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
           className="relative rounded-lg p-0.5"
           style={{
             gridArea: 'taskqueue',
-            background: 'linear-gradient(135deg, var(--color-brand-secondary), #f43f5e)',
+            background: 'linear-gradient(135deg, var(--color-brand-secondary), var(--color-red-500)),
           }}
         >
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
