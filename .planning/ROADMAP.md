@@ -403,6 +403,7 @@ Plans:
 **Depends on**: Phase 20
 **Requirements**: CLOS-01, CLOS-02, CLOS-03, CLOS-04, CLOS-05, CLOS-06
 **Template**: ClosuresViz (scope chain with [[Scope]] references)
+**Plans**: 5 plans
 **Success Criteria** (what must be TRUE):
   1. Closure definition visualization shows lexical environment capture at function creation with arrows to parent scope
   2. Practical closures visualization shows data privacy, factory functions, and state encapsulation patterns
@@ -445,8 +446,8 @@ Phases 1-17 complete (v1.0-v2.0). Phases 18-21 (v3.0) in sequence.
 | 18. Callbacks & Promises | v3.0 | 4/4 | Complete | 2026-01-30 |
 | 19. Async/Await & Queues | v3.0 | 5/5 | Complete | 2026-01-30 |
 | 20. OOP/Prototypes | v3.0 | 4/4 | Complete | 2026-01-31 |
-| 21. Closures | v3.0 | 0/5 | Not started | - |
+| 21. Closures | v3.0 | 0/5 | Planned | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-31 -- Phase 20 complete (6 OOP/prototype visualizations)*
+*Last updated: 2026-01-31 -- Phase 21 planned (5 plans for 6 closure visualizations)*
