@@ -72,6 +72,7 @@
   --color-white-3: rgba(255, 255, 255, 0.03);
   --color-white-4: rgba(255, 255, 255, 0.04);
   --color-white-5: rgba(255, 255, 255, 0.05);
+  --color-white-6: rgba(255, 255, 255, 0.06);
   --color-white-8: rgba(255, 255, 255, 0.08);
   --color-white-10: rgba(255, 255, 255, 0.1);
   --color-white-15: rgba(255, 255, 255, 0.15);
@@ -172,6 +173,8 @@
   /* === Slate scale (Neon gradient grays) === */
   --color-slate-400: #94a3b8;
   --color-slate-500: #64748b;
+  --color-slate-400-20: rgba(148, 163, 184, 0.2);
+  --color-slate-500-50: rgba(30, 41, 59, 0.5);
 
   /* === DSA Action Colors (semantic operation states) === */
   --color-action-access: #60a5fa;
