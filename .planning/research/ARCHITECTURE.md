@@ -55,589 +55,324 @@ tailwind.config.js (v3 JS config)
 
 **7. `--js-viz-*` scoped variables.** 14 files reference visualization-specific variables that are NOT defined in globals.css. These appear to be inherited from parent component contexts or defined locally. Need to trace their definition source before migration.
 
-## Recommended Architecture (Post-Migration)
+---
 
-### Target Structure
+# Architecture: Design Token Consistency
+
+**Addendum:** 2026-01-31
+**Focus:** TypeScript design token objects for visualization components
+**Confidence:** HIGH (based on direct codebase analysis)
+
+## Problem Statement
+
+56 visualization components in `src/components/Concepts/` hardcode color values that duplicate tokens already defined in `globals.css`:
+
+| Pattern | Occurrences | Duplicated Value |
+|---------|-------------|------------------|
+| `levelInfo` object | 39 files | `#10b981`, `#f59e0b`, `#ef4444` |
+| Inline `style={{ }}` | 147 instances | Various hex colors |
+| `getPhaseColor` functions | 21 files | `#60a5fa`, `#10b981`, `#f59e0b` |
+| `getStatusColor` functions | Multiple | `#f59e0b`, `#10b981`, `#ef4444` |
+
+**Token mapping:**
+- `#10b981` = `--color-emerald-500` = `--difficulty-1`
+- `#f59e0b` = `--color-amber-500` = `--difficulty-2`
+- `#ef4444` = `--difficulty-hard` / `--color-red-500`
+
+## Recommended File Structure
 
 ```
-globals.css (Tailwind v4 CSS-first config)
-  |
-  |-- @import "tailwindcss"           (replaces 3 @tailwind directives)
-  |-- @theme {                         (replaces tailwind.config.js)
-  |     --color-primary: #a855f7;
-  |     --color-bg-primary: #0f1419;
-  |     --spacing-xs: 4px;
-  |     ...all design tokens
-  |   }
-  |-- :root {                          (non-utility CSS vars)
-  |     --gradient-brand: ...;
-  |     --glow-brand: ...;
-  |     --white-10: ...;
-  |   }
-  |-- @layer base { ... }             (resets, typography -- largely unchanged)
-  |-- @layer components { ... }       (panel, badge, tooltip, card-gradient-border)
-  |-- @layer utilities { ... }        (keyframes outside @theme)
-  |
-No tailwind.config.js                 (deleted)
-No *.module.css files                 (deleted)
-No PostCSS autoprefixer               (Tailwind v4 handles this)
-  |
-Components use className="..." with Tailwind utilities
-  |-- Static: className="flex flex-col gap-lg p-md"
-  |-- Dynamic: className={`pointer ${isPrimary ? 'bg-accent-blue' : 'bg-accent-purple'}`}
-  |-- Complex state: className mapping objects for visualization states
+src/
+  styles/
+    globals.css              # Existing - CSS custom properties (source of truth)
+    tokens.ts                # NEW - TypeScript token accessors
+  components/
+    Concepts/
+      _shared/               # NEW - Shared visualization utilities
+        index.ts             # Barrel export
+        levelInfo.ts         # Shared level configuration
+        phaseColors.ts       # Shared phase color mappings
+        statusColors.ts      # Shared status color mappings
+      ClosuresViz.tsx        # Modified - imports from _shared
+      HoistingViz.tsx        # Modified - imports from _shared
+      ...
 ```
 
-### @theme Configuration Design
+## Integration Points
 
-The current `tailwind.config.js` maps Tailwind tokens to CSS vars. In v4, the `@theme` directive defines CSS vars that ARE the tokens. This is a clean fit because the project already uses CSS vars everywhere.
+### 1. TypeScript Token Accessor (`src/styles/tokens.ts`)
 
-```css
-@import "tailwindcss";
+Provides TypeScript access to CSS custom properties with type safety.
 
-@theme {
-  /* Background palette */
-  --color-bg-primary: #0f1419;
-  --color-bg-secondary: #1a1f26;
-  --color-bg-tertiary: #242b33;
-  --color-bg-elevated: #2d353f;
-  --color-bg-page: #0f0f1a;
-  --color-bg-page-secondary: #1a1a2e;
+```typescript
+export const cssVar = (name: string) => `var(--${name})`
 
-  /* Text palette */
-  --color-text-primary: #e6edf3;
-  --color-text-secondary: #8b949e;
-  --color-text-muted: #6e7681;
-  --color-text-bright: #f5f7ff;
-
-  /* Brand colors */
-  --color-primary: #a855f7;
-  --color-secondary: #ec4899;
-  --color-primary-light: #c4b5fd;
-
-  /* Accent colors */
-  --color-accent-blue: #58a6ff;
-  --color-accent-green: #3fb950;
-  --color-accent-yellow: #d29922;
-  --color-accent-red: #f85149;
-  --color-accent-purple: #a371f7;
-  --color-accent-cyan: #39c5cf;
-  --color-accent-orange: #db6d28;
-
-  /* Spacing (using Tailwind namespace) */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 12px;
-  --spacing-lg: 16px;
-  --spacing-xl: 24px;
-  --spacing-2xl: 32px;
-  --spacing-3xl: 40px;
-  --spacing-4xl: 48px;
-  --spacing-5xl: 64px;
-  --spacing-6xl: 80px;
-
-  /* Border radius */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
-  --radius-3xl: 20px;
-  --radius-4xl: 24px;
-  --radius-full: 999px;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.5);
-  --shadow-xl: 0 4px 12px rgba(0, 0, 0, 0.5);
-
-  /* Font families */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, monospace;
-
-  /* Font sizes */
-  --text-2xs: 0.625rem;
-  --text-xs: 0.7rem;
-  --text-sm: 0.75rem;
-  --text-base: 0.85rem;
-  --text-md: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 2rem;
-
-  /* Line heights */
-  --leading-none: 1;
-  --leading-tight: 1.25;
-  --leading-snug: 1.4;
-  --leading-normal: 1.5;
-  --leading-relaxed: 1.6;
-
-  /* Custom animations */
-  --animate-pulse-custom: pulse-custom 2s ease-in-out infinite;
-  --animate-slide-in: slideIn 0.2s ease-out;
-  --animate-fade-in: fadeIn 0.2s ease-out;
-  --animate-pointer-pulse: pointerPulse 1.5s ease-in-out infinite;
-
-  @keyframes pulse-custom {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
-  @keyframes slideIn {
-    from { transform: translateY(-10px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes pointerPulse {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-1px); }
-  }
-}
-```
-
-### What Goes Where: @theme vs :root
-
-**Key decision:** Not every current CSS variable maps to a Tailwind utility namespace. Variables like `--glow-brand`, `--gradient-brand`, `--card-gradient-bg`, and the many opacity variants (`--emerald-20`, `--white-10`, etc.) have no natural Tailwind namespace. These should remain as `:root` CSS custom properties, referenced via arbitrary values: `bg-[var(--gradient-brand)]` or `shadow-[var(--glow-brand)]`.
-
-| Current Variable | @theme? | Rationale |
-|-----------------|---------|-----------|
-| `--bg-primary`, `--bg-secondary`, etc. | YES as `--color-bg-*` | Maps to `bg-bg-primary` utilities |
-| `--text-primary`, `--text-secondary`, etc. | YES as `--color-text-*` | Maps to `text-text-primary` utilities |
-| `--color-primary`, `--color-secondary` | YES as `--color-primary` | Maps to `bg-primary`, `text-primary` |
-| `--accent-blue`, etc. | YES as `--color-accent-*` | Maps to `bg-accent-blue` utilities |
-| `--space-xs` through `--space-6xl` | YES as `--spacing-*` | Maps to `p-xs`, `gap-lg` etc. |
-| `--radius-*` | YES as `--radius-*` | Maps to `rounded-lg` etc. |
-| `--shadow-*` | YES as `--shadow-*` | Maps to `shadow-md` etc. |
-| `--font-sans`, `--font-mono` | YES as `--font-*` | Maps to `font-sans`, `font-mono` |
-| `--text-2xs` through `--text-3xl` | YES as `--text-*` | Maps to `text-2xs` etc. |
-| `--leading-*` | YES as `--leading-*` | Maps to `leading-tight` etc. |
-| `--gradient-brand`, `--gradient-*` | NO - `:root` | No gradient namespace in Tailwind |
-| `--glow-brand`, `--glow-*` | NO - `:root` | Use via `shadow-[var(--glow-brand)]` |
-| `--card-gradient-*`, `--surface-*` | NO - `:root` | Composite values, use via arbitrary |
-| `--white-5`, `--black-30`, etc. | NO - `:root` | Opacity variants, use via arbitrary |
-| `--emerald-*`, `--neon-viz-*` | NO - `:root` | Viz-specific, use via arbitrary |
-| `--transition-*` | NO - `:root` | Tailwind has built-in transition utils |
-| `--border-width-*` | NO - `:root` | Tailwind has built-in border utils |
-| `--font-normal` through `--font-bold` | NO | Tailwind has built-in `font-bold` etc. |
-| `--difficulty-*` | NO - `:root` | Domain-specific semantic vars |
-| `--exec-*`, `--stack-frame-*` | NO - `:root` | Domain-specific, too narrow for utilities |
-
-## Recommended Migration Order
-
-### Principle: Leaves First, Roots Last
-
-Migrate components with NO dependents first (leaf nodes), then work inward toward shared/layout components. This ensures each migrated component can be tested in isolation without disrupting others.
-
-### Phase 1: Foundation (globals.css + config)
-
-**What:** Convert globals.css to Tailwind v4 CSS-first config. Delete `tailwind.config.js`.
-
-1. Replace `@tailwind base/components/utilities` with `@import "tailwindcss"`
-2. Create `@theme { }` block with all design tokens (see design above)
-3. Move remaining CSS variables to `:root` block
-4. Keep `@layer base`, `@layer components`, `@layer utilities` blocks as-is
-5. Delete `tailwind.config.js`
-6. Remove `autoprefixer` from PostCSS config (Tailwind v4 includes it)
-
-**Verification:** `npm run build` succeeds. All pages render identically (existing CSS Modules still work -- they reference CSS vars which now come from `@theme` and `:root` instead of only `:root`).
-
-**Risk:** LOW. This is additive -- CSS Modules continue working alongside the new @theme config.
-
-### Phase 2: Simple Leaf Components (Low Complexity)
-
-**What:** Migrate components with straightforward layouts, no animations, no pseudo-elements, no dynamic class access.
-
-**Components (14 files):**
-1. `ErrorBoundary/ErrorBoundary.module.css` (~30 lines)
-2. `DifficultyIndicator/DifficultyIndicator.module.css` (~40 lines)
-3. `StepDescription/StepDescription.module.css` (~40 lines)
-4. `ReadOnlyCode/ReadOnlyCode.module.css` (~40 lines)
-5. `Console/Console.module.css` (~60 lines)
-6. `Variables/Variables.module.css` (~80 lines)
-7. `CallStack/CallStack.module.css` (~120 lines) -- has `styles[type]` dynamic access
-8. `Controls/Controls.module.css` (~60 lines)
-9. `ExampleSelector/ExampleSelector.module.css` (~50 lines)
-10. `SiteFooter/SiteFooter.module.css` (~50 lines)
-11. `CrossLinks/RelatedPatterns.module.css` (~60 lines)
-12. `CrossLinks/RelatedProblems.module.css` (~60 lines)
-13. `SharedViz/StepControls.module.css` (~80 lines)
-14. `SharedViz/StepProgress.module.css` (~70 lines)
-
-**Verification per component:**
-- Visual diff (screenshot before/after)
-- Responsive check at 360px, 768px, 1024px
-- Interactive states (hover, focus, disabled) verified
-
-**Risk:** LOW. These are small, self-contained files.
-
-### Phase 3: Medium Components (Responsive + Pseudo-elements)
-
-**What:** Components with media queries, hover states, `::before`/`::after` pseudo-elements.
-
-**Components (12 files):**
-1. `Card/Card.module.css` -- has `::before` gradient border trick
-2. `Card/CardCarousel.module.css` -- scroll-snap, responsive
-3. `Card/CardGrid.module.css` -- CSS var `--columns`, responsive
-4. `ProblemCard/ProblemCard.module.css`
-5. `CategoryCarousel/CategoryCarousel.module.css` -- responsive
-6. `ConceptCarousel/ConceptCarousel.module.css` -- responsive
-7. `ProblemListingLayout/ProblemListingLayout.module.css` -- responsive
-8. `ExpandableGrid/ExpandableGrid.module.css`
-9. `Search/GlobalSearch.module.css` -- responsive, hover states
-10. `Search/PageSearch.module.css` -- responsive
-11. `Search/SearchResults.module.css`
-12. `SharedViz/CodePanel.module.css`
-
-**Special handling for Card.module.css:** The gradient border trick using `::before` with mask-composite needs either:
-- Verbose Tailwind `before:` utilities -- possible but unreadable (~8 chained utilities)
-- OR keep as `@layer components` rule in globals.css -- recommended for readability
-
-### Phase 4: NavBar + Layout (Complex Responsive + Checkbox Hack)
-
-**What:** NavBar is the most architecturally complex single component. It uses the CSS-only checkbox hack for mobile menu which requires sibling selectors (`:checked ~ .mobileNav`).
-
-**Components (4 files):**
-1. `NavBar/NavBar.module.css` (319 lines) -- checkbox hack, hamburger animation, 4 breakpoints
-2. `CodeEditor/CodeEditor.module.css` (128 lines) -- Monaco wrapper
-3. `ConceptPanel/ConceptPanel.module.css` (328 lines)
-4. `EventLoopPlayground/PlaygroundEditor.module.css`
-
-**NavBar Decision Point:** The checkbox hack (`mobileMenuToggle:checked ~ .mobileNav`) cannot be expressed in Tailwind utilities. Two options:
-
-- **Option A (Recommended): Refactor to React state.** Replace the hidden checkbox with `useState`, control visibility with conditional Tailwind classes. Cleaner, more idiomatic React. The checkbox hack was a CSS-only workaround that becomes unnecessary with Tailwind's conditional class approach.
-
-- **Option B: Keep as custom CSS.** Move the checkbox-related styles to a `@layer components` block in globals.css. Apply Tailwind to everything else. Hybrid but safe.
-
-### Phase 5: Concepts Viz Components (Bulk Migration)
-
-**What:** The 30 Concepts Viz files represent ~12,756 lines of CSS (~51% of total). They share massive structural duplication but each has unique visualization-specific styles.
-
-**Strategy: Extract shared patterns first, then batch-convert unique styles.**
-
-1. **Create shared utility layer** in globals.css for common viz patterns using Tailwind v4's `@utility` directive:
-   ```css
-   @utility viz-level-selector {
-     display: flex;
-     gap: var(--spacing-sm);
-     justify-content: center;
-     /* ... */
-   }
-   ```
-   This generates utility classes like `viz-level-selector` that are tree-shaken if unused.
-
-2. **Migration sub-batches** (by shared structure similarity):
-   - **Evolution Viz group** (5 files: AsyncEvolution, BuildToolsEvolution, ModuleEvolution, StateEvolution, WebEvolution) -- ~430 lines each, nearly identical structure
-   - **Basic concept group** (5 files: DataTypes, Conditionals, Operators, TypeCoercion, JSPhilosophy) -- simpler layouts
-   - **Step-through group** (5 files: Variables, Functions, ArraysBasics, ObjectsBasics, Loops) -- uses SharedViz, step controls
-   - **Complex viz group** (5 files: EventLoop, NodeEventLoop, MemoryModel, Closures, Prototypes) -- unique layouts, animations
-   - **Interactive group** (5 files: Hoisting, ThisKeyword, Memoization, Recursion, Promises) -- interactive states
-   - **Remaining** (5 files: TimingViz, StreamsBuffers, CriticalRenderPath, Composition, WebWorkers)
-
-**Verification:** Each sub-batch gets a visual regression check on the corresponding `/concepts/[conceptId]` page.
-
-### Phase 6: DSA Pattern Viz + Visualization Components
-
-**What:** The most complex visualization files plus all DSA components.
-
-**Components (17 files):**
-1. `DSAPatterns/BitManipulationViz/BitManipulationViz.module.css` (561 lines) -- has `styles[`width${bitWidth}`]` dynamic access
-2. `DSAPatterns/HashMapViz/HashMapViz.module.css` (494 lines) -- complex bucket viz
-3. `DSAPatterns/TwoPointersViz/TwoPointersViz.module.css`
-4. `DSAConcepts/` (7 files: ArrayViz, BigOViz, BinarySystemViz, HashTableViz, LinkedListViz, QueueViz, StackViz)
-5. `Visualization/ArrayVisualization.module.css` -- has `styles[state]` dynamic access
-6. `Visualization/BinaryVisualization.module.css`
-7. `Visualization/VisualizationPanel.module.css`
-8. `ConceptPanel/HashMapConcept.module.css`
-9. `ConceptPanel/TwoPointersConcept.module.css`
-10. `ConceptPanel/BitManipulationConcept.module.css`
-
-### Phase 7: App Page Layouts
-
-**What:** Page-level CSS modules in `src/app/`.
-
-**Files (9):**
-1. `app/page.module.css` (632 lines -- largest single file)
-2. `app/concepts/page.module.css`
-3. `app/concepts/[conceptId]/page.module.css`
-4. `app/concepts/dsa/[conceptId]/page.module.css`
-5. `app/concepts/dsa/patterns/[patternId]/page.module.css`
-6. `app/[categoryId]/page.module.css` (431 lines)
-7. `app/[categoryId]/[problemId]/page.module.css`
-8. `app/[categoryId]/[problemId]/concept/page.module.css`
-9. `app/playground/event-loop/page.module.css`
-
-### Phase 8: Cleanup
-
-1. Delete all `*.module.css` files (verify no imports remain)
-2. Remove legacy CSS variable aliases (`--theme-cyan`, `--gradient-neon`, etc.)
-3. Remove redundant `:root` variables that are now in `@theme`
-4. Audit globals.css for dead CSS in `@layer components`
-5. Run full build + visual regression across all routes
-
-## Handling Complex Patterns
-
-### Pattern: Dynamic Class Access (`styles[variable]`)
-
-**Current (17 instances):**
-```tsx
-<div className={`${styles.element} ${styles[state]}`}>
-```
-Where `state` is a runtime string like `"comparing"` | `"swapping"`.
-
-**Tailwind approach -- mapping object:**
-```tsx
-const stateStyles = {
-  comparing: 'bg-accent-yellow border-accent-yellow text-accent-yellow',
-  swapping: 'bg-accent-green/20 border-accent-green text-accent-green',
-  accessed: 'bg-accent-purple/20 border-accent-purple text-accent-purple',
-  sorted: 'bg-accent-green/60',
+export const colors = {
+  difficulty: {
+    easy: cssVar('difficulty-1'),
+    medium: cssVar('difficulty-2'),
+    hard: cssVar('difficulty-hard'),
+  },
+  emerald: { 500: cssVar('color-emerald-500') },
+  amber: { 500: cssVar('color-amber-500') },
 } as const
 
-<div className={`flex flex-col items-center min-w-2xl ${stateStyles[state] ?? ''}`}>
+export const colorValues = {
+  difficulty: {
+    easy: '#10b981',
+    medium: '#f59e0b',
+    hard: '#ef4444',
+  },
+} as const
 ```
 
-This is cleaner and more explicit than CSS Module bracket access.
+**Why two exports:**
+- `colors` uses `var(--name)` for CSS compatibility
+- `colorValues` has actual hex values for dynamic inline styles that construct gradients or need string manipulation
 
-### Pattern: Template Literal Composition (284 instances)
+### 2. Shared Level Configuration (`src/components/Concepts/_shared/levelInfo.ts`)
 
-**Current:**
-```tsx
-className={`${styles.card} ${styles.active}`}
-```
+```typescript
+import { colorValues } from '@/styles/tokens'
 
-**Tailwind approach -- direct string or `clsx`:**
-```tsx
-className="relative bg-[var(--card-gradient-bg)] rounded-2xl p-0.5 block h-full transition-all duration-350"
-```
+export type Level = 'beginner' | 'intermediate' | 'advanced'
 
-For conditional classes, install `clsx` and use:
-```tsx
-className={clsx('relative rounded-2xl', isActive && 'scale-[1.02]', !isActive && 'opacity-75')}
-```
+export const levelInfo: Record<Level, { label: string; color: string }> = {
+  beginner: { label: 'Beginner', color: colorValues.difficulty.easy },
+  intermediate: { label: 'Intermediate', color: colorValues.difficulty.medium },
+  advanced: { label: 'Advanced', color: colorValues.difficulty.hard },
+}
 
-**Recommendation:** Install `clsx` as a project dependency before starting Phase 2. It replaces template literal concatenation cleanly.
-
-### Pattern: Pseudo-element Gradient Border (Card)
-
-**Current:**
-```css
-.card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-2xl);
-  padding: var(--space-0-5);
-  background: var(--card-gradient-border);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+export const levelClasses: Record<Level, { bg: string; border: string; text: string }> = {
+  beginner: {
+    bg: 'bg-emerald-500/15',
+    border: 'border-emerald-500/70',
+    text: 'text-emerald-400',
+  },
+  intermediate: {
+    bg: 'bg-amber-500/15',
+    border: 'border-amber-500/70',
+    text: 'text-amber-400',
+  },
+  advanced: {
+    bg: 'bg-red-500/15',
+    border: 'border-red-500/70',
+    text: 'text-red-400',
+  },
 }
 ```
 
-**Recommendation: Keep as `@layer components` in globals.css.**
-```css
-@layer components {
-  .card-gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: var(--radius-2xl);
-    padding: 2px;
-    background: var(--card-gradient-border);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+### 3. Shared Phase Colors (`src/components/Concepts/_shared/phaseColors.ts`)
+
+```typescript
+export type ExecutionPhase = 'Creation' | 'Execution' | 'Return' | 'sync' | 'micro' | 'macro' | 'idle'
+
+export const phaseColors: Record<string, string> = {
+  Creation: '#60a5fa',
+  Execution: '#10b981',
+  Return: '#f59e0b',
+  sync: '#a855f7',
+  micro: '#a855f7',
+  macro: '#f59e0b',
+  idle: '#555555',
+}
+
+export const getPhaseColor = (phase: string): string => phaseColors[phase] ?? '#888888'
+```
+
+### 4. Shared Status Colors (`src/components/Concepts/_shared/statusColors.ts`)
+
+```typescript
+export type VariableStatus = 'hoisted' | 'initialized' | 'tdz'
+
+export const statusColors: Record<VariableStatus, string> = {
+  hoisted: '#f59e0b',
+  initialized: '#10b981',
+  tdz: '#ef4444',
+}
+
+export const getStatusColor = (status: VariableStatus): string => statusColors[status]
+```
+
+### 5. Barrel Export (`src/components/Concepts/_shared/index.ts`)
+
+```typescript
+export { levelInfo, levelClasses, type Level } from './levelInfo'
+export { phaseColors, getPhaseColor, type ExecutionPhase } from './phaseColors'
+export { statusColors, getStatusColor, type VariableStatus } from './statusColors'
+```
+
+## Component Usage Patterns
+
+### Before (Current State)
+
+```tsx
+const levelInfo = {
+  beginner: { label: 'Beginner', color: '#10b981' },
+  intermediate: { label: 'Intermediate', color: '#f59e0b' },
+  advanced: { label: 'Advanced', color: '#ef4444' },
+}
+
+const getPhaseColor = (phase: string) => {
+  switch (phase) {
+    case 'Creation': return '#60a5fa'
+    case 'Execution': return '#10b981'
+    default: return '#888'
   }
 }
+
+<span style={{ background: levelInfo[level].color }} />
 ```
-Then use: `className="card-gradient-border relative ..."`. This is a legitimate use of `@layer components` -- the mask-composite pattern is too complex for utility composition.
 
-### Pattern: CSS-only Checkbox Hack (NavBar)
+### After (Migrated)
 
-**Recommendation: Refactor to React state** during Phase 4.
-
-Replace:
 ```tsx
-<input type="checkbox" id={menuId} className={styles.mobileMenuToggle} />
-<label htmlFor={menuId} className={styles.hamburgerBtn}>...</label>
-<nav className={styles.mobileNav}>...</nav>
+import { levelInfo, getPhaseColor } from './_shared'
+
+<span style={{ background: levelInfo[level].color }} />
 ```
 
-With:
-```tsx
-const [menuOpen, setMenuOpen] = useState(false)
-
-<button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden ...">
-  <span className={clsx('block w-6 h-0.5 bg-text-secondary transition-transform',
-    menuOpen && 'rotate-45 translate-y-[6px]')} />
-</button>
-<nav className={clsx('fixed top-0 right-0 w-70 h-screen bg-bg-secondary transition-transform',
-  menuOpen ? 'translate-x-0' : 'translate-x-full',
-  'md:hidden')}>
-```
-
-### Pattern: @keyframes Animations
-
-**Current:** Defined in module.css files (14 files have animations).
-
-**Tailwind v4 approach:** Define in `@theme` block for auto-generated utilities, or outside `@theme` for always-available keyframes.
-
-```css
-@theme {
-  --animate-pointer-pulse: pointerPulse 1.5s ease-in-out infinite;
-  @keyframes pointerPulse {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-1px); }
-  }
-}
-```
-Usage in markup: `className="animate-pointer-pulse"`
-
-### Pattern: Responsive Media Queries
-
-**Current:** 65 files use `@media (max-width: ...)` breakpoints (desktop-first).
-
-**Tailwind approach:** Tailwind uses mobile-first (`min-width`) by default. The project uses `max-width`. Two options:
-
-- **Recommended:** Flip to mobile-first thinking during migration. Default styles = mobile, add `sm:`, `md:`, and `lg:` prefixes for larger screens.
-- **Alternative:** Use Tailwind v4's `max-*` variant: `max-md:hidden` for desktop-first overrides.
-
-Current breakpoints map to Tailwind defaults:
-| Project | Tailwind |
-|---------|----------|
-| 480px | Custom (define as `--breakpoint-xs: 480px` in `@theme`) |
-| 640px | `sm` (built-in) |
-| 768px | `md` (built-in) |
-| 1024px | `lg` (built-in) |
-
-### Pattern: `--js-viz-*` Scoped Variables
-
-14 files reference `--js-viz-text`, `--js-viz-surface-2`, `--js-viz-border`, `--js-viz-muted`. These are NOT in globals.css. They appear to be defined in a parent CSS context (likely a concept page layout CSS file).
-
-**Action needed:** Trace where these are defined. If they are set via parent component inline styles or a wrapping element's CSS, they must be preserved as `:root` or scoped CSS variables. They CANNOT be @theme variables since they may vary per context.
-
-## Visual Parity Verification Strategy
-
-### Per-Component Verification
-
-For each migrated component:
-
-1. **Before screenshot** at 3 breakpoints (360px, 768px, 1440px)
-2. Migrate CSS Module to Tailwind utilities
-3. **After screenshot** at same breakpoints
-4. Visual comparison (manual or diff tool)
-5. Test interactive states: hover, focus, disabled, active
-6. Test dynamic states (for viz components): step through all visualization states
-
-### Full Route Verification (Per Phase)
-
-After each phase completes, verify ALL affected routes:
-- Home page (`/`)
-- Concepts listing (`/concepts`)
-- Any concept page (`/concepts/closures`)
-- Problem listing (`/arrays-hashing`)
-- Problem practice page (`/arrays-hashing/two-sum`)
-- Algorithm concept page (`/arrays-hashing/two-sum/concept`)
-
-### Build Verification
-
-After each phase:
-- `npm run build` succeeds with zero errors
-- `npm run lint` passes
-- `npm run test:run` passes
-- No unused CSS module imports (search for orphaned `import styles`)
-
-## Dependency Graph for Migration Order
+## Build Order (Dependencies)
 
 ```
-globals.css (PHASE 1 -- foundation, everything depends on this)
+Phase 1: Create shared modules (no dependencies)
+    src/styles/tokens.ts
     |
-    +-- SharedViz (PHASE 2 -- used by Concepts Viz + DSAPatterns)
-    |     |-- StepControls
-    |     |-- StepProgress
-    |     |-- CodePanel (PHASE 3)
+    v
+Phase 2: Create _shared utilities (depends on tokens.ts)
+    src/components/Concepts/_shared/levelInfo.ts
+    src/components/Concepts/_shared/phaseColors.ts
+    src/components/Concepts/_shared/statusColors.ts
+    src/components/Concepts/_shared/index.ts
     |
-    +-- Simple leaf components (PHASE 2 -- no dependents)
-    |     |-- ErrorBoundary, Console, Variables, CallStack
-    |     |-- Controls, DifficultyIndicator, StepDescription
-    |     |-- ReadOnlyCode, ExampleSelector, SiteFooter
-    |     |-- CrossLinks/RelatedPatterns, CrossLinks/RelatedProblems
+    v
+Phase 3: Migrate components (depends on _shared/)
+    39 files with levelInfo
+    21 files with getPhaseColor
+    ~10 files with getStatusColor
     |
-    +-- Card system (PHASE 3 -- used by pages)
-    |     |-- Card (has ::before trick)
-    |     |-- CardCarousel, CardGrid
-    |     |-- ProblemCard
-    |
-    +-- Search components (PHASE 3 -- used by NavBar)
-    |     |-- GlobalSearch, PageSearch, SearchResults
-    |
-    +-- NavBar (PHASE 4 -- depends on Search, used by layout)
-    |
-    +-- Concepts Viz (PHASE 5 -- leaf pages, no dependents)
-    |     |-- 30 individual viz components
-    |
-    +-- DSA components (PHASE 6 -- leaf pages)
-    |     |-- DSAPatterns (3 pattern viz)
-    |     |-- DSAConcepts (7 data structure viz)
-    |     |-- Visualization (Array, Binary, Panel)
-    |     |-- ConceptPanel (3 concept panels)
-    |
-    +-- App page layouts (PHASE 7 -- depend on all above)
-          |-- app/page.module.css (home)
-          |-- app/concepts/*.module.css
-          |-- app/[categoryId]/*.module.css
+    v
+Phase 4: Audit remaining inline styles
+    147 style={{ }} instances
 ```
 
-## Build Order Summary
+## Migration Strategy: Incremental
 
-| Phase | Scope | Files | Effort | Risk |
-|-------|-------|-------|--------|------|
-| 1 | Foundation (@theme + config) | 2 | Small | Low |
-| 2 | Simple leaf components | 14 | Medium | Low |
-| 3 | Responsive + pseudo-element components | 12 | Medium | Medium |
-| 4 | NavBar + complex layout | 4 | Medium | Medium (checkbox refactor) |
-| 5 | Concepts Viz (bulk) | 30 | Large | Medium (volume) |
-| 6 | DSA + Visualization components | 17 | Large | Medium (dynamic classes) |
-| 7 | App page layouts | 9 | Medium | Low |
-| 8 | Cleanup + audit | -- | Small | Low |
+**Rationale:** 56 components with 400+ hardcoded values. Big-bang migration is risky.
+
+| Phase | Focus | Files | Risk |
+|-------|-------|-------|------|
+| 1 | Create shared modules | 5 new files | LOW |
+| 2 | Migrate levelInfo | 39 files | LOW |
+| 3 | Migrate phaseColors | 21 files | LOW |
+| 4 | Migrate statusColors | ~10 files | LOW |
+| 5 | Audit remaining inline | All | MEDIUM |
+
+### Per-File Migration Steps
+
+1. Add import: `import { levelInfo } from './_shared'`
+2. Remove local `const levelInfo = { ... }` definition
+3. Verify no compilation errors
+4. Visual verification (same appearance)
 
 ## Anti-Patterns to Avoid
 
-### Do NOT use `@apply` in CSS files
-Tailwind v4 discourages `@apply`. Write actual CSS properties in `@layer components` or use utility classes in markup. The `@apply` bridge was meant for v3 migration, not as a permanent pattern.
+### 1. Duplicating Token Values
 
-### Do NOT create a hybrid system within a single component
-Every component should be fully migrated or fully CSS Modules. Do not mix `className={styles.foo}` with Tailwind utilities in the same component -- it makes reasoning about specificity impossible. The project-level hybrid (some components migrated, some not yet) is fine during the migration window.
+**Bad:**
+```typescript
+// tokens.ts
+export const colors = { emerald500: '#10b981' }
 
-### Do NOT put 50+ utility classes on one element
-If a single element needs more than ~15 utility classes, extract to `@layer components` in globals.css or use `@utility` in v4. The Card gradient border trick is a good example of when component-layer CSS is appropriate.
+// levelInfo.ts
+export const levelInfo = { beginner: { color: '#10b981' } } // Duplicated!
+```
 
-### Do NOT replicate CSS Module scoping concerns
-Tailwind utilities are global by design. You do not need to worry about class name collisions. The `.container` class appearing in 69 module files is a CSS Modules artifact -- with Tailwind, each component's `className` is self-contained in the JSX.
+**Good:**
+```typescript
+// tokens.ts
+export const colorValues = { emerald500: '#10b981' }
 
-### Do NOT remove `:root` variables too aggressively
-Many opacity variants (`--white-10`, `--emerald-20`, `--neon-viz-25`) are used extensively. Keep them as `:root` CSS vars and reference via arbitrary values `bg-[var(--white-10)]`. Trying to convert every opacity shade to a Tailwind color would bloat the theme.
+// levelInfo.ts
+import { colorValues } from '@/styles/tokens'
+export const levelInfo = { beginner: { color: colorValues.emerald500 } }
+```
+
+### 2. Breaking CSS Variable Chain
+
+**Bad:**
+```tsx
+<div style={{ background: '#10b981' }} />
+```
+
+**Good:**
+```tsx
+<div className="bg-emerald-500" />
+// Or when dynamic is needed:
+<div style={{ background: 'var(--color-emerald-500)' }} />
+```
+
+### 3. Over-engineering
+
+**Bad:**
+```typescript
+const useThemeAwareColor = (level: Level, variant: ColorVariant) => { ... }
+```
+
+**Good:**
+```typescript
+import { levelInfo } from './_shared'
+const color = levelInfo[level].color
+```
+
+## Validation Strategy
+
+For each migrated component:
+
+1. **Grep check:** No hex colors remain in file
+   ```bash
+   grep -E "#[0-9a-fA-F]{6}" ComponentViz.tsx
+   ```
+2. **Visual verification:** Component renders identically
+3. **Type check:** `npm run build` passes
+
+## Open Questions
+
+1. **Opacity variants:** Current code uses `${color}15` for 15% opacity. Should `levelInfo` include pre-computed background variants?
+
+2. **Future Tailwind migration:** These shared objects support the eventual Tailwind v4 migration by centralizing color values. When Tailwind utilities replace inline styles, only `_shared/*.ts` files need updating.
+
+---
+
+## Recommended Migration Order (Updated)
+
+The original Tailwind v4 migration plan (Phases 1-8) should incorporate design token consistency as a **pre-requisite step before Phase 5 (Concepts Viz)**.
+
+**Revised Phase Order:**
+
+| Phase | Scope | Notes |
+|-------|-------|-------|
+| 1 | Foundation (@theme + config) | Original |
+| 2 | Simple leaf components | Original |
+| 3 | Responsive + pseudo-element | Original |
+| 4 | NavBar + complex layout | Original |
+| **4.5** | **Design Token Shared Modules** | **NEW: Create _shared/, migrate levelInfo** |
+| 5 | Concepts Viz (bulk) | Now uses _shared/ |
+| 6 | DSA + Visualization | Original |
+| 7 | App page layouts | Original |
+| 8 | Cleanup + audit | Original |
+
+---
 
 ## Sources
 
 **Codebase Analysis (HIGH confidence):**
-- Direct inspection of 82 CSS module files, 246 CSS custom properties
-- Component TSX files analyzed for className patterns (284 template literals, 17 bracket accesses)
-- Package.json confirms Tailwind v4.1.18 already installed with `@tailwindcss/postcss`
+- Direct inspection of 56 Concepts Viz components
+- Grep analysis: 402 occurrences of `#10b981`, `#f59e0b`, `#ef4444`
+- Pattern analysis of `levelInfo`, `getPhaseColor`, `getStatusColor`
+- `globals.css` token inventory (130+ tokens in @theme block)
 
-**Official Documentation (HIGH confidence):**
-- [Tailwind CSS v4 Upgrade Guide](https://tailwindcss.com/docs/upgrade-guide)
-- [Tailwind CSS v4 Theme Variables](https://tailwindcss.com/docs/theme)
-- [Tailwind CSS v4 Functions and Directives](https://tailwindcss.com/docs/functions-and-directives)
-- [Tailwind CSS v4 Hover, Focus, and States](https://tailwindcss.com/docs/hover-focus-and-other-states)
-- [Tailwind CSS v4 Animation](https://tailwindcss.com/docs/animation)
-- [Tailwind CSS v4 Blog Post](https://tailwindcss.com/blog/tailwindcss-v4)
-
-**Community Sources (MEDIUM confidence):**
-- [CSS Modules + Tailwind v4 Discussion](https://github.com/tailwindlabs/tailwindcss/discussions/17342)
-- [Migration from V3 to V4 Discussion](https://github.com/tailwindlabs/tailwindcss/discussions/16642)
-- [Theming Best Practices v4 Discussion](https://github.com/tailwindlabs/tailwindcss/discussions/18471)
+**TypeScript Best Practices (HIGH confidence):**
+- Barrel export pattern for module organization
+- Type-safe color mapping with `as const`
+- Path alias usage (`@/styles/tokens`)
