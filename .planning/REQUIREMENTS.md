@@ -1,52 +1,78 @@
 # Requirements: DSA Visualizer
 
-**Defined:** 2026-01-30
+**Defined:** 2026-01-31
 **Core Value:** Learners can step through code execution visually, seeing exactly how algorithms and JavaScript work under the hood
 
-## v3.0 Requirements — Complete Concept Visualizations
+## v4.0 Requirements — Design Token Consistency
 
-Add step-through visualizations for all remaining JS concepts — async patterns, OOP/prototypes, and closures. Each matches existing Viz quality with beginner/intermediate/advanced difficulty levels.
+Replace all hardcoded colors with @theme tokens — single source of truth for design consistency across 56 visualization components.
 
-### Async Visualizations
+### Shared Infrastructure
 
-- [ ] **ASYNC-01**: CallbacksBasicsViz — step-through of callback function passing and invocation
-- [ ] **ASYNC-02**: CallbackHellViz — pyramid visualization of nested callbacks with readability issues
-- [ ] **ASYNC-03**: ErrorFirstCallbacksViz — Node.js error-first pattern with error propagation
-- [ ] **ASYNC-04**: PromisesCreationViz — new Promise constructor, resolve/reject mechanics
-- [ ] **ASYNC-05**: PromisesThenCatchViz — then/catch chaining with return value flow
-- [ ] **ASYNC-06**: PromisesChainingViz — sequential promise chaining with transformations
-- [ ] **ASYNC-07**: PromisesStaticViz — Promise.all, Promise.race, Promise.allSettled comparison
-- [ ] **ASYNC-08**: AsyncAwaitSyntaxViz — async function suspension and resumption points
-- [ ] **ASYNC-09**: AsyncAwaitErrorsViz — try/catch with async/await, error propagation
-- [ ] **ASYNC-10**: AsyncAwaitParallelViz — Promise.all with async/await for concurrent execution
-- [ ] **ASYNC-11**: MicrotaskQueueViz — microtask queue processing, promise callbacks
-- [ ] **ASYNC-12**: TaskQueueViz — macrotask queue (setTimeout, setInterval, I/O)
-- [ ] **ASYNC-13**: EventLoopTickViz — granular event loop tick showing task selection
+- [ ] **INFRA-01**: Create shared `levelInfo` module with CSS var references for beginner/intermediate/advanced colors
+- [ ] **INFRA-02**: Create shared `phaseColors` and `statusColors` modules for phase/status color functions
+- [ ] **INFRA-03**: Define all required opacity variants in @theme (15, 20, 30, 40 for each accent color)
+- [ ] **INFRA-04**: TypeScript type safety for token name references with compile-time validation
 
-### OOP/Prototype Visualizations
+### Component Migration
 
-- [ ] **OOP-01**: PrototypeChainBasicsViz — object -> prototype -> Object.prototype -> null chain
-- [ ] **OOP-02**: PropertyLookupViz — property access walking the prototype chain
-- [ ] **OOP-03**: InstanceofViz — instanceof operator checking prototype chain membership
-- [ ] **OOP-04**: ClassSyntaxViz — ES6 class as syntactic sugar over prototypes
-- [ ] **OOP-05**: PrototypeInheritanceViz — extends keyword and prototype linking
-- [ ] **OOP-06**: PrototypePollutionViz — dangers of modifying Object.prototype
+- [ ] **MIG-01**: Migrate 39 `levelInfo` duplications to shared import
+- [ ] **MIG-02**: Migrate 21 `phaseColors`/`statusColors` function duplications to shared import
+- [ ] **MIG-03**: Replace 147 inline style hex values with CSS var references
+- [ ] **MIG-04**: Establish visual regression baseline with before/after screenshot comparisons
 
-### Closure Visualizations
+### Animation Handling
 
-- [ ] **CLOS-01**: ClosureDefinitionViz — lexical environment capture at function creation
-- [ ] **CLOS-02**: ClosurePracticalViz — data privacy, factory functions, state encapsulation
-- [ ] **CLOS-03**: ClosureLoopGotchaViz — var vs let in loops, closure over single binding
-- [ ] **CLOS-04**: ClosureMemoryLeaksViz — DOM references, large objects held by closures
-- [ ] **CLOS-05**: ClosureModulePatternViz — IIFE revealing module pattern
-- [ ] **CLOS-06**: ClosurePartialApplicationViz — currying and partial function application
+- [ ] **ANIM-01**: Create animation constants file with hex values that mirror @theme tokens
+- [ ] **ANIM-02**: Identify and catalog 18 components with Framer Motion animated colors
+- [ ] **ANIM-03**: Document hybrid pattern for when to use CSS vars vs hex constants
 
 ### Quality Requirements
 
-- [ ] **QUAL-01**: All visualizations have beginner/intermediate/advanced difficulty levels
-- [ ] **QUAL-02**: All visualizations use SharedViz components (CodePanel, StepControls, StepProgress)
-- [ ] **QUAL-03**: Code highlighting synced with visualization step
-- [ ] **QUAL-04**: Mobile responsive layout for all new visualizations
+- [ ] **QUAL-01**: All 56 visualization components reference @theme tokens (no hardcoded hex)
+- [ ] **QUAL-02**: Visual parity verified — no appearance changes after migration
+- [ ] **QUAL-03**: `npm run build` passes with zero errors
+
+## v3.0 Requirements (Paused)
+
+<details>
+<summary>v3.0 Complete Concept Visualizations — Phase 21 remaining</summary>
+
+### Async Visualizations (Complete)
+
+- [x] **ASYNC-01**: CallbacksBasicsViz — Phase 18
+- [x] **ASYNC-02**: CallbackHellViz — Phase 18
+- [x] **ASYNC-03**: ErrorFirstCallbacksViz — Phase 18
+- [x] **ASYNC-04**: PromisesCreationViz — Phase 18
+- [x] **ASYNC-05**: PromisesThenCatchViz — Phase 18
+- [x] **ASYNC-06**: PromisesChainingViz — Phase 18
+- [x] **ASYNC-07**: PromisesStaticViz — Phase 19
+- [x] **ASYNC-08**: AsyncAwaitSyntaxViz — Phase 19
+- [x] **ASYNC-09**: AsyncAwaitErrorsViz — Phase 19
+- [x] **ASYNC-10**: AsyncAwaitParallelViz — Phase 19
+- [x] **ASYNC-11**: MicrotaskQueueViz — Phase 19
+- [x] **ASYNC-12**: TaskQueueViz — Phase 19
+- [x] **ASYNC-13**: EventLoopTickViz — Phase 19
+
+### OOP/Prototype Visualizations (Complete)
+
+- [x] **OOP-01**: PrototypeChainBasicsViz — Phase 20
+- [x] **OOP-02**: PropertyLookupViz — Phase 20
+- [x] **OOP-03**: InstanceofViz — Phase 20
+- [x] **OOP-04**: ClassSyntaxViz — Phase 20
+- [x] **OOP-05**: PrototypeInheritanceViz — Phase 20
+- [x] **OOP-06**: PrototypePollutionViz — Phase 20
+
+### Closure Visualizations (Paused — Phase 21)
+
+- [ ] **CLOS-01**: ClosureDefinitionViz
+- [ ] **CLOS-02**: ClosurePracticalViz
+- [ ] **CLOS-03**: ClosureLoopGotchaViz
+- [ ] **CLOS-04**: ClosureMemoryLeaksViz
+- [ ] **CLOS-05**: ClosureModulePatternViz
+- [ ] **CLOS-06**: ClosurePartialApplicationViz
+
+</details>
 
 ## v2.0 Requirements (Complete)
 
@@ -78,65 +104,17 @@ Add step-through visualizations for all remaining JS concepts — async patterns
 
 </details>
 
-## v1.2 Requirements (Complete)
-
-<details>
-<summary>v1.2 Polish & Production — All 13 requirements complete</summary>
-
-### Responsive Design
-
-- [x] **RESP-01**: Standardized breakpoints (640/768/1024px) across all CSS files
-- [x] **RESP-02**: Mobile navigation (hamburger menu or bottom nav) replaces hidden nav
-- [x] **RESP-03**: Touch-friendly controls (44px minimum tap targets)
-- [x] **RESP-04**: Responsive visualizations adapt to screen width
-- [x] **RESP-05**: Monaco Editor hidden on mobile, replaced with read-only code display
-
-### SEO & Meta
-
-- [x] **SEO-01**: generateMetadata on all dynamic routes
-- [x] **SEO-02**: Breadcrumb schema (JSON-LD) on all pages
-- [x] **SEO-03**: Dynamic OpenGraph images for social sharing
-
-### Cross-Linking
-
-- [x] **LINK-01**: Pattern -> Problem links ("Practice this pattern" sections)
-- [x] **LINK-02**: Problem -> Pattern links ("Learn the pattern" sections)
-- [x] **LINK-03**: Footer navigation with site-wide links
-
-### Page Consistency
-
-- [x] **PAGE-01**: Consistent headers on DSA pattern pages matching concept pages
-- [x] **PAGE-02**: NavBar breadcrumbs present on all page types
-
-</details>
-
-## v3.1+ Requirements
-
-Deferred to future milestone. Tracked but not in current roadmap.
-
-### Component Migration
-
-- **MIG-01**: Migrate CSS Module files to Tailwind utility classes
-- **MIG-02**: Replace dynamic bracket-notation class access with mapping objects
-- **MIG-03**: Extract shared Viz UI components (LevelSelector, ExampleSelector)
-
-### Additional DSA Patterns
-
-- **PAT-01**: Sliding Window pattern visualization
-- **PAT-02**: Binary Search pattern visualization
-- **PAT-03**: Dynamic Programming pattern visualization
-
 ## Out of Scope
 
 Explicitly excluded. Documented to prevent scope creep.
 
 | Feature | Reason |
 |---------|--------|
-| Shared UI extraction | Copy-paste approach chosen; each Viz self-contained |
-| Real code execution | Use simulation with explicit disclaimers |
-| GC animation | Misleading; hard to visualize accurately |
-| Custom code editor | Existing CodePanel sufficient |
-| New DSA patterns | Deferred to future milestone |
+| Full Tailwind utility migration | Deferred to v4.1+ — focus on token consistency first |
+| Theme switching (dark/light) | Not needed for current single-theme design |
+| CSS-in-JS solution | Adds complexity; CSS vars sufficient |
+| ESLint rule for hex colors | Nice-to-have but not critical for v4.0 |
+| Automated migration scripts | Manual migration preferred for control |
 
 ## Traceability
 
@@ -144,41 +122,26 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ASYNC-01 | Phase 18 | Pending |
-| ASYNC-02 | Phase 18 | Pending |
-| ASYNC-03 | Phase 18 | Pending |
-| ASYNC-04 | Phase 18 | Pending |
-| ASYNC-05 | Phase 18 | Pending |
-| ASYNC-06 | Phase 18 | Pending |
-| ASYNC-07 | Phase 19 | Pending |
-| ASYNC-08 | Phase 19 | Pending |
-| ASYNC-09 | Phase 19 | Pending |
-| ASYNC-10 | Phase 19 | Pending |
-| ASYNC-11 | Phase 19 | Pending |
-| ASYNC-12 | Phase 19 | Pending |
-| ASYNC-13 | Phase 19 | Pending |
-| OOP-01 | Phase 20 | Pending |
-| OOP-02 | Phase 20 | Pending |
-| OOP-03 | Phase 20 | Pending |
-| OOP-04 | Phase 20 | Pending |
-| OOP-05 | Phase 20 | Pending |
-| OOP-06 | Phase 20 | Pending |
-| CLOS-01 | Phase 21 | Pending |
-| CLOS-02 | Phase 21 | Pending |
-| CLOS-03 | Phase 21 | Pending |
-| CLOS-04 | Phase 21 | Pending |
-| CLOS-05 | Phase 21 | Pending |
-| CLOS-06 | Phase 21 | Pending |
+| INFRA-01 | TBD | Pending |
+| INFRA-02 | TBD | Pending |
+| INFRA-03 | TBD | Pending |
+| INFRA-04 | TBD | Pending |
+| MIG-01 | TBD | Pending |
+| MIG-02 | TBD | Pending |
+| MIG-03 | TBD | Pending |
+| MIG-04 | TBD | Pending |
+| ANIM-01 | TBD | Pending |
+| ANIM-02 | TBD | Pending |
+| ANIM-03 | TBD | Pending |
 | QUAL-01 | All phases | Pending |
 | QUAL-02 | All phases | Pending |
 | QUAL-03 | All phases | Pending |
-| QUAL-04 | All phases | Pending |
 
 **Coverage:**
-- v3.0 requirements: 29 total (25 viz + 4 quality)
-- Mapped to phases: 29
-- Unmapped: 0
+- v4.0 requirements: 14 total (4 infra + 4 migration + 3 animation + 3 quality)
+- Mapped to phases: 0
+- Unmapped: 14
 
 ---
-*Requirements defined: 2026-01-30*
-*Last updated: 2026-01-30 -- Traceability complete for v3.0 phases 18-21*
+*Requirements defined: 2026-01-31*
+*Last updated: 2026-01-31 — v4.0 requirements defined*
