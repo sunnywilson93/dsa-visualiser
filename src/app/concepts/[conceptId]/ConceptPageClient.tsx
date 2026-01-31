@@ -93,7 +93,7 @@ const visualizations: Record<string, React.ComponentType> = {
   'property-lookup': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
   'class-syntax-sugar': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
   'class-syntax-prototypes': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
-  'instanceof-operator': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
+  'instanceof-operator': dynamic(() => import('@/components/Concepts/InstanceofViz').then(m => m.InstanceofViz)),
   'object-create': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
   'prototype-inheritance': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
   'prototype-pollution': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
