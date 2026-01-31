@@ -85,15 +85,17 @@ export function CardCarousel({ children, itemCount }: CardCarouselProps) {
         <ChevronRight size={24} />
       </button>
 
-      <div
-        className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth py-4 px-2 -mx-2 scrollbar-hide"
-        ref={scrollRef}
-        style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        }}
-      >
-        {children}
+      <div className="overflow-hidden">
+        <div
+          className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth py-4 scrollbar-hide"
+          ref={scrollRef}
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          {children}
+        </div>
       </div>
 
       <div className="flex justify-center gap-2 mt-4 max-sm:mt-3">

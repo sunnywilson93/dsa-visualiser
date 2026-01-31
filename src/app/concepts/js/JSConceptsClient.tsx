@@ -1,7 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { Search, ChevronDown } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { SearchResultsList } from '@/components/Search'
 import { usePageSearch } from '@/components/Search'
@@ -9,70 +8,6 @@ import { PageSearchControls } from '@/components/Search/PageSearchControls'
 import { ConceptIcon } from '@/components/Icons'
 import { Card, CardCarousel } from '@/components/Card'
 import { concepts, conceptCategories, subcategories } from '@/data/concepts'
-
-// Subcategory grouping component
-function SubcategoryAccordion({ 
-  subcategoryId, 
-  subcategory, 
-  concepts 
-}: { 
-  subcategoryId: string
-  subcategory: { name: string; description: string; order: number }
-  concepts: typeof import('@/data/concepts').concepts
-}) {
-  const [isOpen, setIsOpen] = useState(subcategory.order === 1) // Open first by default
-
-  if (concepts.length === 0) return null
-
-  return (
-    <div className="mb-6 border border-white/10 rounded-xl overflow-hidden bg-black/20">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 text-left hover:bg-white/5 transition-colors"
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-xl">
-            <ConceptIcon conceptId={concepts[0]?.id || subcategoryId} size={24} />
-          </span>
-          <div>
-            <h3 className="text-lg font-semibold text-white">{subcategory.name}</h3>
-            <p className="text-sm text-gray-400">{subcategory.description}</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-gray-500">{concepts.length} concepts</span>
-          <ChevronDown 
-            size={20} 
-            className={`text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-          />
-        </div>
-      </button>
-      
-      {isOpen && (
-        <div className="p-4 pt-0">
-          <CardCarousel itemCount={concepts.length}>
-            {concepts.map((concept, index) => (
-              <Card
-                key={concept.id}
-                href={`/concepts/${concept.id}`}
-                title={concept.title}
-                description={concept.shortDescription}
-                icon={<ConceptIcon conceptId={concept.id} size={32} />}
-                difficulty={concept.difficulty}
-                stats={[
-                  { label: 'key points', value: concept.keyPoints.length },
-                  { label: 'examples', value: concept.examples.length },
-                ]}
-                index={index}
-                isActive={index === 0}
-              />
-            ))}
-          </CardCarousel>
-        </div>
-      )}
-    </div>
-  )
-}
 
 export default function JSConceptsClient() {
   const search = usePageSearch('js')
@@ -150,12 +85,33 @@ export default function JSConceptsClient() {
                       if (subcategoryConcepts.length === 0) return null
 
                       return (
-                        <SubcategoryAccordion
-                          key={subcategoryId}
-                          subcategoryId={subcategoryId}
-                          subcategory={subcategory}
-                          concepts={subcategoryConcepts}
-                        />
+                        <div key={subcategoryId} className="mb-8">
+                          <h3 className="flex items-center gap-3 text-lg font-semibold text-text-bright m-0 mb-3">
+                            <ConceptIcon conceptId={subcategoryConcepts[0]?.id || subcategoryId} size={20} />
+                            {subcategory.name}
+                            <span className="text-sm font-normal text-text-muted ml-auto">
+                              {subcategory.description}
+                            </span>
+                          </h3>
+                          <CardCarousel itemCount={subcategoryConcepts.length}>
+                            {subcategoryConcepts.map((concept, index) => (
+                              <Card
+                                key={concept.id}
+                                href={`/concepts/${concept.id}`}
+                                title={concept.title}
+                                description={concept.shortDescription}
+                                icon={<ConceptIcon conceptId={concept.id} size={32} />}
+                                difficulty={concept.difficulty}
+                                stats={[
+                                  { label: 'key points', value: concept.keyPoints.length },
+                                  { label: 'examples', value: concept.examples.length },
+                                ]}
+                                index={index}
+                                isActive={index === 0}
+                              />
+                            ))}
+                          </CardCarousel>
+                        </div>
                       )
                     })}
                   </section>
