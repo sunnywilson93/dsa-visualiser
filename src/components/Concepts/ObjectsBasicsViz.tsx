@@ -1141,7 +1141,7 @@ export function ObjectsBasicsViz() {
   const handleReset = () => setStepIndex(0)
 
   return (
-    <div className="flex flex-col gap-5" style={{ '--js-viz-accent': '#14b8a6' } as React.CSSProperties}>
+    <div className="flex flex-col gap-5" style={{ '--js-viz-accent': 'var(--color-brand-secondary)' } as React.CSSProperties}>
       {/* Level selector */}
       <div className="flex gap-2 justify-center flex-wrap bg-black/30 border border-white/10 rounded-full p-1.5">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (

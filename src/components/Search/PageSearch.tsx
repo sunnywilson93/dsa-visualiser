@@ -104,7 +104,7 @@ export function PageSearch({
                 {diff.color && (
                   <span
                     className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: filters.difficulty === diff.value ? '#fff' : diff.color }}
+                    style={{ backgroundColor: filters.difficulty === diff.value ? 'var(--color-white)' : diff.color }}
                   />
                 )}
                 {diff.label}

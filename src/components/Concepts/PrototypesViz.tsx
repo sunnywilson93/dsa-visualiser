@@ -695,7 +695,7 @@ export function PrototypesViz() {
                   className={`w-full bg-black/30 border-2 rounded-lg overflow-hidden transition-all relative ${
                     currentStep?.checkedObjects.includes(obj.id) ? 'bg-white/5' : 'border-white/10'
                   } ${currentStep?.foundAt === obj.id ? 'shadow-[0_0_15px_rgba(16,185,129,0.3)]' : ''}`}
-                  style={{ borderColor: currentStep?.checkedObjects.includes(obj.id) ? obj.color : 'rgba(255,255,255,0.1)' }}
+                  style={{ borderColor: currentStep?.checkedObjects.includes(obj.id) ? obj.color : 'var(--color-white-10)' }}
                   animate={{ scale: currentStep?.foundAt === obj.id ? 1.02 : 1 }}
                 >
                   <div className="px-2 py-1 text-2xs font-semibold text-black text-center" style={{ background: obj.color }}>

@@ -249,7 +249,7 @@ export function JSPhilosophyViz() {
                       ? 'bg-[var(--color-white-8)]' 
                       : 'border-[var(--color-white-10)] hover:bg-[var(--color-white-5)]'
                     }`}
-                  style={{ borderColor: activePrinciple === i ? p.color : 'rgba(255,255,255,0.1)' }}
+                  style={{ borderColor: activePrinciple === i ? p.color : 'var(--color-white-10)' }}
                   onClick={() => setActivePrinciple(i)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

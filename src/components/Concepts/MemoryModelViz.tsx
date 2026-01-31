@@ -855,7 +855,7 @@ export function MemoryModelViz() {
         </div>
 
         {/* Heap - Neon Box */}
-        <div className="relative rounded-xl p-[3px]" style={{ background: 'linear-gradient(135deg, var(--color-brand-primary, #3b82f6), var(--color-brand-secondary, #8b5cf6))' }}>
+        <div className="relative rounded-xl p-[3px]" style={{ background: 'var(--gradient-brand)' }}>
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-6 py-1 bg-gray-800 rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10">
             Heap
           </div>

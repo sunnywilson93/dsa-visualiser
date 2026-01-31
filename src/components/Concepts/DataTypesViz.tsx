@@ -131,7 +131,7 @@ export function DataTypesViz() {
                   className={`flex flex-col items-center gap-1.5 p-4 bg-black/30 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:bg-white/5 ${
                     selectedType?.id === type.id ? 'bg-white/[0.08]' : ''
                   }`}
-                  style={{ borderColor: selectedType?.id === type.id ? type.color : 'rgba(255,255,255,0.1)' }}
+                  style={{ borderColor: selectedType?.id === type.id ? type.color : 'var(--color-white-10)' }}
                   onClick={() => setSelectedType(type)}
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
@@ -187,7 +187,7 @@ export function DataTypesViz() {
                   className={`flex flex-col items-center gap-1.5 p-4 bg-black/30 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:bg-white/5 ${
                     selectedType?.id === type.id ? 'bg-white/[0.08]' : ''
                   }`}
-                  style={{ borderColor: selectedType?.id === type.id ? type.color : 'rgba(255,255,255,0.1)' }}
+                  style={{ borderColor: selectedType?.id === type.id ? type.color : 'var(--color-white-10)' }}
                   onClick={() => setSelectedType(type)}
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}

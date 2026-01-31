@@ -156,7 +156,7 @@ export function BitManipulationConcept({ step }: BitManipulationConceptProps) {
                 w-5 text-center text-sm font-mono
                 ${activeBits.includes(pos) ? 'text-blue-400 font-semibold' : 'text-gray-600'}
               `}
-              style={activeBits.includes(pos) ? { textShadow: '0 0 4px rgba(96, 165, 250, 0.4)' } : {}}
+              style={activeBits.includes(pos) ? { textShadow: '0 0 4px var(--color-blue-400-30)' } : {}}
             >
               {pos}
             </span>
