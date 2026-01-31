@@ -11,11 +11,11 @@ See: .planning/PROJECT.md (updated 2026-01-30)
 
 Milestone: v3.0
 Phase: 20 - OOP/Prototype Visualizations
-Plan: 02 of 4
+Plan: 03 of 4
 Status: In progress
-Last activity: 2026-01-31 -- Completed 20-02-PLAN.md (InstanceofViz)
+Last activity: 2026-01-31 -- Completed 20-03-PLAN.md (ClassSyntaxViz)
 
-Progress: [######____] 2.5/4 phases (Phase 18-19 complete, Phase 20 in progress)
+Progress: [######____] 2.75/4 phases (Phase 18-19 complete, Phase 20 in progress)
 
 ## v3.0 Overview
 
@@ -23,7 +23,7 @@ Progress: [######____] 2.5/4 phases (Phase 18-19 complete, Phase 20 in progress)
 |-------|------|--------------|-------|--------|
 | 18 | Callbacks & Promises | ASYNC-01..06 (6) | 4/4 | Verified |
 | 19 | Async/Await & Queues | ASYNC-07..13 (7) | 5/5 | Verified |
-| 20 | OOP/Prototypes | OOP-01..06 (6) | 4 | 02/04 |
+| 20 | OOP/Prototypes | OOP-01..06 (6) | 4 | 03/04 |
 | 21 | Closures | CLOS-01..06 (6) | 5 | Not started |
 
 **Quality requirements (all phases):** QUAL-01..04
@@ -50,6 +50,7 @@ Progress: [######____] 2.5/4 phases (Phase 18-19 complete, Phase 20 in progress)
 
 **v3.0 Phase 20:**
 - 20-02: 3 min (InstanceofViz)
+- 20-03: 5 min (ClassSyntaxViz)
 
 ## Accumulated Context
 
@@ -80,6 +81,8 @@ Recent decisions affecting current work:
 | Async function state icons | Play=running, Pause=suspended, CheckCircle=completed | 19-02 |
 | Three-panel layout for async viz | Code+State top, CallStack+MicroQueue bottom | 19-02 |
 | Two-panel instanceof layout | Chain on left, target on right with comparison indicator | 20-02 |
+| Side-by-side class/prototype comparison | Purple for class, amber for prototype, shared chain below | 20-03 |
+| Syntactic Sugar badge pattern | Prominent badge at top with sparkle icons | 20-03 |
 
 ### Pending Todos
 
@@ -93,6 +96,6 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-31
-Stopped at: Completed 20-02-PLAN.md (InstanceofViz)
+Stopped at: Completed 20-03-PLAN.md (ClassSyntaxViz)
 Resume file: None
-Next action: Execute 20-03-PLAN.md or 20-04-PLAN.md
+Next action: Execute 20-04-PLAN.md
