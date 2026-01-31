@@ -6,7 +6,8 @@
 - [x] **v1.1 DSA Pattern Visualizations** - Phases 7-10 (shipped 2026-01-25)
 - [x] **v1.2 Polish & Production** - Phases 11-15 (shipped 2026-01-25)
 - [x] **v2.0 Design System Foundation** - Phases 16-17 (shipped 2026-01-27)
-- [ ] **v3.0 Complete Concept Visualizations** - Phases 18-21 (in progress)
+- [ ] **v3.0 Complete Concept Visualizations** - Phases 18-21 (paused at Phase 21)
+- [ ] **v4.0 Design Token Consistency** - Phases 22-26 (in progress)
 
 ## Phases
 
@@ -321,9 +322,12 @@ Plans:
 
 </details>
 
-### v3.0 Complete Concept Visualizations (In Progress)
+<details>
+<summary>v3.0 Complete Concept Visualizations (Phases 18-21) - PAUSED</summary>
 
 **Milestone Goal:** Add step-through visualizations for all remaining JS concepts -- async patterns, OOP/prototypes, and closures. Each visualization matches existing quality with beginner/intermediate/advanced difficulty levels, uses SharedViz components, and is mobile responsive.
+
+**Status:** Paused at Phase 21 (Closures) to complete v4.0 Design Token Consistency first.
 
 **Execution Order:** Phase 18 first (callbacks/promises foundation), then Phase 19 (async/await and queues), then Phase 20 (OOP/prototypes), then Phase 21 (closures). Sequential -- each phase builds on patterns established in previous phases.
 
@@ -336,8 +340,6 @@ Plans:
 - QUAL-02: All visualizations use SharedViz components (CodePanel, StepControls, StepProgress)
 - QUAL-03: Code highlighting synced with visualization step
 - QUAL-04: Mobile responsive layout for all new visualizations
-
-## Phase Details
 
 ### Phase 18: Callbacks & Promises Foundation
 **Goal**: Learners can step through callback patterns and promise fundamentals to understand async building blocks
@@ -419,10 +421,106 @@ Plans:
 - [ ] 21-04-PLAN.md - ClosureMemoryLeaksViz (CLOS-04)
 - [ ] 21-05-PLAN.md - ClosureModulePatternViz and ClosurePartialApplicationViz (CLOS-05, CLOS-06)
 
+</details>
+
+### v4.0 Design Token Consistency (In Progress)
+
+**Milestone Goal:** Replace all hardcoded colors with @theme tokens -- single source of truth for design consistency across 56 visualization components. Eliminate 700+ hardcoded hex colors and extract shared color patterns (levelInfo, phaseColors, statusColors) into reusable TypeScript modules.
+
+**Execution Order:** Phase 22 first (foundation before migration), then Phases 23-24 (high-duplication patterns), then Phase 25 (Framer Motion special handling), finally Phase 26 (cleanup and validation).
+
+```
+22 -> 23 -> 24 -> 25 -> 26
+```
+
+**Quality Requirements (apply to all phases):**
+- QUAL-01: All 56 visualization components reference @theme tokens (no hardcoded hex)
+- QUAL-02: Visual parity verified -- no appearance changes after migration
+- QUAL-03: `npm run build` passes with zero errors
+
+## Phase Details
+
+### Phase 22: Foundation & Audit
+**Goal**: Shared infrastructure exists and visual regression baseline captured before any migration begins
+**Depends on**: Phase 17 (v2.0 @theme foundation complete)
+**Requirements**: INFRA-01, INFRA-02, INFRA-03, INFRA-04, MIG-04
+**Success Criteria** (what must be TRUE):
+  1. Shared `levelInfo` module exports beginner/intermediate/advanced colors as CSS var references with TypeScript types
+  2. Shared `phaseColors` and `statusColors` modules export execution phase and variable state colors as CSS var references
+  3. All required opacity variants (15, 20, 30, 40) are defined in @theme for emerald, amber, red, blue accent colors
+  4. TypeScript types provide compile-time validation when referencing token names
+  5. Visual regression baseline screenshots captured for all 56 visualization components before any migration
+
+Plans:
+- [ ] 22-01-PLAN.md - Opacity variants in @theme and levelInfo module (INFRA-03, INFRA-01)
+- [ ] 22-02-PLAN.md - phaseColors and statusColors modules (INFRA-02)
+- [ ] 22-03-PLAN.md - TypeScript type safety and visual regression baseline (INFRA-04, MIG-04)
+
+### Phase 23: Level Indicators Migration
+**Goal**: All 39 components with levelInfo duplications migrated to shared import
+**Depends on**: Phase 22
+**Requirements**: MIG-01
+**Success Criteria** (what must be TRUE):
+  1. All 39 components importing levelInfo from src/constants/levelInfo.ts instead of inline definitions
+  2. Beginner/intermediate/advanced difficulty badges render with correct emerald/amber/red colors
+  3. No inline levelInfo object definitions remain in any visualization component
+  4. Visual regression tests pass -- difficulty indicators render identically to baseline
+
+Plans:
+- [ ] 23-01-PLAN.md - Migrate first 13 visualization components to shared levelInfo
+- [ ] 23-02-PLAN.md - Migrate next 13 visualization components to shared levelInfo
+- [ ] 23-03-PLAN.md - Migrate final 13 visualization components to shared levelInfo and validate
+
+### Phase 24: Phase/Status Colors Migration
+**Goal**: All 21 components with getPhaseColor/getStatusColor functions migrated to shared import
+**Depends on**: Phase 22
+**Requirements**: MIG-02
+**Success Criteria** (what must be TRUE):
+  1. All components with getPhaseColor functions import from src/constants/phaseColors.ts
+  2. All components with getStatusColor/stateColors import from src/constants/statusColors.ts
+  3. No inline phase/status color function definitions remain in visualization components
+  4. Execution phase badges (creation/execution/return) render with correct colors
+  5. Variable state badges (hoisted/initialized/TDZ) render with correct colors
+
+Plans:
+- [ ] 24-01-PLAN.md - Migrate phaseColors from 11 components
+- [ ] 24-02-PLAN.md - Migrate statusColors from 10 components and validate
+
+### Phase 25: Animation Colors Handling
+**Goal**: Framer Motion animation colors documented and handled correctly without breaking interpolation
+**Depends on**: Phase 24 (static styles migrated first)
+**Requirements**: ANIM-01, ANIM-02, ANIM-03
+**Success Criteria** (what must be TRUE):
+  1. Animation constants file exists with hex values that mirror corresponding @theme tokens
+  2. All 18 components with Framer Motion animated colors identified and cataloged
+  3. Hybrid pattern documented: static styles use CSS vars, animated styles use hex constants
+  4. Animation interpolation verified working in all animated components (no "not animatable" errors)
+  5. Animation constants file includes comment linking each hex to its @theme source token
+
+Plans:
+- [ ] 25-01-PLAN.md - Animation constants file and catalog of animated components (ANIM-01, ANIM-02)
+- [ ] 25-02-PLAN.md - Document hybrid pattern and verify animation interpolation (ANIM-03)
+
+### Phase 26: Inline Styles Cleanup
+**Goal**: All remaining inline style hex values replaced with CSS var references
+**Depends on**: Phase 25
+**Requirements**: MIG-03, QUAL-01, QUAL-02, QUAL-03
+**Success Criteria** (what must be TRUE):
+  1. All 147 inline style hex values replaced with CSS var references (excluding Framer Motion animations)
+  2. Grep for hex color patterns (#[0-9a-fA-F]{6}) returns zero matches outside animation constants file
+  3. All 56 visualization components reference @theme tokens with no hardcoded hex
+  4. Final visual regression comparison shows zero visual differences from baseline
+  5. `npm run build` passes with zero errors
+
+Plans:
+- [ ] 26-01-PLAN.md - Replace inline style hex values in first 19 components
+- [ ] 26-02-PLAN.md - Replace inline style hex values in next 19 components
+- [ ] 26-03-PLAN.md - Replace inline style hex values in final 18 components and run final validation
+
 ## Progress
 
 **Execution Order:**
-Phases 1-17 complete (v1.0-v2.0). Phases 18-21 (v3.0) in sequence.
+Phases 1-20 complete (v1.0-v3.0 partial). Phase 21 paused. Phases 22-26 (v4.0) in sequence.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -446,8 +544,13 @@ Phases 1-17 complete (v1.0-v2.0). Phases 18-21 (v3.0) in sequence.
 | 18. Callbacks & Promises | v3.0 | 4/4 | Complete | 2026-01-30 |
 | 19. Async/Await & Queues | v3.0 | 5/5 | Complete | 2026-01-30 |
 | 20. OOP/Prototypes | v3.0 | 4/4 | Complete | 2026-01-31 |
-| 21. Closures | v3.0 | 0/5 | Planned | - |
+| 21. Closures | v3.0 | 0/5 | Paused | - |
+| 22. Foundation & Audit | v4.0 | 0/3 | Planned | - |
+| 23. Level Indicators Migration | v4.0 | 0/3 | Planned | - |
+| 24. Phase/Status Colors Migration | v4.0 | 0/2 | Planned | - |
+| 25. Animation Colors Handling | v4.0 | 0/2 | Planned | - |
+| 26. Inline Styles Cleanup | v4.0 | 0/3 | Planned | - |
 
 ---
 *Roadmap created: 2026-01-24*
-*Last updated: 2026-01-31 -- Phase 21 planned (5 plans for 6 closure visualizations)*
+*Last updated: 2026-01-31 -- v4.0 Design Token Consistency phases added (Phases 22-26)*

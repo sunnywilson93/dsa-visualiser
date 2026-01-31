@@ -3,9 +3,9 @@
 **Defined:** 2026-01-31
 **Core Value:** Learners can step through code execution visually, seeing exactly how algorithms and JavaScript work under the hood
 
-## v4.0 Requirements — Design Token Consistency
+## v4.0 Requirements -- Design Token Consistency
 
-Replace all hardcoded colors with @theme tokens — single source of truth for design consistency across 56 visualization components.
+Replace all hardcoded colors with @theme tokens -- single source of truth for design consistency across 56 visualization components.
 
 ### Shared Infrastructure
 
@@ -30,40 +30,40 @@ Replace all hardcoded colors with @theme tokens — single source of truth for d
 ### Quality Requirements
 
 - [ ] **QUAL-01**: All 56 visualization components reference @theme tokens (no hardcoded hex)
-- [ ] **QUAL-02**: Visual parity verified — no appearance changes after migration
+- [ ] **QUAL-02**: Visual parity verified -- no appearance changes after migration
 - [ ] **QUAL-03**: `npm run build` passes with zero errors
 
 ## v3.0 Requirements (Paused)
 
 <details>
-<summary>v3.0 Complete Concept Visualizations — Phase 21 remaining</summary>
+<summary>v3.0 Complete Concept Visualizations -- Phase 21 remaining</summary>
 
 ### Async Visualizations (Complete)
 
-- [x] **ASYNC-01**: CallbacksBasicsViz — Phase 18
-- [x] **ASYNC-02**: CallbackHellViz — Phase 18
-- [x] **ASYNC-03**: ErrorFirstCallbacksViz — Phase 18
-- [x] **ASYNC-04**: PromisesCreationViz — Phase 18
-- [x] **ASYNC-05**: PromisesThenCatchViz — Phase 18
-- [x] **ASYNC-06**: PromisesChainingViz — Phase 18
-- [x] **ASYNC-07**: PromisesStaticViz — Phase 19
-- [x] **ASYNC-08**: AsyncAwaitSyntaxViz — Phase 19
-- [x] **ASYNC-09**: AsyncAwaitErrorsViz — Phase 19
-- [x] **ASYNC-10**: AsyncAwaitParallelViz — Phase 19
-- [x] **ASYNC-11**: MicrotaskQueueViz — Phase 19
-- [x] **ASYNC-12**: TaskQueueViz — Phase 19
-- [x] **ASYNC-13**: EventLoopTickViz — Phase 19
+- [x] **ASYNC-01**: CallbacksBasicsViz -- Phase 18
+- [x] **ASYNC-02**: CallbackHellViz -- Phase 18
+- [x] **ASYNC-03**: ErrorFirstCallbacksViz -- Phase 18
+- [x] **ASYNC-04**: PromisesCreationViz -- Phase 18
+- [x] **ASYNC-05**: PromisesThenCatchViz -- Phase 18
+- [x] **ASYNC-06**: PromisesChainingViz -- Phase 18
+- [x] **ASYNC-07**: PromisesStaticViz -- Phase 19
+- [x] **ASYNC-08**: AsyncAwaitSyntaxViz -- Phase 19
+- [x] **ASYNC-09**: AsyncAwaitErrorsViz -- Phase 19
+- [x] **ASYNC-10**: AsyncAwaitParallelViz -- Phase 19
+- [x] **ASYNC-11**: MicrotaskQueueViz -- Phase 19
+- [x] **ASYNC-12**: TaskQueueViz -- Phase 19
+- [x] **ASYNC-13**: EventLoopTickViz -- Phase 19
 
 ### OOP/Prototype Visualizations (Complete)
 
-- [x] **OOP-01**: PrototypeChainBasicsViz — Phase 20
-- [x] **OOP-02**: PropertyLookupViz — Phase 20
-- [x] **OOP-03**: InstanceofViz — Phase 20
-- [x] **OOP-04**: ClassSyntaxViz — Phase 20
-- [x] **OOP-05**: PrototypeInheritanceViz — Phase 20
-- [x] **OOP-06**: PrototypePollutionViz — Phase 20
+- [x] **OOP-01**: PrototypeChainBasicsViz -- Phase 20
+- [x] **OOP-02**: PropertyLookupViz -- Phase 20
+- [x] **OOP-03**: InstanceofViz -- Phase 20
+- [x] **OOP-04**: ClassSyntaxViz -- Phase 20
+- [x] **OOP-05**: PrototypeInheritanceViz -- Phase 20
+- [x] **OOP-06**: PrototypePollutionViz -- Phase 20
 
-### Closure Visualizations (Paused — Phase 21)
+### Closure Visualizations (Paused -- Phase 21)
 
 - [ ] **CLOS-01**: ClosureDefinitionViz
 - [ ] **CLOS-02**: ClosurePracticalViz
@@ -77,7 +77,7 @@ Replace all hardcoded colors with @theme tokens — single source of truth for d
 ## v2.0 Requirements (Complete)
 
 <details>
-<summary>v2.0 Design System Foundation — All requirements complete</summary>
+<summary>v2.0 Design System Foundation -- All requirements complete</summary>
 
 ### Tailwind v4 Configuration
 
@@ -110,7 +110,7 @@ Explicitly excluded. Documented to prevent scope creep.
 
 | Feature | Reason |
 |---------|--------|
-| Full Tailwind utility migration | Deferred to v4.1+ — focus on token consistency first |
+| Full Tailwind utility migration | Deferred to v4.1+ -- focus on token consistency first |
 | Theme switching (dark/light) | Not needed for current single-theme design |
 | CSS-in-JS solution | Adds complexity; CSS vars sufficient |
 | ESLint rule for hex colors | Nice-to-have but not critical for v4.0 |
@@ -122,26 +122,26 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | TBD | Pending |
-| INFRA-02 | TBD | Pending |
-| INFRA-03 | TBD | Pending |
-| INFRA-04 | TBD | Pending |
-| MIG-01 | TBD | Pending |
-| MIG-02 | TBD | Pending |
-| MIG-03 | TBD | Pending |
-| MIG-04 | TBD | Pending |
-| ANIM-01 | TBD | Pending |
-| ANIM-02 | TBD | Pending |
-| ANIM-03 | TBD | Pending |
-| QUAL-01 | All phases | Pending |
-| QUAL-02 | All phases | Pending |
-| QUAL-03 | All phases | Pending |
+| INFRA-01 | Phase 22 | Pending |
+| INFRA-02 | Phase 22 | Pending |
+| INFRA-03 | Phase 22 | Pending |
+| INFRA-04 | Phase 22 | Pending |
+| MIG-01 | Phase 23 | Pending |
+| MIG-02 | Phase 24 | Pending |
+| MIG-03 | Phase 26 | Pending |
+| MIG-04 | Phase 22 | Pending |
+| ANIM-01 | Phase 25 | Pending |
+| ANIM-02 | Phase 25 | Pending |
+| ANIM-03 | Phase 25 | Pending |
+| QUAL-01 | Phase 26 | Pending |
+| QUAL-02 | Phase 26 | Pending |
+| QUAL-03 | Phase 26 | Pending |
 
 **Coverage:**
 - v4.0 requirements: 14 total (4 infra + 4 migration + 3 animation + 3 quality)
-- Mapped to phases: 0
-- Unmapped: 14
+- Mapped to phases: 14
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-31*
-*Last updated: 2026-01-31 — v4.0 requirements defined*
+*Last updated: 2026-01-31 -- v4.0 traceability updated with phase mappings*
