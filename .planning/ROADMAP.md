@@ -454,7 +454,8 @@ Plans:
 Plans:
 - [ ] 22-01-PLAN.md - Opacity variants in @theme and levelInfo module (INFRA-03, INFRA-01)
 - [ ] 22-02-PLAN.md - phaseColors and statusColors modules (INFRA-02)
-- [ ] 22-03-PLAN.md - TypeScript type safety and visual regression baseline (INFRA-04, MIG-04)
+- [ ] 22-03-PLAN.md - TypeScript type safety and barrel exports (INFRA-04)
+- [ ] 22-04-PLAN.md - Visual regression baseline (MIG-04)
 
 ### Phase 23: Level Indicators Migration
 **Goal**: All 39 components with levelInfo duplications migrated to shared import
@@ -545,7 +546,7 @@ Phases 1-20 complete (v1.0-v3.0 partial). Phase 21 paused. Phases 22-26 (v4.0) i
 | 19. Async/Await & Queues | v3.0 | 5/5 | Complete | 2026-01-30 |
 | 20. OOP/Prototypes | v3.0 | 4/4 | Complete | 2026-01-31 |
 | 21. Closures | v3.0 | 0/5 | Paused | - |
-| 22. Foundation & Audit | v4.0 | 0/3 | Planned | - |
+| 22. Foundation & Audit | v4.0 | 0/4 | Planned | - |
 | 23. Level Indicators Migration | v4.0 | 0/3 | Planned | - |
 | 24. Phase/Status Colors Migration | v4.0 | 0/2 | Planned | - |
 | 25. Animation Colors Handling | v4.0 | 0/2 | Planned | - |
