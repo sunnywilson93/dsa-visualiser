@@ -95,8 +95,8 @@ const visualizations: Record<string, React.ComponentType> = {
   'class-syntax-prototypes': dynamic(() => import('@/components/Concepts/ClassSyntaxViz').then(m => m.ClassSyntaxViz)),
   'instanceof-operator': dynamic(() => import('@/components/Concepts/InstanceofViz').then(m => m.InstanceofViz)),
   'object-create': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
-  'prototype-inheritance': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
-  'prototype-pollution': dynamic(() => import('@/components/Concepts/PrototypesViz').then(m => m.PrototypesViz)),
+  'prototype-inheritance': dynamic(() => import('@/components/Concepts/PrototypeInheritanceViz').then(m => m.PrototypeInheritanceViz)),
+  'prototype-pollution': dynamic(() => import('@/components/Concepts/PrototypePollutionViz').then(m => m.PrototypePollutionViz)),
   
   // Phase 5: Event Loop
   'call-stack-basics': dynamic(() => import('@/components/Concepts/EventLoopGranularViz').then(m => m.EventLoopGranularViz)),
