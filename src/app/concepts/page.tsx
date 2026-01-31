@@ -13,9 +13,9 @@ export default function ConceptsPage() {
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-bg-page from-0% to-bg-page-secondary to-100%">
       <NavBar breadcrumbs={[{ label: 'Concepts' }]} />
 
-      <main className="flex-1 p-8 max-w-[1200px] mx-auto w-full max-md:p-6">
+      <main className="flex-1 p-8 container-default mx-auto w-full max-md:p-6">
         <header className="text-center py-4 pb-8">
-          <h1 className="text-[2.5rem] font-bold bg-gradient-to-br from-brand-primary from-0% to-brand-secondary to-100% bg-clip-text text-transparent m-0 mb-3 drop-shadow-[0_0_20px_var(--color-brand-primary-30)] max-lg:text-3xl max-md:text-[1.75rem]">Learn Concepts</h1>
+          <h1 className="text-[2.5rem] font-bold bg-gradient-to-br from-brand-primary from-0% to-brand-secondary to-100% bg-clip-text text-transparent m-0 mb-3 drop-shadow-glow-brand max-lg:text-3xl max-md:text-[1.75rem]">Learn Concepts</h1>
           <p className="text-text-secondary text-md m-0 leading-relaxed max-md:text-base">
             Visual, interactive explanations of core concepts.
             <br />

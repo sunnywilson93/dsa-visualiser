@@ -32,7 +32,7 @@ export default function PatternPageClient({ patternId }: Props) {
         ]}
       />
 
-      <main className="mx-auto w-full max-w-[900px] flex-1 px-8 pb-12 pt-6 max-md:px-[var(--spacing-lg)]">
+      <main className="mx-auto w-full container-content flex-1 px-8 pb-12 pt-6 max-md:px-[var(--spacing-lg)]">
         <header className="mb-8">
           <button 
             className="mb-[var(--spacing-lg)] inline-flex items-center gap-[var(--spacing-sm)] border-0 bg-transparent p-0 py-[var(--spacing-sm)] text-base text-[var(--color-gray-500)] transition-colors duration-200 hover:text-[var(--color-brand-primary)]" 
@@ -101,7 +101,7 @@ export default function PatternPageClient({ patternId }: Props) {
                 <p className="mb-[var(--spacing-sm)] text-sm leading-[var(--leading-normal)] text-[var(--text-secondary)]">
                   {variant.description}
                 </p>
-                <p className="text-[13px] text-[var(--text-muted)]">
+                <p className="text-xs text-[var(--text-muted)]">
                   <strong className="text-[var(--text-secondary)]">Use for:</strong> {variant.whenToUse}
                 </p>
               </div>

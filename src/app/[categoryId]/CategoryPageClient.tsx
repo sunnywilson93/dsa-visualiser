@@ -94,7 +94,7 @@ export default function CategoryPageClient() {
 
   const renderDsaSubcategories = isDsa ? (
     <>
-      <div className="py-4 px-8 flex gap-2 flex-wrap max-w-[1200px] mx-auto w-full max-lg:py-3 max-lg:px-6 max-md:py-3 max-md:px-4">
+      <div className="py-4 px-8 flex gap-2 flex-wrap container-default mx-auto w-full max-lg:py-3 max-lg:px-6 max-md:py-3 max-md:px-4">
         <button
           className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-white-10 bg-transparent text-gray-500 text-sm cursor-pointer transition-all duration-150 hover:border-white-20 hover:text-gray-300 ${!selectedSubcategory ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
           onClick={() => setSelectedSubcategory(null)}
@@ -114,7 +114,7 @@ export default function CategoryPageClient() {
       </div>
 
       {selectedSubcategory && subcategoryToConcept[selectedSubcategory] && (
-        <div className="py-3 px-8 max-w-[1200px] mx-auto w-full max-lg:px-6 max-md:px-4">
+        <div className="py-3 px-8 container-default mx-auto w-full max-lg:px-6 max-md:px-4">
           <Link
             href={`/concepts/dsa/${subcategoryToConcept[selectedSubcategory].id}`}
             className="inline-flex items-center gap-2 py-2 px-3.5 bg-brand-primary-10 border border-brand-primary-25 rounded-md text-brand-light text-base font-medium no-underline transition-all duration-150 hover:bg-brand-primary-20 hover:border-brand-primary-40 hover:text-brand-light group"

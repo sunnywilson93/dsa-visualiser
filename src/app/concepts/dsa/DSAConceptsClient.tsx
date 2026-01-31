@@ -19,9 +19,9 @@ export default function DSAConceptsClient() {
         { label: 'DSA' }
       ]} />
 
-      <main className="flex-1 p-8 max-w-[1200px] mx-auto w-full max-md:p-6">
+      <main className="flex-1 p-8 container-default mx-auto w-full max-md:p-6">
         <header className="text-center py-4 pb-8">
-          <h1 className="text-[2.5rem] font-bold bg-gradient-to-br from-brand-primary from-0% to-brand-secondary to-100% bg-clip-text text-transparent m-0 mb-3 drop-shadow-[0_0_20px_var(--color-brand-primary-30)] max-lg:text-3xl max-md:text-[1.75rem]">
+          <h1 className="text-4xl font-bold bg-gradient-to-br from-brand-primary from-0% to-brand-secondary to-100% bg-clip-text text-transparent m-0 mb-3 drop-shadow-glow-brand max-lg:text-3xl max-md:text-[1.75rem]">
             DSA Concepts
           </h1>
           <p className="text-text-secondary text-md m-0 leading-relaxed max-md:text-base">
@@ -39,7 +39,7 @@ export default function DSAConceptsClient() {
         {hasActiveFilters ? (
           <section className="mb-12">
             <h2 className="flex items-center gap-4 text-xl font-semibold text-text-bright m-0 mb-4 max-md:flex-wrap">
-              <span className="text-xl drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]">
+              <span className="text-xl drop-shadow-glow-white-sm">
                 <Search size={20} />
               </span>
               Search Results
@@ -63,7 +63,7 @@ export default function DSAConceptsClient() {
               return (
                 <section key={category.id} className="mb-12">
                   <h2 className="flex items-center gap-4 text-xl font-semibold text-text-bright m-0 mb-4 max-md:flex-wrap">
-                    <span className="text-xl drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]">
+                    <span className="text-xl drop-shadow-glow-white-sm">
                       <ConceptIcon conceptId={category.id} size={20} />
                     </span>
                     {category.name}
@@ -96,7 +96,7 @@ export default function DSAConceptsClient() {
 
             <section className="mb-12">
               <h2 className="flex items-center gap-4 text-xl font-semibold text-text-bright m-0 mb-4 max-md:flex-wrap">
-                <span className="text-xl drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]">
+                <span className="text-xl drop-shadow-glow-white-sm">
                   <Layers size={20} />
                 </span>
                 Algorithm Patterns

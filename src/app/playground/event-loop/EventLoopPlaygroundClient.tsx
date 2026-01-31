@@ -207,7 +207,7 @@ export default function EventLoopPlaygroundClient() {
         { label: 'Playground' },
         { label: 'Event Loop' }
       ]} />
-      <div className="flex flex-col gap-5 max-w-[1400px] mx-auto p-6 text-text-primary max-[600px]:p-4">
+      <div className="flex flex-col gap-5 container-wide mx-auto p-6 text-text-primary max-[600px]:p-4">
         <header className="text-center mb-2">
         <h1 className="text-2xl font-bold m-0 mb-2 bg-gradient-to-br from-brand-primary from-0% to-brand-secondary to-100% bg-clip-text text-transparent">Event Loop Playground</h1>
         <p className="text-base text-text-secondary m-0">

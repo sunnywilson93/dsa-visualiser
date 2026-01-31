@@ -266,6 +266,7 @@
   --text-xl: 1.25rem;
   --text-2xl: 1.5rem;
   --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
 
   /* Font weights (RENAMED from --font-* to --font-weight-*) */
   --font-weight-normal: 400;
@@ -293,6 +294,30 @@
   --radius-3xl: 20px;
   --radius-4xl: 24px;
   --radius-full: 999px;
+
+  /* === Max Width (container widths) === */
+  --container-narrow: 600px;
+  --container-content: 900px;
+  --container-default: 1200px;
+  --container-wide: 1400px;
+
+  /* === Min Heights === */
+  --min-height-card-sm: 180px;
+  --min-height-card-md: 200px;
+  --min-height-card-lg: 250px;
+  --min-height-card-xl: 300px;
+  --min-height-card-2xl: 350px;
+  --min-height-card-3xl: 450px;
+  --min-height-card-4xl: 500px;
+
+  /* === Grid column min widths === */
+  --grid-col-sm: 250px;
+  --grid-col-md: 280px;
+
+  /* === Drop Shadows === */
+  --drop-shadow-glow-white-sm: 0 0 4px var(--color-white-30);
+  --drop-shadow-glow-white-md: 0 0 6px var(--color-white-20);
+  --drop-shadow-glow-brand: 0 0 20px var(--color-brand-primary-30);
 
   /* === Shadows === */
   --shadow-*: initial;
@@ -486,6 +511,46 @@
   --stack-frame-3: #3fb950;
   --stack-frame-4: #d29922;
   --stack-frame-5: #f85149;
+
+  /* OpenGraph / Meta image colors */
+  --og-bg-start: #0f0f23;
+  --og-bg-end: #1a1a2e;
+  --og-text-secondary: #888;
+
+  /* Code syntax colors */
+  --code-text: #e0e0e0;
+  --code-text-error: #f8a0a0;
+
+  /* Container widths */
+  --container-narrow: 600px;
+  --container-content: 900px;
+  --container-default: 1200px;
+  --container-wide: 1400px;
+
+  /* Card min-heights */
+  --card-height-sm: 180px;
+  --card-height-md: 200px;
+  --card-height-lg: 250px;
+  --card-height-xl: 300px;
+  --card-height-2xl: 350px;
+  --card-height-3xl: 450px;
+  --card-height-4xl: 500px;
+
+  /* Font sizes */
+  --font-size-2xs: 0.625rem;
+  --font-size-xs: 0.7rem;
+  --font-size-sm: 0.75rem;
+  --font-size-base: 0.85rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+
+  /* Grid column min-widths */
+  --grid-col-sm: 250px;
+  --grid-col-md: 280px;
 
   /* Responsive breakpoints (documentation only - cannot use in @media) */
   /* sm: 640px - Mobile landscape, large phones */
@@ -693,6 +758,65 @@ button:disabled {
   background: var(--color-accent-red-30) !important;
   border-left: 3px solid var(--color-accent-red);
 }
+}
+
+/* Container max-width utilities */
+@utility container-narrow {
+  max-width: 600px;
+}
+@utility container-content {
+  max-width: 900px;
+}
+@utility container-default {
+  max-width: 1200px;
+}
+@utility container-wide {
+  max-width: 1400px;
+}
+
+/* Min-height utilities */
+@utility min-h-card-sm {
+  min-height: 180px;
+}
+@utility min-h-card-md {
+  min-height: 200px;
+}
+@utility min-h-card-lg {
+  min-height: 250px;
+}
+@utility min-h-card-xl {
+  min-height: 300px;
+}
+@utility min-h-card-2xl {
+  min-height: 350px;
+}
+@utility min-h-card-3xl {
+  min-height: 450px;
+}
+@utility min-h-card-4xl {
+  min-height: 500px;
+}
+
+/* Grid column utilities */
+@utility grid-cols-auto-sm {
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+@utility grid-cols-auto-md {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* Drop shadow utilities */
+@utility drop-shadow-glow-white-sm {
+  --tw-drop-shadow: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+@utility drop-shadow-glow-white-md {
+  --tw-drop-shadow: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+@utility drop-shadow-glow-brand {
+  --tw-drop-shadow: drop-shadow(0 0 20px rgba(99, 102, 241, 0.3));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 

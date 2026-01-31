@@ -128,9 +128,9 @@ const visualizations: Record<string, React.ComponentType> = {
 }
 
 const difficultyColors = {
-  beginner: '#10b981',
-  intermediate: '#f59e0b',
-  advanced: '#ef4444',
+  beginner: 'var(--color-emerald-500)',
+  intermediate: 'var(--color-amber-500)',
+  advanced: 'var(--color-red-500)',
 }
 
 // Helper to determine if a concept is a JS concept or DSA concept
@@ -178,7 +178,7 @@ export default function ConceptPageClient(): JSX.Element {
         ]}
       />
 
-      <main className="mx-auto w-full max-w-[900px] flex-1 px-8 pb-12 pt-6 max-md:px-[var(--spacing-lg)]">
+      <main className="mx-auto w-full container-content flex-1 px-8 pb-12 pt-6 max-md:px-[var(--spacing-lg)]">
         {/* Header */}
         <header className="mb-8">
           <button 
@@ -267,7 +267,7 @@ export default function ConceptPageClient(): JSX.Element {
                 <h3 className="m-0 border-b border-[var(--color-white-8)] bg-[var(--color-brand-primary-15)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-[0.95rem] font-semibold text-white">
                   {example.title}
                 </h3>
-                <pre className="m-0 overflow-x-auto bg-[var(--color-black-40)] p-[var(--spacing-lg)] font-mono text-base leading-[var(--leading-relaxed)] text-[#e0e0e0] max-md:p-[var(--spacing-md)] max-md:text-[var(--text-sm)]">
+                <pre className="m-0 overflow-x-auto bg-[var(--color-black-40)] p-[var(--spacing-lg)] font-mono text-base leading-[var(--leading-relaxed)] text-gray-300 max-md:p-[var(--spacing-md)] max-md:text-[var(--text-sm)]">
                   <code className="whitespace-pre">{example.code}</code>
                 </pre>
                 <p className="m-0 border-t border-[var(--color-white-5)] bg-[var(--color-brand-primary-5)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-base leading-[var(--leading-relaxed)] text-[var(--color-gray-400)]">
@@ -289,7 +289,7 @@ export default function ConceptPageClient(): JSX.Element {
               {concept.commonMistakes.map((mistake, i) => (
                 <li 
                   key={i} 
-                  className="relative rounded-r-md border-l-4 border-l-[var(--color-red-500)] bg-[var(--color-red-10)] py-1.5 pl-8 pr-3 text-base text-[#f8a0a0] before:absolute before:left-2.5 before:text-[var(--color-accent-red)] before:content-['✗']"
+                  className="relative rounded-r-md border-l-4 border-l-[var(--color-red-500)] bg-[var(--color-red-10)] py-1.5 pl-8 pr-3 text-base text-red-300 before:absolute before:left-2.5 before:text-[var(--color-accent-red)] before:content-['✗']"
                 >
                   {mistake}
                 </li>
@@ -334,7 +334,7 @@ export default function ConceptPageClient(): JSX.Element {
               <p className="mb-4 -mt-2 text-base text-[var(--color-gray-500)]">
                 Apply this concept by solving these {problems.length} problems
               </p>
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-[var(--spacing-md)]">
+              <div className="grid grid-cols-auto-md gap-[var(--spacing-md)]">
                 {problems.map((problem) => (
                   <Link
                     key={problem.id}
@@ -371,7 +371,7 @@ export default function ConceptPageClient(): JSX.Element {
                 <Link2 size={20} className="text-[var(--color-brand-primary)]" />
                 Related Concepts
               </h2>
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-[var(--spacing-lg)]">
+              <div className="grid grid-cols-auto-sm gap-[var(--spacing-lg)]">
                 {relatedConcepts.map((related) => (
                   <Link
                     key={related.id}

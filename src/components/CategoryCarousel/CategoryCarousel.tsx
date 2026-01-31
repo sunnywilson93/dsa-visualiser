@@ -22,10 +22,13 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10)
 
     // Calculate active index based on scroll position
-    const cardWidth = container.firstElementChild?.clientWidth || 280
-    const gap = 16
-    const newIndex = Math.round(scrollLeft / (cardWidth + gap))
-    setActiveIndex(Math.min(newIndex, children.length - 1))
+    const card = container.firstElementChild as HTMLElement | null
+    if (card) {
+      const cardWidth = card.offsetWidth
+      const gap = 16
+      const newIndex = Math.round(scrollLeft / (cardWidth + gap))
+      setActiveIndex(Math.min(newIndex, children.length - 1))
+    }
   }, [children.length])
 
   useEffect(() => {
@@ -49,27 +52,33 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
     const container = scrollRef.current
     if (!container) return
 
-    const cardWidth = container.firstElementChild?.clientWidth || 280
-    const gap = 16
-    const scrollAmount = cardWidth + gap
+    const card = container.firstElementChild as HTMLElement | null
+    if (card) {
+      const cardWidth = card.offsetWidth
+      const gap = 16
+      const scrollAmount = cardWidth + gap
 
-    container.scrollBy({
-      left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth'
-    })
+      container.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
+    }
   }
 
   const scrollToIndex = (index: number) => {
     const container = scrollRef.current
     if (!container) return
 
-    const cardWidth = container.firstElementChild?.clientWidth || 280
-    const gap = 16
+    const card = container.firstElementChild as HTMLElement | null
+    if (card) {
+      const cardWidth = card.offsetWidth
+      const gap = 16
 
-    container.scrollTo({
-      left: index * (cardWidth + gap),
-      behavior: 'smooth'
-    })
+      container.scrollTo({
+        left: index * (cardWidth + gap),
+        behavior: 'smooth'
+      })
+    }
   }
 
   return (
@@ -105,12 +114,7 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
         {children.map((child, index) => (
           <div
             key={index}
-            className={`
-              flex-[0_0_340px] snap-start transition-all duration-300
-              max-md:flex-[0_0_300px]
-              max-sm:flex-[0_0_calc(100vw-32px)]
-              ${index === activeIndex ? 'scale-[1.02]' : 'opacity-75'}
-            `}
+            className="flex-[0_0_calc(25%-12px)] snap-start transition-all duration-300 max-lg:flex-[0_0_calc(33.333%-11px)] max-md:flex-[0_0_calc(50%-8px)] max-sm:flex-[0_0_calc(100vw-32px)]"
           >
             {child}
           </div>

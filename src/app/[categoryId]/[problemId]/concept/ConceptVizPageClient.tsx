@@ -42,9 +42,9 @@ export default function ConceptVizPageClient() {
   ]
 
   const difficultyBgColors: Record<string, string> = {
-    easy: 'bg-[rgba(74,222,128,0.15)] text-[#4ade80]',
-    medium: 'bg-[rgba(251,191,36,0.15)] text-[var(--color-amber-400)]',
-    hard: 'bg-[rgba(248,113,113,0.15)] text-[var(--color-red-400)]',
+    easy: 'bg-emerald-500/15 text-emerald-400',
+    medium: 'bg-amber-500/15 text-amber-400',
+    hard: 'bg-red-500/15 text-red-400',
   }
 
   if (!problem || !hasConcept) {
@@ -79,7 +79,7 @@ export default function ConceptVizPageClient() {
             {problem.difficulty}
           </span>
         </div>
-        <p className="m-0 text-[13px] text-[var(--color-text-muted)] max-md:hidden">{problem.description}</p>
+        <p className="m-0 text-xs text-[var(--color-text-muted)] max-md:hidden">{problem.description}</p>
       </header>
 
       <main className="mx-auto flex w-full max-w-[600px] flex-1 flex-col items-center gap-[var(--spacing-lg)] max-md:gap-[var(--spacing-sm)]">
