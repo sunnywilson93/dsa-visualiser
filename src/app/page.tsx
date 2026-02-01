@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { NavBar } from '@/components/NavBar'
 import { CategoryCarousel } from '@/components/CategoryCarousel'
 import { ConceptIcon } from '@/components/Icons'
-import { DifficultyIndicator } from '@/components/DifficultyIndicator'
+import { DifficultyIndicator, DifficultyMiniBar } from '@/components/DifficultyIndicator'
 import { exampleCategories, getExamplesByCategory, getAllJsExamples } from '@/data/examples'
 import { concepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
@@ -59,14 +59,6 @@ export default function HomePage() {
                 <p className="text-base text-text-secondary m-0 leading-normal flex-1">
                   Closures, Event Loop, Prototypes, This, V8 Engine
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  {concepts.slice(0, 3).map(c => (
-                    <span key={c.id} className="text-xs py-0.5 px-2.5 bg-brand-primary-15 border border-brand-primary-30 rounded-xl text-brand-primary whitespace-nowrap">{c.title}</span>
-                  ))}
-                  {concepts.length > 3 && (
-                    <span className="text-xs py-0.5 px-2.5 text-text-muted">+{concepts.length - 3}</span>
-                  )}
-                </div>
               </div>
             </Link>
 
@@ -82,14 +74,6 @@ export default function HomePage() {
                 <p className="text-base text-text-secondary m-0 leading-normal flex-1">
                   Big O, Arrays, Hash Tables, Stacks, Queues, Linked Lists
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  {dsaConcepts.slice(0, 3).map(c => (
-                    <span key={c.id} className="text-xs py-0.5 px-2.5 bg-brand-primary-15 border border-brand-primary-30 rounded-xl text-brand-primary whitespace-nowrap">{c.title}</span>
-                  ))}
-                  {(dsaConcepts.length + dsaPatterns.length) > 3 && (
-                    <span className="text-xs py-0.5 px-2.5 text-text-muted">+{dsaConcepts.length + dsaPatterns.length - 3}</span>
-                  )}
-                </div>
               </div>
             </Link>
           </div>
@@ -136,13 +120,9 @@ export default function HomePage() {
                     </div>
                     <h3 className="text-lg font-semibold text-text-bright mt-1 mb-0">{category.name}</h3>
                     <p className="text-base text-text-secondary m-0 leading-normal flex-1">{category.description}</p>
-                    <div className="flex gap-4 mt-auto pt-3 border-t border-border-card">
+                    <div className="flex items-center gap-3 mt-auto pt-3 border-t border-border-card">
                       <span className="text-sm text-brand-primary font-medium">{problems.length} problems</span>
-                      <span className="text-sm text-brand-primary font-medium">
-                        {easyCount > 0 && `${easyCount} easy`}
-                        {mediumCount > 0 && ` · ${mediumCount} med`}
-                        {hardCount > 0 && ` · ${hardCount} hard`}
-                      </span>
+                      <DifficultyMiniBar easy={easyCount} medium={mediumCount} hard={hardCount} />
                     </div>
                   </div>
                 </Link>
@@ -189,12 +169,6 @@ export default function HomePage() {
                     <span className="text-sm text-text-secondary uppercase tracking-wide">Topics</span>
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-wrap gap-2 mb-4 max-md:hidden">
-                {['Arrays', 'Two Pointers', 'Binary Search', 'Trees', 'Graphs', 'DP'].map(topic => (
-                  <span key={topic} className="text-sm py-0.5 px-3 bg-brand-primary-15 border border-brand-primary-30 rounded-3xl text-brand-primary">{topic}</span>
-                ))}
-                <span className="text-sm py-0.5 px-3 text-text-muted">+13 more</span>
               </div>
               <span className="inline-block py-2.5 px-6 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-base font-semibold text-white">Explore DSA Problems →</span>
             </div>
