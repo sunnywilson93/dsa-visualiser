@@ -15,7 +15,7 @@ export default function ConceptsPage() {
 
       <main className="flex-1 p-8 container-default mx-auto w-full max-md:p-6">
         <header className="text-center py-4 pb-8">
-          <h1 className="text-[2.5rem] font-bold bg-gradient-to-br from-brand-primary from-0% to-brand-secondary to-100% bg-clip-text text-transparent m-0 mb-3 drop-shadow-glow-brand max-lg:text-3xl max-md:text-[1.75rem]">Learn Concepts</h1>
+          <h1 className="text-[2.5rem] font-bold text-brand-light m-0 mb-3 max-lg:text-3xl max-md:text-[1.75rem]">Learn Concepts</h1>
           <p className="text-text-secondary text-md m-0 leading-relaxed max-md:text-base">
             Visual, interactive explanations of core concepts.
             <br />
@@ -25,10 +25,10 @@ export default function ConceptsPage() {
 
         <div className="grid grid-cols-2 gap-5 [&>*]:flex max-md:grid-cols-1 max-md:gap-4">
           <div>
-            <Link href="/concepts/js" className="relative flex-1 rounded-[14px] p-0.5 no-underline text-inherit transition-all duration-350 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_20px_var(--color-brand-primary-20),0_0_40px_var(--color-brand-secondary-10)]">
+            <Link href="/concepts/js" className="relative flex-1 rounded-[14px] p-0.5 no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40">
               <div className="bg-bg-page-secondary rounded-xl p-5 flex flex-col gap-2 flex-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-[1.75rem] leading-none drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]">
+                  <span className="text-[1.75rem] leading-none">
                     <Zap size={28} />
                   </span>
                   <span className="text-xs font-semibold py-0.5 px-2.5 rounded-full bg-brand-primary-30 text-brand-light">{concepts.length} topics</span>
@@ -46,10 +46,10 @@ export default function ConceptsPage() {
           </div>
 
           <div>
-            <Link href="/concepts/dsa" className="relative flex-1 rounded-[14px] p-0.5 no-underline text-inherit transition-all duration-350 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_20px_var(--color-brand-primary-20),0_0_40px_var(--color-brand-secondary-10)]">
+            <Link href="/concepts/dsa" className="relative flex-1 rounded-[14px] p-0.5 no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40">
               <div className="bg-bg-page-secondary rounded-xl p-5 flex flex-col gap-2 flex-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-[1.75rem] leading-none drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]">
+                  <span className="text-[1.75rem] leading-none">
                     <Box size={28} />
                   </span>
                   <span className="text-xs font-semibold py-0.5 px-2.5 rounded-full bg-brand-primary-30 text-brand-light">{dsaConcepts.length + dsaPatterns.length} topics</span>

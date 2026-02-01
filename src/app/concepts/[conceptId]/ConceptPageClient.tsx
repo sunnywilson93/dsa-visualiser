@@ -339,7 +339,7 @@ export default function ConceptPageClient(): JSX.Element {
                   <Link
                     key={problem.id}
                     href={`/${problem.category}/${problem.id}`}
-                    className="flex flex-col gap-[var(--spacing-sm)] rounded-[var(--radius-lg)] border border-[var(--color-white-8)] bg-[var(--color-white-3)] p-[var(--spacing-md)] px-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:-translate-y-0.5 hover:border-[var(--color-brand-primary-30)] hover:bg-[var(--color-brand-primary-10)]"
+                    className="flex flex-col gap-[var(--spacing-sm)] rounded-[var(--radius-lg)] border border-[var(--color-white-10)] bg-[var(--color-white-3)] p-[var(--spacing-md)] px-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-white-5)] hover:border-[var(--color-brand-primary-40)]"
                   >
                     <div className="flex items-center justify-between gap-[var(--spacing-sm)]">
                       <h3 className="m-0 text-[0.95rem] font-semibold text-white">{problem.name}</h3>
@@ -376,7 +376,7 @@ export default function ConceptPageClient(): JSX.Element {
                   <Link
                     key={related.id}
                     href={`/concepts/${related.id}`}
-                    className="flex items-center gap-[var(--spacing-md)] rounded-[var(--radius-lg)] border border-[var(--color-white-8)] bg-[var(--color-white-3)] p-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:-translate-y-0.5 hover:border-[var(--color-brand-primary-30)] hover:bg-[var(--color-brand-primary-10)]"
+                    className="flex items-center gap-[var(--spacing-md)] rounded-[var(--radius-lg)] border border-[var(--color-white-10)] bg-[var(--color-white-3)] p-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-white-5)] hover:border-[var(--color-brand-primary-40)]"
                   >
                     <span className="text-[1.75rem] leading-none">
                       <ConceptIcon conceptId={related.id} size={24} />

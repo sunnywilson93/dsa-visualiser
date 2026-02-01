@@ -42,10 +42,7 @@ export function Card({
     >
       <Link
         href={href}
-        className="group relative block h-full p-[2px] rounded-2xl no-underline text-inherit transition-all duration-300 hover:-translate-y-1 card-gradient-border"
-        style={{
-          background: 'var(--card-gradient-bg)',
-        }}
+        className="group relative block h-full p-[2px] rounded-2xl no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40"
       >
         <div
           className="h-full p-6 flex flex-col gap-3 rounded-xl max-[480px]:min-h-[180px]"
@@ -56,10 +53,7 @@ export function Card({
         >
           <div className="flex items-center justify-between">
             {icon && (
-              <span
-                className="text-3xl leading-none"
-                style={{ filter: 'drop-shadow(0 0 8px var(--color-white-20))' }}
-              >
+              <span className="text-3xl leading-none">
                 {icon}
               </span>
             )}

@@ -3,6 +3,7 @@
 import { Component, ErrorInfo, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { AlertTriangle, RefreshCw, Home, ChevronDown, ChevronUp } from 'lucide-react'
+import { Button } from '@/components/Button'
 
 interface Props {
   children: ReactNode
@@ -49,20 +50,24 @@ function ErrorFallbackWithRouter({
         </p>
 
         <div className="flex gap-3 flex-wrap justify-center mt-2 max-sm:flex-col max-sm:w-full">
-          <button 
-            className="flex items-center gap-1 py-3 px-4 text-base font-medium bg-gradient-to-br from-brand-primary to-brand-primary border-none rounded-lg text-white cursor-pointer transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_6px_rgba(168,85,247,0.4)] max-sm:w-full max-sm:justify-center" 
+          <Button
+            variant="primary"
+            size="lg"
+            className="max-sm:w-full max-sm:justify-center"
             onClick={onRetry}
           >
             <RefreshCw size={16} />
             Try Again
-          </button>
-          <button 
-            className="flex items-center gap-1 py-3 px-4 text-base font-medium bg-transparent border border-white-15 rounded-lg text-gray-500 cursor-pointer transition-all duration-150 hover:bg-white-5 hover:border-white-30 hover:text-gray-300 max-sm:w-full max-sm:justify-center" 
+          </Button>
+          <Button
+            variant="secondary"
+            size="lg"
+            className="max-sm:w-full max-sm:justify-center"
             onClick={handleGoHome}
           >
             <Home size={16} />
             Go Home
-          </button>
+          </Button>
         </div>
 
         <button 

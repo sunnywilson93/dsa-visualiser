@@ -451,7 +451,7 @@ export function WebEvolutionViz() {
           {activeEra + 1} / {eras.length}
         </span>
         <button
-          className="px-4 py-2 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-all duration-200 hover:-translate-y-px hover:shadow-[0_4px_12px_var(--color-brand-primary-40)] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-all duration-200 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={activeEra === eras.length - 1}
         >

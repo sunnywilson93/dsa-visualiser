@@ -98,7 +98,7 @@ export function PlaygroundEditor({
           Code
         </span>
         <button
-          className="flex items-center gap-1.5 px-4 py-1.5 text-sm font-semibold bg-gradient-brand border-0 rounded-md text-white cursor-pointer transition-all duration-150 hover:-translate-y-px hover:shadow-[0_4px_12px_var(--color-brand-primary-30)] active:translate-y-0"
+          className="flex items-center gap-1.5 px-4 py-1.5 text-sm font-semibold bg-gradient-brand border-0 rounded-md text-white cursor-pointer transition-all duration-150 hover:brightness-110"
           onClick={onAnalyze}
           title="Analyze (Ctrl+Enter)"
         >

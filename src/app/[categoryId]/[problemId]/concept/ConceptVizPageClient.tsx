@@ -98,7 +98,7 @@ export default function ConceptVizPageClient() {
 
         <Link
           href={`/${categoryId}/${problemId}`}
-          className="flex items-center justify-center gap-[var(--spacing-sm)] rounded-[var(--radius-md)] bg-gradient-to-br from-[var(--color-accent-blue)] to-[var(--color-accent-purple)] px-[var(--spacing-xl)] py-[var(--spacing-md)] text-sm font-semibold text-white no-underline transition-all duration-[var(--transition-fast)] hover:brightness-110 hover:-translate-y-0.5 max-md:px-[var(--spacing-md)] max-md:py-[var(--spacing-sm)] max-md:text-[13px]"
+          className="flex items-center justify-center gap-[var(--spacing-sm)] rounded-[var(--radius-md)] bg-gradient-to-br from-[var(--color-accent-blue)] to-[var(--color-accent-purple)] px-[var(--spacing-xl)] py-[var(--spacing-md)] text-sm font-semibold text-white no-underline transition-all duration-[var(--transition-fast)] hover:brightness-110 max-md:px-[var(--spacing-md)] max-md:py-[var(--spacing-sm)] max-md:text-[13px]"
         >
           <Code size={16} />
           <span>Practice the Code</span>

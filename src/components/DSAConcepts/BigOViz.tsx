@@ -240,7 +240,7 @@ export function BigOViz() {
           disabled={isAnimating}
         />
         <button
-          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_15px_var(--color-brand-primary-40)] disabled:opacity-60 disabled:cursor-not-allowed"
+          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-all duration-200 hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed"
           onClick={handleAnimate}
           disabled={isAnimating}
         >

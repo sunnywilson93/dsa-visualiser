@@ -1,3 +1,4 @@
+export { Button } from './Button'
 export { CodeEditor } from './CodeEditor'
 export { CallStack } from './CallStack'
 export { Controls } from './Controls'

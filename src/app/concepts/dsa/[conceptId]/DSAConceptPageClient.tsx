@@ -273,7 +273,7 @@ export default function DSAConceptPageClient(): JSX.Element {
                 <Link
                   key={problemId}
                   href={`/dsa/${problemId}`}
-                  className="inline-flex items-center rounded-[var(--radius-3xl)] border border-[var(--color-brand-primary-30)] bg-[var(--color-brand-primary-10)] px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-base font-medium text-[var(--color-brand-primary)] no-underline transition-all duration-[var(--transition-fast)] hover:-translate-y-px hover:border-[var(--color-brand-primary-50)] hover:bg-[var(--color-brand-primary-20)] max-md:px-3 max-md:py-1 max-md:text-[var(--text-base)]"
+                  className="inline-flex items-center rounded-[var(--radius-3xl)] border border-[var(--color-brand-primary-30)] bg-[var(--color-brand-primary-10)] px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-base font-medium text-[var(--color-brand-primary)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-brand-primary-20)] hover:border-[var(--color-brand-primary-50)] max-md:px-3 max-md:py-1 max-md:text-[var(--text-base)]"
                 >
                   {problemId.split('-').map(word =>
                     word.charAt(0).toUpperCase() + word.slice(1)
@@ -299,7 +299,7 @@ export default function DSAConceptPageClient(): JSX.Element {
                   <Link
                     key={related.id}
                     href={`/concepts/dsa/${related.id}`}
-                    className="flex items-center gap-[var(--spacing-md)] rounded-[var(--radius-lg)] border border-[var(--color-white-8)] bg-[var(--color-white-3)] p-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:-translate-y-0.5 hover:border-[var(--color-brand-primary-30)] hover:bg-[var(--color-brand-primary-10)]"
+                    className="flex items-center gap-[var(--spacing-md)] rounded-[var(--radius-lg)] border border-[var(--color-white-10)] bg-[var(--color-white-3)] p-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-white-5)] hover:border-[var(--color-brand-primary-40)]"
                   >
                     <span className="text-[1.75rem] leading-none">
                       <ConceptIcon conceptId={related.id} size={24} />

@@ -23,7 +23,7 @@ export function RelatedPatterns({ problemId }: Props) {
           <Link
             key={pattern.id}
             href={pattern.href}
-            className="flex items-start gap-[var(--spacing-md)] px-[var(--spacing-lg)] py-[var(--spacing-md)] bg-[var(--color-brand-primary-10)] border border-[var(--color-brand-primary-20)] rounded-[var(--radius-md)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-brand-primary-15)] hover:border-[var(--color-brand-primary-30)] hover:-translate-y-px focus-visible:outline focus-visible:outline-[var(--border-width-2)] focus-visible:outline-[var(--color-accent-blue)] focus-visible:outline-offset-2 max-[768px]:px-[var(--spacing-md)] max-[768px]:py-[var(--spacing-sm)]"
+            className="flex items-start gap-[var(--spacing-md)] px-[var(--spacing-lg)] py-[var(--spacing-md)] bg-[var(--color-brand-primary-10)] border border-[var(--color-brand-primary-20)] rounded-[var(--radius-md)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-brand-primary-15)] hover:border-[var(--color-brand-primary-40)] focus-visible:outline focus-visible:outline-[var(--border-width-2)] focus-visible:outline-[var(--color-accent-blue)] focus-visible:outline-offset-2 max-[768px]:px-[var(--spacing-md)] max-[768px]:py-[var(--spacing-sm)]"
           >
             <Lightbulb size={18} className="text-[var(--color-brand-primary)] flex-shrink-0 mt-[2px]" />
             <div className="flex flex-col gap-[2px]">

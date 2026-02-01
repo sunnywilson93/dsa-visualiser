@@ -21,7 +21,7 @@ export default function HomePage() {
       <NavBar />
 
       <header className="text-center py-8 px-8 pt-8">
-        <h1 className="text-3xl font-bold bg-gradient-to-br from-brand-primary from-0% to-brand-secondary to-100% bg-clip-text text-transparent m-0 mb-3 drop-shadow-[0_0_20px_var(--color-brand-primary-30)]">JS Interview Prep</h1>
+        <h1 className="text-3xl font-bold text-brand-light m-0 mb-3">JS Interview Prep</h1>
         <p className="text-text-secondary text-md m-0">
           Master JavaScript for frontend interviews with interactive visualizations
         </p>
@@ -33,7 +33,7 @@ export default function HomePage() {
           <div className="flex justify-between items-start mb-6">
             <div>
               <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
-                <span className="inline-flex items-center justify-center w-7 h-7 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-base font-bold text-white">1</span>
+                <span className="inline-flex items-center justify-center w-7 h-7 bg-brand-primary rounded-lg text-base font-bold text-white">1</span>
                 Understand
               </h2>
               <p className="text-base text-text-secondary mt-1 mb-0">
@@ -47,7 +47,7 @@ export default function HomePage() {
 
           {/* Two concept category cards */}
           <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1 max-md:gap-4 items-stretch">
-            <Link href="/concepts/js" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)] h-full">
+            <Link href="/concepts/js" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 h-full">
               <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
                 <div className="flex items-center justify-between">
                   <span className="flex items-center justify-center text-brand-primary">
@@ -62,7 +62,7 @@ export default function HomePage() {
               </div>
             </Link>
 
-            <Link href="/concepts/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)] h-full">
+            <Link href="/concepts/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 h-full">
               <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
                 <div className="flex items-center justify-between">
                   <span className="flex items-center justify-center text-brand-primary">
@@ -84,7 +84,7 @@ export default function HomePage() {
           <div className="flex justify-between items-start mb-6">
             <div>
               <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
-                <span className="inline-flex items-center justify-center w-7 h-7 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-base font-bold text-white">2</span>
+                <span className="inline-flex items-center justify-center w-7 h-7 bg-brand-primary rounded-lg text-base font-bold text-white">2</span>
                 Build
               </h2>
               <p className="text-base text-text-secondary mt-1 mb-0">
@@ -106,11 +106,11 @@ export default function HomePage() {
                 <Link
                   key={category.id}
                   href={`/${category.id}`}
-                  className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border h-full hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)]"
+                  className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 h-full"
                 >
                   <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full min-h-[200px] max-md:min-h-[180px]">
                     <div className="flex items-center justify-between">
-                      <span className="text-3xl leading-none drop-shadow-glow-white-md">
+                      <span className="text-3xl leading-none">
                         <ConceptIcon conceptId={category.id} size={32} />
                       </span>
                       <DifficultyIndicator
@@ -136,7 +136,7 @@ export default function HomePage() {
           <div className="flex justify-between items-start mb-6">
             <div>
               <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
-                <span className="inline-flex items-center justify-center w-7 h-7 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-base font-bold text-white">3</span>
+                <span className="inline-flex items-center justify-center w-7 h-7 bg-brand-primary rounded-lg text-base font-bold text-white">3</span>
                 Solve
               </h2>
               <p className="text-base text-text-secondary mt-1 mb-0">
@@ -145,7 +145,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <Link href="/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 card-gradient-border hover:-translate-y-1 hover:shadow-[0_0_25px_var(--color-brand-primary-50),0_0_50px_var(--color-brand-secondary-30)]">
+          <Link href="/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40">
             <div className="bg-bg-page-secondary rounded-xl p-6">
               <div className="flex justify-between items-center mb-4 max-lg:flex-col max-lg:items-start max-lg:gap-4">
                 <div className="flex items-center gap-4">

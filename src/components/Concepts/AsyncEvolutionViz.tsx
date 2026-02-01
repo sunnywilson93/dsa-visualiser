@@ -472,7 +472,7 @@ export function AsyncEvolutionViz() {
           {activeEra + 1} / {eras.length}
         </span>
         <button
-          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-blue-500 to-cyan-500 border-0 rounded-md text-white cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-blue-500 to-cyan-500 border-0 rounded-md text-white cursor-pointer transition-all duration-200 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNext}
           disabled={activeEra === eras.length - 1}
         >

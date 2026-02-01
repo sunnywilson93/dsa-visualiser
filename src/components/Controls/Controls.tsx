@@ -137,7 +137,7 @@ export function Controls() {
         {/* Single Run button (only when idle) */}
         {isIdle && (
           <motion.button
-            className="flex items-center gap-2 py-2 px-6 font-semibold text-base rounded-md border-none cursor-pointer transition-all duration-150 text-white bg-gradient-to-br from-accent-blue to-accent-purple hover:brightness-110 hover:-translate-y-0.5"
+            className="flex items-center gap-2 py-2 px-6 font-semibold text-base rounded-md border-none cursor-pointer transition-all duration-150 text-white bg-gradient-to-br from-accent-blue to-accent-purple hover:brightness-110"
             onClick={handleVisualize}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

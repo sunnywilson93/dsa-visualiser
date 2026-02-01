@@ -129,7 +129,7 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
               key={index}
               className={`w-1.5 h-1.5 rounded-full border-none cursor-pointer transition-all duration-200 p-0 ${
                 index === activeIndex
-                  ? 'bg-gradient-to-br from-brand-primary to-brand-secondary w-[18px] rounded-sm shadow-[0_0_6px_var(--color-brand-primary-50)]'
+                  ? 'bg-brand-primary w-[18px] rounded-sm'
                   : 'bg-brand-primary-30 hover:bg-brand-primary-50'
               }`}
               onClick={() => scrollToIndex(index)}

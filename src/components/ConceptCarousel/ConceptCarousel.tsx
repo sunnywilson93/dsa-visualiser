@@ -114,13 +114,13 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
             viewport={{ once: true }}
             transition={{ delay: index * 0.05 }}
           >
-            <Link 
-              href={`${basePath}/${concept.id}`} 
-              className="relative block h-full rounded-2xl p-0.5 bg-gradient-to-br from-brand-primary-15 to-brand-secondary-15 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(168,85,247,0.25),0_0_50px_rgba(236,72,153,0.15)] card-gradient-border"
+            <Link
+              href={`${basePath}/${concept.id}`}
+              className="relative block h-full rounded-2xl p-0.5 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 transition-all duration-300"
             >
               <div className="bg-bg-page-secondary rounded-[14px] p-6 flex flex-col gap-3 h-full min-h-[200px] max-sm:p-5 max-sm:min-h-[180px]">
                 <div className="flex items-center justify-between">
-                  <span className="text-3xl leading-none drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
+                  <span className="text-3xl leading-none">
                     <ConceptIcon conceptId={concept.id} size={32} />
                   </span>
                   <DifficultyIndicator level={concept.difficulty} size="md" />
@@ -146,7 +146,7 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
         {concepts.map((_, index) => (
           <button
             key={index}
-            className={`w-2 h-2 rounded-full border-none cursor-pointer transition-all duration-200 p-0 hover:bg-brand-primary-50 ${index === activeIndex ? 'bg-gradient-to-br from-brand-primary to-brand-secondary w-6 rounded-sm shadow-[0_0_8px_rgba(168,85,247,0.5)]' : 'bg-brand-primary-30'}`}
+            className={`w-2 h-2 rounded-full border-none cursor-pointer transition-all duration-200 p-0 hover:bg-brand-primary-50 ${index === activeIndex ? 'bg-brand-primary w-6 rounded-sm' : 'bg-brand-primary-30'}`}
             onClick={() => scrollToIndex(index)}
             aria-label={`Go to concept ${index + 1}`}
           />
