@@ -38,7 +38,9 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
           className="relative rounded-lg p-0.5"
           style={{
             gridArea: 'callstack',
-            background: 'linear-gradient(135deg, var(--color-orange-500), var(--color-amber-400))',
+            background: step.callStack.length > 0
+              ? 'var(--color-brand-primary-30)'
+              : 'var(--color-border-primary)',
           }}
         >
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
@@ -73,7 +75,9 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
           className="relative rounded-lg p-0.5"
           style={{
             gridArea: 'webapis',
-            background: 'linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-secondary))',
+            background: step.activeWebApi
+              ? 'var(--color-brand-secondary-30)'
+              : 'var(--color-border-primary)',
           }}
         >
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
@@ -105,7 +109,9 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
           className="relative rounded-lg p-0.5"
           style={{
             gridArea: 'eventloop',
-            background: 'var(--gradient-neon-gray)',
+            background: step.phase !== 'idle'
+              ? 'var(--color-sky-20)'
+              : 'var(--color-border-primary)',
           }}
         >
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
@@ -125,7 +131,9 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
           className="relative rounded-lg p-0.5"
           style={{
             gridArea: 'taskqueue',
-            background: 'linear-gradient(135deg, var(--color-brand-secondary), var(--color-red-500))'
+            background: step.macroQueue.length > 0
+              ? 'var(--color-amber-30)'
+              : 'var(--color-border-primary)',
           }}
         >
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
@@ -142,7 +150,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
                   step.macroQueue.map((item, i) => (
                     <motion.div
                       key={item + i}
-                      className="px-2.5 py-1.5 bg-amber-500/15 border border-amber-500/40 rounded font-mono text-2xs text-amber-400 text-center"
+                      className="px-2.5 py-1.5 bg-amber-500/20 border border-amber-500/40 rounded font-mono text-2xs text-white text-center"
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
@@ -162,7 +170,9 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
           className="relative rounded-lg p-0.5"
           style={{
             gridArea: 'microtask',
-            background: 'linear-gradient(135deg, var(--difficulty-1), var(--color-accent-cyan))',
+            background: step.microQueue.length > 0
+              ? 'var(--color-emerald-30)'
+              : 'var(--color-border-primary)',
           }}
         >
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
@@ -179,7 +189,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
                   step.microQueue.map((item, i) => (
                     <motion.div
                       key={item + i}
-                      className="px-2.5 py-1.5 bg-brand-primary/15 border border-brand-primary/40 rounded font-mono text-2xs text-brand-light text-center"
+                      className="px-2.5 py-1.5 bg-emerald-20 border border-emerald-40 rounded font-mono text-2xs text-white text-center"
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
