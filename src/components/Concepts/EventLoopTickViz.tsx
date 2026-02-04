@@ -1102,9 +1102,6 @@ export function EventLoopTickViz() {
         </div>
 
         <div className="flex-1 p-3 bg-white/5 rounded-lg border border-white/10">
-          <div className="text-xs font-semibold text-gray-400 mb-1">
-            Step {stepIndex + 1}/{currentExample.steps.length}
-          </div>
           <div className="text-sm text-gray-300">{currentStep.description}</div>
         </div>
       </div>

@@ -1078,7 +1078,6 @@ export function PromisesStaticViz() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={styles.stepBadge}>Step {stepIndex + 1}/{currentExample.steps.length}</span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>

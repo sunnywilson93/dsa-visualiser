@@ -790,15 +790,6 @@ export function PrototypePollutionViz() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={`inline-block px-1.5 py-0.5 rounded text-2xs font-semibold mr-2 ${
-            currentStep.showWarning
-              ? 'bg-red-500/30 text-red-300'
-              : currentStep.prevention
-                ? 'bg-emerald-500/30 text-emerald-300'
-                : 'bg-purple-500/30 text-purple-300'
-          }`}>
-            Step {stepIndex + 1}/{currentExample.steps.length}
-          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>

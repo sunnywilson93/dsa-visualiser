@@ -614,9 +614,6 @@ export function HoistingViz() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className="inline-block px-1.5 py-0.5 bg-blue-500/30 rounded text-[10px] font-semibold text-blue-300 mr-2">
-            Step {stepIndex + 1}/{currentExample.steps.length}
-          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>

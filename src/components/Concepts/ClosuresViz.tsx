@@ -844,9 +844,6 @@ export function ClosuresViz() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className="inline-block px-1.5 py-0.5 bg-purple-500/30 rounded text-2xs font-semibold text-purple-300 mr-2">
-            Step {stepIndex + 1}/{currentExample.steps.length}
-          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>

@@ -1227,9 +1227,6 @@ export function EventLoopViz() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className="inline-block px-[var(--spacing-xs)] py-0.5 bg-[var(--color-brand-primary-30)] rounded-md text-2xs font-semibold text-[var(--color-brand-light)] mr-[var(--spacing-sm)]">
-            Step {stepIndex + 1}/{currentExample.steps.length}
-          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>

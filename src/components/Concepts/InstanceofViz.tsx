@@ -967,17 +967,6 @@ export function InstanceofViz() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className={`inline-block px-1.5 py-0.5 rounded text-2xs font-semibold mr-2 ${
-            currentStep.phase === 'setup'
-              ? 'bg-gray-500/30 text-gray-400'
-              : currentStep.phase === 'checking'
-              ? 'bg-amber-500/30 text-amber-300'
-              : isMatch
-              ? 'bg-emerald-500/30 text-emerald-300'
-              : 'bg-red-500/30 text-red-300'
-          }`}>
-            Step {stepIndex + 1}/{totalSteps}
-          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>

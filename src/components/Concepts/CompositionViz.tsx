@@ -749,9 +749,6 @@ export function CompositionViz() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className="inline-block bg-[var(--color-brand-primary-30)] px-2 py-0.5 rounded-full text-2xs font-semibold text-[var(--color-brand-light)] mr-2">
-            Step {stepIndex + 1}/{currentExample.steps.length}
-          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>

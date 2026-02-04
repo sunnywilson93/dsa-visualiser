@@ -910,9 +910,6 @@ export function NodeEventLoopViz() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
         >
-          <span className="inline-block px-1.5 py-0.5 bg-[var(--color-brand-primary-30)] rounded text-2xs font-semibold text-[var(--color-brand-light)] mr-2">
-            Step {stepIndex + 1}/{currentExample.steps.length}
-          </span>
           {currentStep.description}
         </motion.div>
       </AnimatePresence>
@@ -926,9 +923,6 @@ export function NodeEventLoopViz() {
             transition={{ duration: 0.3, ease: 'easeOut' }}
           />
         </div>
-        <span className="text-2xs text-gray-700 whitespace-nowrap">
-          Step {stepIndex + 1} / {currentExample.steps.length}
-        </span>
       </div>
 
       <StepControls
