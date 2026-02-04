@@ -1,11 +1,12 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-import { ArrowLeft, Zap } from 'lucide-react'
+import { Zap } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { NavBar } from '@/components/NavBar'
 import { ExecutionBar } from '@/components/ExecutionBar'
 import { UnifiedVisualization } from '@/components/UnifiedVisualization'
 import { useExecutionStore } from '@/store'
@@ -26,7 +27,6 @@ const CodeEditor = dynamic(
 
 export default function PracticePageClient() {
   const params = useParams()
-  const router = useRouter()
   const categoryId = params.categoryId as string
   const problemId = params.problemId as string
 
@@ -46,6 +46,13 @@ export default function PracticePageClient() {
 
   const subcategoryName = getSubcategoryName()
 
+  // Build breadcrumbs for NavBar
+  const breadcrumbs = [
+    ...(mainCategory ? [{ label: mainCategory.name, path: `/${mainCategory.id}` }] : []),
+    ...(subcategoryName ? [{ label: subcategoryName }] : []),
+    { label: problem?.name || problemId },
+  ]
+
   const { categoryConcept, insight } = problem
     ? getConceptForProblem(problem.id, problem.category)
     : { categoryConcept: null, insight: null }
@@ -64,11 +71,14 @@ export default function PracticePageClient() {
 
   if (!problem) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-bg-primary text-text-muted">
-        <h2>Problem not found</h2>
-        <Link href="/" className="inline-flex items-center gap-2 text-accent-blue">
-          <ArrowLeft size={16} /> Back to Home
-        </Link>
+      <div className="flex min-h-screen flex-col bg-bg-primary">
+        <NavBar />
+        <div className="flex flex-1 flex-col items-center justify-center gap-4 text-text-muted">
+          <h2>Problem not found</h2>
+          <Link href="/" className="text-accent-blue">
+            Back to Home
+          </Link>
+        </div>
       </div>
     )
   }
@@ -83,37 +93,16 @@ export default function PracticePageClient() {
 
   return (
     <div className="flex h-screen flex-col bg-bg-primary overflow-hidden">
-      {/* Header */}
-      <header className="flex items-center gap-4 px-4 py-3 border-b border-border-primary bg-bg-secondary/50">
-        <button 
-          onClick={() => router.back()} 
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-border-primary bg-bg-tertiary text-text-secondary hover:text-text-primary hover:bg-bg-secondary transition-colors flex-shrink-0"
-        >
-          <ArrowLeft size={16} />
-        </button>
-        
-        <div className="flex flex-col min-w-0">
-          <div className="flex items-center gap-2">
-            <h1 className="text-lg font-semibold text-text-primary truncate">{problem.name}</h1>
-            <span className={`text-xs font-medium px-2 py-0.5 rounded border flex-shrink-0 ${difficultyClasses[problem.difficulty]}`}>
-              {problem.difficulty}
-            </span>
-          </div>
-          <div className="flex items-center gap-1 text-xs text-text-muted">
-            <Link href="/" className="hover:text-text-secondary">Home</Link>
-            <span>/</span>
-            {mainCategory && (
-              <>
-                <Link href={`/${mainCategory.id}`} className="hover:text-text-secondary truncate">{mainCategory.name}</Link>
-                {subcategoryName && (
-                  <>
-                    <span>/</span>
-                    <span className="text-text-secondary">{subcategoryName}</span>
-                  </>
-                )}
-              </>
-            )}
-          </div>
+      {/* Standard NavBar */}
+      <NavBar breadcrumbs={breadcrumbs} />
+
+      {/* Problem info bar */}
+      <header className="flex items-center gap-4 px-4 py-2 border-b border-border-primary bg-bg-secondary/50">
+        <div className="flex items-center gap-3 min-w-0">
+          <h1 className="text-base font-semibold text-text-primary truncate">{problem.name}</h1>
+          <span className={`text-xs font-medium px-2 py-0.5 rounded border flex-shrink-0 ${difficultyClasses[problem.difficulty]}`}>
+            {problem.difficulty}
+          </span>
         </div>
 
         <div className="flex-1" />

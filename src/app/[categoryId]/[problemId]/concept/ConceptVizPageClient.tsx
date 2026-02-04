@@ -1,8 +1,8 @@
 'use client'
 
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Code } from 'lucide-react'
+import { Code } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { ConceptPanel } from '@/components/ConceptPanel'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
@@ -12,7 +12,6 @@ import { getConceptForProblem, getConceptSteps } from '@/data/algorithmConcepts'
 
 export default function ConceptVizPageClient() {
   const params = useParams()
-  const router = useRouter()
   const categoryId = params.categoryId as string
   const problemId = params.problemId as string
 
@@ -49,11 +48,14 @@ export default function ConceptVizPageClient() {
 
   if (!problem || !hasConcept) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-[var(--spacing-lg)] bg-[var(--color-bg-primary)] text-[var(--color-gray-500)]">
-        <h2>Concept not found</h2>
-        <Link href="/" className="inline-flex items-center gap-2 text-[var(--color-accent-blue)]">
-          <ArrowLeft size={16} /> Back to Home
-        </Link>
+      <div className="flex min-h-screen flex-col bg-bg-primary">
+        <NavBar />
+        <div className="flex flex-1 flex-col items-center justify-center gap-4 text-text-muted">
+          <h2>Concept not found</h2>
+          <Link href="/" className="text-accent-blue">
+            Back to Home
+          </Link>
+        </div>
       </div>
     )
   }
@@ -62,24 +64,16 @@ export default function ConceptVizPageClient() {
     <div className="flex min-h-screen flex-col gap-[var(--spacing-lg)] bg-[var(--color-bg-primary)] p-[var(--spacing-lg)] max-md:gap-[var(--spacing-sm)] max-md:p-[var(--spacing-sm)]">
       <NavBar breadcrumbs={breadcrumbs} />
 
-      <header className="mb-[var(--spacing-lg)] flex flex-shrink-0 items-center justify-between gap-[var(--spacing-lg)] max-md:mb-[var(--spacing-sm)] max-md:gap-[var(--spacing-sm)]">
-        <div className="flex items-center gap-[var(--spacing-md)] max-md:min-w-0 max-md:flex-1">
-          <button 
-            onClick={() => router.back()} 
-            className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-primary)] bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] transition-all duration-[var(--transition-fast)] hover:border-[var(--color-border-secondary)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)]"
-          >
-            <ArrowLeft size={16} />
-          </button>
-          <div className="flex flex-col gap-0.5 max-md:min-w-0">
-            <h1 className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold text-[var(--color-text-primary)] max-md:text-[var(--spacing-lg)]">
-              {problem.name}
-            </h1>
-          </div>
-          <span className={`rounded-[var(--radius-sm)] px-2.5 py-1 text-xs font-medium uppercase ${difficultyBgColors[problem.difficulty]}`}>
+      {/* Problem info bar */}
+      <header className="flex items-center gap-4 px-4 py-2 border-b border-border-primary bg-bg-secondary/50 rounded-lg mb-4">
+        <div className="flex items-center gap-3 min-w-0">
+          <h1 className="text-base font-semibold text-text-primary truncate m-0">{problem.name}</h1>
+          <span className={`text-xs font-medium px-2 py-0.5 rounded flex-shrink-0 ${difficultyBgColors[problem.difficulty]}`}>
             {problem.difficulty}
           </span>
         </div>
-        <p className="m-0 text-xs text-[var(--color-text-muted)] max-md:hidden">{problem.description}</p>
+        <div className="flex-1" />
+        <p className="m-0 text-xs text-text-muted max-md:hidden">{problem.description}</p>
       </header>
 
       <main className="mx-auto flex w-full max-w-[600px] flex-1 flex-col items-center gap-[var(--spacing-lg)] max-md:gap-[var(--spacing-sm)]">
