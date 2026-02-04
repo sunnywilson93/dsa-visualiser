@@ -21,7 +21,7 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
 
   return (
     <nav className="sticky top-0 z-[100] bg-[rgba(15,15,26,0.85)] backdrop-blur-[12px] border-b border-white-8">
-      <div className="flex items-center gap-4 max-w-[1400px] mx-auto py-3 px-8 max-md:py-2.5 max-md:px-4 max-md:gap-3 max-sm:gap-2">
+      <div className="flex items-center gap-4 py-3 px-8 max-md:py-2.5 max-md:px-4 max-md:gap-3 max-sm:gap-2 2xl:px-12">
         {/* Left: Brand */}
         <Link href="/" className="flex items-center gap-2.5 no-underline text-inherit shrink-0">
           <span className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-sm font-bold text-white tracking-tight">
@@ -71,7 +71,7 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
           >
             Playground
           </Link>
-          <div className="shrink-0 w-[280px] max-md:w-[200px] max-sm:w-[120px] max-[360px]:w-[100px]">
+          <div className="shrink-0 w-[280px] max-md:w-[200px] max-sm:w-[120px] max-[360px]:w-[100px] xl:w-[320px] 2xl:w-[360px]">
             <GlobalSearch />
           </div>
         </div>
