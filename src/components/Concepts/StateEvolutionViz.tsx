@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, AlertTriangle, ArrowRight } from 'lucide-react'
+import { StepControls } from '@/components/SharedViz'
 
 interface Era {
   id: string
@@ -57,7 +58,7 @@ $('#add-btn').click(function() {
     id: 'mvc',
     name: 'MVC / Backbone',
     years: '2010-2014',
-    color: '#a855f7',
+    color: 'var(--color-purple-500)',
     technologies: ['Backbone.js', 'Models', 'Views', 'Collections'],
     code: `// Backbone.js - Separate Models from Views
 var Todo = Backbone.Model.extend({
@@ -105,7 +106,7 @@ var TodoView = Backbone.View.extend({
     id: 'two-way',
     name: 'Two-Way Binding',
     years: '2012-2016',
-    color: '#f59e0b',
+    color: 'var(--color-amber-500)',
     technologies: ['Angular 1.x', 'Knockout', 'ng-model'],
     code: `<!-- Angular 1.x - Two-way data binding -->
 <div ng-controller="TodoCtrl">
@@ -314,7 +315,7 @@ function TodoList() {
     id: 'modern',
     name: 'Modern Solutions',
     years: '2020-Present',
-    color: '#10b981',
+    color: 'var(--color-emerald-500)',
     technologies: ['Zustand', 'Jotai', 'Signals', 'Fine-grained'],
     code: `// Zustand - minimal, hook-based store
 import { create } from 'zustand';
@@ -373,6 +374,8 @@ export function StateEvolutionViz() {
   const handleNext = () => {
     if (activeEra < eras.length - 1) setActiveEra(activeEra + 1)
   }
+
+  const handleReset = () => setActiveEra(0)
 
   return (
     <div className="flex flex-col gap-[var(--spacing-lg)]">
@@ -507,25 +510,14 @@ export function StateEvolutionViz() {
         </div>
       )}
 
-      <div className="flex gap-[var(--spacing-md)] justify-center items-center">
-        <button
-          className="px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-base font-medium bg-[var(--color-white-5)] border border-[var(--color-white-10)] rounded-md text-[var(--color-gray-500)] cursor-pointer transition-all hover:bg-[var(--color-white-10)] hover:text-white hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={handlePrev}
-          disabled={activeEra === 0}
-        >
-          Previous Era
-        </button>
-        <span className="text-sm text-[var(--color-gray-700)] font-medium min-w-[3rem] text-center">
-          {activeEra + 1} / {eras.length}
-        </span>
-        <button
-          className="px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-base font-medium bg-[var(--gradient-brand)] border-none rounded-md text-white cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-[0_4px_12px_var(--color-brand-primary-40)] disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={activeEra === eras.length - 1}
-        >
-          Next Era
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={activeEra > 0}
+        canNext={activeEra < eras.length - 1}
+        stepInfo={{ current: activeEra + 1, total: eras.length }}
+      />
 
       <div className="px-[var(--spacing-md)] py-2.5 bg-[var(--color-brand-primary-8)] border border-[var(--color-brand-primary-20)] rounded-lg text-sm text-[var(--color-gray-400)] text-center">
         <strong className="text-[var(--color-brand-primary)]">Key Insight:</strong> The trend is toward simplicity. Modern solutions like Zustand prove you don&apos;t need complexity for predictable state.

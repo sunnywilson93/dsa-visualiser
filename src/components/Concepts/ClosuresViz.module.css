@@ -9,18 +9,18 @@
   display: flex;
   gap: var(--spacing-sm);
   justify-content: center;
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--spacing-1);
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  padding: 0.35rem;
+  padding: var(--spacing-pill);
 }
 
 .levelBtn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px var(--spacing-md);
+  gap: var(--spacing-1\.5);
+  padding: var(--spacing-1\.5) var(--spacing-md);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   background: var(--color-white-4);
@@ -58,11 +58,11 @@
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  padding: 0.35rem;
+  padding: var(--spacing-pill);
 }
 
 .exampleBtn {
-  padding: 6px var(--spacing-md);
+  padding: var(--spacing-1\.5) var(--spacing-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   background: var(--color-white-4);
@@ -105,7 +105,7 @@
 }
 
 .phaseBadge {
-  padding: 2px var(--spacing-sm);
+  padding: var(--spacing-0\.5) var(--spacing-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   font-weight: var(--font-weight-semibold);
@@ -121,8 +121,8 @@
 
 .codeLine {
   display: flex;
-  padding: 2px var(--spacing-sm);
-  transition: background 0.2s;
+  padding: var(--spacing-0\.5) var(--spacing-sm);
+  transition: background var(--transition-fast);
 }
 
 .codeLine.activeLine {
@@ -172,7 +172,7 @@
   transform: translateX(-50%);
   padding: 5px var(--spacing-lg);
   background: var(--color-bg-tertiary);
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
   color: var(--color-white);
@@ -205,12 +205,12 @@
 .stack {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--spacing-1\.5);
 }
 
 .executionContext {
   background: var(--color-sky-10);
-  border: 1px solid var(--color-blue-400-30);
+  border: var(--border-width-1) solid var(--color-blue-400-30);
   border-radius: var(--radius-md);
   overflow: hidden;
 }
@@ -260,7 +260,7 @@
   align-items: center;
   padding: 0.15rem 0.3rem;
   background: var(--color-black-20);
-  border-radius: 3px;
+  border-radius: var(--radius-xs);
   margin-bottom: 0.15rem;
 }
 
@@ -321,12 +321,12 @@
 
 .heapBlock.scopeBlock {
   background: var(--color-amber-10);
-  border: 1px solid var(--color-amber-40);
+  border: var(--border-width-1) solid var(--color-amber-40);
 }
 
 .heapBlock.functionBlock {
   background: var(--color-brand-primary-10);
-  border: 1px solid var(--color-brand-primary-40);
+  border: var(--border-width-1) solid var(--color-brand-primary-40);
 }
 
 .heapLabel {
@@ -372,7 +372,7 @@
   right: 6px;
   padding: 0.1rem 0.35rem;
   background: var(--difficulty-2);
-  border-radius: 3px;
+  border-radius: var(--radius-xs);
   font-size: var(--text-xs);
   font-weight: var(--font-weight-bold);
   color: var(--color-black);
@@ -416,7 +416,7 @@
 
 .stepBadge {
   display: inline-block;
-  padding: 2px var(--spacing-xs);
+  padding: var(--spacing-0\.5) var(--spacing-xs);
   background: var(--color-brand-primary-30);
   border-radius: var(--radius-sm);
   font-size: var(--text-2xs);

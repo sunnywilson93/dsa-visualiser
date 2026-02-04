@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 import styles from './PromisesViz.module.css'
 
 interface PromiseState {
@@ -34,9 +35,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -472,33 +473,33 @@ export function PromisesCreationViz() {
 
   const getPhaseColor = (phase: string) => {
     switch (phase) {
-      case 'Creation': return '#60a5fa'
-      case 'Executor': return '#f59e0b'
-      case 'Resolve': return '#10b981'
-      case 'Complete': return '#10b981'
-      case 'Schedule': return '#c4b5fd'
+      case 'Creation': return 'var(--color-blue-400)'
+      case 'Executor': return 'var(--color-amber-500)'
+      case 'Resolve': return 'var(--color-emerald-500)'
+      case 'Complete': return 'var(--color-emerald-500)'
+      case 'Schedule': return 'var(--color-violet-300-40)'
       case 'Continue': return '#94a3b8'
-      case 'Async Resolve': return '#10b981'
-      case 'Setup': return '#60a5fa'
-      case 'Branch': return '#f59e0b'
-      case 'First Resolve': return '#10b981'
+      case 'Async Resolve': return 'var(--color-emerald-500)'
+      case 'Setup': return 'var(--color-blue-400)'
+      case 'Branch': return 'var(--color-amber-500)'
+      case 'First Resolve': return 'var(--color-emerald-500)'
       case 'Ignored': return '#6b7280'
-      case 'Throw': return '#ef4444'
-      case 'Handle': return '#10b981'
-      case 'Create Inner': return '#60a5fa'
+      case 'Throw': return 'var(--color-red-500)'
+      case 'Handle': return 'var(--color-emerald-500)'
+      case 'Create Inner': return 'var(--color-blue-400)'
       case 'Create Outer': return '#818cf8'
-      case 'Resolve with Promise': return '#f59e0b'
-      case 'Inner Resolves': return '#10b981'
-      case 'Then Runs': return '#10b981'
-      default: return '#888'
+      case 'Resolve with Promise': return 'var(--color-amber-500)'
+      case 'Inner Resolves': return 'var(--color-emerald-500)'
+      case 'Then Runs': return 'var(--color-emerald-500)'
+      default: return 'var(--color-gray-500)'
     }
   }
 
   const getPromiseStateColor = (state: 'pending' | 'fulfilled' | 'rejected') => {
     switch (state) {
-      case 'pending': return '#f59e0b'
-      case 'fulfilled': return '#10b981'
-      case 'rejected': return '#ef4444'
+      case 'pending': return 'var(--color-amber-500)'
+      case 'fulfilled': return 'var(--color-emerald-500)'
+      case 'rejected': return 'var(--color-red-500)'
     }
   }
 
@@ -513,8 +514,8 @@ export function PromisesCreationViz() {
   const getExecutorPhaseColor = (phase: 'not-started' | 'running' | 'complete') => {
     switch (phase) {
       case 'not-started': return '#6b7280'
-      case 'running': return '#f59e0b'
-      case 'complete': return '#10b981'
+      case 'running': return 'var(--color-amber-500)'
+      case 'complete': return 'var(--color-emerald-500)'
     }
   }
 
@@ -736,23 +737,14 @@ export function PromisesCreationViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
-          Prev
-        </button>
-        <motion.button
-          className={styles.btnPrimary}
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next'}
-        </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
-          Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className={styles.insight}>

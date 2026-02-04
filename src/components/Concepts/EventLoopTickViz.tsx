@@ -30,25 +30,25 @@ type Level = 'beginner' | 'intermediate' | 'advanced'
 const levelInfo: Record<Level, { label: string; color: string; message: string }> = {
   beginner: {
     label: 'Beginner',
-    color: '#10b981',
+    color: 'var(--color-emerald-500)',
     message: 'JavaScript is single-threaded - one task at a time'
   },
   intermediate: {
     label: 'Intermediate',
-    color: '#f59e0b',
+    color: 'var(--color-amber-500)',
     message: 'Microtasks have priority - they ALL run before any macrotask'
   },
   advanced: {
     label: 'Advanced',
-    color: '#ef4444',
+    color: 'var(--color-red-500)',
     message: 'Render step ensures smooth animations between tasks'
   }
 }
 
 const phaseColors: Record<Step['currentPhase'], { bg: string; border: string; text: string; glow: string }> = {
   idle: { bg: 'rgba(107,114,128,0.2)', border: '#6b7280', text: '#9ca3af', glow: 'rgba(107,114,128,0.4)' },
-  task: { bg: 'rgba(245,158,11,0.2)', border: '#f59e0b', text: '#fbbf24', glow: 'rgba(245,158,11,0.5)' },
-  microtasks: { bg: 'rgba(168,85,247,0.2)', border: '#a855f7', text: '#c084fc', glow: 'rgba(168,85,247,0.5)' },
+  task: { bg: 'rgba(245,158,11,0.2)', border: 'var(--color-amber-500)', text: '#fbbf24', glow: 'rgba(245,158,11,0.5)' },
+  microtasks: { bg: 'rgba(168,85,247,0.2)', border: 'var(--color-purple-500)', text: '#c084fc', glow: 'rgba(168,85,247,0.5)' },
   render: { bg: 'rgba(6,182,212,0.2)', border: '#06b6d4', text: '#22d3ee', glow: 'rgba(6,182,212,0.5)' },
   'idle-callbacks': { bg: 'rgba(107,114,128,0.15)', border: '#4b5563', text: '#9ca3af', glow: 'rgba(107,114,128,0.3)' }
 }

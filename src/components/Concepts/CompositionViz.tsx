@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 
 interface FunctionBox {
   id: string
@@ -38,9 +39,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -574,21 +575,21 @@ export function CompositionViz() {
 
   const getPhaseColor = (phase: string) => {
     switch (phase) {
-      case 'Setup': return '#60a5fa'
-      case 'Compose': return '#c4b5fd'
-      case 'Execute': return '#10b981'
-      case 'Complete': return '#10b981'
-      case 'Partial': return '#f59e0b'
-      case 'Curry': return '#f59e0b'
-      case 'Flexible': return '#c4b5fd'
-      case 'Pipe': return '#60a5fa'
-      case 'Create': return '#60a5fa'
-      case 'First Call': return '#10b981'
-      case 'Second Call': return '#c4b5fd'
-      case 'Register': return '#60a5fa'
-      case 'Handle': return '#f59e0b'
-      case 'Chain': return '#c4b5fd'
-      default: return '#888'
+      case 'Setup': return 'var(--color-blue-400)'
+      case 'Compose': return 'var(--color-violet-300-40)'
+      case 'Execute': return 'var(--color-emerald-500)'
+      case 'Complete': return 'var(--color-emerald-500)'
+      case 'Partial': return 'var(--color-amber-500)'
+      case 'Curry': return 'var(--color-amber-500)'
+      case 'Flexible': return 'var(--color-violet-300-40)'
+      case 'Pipe': return 'var(--color-blue-400)'
+      case 'Create': return 'var(--color-blue-400)'
+      case 'First Call': return 'var(--color-emerald-500)'
+      case 'Second Call': return 'var(--color-violet-300-40)'
+      case 'Register': return 'var(--color-blue-400)'
+      case 'Handle': return 'var(--color-amber-500)'
+      case 'Chain': return 'var(--color-violet-300-40)'
+      default: return 'var(--color-gray-500)'
     }
   }
 
@@ -755,30 +756,14 @@ export function CompositionViz() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="flex gap-4 justify-center">
-        <button 
-          className="px-4 py-2 text-sm bg-white/5 border border-white/10 rounded-full font-medium text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-[var(--color-text-bright)] disabled:opacity-50 disabled:cursor-not-allowed" 
-          onClick={handlePrev} 
-          disabled={stepIndex === 0}
-        >
-          ← Prev
-        </button>
-        <motion.button
-          className="px-4 py-2 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-full text-sm font-medium text-white cursor-pointer transition-all duration-200 hover:shadow-[0_0_20px_var(--color-brand-primary-40)] disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
-        </motion.button>
-        <button 
-          className="px-4 py-2 text-sm bg-white/5 border border-white/10 rounded-full font-medium text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-[var(--color-text-bright)]" 
-          onClick={handleReset}
-        >
-          ↻ Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       <div className="bg-[var(--color-emerald-10)] border border-[var(--color-emerald-30)] rounded-lg p-4 text-sm text-gray-300 leading-normal">
         <strong className="text-emerald-500">Key Insight:</strong> {currentExample.insight}

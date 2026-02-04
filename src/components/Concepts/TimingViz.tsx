@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 import styles from './TimingViz.module.css'
 
 interface TimelineEvent {
@@ -34,9 +35,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -639,30 +640,30 @@ export function TimingViz() {
 
   const getPhaseColor = (phase: string) => {
     switch (phase) {
-      case 'Setup': return '#60a5fa'
+      case 'Setup': return 'var(--color-blue-400)'
       case 'Call 1':
       case 'Call 2':
       case 'Call 3':
-      case 'Call 4': return '#f59e0b'
-      case 'Wait': return '#888'
-      case 'Execute': return '#10b981'
-      case 'Reset': return '#60a5fa'
-      case 'Debounce': return '#c4b5fd'
-      case 'Throttle': return '#f59e0b'
-      case 'Cancel': return '#ef4444'
-      case 'Usage': return '#60a5fa'
+      case 'Call 4': return 'var(--color-amber-500)'
+      case 'Wait': return 'var(--color-gray-500)'
+      case 'Execute': return 'var(--color-emerald-500)'
+      case 'Reset': return 'var(--color-blue-400)'
+      case 'Debounce': return 'var(--color-violet-300-40)'
+      case 'Throttle': return 'var(--color-amber-500)'
+      case 'Cancel': return 'var(--color-red-500)'
+      case 'Usage': return 'var(--color-blue-400)'
       case 'React': return '#61dafb'
-      case 'Summary': return '#10b981'
-      case 'Trailing': return '#c4b5fd'
-      default: return '#888'
+      case 'Summary': return 'var(--color-emerald-500)'
+      case 'Trailing': return 'var(--color-violet-300-40)'
+      default: return 'var(--color-gray-500)'
     }
   }
 
   const getEventColor = (type: 'call' | 'execute' | 'cancel') => {
     switch (type) {
-      case 'call': return '#f59e0b'
-      case 'execute': return '#10b981'
-      case 'cancel': return '#ef4444'
+      case 'call': return 'var(--color-amber-500)'
+      case 'execute': return 'var(--color-emerald-500)'
+      case 'cancel': return 'var(--color-red-500)'
     }
   }
 
@@ -780,8 +781,8 @@ export function TimingViz() {
               <motion.span
                 className={styles.varValue}
                 key={currentStep.closureState.timeoutId}
-                initial={{ scale: 1.2, color: '#f59e0b' }}
-                animate={{ scale: 1, color: '#10b981' }}
+                initial={{ scale: 1.2, color: 'var(--color-amber-500)' }}
+                animate={{ scale: 1, color: 'var(--color-emerald-500)' }}
               >
                 {currentStep.closureState.timeoutId}
               </motion.span>
@@ -792,8 +793,8 @@ export function TimingViz() {
                 <motion.span
                   className={styles.varValue}
                   key={currentStep.closureState.lastTime}
-                  initial={{ scale: 1.2, color: '#f59e0b' }}
-                  animate={{ scale: 1, color: '#10b981' }}
+                  initial={{ scale: 1.2, color: 'var(--color-amber-500)' }}
+                  animate={{ scale: 1, color: 'var(--color-emerald-500)' }}
                 >
                   {currentStep.closureState.lastTime}
                 </motion.span>
@@ -839,23 +840,14 @@ export function TimingViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
-          ← Prev
-        </button>
-        <motion.button
-          className={styles.btnPrimary}
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
-        </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
-          ↻ Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className={styles.insight}>

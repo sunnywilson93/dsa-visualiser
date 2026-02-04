@@ -62,23 +62,23 @@ interface VariableExample {
 }
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const stateColors: Record<VariableState, string> = {
   'not-declared': '#6b7280',
-  'hoisted-undefined': '#f59e0b',
-  'hoisted-tdz': '#ef4444',
-  'initialized': '#10b981',
-  'error': '#ef4444'
+  'hoisted-undefined': 'var(--color-amber-500)',
+  'hoisted-tdz': 'var(--color-red-500)',
+  'initialized': 'var(--color-emerald-500)',
+  'error': 'var(--color-red-500)'
 }
 
 const keywordColors: Record<'var' | 'let' | 'const', string> = {
-  var: '#f59e0b',
+  var: 'var(--color-amber-500)',
   let: '#3b82f6',
-  const: '#10b981'
+  const: 'var(--color-emerald-500)'
 }
 
 const stateLabels: Record<VariableState, string> = {
@@ -1331,7 +1331,7 @@ export function VariablesViz() {
               <span
                 className={styles.phaseBadge}
                 style={{
-                  background: currentStep.phase === 'creation' ? '#60a5fa' : '#10b981'
+                  background: currentStep.phase === 'creation' ? 'var(--color-blue-400)' : 'var(--color-emerald-500)'
                 }}
               >
                 {currentStep.phase === 'creation' ? 'Creation' : 'Execution'} Phase
@@ -1453,7 +1453,7 @@ export function VariablesViz() {
                     opacity: 1,
                     y: 0,
                     borderColor: isCurrentSearch
-                      ? '#10b981'
+                      ? 'var(--color-emerald-500)'
                       : isBeingSearched
                         ? 'rgba(16, 185, 129, 0.3)'
                         : 'rgba(148, 163, 184, 0.2)',

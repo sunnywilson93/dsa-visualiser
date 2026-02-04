@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 
 interface Variable {
   name: string
@@ -29,17 +30,17 @@ type Level = 'beginner' | 'intermediate' | 'advanced'
 const levelInfo: Record<Level, { label: string; color: string; description: string }> = {
   beginner: {
     label: 'Beginner',
-    color: '#10b981',
+    color: 'var(--color-emerald-500)',
     description: 'Basic hoisting concepts'
   },
   intermediate: {
     label: 'Intermediate',
-    color: '#f59e0b',
+    color: 'var(--color-amber-500)',
     description: 'TDZ and comparisons'
   },
   advanced: {
     label: 'Advanced',
-    color: '#ef4444',
+    color: 'var(--color-red-500)',
     description: 'Edge cases and gotchas'
   }
 }
@@ -454,9 +455,9 @@ export function HoistingViz() {
 
   const getStatusColor = (status: Variable['status']) => {
     switch (status) {
-      case 'hoisted': return '#f59e0b'
-      case 'initialized': return '#10b981'
-      case 'tdz': return '#ef4444'
+      case 'hoisted': return 'var(--color-amber-500)'
+      case 'initialized': return 'var(--color-emerald-500)'
+      case 'tdz': return 'var(--color-red-500)'
     }
   }
 
@@ -621,30 +622,14 @@ export function HoistingViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className="flex gap-2 justify-center">
-        <button 
-          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={handlePrev} 
-          disabled={stepIndex === 0}
-        >
-          Prev
-        </button>
-        <motion.button
-          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-blue-500 to-cyan-500 border-0 rounded-md text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          Next
-        </motion.button>
-        <button 
-          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white"
-          onClick={handleReset}
-        >
-          Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Legend */}
       <div className="flex gap-6 justify-center flex-wrap">

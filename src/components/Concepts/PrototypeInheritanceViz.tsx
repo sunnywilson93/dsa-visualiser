@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 
 interface ChainNode {
   id: string
@@ -34,9 +35,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -78,10 +79,10 @@ const examples: Record<Level, Example[]> = {
           codeHighlight: 0,
           prototypeLink: { from: 'Dog.prototype', to: 'Animal.prototype' },
           chain: [
-            { id: 'Dog.prototype', name: 'Dog.prototype', type: 'prototype', props: [{ name: 'bark', value: 'fn()' }, { name: 'constructor', value: 'Dog' }], protoRef: 'Animal.prototype', color: '#a855f7' },
+            { id: 'Dog.prototype', name: 'Dog.prototype', type: 'prototype', props: [{ name: 'bark', value: 'fn()' }, { name: 'constructor', value: 'Dog' }], protoRef: 'Animal.prototype', color: 'var(--color-purple-500)' },
             { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'speak', value: 'fn()' }, { name: 'constructor', value: 'Animal' }], protoRef: 'Object.prototype', color: '#06b6d4' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['// extends keyword links Dog.prototype.__proto__ to Animal.prototype'],
           phase: 'prototype-linking'
@@ -101,10 +102,10 @@ const examples: Record<Level, Example[]> = {
           superCallActive: true,
           constructorStack: ['Dog("Rex")', 'super("Rex") → Animal("Rex")'],
           chain: [
-            { id: 'Dog.prototype', name: 'Dog.prototype', type: 'prototype', props: [{ name: 'bark', value: 'fn()' }, { name: 'constructor', value: 'Dog' }], protoRef: 'Animal.prototype', color: '#a855f7' },
+            { id: 'Dog.prototype', name: 'Dog.prototype', type: 'prototype', props: [{ name: 'bark', value: 'fn()' }, { name: 'constructor', value: 'Dog' }], protoRef: 'Animal.prototype', color: 'var(--color-purple-500)' },
             { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'speak', value: 'fn()' }, { name: 'constructor', value: 'Animal' }], protoRef: 'Object.prototype', color: '#06b6d4' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['// super() must be called before using "this"'],
           phase: 'super-call'
@@ -120,11 +121,11 @@ const examples: Record<Level, Example[]> = {
           ],
           codeHighlight: undefined,
           chain: [
-            { id: 'rex', name: 'rex (instance)', type: 'instance', props: [{ name: 'name', value: '"Rex"' }, { name: 'isGoodBoy', value: 'true' }], protoRef: 'Dog.prototype', color: '#a855f7' },
-            { id: 'Dog.prototype', name: 'Dog.prototype', type: 'prototype', props: [{ name: 'bark', value: 'fn()' }, { name: 'constructor', value: 'Dog' }], protoRef: 'Animal.prototype', color: '#a855f7' },
+            { id: 'rex', name: 'rex (instance)', type: 'instance', props: [{ name: 'name', value: '"Rex"' }, { name: 'isGoodBoy', value: 'true' }], protoRef: 'Dog.prototype', color: 'var(--color-purple-500)' },
+            { id: 'Dog.prototype', name: 'Dog.prototype', type: 'prototype', props: [{ name: 'bark', value: 'fn()' }, { name: 'constructor', value: 'Dog' }], protoRef: 'Animal.prototype', color: 'var(--color-purple-500)' },
             { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'speak', value: 'fn()' }, { name: 'constructor', value: 'Animal' }], protoRef: 'Object.prototype', color: '#06b6d4' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['"Rex"', 'true', '"Woof!"', '"Rex makes a sound"'],
           phase: 'instance-creation'
@@ -151,8 +152,8 @@ const examples: Record<Level, Example[]> = {
           codeHighlight: 4,
           chain: [
             { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'speak', value: 'fn()' }], protoRef: 'Object.prototype', color: '#06b6d4' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: [],
           phase: 'class-definition'
@@ -170,10 +171,10 @@ const examples: Record<Level, Example[]> = {
           codeHighlight: 2,
           prototypeLink: { from: 'Cat.prototype', to: 'Animal.prototype' },
           chain: [
-            { id: 'Cat.prototype', name: 'Cat.prototype', type: 'prototype', props: [{ name: 'speak', value: 'fn() (override)' }], protoRef: 'Animal.prototype', color: '#a855f7' },
+            { id: 'Cat.prototype', name: 'Cat.prototype', type: 'prototype', props: [{ name: 'speak', value: 'fn() (override)' }], protoRef: 'Animal.prototype', color: 'var(--color-purple-500)' },
             { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'speak', value: 'fn()' }], protoRef: 'Object.prototype', color: '#06b6d4' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['// super.speak() accesses Animal.prototype.speak'],
           phase: 'prototype-linking'
@@ -193,11 +194,11 @@ const examples: Record<Level, Example[]> = {
           superCallActive: true,
           constructorStack: ['Cat.speak()', 'super.speak() → Animal.speak()'],
           chain: [
-            { id: 'whiskers', name: 'whiskers', type: 'instance', props: [{ name: 'name', value: '"Whiskers"' }], protoRef: 'Cat.prototype', color: '#a855f7' },
-            { id: 'Cat.prototype', name: 'Cat.prototype', type: 'prototype', props: [{ name: 'speak', value: 'fn() (override)' }], protoRef: 'Animal.prototype', color: '#a855f7' },
+            { id: 'whiskers', name: 'whiskers', type: 'instance', props: [{ name: 'name', value: '"Whiskers"' }], protoRef: 'Cat.prototype', color: 'var(--color-purple-500)' },
+            { id: 'Cat.prototype', name: 'Cat.prototype', type: 'prototype', props: [{ name: 'speak', value: 'fn() (override)' }], protoRef: 'Animal.prototype', color: 'var(--color-purple-500)' },
             { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'speak', value: 'fn()' }], protoRef: 'Object.prototype', color: '#06b6d4' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['"Whiskers makes a sound... Meow!"'],
           phase: 'super-call'
@@ -231,11 +232,11 @@ const examples: Record<Level, Example[]> = {
           ],
           codeHighlight: 10,
           chain: [
-            { id: 'GR.prototype', name: 'GoldenRetriever.prototype', type: 'prototype', props: [{ name: 'fetch', value: 'fn()' }], protoRef: 'Dog.prototype', color: '#a855f7' },
+            { id: 'GR.prototype', name: 'GoldenRetriever.prototype', type: 'prototype', props: [{ name: 'fetch', value: 'fn()' }], protoRef: 'Dog.prototype', color: 'var(--color-purple-500)' },
             { id: 'Dog.prototype', name: 'Dog.prototype', type: 'prototype', props: [{ name: 'bark', value: 'fn()' }], protoRef: 'Animal.prototype', color: '#06b6d4' },
             { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'breathe', value: 'fn()' }], protoRef: 'Object.prototype', color: '#22c55e' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['// Each class extends the previous one'],
           phase: 'prototype-linking'
@@ -257,11 +258,11 @@ const examples: Record<Level, Example[]> = {
           superCallActive: true,
           constructorStack: ['GoldenRetriever("Buddy")', 'super() → Dog("Buddy")', 'super() → Animal("Buddy")'],
           chain: [
-            { id: 'GR.prototype', name: 'GoldenRetriever.prototype', type: 'prototype', props: [{ name: 'fetch', value: 'fn()' }], protoRef: 'Dog.prototype', color: '#a855f7' },
+            { id: 'GR.prototype', name: 'GoldenRetriever.prototype', type: 'prototype', props: [{ name: 'fetch', value: 'fn()' }], protoRef: 'Dog.prototype', color: 'var(--color-purple-500)' },
             { id: 'Dog.prototype', name: 'Dog.prototype', type: 'prototype', props: [{ name: 'bark', value: 'fn()' }], protoRef: 'Animal.prototype', color: '#06b6d4' },
             { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'breathe', value: 'fn()' }], protoRef: 'Object.prototype', color: '#22c55e' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: [],
           phase: 'super-call'
@@ -279,12 +280,12 @@ const examples: Record<Level, Example[]> = {
           ],
           codeHighlight: undefined,
           chain: [
-            { id: 'buddy', name: 'buddy (instance)', type: 'instance', props: [{ name: 'name', value: '"Buddy"' }, { name: 'legs', value: '4' }, { name: 'color', value: '"golden"' }], protoRef: 'GR.prototype', color: '#a855f7' },
-            { id: 'GR.prototype', name: 'GoldenRetriever.prototype', type: 'prototype', props: [{ name: 'fetch', value: 'fn()' }], protoRef: 'Dog.prototype', color: '#a855f7' },
+            { id: 'buddy', name: 'buddy (instance)', type: 'instance', props: [{ name: 'name', value: '"Buddy"' }, { name: 'legs', value: '4' }, { name: 'color', value: '"golden"' }], protoRef: 'GR.prototype', color: 'var(--color-purple-500)' },
+            { id: 'GR.prototype', name: 'GoldenRetriever.prototype', type: 'prototype', props: [{ name: 'fetch', value: 'fn()' }], protoRef: 'Dog.prototype', color: 'var(--color-purple-500)' },
             { id: 'Dog.prototype', name: 'Dog.prototype', type: 'prototype', props: [{ name: 'bark', value: 'fn()' }], protoRef: 'Animal.prototype', color: '#06b6d4' },
             { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'breathe', value: 'fn()' }], protoRef: 'Object.prototype', color: '#22c55e' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['"Buddy"', '4', '"golden"', '"fetching!"', '"woof"', '"breathing"'],
           phase: 'instance-creation'
@@ -333,7 +334,7 @@ const examples: Record<Level, Example[]> = {
           codeHighlight: 5,
           prototypeLink: { from: 'Dog', to: 'Animal' },
           chain: [
-            { id: 'Dog', name: 'Dog (class)', type: 'prototype', props: [{ name: 'species', value: '"Canis lupus"' }], protoRef: 'Animal', color: '#a855f7' },
+            { id: 'Dog', name: 'Dog (class)', type: 'prototype', props: [{ name: 'species', value: '"Canis lupus"' }], protoRef: 'Animal', color: 'var(--color-purple-500)' },
             { id: 'Animal', name: 'Animal (class)', type: 'prototype', props: [{ name: 'kingdom', value: '"Animalia"' }, { name: 'describe', value: 'static fn()' }], protoRef: 'Function.prototype', color: '#06b6d4' }
           ],
           output: ['"Animalia"', '"Kingdom: Animalia"', '"Canis lupus"'],
@@ -354,11 +355,11 @@ const examples: Record<Level, Example[]> = {
           ],
           codeHighlight: undefined,
           chain: [
-            { id: 'dog', name: 'dog (instance)', type: 'instance', props: [], protoRef: 'Dog.prototype', color: '#a855f7' },
-            { id: 'Dog.prototype', name: 'Dog.prototype', type: 'prototype', props: [], protoRef: 'Animal.prototype', color: '#a855f7' },
+            { id: 'dog', name: 'dog (instance)', type: 'instance', props: [], protoRef: 'Dog.prototype', color: 'var(--color-purple-500)' },
+            { id: 'Dog.prototype', name: 'Dog.prototype', type: 'prototype', props: [], protoRef: 'Animal.prototype', color: 'var(--color-purple-500)' },
             { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [], protoRef: 'Object.prototype', color: '#06b6d4' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['undefined', '"Kingdom: Animalia"'],
           phase: 'instance-creation'
@@ -410,12 +411,12 @@ const examples: Record<Level, Example[]> = {
           codeHighlight: 5,
           prototypeLink: { from: 'Duck.prototype', to: 'SwimmerMixin.prototype' },
           chain: [
-            { id: 'Duck.prototype', name: 'Duck.prototype', type: 'prototype', props: [{ name: 'quack', value: 'fn()' }], protoRef: 'SwimmerMixin', color: '#a855f7' },
+            { id: 'Duck.prototype', name: 'Duck.prototype', type: 'prototype', props: [{ name: 'quack', value: 'fn()' }], protoRef: 'SwimmerMixin', color: 'var(--color-purple-500)' },
             { id: 'SwimmerMixin', name: 'SwimmerMixin.prototype', type: 'prototype', props: [{ name: 'swim', value: 'fn()' }], protoRef: 'FlyerMixin', color: '#06b6d4' },
             { id: 'FlyerMixin', name: 'FlyerMixin.prototype', type: 'prototype', props: [{ name: 'fly', value: 'fn()' }], protoRef: 'Animal.prototype', color: '#22c55e' },
-            { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'constructor', value: 'Animal' }], protoRef: 'Object.prototype', color: '#f59e0b' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'constructor', value: 'Animal' }], protoRef: 'Object.prototype', color: 'var(--color-amber-500)' },
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: [],
           phase: 'prototype-linking'
@@ -432,13 +433,13 @@ const examples: Record<Level, Example[]> = {
           ],
           codeHighlight: undefined,
           chain: [
-            { id: 'daffy', name: 'daffy (instance)', type: 'instance', props: [{ name: 'name', value: '"Daffy"' }], protoRef: 'Duck.prototype', color: '#a855f7' },
-            { id: 'Duck.prototype', name: 'Duck.prototype', type: 'prototype', props: [{ name: 'quack', value: 'fn()' }], protoRef: 'SwimmerMixin', color: '#a855f7' },
+            { id: 'daffy', name: 'daffy (instance)', type: 'instance', props: [{ name: 'name', value: '"Daffy"' }], protoRef: 'Duck.prototype', color: 'var(--color-purple-500)' },
+            { id: 'Duck.prototype', name: 'Duck.prototype', type: 'prototype', props: [{ name: 'quack', value: 'fn()' }], protoRef: 'SwimmerMixin', color: 'var(--color-purple-500)' },
             { id: 'SwimmerMixin', name: 'SwimmerMixin.prototype', type: 'prototype', props: [{ name: 'swim', value: 'fn()' }], protoRef: 'FlyerMixin', color: '#06b6d4' },
             { id: 'FlyerMixin', name: 'FlyerMixin.prototype', type: 'prototype', props: [{ name: 'fly', value: 'fn()' }], protoRef: 'Animal.prototype', color: '#22c55e' },
-            { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'constructor', value: 'Animal' }], protoRef: 'Object.prototype', color: '#f59e0b' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Animal.prototype', name: 'Animal.prototype', type: 'prototype', props: [{ name: 'constructor', value: 'Animal' }], protoRef: 'Object.prototype', color: 'var(--color-amber-500)' },
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['"Quack!"', '"Daffy is swimming"', '"Daffy is flying"', '"Daffy"'],
           phase: 'instance-creation'
@@ -467,9 +468,9 @@ const examples: Record<Level, Example[]> = {
           ],
           codeHighlight: 10,
           chain: [
-            { id: 'dog', name: 'dog', type: 'instance', props: [{ name: 'name', value: '"Rex"' }, { name: 'bark', value: 'fn()' }], protoRef: 'Object.prototype', color: '#a855f7' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'dog', name: 'dog', type: 'instance', props: [{ name: 'name', value: '"Rex"' }, { name: 'bark', value: 'fn()' }], protoRef: 'Object.prototype', color: 'var(--color-purple-500)' },
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['undefined'],
           phase: 'class-definition'
@@ -490,10 +491,10 @@ const examples: Record<Level, Example[]> = {
           codeHighlight: 1,
           prototypeLink: { from: 'dog', to: 'animal' },
           chain: [
-            { id: 'dog', name: 'dog', type: 'instance', props: [{ name: 'name', value: '"Rex"' }, { name: 'bark', value: 'fn()' }], protoRef: 'animal', color: '#a855f7' },
+            { id: 'dog', name: 'dog', type: 'instance', props: [{ name: 'name', value: '"Rex"' }, { name: 'bark', value: 'fn()' }], protoRef: 'animal', color: 'var(--color-purple-500)' },
             { id: 'animal', name: 'animal', type: 'prototype', props: [{ name: 'speak', value: 'fn()' }], protoRef: 'Object.prototype', color: '#06b6d4' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['"generic sound"', '"woof"'],
           phase: 'prototype-linking'
@@ -519,8 +520,8 @@ const examples: Record<Level, Example[]> = {
           chain: [
             { id: 'betterDog', name: 'betterDog', type: 'instance', props: [{ name: 'name', value: '"Rex"' }], protoRef: 'animal', color: '#22c55e' },
             { id: 'animal', name: 'animal', type: 'prototype', props: [{ name: 'speak', value: 'fn()' }], protoRef: 'Object.prototype', color: '#06b6d4' },
-            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: '#f59e0b' },
-            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: '#ef4444' }
+            { id: 'Object.prototype', name: 'Object.prototype', type: 'prototype', props: [{ name: 'toString', value: 'fn()' }], protoRef: 'null', color: 'var(--color-amber-500)' },
+            { id: 'null', name: 'null', type: 'null', props: [], protoRef: null, color: 'var(--color-red-500)' }
           ],
           output: ['// Object.create() is the safe alternative'],
           phase: 'instance-creation'
@@ -686,7 +687,7 @@ export function PrototypeInheritanceViz() {
                         className="text-center text-xs py-0.5 transition-colors"
                         style={{
                           color: currentStep.prototypeLink?.from === obj.id || currentStep.prototypeLink?.to === currentStep.chain[index + 1]?.id
-                            ? '#a855f7'
+                            ? 'var(--color-purple-500)'
                             : '#444'
                         }}
                       >
@@ -794,30 +795,14 @@ export function PrototypeInheritanceViz() {
       )}
 
       {/* Controls */}
-      <div className="flex gap-3 justify-center flex-wrap">
-        <button
-          className="px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-          onClick={handlePrev}
-          disabled={stepIndex === 0}
-        >
-          ← Prev
-        </button>
-        <button
-          className="px-2.5 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-500 hover:bg-white/10 hover:text-gray-400 transition-colors"
-          onClick={handleReset}
-        >
-          ↻ Reset
-        </button>
-        <motion.button
-          className="px-6 py-2 text-sm font-medium bg-gradient-to-r from-purple-500 to-cyan-500 rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
-        </motion.button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Insight */}
       <div className="px-4 py-2.5 bg-amber-500/10 border border-amber-400/20 rounded-lg text-xs text-gray-500 text-center">

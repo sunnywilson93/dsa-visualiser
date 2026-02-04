@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
@@ -512,13 +513,23 @@ export function WebWorkersViz() {
     setStep(0)
   }
 
+  const handlePrev = () => {
+    if (step > 0) setStep(s => s - 1)
+  }
+
+  const handleNext = () => {
+    if (step < example.steps.length - 1) setStep(s => s + 1)
+  }
+
+  const handleReset = () => setStep(0)
+
   const getStatusColor = (status: ThreadState['status']) => {
     switch (status) {
-      case 'idle': return '#10b981'
+      case 'idle': return 'var(--color-emerald-500)'
       case 'busy': return '#3b82f6'
-      case 'blocked': return '#ef4444'
-      case 'waiting': return '#f59e0b'
-      default: return '#888'
+      case 'blocked': return 'var(--color-red-500)'
+      case 'waiting': return 'var(--color-amber-500)'
+      default: return 'var(--color-gray-500)'
     }
   }
 
@@ -539,7 +550,7 @@ export function WebWorkersViz() {
             <span
               className="w-4 h-4 rounded-full"
               style={{
-                background: l === 'beginner' ? '#10b981' : l === 'intermediate' ? '#f59e0b' : '#ef4444'
+                background: l === 'beginner' ? 'var(--color-emerald-500)' : l === 'intermediate' ? 'var(--color-amber-500)' : 'var(--color-red-500)'
               }}
             />
             {l.charAt(0).toUpperCase() + l.slice(1)}
@@ -754,29 +765,14 @@ export function WebWorkersViz() {
       </motion.div>
 
       {/* Controls */}
-      <div className="flex gap-2 justify-center">
-        <button
-          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={() => setStep(0)}
-          disabled={step === 0}
-        >
-          Reset
-        </button>
-        <button
-          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={() => setStep(s => s - 1)}
-          disabled={step === 0}
-        >
-          Prev
-        </button>
-        <button
-          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-blue-500 to-cyan-500 border-0 rounded-md text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={() => setStep(s => s + 1)}
-          disabled={step >= example.steps.length - 1}
-        >
-          Next Step
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={step > 0}
+        canNext={step < example.steps.length - 1}
+        stepInfo={{ current: step + 1, total: example.steps.length }}
+      />
 
       {/* Insight */}
       <div className="px-4 py-2 bg-blue-500/[0.08] border border-blue-500/20 rounded-lg text-xs text-gray-500 text-center">

@@ -125,9 +125,9 @@ export function ErrorHandlingViz({ mode = 'try-catch' }: ErrorHandlingVizProps) 
             >
               <div className="w-3 h-3 rounded-full" style={{ 
                 backgroundColor: t.color === 'gray' ? '#6b7280' : 
-                  t.color === 'purple' ? '#a855f7' : 
+                  t.color === 'purple' ? 'var(--color-purple-500)' : 
                   t.color === 'orange' ? '#f97316' :
-                  t.color === 'yellow' ? '#eab308' : '#ef4444'
+                  t.color === 'yellow' ? '#eab308' : 'var(--color-red-500)'
               }} />
               <span className="font-mono text-sm font-semibold text-white w-32">{t.name}</span>
               <span className="text-sm text-gray-400">{t.desc}</span>

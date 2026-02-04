@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, AlertTriangle, ArrowRight } from 'lucide-react'
+import { StepControls } from '@/components/SharedViz'
 
 interface Era {
   id: string
@@ -61,7 +62,7 @@ const eras: Era[] = [
     id: 'task-runners',
     name: 'Task Runners',
     years: '2012-2016',
-    color: '#f59e0b',
+    color: 'var(--color-amber-500)',
     technologies: ['Grunt', 'Gulp', 'npm scripts'],
     code: `// Gruntfile.js - Configuration-based task runner
 module.exports = function(grunt) {
@@ -169,7 +170,7 @@ import './styles.css';`,
     id: 'zero-config',
     name: 'Zero-Config Era',
     years: '2017-2020',
-    color: '#a855f7',
+    color: 'var(--color-purple-500)',
     technologies: ['Create React App', 'Parcel', 'Vue CLI'],
     code: `# Create React App - Zero config to start
 npx create-react-app my-app
@@ -213,7 +214,7 @@ function App() {
     id: 'native-esm',
     name: 'Native ESM / Unbundled',
     years: '2019-Present',
-    color: '#10b981',
+    color: 'var(--color-emerald-500)',
     technologies: ['Vite', 'esbuild', 'Snowpack', 'Turbopack'],
     code: `// vite.config.js - Minimal config, maximum speed
 import { defineConfig } from 'vite';
@@ -270,6 +271,8 @@ export function BuildToolsEvolutionViz() {
   const handleNext = () => {
     if (activeEra < eras.length - 1) setActiveEra(activeEra + 1)
   }
+
+  const handleReset = () => setActiveEra(0)
 
   return (
     <div className="flex flex-col gap-6">
@@ -437,25 +440,14 @@ export function BuildToolsEvolutionViz() {
         </div>
       )}
 
-      <div className="flex gap-4 justify-center items-center">
-        <button
-          className="px-4 py-2 text-sm bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={handlePrev}
-          disabled={activeEra === 0}
-        >
-          Previous Era
-        </button>
-        <span className="text-sm text-gray-700 font-medium min-w-[3rem] text-center">
-          {activeEra + 1} / {eras.length}
-        </span>
-        <button
-          className="px-4 py-2 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-all duration-200 hover:-translate-y-px hover:shadow-[0_4px_12px_var(--color-brand-primary-40)] disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={activeEra === eras.length - 1}
-        >
-          Next Era
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={activeEra > 0}
+        canNext={activeEra < eras.length - 1}
+        stepInfo={{ current: activeEra + 1, total: eras.length }}
+      />
 
       <div className="px-4 py-2.5 bg-[var(--color-brand-primary-8)] border border-[var(--color-brand-primary-20)] rounded-lg text-sm text-gray-400 text-center">
         <strong className="text-[var(--color-brand-primary)]">Key Insight:</strong> Vite won by skipping bundling during dev. Native ESM + on-demand transforms = instant feedback.

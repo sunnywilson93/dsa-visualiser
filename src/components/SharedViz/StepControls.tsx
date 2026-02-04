@@ -8,6 +8,7 @@ export interface StepControlsProps {
   onReset: () => void
   canPrev: boolean
   canNext: boolean
+  prevLabel?: string
   nextLabel?: string
   isPlaying?: boolean
   onPlayPause?: () => void
@@ -22,6 +23,7 @@ export function StepControls({
   onReset,
   canPrev,
   canNext,
+  prevLabel = 'Prev',
   nextLabel,
   isPlaying = false,
   onPlayPause,
@@ -74,7 +76,7 @@ export function StepControls({
         disabled={!canPrev}
       >
         <ChevronLeft size={16} />
-        Prev
+        {prevLabel}
       </button>
 
       {stepInfo && (

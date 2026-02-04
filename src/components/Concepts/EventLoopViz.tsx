@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { RefreshCw } from 'lucide-react'
+import { StepControls } from '@/components/SharedViz'
 
 interface Step {
   description: string
@@ -24,9 +25,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const webApis = [
@@ -965,9 +966,9 @@ export function EventLoopViz() {
 
   const getPhaseColor = (phase: Step['phase']) => {
     switch (phase) {
-      case 'sync': return '#a855f7'
-      case 'micro': return '#a855f7'
-      case 'macro': return '#f59e0b'
+      case 'sync': return 'var(--color-purple-500)'
+      case 'micro': return 'var(--color-purple-500)'
+      case 'macro': return 'var(--color-amber-500)'
       case 'idle': return '#555'
     }
   }
@@ -1234,30 +1235,14 @@ export function EventLoopViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className="flex gap-[var(--spacing-sm)] justify-center">
-        <button 
-          className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-xs bg-[var(--color-white-5)] border border-[var(--color-white-10)] rounded-md text-[var(--color-gray-500)] cursor-pointer transition-all hover:bg-[var(--color-white-10)] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={handlePrev} 
-          disabled={stepIndex === 0}
-        >
-          ← Prev
-        </button>
-        <motion.button
-          className="px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-base font-medium bg-[var(--gradient-brand)] border-none rounded-md text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
-        </motion.button>
-        <button 
-          className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-xs bg-[var(--color-white-5)] border border-[var(--color-white-10)] rounded-md text-[var(--color-gray-500)] cursor-pointer transition-all hover:bg-[var(--color-white-10)] hover:text-white"
-          onClick={handleReset}
-        >
-          ↻ Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className="px-[var(--spacing-md)] py-[var(--spacing-sm)] bg-[var(--color-brand-primary-8)] border border-[var(--color-brand-primary-20)] rounded-lg text-xs text-[var(--color-gray-500)] text-center">

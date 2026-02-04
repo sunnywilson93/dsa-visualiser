@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 import styles from './PromisesViz.module.css'
 
 interface PromiseState {
@@ -41,9 +42,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -558,39 +559,39 @@ export function PromisesThenCatchViz() {
 
   const getPhaseColor = (phase: string) => {
     switch (phase) {
-      case 'Setup': return '#60a5fa'
-      case 'Start': return '#60a5fa'
-      case 'Chain': return '#c4b5fd'
-      case 'Execute': return '#f59e0b'
-      case 'Settle': return '#10b981'
-      case 'Output': return '#10b981'
-      case 'Error': return '#ef4444'
-      case 'Catch': return '#ef4444'
-      case 'Recover': return '#10b981'
-      case 'Continue': return '#10b981'
-      case 'First .then()': return '#c4b5fd'
-      case 'Second .then()': return '#c4b5fd'
-      case '.then()': return '#c4b5fd'
+      case 'Setup': return 'var(--color-blue-400)'
+      case 'Start': return 'var(--color-blue-400)'
+      case 'Chain': return 'var(--color-violet-300-40)'
+      case 'Execute': return 'var(--color-amber-500)'
+      case 'Settle': return 'var(--color-emerald-500)'
+      case 'Output': return 'var(--color-emerald-500)'
+      case 'Error': return 'var(--color-red-500)'
+      case 'Catch': return 'var(--color-red-500)'
+      case 'Recover': return 'var(--color-emerald-500)'
+      case 'Continue': return 'var(--color-emerald-500)'
+      case 'First .then()': return 'var(--color-violet-300-40)'
+      case 'Second .then()': return 'var(--color-violet-300-40)'
+      case '.then()': return 'var(--color-violet-300-40)'
       case '.finally()': return '#94a3b8'
-      case 'Throw': return '#ef4444'
+      case 'Throw': return 'var(--color-red-500)'
       case 'Skip': return '#6b7280'
-      case 'Complete': return '#10b981'
-      default: return '#888'
+      case 'Complete': return 'var(--color-emerald-500)'
+      default: return 'var(--color-gray-500)'
     }
   }
 
   const getPromiseStateColor = (state: 'pending' | 'fulfilled' | 'rejected') => {
     switch (state) {
-      case 'pending': return '#f59e0b'
-      case 'fulfilled': return '#10b981'
-      case 'rejected': return '#ef4444'
+      case 'pending': return 'var(--color-amber-500)'
+      case 'fulfilled': return 'var(--color-emerald-500)'
+      case 'rejected': return 'var(--color-red-500)'
     }
   }
 
   const getHandlerColor = (handler: 'then' | 'catch' | 'finally') => {
     switch (handler) {
-      case 'then': return '#c4b5fd'
-      case 'catch': return '#ef4444'
+      case 'then': return 'var(--color-violet-300-40)'
+      case 'catch': return 'var(--color-red-500)'
       case 'finally': return '#94a3b8'
     }
   }
@@ -742,8 +743,8 @@ export function PromisesThenCatchViz() {
                           fontSize: 'var(--text-2xs)',
                           fontFamily: 'var(--font-mono)',
                           color: currentStep.valueFlows.find(f => f.from === p.id)?.type === 'throw'
-                            ? '#ef4444'
-                            : '#10b981',
+                            ? 'var(--color-red-500)'
+                            : 'var(--color-emerald-500)',
                           marginBottom: '2px',
                           padding: '1px 6px',
                           background: currentStep.valueFlows.find(f => f.from === p.id)?.type === 'throw'
@@ -762,7 +763,7 @@ export function PromisesThenCatchViz() {
                       style={{
                         fontSize: '20px',
                         color: currentStep.valueFlows.find(f => f.from === p.id)?.type === 'throw'
-                          ? '#ef4444'
+                          ? 'var(--color-red-500)'
                           : 'var(--color-gray-500)'
                       }}
                     >
@@ -812,23 +813,14 @@ export function PromisesThenCatchViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
-          Prev
-        </button>
-        <motion.button
-          className={styles.btnPrimary}
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next'}
-        </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
-          Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className={styles.insight}>

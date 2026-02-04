@@ -26,14 +26,14 @@
 .ruleGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 0.6rem;
+  gap: var(--spacing-sm);
 }
 
 .ruleBtn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
+  gap: var(--spacing-1);
   padding: var(--spacing-md);
   background: var(--color-white-3);
   border: var(--border-width-1) solid var(--color-white-10);
@@ -65,7 +65,7 @@
 
 .result {
   background: var(--color-black-30);
-  border: 2px solid;
+  border: var(--border-width-2) solid;
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -138,11 +138,11 @@
   padding: var(--spacing-sm);
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: var(--spacing-1);
 }
 
 .queueItem {
-  padding: 0.35rem 0.5rem;
+  padding: var(--spacing-pill) var(--spacing-sm);
   background: var(--color-white-10);
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
@@ -235,7 +235,7 @@
   background: var(--color-brand-primary-20);
   display: inline;
   padding: 0.1rem 0.25rem;
-  border-radius: 3px;
+  border-radius: var(--radius-xs);
 }
 
 .comment {
@@ -251,7 +251,7 @@
 
 .backpackBox {
   background: var(--color-amber-10);
-  border: 2px solid var(--color-amber-30);
+  border: var(--border-width-2) solid var(--color-amber-30);
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg);
 }
@@ -355,7 +355,7 @@
 }
 
 .secondaryBtn {
-  padding: 0.6rem 1rem;
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-base);
   background: var(--color-white-5);
   border: var(--border-width-1) solid var(--color-white-10);

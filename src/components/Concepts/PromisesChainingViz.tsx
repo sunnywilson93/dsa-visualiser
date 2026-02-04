@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 import styles from './PromisesViz.module.css'
 
 interface ChainedPromise {
@@ -33,9 +34,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -570,39 +571,39 @@ export function PromisesChainingViz() {
 
   const getPhaseColor = (phase: string) => {
     switch (phase) {
-      case 'Start': return '#60a5fa'
-      case 'Fetch': return '#60a5fa'
-      case 'Fetch User': return '#60a5fa'
-      case 'Resolve': return '#10b981'
-      case 'Parse': return '#c4b5fd'
-      case 'Data': return '#c4b5fd'
-      case 'User': return '#60a5fa'
-      case 'Posts': return '#c4b5fd'
-      case 'Comments': return '#c4b5fd'
-      case 'Filter': return '#f59e0b'
-      case 'Flatten': return '#f59e0b'
-      case 'Map': return '#f59e0b'
-      case 'Extract': return '#f59e0b'
-      case 'Count': return '#f59e0b'
-      case 'Calculate': return '#f59e0b'
-      case 'Reduce': return '#f59e0b'
-      case 'Sort': return '#f59e0b'
-      case 'Slice': return '#f59e0b'
-      case 'Check Role': return '#f59e0b'
-      case 'Branch': return '#f59e0b'
-      case 'Load': return '#c4b5fd'
-      case 'Render': return '#10b981'
-      case 'Output': return '#10b981'
-      case 'Complete': return '#10b981'
-      default: return '#888'
+      case 'Start': return 'var(--color-blue-400)'
+      case 'Fetch': return 'var(--color-blue-400)'
+      case 'Fetch User': return 'var(--color-blue-400)'
+      case 'Resolve': return 'var(--color-emerald-500)'
+      case 'Parse': return 'var(--color-violet-300-40)'
+      case 'Data': return 'var(--color-violet-300-40)'
+      case 'User': return 'var(--color-blue-400)'
+      case 'Posts': return 'var(--color-violet-300-40)'
+      case 'Comments': return 'var(--color-violet-300-40)'
+      case 'Filter': return 'var(--color-amber-500)'
+      case 'Flatten': return 'var(--color-amber-500)'
+      case 'Map': return 'var(--color-amber-500)'
+      case 'Extract': return 'var(--color-amber-500)'
+      case 'Count': return 'var(--color-amber-500)'
+      case 'Calculate': return 'var(--color-amber-500)'
+      case 'Reduce': return 'var(--color-amber-500)'
+      case 'Sort': return 'var(--color-amber-500)'
+      case 'Slice': return 'var(--color-amber-500)'
+      case 'Check Role': return 'var(--color-amber-500)'
+      case 'Branch': return 'var(--color-amber-500)'
+      case 'Load': return 'var(--color-violet-300-40)'
+      case 'Render': return 'var(--color-emerald-500)'
+      case 'Output': return 'var(--color-emerald-500)'
+      case 'Complete': return 'var(--color-emerald-500)'
+      default: return 'var(--color-gray-500)'
     }
   }
 
   const getPromiseStateColor = (state: 'pending' | 'fulfilled' | 'rejected') => {
     switch (state) {
-      case 'pending': return '#f59e0b'
-      case 'fulfilled': return '#10b981'
-      case 'rejected': return '#ef4444'
+      case 'pending': return 'var(--color-amber-500)'
+      case 'fulfilled': return 'var(--color-emerald-500)'
+      case 'rejected': return 'var(--color-red-500)'
     }
   }
 
@@ -690,9 +691,9 @@ export function PromisesChainingViz() {
                   height: '24px',
                   borderRadius: '50%',
                   background: currentStep.currentlyExecuting === p.id
-                    ? '#f59e0b'
+                    ? 'var(--color-amber-500)'
                     : p.state === 'fulfilled'
-                      ? '#10b98130'
+                      ? 'var(--color-emerald-30)'
                       : 'var(--color-white-10)',
                   display: 'flex',
                   alignItems: 'center',
@@ -718,7 +719,7 @@ export function PromisesChainingViz() {
                     justifyContent: 'space-between',
                     padding: 'var(--spacing-sm) var(--spacing-md)',
                     borderColor: currentStep.currentlyExecuting === p.id
-                      ? '#f59e0b'
+                      ? 'var(--color-amber-500)'
                       : getPromiseStateColor(p.state),
                     boxShadow: currentStep.currentlyExecuting === p.id
                       ? '0 0 20px rgba(245, 158, 11, 0.4)'
@@ -750,7 +751,7 @@ export function PromisesChainingViz() {
                       <motion.div
                         style={{
                           fontSize: 'var(--text-2xs)',
-                          color: '#f59e0b',
+                          color: 'var(--color-amber-500)',
                           padding: '2px 8px',
                           background: 'rgba(245, 158, 11, 0.15)',
                           borderRadius: '4px',
@@ -776,7 +777,7 @@ export function PromisesChainingViz() {
                         style={{
                           fontSize: 'var(--text-xs)',
                           fontFamily: 'var(--font-mono)',
-                          color: '#10b981',
+                          color: 'var(--color-emerald-500)',
                           padding: '2px 8px',
                           background: 'rgba(16, 185, 129, 0.15)',
                           borderRadius: '4px'
@@ -836,23 +837,14 @@ export function PromisesChainingViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
-          Prev
-        </button>
-        <motion.button
-          className={styles.btnPrimary}
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next'}
-        </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
-          Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className={styles.insight}>

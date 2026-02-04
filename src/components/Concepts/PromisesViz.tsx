@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 import styles from './PromisesViz.module.css'
 
 interface PromiseState {
@@ -31,9 +32,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -471,30 +472,30 @@ export function PromisesViz() {
 
   const getPhaseColor = (phase: string) => {
     switch (phase) {
-      case 'Creation': return '#60a5fa'
-      case 'Waiting': return '#f59e0b'
-      case 'Settling': return '#10b981'
-      case 'Execution': return '#10b981'
-      case 'Start': return '#60a5fa'
-      case 'Chain': return '#c4b5fd'
-      case 'Setup': return '#60a5fa'
-      case 'Racing': return '#f59e0b'
-      case 'Winner': return '#10b981'
-      case 'Fail Fast': return '#ef4444'
-      case 'Catch': return '#ef4444'
-      case 'Searching': return '#f59e0b'
-      case 'Found': return '#10b981'
-      case 'Result': return '#10b981'
-      case 'Complete': return '#10b981'
-      default: return '#888'
+      case 'Creation': return 'var(--color-blue-400)'
+      case 'Waiting': return 'var(--color-amber-500)'
+      case 'Settling': return 'var(--color-emerald-500)'
+      case 'Execution': return 'var(--color-emerald-500)'
+      case 'Start': return 'var(--color-blue-400)'
+      case 'Chain': return 'var(--color-violet-300-40)'
+      case 'Setup': return 'var(--color-blue-400)'
+      case 'Racing': return 'var(--color-amber-500)'
+      case 'Winner': return 'var(--color-emerald-500)'
+      case 'Fail Fast': return 'var(--color-red-500)'
+      case 'Catch': return 'var(--color-red-500)'
+      case 'Searching': return 'var(--color-amber-500)'
+      case 'Found': return 'var(--color-emerald-500)'
+      case 'Result': return 'var(--color-emerald-500)'
+      case 'Complete': return 'var(--color-emerald-500)'
+      default: return 'var(--color-gray-500)'
     }
   }
 
   const getPromiseStateColor = (state: 'pending' | 'fulfilled' | 'rejected') => {
     switch (state) {
-      case 'pending': return '#f59e0b'
-      case 'fulfilled': return '#10b981'
-      case 'rejected': return '#ef4444'
+      case 'pending': return 'var(--color-amber-500)'
+      case 'fulfilled': return 'var(--color-emerald-500)'
+      case 'rejected': return 'var(--color-red-500)'
     }
   }
 
@@ -645,23 +646,14 @@ export function PromisesViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
-          ← Prev
-        </button>
-        <motion.button
-          className={styles.btnPrimary}
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
-        </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
-          ↻ Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className={styles.insight}>

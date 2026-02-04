@@ -225,7 +225,7 @@ export function ConditionalsViz() {
                   }`}
                   style={{
                     borderColor: selectedFalsy === item.value
-                      ? (item.isFalsy ? '#ef4444' : '#10b981')
+                      ? (item.isFalsy ? 'var(--color-red-500)' : 'var(--color-emerald-500)')
                       : 'rgba(255,255,255,0.1)'
                   }}
                   onClick={() => setSelectedFalsy(item.value)}

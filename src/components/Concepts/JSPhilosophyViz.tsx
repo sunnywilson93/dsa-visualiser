@@ -25,10 +25,10 @@ interface Principle {
 }
 
 const timeline: TimelineEvent[] = [
-  { year: '1995', title: 'Birth of JavaScript', description: 'Brendan Eich creates JavaScript in 10 days at Netscape', color: '#f59e0b' },
-  { year: '1997', title: 'ECMAScript 1', description: 'JavaScript becomes standardized as ECMAScript', color: '#10b981' },
+  { year: '1995', title: 'Birth of JavaScript', description: 'Brendan Eich creates JavaScript in 10 days at Netscape', color: 'var(--color-amber-500)' },
+  { year: '1997', title: 'ECMAScript 1', description: 'JavaScript becomes standardized as ECMAScript', color: 'var(--color-emerald-500)' },
   { year: '2009', title: 'ES5', description: 'Strict mode, JSON support, array methods', color: '#3b82f6' },
-  { year: '2015', title: 'ES6/ES2015', description: 'let/const, arrow functions, classes, promises', color: '#a855f7' },
+  { year: '2015', title: 'ES6/ES2015', description: 'let/const, arrow functions, classes, promises', color: 'var(--color-purple-500)' },
   { year: '2020+', title: 'Modern JS', description: 'Optional chaining, nullish coalescing, and more', color: '#ec4899' },
 ]
 
@@ -36,7 +36,7 @@ const paradigms: Paradigm[] = [
   {
     id: 'procedural',
     name: 'Procedural',
-    color: '#f59e0b',
+    color: 'var(--color-amber-500)',
     description: 'Step-by-step instructions',
     code: `let sum = 0;
 for (let i = 1; i <= 5; i++) {
@@ -47,7 +47,7 @@ console.log(sum); // 15`,
   {
     id: 'functional',
     name: 'Functional',
-    color: '#10b981',
+    color: 'var(--color-emerald-500)',
     description: 'Functions as first-class values',
     code: `const nums = [1, 2, 3, 4, 5];
 const sum = nums.reduce(
@@ -58,7 +58,7 @@ console.log(sum); // 15`,
   {
     id: 'oop',
     name: 'Object-Oriented',
-    color: '#a855f7',
+    color: 'var(--color-purple-500)',
     description: 'Objects with methods',
     code: `class Counter {
   constructor() { this.sum = 0; }
@@ -75,14 +75,14 @@ const principles: Principle[] = [
     title: 'Dynamic Typing',
     description: 'Types are checked at runtime, not compile time',
     example: 'let x = 42; x = "hello"; // No error!',
-    color: '#f59e0b',
+    color: 'var(--color-amber-500)',
   },
   {
     id: 'firstclass',
     title: 'First-Class Functions',
     description: 'Functions are values you can pass around',
     example: 'const fn = x => x * 2; [1,2].map(fn);',
-    color: '#10b981',
+    color: 'var(--color-emerald-500)',
   },
   {
     id: 'prototype',
@@ -96,7 +96,7 @@ const principles: Principle[] = [
     title: 'Fail Silently',
     description: 'Returns undefined instead of throwing errors',
     example: 'const obj = {}; obj.missing; // undefined',
-    color: '#a855f7',
+    color: 'var(--color-purple-500)',
   },
 ]
 

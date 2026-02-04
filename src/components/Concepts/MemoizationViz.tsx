@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 import styles from './MemoizationViz.module.css'
 
 interface CacheEntry {
@@ -36,9 +37,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -577,28 +578,28 @@ export function MemoizationViz() {
 
   const getPhaseColor = (phase: string) => {
     switch (phase) {
-      case 'Setup': return '#60a5fa'
+      case 'Setup': return 'var(--color-blue-400)'
       case 'Call 1':
       case 'Call 2':
       case 'Call 3':
-      case 'Call 4': return '#f59e0b'
-      case 'Miss': return '#ef4444'
-      case 'Hit': return '#10b981'
-      case 'Complete': return '#10b981'
-      case 'Problem': return '#ef4444'
-      case 'Memo': return '#c4b5fd'
-      case 'Build': return '#f59e0b'
-      case 'Why': return '#60a5fa'
-      case 'Fill': return '#f59e0b'
-      case 'Access': return '#10b981'
+      case 'Call 4': return 'var(--color-amber-500)'
+      case 'Miss': return 'var(--color-red-500)'
+      case 'Hit': return 'var(--color-emerald-500)'
+      case 'Complete': return 'var(--color-emerald-500)'
+      case 'Problem': return 'var(--color-red-500)'
+      case 'Memo': return 'var(--color-violet-300-40)'
+      case 'Build': return 'var(--color-amber-500)'
+      case 'Why': return 'var(--color-blue-400)'
+      case 'Fill': return 'var(--color-amber-500)'
+      case 'Access': return 'var(--color-emerald-500)'
       case 'Add D':
-      case 'Add E': return '#c4b5fd'
+      case 'Add E': return 'var(--color-violet-300-40)'
       case 'useMemo':
       case 'useCallback': return '#61dafb'
       case 'Render 1':
-      case 'Render 2': return '#f59e0b'
-      case 'React.memo': return '#10b981'
-      default: return '#888'
+      case 'Render 2': return 'var(--color-amber-500)'
+      case 'React.memo': return 'var(--color-emerald-500)'
+      default: return 'var(--color-gray-500)'
     }
   }
 
@@ -753,23 +754,14 @@ export function MemoizationViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
-          ← Prev
-        </button>
-        <motion.button
-          className={styles.btnPrimary}
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
-        </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
-          ↻ Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className={styles.insight}>

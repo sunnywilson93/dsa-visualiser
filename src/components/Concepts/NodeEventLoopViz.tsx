@@ -2,13 +2,14 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 
 const actionColors: Record<string, { bg: string; border: string; text: string }> = {
   setTimeout: { bg: 'rgba(249, 115, 22, 0.2)', border: 'rgba(249, 115, 22, 0.5)', text: '#fb923c' },
   setInterval: { bg: 'rgba(249, 115, 22, 0.2)', border: 'rgba(249, 115, 22, 0.5)', text: '#fb923c' },
   timeout: { bg: 'rgba(249, 115, 22, 0.2)', border: 'rgba(249, 115, 22, 0.5)', text: '#fb923c' },
-  setImmediate: { bg: 'rgba(59, 130, 246, 0.2)', border: 'rgba(59, 130, 246, 0.5)', text: '#60a5fa' },
-  immediate: { bg: 'rgba(59, 130, 246, 0.2)', border: 'rgba(59, 130, 246, 0.5)', text: '#60a5fa' },
+  setImmediate: { bg: 'rgba(59, 130, 246, 0.2)', border: 'rgba(59, 130, 246, 0.5)', text: 'var(--color-blue-400)' },
+  immediate: { bg: 'rgba(59, 130, 246, 0.2)', border: 'rgba(59, 130, 246, 0.5)', text: 'var(--color-blue-400)' },
   Promise: { bg: 'rgba(236, 72, 153, 0.2)', border: 'rgba(236, 72, 153, 0.5)', text: '#f472b6' },
   promise: { bg: 'rgba(236, 72, 153, 0.2)', border: 'rgba(236, 72, 153, 0.5)', text: '#f472b6' },
   nextTick: { bg: 'rgba(168, 85, 247, 0.2)', border: 'rgba(168, 85, 247, 0.5)', text: '#c084fc' },
@@ -57,9 +58,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const createPhases = (activePhase?: string): PhaseQueue[] => [
@@ -930,30 +931,14 @@ export function NodeEventLoopViz() {
         </span>
       </div>
 
-      <div className="flex gap-2 justify-center">
-        <button
-          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={handlePrev}
-          disabled={stepIndex === 0}
-        >
-          ← Prev
-        </button>
-        <motion.button
-          className={`px-4 py-2 text-base font-medium border-none rounded-md text-white cursor-pointer ${
-            isLastStep 
-              ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:shadow-[0_4px_12px_var(--color-emerald-40)]' 
-              : 'bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)]'
-          }`}
-          onClick={isLastStep ? handleReset : handleNext}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {isLastStep ? '✓ Done' : 'Next →'}
-        </motion.button>
-        <button className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white" onClick={handleReset}>
-          Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       <div className="text-center text-2xs text-gray-800">
         <span className="px-2 py-0.5 bg-white/3 rounded">Use ← → keys to navigate, R to reset</span>

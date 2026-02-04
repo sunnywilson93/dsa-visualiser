@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, AlertTriangle, ArrowRight } from 'lucide-react'
+import { StepControls } from '@/components/SharedViz'
 
 interface Era {
   id: string
@@ -50,7 +51,7 @@ const eras: Era[] = [
     id: 'server-scripting',
     name: 'Server-Side Scripting',
     years: '1995-2005',
-    color: '#a855f7',
+    color: 'var(--color-purple-500)',
     technologies: ['PHP', 'CGI', 'ASP', 'JSP'],
     code: `<?php
 // Server generates HTML dynamically
@@ -116,7 +117,7 @@ $.get('/api/comments', renderComments);`,
     id: 'spa',
     name: 'Single Page Apps',
     years: '2010-2016',
-    color: '#10b981',
+    color: 'var(--color-emerald-500)',
     technologies: ['Angular', 'Backbone', 'Ember', 'React'],
     code: `// React SPA - Client renders everything
 function App() {
@@ -153,7 +154,7 @@ function App() {
     id: 'ssr-return',
     name: 'SSR Returns',
     years: '2016-2020',
-    color: '#f59e0b',
+    color: 'var(--color-amber-500)',
     technologies: ['Next.js', 'Nuxt.js', 'Gatsby'],
     code: `// Next.js - Server renders, then hydrates
 export async function getServerSideProps() {
@@ -270,6 +271,8 @@ export function WebEvolutionViz() {
   const handleNext = () => {
     if (activeEra < eras.length - 1) setActiveEra(activeEra + 1)
   }
+
+  const handleReset = () => setActiveEra(0)
 
   return (
     <div className="flex flex-col gap-6">
@@ -439,25 +442,14 @@ export function WebEvolutionViz() {
         </div>
       )}
 
-      <div className="flex gap-4 justify-center items-center">
-        <button
-          className="px-4 py-2 text-sm bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={handlePrev}
-          disabled={activeEra === 0}
-        >
-          Previous Era
-        </button>
-        <span className="text-sm text-gray-700 font-medium min-w-[3rem] text-center">
-          {activeEra + 1} / {eras.length}
-        </span>
-        <button
-          className="px-4 py-2 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-all duration-200 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={activeEra === eras.length - 1}
-        >
-          Next Era
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={activeEra > 0}
+        canNext={activeEra < eras.length - 1}
+        stepInfo={{ current: activeEra + 1, total: eras.length }}
+      />
 
       <div className="px-4 py-2.5 bg-[var(--color-brand-primary-8)] border border-[var(--color-brand-primary-20)] rounded-lg text-sm text-gray-400 text-center">
         <strong className="text-[var(--color-brand-primary)]">Pattern:</strong> Each era solves previous problems but creates new ones, driving the next evolution.

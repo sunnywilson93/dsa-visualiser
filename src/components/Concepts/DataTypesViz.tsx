@@ -11,18 +11,18 @@ interface TypeInfo {
 }
 
 const primitives: TypeInfo[] = [
-  { id: 'string', name: 'String', color: '#10b981', examples: ['"hello"', "'world'", '`template`'], typeof: '"string"' },
+  { id: 'string', name: 'String', color: 'var(--color-emerald-500)', examples: ['"hello"', "'world'", '`template`'], typeof: '"string"' },
   { id: 'number', name: 'Number', color: '#3b82f6', examples: ['42', '3.14', 'Infinity', 'NaN'], typeof: '"number"' },
-  { id: 'boolean', name: 'Boolean', color: '#f59e0b', examples: ['true', 'false'], typeof: '"boolean"' },
-  { id: 'null', name: 'null', color: '#ef4444', examples: ['null'], typeof: '"object"', note: 'Bug: typeof null is "object"!' },
-  { id: 'undefined', name: 'undefined', color: '#a855f7', examples: ['undefined'], typeof: '"undefined"' },
+  { id: 'boolean', name: 'Boolean', color: 'var(--color-amber-500)', examples: ['true', 'false'], typeof: '"boolean"' },
+  { id: 'null', name: 'null', color: 'var(--color-red-500)', examples: ['null'], typeof: '"object"', note: 'Bug: typeof null is "object"!' },
+  { id: 'undefined', name: 'undefined', color: 'var(--color-purple-500)', examples: ['undefined'], typeof: '"undefined"' },
   { id: 'symbol', name: 'Symbol', color: '#ec4899', examples: ['Symbol("id")'], typeof: '"symbol"' },
   { id: 'bigint', name: 'BigInt', color: '#06b6d4', examples: ['9007199254740991n'], typeof: '"bigint"' },
 ]
 
 const referenceTypes: TypeInfo[] = [
-  { id: 'object', name: 'Object', color: '#a855f7', examples: ['{ key: "value" }'], typeof: '"object"' },
-  { id: 'array', name: 'Array', color: '#a855f7', examples: ['[1, 2, 3]'], typeof: '"object"', note: 'Arrays are objects!' },
+  { id: 'object', name: 'Object', color: 'var(--color-purple-500)', examples: ['{ key: "value" }'], typeof: '"object"' },
+  { id: 'array', name: 'Array', color: 'var(--color-purple-500)', examples: ['[1, 2, 3]'], typeof: '"object"', note: 'Arrays are objects!' },
   { id: 'function', name: 'Function', color: '#f97316', examples: ['function() {}', '() => {}'], typeof: '"function"' },
 ]
 

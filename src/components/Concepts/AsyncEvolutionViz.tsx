@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, AlertTriangle, ArrowRight } from 'lucide-react'
+import { StepControls } from '@/components/SharedViz'
 
 interface Era {
   id: string
@@ -56,7 +57,7 @@ fetchUser(1, function(err, user) {
     id: 'callback-hell',
     name: 'Callback Hell',
     years: '2008-2015',
-    color: '#ef4444',
+    color: 'var(--color-red-500)',
     technologies: ['Nested callbacks', 'Pyramid of Doom'],
     code: `// The infamous "Pyramid of Doom"
 getUser(userId, function(err, user) {
@@ -144,7 +145,7 @@ Promise.all([
     id: 'generators',
     name: 'Generators',
     years: '2015-2017',
-    color: '#a855f7',
+    color: 'var(--color-purple-500)',
     technologies: ['function*', 'yield', 'co', 'Koa'],
     code: `// Generators: pausable functions
 function* fetchSequence() {
@@ -190,7 +191,7 @@ gen.next(); // { value: 3, done: true }`,
     id: 'async-await',
     name: 'Async/Await',
     years: '2017-Present',
-    color: '#10b981',
+    color: 'var(--color-emerald-500)',
     technologies: ['async', 'await', 'try/catch'],
     code: `// Async/Await: the best of all worlds
 async function fetchOrderFlow(userId) {
@@ -292,6 +293,8 @@ export function AsyncEvolutionViz() {
   const handleNext = () => {
     if (activeEra < eras.length - 1) setActiveEra(activeEra + 1)
   }
+
+  const handleReset = () => setActiveEra(0)
 
   return (
     <div className="flex flex-col gap-6">
@@ -460,25 +463,14 @@ export function AsyncEvolutionViz() {
         </div>
       )}
 
-      <div className="flex gap-4 justify-center items-center">
-        <button
-          className="px-4 py-2 text-sm bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={handlePrev}
-          disabled={activeEra === 0}
-        >
-          Previous Era
-        </button>
-        <span className="text-sm text-gray-500 font-medium min-w-[3rem] text-center">
-          {activeEra + 1} / {eras.length}
-        </span>
-        <button
-          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-blue-500 to-cyan-500 border-0 rounded-md text-white cursor-pointer transition-all duration-200 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={activeEra === eras.length - 1}
-        >
-          Next Era
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={activeEra > 0}
+        canNext={activeEra < eras.length - 1}
+        stepInfo={{ current: activeEra + 1, total: eras.length }}
+      />
 
       <div className="px-4 py-2.5 bg-blue-500/[0.08] border border-blue-500/20 rounded-lg text-sm text-gray-400 text-center">
         <strong className="text-blue-500">Key Insight:</strong> Async/await won because it makes async code look synchronous while preserving all Promise capabilities.

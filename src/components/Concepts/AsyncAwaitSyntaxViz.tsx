@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, CheckCircle } from 'lucide-react'
+import { StepControls } from '@/components/SharedViz'
 import styles from './PromisesViz.module.css'
 
 interface AsyncFunction {
@@ -32,9 +33,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -756,9 +757,9 @@ export function AsyncAwaitSyntaxViz() {
 
   const getPhaseColor = (phase: Step['phase']) => {
     switch (phase) {
-      case 'sync': return '#a855f7'
-      case 'await': return '#f59e0b'
-      case 'resume': return '#10b981'
+      case 'sync': return 'var(--color-purple-500)'
+      case 'await': return 'var(--color-amber-500)'
+      case 'resume': return 'var(--color-emerald-500)'
       case 'complete': return '#6b7280'
     }
   }
@@ -774,8 +775,8 @@ export function AsyncAwaitSyntaxViz() {
 
   const getStateColor = (state: AsyncFunction['state']) => {
     switch (state) {
-      case 'running': return '#10b981'
-      case 'suspended': return '#f59e0b'
+      case 'running': return 'var(--color-emerald-500)'
+      case 'suspended': return 'var(--color-amber-500)'
       case 'completed': return '#6b7280'
     }
   }
@@ -1000,23 +1001,14 @@ export function AsyncAwaitSyntaxViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
-          Prev
-        </button>
-        <motion.button
-          className={styles.btnPrimary}
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next'}
-        </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
-          Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className={styles.insight}>

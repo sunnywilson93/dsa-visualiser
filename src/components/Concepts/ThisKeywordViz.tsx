@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 
 interface Step {
   description: string
@@ -20,9 +21,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -31,7 +32,7 @@ const examples: Record<Level, Example[]> = {
       id: 'implicit',
       title: 'Object Method',
       bindingType: 'Implicit Binding',
-      color: '#10b981',
+      color: 'var(--color-emerald-500)',
       code: [
         'const person = {',
         '  name: "Alice",',
@@ -51,7 +52,7 @@ const examples: Record<Level, Example[]> = {
       id: 'default',
       title: 'Standalone Function',
       bindingType: 'Default Binding',
-      color: '#ef4444',
+      color: 'var(--color-red-500)',
       code: [
         'function showThis() {',
         '  console.log(this);',
@@ -70,7 +71,7 @@ const examples: Record<Level, Example[]> = {
       id: 'call-apply',
       title: 'call() / apply()',
       bindingType: 'Explicit Binding',
-      color: '#a855f7',
+      color: 'var(--color-purple-500)',
       code: [
         'function greet(greeting) {',
         '  console.log(greeting, this.name);',
@@ -92,7 +93,7 @@ const examples: Record<Level, Example[]> = {
       id: 'bind',
       title: 'bind()',
       bindingType: 'Hard Binding',
-      color: '#a855f7',
+      color: 'var(--color-purple-500)',
       code: [
         'const person = {',
         '  name: "Dave",',
@@ -118,7 +119,7 @@ const examples: Record<Level, Example[]> = {
       id: 'arrow',
       title: 'Arrow Functions',
       bindingType: 'Lexical this',
-      color: '#f59e0b',
+      color: 'var(--color-amber-500)',
       code: [
         'const person = {',
         '  name: "Eve",',
@@ -145,7 +146,7 @@ const examples: Record<Level, Example[]> = {
       id: 'new-binding',
       title: 'new Keyword',
       bindingType: 'Constructor Binding',
-      color: '#f59e0b',
+      color: 'var(--color-amber-500)',
       code: [
         'function Person(name) {',
         '  // 1. Empty object created',
@@ -170,7 +171,7 @@ const examples: Record<Level, Example[]> = {
       id: 'callback-lost',
       title: 'Lost Binding',
       bindingType: 'Common Bug',
-      color: '#ef4444',
+      color: 'var(--color-red-500)',
       code: [
         'const user = {',
         '  name: "Frank",',
@@ -194,7 +195,7 @@ const examples: Record<Level, Example[]> = {
       id: 'callback-fix',
       title: 'Fixed with Arrow',
       bindingType: 'Arrow Solution',
-      color: '#10b981',
+      color: 'var(--color-emerald-500)',
       code: [
         'const user = {',
         '  name: "Grace",',
@@ -353,30 +354,14 @@ export function ThisKeywordViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className="flex gap-[var(--spacing-sm)] justify-center">
-        <button 
-          className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-xs bg-[var(--color-white-5)] border border-[var(--color-white-10)] rounded-md text-[var(--color-gray-500)] cursor-pointer transition-all hover:bg-[var(--color-white-10)] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={handlePrev} 
-          disabled={stepIndex === 0}
-        >
-          ← Prev
-        </button>
-        <motion.button
-          className="px-[var(--spacing-lg)] py-[var(--spacing-sm)] text-base font-medium bg-[var(--gradient-brand)] border-none rounded-md text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
-        </motion.button>
-        <button 
-          className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-xs bg-[var(--color-white-5)] border border-[var(--color-white-10)] rounded-md text-[var(--color-gray-500)] cursor-pointer transition-all hover:bg-[var(--color-white-10)] hover:text-white"
-          onClick={() => setStepIndex(0)}
-        >
-          ↻ Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={() => setStepIndex(0)}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Priority note */}
       <div className="px-[var(--spacing-md)] py-[var(--spacing-sm)] bg-[var(--color-amber-8)] border border-[var(--color-amber-20)] rounded-lg text-xs text-[var(--color-gray-500)] text-center">

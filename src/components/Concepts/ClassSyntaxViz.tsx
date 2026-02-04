@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Code2 } from 'lucide-react'
+import { StepControls } from '@/components/SharedViz'
 
 interface ChainNode {
   id: string
@@ -35,9 +36,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -170,7 +171,7 @@ const examples: Record<Level, Example[]> = {
                 { name: 'name', value: '"Rex"', location: 'instance' },
               ],
               protoRef: 'Animal.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
             {
               id: 'Animal.prototype',
@@ -181,7 +182,7 @@ const examples: Record<Level, Example[]> = {
                 { name: 'constructor', value: 'Animal', location: 'prototype' },
               ],
               protoRef: 'Object.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
             {
               id: 'Object.prototype',
@@ -191,7 +192,7 @@ const examples: Record<Level, Example[]> = {
                 { name: 'toString', value: 'fn()', location: 'prototype' },
               ],
               protoRef: 'null',
-              color: '#f59e0b',
+              color: 'var(--color-amber-500)',
             },
             {
               id: 'null',
@@ -199,7 +200,7 @@ const examples: Record<Level, Example[]> = {
               type: 'null',
               props: [],
               protoRef: null,
-              color: '#ef4444',
+              color: 'var(--color-red-500)',
             },
           ],
           createdInstances: ['dog'],
@@ -245,7 +246,7 @@ const examples: Record<Level, Example[]> = {
                 { name: 'name', value: '"Rex"', location: 'instance' },
               ],
               protoRef: 'Animal.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
             {
               id: 'Animal.prototype',
@@ -256,7 +257,7 @@ const examples: Record<Level, Example[]> = {
                 { name: 'constructor', value: 'Animal', location: 'prototype' },
               ],
               protoRef: 'Object.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
             {
               id: 'Object.prototype',
@@ -266,7 +267,7 @@ const examples: Record<Level, Example[]> = {
                 { name: 'toString', value: 'fn()', location: 'prototype' },
               ],
               protoRef: 'null',
-              color: '#f59e0b',
+              color: 'var(--color-amber-500)',
             },
             {
               id: 'null',
@@ -274,7 +275,7 @@ const examples: Record<Level, Example[]> = {
               type: 'null',
               props: [],
               protoRef: null,
-              color: '#ef4444',
+              color: 'var(--color-red-500)',
             },
           ],
           createdInstances: ['dog'],
@@ -465,7 +466,7 @@ const examples: Record<Level, Example[]> = {
               type: 'instance',
               props: [],
               protoRef: 'MathHelper.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
             {
               id: 'MathHelper.prototype',
@@ -475,7 +476,7 @@ const examples: Record<Level, Example[]> = {
                 { name: 'multiply', value: 'fn()', location: 'prototype' },
               ],
               protoRef: 'Object.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
           ],
           createdInstances: ['m'],
@@ -568,7 +569,7 @@ const examples: Record<Level, Example[]> = {
                 { name: '_radius', value: '5', location: 'instance' },
               ],
               protoRef: 'Circle.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
             {
               id: 'Circle.prototype',
@@ -578,7 +579,7 @@ const examples: Record<Level, Example[]> = {
                 { name: 'area', value: 'getter', location: 'prototype' },
               ],
               protoRef: 'Object.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
           ],
           createdInstances: ['c'],
@@ -663,7 +664,7 @@ const examples: Record<Level, Example[]> = {
                 { name: '#balance', value: '100', location: 'instance' },
               ],
               protoRef: 'BankAccount.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
             {
               id: 'BankAccount.prototype',
@@ -674,7 +675,7 @@ const examples: Record<Level, Example[]> = {
                 { name: 'getBalance', value: 'fn()', location: 'prototype' },
               ],
               protoRef: 'Object.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
           ],
           createdInstances: ['acc'],
@@ -779,7 +780,7 @@ const examples: Record<Level, Example[]> = {
                 { name: 'name', value: '"Rex"', location: 'instance' },
               ],
               protoRef: 'Animal.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
             {
               id: 'Animal.prototype',
@@ -789,7 +790,7 @@ const examples: Record<Level, Example[]> = {
                 { name: 'constructor', value: 'Animal', location: 'prototype' },
               ],
               protoRef: 'Object.prototype',
-              color: '#a855f7',
+              color: 'var(--color-purple-500)',
             },
           ],
           createdInstances: ['a'],
@@ -1113,30 +1114,14 @@ export function ClassSyntaxViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className="flex gap-3 justify-center">
-        <button
-          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={handlePrev}
-          disabled={stepIndex === 0}
-        >
-          Prev
-        </button>
-        <motion.button
-          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-purple-500 to-amber-500 rounded-md text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next'}
-        </motion.button>
-        <button
-          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all hover:bg-white/10 hover:text-white"
-          onClick={handleReset}
-        >
-          Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className="px-4 py-2.5 bg-gradient-to-r from-purple-500/10 to-amber-500/10 border border-purple-500/20 rounded-lg text-xs text-gray-500 text-center">

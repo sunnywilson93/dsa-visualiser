@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 import styles from './PromisesViz.module.css'
 
 interface PromiseItem {
@@ -46,9 +47,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -646,36 +647,36 @@ export function PromisesStaticViz() {
 
   const getPhaseColor = (phase: string) => {
     switch (phase) {
-      case 'Setup': return '#60a5fa'
+      case 'Setup': return 'var(--color-blue-400)'
       case 'Race Settles':
       case 'Race':
       case 'First Reject':
       case 'Second Reject':
-        return '#f59e0b'
+        return 'var(--color-amber-500)'
       case 'Any Settles':
       case 'Any':
-        return '#c4b5fd'
+        return 'var(--color-violet-300-40)'
       case 'All Rejects':
       case 'All Rejected':
       case 'AggregateError':
-        return '#ef4444'
+        return 'var(--color-red-500)'
       case 'AllSettled':
         return '#818cf8'
       case 'All':
-        return '#10b981'
+        return 'var(--color-emerald-500)'
       case '500ms':
       case '1000ms':
-        return '#f59e0b'
-      case 'Complete': return '#10b981'
-      default: return '#888'
+        return 'var(--color-amber-500)'
+      case 'Complete': return 'var(--color-emerald-500)'
+      default: return 'var(--color-gray-500)'
     }
   }
 
   const getStateColor = (state: 'pending' | 'fulfilled' | 'rejected') => {
     switch (state) {
-      case 'pending': return '#f59e0b'
-      case 'fulfilled': return '#10b981'
-      case 'rejected': return '#ef4444'
+      case 'pending': return 'var(--color-amber-500)'
+      case 'fulfilled': return 'var(--color-emerald-500)'
+      case 'rejected': return 'var(--color-red-500)'
     }
   }
 
@@ -834,8 +835,8 @@ export function PromisesStaticViz() {
         {(['all', 'race', 'allSettled', 'any'] as const).map(method => {
           const result = currentStep.results[method]
           const methodColors: Record<string, string> = {
-            all: '#10b981',
-            race: '#f59e0b',
+            all: 'var(--color-emerald-500)',
+            race: 'var(--color-amber-500)',
             allSettled: '#818cf8',
             any: '#c4b5fd'
           }
@@ -910,7 +911,7 @@ export function PromisesStaticViz() {
                     style={{
                       fontFamily: 'var(--font-mono)',
                       fontSize: 'var(--text-2xs)',
-                      color: '#10b981',
+                      color: 'var(--color-emerald-500)',
                       wordBreak: 'break-word',
                       textAlign: 'center'
                     }}
@@ -941,7 +942,7 @@ export function PromisesStaticViz() {
                             padding: '2px 6px',
                             borderRadius: 'var(--radius-sm)',
                             background: item.status === 'fulfilled' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-                            color: item.status === 'fulfilled' ? '#10b981' : '#ef4444',
+                            color: item.status === 'fulfilled' ? 'var(--color-emerald-500)' : 'var(--color-red-500)',
                             fontFamily: 'var(--font-mono)',
                             fontSize: '10px'
                           }}
@@ -961,7 +962,7 @@ export function PromisesStaticViz() {
                     style={{
                       fontFamily: 'var(--font-mono)',
                       fontSize: 'var(--text-2xs)',
-                      color: '#ef4444',
+                      color: 'var(--color-red-500)',
                       wordBreak: 'break-word',
                       textAlign: 'center'
                     }}
@@ -984,7 +985,7 @@ export function PromisesStaticViz() {
                     <div style={{
                       fontSize: 'var(--text-2xs)',
                       fontWeight: 600,
-                      color: '#ef4444',
+                      color: 'var(--color-red-500)',
                       textAlign: 'center',
                       marginBottom: '2px'
                     }}>
@@ -1083,23 +1084,14 @@ export function PromisesStaticViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className={styles.controls}>
-        <button className={styles.btnSecondary} onClick={handlePrev} disabled={stepIndex === 0}>
-          Prev
-        </button>
-        <motion.button
-          className={styles.btnPrimary}
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next'}
-        </motion.button>
-        <button className={styles.btnSecondary} onClick={handleReset}>
-          Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className={styles.insight}>
