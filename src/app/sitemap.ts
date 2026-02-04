@@ -53,9 +53,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // JS Concept pages (/concepts/[conceptId])
+  // JS Concept pages (/concepts/js/[conceptId])
   const jsConceptPages: MetadataRoute.Sitemap = concepts.map((concept) => ({
-    url: `${BASE_URL}/concepts/${concept.id}`,
+    url: `${BASE_URL}/concepts/js/${concept.id}`,
     lastModified: CONTENT_LAST_UPDATED,
     changeFrequency: 'monthly' as const,
     priority: 0.8,

@@ -97,7 +97,7 @@ export default function JSConceptsClient() {
                             {subcategoryConcepts.map((concept, index) => (
                               <Card
                                 key={concept.id}
-                                href={`/concepts/${concept.id}`}
+                                href={`/concepts/js/${concept.id}`}
                                 title={concept.title}
                                 description={concept.shortDescription}
                                 icon={<ConceptIcon conceptId={concept.id} size={32} />}
@@ -135,7 +135,7 @@ export default function JSConceptsClient() {
                     {categoryConcepts.map((concept, index) => (
                       <Card
                         key={concept.id}
-                        href={`/concepts/${concept.id}`}
+                        href={`/concepts/js/${concept.id}`}
                         title={concept.title}
                         description={concept.shortDescription}
                         icon={<ConceptIcon conceptId={concept.id} size={32} />}

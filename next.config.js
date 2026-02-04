@@ -1,6 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+
+  // Redirect old JS concept URLs to new structure
+  async redirects() {
+    return [
+      {
+        source: '/concepts/:conceptId((?!js|dsa)[a-z0-9-]+)',
+        destination: '/concepts/js/:conceptId',
+        permanent: true,
+      },
+    ]
+  },
   
   // Hot reload configuration
   webpack: (config, { dev, isServer }) => {

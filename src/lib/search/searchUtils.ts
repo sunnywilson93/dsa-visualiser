@@ -16,7 +16,7 @@ function normalizeJSConcepts(): SearchableItem[] {
     shortDescription: c.shortDescription,
     keyPoints: c.keyPoints,
     source: 'js' as ConceptSource,
-    href: `/concepts/${c.id}`,
+    href: `/concepts/js/${c.id}`,
   }))
 }
 
