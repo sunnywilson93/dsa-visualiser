@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, X } from 'lucide-react'
+import { StepControls } from '@/components/SharedViz'
 
 interface InstanceofStep {
   description: string
@@ -34,9 +35,9 @@ interface InstanceofExample {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, InstanceofExample[]> = {
@@ -1000,34 +1001,14 @@ export function InstanceofViz() {
       )}
 
       {/* Controls */}
-      <div className="flex gap-3 justify-center flex-wrap">
-        <motion.button
-          className="px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-400 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/10 hover:text-white transition-colors"
-          onClick={handlePrev}
-          disabled={stepIndex === 0}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          Previous
-        </motion.button>
-        <motion.button
-          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-purple-500 to-pink-500 rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={stepIndex >= totalSteps - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= totalSteps - 1 ? 'Done' : 'Next'}
-        </motion.button>
-        <motion.button
-          className="px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white transition-colors"
-          onClick={handleReset}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          Reset
-        </motion.button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < totalSteps - 1}
+        stepInfo={{ current: stepIndex + 1, total: totalSteps }}
+      />
 
       {/* Insight */}
       <div className="px-4 py-2.5 bg-amber-500/10 border border-amber-400/20 rounded-lg text-sm text-gray-400 text-center">

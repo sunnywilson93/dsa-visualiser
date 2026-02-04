@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AlertTriangle, Shield } from 'lucide-react'
+import { StepControls } from '@/components/SharedViz'
 
 interface PollutionStep {
   description: string
@@ -35,8 +36,8 @@ interface Example {
 type Level = 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -821,34 +822,14 @@ export function PrototypePollutionViz() {
       )}
 
       {/* Controls */}
-      <div className="flex gap-3 justify-center flex-wrap">
-        <button
-          className="px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-          onClick={handlePrev}
-          disabled={stepIndex === 0}
-        >
-          ← Prev
-        </button>
-        <button
-          className="px-2.5 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-500 hover:bg-white/10 hover:text-gray-400 transition-colors"
-          onClick={handleReset}
-        >
-          ↻ Reset
-        </button>
-        <motion.button
-          className={`px-6 py-2 text-sm font-medium rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed ${
-            currentStep.prevention
-              ? 'bg-gradient-to-r from-emerald-500 to-cyan-500'
-              : 'bg-gradient-to-r from-purple-500 to-pink-500'
-          }`}
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
-        </motion.button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Insight */}
       <div className={`px-4 py-2.5 border rounded-lg text-xs text-center ${

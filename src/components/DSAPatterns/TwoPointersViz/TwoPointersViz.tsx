@@ -1,14 +1,11 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { clsx, type ClassValue } from 'clsx'
+import { cn } from '@/utils/cn'
 import { CodePanel, StepProgress, StepControls } from '@/components/SharedViz'
+import { LevelSelector, type Level, defaultLevelConfig } from '@/components/ui/LevelSelector'
+import { VariantSelector } from '@/components/ui/VariantSelector'
+import { ExampleTabs } from '@/components/ui/ExampleTabs'
 
-// Utility for cleaner tailwind class merging
-function cn(...inputs: ClassValue[]) {
-  return clsx(inputs)
-}
-
-type Level = 'beginner' | 'intermediate' | 'advanced'
 type Variant = 'converging' | 'same-direction' | 'partition'
 type Phase = 'init' | 'compare' | 'move' | 'done'
 
@@ -41,13 +38,7 @@ interface TwoPointerExample {
   insight: string
 }
 
-const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
-}
-
-const variantInfo: Record<Variant, { label: string; description: string }> = {
+const variantConfig: Record<Variant, { label: string; description: string }> = {
   converging: {
     label: 'Converging',
     description: 'Two pointers moving towards each other from opposite ends'
@@ -61,6 +52,9 @@ const variantInfo: Record<Variant, { label: string; description: string }> = {
     description: 'Pointers partitioning array into regions'
   }
 }
+
+const variants: Variant[] = ['converging', 'same-direction', 'partition']
+const levels: Level[] = ['beginner', 'intermediate', 'advanced']
 
 const examples: Record<Variant, Record<Level, TwoPointerExample[]>> = {
   converging: {
@@ -492,81 +486,52 @@ export function TwoPointersViz() {
     return step.pointers.left === index || step.pointers.right === index || step.pointers.mid === index
   }
 
+  // Compute disabled levels (those with no examples for current variant)
+  const disabledLevels = useMemo(() =>
+    levels.filter(lvl => examples[variant][lvl].length === 0),
+    [variant]
+  )
+
+  // Convert current examples to ExampleTabs format
+  const exampleTabs = useMemo(() =>
+    currentExamples.map(ex => ({ id: ex.id, title: ex.title })),
+    [currentExamples]
+  )
+
   return (
     <div className="flex flex-col gap-6">
       {/* Variant Selector */}
-      <div className="flex flex-wrap justify-center gap-2 rounded-full border border-white/[0.08] bg-black/30 p-[0.35rem]">
-        {(Object.keys(variantInfo) as Variant[]).map(v => (
-          <button
-            key={v}
-            className={cn(
-              'min-h-[44px] cursor-pointer rounded-full border-2 px-4 py-2 font-mono text-sm font-medium transition-all',
-              'touch-manipulation',
-              variant === v
-                ? 'border-emerald-500/50 bg-emerald-500/15 text-white'
-                : 'border-transparent bg-white/5 text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
-            )}
-            onClick={() => handleVariantChange(v)}
-            title={variantInfo[v].description}
-          >
-            {variantInfo[v].label}
-          </button>
-        ))}
-      </div>
+      <VariantSelector
+        value={variant}
+        onChange={handleVariantChange}
+        variants={variants}
+        config={variantConfig}
+        accentColor="var(--color-emerald-500)"
+      />
 
       {/* Level Selector */}
-      <div className="flex flex-wrap justify-center gap-2 rounded-full border border-white/[0.08] bg-black/30 p-[0.35rem]">
-        {(Object.keys(levelInfo) as Level[]).map(lvl => (
-          <button
-            key={lvl}
-            className={cn(
-              'flex min-h-[44px] items-center gap-1.5 rounded-full border-2 px-3 py-1.5 font-mono text-sm font-medium transition-all',
-              'touch-manipulation disabled:cursor-not-allowed disabled:opacity-40',
-              level === lvl
-                ? 'text-white'
-                : 'border-transparent bg-white/5 text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
-            )}
-            onClick={() => handleLevelChange(lvl)}
-            disabled={examples[variant][lvl].length === 0}
-            style={{
-              borderColor: level === lvl ? levelInfo[lvl].color : 'transparent',
-              background: level === lvl ? `${levelInfo[lvl].color}15` : undefined
-            }}
-          >
-            <span
-              className="h-2 w-2 rounded-full"
-              style={{ background: levelInfo[lvl].color }}
-            />
-            {levelInfo[lvl].label}
-          </button>
-        ))}
-      </div>
+      <LevelSelector
+        value={level}
+        onChange={handleLevelChange}
+        levels={levels}
+        config={defaultLevelConfig}
+        disabledLevels={disabledLevels}
+      />
 
       {/* Example Tabs */}
       {hasExamples && currentExamples.length > 1 && (
-        <div className="flex flex-wrap justify-center gap-2 rounded-full border border-white/[0.08] bg-black/30 p-[0.35rem]">
-          {currentExamples.map((ex, i) => (
-            <button
-              key={ex.id}
-              className={cn(
-                'min-h-[44px] cursor-pointer rounded-full border px-3 py-1.5 font-mono text-sm transition-all',
-                'touch-manipulation',
-                exampleIndex === i
-                  ? 'border-emerald-500/70 bg-emerald-500/18 text-white shadow-[0_0_20px_rgba(16,185,129,0.25)]'
-                  : 'border-white/[0.08] bg-white/5 text-gray-500 hover:bg-white/[0.08] hover:text-gray-300'
-              )}
-              onClick={() => handleExampleChange(i)}
-            >
-              {ex.title}
-            </button>
-          ))}
-        </div>
+        <ExampleTabs
+          tabs={exampleTabs}
+          activeIndex={exampleIndex}
+          onChange={handleExampleChange}
+          variant="mono"
+        />
       )}
 
       {!hasExamples ? (
         <div className="rounded-xl border border-white/[0.08] bg-black/30 p-8 text-center">
           <p className="text-sm text-gray-500">
-            Examples coming soon for {variantInfo[variant].label} - {levelInfo[level].label}.
+            Examples coming soon for {variantConfig[variant].label} - {defaultLevelConfig[level].label}.
           </p>
         </div>
       ) : currentExample && currentStep && (
@@ -686,6 +651,7 @@ export function TwoPointersViz() {
             onReset={() => setStepIndex(0)}
             canPrev={stepIndex > 0}
             canNext={stepIndex < currentExample.steps.length - 1}
+            stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
           />
 
           {/* Insight Box */}

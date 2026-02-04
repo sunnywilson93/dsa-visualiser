@@ -2,14 +2,10 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { clsx, type ClassValue } from 'clsx'
 import { BitManipulationConcept } from '@/components/ConceptPanel'
+import { StepControls } from '@/components/SharedViz'
+import { cn } from '@/utils/cn'
 import type { ConceptStep } from '@/types'
-
-// Utility for cleaner tailwind class merging
-function cn(...inputs: ClassValue[]) {
-  return clsx(inputs)
-}
 
 interface BinaryExample {
   id: string
@@ -270,31 +266,14 @@ export function BinarySystemViz(): JSX.Element {
         <p className="m-0 text-base text-gray-300 leading-normal">{currentExample.insight}</p>
       </div>
 
-      <div className="flex items-center justify-center gap-4 flex-wrap">
-        <button
-          className="px-4 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          onClick={handlePrev}
-          disabled={stepIndex === 0}
-        >
-          Prev
-        </button>
-        <span className="text-base text-gray-700 min-w-[60px] text-center">
-          {stepIndex + 1} / {currentExample.steps.length}
-        </span>
-        <button 
-          className="px-4 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 transition-all duration-200 hover:bg-white/10 hover:text-white"
-          onClick={handleReset}
-        >
-          Reset
-        </button>
-        <button
-          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-opacity duration-200 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={stepIndex === currentExample.steps.length - 1}
-        >
-          Next
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
     </div>
   )
 }

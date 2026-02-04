@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 
 interface ExecutionContext {
   id: string
@@ -37,9 +38,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -640,10 +641,10 @@ export function ClosuresViz() {
 
   const getPhaseColor = (phase: string) => {
     switch (phase) {
-      case 'Creation': return '#60a5fa'
-      case 'Execution': return '#10b981'
-      case 'Return': return '#f59e0b'
-      default: return '#888'
+      case 'Creation': return 'var(--color-blue-400)'
+      case 'Execution': return 'var(--color-emerald-500)'
+      case 'Return': return 'var(--color-amber-500)'
+      default: return 'var(--color-gray-500)'
     }
   }
 
@@ -792,8 +793,8 @@ export function ClosuresViz() {
                             <motion.span
                               key={v.value}
                               className={`font-medium ${v.name === '[[Scope]]' ? 'text-purple-400' : 'text-emerald-500'}`}
-                              initial={{ scale: 1.2, color: '#f59e0b' }}
-                              animate={{ scale: 1, color: v.name === '[[Scope]]' ? '#a855f7' : '#10b981' }}
+                              initial={{ scale: 1.2, color: 'var(--color-amber-500)' }}
+                              animate={{ scale: 1, color: v.name === '[[Scope]]' ? 'var(--color-purple-500)' : 'var(--color-emerald-500)' }}
                             >
                               {v.value}
                             </motion.span>
@@ -851,30 +852,14 @@ export function ClosuresViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className="flex gap-3 justify-center">
-        <button
-          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          onClick={handlePrev}
-          disabled={stepIndex === 0}
-        >
-          ← Prev
-        </button>
-        <motion.button
-          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-purple-500 to-pink-500 rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
-        </motion.button>
-        <button
-          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white transition-colors"
-          onClick={handleReset}
-        >
-          ↻ Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className="px-4 py-2.5 bg-purple-500/10 border border-purple-500/20 rounded-lg text-sm text-gray-400 leading-relaxed">

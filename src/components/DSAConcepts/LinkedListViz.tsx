@@ -2,6 +2,7 @@
 
 import { useState, type CSSProperties } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 
 interface ListNode {
   id: number
@@ -439,33 +440,14 @@ export function LinkedListViz(): JSX.Element {
         </motion.div>
       </AnimatePresence>
 
-      <div className="flex items-center justify-center gap-3">
-        <button 
-          className="px-3 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed" 
-          onClick={handlePrev} 
-          disabled={stepIndex === 0}
-        >
-          &lt;- Prev
-        </button>
-        <span className="text-base text-gray-600 min-w-[50px] text-center">
-          {stepIndex + 1} / {currentExample.steps.length}
-        </span>
-        <motion.button
-          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-brand-primary to-brand-secondary border-0 rounded-md text-white cursor-pointer transition-opacity duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next ->'}
-        </motion.button>
-        <button 
-          className="px-3 py-2 text-base bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white" 
-          onClick={handleReset}
-        >
-          Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={handleReset}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       <div className="p-3 px-4 bg-brand-primary/10 border border-brand-primary/20 rounded-lg text-base text-gray-300 leading-normal">
         <strong className="text-brand-light">Key Insight:</strong> {currentExample.insight}

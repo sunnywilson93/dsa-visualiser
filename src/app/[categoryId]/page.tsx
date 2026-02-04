@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { exampleCategories, getExamplesByCategory } from '@/data/examples'
+import { exampleCategories, dsaSubcategories, getExamplesByCategory } from '@/data/examples'
 import CategoryPageClient from './CategoryPageClient'
 import { StructuredData } from '@/components/StructuredData'
 import { generateBreadcrumbSchema } from '@/lib/seo/breadcrumb'
@@ -8,8 +8,20 @@ interface Props {
   params: { categoryId: string }
 }
 
+// Combine main categories and DSA subcategories for lookups
+const allCategories = [
+  ...exampleCategories,
+  ...dsaSubcategories.map(sub => ({ ...sub, description: `Practice ${sub.name} problems` })),
+]
+
+// Helper to find category in combined list
+const findCategory = (id: string) => allCategories.find((c) => c.id === id)
+
+// Check if this is a DSA subcategory
+const isDsaSubcategory = (id: string) => dsaSubcategories.some((s) => s.id === id)
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const category = exampleCategories.find((c) => c.id === params.categoryId)
+  const category = findCategory(params.categoryId)
 
   if (!category) {
     return {
@@ -20,12 +32,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const problemCount = getExamplesByCategory(params.categoryId).length
 
   const isDsa = params.categoryId === 'dsa'
+  const isSubcategory = isDsaSubcategory(params.categoryId)
   const titlePrefix = isDsa ? 'DSA Problems' : category.name
 
   return {
     title: `${titlePrefix} - ${problemCount} Coding Challenges | JS Interview Prep`,
     description: `${category.description}. Practice ${problemCount} interactive coding problems with step-by-step execution visualization.`,
-    keywords: `${category.name.toLowerCase()}, javascript ${category.name.toLowerCase()}, coding interview, ${isDsa ? 'data structures algorithms leetcode' : 'javascript practice'}`,
+    keywords: `${category.name.toLowerCase()}, javascript ${category.name.toLowerCase()}, coding interview, ${isDsa || isSubcategory ? 'data structures algorithms leetcode' : 'javascript practice'}`,
     openGraph: {
       title: `${titlePrefix} - JavaScript Coding Challenges`,
       description: `${category.description}. ${problemCount} problems with visualization.`,
@@ -38,13 +51,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  return exampleCategories.map((category) => ({
+  return allCategories.map((category) => ({
     categoryId: category.id,
   }))
 }
 
 export default function CategoryPage({ params }: Props) {
-  const category = exampleCategories.find((c) => c.id === params.categoryId)
+  const category = findCategory(params.categoryId)
 
   const breadcrumbSchema = category
     ? generateBreadcrumbSchema([

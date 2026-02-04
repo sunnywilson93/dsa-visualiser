@@ -31,14 +31,27 @@ const subcategoryToConcept: Record<string, { id: string; name: string }> = {
 const dsaSubcategoryMap = new Map(dsaSubcategories.map((s) => [s.id, s]))
 const categoryMap = new Map(exampleCategories.map((c) => [c.id, c]))
 
+// Check if a category ID is a DSA subcategory
+const isDsaSubcategoryId = (id: string) => dsaSubcategoryMap.has(id)
+
+// Find category from either main categories or DSA subcategories
+const findCategory = (id: string) => {
+  const mainCat = exampleCategories.find((c) => c.id === id)
+  if (mainCat) return mainCat
+  const subCat = dsaSubcategories.find((s) => s.id === id)
+  if (subCat) return { ...subCat, description: `Practice ${subCat.name} problems` }
+  return null
+}
+
 export default function CategoryPageClient() {
   const params = useParams()
   const router = useRouter()
   const categoryId = params.categoryId as string
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null)
 
-  const category = exampleCategories.find((c) => c.id === categoryId)
+  const category = findCategory(categoryId)
   const isDsa = categoryId === 'dsa'
+  const isSubcategoryPage = isDsaSubcategoryId(categoryId)
 
   const allProblems = useMemo(() => {
     if (!categoryId) return []
@@ -46,11 +59,14 @@ export default function CategoryPageClient() {
   }, [categoryId])
 
   const subcategoryProblems = useMemo(() => {
+    // If viewing a subcategory page directly, show all problems for that subcategory
+    if (isSubcategoryPage) return allProblems
+    // If on DSA page with subcategory filter selected
     if (!selectedSubcategory) return allProblems
     return allProblems.filter((p) => p.category === selectedSubcategory)
-  }, [allProblems, selectedSubcategory])
+  }, [allProblems, selectedSubcategory, isSubcategoryPage])
 
-  const isComingSoon = selectedSubcategory && subcategoryProblems.length === 0
+  const isComingSoon = (selectedSubcategory || isSubcategoryPage) && subcategoryProblems.length === 0
 
   const getCategoryForProblem = useCallback((problem: CodeExample): CategoryInfo => {
     const subcat = dsaSubcategoryMap.get(problem.category)
@@ -62,9 +78,11 @@ export default function CategoryPageClient() {
 
   const handleProblemClick = useCallback(
     (problem: CodeExample) => {
-      router.push(`/${categoryId}/${problem.id}`)
+      // For subcategory pages, use the problem's actual category for the URL
+      const urlCategory = isSubcategoryPage ? problem.category : categoryId
+      router.push(`/${urlCategory}/${problem.id}`)
     },
-    [categoryId, router]
+    [categoryId, router, isSubcategoryPage]
   )
 
   const handleCategoryClick = useCallback(
@@ -92,6 +110,7 @@ export default function CategoryPageClient() {
     )
   }
 
+  // Show subcategory filters only on the main DSA page, not on individual subcategory pages
   const renderDsaSubcategories = isDsa ? (
     <>
       <div className="py-4 px-8 flex gap-2 flex-wrap container-default mx-auto w-full max-lg:py-3 max-lg:px-6 max-md:py-3 max-md:px-4">
@@ -128,6 +147,20 @@ export default function CategoryPageClient() {
     </>
   ) : null
 
+  // Show "Learn X" link on subcategory pages if a concept exists
+  const renderSubcategoryLearnLink = isSubcategoryPage && subcategoryToConcept[categoryId] ? (
+    <div className="py-3 px-8 container-default mx-auto w-full max-lg:px-6 max-md:px-4">
+      <Link
+        href={`/concepts/dsa/${subcategoryToConcept[categoryId].id}`}
+        className="inline-flex items-center gap-2 py-2 px-3.5 bg-brand-primary-10 border border-brand-primary-25 rounded-md text-brand-light text-base font-medium no-underline transition-all duration-150 hover:bg-brand-primary-20 hover:border-brand-primary-40 hover:text-brand-light group"
+      >
+        <BookOpen size={14} />
+        <span>Learn {subcategoryToConcept[categoryId].name}</span>
+        <span className="opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100">→</span>
+      </Link>
+    </div>
+  ) : null
+
   const comingSoonState = isComingSoon ? (
     <div className="flex flex-col items-center justify-center py-16 px-8 text-center bg-gradient-to-br from-brand-primary-8 to-brand-primary-8 border border-dashed border-brand-primary-30 rounded-2xl">
       <div className="text-brand-primary-50 mb-4">
@@ -144,19 +177,24 @@ export default function CategoryPageClient() {
     </div>
   ) : undefined
 
+  // Build breadcrumbs based on page type
+  const breadcrumbs = isSubcategoryPage
+    ? [{ label: 'DSA', href: '/dsa' }, { label: category.name }]
+    : [{ label: category.name }]
+
   return (
     <ProblemListingLayout
       config={{
         title: category.name,
         subtitle: category.description,
         iconId: category.id,
-        breadcrumbs: [{ label: category.name }],
+        breadcrumbs,
       }}
       problems={subcategoryProblems}
       getCategoryForProblem={getCategoryForProblem}
       onProblemClick={handleProblemClick}
       onCategoryClick={isDsa ? handleCategoryClick : undefined}
-      renderBeforeGrid={renderDsaSubcategories}
+      renderBeforeGrid={isSubcategoryPage ? renderSubcategoryLearnLink : renderDsaSubcategories}
       emptyState={comingSoonState}
     />
   )

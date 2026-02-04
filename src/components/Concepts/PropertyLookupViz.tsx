@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 
 interface Property {
   name: string
@@ -46,9 +47,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -66,7 +67,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'age', value: '3' }
           ],
           protoRef: 'Animal.prototype',
-          color: '#a855f7'
+          color: 'var(--color-purple-500)'
         },
         {
           id: 'Animal.prototype',
@@ -77,7 +78,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'eat', value: 'fn()' }
           ],
           protoRef: 'Object.prototype',
-          color: '#a855f7'
+          color: 'var(--color-purple-500)'
         },
         {
           id: 'Object.prototype',
@@ -88,7 +89,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'hasOwnProperty', value: 'fn()' }
           ],
           protoRef: 'null',
-          color: '#f59e0b'
+          color: 'var(--color-amber-500)'
         },
         {
           id: 'null',
@@ -96,7 +97,7 @@ const examples: Record<Level, Example[]> = {
           type: 'null',
           props: [],
           protoRef: null,
-          color: '#ef4444'
+          color: 'var(--color-red-500)'
         }
       ],
       lookups: [
@@ -163,7 +164,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'name', value: '"Rex"' }
           ],
           protoRef: 'Animal.prototype',
-          color: '#a855f7'
+          color: 'var(--color-purple-500)'
         },
         {
           id: 'Animal.prototype',
@@ -174,7 +175,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'eat', value: 'fn()' }
           ],
           protoRef: 'Object.prototype',
-          color: '#a855f7'
+          color: 'var(--color-purple-500)'
         },
         {
           id: 'Object.prototype',
@@ -184,7 +185,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'toString', value: 'fn()' }
           ],
           protoRef: 'null',
-          color: '#f59e0b'
+          color: 'var(--color-amber-500)'
         },
         {
           id: 'null',
@@ -192,7 +193,7 @@ const examples: Record<Level, Example[]> = {
           type: 'null',
           props: [],
           protoRef: null,
-          color: '#ef4444'
+          color: 'var(--color-red-500)'
         }
       ],
       lookups: [
@@ -289,7 +290,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'name', value: '"child"' }
           ],
           protoRef: 'parent',
-          color: '#a855f7'
+          color: 'var(--color-purple-500)'
         },
         {
           id: 'parent',
@@ -310,7 +311,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'toString', value: 'fn()' }
           ],
           protoRef: 'null',
-          color: '#f59e0b'
+          color: 'var(--color-amber-500)'
         },
         {
           id: 'null',
@@ -318,7 +319,7 @@ const examples: Record<Level, Example[]> = {
           type: 'null',
           props: [],
           protoRef: null,
-          color: '#ef4444'
+          color: 'var(--color-red-500)'
         }
       ],
       lookups: [
@@ -395,7 +396,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'name', value: '"test"' }
           ],
           protoRef: 'Object.prototype',
-          color: '#a855f7'
+          color: 'var(--color-purple-500)'
         },
         {
           id: 'Object.prototype',
@@ -405,7 +406,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'toString', value: 'fn()' }
           ],
           protoRef: 'null',
-          color: '#f59e0b'
+          color: 'var(--color-amber-500)'
         },
         {
           id: 'null',
@@ -413,7 +414,7 @@ const examples: Record<Level, Example[]> = {
           type: 'null',
           props: [],
           protoRef: null,
-          color: '#ef4444'
+          color: 'var(--color-red-500)'
         }
       ],
       lookups: [
@@ -476,7 +477,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'own', value: '"mine"' }
           ],
           protoRef: 'proto',
-          color: '#a855f7'
+          color: 'var(--color-purple-500)'
         },
         {
           id: 'proto',
@@ -496,7 +497,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'hasOwnProperty', value: 'fn()' }
           ],
           protoRef: 'null',
-          color: '#f59e0b'
+          color: 'var(--color-amber-500)'
         },
         {
           id: 'null',
@@ -504,7 +505,7 @@ const examples: Record<Level, Example[]> = {
           type: 'null',
           props: [],
           protoRef: null,
-          color: '#ef4444'
+          color: 'var(--color-red-500)'
         }
       ],
       lookups: [
@@ -605,7 +606,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'level', value: '3' }
           ],
           protoRef: 'parent',
-          color: '#a855f7'
+          color: 'var(--color-purple-500)'
         },
         {
           id: 'parent',
@@ -638,7 +639,7 @@ const examples: Record<Level, Example[]> = {
             { name: 'toString', value: 'fn()' }
           ],
           protoRef: 'null',
-          color: '#f59e0b'
+          color: 'var(--color-amber-500)'
         },
         {
           id: 'null',
@@ -646,7 +647,7 @@ const examples: Record<Level, Example[]> = {
           type: 'null',
           props: [],
           protoRef: null,
-          color: '#ef4444'
+          color: 'var(--color-red-500)'
         }
       ],
       lookups: [
@@ -875,11 +876,11 @@ export function PropertyLookupViz() {
                     }`}
                     style={{
                       borderColor: isCurrentlyChecking
-                        ? '#f59e0b'
+                        ? 'var(--color-amber-500)'
                         : isFoundAt
-                        ? '#10b981'
+                        ? 'var(--color-emerald-500)'
                         : isNotFoundTarget
-                        ? '#ef4444'
+                        ? 'var(--color-red-500)'
                         : isChecked
                         ? node.color
                         : 'rgba(255,255,255,0.1)'
@@ -1033,26 +1034,14 @@ export function PropertyLookupViz() {
 
       {/* Controls */}
       {currentLookup && (
-        <div className="flex gap-3 justify-center">
-          <motion.button
-            className="px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
-            onClick={handlePrev}
-            disabled={stepIndex === 0}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            ← Prev
-          </motion.button>
-          <motion.button
-            className="px-6 py-2 text-base font-medium bg-gradient-to-r from-purple-500 to-pink-500 rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed"
-            onClick={handleNext}
-            disabled={stepIndex >= currentLookup.steps.length - 1}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {stepIndex >= currentLookup.steps.length - 1 ? 'Done' : 'Next →'}
-          </motion.button>
-        </div>
+        <StepControls
+          onPrev={handlePrev}
+          onNext={handleNext}
+          onReset={handleReset}
+          canPrev={stepIndex > 0}
+          canNext={stepIndex < currentLookup.steps.length - 1}
+          stepInfo={{ current: stepIndex + 1, total: currentLookup.steps.length }}
+        />
       )}
 
       {/* Start prompt */}

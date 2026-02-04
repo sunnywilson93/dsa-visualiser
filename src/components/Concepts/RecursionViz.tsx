@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { StepControls } from '@/components/SharedViz'
 
 interface StackFrame {
   fn: string
@@ -27,9 +28,9 @@ interface Example {
 type Level = 'beginner' | 'intermediate' | 'advanced'
 
 const levelInfo: Record<Level, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: '#10b981' },
-  intermediate: { label: 'Intermediate', color: '#f59e0b' },
-  advanced: { label: 'Advanced', color: '#ef4444' }
+  beginner: { label: 'Beginner', color: 'var(--color-emerald-500)' },
+  intermediate: { label: 'Intermediate', color: 'var(--color-amber-500)' },
+  advanced: { label: 'Advanced', color: 'var(--color-red-500)' }
 }
 
 const examples: Record<Level, Example[]> = {
@@ -323,17 +324,17 @@ export function RecursionViz() {
 
   const getPhaseColor = (phase: Step['phase']) => {
     switch (phase) {
-      case 'calling': return '#a855f7'
-      case 'returning': return '#10b981'
-      case 'complete': return '#a855f7'
+      case 'calling': return 'var(--color-purple-500)'
+      case 'returning': return 'var(--color-emerald-500)'
+      case 'complete': return 'var(--color-purple-500)'
     }
   }
 
   const getStatusColor = (status: StackFrame['status']) => {
     switch (status) {
-      case 'active': return '#a855f7'
-      case 'waiting': return '#f59e0b'
-      case 'returning': return '#10b981'
+      case 'active': return 'var(--color-purple-500)'
+      case 'waiting': return 'var(--color-amber-500)'
+      case 'returning': return 'var(--color-emerald-500)'
     }
   }
 
@@ -472,30 +473,14 @@ export function RecursionViz() {
       </AnimatePresence>
 
       {/* Controls */}
-      <div className="flex gap-3 justify-center">
-        <button
-          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          onClick={handlePrev}
-          disabled={stepIndex === 0}
-        >
-          ← Prev
-        </button>
-        <motion.button
-          className="px-6 py-2 text-base font-medium bg-gradient-to-r from-purple-500 to-pink-500 rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNext}
-          disabled={stepIndex >= currentExample.steps.length - 1}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {stepIndex >= currentExample.steps.length - 1 ? 'Done' : 'Next →'}
-        </motion.button>
-        <button
-          className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 hover:bg-white/10 hover:text-white transition-colors"
-          onClick={() => setStepIndex(0)}
-        >
-          ↻ Reset
-        </button>
-      </div>
+      <StepControls
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onReset={() => setStepIndex(0)}
+        canPrev={stepIndex > 0}
+        canNext={stepIndex < currentExample.steps.length - 1}
+        stepInfo={{ current: stepIndex + 1, total: currentExample.steps.length }}
+      />
 
       {/* Key insight */}
       <div className="px-4 py-2.5 bg-amber-500/10 border border-amber-400/20 rounded-lg text-xs text-gray-500 text-center">
