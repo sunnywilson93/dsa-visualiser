@@ -17,7 +17,8 @@
     "check:keyframes": "npx tsx scripts/check-keyframes.ts",
     "tokens:audit": "npx tsx scripts/tokens-audit.ts",
     "test:visual": "npx playwright test",
-    "test:visual:update": "npx playwright test --update-snapshots"
+    "test:visual:update": "npx playwright test --update-snapshots",
+    "prepare": "husky"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
@@ -45,6 +46,7 @@
     "@vitest/coverage-v8": "^4.0.16",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.0",
+    "husky": "^9.1.7",
     "jsdom": "^27.4.0",
     "postcss": "^8.5.6",
     "postcss-value-parser": "^4.2.0",
