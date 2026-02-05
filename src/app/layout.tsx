@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     google: 'VrYpJpsVJz7IC1u0x6Cwe02I9vd2zk8-k5qgqudMOBw',
   },
   title: 'JS Interview Prep - Master JavaScript with Interactive Code Visualization',
-  description: 'Free interactive JavaScript interview preparation. Visualize closures, hoisting, event loop, prototypes, promises, and 100+ coding challenges with step-by-step execution. Ace your frontend interview at FAANG and top tech companies.',
+  description: 'Master JavaScript through interactive visualization. Step through closures, event loop, prototypes, and 100+ coding challenges with real-time execution. Free learning platform for frontend interviews and JavaScript mastery.',
   keywords: 'javascript interview questions, js interview prep, frontend interview, coding interview, javascript visualizer, learn javascript, closures explained, event loop visualization, promise polyfill, array methods, hoisting, this keyword, prototype chain, async await, FAANG interview, web developer interview, javascript tutorial, interactive coding, DSA javascript, algorithm visualization',
   authors: [{ name: 'JS Interview Prep' }],
   robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://jsinterview.dev/',
     title: 'JS Interview Prep - Interactive JavaScript Visualization',
-    description: 'Master JavaScript interviews with interactive code visualization. Learn closures, event loop, promises, and 100+ coding challenges. Free and open source.',
+    description: 'Master JavaScript through interactive visualization. Step through closures, event loop, prototypes, and 100+ coding challenges with real-time execution. Free learning platform.',
     images: [
       {
         url: 'https://jsinterview.dev/og-image.png',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'JS Interview Prep - Interactive JavaScript Visualization',
-    description: 'Master JavaScript interviews with interactive code visualization. Learn closures, event loop, promises, and 100+ coding challenges.',
+    description: 'Master JavaScript through interactive visualization. Step through closures, event loop, prototypes, and 100+ coding challenges with real-time execution.',
     images: ['https://jsinterview.dev/og-image.png'],
   },
   metadataBase: new URL('https://jsinterview.dev'),
@@ -58,14 +58,14 @@ const jsonLd = {
     "name": "JS Interview Prep",
     "alternateName": ["JavaScript Interview Preparation", "JS Interview"],
     "url": "https://jsinterview.dev",
-    "description": "Interactive JavaScript interview preparation with code visualization",
+    "description": "Master JavaScript through interactive visualization and real-time code execution",
   },
   education: {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     "name": "JS Interview Prep",
     "url": "https://jsinterview.dev",
-    "description": "Free interactive platform to master JavaScript concepts for technical interviews",
+    "description": "Free interactive platform to master JavaScript through visualization for learning and technical interviews",
     "areaServed": "Worldwide",
   },
   app: {

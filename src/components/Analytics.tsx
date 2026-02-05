@@ -1,23 +1,33 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import Script from 'next/script'
 
 const GA_MEASUREMENT_ID = 'G-W2VCY1D7Y7'
+const PRODUCTION_HOSTNAME = 'jsinterview.dev'
 
 export function Analytics() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const [isProduction, setIsProduction] = useState(false)
 
   useEffect(() => {
-    if (typeof window.gtag !== 'function') return
+    setIsProduction(window.location.hostname === PRODUCTION_HOSTNAME)
+  }, [])
+
+  useEffect(() => {
+    if (!isProduction || typeof window.gtag !== 'function') return
 
     const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '')
     window.gtag('config', GA_MEASUREMENT_ID, {
       page_path: url,
     })
-  }, [pathname, searchParams])
+  }, [pathname, searchParams, isProduction])
+
+  if (!isProduction) {
+    return null
+  }
 
   return (
     <>
