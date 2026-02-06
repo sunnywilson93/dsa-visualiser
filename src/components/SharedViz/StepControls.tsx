@@ -1,6 +1,9 @@
+import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Play, Pause, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react'
 import { cn } from '@/utils/cn'
+import { useKeyboardShortcuts } from '@/hooks'
+import type { ShortcutMap } from '@/hooks'
 
 export interface StepControlsProps {
   onPrev: () => void
@@ -32,6 +35,33 @@ export function StepControls({
 }: StepControlsProps) {
   const computedNextLabel = nextLabel ?? (canNext ? 'Next' : 'Done')
 
+  // Keyboard shortcuts for all concept visualizations
+  const shortcuts = useMemo<ShortcutMap>(() => ({
+    'ArrowRight': {
+      action: () => { if (canNext) onNext() },
+      description: 'Next step',
+      group: 'Navigation',
+    },
+    'ArrowLeft': {
+      action: () => { if (canPrev) onPrev() },
+      description: 'Previous step',
+      group: 'Navigation',
+    },
+    'Space': {
+      action: () => {
+        if (onPlayPause) onPlayPause()
+        else if (canNext) onNext()
+      },
+      description: onPlayPause ? 'Play / Pause' : 'Next step',
+      group: 'Playback',
+    },
+    'Escape': {
+      action: onReset,
+      description: 'Reset',
+      group: 'Navigation',
+    },
+  }), [canNext, canPrev, onNext, onPrev, onPlayPause, onReset])
+
   const handlePrev = () => {
     if (isPlaying && onPlayPause) {
       onPlayPause()
@@ -52,6 +82,8 @@ export function StepControls({
     }
     onReset()
   }
+
+  useKeyboardShortcuts(shortcuts)
 
   const secondaryButtonClass = cn(
     'flex items-center justify-center gap-1 px-3 py-2 text-sm min-h-[44px]',

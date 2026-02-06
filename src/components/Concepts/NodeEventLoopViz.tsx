@@ -658,23 +658,6 @@ export function NodeEventLoopViz() {
 
   const handleReset = useCallback(() => setStepIndex(0), [])
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
-      if (e.key === 'ArrowRight' || e.key === ' ') {
-        e.preventDefault()
-        handleNext()
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault()
-        handlePrev()
-      } else if (e.key === 'r' || e.key === 'R') {
-        e.preventDefault()
-        handleReset()
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handleNext, handlePrev, handleReset])
 
   const isLastStep = stepIndex >= currentExample.steps.length - 1
   const progressPercent = ((stepIndex + 1) / currentExample.steps.length) * 100

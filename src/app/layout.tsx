@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Analytics } from '@/components/Analytics'
 import { SiteFooter } from '@/components/SiteFooter'
+import { ShortcutOverlay } from '@/components/ShortcutOverlay'
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {
@@ -104,6 +105,7 @@ export default function RootLayout({
       <body>
         {children}
         <SiteFooter />
+        <ShortcutOverlay />
         <Suspense fallback={null}>
           <Analytics />
         </Suspense>

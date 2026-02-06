@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { Play, SkipBack, SkipForward, RotateCcw, AlertTriangle, Pause } from 'lucide-react'
+import { AlertTriangle } from 'lucide-react'
 import { analyzeEventLoop, EventLoopStep, AnalyzerWarning } from '@/engine/eventLoopAnalyzer'
 import { NavBar } from '@/components/NavBar'
 import { PlaygroundEditor } from '@/components/EventLoopPlayground/PlaygroundEditor'
 import { EventLoopDisplay } from '@/components/EventLoopPlayground/EventLoopDisplay'
+import { StepControls } from '@/components/SharedViz'
 
 
 interface Example {
@@ -216,13 +217,15 @@ export default function EventLoopPlaygroundClient() {
       </header>
 
       {/* Example selector */}
-      <div className="flex items-center gap-3 flex-wrap justify-center p-3 bg-bg-secondary border border-border-secondary rounded-lg">
-        <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">Examples:</span>
+      <div className="flex items-center gap-2 flex-wrap justify-center bg-white-3 border border-white-8 rounded-full p-[0.35rem] shadow-[inset_0_0_0_1px_var(--color-white-2)]">
+        <span className="text-xs font-semibold text-text-muted uppercase tracking-wider pl-2">Examples:</span>
         <div className="flex gap-2 flex-wrap max-[600px]:justify-center">
           {examples.map(ex => (
             <button
               key={ex.id}
-              className={`py-1 px-3 font-sans text-xs bg-white-4 border border-border-secondary rounded-full text-text-muted cursor-pointer transition-all duration-150 hover:bg-white-8 hover:text-text-primary ${selectedExample === ex.id ? 'bg-brand-primary-20 border-brand-primary-50 text-text-bright shadow-[0_0_10px_var(--color-brand-primary-20)]' : ''}`}
+              className={`py-1.5 px-3 font-sans text-xs rounded-full cursor-pointer transition-all duration-150 ${selectedExample === ex.id
+                ? 'bg-neon-viz-18 border border-neon-viz-70 text-text-bright shadow-[0_0_12px_var(--color-neon-viz-25)]'
+                : 'bg-white-4 border border-white-8 text-text-muted hover:bg-white-8 hover:text-text-primary'}`}
               onClick={() => handleExampleChange(ex.id)}
             >
               {ex.title}
@@ -277,46 +280,22 @@ export default function EventLoopPlaygroundClient() {
 
       {/* Controls */}
       {steps.length > 0 && (
-        <div className="flex items-center justify-center gap-3 p-3 bg-bg-secondary border border-border-secondary rounded-lg">
-          <button
-            className="flex items-center justify-center w-9 h-9 bg-white-5 border border-border-secondary rounded-lg text-text-muted cursor-pointer transition-all duration-150 hover:bg-white-10 hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
-            onClick={handleReset}
-            title="Reset"
-          >
-            <RotateCcw size={16} />
-          </button>
-          <button
-            className="flex items-center justify-center w-9 h-9 bg-white-5 border border-border-secondary rounded-lg text-text-muted cursor-pointer transition-all duration-150 hover:bg-white-10 hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
-            onClick={handlePrev}
-            disabled={currentStepIndex === 0}
-            title="Previous step"
-          >
-            <SkipBack size={16} />
-          </button>
-          <button
-            className="flex items-center justify-center w-11 h-11 bg-gradient-to-br from-brand-primary to-brand-secondary border-none text-white cursor-pointer transition-all duration-150 hover:brightness-110 hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed"
-            onClick={togglePlay}
-            title={isPlaying ? 'Pause' : 'Play'}
-          >
-            {isPlaying ? <Pause size={18} /> : <Play size={18} />}
-          </button>
-          <button
-            className="flex items-center justify-center w-9 h-9 bg-white-5 border border-border-secondary rounded-lg text-text-muted cursor-pointer transition-all duration-150 hover:bg-white-10 hover:text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
-            onClick={handleNext}
-            disabled={currentStepIndex >= steps.length - 1}
-            title="Next step"
-          >
-            <SkipForward size={16} />
-          </button>
-          <div className="text-sm font-medium text-text-muted min-w-20 text-center">
-            Step {currentStepIndex + 1} / {steps.length}
-          </div>
-        </div>
+        <StepControls
+          onPrev={handlePrev}
+          onNext={handleNext}
+          onReset={handleReset}
+          canPrev={currentStepIndex > 0}
+          canNext={currentStepIndex < steps.length - 1}
+          isPlaying={isPlaying}
+          onPlayPause={togglePlay}
+          showPlayPause
+          stepInfo={{ current: currentStepIndex + 1, total: steps.length }}
+        />
       )}
 
         {/* Step description */}
         {steps.length > 0 && currentStep && (
-          <div className="flex items-center gap-3 p-3 px-4 bg-bg-secondary border border-border-secondary rounded-lg">
+          <div className="flex items-center gap-3 p-3 px-4 bg-brand-primary-8 border border-brand-primary-20 rounded-lg">
             <span className="py-0.5 px-2.5 rounded-full text-2xs font-semibold text-white flex-shrink-0 [&[data-phase='sync']]:bg-brand-primary [&[data-phase='micro']]:bg-brand-primary [&[data-phase='macro']]:bg-amber-500 [&[data-phase='idle']]:bg-gray-800" data-phase={currentStep.phase}>
               {currentStep.phase === 'sync' ? 'Sync' :
                currentStep.phase === 'micro' ? 'Microtask' :

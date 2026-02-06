@@ -1,9 +1,11 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, SkipBack, SkipForward, RotateCcw, Lightbulb } from 'lucide-react'
 import type { ConceptStep, ConceptType } from '@/types'
+import { useKeyboardShortcuts } from '@/hooks'
+import type { ShortcutMap } from '@/hooks'
 import { TwoPointersConcept } from './TwoPointersConcept'
 import { BitManipulationConcept } from './BitManipulationConcept'
 
@@ -65,25 +67,31 @@ export function ConceptPanel({
     setIsPlaying((prev) => !prev)
   }, [currentStep, totalSteps])
 
-  // Keyboard controls
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
-        return
-      }
+  // Keyboard shortcuts (unified with rest of app)
+  const shortcuts = useMemo<ShortcutMap>(() => ({
+    'ArrowRight': {
+      action: handleNext,
+      description: 'Next step',
+      group: 'Navigation',
+    },
+    'ArrowLeft': {
+      action: handlePrev,
+      description: 'Previous step',
+      group: 'Navigation',
+    },
+    'Space': {
+      action: handlePlayPause,
+      description: 'Play / Pause',
+      group: 'Playback',
+    },
+    'Escape': {
+      action: handleReset,
+      description: 'Reset',
+      group: 'Navigation',
+    },
+  }), [handleNext, handlePrev, handlePlayPause, handleReset])
 
-      if (e.key === 'ArrowLeft' && e.shiftKey) {
-        e.preventDefault()
-        handlePrev()
-      } else if (e.key === 'ArrowRight' && e.shiftKey) {
-        e.preventDefault()
-        handleNext()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handlePrev, handleNext])
+  useKeyboardShortcuts(shortcuts)
 
   const renderVisualization = () => {
     switch (type) {
@@ -157,7 +165,7 @@ export function ConceptPanel({
               className="flex items-center justify-center w-7 h-7 bg-white/5 border border-white/15 rounded-md text-gray-400 hover:not-disabled:bg-[var(--color-brand-primary-15)] hover:not-disabled:border-[var(--color-brand-primary-40)] hover:not-disabled:text-white hover:not-disabled:shadow-[var(--glow-md)_var(--color-brand-primary-20)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
               onClick={handlePrev}
               disabled={currentStep === 0}
-              title="Previous (Shift+Left)"
+              title="Previous (←)"
             >
               <SkipBack size={14} />
             </button>
@@ -174,7 +182,7 @@ export function ConceptPanel({
               className="flex items-center justify-center w-7 h-7 bg-white/5 border border-white/15 rounded-md text-gray-400 hover:not-disabled:bg-[var(--color-brand-primary-15)] hover:not-disabled:border-[var(--color-brand-primary-40)] hover:not-disabled:text-white hover:not-disabled:shadow-[var(--glow-md)_var(--color-brand-primary-20)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
               onClick={handleNext}
               disabled={currentStep === totalSteps - 1}
-              title="Next (Shift+Right)"
+              title="Next (→)"
             >
               <SkipForward size={14} />
             </button>

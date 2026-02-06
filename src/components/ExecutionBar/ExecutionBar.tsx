@@ -1,8 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
 import { Play, Pause, SkipForward, SkipBack, RotateCcw, FastForward, Sparkles } from 'lucide-react'
 import { useExecutionStore, useExecutionProgress, useCurrentStep } from '@/store'
+import { useKeyboardShortcuts } from '@/hooks'
+import type { ShortcutMap } from '@/hooks'
 import type { PlaybackSpeed } from '@/types'
 
 const SPEED_MS: Record<PlaybackSpeed, number> = {
@@ -56,40 +58,77 @@ export function ExecutionBar() {
     }
   }, [isPlaying, status, playbackSpeed, stepForward, pause])
 
-  // Keyboard shortcuts
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
-      return
-    }
-
-    switch (e.key) {
-      case ' ':
-        e.preventDefault()
-        if (status === 'idle') {
-          startExecution()
-        } else {
-          togglePlayback()
+  // Centralized keyboard shortcuts
+  const shortcuts = useMemo<ShortcutMap>(() => ({
+    'Space': {
+      action: () => {
+        if (status === 'idle') startExecution()
+        else togglePlayback()
+      },
+      description: 'Play / Pause',
+      group: 'Playback',
+    },
+    'ArrowRight': {
+      action: stepForward,
+      description: 'Step forward',
+      group: 'Navigation',
+      when: () => useExecutionStore.getState().status !== 'idle',
+    },
+    'ArrowLeft': {
+      action: stepBackward,
+      description: 'Step backward',
+      group: 'Navigation',
+      when: () => useExecutionStore.getState().status !== 'idle',
+    },
+    'Escape': {
+      action: reset,
+      description: 'Reset',
+      group: 'Navigation',
+    },
+    'e': {
+      action: runToCompletion,
+      description: 'Run to end',
+      group: 'Playback',
+      when: () => useExecutionStore.getState().status !== 'idle',
+    },
+    'b': {
+      action: () => {
+        const { steps, currentStep } = useExecutionStore.getState()
+        const step = steps[currentStep]
+        if (step?.location?.line) {
+          useExecutionStore.getState().toggleBreakpoint(step.location.line)
         }
-        break
-      case 'ArrowRight':
-        e.preventDefault()
-        if (status !== 'idle') stepForward()
-        break
-      case 'ArrowLeft':
-        e.preventDefault()
-        if (status !== 'idle') stepBackward()
-        break
-      case 'Escape':
-        e.preventDefault()
-        reset()
-        break
-    }
-  }, [status, startExecution, togglePlayback, stepForward, stepBackward, reset])
+      },
+      description: 'Toggle breakpoint',
+      group: 'Editor',
+      when: () => useExecutionStore.getState().status !== 'idle',
+    },
+    '1': {
+      action: () => setPlaybackSpeed('slow'),
+      description: 'Speed: 0.5x',
+      group: 'Playback',
+    },
+    '2': {
+      action: () => setPlaybackSpeed('medium'),
+      description: 'Speed: 1x',
+      group: 'Playback',
+    },
+    '3': {
+      action: () => setPlaybackSpeed('fast'),
+      description: 'Speed: 2x',
+      group: 'Playback',
+    },
+    'f': {
+      action: () => {
+        const textarea = document.querySelector('.monaco-editor textarea') as HTMLElement | null
+        textarea?.focus()
+      },
+      description: 'Focus editor',
+      group: 'Editor',
+    },
+  }), [status, startExecution, togglePlayback, stepForward, stepBackward, reset, runToCompletion, setPlaybackSpeed])
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handleKeyDown])
+  useKeyboardShortcuts(shortcuts)
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const step = parseInt(e.target.value, 10)
@@ -108,7 +147,7 @@ export function ExecutionBar() {
         <span>•</span>
         <span><kbd className="px-2 py-1 bg-bg-tertiary rounded text-text-secondary font-mono">←</kbd> <kbd className="px-2 py-1 bg-bg-tertiary rounded text-text-secondary font-mono">→</kbd> to step</span>
         <span>•</span>
-        <span><kbd className="px-2 py-1 bg-bg-tertiary rounded text-text-secondary font-mono">Esc</kbd> to reset</span>
+        <span><kbd className="px-2 py-1 bg-bg-tertiary rounded text-text-secondary font-mono">?</kbd> all shortcuts</span>
       </div>
     )
   }
