@@ -5,9 +5,19 @@ export type DifficultyLevel = 'easy' | 'medium' | 'hard' | 'beginner' | 'interme
 interface DifficultyIndicatorProps {
   level: DifficultyLevel
   size?: 'sm' | 'md' | 'lg'
+  showLabel?: boolean
 }
 
-const levelToDisplay: Record<DifficultyLevel, string> = {
+const levelToFilled: Record<DifficultyLevel, number> = {
+  easy: 1,
+  beginner: 1,
+  medium: 2,
+  intermediate: 2,
+  hard: 3,
+  advanced: 3,
+}
+
+const levelToLabel: Record<DifficultyLevel, string> = {
   easy: 'Easy',
   beginner: 'Easy',
   medium: 'Med',
@@ -25,31 +35,61 @@ const levelToColor: Record<DifficultyLevel, string> = {
   advanced: 'var(--difficulty-3)',
 }
 
-const sizeClasses = {
-  sm: 'text-xs py-0.5 px-1.5',
-  md: 'text-xs py-0.5 px-2',
-  lg: 'text-sm py-1 px-2.5',
+const TOTAL_BARS = 3
+
+const barSizes = {
+  sm: { width: 3, height: 10, gap: 2, fontSize: 'text-2xs' },
+  md: { width: 4, height: 12, gap: 2, fontSize: 'text-xs' },
+  lg: { width: 5, height: 14, gap: 3, fontSize: 'text-xs' },
 }
 
 export function DifficultyIndicator({
   level,
   size = 'md',
+  showLabel = true,
 }: DifficultyIndicatorProps) {
-  const displayText = levelToDisplay[level]
+  const filled = levelToFilled[level]
+  const label = levelToLabel[level]
   const color = levelToColor[level]
+  const dims = barSizes[size]
 
   return (
     <span
-      className={`inline-flex items-center font-semibold rounded-md ${sizeClasses[size]}`}
-      style={{
-        color,
-        backgroundColor: `color-mix(in srgb, ${color} 15%, transparent)`,
-        border: `1px solid color-mix(in srgb, ${color} 30%, transparent)`,
-      }}
+      className="inline-flex items-center"
+      style={{ gap: dims.gap + 4 }}
       role="status"
       aria-label={`Difficulty: ${level}`}
     >
-      {displayText}
+      <span
+        className="inline-flex items-end"
+        style={{ gap: dims.gap }}
+        aria-hidden="true"
+      >
+        {Array.from({ length: TOTAL_BARS }, (_, i) => {
+          const isFilled = i < filled
+          return (
+            <span
+              key={i}
+              style={{
+                width: dims.width,
+                height: dims.height - (TOTAL_BARS - 1 - i) * 2,
+                borderRadius: 1,
+                backgroundColor: isFilled ? color : 'rgba(255,255,255,0.1)',
+                boxShadow: isFilled ? `0 0 6px ${color}` : 'none',
+                transition: 'all 0.2s ease',
+              }}
+            />
+          )
+        })}
+      </span>
+      {showLabel && (
+        <span
+          className={`${dims.fontSize} font-semibold leading-none`}
+          style={{ color }}
+        >
+          {label}
+        </span>
+      )}
     </span>
   )
 }

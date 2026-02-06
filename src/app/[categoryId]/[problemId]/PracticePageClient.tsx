@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic'
 import { Zap } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { NavBar } from '@/components/NavBar'
+import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import { ExecutionBar } from '@/components/ExecutionBar'
 import { UnifiedVisualization } from '@/components/UnifiedVisualization'
 import { useExecutionStore } from '@/store'
@@ -83,12 +84,6 @@ export default function PracticePageClient() {
     )
   }
 
-  const difficultyClasses: Record<string, string> = {
-    easy: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-    medium: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-    hard: 'bg-red-500/20 text-red-400 border-red-500/30',
-  }
-
   const isIdle = status === 'idle'
 
   return (
@@ -100,9 +95,7 @@ export default function PracticePageClient() {
       <header className="flex items-center gap-4 px-4 py-2 border-b border-border-primary bg-bg-secondary/50">
         <div className="flex items-center gap-3 min-w-0">
           <h1 className="text-base font-semibold text-text-primary truncate">{problem.name}</h1>
-          <span className={`text-xs font-medium px-2 py-0.5 rounded border flex-shrink-0 ${difficultyClasses[problem.difficulty]}`}>
-            {problem.difficulty}
-          </span>
+          <DifficultyIndicator level={problem.difficulty} size="sm" />
         </div>
 
         <div className="flex-1" />

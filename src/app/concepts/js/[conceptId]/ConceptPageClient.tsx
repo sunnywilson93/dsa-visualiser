@@ -8,14 +8,24 @@ import { ArrowLeft, Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2, Ham
 import { NavBar } from '@/components/NavBar'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ConceptIcon } from '@/components/Icons'
+import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import { getConceptById, getRelatedConcepts, getRelatedProblems, concepts as jsConcepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
 import { codeExamples } from '@/data/examples'
 
 // Lazy load visualizations - each loads only when its concept page is visited
 const visualizations: Record<string, React.ComponentType> = {
-  // Beginner
+  // Philosophy
   'js-philosophy': dynamic(() => import('@/components/Concepts/JSPhilosophyViz').then(m => m.JSPhilosophyViz)),
+
+  // Engineering Foundations
+  'mental-execution-model': dynamic(() => import('@/components/Concepts/MentalExecutionModelViz').then(m => m.MentalExecutionModelViz)),
+  'values-and-memory': dynamic(() => import('@/components/Concepts/ValuesAndMemoryViz').then(m => m.ValuesAndMemoryViz)),
+  'expressions-vs-statements': dynamic(() => import('@/components/Concepts/ExpressionsVsStatementsViz').then(m => m.ExpressionsVsStatementsViz)),
+  'reading-code': dynamic(() => import('@/components/Concepts/ReadingCodeViz').then(m => m.ReadingCodeViz)),
+  'debugging-mindset': dynamic(() => import('@/components/Concepts/DebuggingMindsetViz').then(m => m.DebuggingMindsetViz)),
+
+  // Beginner Basics
   'variables': dynamic(() => import('@/components/Concepts/VariablesViz').then(m => m.VariablesViz)),
   'data-types': dynamic(() => import('@/components/Concepts/DataTypesViz').then(m => m.DataTypesViz)),
   'operators': dynamic(() => import('@/components/Concepts/OperatorsViz').then(m => m.OperatorsViz)),
@@ -127,12 +137,6 @@ const visualizations: Record<string, React.ComponentType> = {
   'coercion-edge-cases': dynamic(() => import('@/components/Concepts/TypeCoercionViz').then(m => m.TypeCoercionViz)),
 }
 
-const difficultyColors = {
-  beginner: 'var(--color-emerald-500)',
-  intermediate: 'var(--color-amber-500)',
-  advanced: 'var(--color-red-500)',
-}
-
 // Helper to determine if a concept is a JS concept or DSA concept
 function getConceptParentSection(conceptId: string): { label: string; path: string } {
   const isJsConcept = jsConcepts.some(c => c.id === conceptId)
@@ -196,12 +200,7 @@ export default function ConceptPageClient(): JSX.Element {
             <h1 className="m-0 text-[var(--text-3xl)] font-bold text-white max-md:text-[var(--text-2xl)]">
               {concept.title}
             </h1>
-            <span
-              className="rounded-[var(--radius-sm)] px-2.5 py-[var(--spacing-xs)] text-[var(--text-xs)] font-semibold uppercase tracking-wide text-white"
-              style={{ background: difficultyColors[concept.difficulty] }}
-            >
-              {concept.difficulty}
-            </span>
+            <DifficultyIndicator level={concept.difficulty} size="md" />
           </div>
 
           <p className="m-0 text-[var(--text-md)] leading-[1.7] text-[var(--color-gray-400)] max-md:text-base">
@@ -343,13 +342,7 @@ export default function ConceptPageClient(): JSX.Element {
                   >
                     <div className="flex items-center justify-between gap-[var(--spacing-sm)]">
                       <h3 className="m-0 text-[0.95rem] font-semibold text-white">{problem.name}</h3>
-                      <span className={`rounded-[var(--radius-sm)] px-2 py-0.5 text-[var(--text-2xs)] font-semibold uppercase tracking-wide text-white ${
-                        problem.difficulty === 'easy' ? 'bg-[var(--color-emerald-500)]' : 
-                        problem.difficulty === 'medium' ? 'bg-[var(--color-amber-500)]' : 
-                        'bg-[var(--color-red-500)]'
-                      }`}>
-                        {problem.difficulty}
-                      </span>
+                      <DifficultyIndicator level={problem.difficulty} size="sm" />
                     </div>
                     <p className="m-0 text-[var(--text-sm)] leading-[var(--leading-snug)] text-[var(--color-gray-500)]">
                       {problem.description}

@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, Lightbulb, AlertTriangle, Award, Clock, Gamepad2, Code2, Target, Link2 } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { ConceptIcon } from '@/components/Icons'
+import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import { getDSAConceptById, getRelatedDSAConcepts } from '@/data/dsaConcepts'
 import {
   HashTableViz,
@@ -26,12 +27,6 @@ const visualizations: Record<string, React.ComponentType> = {
   'stacks': StackViz,
   'queues': QueueViz,
   'linked-lists': LinkedListViz,
-}
-
-const difficultyColors = {
-  beginner: 'var(--color-emerald-500)',
-  intermediate: 'var(--color-amber-500)',
-  advanced: 'var(--color-red-500)',
 }
 
 export default function DSAConceptPageClient(): JSX.Element {
@@ -81,12 +76,7 @@ export default function DSAConceptPageClient(): JSX.Element {
             <h1 className="m-0 text-[var(--text-3xl)] font-bold text-white max-md:text-[var(--text-2xl)]">
               {concept.title}
             </h1>
-            <span
-              className="rounded-[var(--radius-sm)] px-2.5 py-[var(--spacing-xs)] text-[var(--text-xs)] font-semibold uppercase tracking-wide text-white"
-              style={{ background: difficultyColors[concept.difficulty] }}
-            >
-              {concept.difficulty}
-            </span>
+            <DifficultyIndicator level={concept.difficulty} size="md" />
           </div>
 
           <p className="mb-[var(--spacing-lg)] text-[var(--text-md)] leading-[1.7] text-[var(--color-gray-400)] max-md:text-base">
