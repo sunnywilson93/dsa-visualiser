@@ -1,6 +1,7 @@
 'use client'
 
-import { Search, Layers } from 'lucide-react'
+import Link from 'next/link'
+import { Search, Layers, ArrowRight } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { SearchResultsList, usePageSearch, PageSearchControls } from '@/components/Search'
 import { ConceptIcon } from '@/components/Icons'
@@ -67,6 +68,9 @@ export default function DSAConceptsClient() {
                       <ConceptIcon conceptId={category.id} size={20} />
                     </span>
                     {category.name}
+                    <span className="text-xs font-medium text-text-muted bg-white/5 px-2 py-0.5 rounded-full">
+                      {categoryConcepts.length}
+                    </span>
                     <span className="text-base font-normal text-text-muted ml-auto max-md:w-full max-md:ml-0 max-md:mt-1">
                       {category.description}
                     </span>
@@ -100,6 +104,9 @@ export default function DSAConceptsClient() {
                   <Layers size={20} />
                 </span>
                 Algorithm Patterns
+                <span className="text-xs font-medium text-text-muted bg-white/5 px-2 py-0.5 rounded-full">
+                  {dsaPatterns.length}
+                </span>
                 <span className="text-base font-normal text-text-muted ml-auto max-md:w-full max-md:ml-0 max-md:mt-1">
                   Step-by-step visualizations of common algorithm patterns
                 </span>
@@ -129,7 +136,16 @@ export default function DSAConceptsClient() {
       </main>
 
       <footer className="text-center p-8 text-text-muted text-base max-md:p-6">
-        <p>More patterns coming soon!</p>
+        <p className="m-0 mb-2">
+          {dsaConcepts.length} concepts across {dsaConceptCategories.length} topics &middot; {dsaPatterns.length} algorithm patterns
+        </p>
+        <Link
+          href="/concepts/js"
+          className="inline-flex items-center gap-1.5 text-brand-primary hover:text-brand-secondary transition-colors no-underline text-sm font-medium"
+        >
+          Explore JavaScript Concepts
+          <ArrowRight size={14} />
+        </Link>
       </footer>
     </div>
   )

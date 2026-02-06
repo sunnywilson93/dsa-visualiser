@@ -1,6 +1,7 @@
 'use client'
 
-import { Search } from 'lucide-react'
+import Link from 'next/link'
+import { Search, ArrowRight } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { SearchResultsList } from '@/components/Search'
 import { usePageSearch } from '@/components/Search'
@@ -73,6 +74,9 @@ export default function JSConceptsClient() {
                         <ConceptIcon conceptId={category.id} size={20} />
                       </span>
                       {category.name}
+                      <span className="text-xs font-medium text-text-muted bg-white/5 px-2 py-0.5 rounded-full">
+                        {categoryConcepts.length}
+                      </span>
                       <span className="text-base font-normal text-text-muted ml-auto max-md:w-full max-md:ml-0 max-md:mt-1">
                         {category.description}
                       </span>
@@ -85,10 +89,13 @@ export default function JSConceptsClient() {
                       if (subcategoryConcepts.length === 0) return null
 
                       return (
-                        <div key={subcategoryId} className="mb-8">
-                          <h3 className="flex items-center gap-3 text-lg font-semibold text-text-bright m-0 mb-3">
-                            <ConceptIcon conceptId={subcategoryConcepts[0]?.id || subcategoryId} size={20} />
+                        <div key={subcategoryId} className="mb-8 pl-4 border-l-2 border-l-brand-primary/20">
+                          <h3 className="flex items-center gap-3 text-base font-semibold text-text-bright m-0 mb-3">
+                            <ConceptIcon conceptId={subcategoryConcepts[0]?.id || subcategoryId} size={18} />
                             {subcategory.name}
+                            <span className="text-xs font-medium text-text-muted bg-white/5 px-2 py-0.5 rounded-full">
+                              {subcategoryConcepts.length}
+                            </span>
                             <span className="text-sm font-normal text-text-muted ml-auto">
                               {subcategory.description}
                             </span>
@@ -126,6 +133,9 @@ export default function JSConceptsClient() {
                       <ConceptIcon conceptId={category.id} size={20} />
                     </span>
                     {category.name}
+                    <span className="text-xs font-medium text-text-muted bg-white/5 px-2 py-0.5 rounded-full">
+                      {categoryConcepts.length}
+                    </span>
                     <span className="text-base font-normal text-text-muted ml-auto max-md:w-full max-md:ml-0 max-md:mt-1">
                       {category.description}
                     </span>
@@ -157,7 +167,16 @@ export default function JSConceptsClient() {
       </main>
 
       <footer className="text-center p-8 text-text-muted text-base max-md:p-6">
-        <p>More concepts coming soon!</p>
+        <p className="m-0 mb-2">
+          {concepts.length} concepts across {conceptCategories.length} topics
+        </p>
+        <Link
+          href="/concepts/dsa"
+          className="inline-flex items-center gap-1.5 text-brand-primary hover:text-brand-secondary transition-colors no-underline text-sm font-medium"
+        >
+          Explore DSA Concepts
+          <ArrowRight size={14} />
+        </Link>
       </footer>
     </div>
   )
