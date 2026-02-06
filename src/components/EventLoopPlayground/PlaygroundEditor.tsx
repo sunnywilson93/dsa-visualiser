@@ -23,6 +23,8 @@ export function PlaygroundEditor({
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
   const monacoRef = useRef<Monaco | null>(null)
   const decorationsRef = useRef<string[]>([])
+  const onAnalyzeRef = useRef(onAnalyze)
+  onAnalyzeRef.current = onAnalyze
 
   const handleEditorMount: OnMount = useCallback((editor, monaco) => {
     editorRef.current = editor
@@ -56,9 +58,9 @@ export function PlaygroundEditor({
 
     // Add keyboard shortcut for analyze
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
-      onAnalyze()
+      onAnalyzeRef.current()
     })
-  }, [onAnalyze])
+  }, [])
 
   // Update decorations when current line changes
   useEffect(() => {

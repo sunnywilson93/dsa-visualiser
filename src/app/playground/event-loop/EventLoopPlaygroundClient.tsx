@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, Zap } from 'lucide-react'
 import { analyzeEventLoop, EventLoopStep, AnalyzerWarning } from '@/engine/eventLoopAnalyzer'
 import { NavBar } from '@/components/NavBar'
 import { PlaygroundEditor } from '@/components/EventLoopPlayground/PlaygroundEditor'
@@ -202,6 +202,18 @@ export default function EventLoopPlaygroundClient() {
     }
   }, [currentStepIndex, steps.length, isPlaying])
 
+  // Page-level Ctrl+Enter shortcut for Analyze
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault()
+        handleAnalyze()
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [handleAnalyze])
+
   return (
     <>
       <NavBar breadcrumbs={[
@@ -235,9 +247,9 @@ export default function EventLoopPlaygroundClient() {
       </div>
 
       {/* Main content */}
-      <div className="grid grid-cols-2 gap-5 min-h-[500px] max-[900px]:grid-cols-1">
+      <div className="grid grid-cols-2 gap-5 min-h-[420px] max-[900px]:grid-cols-1">
         {/* Left side: Editor */}
-        <div className="flex flex-col gap-3 min-h-[500px] max-[900px]:min-h-[350px]">
+        <div className="flex flex-col gap-3 max-[900px]:min-h-[350px]">
           <PlaygroundEditor
             code={code}
             onChange={setCode}
@@ -260,6 +272,33 @@ export default function EventLoopPlaygroundClient() {
               </ul>
             </div>
           )}
+
+          {/* Controls (in left column for above-fold visibility) */}
+          {steps.length > 0 && (
+            <StepControls
+              onPrev={handlePrev}
+              onNext={handleNext}
+              onReset={handleReset}
+              canPrev={currentStepIndex > 0}
+              canNext={currentStepIndex < steps.length - 1}
+              isPlaying={isPlaying}
+              onPlayPause={togglePlay}
+              showPlayPause
+              stepInfo={{ current: currentStepIndex + 1, total: steps.length }}
+            />
+          )}
+
+          {/* Step description */}
+          {steps.length > 0 && currentStep && (
+            <div className="flex items-center gap-3 p-3 px-4 bg-brand-primary-8 border border-brand-primary-20 rounded-lg">
+              <span className="py-0.5 px-2.5 rounded-full text-2xs font-semibold text-white flex-shrink-0 [&[data-phase='sync']]:bg-brand-primary [&[data-phase='micro']]:bg-brand-primary [&[data-phase='macro']]:bg-amber-500 [&[data-phase='idle']]:bg-gray-800" data-phase={currentStep.phase}>
+                {currentStep.phase === 'sync' ? 'Sync' :
+                 currentStep.phase === 'micro' ? 'Microtask' :
+                 currentStep.phase === 'macro' ? 'Macrotask' : 'Idle'}
+              </span>
+              <span className="text-base text-text-primary">{currentStep.description}</span>
+            </div>
+          )}
         </div>
 
         {/* Right side: Visualization */}
@@ -267,43 +306,21 @@ export default function EventLoopPlaygroundClient() {
           {steps.length > 0 && currentStep ? (
             <EventLoopDisplay step={currentStep} />
           ) : (
-            <div className="flex flex-col items-center justify-center h-full text-center text-text-secondary">
-              <div className="text-5xl mb-6">⚡</div>
-              <p>Click <strong>Analyze</strong> to visualize the event loop</p>
-              <p className="text-sm opacity-70">
-                Or select an example above to get started
-              </p>
+            <div className="flex flex-col items-center justify-center h-full text-center text-text-secondary gap-3">
+              <div className="w-14 h-14 rounded-full bg-brand-primary-8 border border-brand-primary-20 flex items-center justify-center">
+                <Zap size={24} className="text-brand-primary" />
+              </div>
+              <div>
+                <p className="text-base font-semibold text-text-primary m-0 mb-1">Ready to analyze</p>
+                <p className="text-sm text-text-secondary m-0">
+                  Click <strong>Analyze</strong> or press{' '}
+                  <kbd className="px-1.5 py-0.5 bg-white-8 border border-white-12 rounded text-2xs font-mono text-text-muted">Ctrl+Enter</kbd>
+                </p>
+              </div>
             </div>
           )}
         </div>
       </div>
-
-      {/* Controls */}
-      {steps.length > 0 && (
-        <StepControls
-          onPrev={handlePrev}
-          onNext={handleNext}
-          onReset={handleReset}
-          canPrev={currentStepIndex > 0}
-          canNext={currentStepIndex < steps.length - 1}
-          isPlaying={isPlaying}
-          onPlayPause={togglePlay}
-          showPlayPause
-          stepInfo={{ current: currentStepIndex + 1, total: steps.length }}
-        />
-      )}
-
-        {/* Step description */}
-        {steps.length > 0 && currentStep && (
-          <div className="flex items-center gap-3 p-3 px-4 bg-brand-primary-8 border border-brand-primary-20 rounded-lg">
-            <span className="py-0.5 px-2.5 rounded-full text-2xs font-semibold text-white flex-shrink-0 [&[data-phase='sync']]:bg-brand-primary [&[data-phase='micro']]:bg-brand-primary [&[data-phase='macro']]:bg-amber-500 [&[data-phase='idle']]:bg-gray-800" data-phase={currentStep.phase}>
-              {currentStep.phase === 'sync' ? 'Sync' :
-               currentStep.phase === 'micro' ? 'Microtask' :
-               currentStep.phase === 'macro' ? 'Macrotask' : 'Idle'}
-            </span>
-            <span className="text-base text-text-primary">{currentStep.description}</span>
-          </div>
-        )}
       </div>
     </>
   )

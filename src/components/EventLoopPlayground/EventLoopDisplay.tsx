@@ -18,11 +18,22 @@ const webApis = [
 ]
 
 export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
+  const isSpinning = step.phase === 'micro' || step.phase === 'macro'
+
   const getEventLoopClass = () => {
-    if (step.phase === 'idle') return 'text-gray-800 animate-none'
-    if (step.phase === 'micro' || step.phase === 'macro')
+    if (step.phase === 'idle') return 'text-gray-800'
+    if (isSpinning)
       return 'text-sky-400 animate-spin drop-shadow-[0_0_6px_var(--color-sky-400-60)]'
-    return ''
+    return 'text-sky-400'
+  }
+
+  const getPhaseLabel = () => {
+    switch (step.phase) {
+      case 'sync': return 'Executing sync code'
+      case 'micro': return 'Draining microtasks'
+      case 'macro': return 'Processing task queue'
+      default: return 'Waiting...'
+    }
   }
 
   return (
@@ -35,11 +46,11 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
       >
         {/* Call Stack */}
         <div
-          className="relative rounded-lg p-0.5"
+          className="relative rounded-lg p-0.5 transition-all duration-300"
           style={{
             gridArea: 'callstack',
             background: step.callStack.length > 0
-              ? 'var(--color-brand-primary-30)'
+              ? 'var(--color-brand-primary-50)'
               : 'var(--color-border-primary)',
           }}
         >
@@ -72,11 +83,11 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
 
         {/* Web APIs */}
         <div
-          className="relative rounded-lg p-0.5"
+          className="relative rounded-lg p-0.5 transition-all duration-300"
           style={{
             gridArea: 'webapis',
             background: step.activeWebApi
-              ? 'var(--color-brand-secondary-30)'
+              ? 'var(--color-brand-secondary-50)'
               : 'var(--color-border-primary)',
           }}
         >
@@ -84,55 +95,53 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
             Web APIs
           </div>
           <div className="bg-page-secondary rounded-lg min-h-[100px] pt-5 px-2.5 pb-2.5 min-h-[140px]">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 p-1.5 bg-black/30 border border-dashed border-white/15 rounded-md">
+            <div className="flex flex-wrap gap-1.5">
               {webApis.map((api) => (
                 <div
                   key={api.name}
-                  className={`p-1.5 bg-elevated rounded-sm font-mono text-xs text-center transition-colors ${
+                  className={`px-2.5 py-1.5 rounded font-mono text-xs transition-colors ${
                     step.activeWebApi === api.name
                       ? 'bg-brand-primary/20 border border-brand-primary/50 text-brand-light'
-                      : 'text-gray-400'
-                  } ${api.highlight ? 'text-difficulty-1' : ''}`}
+                      : 'text-gray-800 bg-white-3'
+                  }`}
                 >
                   {api.name}
                 </div>
               ))}
-              <div className="col-span-full text-center text-gray-700 text-2xs py-0.5">
-                Many more...
-              </div>
             </div>
           </div>
         </div>
 
         {/* Event Loop */}
         <div
-          className="relative rounded-lg p-0.5"
+          className="relative rounded-lg p-0.5 transition-all duration-300"
           style={{
             gridArea: 'eventloop',
             background: step.phase !== 'idle'
-              ? 'var(--color-sky-20)'
+              ? 'var(--color-sky-50)'
               : 'var(--color-border-primary)',
           }}
         >
           <div className="absolute -top-px left-1/2 -translate-x-1/2 px-3 py-1 bg-tertiary rounded-b-md text-2xs font-semibold text-white whitespace-nowrap z-10">
             Event Loop
           </div>
-          <div className="bg-page-secondary rounded-lg min-h-[80px] pt-5 px-2.5 pb-2.5 flex flex-col items-center justify-center gap-1.5">
-            <div
-              className={`animate-spin duration-[3000ms] ${getEventLoopClass()}`}
-            >
+          <div className="bg-page-secondary rounded-lg min-h-[80px] pt-5 px-2.5 pb-2.5 flex flex-col items-center justify-center gap-2">
+            <div className={getEventLoopClass()}>
               <RefreshCw size={24} />
             </div>
+            <span className={`text-2xs font-medium ${step.phase !== 'idle' ? 'text-sky-400' : 'text-gray-800'}`}>
+              {getPhaseLabel()}
+            </span>
           </div>
         </div>
 
         {/* Task Queue (Macrotasks) */}
         <div
-          className="relative rounded-lg p-0.5"
+          className="relative rounded-lg p-0.5 transition-all duration-300"
           style={{
             gridArea: 'taskqueue',
             background: step.macroQueue.length > 0
-              ? 'var(--color-amber-30)'
+              ? 'var(--color-amber-50)'
               : 'var(--color-border-primary)',
           }}
         >
@@ -167,11 +176,11 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
 
         {/* Microtask Queue */}
         <div
-          className="relative rounded-lg p-0.5"
+          className="relative rounded-lg p-0.5 transition-all duration-300"
           style={{
             gridArea: 'microtask',
             background: step.microQueue.length > 0
-              ? 'var(--color-emerald-30)'
+              ? 'var(--color-emerald-50)'
               : 'var(--color-border-primary)',
           }}
         >
@@ -206,7 +215,13 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
       </div>
 
       {/* Output Section */}
-      <div className="bg-bg-page-secondary border border-white-10 rounded-lg p-2.5 flex-shrink-0">
+      <motion.div
+        key={step.output.length}
+        className="bg-bg-page-secondary border border-white-10 border-l-2 border-l-emerald-40 rounded-lg p-2.5 flex-shrink-0"
+        initial={step.output.length > 0 ? { backgroundColor: 'rgba(16, 185, 129, 0.08)' } : false}
+        animate={{ backgroundColor: 'rgba(16, 185, 129, 0)' }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 mb-1 text-xs font-semibold uppercase tracking-wider text-gray-200 bg-brand-primary-10 border border-brand-primary-30 rounded-full">
           Output
         </div>
@@ -226,7 +241,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
             ))
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }
