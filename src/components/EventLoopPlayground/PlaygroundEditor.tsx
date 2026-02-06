@@ -92,13 +92,13 @@ export function PlaygroundEditor({
   }, [currentLine])
 
   return (
-    <div className="flex flex-col bg-js-viz-surface border border-js-viz-border rounded-js-viz overflow-hidden h-full">
-      <div className="flex justify-between items-center px-4 py-2 bg-white/3 border-b border-js-viz-border">
-        <span className="inline-flex items-center gap-1.5 px-3 py-0.5 text-2xs font-semibold uppercase tracking-wider text-js-viz-text bg-js-viz-pill-bg border border-js-viz-pill-border rounded-full">
+    <div className="flex flex-col bg-bg-page-secondary border border-white-10 rounded-lg shadow-lg overflow-hidden h-full">
+      <div className="flex justify-between items-center px-4 py-2 bg-white-3">
+        <span className="inline-flex items-center gap-1.5 px-3 py-0.5 text-2xs font-semibold uppercase tracking-wider text-gray-200 bg-brand-primary-10 border border-brand-primary-30 rounded-full">
           Code
         </span>
         <button
-          className="flex items-center gap-1.5 px-4 py-1.5 text-sm font-semibold bg-gradient-brand border-0 rounded-md text-white cursor-pointer transition-all duration-150 hover:brightness-110"
+          className="flex items-center gap-1.5 px-5 py-2 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-all duration-150 hover:brightness-110"
           onClick={onAnalyze}
           title="Analyze (Ctrl+Enter)"
         >
@@ -133,7 +133,7 @@ export function PlaygroundEditor({
           }}
           onMount={handleEditorMount}
           loading={
-            <div className="flex items-center justify-center h-full text-js-viz-muted text-base">
+            <div className="flex items-center justify-center h-full text-text-muted text-base">
               Loading editor...
             </div>
           }

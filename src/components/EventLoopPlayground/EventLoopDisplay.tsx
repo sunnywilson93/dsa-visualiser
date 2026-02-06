@@ -206,8 +206,8 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
       </div>
 
       {/* Output Section */}
-      <div className="bg-js-viz-surface border border-js-viz-border rounded-js-viz p-2.5 flex-shrink-0">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 mb-1 text-xs font-semibold uppercase tracking-wider text-js-viz-text bg-js-viz-pill-bg border border-js-viz-pill-border rounded-full">
+      <div className="bg-bg-page-secondary border border-white-10 rounded-lg p-2.5 flex-shrink-0">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 mb-1 text-xs font-semibold uppercase tracking-wider text-gray-200 bg-brand-primary-10 border border-brand-primary-30 rounded-full">
           Output
         </div>
         <div className="font-mono text-xs text-difficulty-1 min-h-[1.2rem]">
