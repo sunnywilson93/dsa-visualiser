@@ -2,8 +2,9 @@ import Link from 'next/link'
 import { NavBar } from '@/components/NavBar'
 import { CategoryCarousel } from '@/components/CategoryCarousel'
 import { ConceptIcon } from '@/components/Icons'
-import { DifficultyIndicator, DifficultyMiniBar } from '@/components/DifficultyIndicator'
-import { exampleCategories, getExamplesByCategory, getAllJsExamples } from '@/data/examples'
+import { DifficultyMiniBar } from '@/components/DifficultyIndicator'
+import { HeroStats } from '@/components/HeroStats'
+import { exampleCategories, dsaSubcategories, getExamplesByCategory, getAllJsExamples, getProblemCountByCategory } from '@/data/examples'
 import { concepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
 import { dsaPatterns } from '@/data/dsaPatterns'
@@ -11,25 +12,73 @@ import { dsaPatterns } from '@/data/dsaPatterns'
 
 // JS implementation categories (exclude DSA - it gets its own section)
 const jsCategories = exampleCategories.filter(c => c.id !== 'dsa')
-const dsaCategory = exampleCategories.find(c => c.id === 'dsa')!
 const dsaProblems = getExamplesByCategory('dsa')
 const allJsProblems = getAllJsExamples()
+
+// Featured concepts: very-high interview frequency, diverse topics
+const featuredConceptIds = ['scope-basics', 'closure-definition', 'array-iteration-methods', 'microtask-queue']
+const featuredConcepts = featuredConceptIds
+  .map(id => concepts.find(c => c.id === id))
+  .filter(Boolean) as typeof concepts
+
+// First 8 DSA subcategories for preview grid
+const dsaPreviewSubcategories = dsaSubcategories.slice(0, 8)
 
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-bg-page from-0% to-bg-page-secondary to-100%">
       <NavBar />
 
-      <header className="text-center py-8 px-8 pt-8">
-        <h1 className="text-3xl font-bold text-brand-light m-0 mb-3">JS Interview Prep</h1>
-        <p className="text-text-secondary text-md m-0">
-          Master JavaScript for frontend interviews with interactive visualizations
+      {/* Hero */}
+      <header className="text-center py-10 px-8 animate-[fadeIn_0.4s_ease-out]">
+        <h1 className="text-3xl font-bold text-brand-light m-0 mb-3 max-md:text-2xl">
+          Master JavaScript with Interactive Visualizations
+        </h1>
+        <p className="text-text-secondary text-md m-0 max-w-[36rem] mx-auto">
+          Step through code execution, explore {concepts.length} concepts, and solve {allJsProblems.length + dsaProblems.length} problems with visual explanations
         </p>
+        <HeroStats stats={[
+          { value: concepts.length, label: 'Concepts' },
+          { value: allJsProblems.length + dsaProblems.length, label: 'Problems' },
+          { value: jsCategories.length + dsaSubcategories.length, label: 'Categories' },
+        ]} />
+        <div className="flex items-center justify-center gap-4 mt-6 max-sm:flex-col max-sm:gap-3">
+          <Link
+            href="/concepts"
+            className="inline-block py-2.5 px-6 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-base font-semibold text-white no-underline transition-shadow duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+          >
+            Start Learning
+          </Link>
+          <Link
+            href="/js-problems"
+            className="inline-block py-2.5 px-6 rounded-lg text-base font-semibold text-brand-primary no-underline border border-brand-primary-40 transition-all duration-300 hover:bg-brand-primary-10 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+          >
+            Browse Problems
+          </Link>
+        </div>
       </header>
 
       <main className="flex-1 py-6 px-8 pb-8 container-default mx-auto w-full">
+        {/* Popular Starting Points */}
+        <section className="mb-10 animate-[fadeIn_0.4s_ease-out_100ms_both]">
+          <h2 className="text-lg font-semibold text-text-bright m-0 mb-4">Popular Starting Points</h2>
+          <div className="grid grid-cols-4 gap-4 max-lg:grid-cols-2 max-sm:grid-cols-1">
+            {featuredConcepts.map(concept => (
+              <Link
+                key={concept.id}
+                href={`/concepts/js/${concept.id}`}
+                className="block rounded-xl p-4 no-underline text-inherit border border-brand-primary-20 bg-brand-primary-5 transition-all duration-200 hover:border-brand-primary-40 hover:bg-brand-primary-10 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(99,102,241,0.15)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+              >
+                <h3 className="text-base font-semibold text-text-bright m-0 mb-1">{concept.title}</h3>
+                <p className="text-sm text-text-secondary m-0 leading-normal">{concept.shortDescription}</p>
+                <span className="text-xs text-text-muted mt-2 block">{concept.estimatedReadTime} min read</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         {/* Section 1: UNDERSTAND - Concepts */}
-        <section className="mb-10">
+        <section className="mb-10 animate-[fadeIn_0.4s_ease-out_200ms_both]">
           <div className="flex justify-between items-start mb-6">
             <div>
               <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
@@ -40,14 +89,14 @@ export default function HomePage() {
                 What interviewers ask you to <strong>explain</strong>
               </p>
             </div>
-            <Link href="/concepts" className="text-base text-brand-primary no-underline py-2 px-0 hover:text-brand-secondary transition-colors duration-250">
+            <Link href="/concepts" className="text-base text-brand-primary no-underline py-2 px-0 hover:text-brand-secondary transition-colors duration-250 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none focus-visible:rounded">
               View All →
             </Link>
           </div>
 
           {/* Two concept category cards */}
           <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1 max-md:gap-4 items-stretch">
-            <Link href="/concepts/js" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 h-full">
+            <Link href="/concepts/js" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
               <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
                 <div className="flex items-center justify-between">
                   <span className="flex items-center justify-center text-brand-primary">
@@ -62,7 +111,7 @@ export default function HomePage() {
               </div>
             </Link>
 
-            <Link href="/concepts/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 h-full">
+            <Link href="/concepts/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
               <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
                 <div className="flex items-center justify-between">
                   <span className="flex items-center justify-center text-brand-primary">
@@ -80,7 +129,7 @@ export default function HomePage() {
         </section>
 
         {/* Section 2: BUILD - JavaScript Implementations */}
-        <section className="mb-10">
+        <section className="mb-10 animate-[fadeIn_0.4s_ease-out_300ms_both]">
           <div className="flex justify-between items-start mb-6">
             <div>
               <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
@@ -91,7 +140,7 @@ export default function HomePage() {
                 What interviewers ask you to <strong>implement</strong>
               </p>
             </div>
-            <Link href="/js-problems" className="text-base text-brand-primary no-underline py-2 px-0 hover:text-brand-secondary transition-colors duration-250">
+            <Link href="/js-problems" className="text-base text-brand-primary no-underline py-2 px-0 hover:text-brand-secondary transition-colors duration-250 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none focus-visible:rounded">
               All {allJsProblems.length} Problems →
             </Link>
           </div>
@@ -106,22 +155,23 @@ export default function HomePage() {
                 <Link
                   key={category.id}
                   href={`/${category.id}`}
-                  className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 h-full"
+                  className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-0.5 hover:shadow-[0_6px_16px_rgba(99,102,241,0.1)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
                 >
                   <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full min-h-[200px] max-md:min-h-[180px]">
                     <div className="flex items-center justify-between">
                       <span className="text-3xl leading-none">
                         <ConceptIcon conceptId={category.id} size={32} />
                       </span>
-                      <DifficultyIndicator
-                        level={hardCount > 0 ? 'hard' : mediumCount > 0 ? 'medium' : 'easy'}
-                        size="md"
-                      />
+                      <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">
+                        {problems.length} problems
+                      </span>
                     </div>
                     <h3 className="text-lg font-semibold text-text-bright mt-1 mb-0">{category.name}</h3>
                     <p className="text-base text-text-secondary m-0 leading-normal flex-1">{category.description}</p>
                     <div className="flex items-center gap-3 mt-auto pt-3 border-t border-border-card">
-                      <span className="text-sm text-brand-primary font-medium">{problems.length} problems</span>
+                      <span className="text-sm text-text-secondary font-medium">
+                        {easyCount}E · {mediumCount}M · {hardCount}H
+                      </span>
                       <DifficultyMiniBar easy={easyCount} medium={mediumCount} hard={hardCount} />
                     </div>
                   </div>
@@ -132,7 +182,7 @@ export default function HomePage() {
         </section>
 
         {/* Section 3: SOLVE - Data Structures & Algorithms */}
-        <section className="mb-10">
+        <section className="mb-10 animate-[fadeIn_0.4s_ease-out_400ms_both]">
           <div className="flex justify-between items-start mb-6">
             <div>
               <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
@@ -145,39 +195,77 @@ export default function HomePage() {
             </div>
           </div>
 
-          <Link href="/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40">
-            <div className="bg-bg-page-secondary rounded-xl p-6">
-              <div className="flex justify-between items-center mb-4 max-lg:flex-col max-lg:items-start max-lg:gap-4">
-                <div className="flex items-center gap-4">
-                  <span className="flex items-center justify-center text-brand-primary">
-                    <ConceptIcon conceptId="dsa" size={32} />
-                  </span>
-                  <div>
-                    <h3 className="text-2xl font-bold text-text-bright m-0 mb-1 max-md:text-xl">Data Structures & Algorithms</h3>
-                    <p className="text-base text-text-secondary m-0">
-                      Arrays, Trees, Graphs, Dynamic Programming, and more
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-8 max-lg:w-full max-lg:justify-start max-lg:gap-10">
-                  <div className="text-center">
-                    <span className="block text-3xl font-bold bg-gradient-to-br from-brand-primary to-brand-secondary bg-clip-text text-transparent leading-none">{dsaProblems.length}</span>
-                    <span className="text-sm text-text-secondary uppercase tracking-wide">Problems</span>
-                  </div>
-                  <div className="text-center">
-                    <span className="block text-3xl font-bold bg-gradient-to-br from-brand-primary to-brand-secondary bg-clip-text text-transparent leading-none">19</span>
-                    <span className="text-sm text-text-secondary uppercase tracking-wide">Topics</span>
-                  </div>
+          <div className="rounded-2xl border border-white-10 bg-bg-page-secondary p-6">
+            <div className="flex justify-between items-center mb-6 max-lg:flex-col max-lg:items-start max-lg:gap-4">
+              <div className="flex items-center gap-4">
+                <span className="flex items-center justify-center text-brand-primary">
+                  <ConceptIcon conceptId="dsa" size={32} />
+                </span>
+                <div>
+                  <h3 className="text-2xl font-bold text-text-bright m-0 mb-1 max-md:text-xl">Data Structures & Algorithms</h3>
+                  <p className="text-base text-text-secondary m-0">
+                    Arrays, Trees, Graphs, Dynamic Programming, and more
+                  </p>
                 </div>
               </div>
-              <span className="inline-block py-2.5 px-6 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-base font-semibold text-white">Explore DSA Problems →</span>
+              <div className="flex gap-8 max-lg:w-full max-lg:justify-start max-lg:gap-10">
+                <div className="text-center">
+                  <span className="block text-3xl font-bold bg-gradient-to-br from-brand-primary to-brand-secondary bg-clip-text text-transparent leading-none">{dsaProblems.length}</span>
+                  <span className="text-sm text-text-secondary uppercase tracking-wide">Problems</span>
+                </div>
+                <div className="text-center">
+                  <span className="block text-3xl font-bold bg-gradient-to-br from-brand-primary to-brand-secondary bg-clip-text text-transparent leading-none">{dsaSubcategories.length}</span>
+                  <span className="text-sm text-text-secondary uppercase tracking-wide">Topics</span>
+                </div>
+              </div>
             </div>
-          </Link>
+
+            {/* Subcategory preview grid */}
+            <div className="grid grid-cols-4 gap-3 mb-6 max-lg:grid-cols-3 max-md:grid-cols-2">
+              {dsaPreviewSubcategories.map(sub => {
+                const count = getProblemCountByCategory(sub.id)
+                return (
+                  <Link
+                    key={sub.id}
+                    href={`/${sub.id}`}
+                    className="flex items-center gap-3 rounded-lg p-3 no-underline text-inherit border border-white-6 bg-white-3 transition-all duration-200 hover:border-brand-primary-30 hover:bg-brand-primary-5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+                  >
+                    <span className="flex-shrink-0 text-brand-primary">
+                      <ConceptIcon conceptId={sub.id} size={20} />
+                    </span>
+                    <div className="min-w-0">
+                      <span className="text-sm font-medium text-text-bright block truncate">{sub.name}</span>
+                      <span className="text-xs text-text-muted">{count} problems</span>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+
+            <div className="text-center">
+              <Link
+                href="/dsa"
+                className="inline-block py-2.5 px-6 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg text-base font-semibold text-white no-underline transition-shadow duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+              >
+                Explore All DSA Topics →
+              </Link>
+            </div>
+          </div>
         </section>
       </main>
 
-      <footer className="text-center py-6 px-8 text-text-muted text-base border-t border-border-card max-md:py-4 max-md:px-4">
-        <p>Understand concepts → Build implementations → Solve problems</p>
+      {/* Utility footer */}
+      <footer className="text-center py-4 px-8 text-text-muted text-sm border-t border-border-card max-md:py-3 max-md:px-4">
+        <div className="flex items-center justify-center gap-4 max-sm:flex-col max-sm:gap-2">
+          <span className="inline-flex items-center gap-1.5">
+            <kbd className="inline-block px-1.5 py-0.5 rounded bg-white-8 text-text-secondary text-xs font-mono border border-white-10">⌘K</kbd>
+            <span>to search</span>
+          </span>
+          <span className="text-white-20 max-sm:hidden">·</span>
+          <Link href="/playground/event-loop" className="text-text-muted no-underline hover:text-brand-primary transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none focus-visible:rounded">
+            Open Playground
+          </Link>
+        </div>
       </footer>
     </div>
   )
