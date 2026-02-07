@@ -4,7 +4,7 @@ import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2, Hammer } from 'lucide-react'
+import { ArrowLeft, Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2, Hammer, BookOpen } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ConceptIcon } from '@/components/Icons'
@@ -226,6 +226,23 @@ export default function ConceptPageClient(): JSX.Element {
             )}
           </div>
         </section>
+
+        {/* Understanding Section — SEO prose content */}
+        {concept.explanation && (
+          <section className="mb-10">
+            <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+              <BookOpen size={20} className="text-[var(--color-brand-primary)]" />
+              Understanding {concept.title}
+            </h2>
+            <div className="flex flex-col gap-[var(--spacing-lg)]">
+              {concept.explanation.split('\n\n').map((paragraph, i) => (
+                <p key={i} className="m-0 text-base leading-[1.8] text-[var(--color-gray-400)]">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Key Points */}
         <section className="mb-10">
