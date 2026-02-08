@@ -49,8 +49,10 @@ export default function PracticePageClient() {
 
   // Build breadcrumbs for NavBar
   const breadcrumbs = [
-    ...(mainCategory ? [{ label: mainCategory.name, path: `/${mainCategory.id}` }] : []),
-    ...(subcategoryName ? [{ label: subcategoryName }] : []),
+    ...(mainCategory
+      ? [{ label: mainCategory.name, path: `/${mainCategory.id}` }]
+      : [{ label: 'DSA', path: `/${categoryId}` }]),
+    ...(subcategoryName ? [{ label: subcategoryName, path: `/${categoryId}` }] : []),
     { label: problem?.name || problemId },
   ]
 

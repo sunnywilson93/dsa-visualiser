@@ -4663,6 +4663,544 @@ let target = 1;
 threeSumClosest(nums, target);
 `,
   },
+  {
+    id: 'valid-palindrome-ii',
+    name: 'Valid Palindrome II',
+    category: 'two-pointers',
+    categories: ['two-pointers', 'strings'],
+    difficulty: 'easy',
+    description: 'Check if string can be a palindrome by removing at most one character',
+    code: `// Valid Palindrome II
+// Two pointers converge from edges
+// On mismatch, try skipping left or right char
+// If either remaining substring is palindrome, return true
+
+function isPalin(s, l, r) {
+  while (l < r) {
+    if (s[l] !== s[r]) return false
+    l++
+    r--
+  }
+  return true
+}
+
+function validPalindrome(s) {
+  console.log("String:", s)
+  console.log("")
+
+  var left = 0
+  var right = s.length - 1
+
+  while (left < right) {
+    console.log("left:", left, "(" + s[left] + ") right:", right, "(" + s[right] + ")")
+
+    if (s[left] !== s[right]) {
+      console.log("  Mismatch! Try skipping left or right")
+
+      var skipLeft = isPalin(s, left + 1, right)
+      console.log("  Skip left (" + s[left] + "):", skipLeft)
+
+      var skipRight = isPalin(s, left, right - 1)
+      console.log("  Skip right (" + s[right] + "):", skipRight)
+
+      var result = skipLeft || skipRight
+      console.log("  Can be palindrome:", result)
+      return result
+    }
+
+    console.log("  Match!")
+    left++
+    right--
+  }
+
+  console.log("")
+  console.log("Already a palindrome, no removal needed")
+  return true
+}
+
+validPalindrome("abca")
+`,
+  },
+  {
+    id: 'boats-to-save-people',
+    name: 'Boats to Save People',
+    category: 'two-pointers',
+    categories: ['two-pointers', 'greedy', 'sorting'],
+    difficulty: 'medium',
+    description: 'Minimum boats to carry people with weight limit',
+    code: `// Boats to Save People
+// Sort people by weight
+// Pair lightest with heaviest if they fit
+// Otherwise heaviest goes alone
+
+function numRescueBoats(people, limit) {
+  console.log("People:", people, "Limit:", limit)
+
+  // Bubble sort
+  for (var i = 0; i < people.length; i++) {
+    for (var j = 0; j < people.length - 1 - i; j++) {
+      if (people[j] > people[j + 1]) {
+        var temp = people[j]
+        people[j] = people[j + 1]
+        people[j + 1] = temp
+      }
+    }
+  }
+  console.log("Sorted:", people)
+  console.log("")
+
+  var left = 0
+  var right = people.length - 1
+  var boats = 0
+
+  while (left <= right) {
+    console.log("left:", left, "(" + people[left] + ") right:", right, "(" + people[right] + ")")
+    var sum = people[left] + people[right]
+
+    if (left === right) {
+      console.log("  One person left, needs own boat")
+      boats++
+      break
+    }
+
+    if (sum <= limit) {
+      console.log("  Pair fits! " + people[left] + " + " + people[right] + " = " + sum + " <= " + limit)
+      left++
+      right--
+    } else {
+      console.log("  Too heavy! " + people[right] + " goes alone")
+      right--
+    }
+    boats++
+    console.log("  Boats used so far:", boats)
+    console.log("")
+  }
+
+  console.log("Total boats needed:", boats)
+  return boats
+}
+
+numRescueBoats([3, 2, 2, 1], 3)
+`,
+  },
+  {
+    id: 'rotate-array',
+    name: 'Rotate Array',
+    category: 'two-pointers',
+    categories: ['two-pointers', 'arrays-hashing'],
+    difficulty: 'medium',
+    description: 'Rotate array to the right by k steps using triple reverse',
+    code: `// Rotate Array - Triple Reverse
+// Reverse entire array, then first k, then rest
+// Uses two pointers in reverse helper
+
+function reverse(arr, l, r) {
+  while (l < r) {
+    var temp = arr[l]
+    arr[l] = arr[r]
+    arr[r] = temp
+    l++
+    r--
+  }
+}
+
+function rotate(nums, k) {
+  console.log("Array:", nums)
+  console.log("Rotate by:", k)
+  console.log("")
+
+  k = k % nums.length
+  if (k === 0) {
+    console.log("No rotation needed")
+    return
+  }
+
+  console.log("Effective k:", k)
+  console.log("")
+
+  // Step 1: Reverse all
+  console.log("Step 1: Reverse entire array")
+  reverse(nums, 0, nums.length - 1)
+  console.log("  Result:", nums)
+  console.log("")
+
+  // Step 2: Reverse first k
+  console.log("Step 2: Reverse first", k, "elements")
+  reverse(nums, 0, k - 1)
+  console.log("  Result:", nums)
+  console.log("")
+
+  // Step 3: Reverse remaining
+  console.log("Step 3: Reverse elements from index", k, "to", nums.length - 1)
+  reverse(nums, k, nums.length - 1)
+  console.log("  Result:", nums)
+  console.log("")
+
+  console.log("Final rotated array:", nums)
+}
+
+rotate([1, 2, 3, 4, 5, 6, 7], 3)
+`,
+  },
+  {
+    id: 'four-sum',
+    name: '4Sum',
+    category: 'two-pointers',
+    categories: ['two-pointers', 'arrays-hashing', 'sorting'],
+    difficulty: 'medium',
+    description: 'Find all unique quadruplets that sum to target',
+    code: `// 4Sum
+// Fix two elements with nested loops
+// Use two pointers for remaining pair
+// Sort + skip duplicates for unique results
+
+function fourSum(nums, target) {
+  console.log("Array:", nums, "Target:", target)
+
+  // Bubble sort
+  for (var i = 0; i < nums.length; i++) {
+    for (var j = 0; j < nums.length - 1 - i; j++) {
+      if (nums[j] > nums[j + 1]) {
+        var temp = nums[j]
+        nums[j] = nums[j + 1]
+        nums[j + 1] = temp
+      }
+    }
+  }
+  console.log("Sorted:", nums)
+  console.log("")
+
+  var result = []
+
+  for (var a = 0; a < nums.length - 3; a++) {
+    if (a > 0 && nums[a] === nums[a - 1]) continue
+
+    for (var b = a + 1; b < nums.length - 2; b++) {
+      if (b > a + 1 && nums[b] === nums[b - 1]) continue
+
+      var left = b + 1
+      var right = nums.length - 1
+
+      while (left < right) {
+        var sum = nums[a] + nums[b] + nums[left] + nums[right]
+        console.log("a:", a, "b:", b, "left:", left, "right:", right,
+          "values:", nums[a], nums[b], nums[left], nums[right], "sum:", sum)
+
+        if (sum === target) {
+          console.log("  Found quadruplet!", [nums[a], nums[b], nums[left], nums[right]])
+          result.push([nums[a], nums[b], nums[left], nums[right]])
+          while (left < right && nums[left] === nums[left + 1]) left++
+          while (left < right && nums[right] === nums[right - 1]) right--
+          left++
+          right--
+        } else if (sum < target) {
+          left++
+        } else {
+          right--
+        }
+      }
+    }
+  }
+
+  console.log("")
+  console.log("All quadruplets:", result)
+  return result
+}
+
+fourSum([-2, -1, 0, 1, 2], 0)
+`,
+  },
+  {
+    id: 'long-pressed-name',
+    name: 'Long Pressed Name',
+    category: 'two-pointers',
+    categories: ['two-pointers', 'strings'],
+    difficulty: 'easy',
+    description: 'Check if typed string could be result of long pressing name',
+    code: `// Long Pressed Name
+// If chars match, advance both pointers
+// If typed matches previous typed char (long press), advance typed only
+// Otherwise return false
+
+function isLongPressedName(name, typed) {
+  console.log("Name:", name)
+  console.log("Typed:", typed)
+  console.log("")
+
+  var i = 0
+  var j = 0
+
+  while (j < typed.length) {
+    console.log("i:", i, "j:", j,
+      "name[i]:", i < name.length ? name[i] : "END",
+      "typed[j]:", typed[j])
+
+    if (i < name.length && name[i] === typed[j]) {
+      console.log("  Match! Advance both")
+      i++
+      j++
+    } else if (j > 0 && typed[j] === typed[j - 1]) {
+      console.log("  Long press of '" + typed[j] + "', advance typed only")
+      j++
+    } else {
+      console.log("  Mismatch! Not a long press result")
+      return false
+    }
+  }
+
+  var result = i === name.length
+  console.log("")
+  if (result) {
+    console.log("All name characters matched:", result)
+  } else {
+    console.log("Not all name characters consumed, i:", i, "name.length:", name.length)
+  }
+  return result
+}
+
+isLongPressedName("alex", "aaleex")
+`,
+  },
+  {
+    id: 'intersection-of-two-arrays-ii',
+    name: 'Intersection of Two Arrays II',
+    category: 'two-pointers',
+    categories: ['two-pointers', 'arrays-hashing', 'sorting'],
+    difficulty: 'easy',
+    description: 'Find intersection of two arrays including duplicates',
+    code: `// Intersection of Two Arrays II
+// Sort both arrays
+// Two pointers: equal values go to result
+// Otherwise advance the pointer with smaller value
+
+function intersect(nums1, nums2) {
+  console.log("Array 1:", nums1)
+  console.log("Array 2:", nums2)
+
+  // Bubble sort nums1
+  for (var i = 0; i < nums1.length; i++) {
+    for (var j = 0; j < nums1.length - 1 - i; j++) {
+      if (nums1[j] > nums1[j + 1]) {
+        var temp = nums1[j]
+        nums1[j] = nums1[j + 1]
+        nums1[j + 1] = temp
+      }
+    }
+  }
+
+  // Bubble sort nums2
+  for (var i = 0; i < nums2.length; i++) {
+    for (var j = 0; j < nums2.length - 1 - i; j++) {
+      if (nums2[j] > nums2[j + 1]) {
+        var temp = nums2[j]
+        nums2[j] = nums2[j + 1]
+        nums2[j + 1] = temp
+      }
+    }
+  }
+
+  console.log("Sorted 1:", nums1)
+  console.log("Sorted 2:", nums2)
+  console.log("")
+
+  var result = []
+  var p1 = 0
+  var p2 = 0
+
+  while (p1 < nums1.length && p2 < nums2.length) {
+    console.log("p1:", p1, "(" + nums1[p1] + ") p2:", p2, "(" + nums2[p2] + ")")
+
+    if (nums1[p1] === nums2[p2]) {
+      console.log("  Equal! Add", nums1[p1], "to result")
+      result.push(nums1[p1])
+      p1++
+      p2++
+    } else if (nums1[p1] < nums2[p2]) {
+      console.log("  " + nums1[p1] + " < " + nums2[p2] + ", advance p1")
+      p1++
+    } else {
+      console.log("  " + nums1[p1] + " > " + nums2[p2] + ", advance p2")
+      p2++
+    }
+  }
+
+  console.log("")
+  console.log("Intersection:", result)
+  return result
+}
+
+intersect([1, 2, 2, 1], [2, 2])
+`,
+  },
+  {
+    id: 'remove-duplicates-sorted-ii',
+    name: 'Remove Duplicates from Sorted Array II',
+    category: 'two-pointers',
+    categories: ['two-pointers', 'arrays-hashing'],
+    difficulty: 'medium',
+    description: 'Remove duplicates allowing at most two of each element',
+    code: `// Remove Duplicates from Sorted Array II
+// Allow at most 2 of each element
+// Compare nums[fast] with nums[slow - 2]
+// If different, copy to slow position
+
+function removeDuplicates(nums) {
+  console.log("Array:", nums)
+  console.log("")
+
+  if (nums.length <= 2) {
+    console.log("Length <= 2, no duplicates to remove")
+    return nums.length
+  }
+
+  var slow = 2
+
+  for (var fast = 2; fast < nums.length; fast++) {
+    console.log("fast:", fast, "slow:", slow,
+      "nums[fast]:", nums[fast], "nums[slow-2]:", nums[slow - 2])
+
+    if (nums[fast] !== nums[slow - 2]) {
+      console.log("  " + nums[fast] + " !== " + nums[slow - 2] + ", copy to position", slow)
+      nums[slow] = nums[fast]
+      slow++
+    } else {
+      console.log("  " + nums[fast] + " === " + nums[slow - 2] + ", skip (already have 2)")
+    }
+    console.log("  Array so far:", nums)
+  }
+
+  console.log("")
+  console.log("Final length:", slow)
+  console.log("Array:", nums.slice(0, slow))
+  return slow
+}
+
+removeDuplicates([1, 1, 1, 2, 2, 3])
+`,
+  },
+  {
+    id: 'backspace-string-compare',
+    name: 'Backspace String Compare',
+    category: 'two-pointers',
+    categories: ['two-pointers', 'strings', 'stack'],
+    difficulty: 'easy',
+    description: 'Compare two strings with backspace characters (#)',
+    code: `// Backspace String Compare
+// Process from the end of both strings
+// Count '#' as skips, find next valid char
+// Compare valid chars from both strings
+
+function getNextValid(str, idx) {
+  var skip = 0
+  while (idx >= 0) {
+    if (str[idx] === "#") {
+      skip++
+      idx--
+    } else if (skip > 0) {
+      skip--
+      idx--
+    } else {
+      break
+    }
+  }
+  return idx
+}
+
+function backspaceCompare(s, t) {
+  console.log("s:", s)
+  console.log("t:", t)
+  console.log("")
+
+  var i = s.length - 1
+  var j = t.length - 1
+
+  while (i >= 0 || j >= 0) {
+    i = getNextValid(s, i)
+    j = getNextValid(t, j)
+
+    var charS = i >= 0 ? s[i] : ""
+    var charT = j >= 0 ? t[j] : ""
+
+    console.log("i:", i, "char:", charS || "NONE", "| j:", j, "char:", charT || "NONE")
+
+    if (charS !== charT) {
+      console.log("  Mismatch! '" + charS + "' !== '" + charT + "'")
+      console.log("  Result: false")
+      return false
+    }
+
+    console.log("  Match: '" + charS + "'")
+    i--
+    j--
+  }
+
+  console.log("")
+  console.log("All characters matched!")
+  console.log("Result: true")
+  return true
+}
+
+backspaceCompare("ab#c", "ad#c")
+`,
+  },
+  {
+    id: 'string-compression',
+    name: 'String Compression',
+    category: 'two-pointers',
+    categories: ['two-pointers', 'strings'],
+    difficulty: 'medium',
+    description: 'Compress string in-place using read/write pointers',
+    code: `// String Compression
+// Read pointer scans groups of consecutive same chars
+// Write pointer writes char + count digits in-place
+// Return new length
+
+function compress(chars) {
+  console.log("Input:", chars)
+  console.log("")
+
+  var write = 0
+  var read = 0
+
+  while (read < chars.length) {
+    var currentChar = chars[read]
+    var count = 0
+
+    // Count consecutive same characters
+    while (read < chars.length && chars[read] === currentChar) {
+      read++
+      count++
+    }
+
+    console.log("Group: '" + currentChar + "' x " + count)
+
+    // Write the character
+    chars[write] = currentChar
+    write++
+
+    // Write count digits if > 1
+    if (count > 1) {
+      var countStr = "" + count
+      for (var d = 0; d < countStr.length; d++) {
+        chars[write] = countStr[d]
+        write++
+      }
+      console.log("  Write: '" + currentChar + "' + '" + countStr + "'")
+    } else {
+      console.log("  Write: '" + currentChar + "' (count 1, no digit)")
+    }
+    console.log("  Array so far:", chars, "write:", write)
+    console.log("")
+  }
+
+  console.log("Compressed length:", write)
+  console.log("Result:", chars.slice(0, write))
+  return write
+}
+
+compress(["a", "a", "b", "b", "c", "c", "c"])
+`,
+  },
 
   // ==================== ARRAYS & HASHING ====================
   {

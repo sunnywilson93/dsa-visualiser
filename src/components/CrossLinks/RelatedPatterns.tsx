@@ -17,7 +17,7 @@ export function RelatedPatterns({ problemId }: Props) {
 
   return (
     <section className="mb-[var(--spacing-lg)] w-full max-[768px]:mb-[var(--spacing-md)]">
-      <h3 className="text-[var(--text-base)] font-medium text-[var(--color-text-muted)] mb-[var(--spacing-sm)] m-0">Learn the Pattern</h3>
+      <h3 className="text-[length:var(--text-base)] font-medium text-[color:var(--color-text-muted)] mb-[var(--spacing-sm)] m-0">Learn the Pattern</h3>
       <div className="flex flex-col gap-[var(--spacing-sm)]">
         {patterns.map((pattern) => (
           <Link
@@ -27,9 +27,9 @@ export function RelatedPatterns({ problemId }: Props) {
           >
             <Lightbulb size={18} className="text-[var(--color-brand-primary)] flex-shrink-0 mt-[2px]" />
             <div className="flex flex-col gap-[2px]">
-              <span className="text-[var(--text-base)] font-semibold text-[var(--color-text-primary)] max-[768px]:text-[var(--text-base)]">{pattern.name}</span>
+              <span className="text-[length:var(--text-base)] font-semibold text-[color:var(--color-text-primary)] max-[768px]:text-[length:var(--text-base)]">{pattern.name}</span>
               {pattern.description && (
-                <span className="text-[var(--text-sm)] text-[var(--color-text-secondary)] leading-[var(--leading-snug)] max-[768px]:text-[var(--text-sm)]">
+                <span className="text-[length:var(--text-sm)] text-[color:var(--color-text-secondary)] leading-[var(--leading-snug)] max-[768px]:text-[length:var(--text-sm)]">
                   {pattern.description}
                 </span>
               )}

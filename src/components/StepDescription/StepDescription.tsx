@@ -32,27 +32,27 @@ function getStepTypeLabel(type: StepType, description: string): string {
 function getStepTypeColor(type: StepType, description: string): string {
   // Console.log gets a distinct color
   if (type === 'call' && description.startsWith('console.log')) {
-    return '#10b981' // emerald for console output
+    return 'var(--color-emerald-500)' // emerald for console output
   }
 
   switch (type) {
     case 'declaration':
     case 'assignment':
-      return '#60a5fa' // blue
+      return 'var(--color-blue-400)' // blue
     case 'call':
     case 'return':
       return '#a855f7' // purple
     case 'loop-start':
     case 'loop-iteration':
     case 'loop-end':
-      return '#f59e0b' // amber
+      return 'var(--color-amber-500)' // amber
     case 'branch':
       return '#ec4899' // pink
     case 'array-access':
     case 'array-modify':
-      return '#10b981' // emerald
+      return 'var(--color-emerald-500)' // emerald
     case 'comparison':
-      return '#ef4444' // red
+      return 'var(--color-red-500)' // red
     default:
       return '#888'
   }
@@ -66,8 +66,8 @@ export function StepDescription() {
   if (status === 'idle') {
     return (
       <div className="p-[var(--spacing-md)] bg-[var(--color-black-30)] rounded-[var(--radius-lg)] border border-[var(--color-white-8)]">
-        <div className="text-center text-[var(--color-gray-700)] text-[var(--text-base)]">
-          Press <kbd className="inline-block px-[var(--spacing-xs)] py-[2px] bg-[var(--color-white-10)] border border-[var(--color-white-20)] rounded-[var(--radius-sm)] font-mono text-[var(--text-xs)] text-[var(--color-gray-500)]">Space</kbd> to run code
+        <div className="text-center text-[color:var(--color-gray-700)] text-[length:var(--text-base)]">
+          Press <kbd className="inline-block px-[var(--spacing-xs)] py-[2px] bg-[var(--color-white-10)] border border-[var(--color-white-20)] rounded-[var(--radius-sm)] font-mono text-[length:var(--text-xs)] text-[color:var(--color-gray-500)]">Space</kbd> to run code
         </div>
       </div>
     )
@@ -89,20 +89,20 @@ export function StepDescription() {
           transition={{ duration: 0.15 }}
         >
           <div className="flex items-center gap-[var(--spacing-sm)] flex-wrap">
-            <span className="px-[var(--spacing-sm)] py-[2px] bg-[var(--color-brand-primary-20)] border border-[var(--color-brand-primary-30)] rounded-[var(--radius-sm)] text-[var(--text-2xs)] font-semibold text-[var(--color-brand-light)]">
+            <span className="px-[var(--spacing-sm)] py-[2px] bg-[var(--color-brand-primary-20)] border border-[var(--color-brand-primary-30)] rounded-[var(--radius-sm)] text-[length:var(--text-2xs)] font-semibold text-[color:var(--color-brand-light)]">
               Step {current}/{total}
             </span>
             <span
-              className="px-[var(--spacing-sm)] py-[2px] rounded-[var(--radius-sm)] text-[var(--text-2xs)] font-semibold text-[var(--color-black)]"
+              className="px-[var(--spacing-sm)] py-[2px] rounded-[var(--radius-sm)] text-[length:var(--text-2xs)] font-semibold text-[color:var(--color-black)]"
               style={{ background: getStepTypeColor(currentStep.type, currentStep.description) }}
             >
               {getStepTypeLabel(currentStep.type, currentStep.description)}
             </span>
-            <span className="px-[var(--spacing-sm)] py-[2px] bg-[var(--color-white-5)] border border-[var(--color-white-10)] rounded-[var(--radius-sm)] text-[var(--text-2xs)] font-medium text-[var(--color-gray-700)] font-mono">
+            <span className="px-[var(--spacing-sm)] py-[2px] bg-[var(--color-white-5)] border border-[var(--color-white-10)] rounded-[var(--radius-sm)] text-[length:var(--text-2xs)] font-medium text-[color:var(--color-gray-700)] font-mono">
               Line {currentStep.location.line}
             </span>
           </div>
-          <div className="text-[var(--text-base)] text-[var(--color-gray-300)] leading-[var(--leading-snug)] [&_code]:font-mono [&_code]:bg-[var(--color-brand-primary-15)] [&_code]:px-[3px] [&_code]:py-[2px] [&_code]:rounded-[var(--radius-sm)] [&_code]:text-[var(--color-brand-light)]">
+          <div className="text-[length:var(--text-base)] text-[color:var(--color-gray-300)] leading-[var(--leading-snug)] [&_code]:font-mono [&_code]:bg-[var(--color-brand-primary-15)] [&_code]:px-[3px] [&_code]:py-[2px] [&_code]:rounded-[var(--radius-sm)] [&_code]:text-[color:var(--color-brand-light)]">
             {currentStep.description}
           </div>
         </motion.div>

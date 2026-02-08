@@ -161,9 +161,9 @@ export default function ConceptPageClient(): JSX.Element {
     return (
       <div className="flex min-h-screen flex-col bg-[var(--gradient-page)]">
         <NavBar />
-        <div className="flex flex-1 flex-col items-center justify-center gap-[var(--spacing-lg)] text-[var(--color-gray-500)]">
+        <div className="flex flex-1 flex-col items-center justify-center gap-[var(--spacing-lg)] text-[color:var(--color-gray-500)]">
           <h1>Concept not found</h1>
-          <Link href="/concepts" className="text-[var(--color-brand-primary)]">Back to Concepts</Link>
+          <Link href="/concepts" className="text-[color:var(--color-brand-primary)]">Back to Concepts</Link>
         </div>
       </div>
     )
@@ -186,7 +186,7 @@ export default function ConceptPageClient(): JSX.Element {
         {/* Header */}
         <header className="mb-8">
           <button 
-            className="mb-[var(--spacing-lg)] inline-flex items-center gap-[var(--spacing-sm)] border-0 bg-transparent p-0 py-[var(--spacing-sm)] text-base text-[var(--color-gray-500)] transition-colors duration-200 hover:text-[var(--color-brand-primary)]" 
+            className="mb-[var(--spacing-lg)] inline-flex items-center gap-[var(--spacing-sm)] border-0 bg-transparent p-0 py-[var(--spacing-sm)] text-base text-[color:var(--color-gray-500)] transition-colors duration-200 hover:text-[color:var(--color-brand-primary)]" 
             onClick={() => router.push(parentSection.path)}
           >
             <ArrowLeft size={18} />
@@ -197,13 +197,13 @@ export default function ConceptPageClient(): JSX.Element {
             <span className="text-4xl leading-none">
               <ConceptIcon conceptId={concept.id} size={32} />
             </span>
-            <h1 className="m-0 text-[var(--text-3xl)] font-bold text-white max-md:text-[var(--text-2xl)]">
+            <h1 className="m-0 text-[length:var(--text-3xl)] font-bold text-white max-md:text-[length:var(--text-2xl)]">
               {concept.title}
             </h1>
             <DifficultyIndicator level={concept.difficulty} size="md" />
           </div>
 
-          <p className="m-0 text-[var(--text-md)] leading-[1.7] text-[var(--color-gray-400)] max-md:text-base">
+          <p className="m-0 text-[length:var(--text-md)] leading-[1.7] text-[color:var(--color-gray-400)] max-md:text-base">
             {concept.description}
           </p>
         </header>
@@ -211,7 +211,7 @@ export default function ConceptPageClient(): JSX.Element {
         {/* Interactive Visualization */}
         <section className="mb-10">
           <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
-            <Gamepad2 size={20} className="text-[var(--color-brand-primary)]" />
+            <Gamepad2 size={20} className="text-[color:var(--color-brand-primary)]" />
             Interactive Visualization
           </h2>
           <div className="min-h-[300px] rounded-[var(--radius-xl)] border border-[var(--color-white-10)] bg-[var(--color-black-30)] p-[var(--spacing-xl)] max-md:min-h-[200px] max-md:p-[var(--spacing-lg)]">
@@ -220,7 +220,7 @@ export default function ConceptPageClient(): JSX.Element {
                 <Visualization />
               </ErrorBoundary>
             ) : (
-              <div className="flex h-[250px] items-center justify-center text-[var(--color-gray-700)]">
+              <div className="flex h-[250px] items-center justify-center text-[color:var(--color-gray-700)]">
                 Visualization coming soon
               </div>
             )}
@@ -231,12 +231,12 @@ export default function ConceptPageClient(): JSX.Element {
         {concept.explanation && (
           <section className="mb-10">
             <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
-              <BookOpen size={20} className="text-[var(--color-brand-primary)]" />
+              <BookOpen size={20} className="text-[color:var(--color-brand-primary)]" />
               Understanding {concept.title}
             </h2>
             <div className="flex flex-col gap-[var(--spacing-lg)]">
               {concept.explanation.split('\n\n').map((paragraph, i) => (
-                <p key={i} className="m-0 text-base leading-[1.8] text-[var(--color-gray-400)]">
+                <p key={i} className="m-0 text-base leading-[1.8] text-[color:var(--color-gray-400)]">
                   {paragraph}
                 </p>
               ))}
@@ -247,14 +247,14 @@ export default function ConceptPageClient(): JSX.Element {
         {/* Key Points */}
         <section className="mb-10">
           <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
-            <Lightbulb size={20} className="text-[var(--color-brand-primary)]" />
+            <Lightbulb size={20} className="text-[color:var(--color-brand-primary)]" />
             Key Points
           </h2>
           <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
             {concept.keyPoints.map((point, i) => (
               <motion.li
                 key={i}
-                className="relative pl-6 leading-[var(--leading-normal)] text-[var(--color-gray-300)] before:absolute before:left-0 before:font-bold before:text-[var(--color-brand-primary)] before:content-['→']"
+                className="relative pl-6 leading-[var(--leading-normal)] text-[color:var(--color-gray-300)] before:absolute before:left-0 before:font-bold before:text-[color:var(--color-brand-primary)] before:content-['→']"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
@@ -268,7 +268,7 @@ export default function ConceptPageClient(): JSX.Element {
         {/* Code Examples */}
         <section className="mb-10">
           <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
-            <Code2 size={20} className="text-[var(--color-brand-primary)]" />
+            <Code2 size={20} className="text-[color:var(--color-brand-primary)]" />
             Code Examples
           </h2>
           <div className="flex flex-col gap-[var(--spacing-xl)]">
@@ -283,10 +283,10 @@ export default function ConceptPageClient(): JSX.Element {
                 <h3 className="m-0 border-b border-[var(--color-white-8)] bg-[var(--color-brand-primary-15)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-[0.95rem] font-semibold text-white">
                   {example.title}
                 </h3>
-                <pre className="m-0 overflow-x-auto bg-[var(--color-black-40)] p-[var(--spacing-lg)] font-mono text-base leading-[var(--leading-relaxed)] text-gray-300 max-md:p-[var(--spacing-md)] max-md:text-[var(--text-sm)]">
+                <pre className="m-0 overflow-x-auto bg-[var(--color-black-40)] p-[var(--spacing-lg)] font-mono text-base leading-[var(--leading-relaxed)] text-gray-300 max-md:p-[var(--spacing-md)] max-md:text-[length:var(--text-sm)]">
                   <code className="whitespace-pre">{example.code}</code>
                 </pre>
-                <p className="m-0 border-t border-[var(--color-white-5)] bg-[var(--color-brand-primary-5)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-base leading-[var(--leading-relaxed)] text-[var(--color-gray-400)]">
+                <p className="m-0 border-t border-[var(--color-white-5)] bg-[var(--color-brand-primary-5)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-base leading-[var(--leading-relaxed)] text-[color:var(--color-gray-400)]">
                   {example.explanation}
                 </p>
               </motion.div>
@@ -298,14 +298,14 @@ export default function ConceptPageClient(): JSX.Element {
         {concept.commonMistakes && concept.commonMistakes.length > 0 && (
           <section className="mb-10">
             <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
-              <AlertTriangle size={20} className="text-[var(--color-brand-primary)]" />
+              <AlertTriangle size={20} className="text-[color:var(--color-brand-primary)]" />
               Common Mistakes
             </h2>
             <ul className="m-0 flex list-none flex-col gap-[var(--spacing-sm)] p-0">
               {concept.commonMistakes.map((mistake, i) => (
                 <li 
                   key={i} 
-                  className="relative rounded-r-md border-l-4 border-l-[var(--color-red-500)] bg-[var(--color-red-10)] py-1.5 pl-8 pr-3 text-base text-red-300 before:absolute before:left-2.5 before:text-[var(--color-accent-red)] before:content-['✗']"
+                  className="relative rounded-r-md border-l-4 border-l-[var(--color-red-500)] bg-[var(--color-red-10)] py-1.5 pl-8 pr-3 text-base text-red-300 before:absolute before:left-2.5 before:text-[color:var(--color-accent-red)] before:content-['✗']"
                 >
                   {mistake}
                 </li>
@@ -318,14 +318,14 @@ export default function ConceptPageClient(): JSX.Element {
         {concept.interviewTips && concept.interviewTips.length > 0 && (
           <section className="mb-10">
             <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
-              <Award size={20} className="text-[var(--color-brand-primary)]" />
+              <Award size={20} className="text-[color:var(--color-brand-primary)]" />
               Interview Tips
             </h2>
             <ul className="m-0 flex list-none flex-col gap-[var(--spacing-sm)] p-0">
               {concept.interviewTips.map((tip, i) => (
                 <li 
                   key={i} 
-                  className="relative rounded-r-md border-l-4 border-l-[var(--color-emerald-500)] bg-[var(--color-emerald-10)] py-1.5 pl-8 pr-3 text-base text-[var(--color-emerald-400)] before:absolute before:left-2.5 before:text-[var(--difficulty-1)] before:content-['✓']"
+                  className="relative rounded-r-md border-l-4 border-l-[var(--color-emerald-500)] bg-[var(--color-emerald-10)] py-1.5 pl-8 pr-3 text-base text-[color:var(--color-emerald-400)] before:absolute before:left-2.5 before:text-[var(--difficulty-1)] before:content-['✓']"
                 >
                   {tip}
                 </li>
@@ -344,10 +344,10 @@ export default function ConceptPageClient(): JSX.Element {
           return (
             <section className="mb-10">
               <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
-                <Hammer size={20} className="text-[var(--color-brand-primary)]" />
+                <Hammer size={20} className="text-[color:var(--color-brand-primary)]" />
                 Practice Problems
               </h2>
-              <p className="mb-4 -mt-2 text-base text-[var(--color-gray-500)]">
+              <p className="mb-4 -mt-2 text-base text-[color:var(--color-gray-500)]">
                 Apply this concept by solving these {problems.length} problems
               </p>
               <div className="grid grid-cols-auto-md gap-[var(--spacing-md)]">
@@ -361,7 +361,7 @@ export default function ConceptPageClient(): JSX.Element {
                       <h3 className="m-0 text-[0.95rem] font-semibold text-white">{problem.name}</h3>
                       <DifficultyIndicator level={problem.difficulty} size="sm" />
                     </div>
-                    <p className="m-0 text-[var(--text-sm)] leading-[var(--leading-snug)] text-[var(--color-gray-500)]">
+                    <p className="m-0 text-[length:var(--text-sm)] leading-[var(--leading-snug)] text-[color:var(--color-gray-500)]">
                       {problem.description}
                     </p>
                   </Link>
@@ -378,7 +378,7 @@ export default function ConceptPageClient(): JSX.Element {
           return (
             <section className="mb-10">
               <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
-                <Link2 size={20} className="text-[var(--color-brand-primary)]" />
+                <Link2 size={20} className="text-[color:var(--color-brand-primary)]" />
                 Related Concepts
               </h2>
               <div className="grid grid-cols-auto-sm gap-[var(--spacing-lg)]">
@@ -393,7 +393,7 @@ export default function ConceptPageClient(): JSX.Element {
                     </span>
                     <div className="min-w-0 flex-1">
                       <h3 className="mb-1 text-[0.95rem] font-semibold text-white">{related.title}</h3>
-                      <p className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-[var(--text-base)] text-[var(--color-gray-500)]">
+                      <p className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-[length:var(--text-base)] text-[color:var(--color-gray-500)]">
                         {related.shortDescription}
                       </p>
                     </div>

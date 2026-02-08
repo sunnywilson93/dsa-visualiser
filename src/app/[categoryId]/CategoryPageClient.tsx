@@ -179,7 +179,7 @@ export default function CategoryPageClient() {
 
   // Build breadcrumbs based on page type
   const breadcrumbs = isSubcategoryPage
-    ? [{ label: 'DSA', href: '/dsa' }, { label: category.name }]
+    ? [{ label: 'DSA', path: '/' }, { label: category.name }]
     : [{ label: category.name }]
 
   return (

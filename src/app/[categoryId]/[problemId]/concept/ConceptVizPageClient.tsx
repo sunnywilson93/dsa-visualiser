@@ -36,8 +36,8 @@ export default function ConceptVizPageClient() {
   // Build breadcrumbs
   const breadcrumbs = [
     { label: 'DSA', path: `/${categoryId}` },
-    ...(subcategoryName ? [{ label: subcategoryName }] : []),
-    { label: problem?.name || problemId },
+    ...(subcategoryName ? [{ label: subcategoryName, path: `/${categoryId}` }] : []),
+    { label: problem?.name || problemId, path: `/${categoryId}/${problemId}` },
   ]
 
   const difficultyBgColors: Record<string, string> = {

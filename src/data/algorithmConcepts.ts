@@ -902,6 +902,582 @@ export const problemConcepts: Record<string, ProblemConcept> = {
     ],
   },
 
+  'valid-palindrome-ii': {
+    title: 'Valid Palindrome II',
+    keyInsight: 'On mismatch try skipping left or right — if either substring is palindrome, return true.',
+    pattern: 'two-pointers-converge',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Check if "abca" can be palindrome with at most one deletion. left=0, right=3.',
+        visual: {
+          array: ['a', 'b', 'c', 'a'],
+          pointers: { left: 0, right: 3 },
+          highlights: [0, 3],
+          annotations: ['a == a ✓'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Move Inward',
+        description: 'Outer chars match. Move inward: left=1, right=2. Mismatch found.',
+        visual: {
+          array: ['a', 'b', 'c', 'a'],
+          pointers: { left: 1, right: 2 },
+          highlights: [1, 2],
+          annotations: ['b ≠ c — mismatch!'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Try Skip Left',
+        description: 'Skip left char: check substring s[2..2] = "c". Single char is palindrome ✓',
+        visual: {
+          array: ['a', 'b', 'c', 'a'],
+          highlights: [2],
+          annotations: ['Skip b → "c" is palindrome ✓'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Try Skip Right',
+        description: 'Skip right char: check substring s[1..1] = "b". Single char is palindrome ✓',
+        visual: {
+          array: ['a', 'b', 'c', 'a'],
+          highlights: [1],
+          annotations: ['Skip c → "b" is palindrome ✓'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'At most one deletion needed. Either skip produces a palindrome.',
+        visual: {
+          array: ['a', 'b', 'c', 'a'],
+          highlights: [0, 2, 3],
+          result: true,
+        },
+      },
+    ],
+  },
+
+  'boats-to-save-people': {
+    title: 'Boats to Save People',
+    keyInsight: 'Sort people by weight. Pair lightest with heaviest if under limit, otherwise heaviest rides alone.',
+    pattern: 'two-pointers-converge',
+    steps: [
+      {
+        id: 1,
+        title: 'Sort Array',
+        description: 'Sort people by weight. Limit = 3. Use two pointers at ends.',
+        visual: {
+          array: [1, 2, 2, 3],
+          pointers: { left: 0, right: 3 },
+          annotations: ['Sorted, limit = 3'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Heaviest Alone',
+        description: 'left=0 (1) + right=3 (3) = 4 > 3. Heaviest rides alone. boats=1.',
+        visual: {
+          array: [1, 2, 2, 3],
+          pointers: { left: 0, right: 2 },
+          highlights: [3],
+          annotations: ['1+3=4 > 3, alone. boats=1'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Pair Found',
+        description: 'left=0 (1) + right=2 (2) = 3 ≤ 3. Pair them! boats=2.',
+        visual: {
+          array: [1, 2, 2, 3],
+          pointers: { left: 1, right: 1 },
+          highlights: [0, 2],
+          annotations: ['1+2=3 ≤ 3, pair! boats=2'],
+        },
+      },
+      {
+        id: 4,
+        title: 'One Person Left',
+        description: 'left=1, right=1. One person remaining. boats=3.',
+        visual: {
+          array: [1, 2, 2, 3],
+          highlights: [1],
+          annotations: ['One person left, boats=3'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: '3 boats needed to save all 4 people.',
+        visual: {
+          array: [1, 2, 2, 3],
+          result: 'Boats: 3',
+        },
+      },
+    ],
+  },
+
+  'rotate-array': {
+    title: 'Rotate Array',
+    keyInsight: 'Triple reverse: reverse all → reverse first k → reverse rest. Each reverse uses two pointers.',
+    pattern: 'two-pointers-converge',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Rotate [1,2,3,4,5,6,7] right by k=3. Last 3 elements move to front.',
+        visual: {
+          array: [1, 2, 3, 4, 5, 6, 7],
+          highlights: [4, 5, 6],
+          annotations: ['k=3, rotate right'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Reverse All',
+        description: 'Reverse entire array using two pointers converging.',
+        visual: {
+          array: [7, 6, 5, 4, 3, 2, 1],
+          pointers: { left: 0, right: 6 },
+          annotations: ['Reverse all'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Reverse First k',
+        description: 'Reverse first k=3 elements to restore their order.',
+        visual: {
+          array: [5, 6, 7, 4, 3, 2, 1],
+          pointers: { left: 0, right: 2 },
+          highlights: [0, 1, 2],
+          annotations: ['Reverse [0..2]'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Reverse Rest',
+        description: 'Reverse remaining elements from index k to end.',
+        visual: {
+          array: [5, 6, 7, 1, 2, 3, 4],
+          pointers: { left: 3, right: 6 },
+          highlights: [3, 4, 5, 6],
+          annotations: ['Reverse [3..6]'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'Array rotated right by 3. Triple reverse achieves O(1) space.',
+        visual: {
+          array: [5, 6, 7, 1, 2, 3, 4],
+          result: '[5,6,7,1,2,3,4]',
+        },
+      },
+    ],
+  },
+
+  'four-sum': {
+    title: 'Four Sum',
+    keyInsight: 'Fix two numbers with nested loops, then use converging two pointers for the remaining pair. Sort + skip duplicates.',
+    pattern: 'two-pointers-converge',
+    steps: [
+      {
+        id: 1,
+        title: 'Sort Array',
+        description: 'Sort array. Target=0. Fix two outer indices, use two pointers inside.',
+        visual: {
+          array: [-2, -1, 0, 1, 2],
+          annotations: ['Sorted, target = 0'],
+        },
+      },
+      {
+        id: 2,
+        title: 'First Window',
+        description: 'Fix i=0 (-2), j=1 (-1). left=2, right=4. Sum=-2+-1+0+2=-1 < 0, left++.',
+        visual: {
+          array: [-2, -1, 0, 1, 2],
+          pointers: { left: 2, right: 4 },
+          highlights: [0, 1, 2, 4],
+          annotations: ['i=0, j=1, sum=-1 < 0'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Quadruplet Found',
+        description: 'left=3, right=4. Sum=-2+-1+1+2=0 ✓ Found [-2,-1,1,2]!',
+        visual: {
+          array: [-2, -1, 0, 1, 2],
+          pointers: { left: 3, right: 4 },
+          highlights: [0, 1, 3, 4],
+          annotations: ['Sum=0 ✓ Found!'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Skip Duplicates',
+        description: 'Skip duplicates, advance pointers. Move to next j. Continue searching.',
+        visual: {
+          array: [-2, -1, 0, 1, 2],
+          pointers: { left: 3, right: 4 },
+          highlights: [0, 2],
+          annotations: ['Skip duplicates, next j'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Continue Search',
+        description: 'i=0, j=2 (0), left=3, right=4. Sum=-2+0+1+2=1 > 0, right--.',
+        visual: {
+          array: [-2, -1, 0, 1, 2],
+          pointers: { left: 3, right: 4 },
+          highlights: [0, 2, 3, 4],
+          annotations: ['i=0, j=2, sum=1 > 0'],
+        },
+      },
+      {
+        id: 6,
+        title: 'Result',
+        description: 'Only quadruplet summing to 0 is [-2,-1,1,2].',
+        visual: {
+          array: [-2, -1, 0, 1, 2],
+          highlights: [0, 1, 3, 4],
+          result: '[[-2,-1,1,2]]',
+        },
+      },
+    ],
+  },
+
+  'long-pressed-name': {
+    title: 'Long Pressed Name',
+    keyInsight: 'Walk both strings: match advances both pointers. Long-press (repeat of previous) advances typed pointer only.',
+    pattern: 'two-pointers-same-dir',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'name="alex", typed="aaleex". i=0 on name, j=0 on typed.',
+        visual: {
+          array: ['a', 'a', 'l', 'e', 'e', 'x'],
+          pointers: { i: 0, j: 0 },
+          annotations: ['name="alex"'],
+        },
+      },
+      {
+        id: 2,
+        title: 'First Match',
+        description: 'typed[0]="a" matches name[0]="a". Both advance. i=1, j=1.',
+        visual: {
+          array: ['a', 'a', 'l', 'e', 'e', 'x'],
+          pointers: { i: 1, j: 1 },
+          highlights: [0],
+          annotations: ['Match! a == a'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Long Press Detected',
+        description: 'typed[1]="a" ≠ name[1]="l", but matches previous typed "a" (long press). j++ only.',
+        visual: {
+          array: ['a', 'a', 'l', 'e', 'e', 'x'],
+          pointers: { i: 1, j: 2 },
+          highlights: [1],
+          annotations: ['Long press — extra "a"'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Continue Matching',
+        description: 'typed[2]="l" matches name[1]="l". Both advance. Continue through e, e (long press), x.',
+        visual: {
+          array: ['a', 'a', 'l', 'e', 'e', 'x'],
+          pointers: { i: 3, j: 5 },
+          highlights: [0, 2, 3, 5],
+          annotations: ['Matched l, e, x'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'All name chars matched. Extra typed chars are valid long presses.',
+        visual: {
+          array: ['a', 'a', 'l', 'e', 'e', 'x'],
+          highlights: [0, 2, 3, 5],
+          result: true,
+        },
+      },
+    ],
+  },
+
+  'intersection-of-two-arrays-ii': {
+    title: 'Intersection of Two Arrays II',
+    keyInsight: 'Sort both arrays. Equal elements → add to result and advance both. Otherwise advance the smaller pointer.',
+    pattern: 'two-pointers-same-dir',
+    steps: [
+      {
+        id: 1,
+        title: 'Sort Both',
+        description: 'Sort both arrays. nums1=[1,1,2,2], nums2=[2,2]. Use two pointers.',
+        visual: {
+          array: [1, 1, 2, 2],
+          pointers: { i: 0, j: 0 },
+          annotations: ['nums2: [2, 2]'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Advance Smaller',
+        description: 'i=0: nums1[0]=1 < nums2[0]=2. Advance i.',
+        visual: {
+          array: [1, 1, 2, 2],
+          pointers: { i: 1, j: 0 },
+          highlights: [0],
+          annotations: ['1 < 2, advance i'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Still Smaller',
+        description: 'i=1: nums1[1]=1 < nums2[0]=2. Advance i again.',
+        visual: {
+          array: [1, 1, 2, 2],
+          pointers: { i: 2, j: 0 },
+          highlights: [1],
+          annotations: ['1 < 2, advance i'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Match Found',
+        description: 'i=2: nums1[2]=2 == nums2[0]=2. Match! Add 2. Both advance. Then 2==2 again.',
+        visual: {
+          array: [1, 1, 2, 2],
+          pointers: { i: 3, j: 1 },
+          highlights: [2, 3],
+          annotations: ['2 == 2, match! ×2'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'Intersection with duplicates preserved: [2, 2].',
+        visual: {
+          array: [1, 1, 2, 2],
+          highlights: [2, 3],
+          result: '[2, 2]',
+        },
+      },
+    ],
+  },
+
+  'remove-duplicates-sorted-ii': {
+    title: 'Remove Duplicates from Sorted Array II',
+    keyInsight: 'Compare nums[fast] with nums[slow-2]. If different, it is safe to keep — allows at most 2 of each value.',
+    pattern: 'two-pointers-same-dir',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Allow at most 2 of each value. slow=2, fast=2. First 2 elements always kept.',
+        visual: {
+          array: [1, 1, 1, 2, 2, 3],
+          pointers: { slow: 2, fast: 2 },
+          highlights: [0, 1],
+          annotations: ['First 2 always kept'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Third Duplicate',
+        description: 'fast=2: nums[2]=1, nums[slow-2]=nums[0]=1. Same! Skip third 1.',
+        visual: {
+          array: [1, 1, 1, 2, 2, 3],
+          pointers: { slow: 2, fast: 3 },
+          highlights: [0, 2],
+          annotations: ['1 == 1, skip!'],
+        },
+      },
+      {
+        id: 3,
+        title: 'New Value',
+        description: 'fast=3: nums[3]=2, nums[slow-2]=nums[0]=1. Different! Copy 2 to slow.',
+        visual: {
+          array: [1, 1, 2, 2, 2, 3],
+          pointers: { slow: 3, fast: 4 },
+          highlights: [2, 3],
+          annotations: ['2 ≠ 1, keep!'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Second Copy',
+        description: 'fast=4: nums[4]=2, nums[slow-2]=nums[1]=1. Different! Copy 2.',
+        visual: {
+          array: [1, 1, 2, 2, 2, 3],
+          pointers: { slow: 4, fast: 5 },
+          highlights: [3, 4],
+          annotations: ['2 ≠ 1, keep!'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Last Value',
+        description: 'fast=5: nums[5]=3, nums[slow-2]=nums[2]=2. Different! Copy 3.',
+        visual: {
+          array: [1, 1, 2, 2, 3, 3],
+          pointers: { slow: 5, fast: 5 },
+          highlights: [4],
+          annotations: ['3 ≠ 2, keep!'],
+        },
+      },
+      {
+        id: 6,
+        title: 'Result',
+        description: 'Length 5. Array contains [1,1,2,2,3] — at most 2 of each.',
+        visual: {
+          array: [1, 1, 2, 2, 3, 3],
+          highlights: [0, 1, 2, 3, 4],
+          result: 'Length: 5',
+        },
+      },
+    ],
+  },
+
+  'backspace-string-compare': {
+    title: 'Backspace String Compare',
+    keyInsight: 'Process from end: count # as skips, find next valid char in each string, compare them.',
+    pattern: 'two-pointers-same-dir',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 's="ab#c", t="ad#c". Process from end using skip counters.',
+        visual: {
+          array: ['a', 'b', '#', 'c'],
+          pointers: { i: 3, j: 3 },
+          annotations: ['t="ad#c"'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Compare Last Chars',
+        description: 's[3]="c", t[3]="c". Match! Decrement both. i=2, j=2.',
+        visual: {
+          array: ['a', 'b', '#', 'c'],
+          pointers: { i: 2, j: 2 },
+          highlights: [3],
+          annotations: ['c == c ✓'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Process Backspaces',
+        description: 's[2]="#" → skip count=1, skip "b", land on i=0. t[2]="#" → skip "d", land on j=0.',
+        visual: {
+          array: ['a', 'b', '#', 'c'],
+          pointers: { i: 0, j: 0 },
+          highlights: [1, 2],
+          annotations: ['# skips "b" and "d"'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Final Compare',
+        description: 's[0]="a", t[0]="a". Match! Both pointers exhausted.',
+        visual: {
+          array: ['a', 'b', '#', 'c'],
+          pointers: { i: 0, j: 0 },
+          highlights: [0],
+          annotations: ['a == a ✓'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'Both strings reduce to "ac". They are equal.',
+        visual: {
+          array: ['a', 'b', '#', 'c'],
+          highlights: [0, 3],
+          result: true,
+        },
+      },
+    ],
+  },
+
+  'string-compression': {
+    title: 'String Compression',
+    keyInsight: 'Read pointer counts consecutive groups. Write pointer writes char then count digits in-place.',
+    pattern: 'two-pointers-same-dir',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Compress ["a","a","b","b","c","c","c"] in-place. write=0, read=0.',
+        visual: {
+          array: ['a', 'a', 'b', 'b', 'c', 'c', 'c'],
+          pointers: { slow: 0, fast: 0 },
+          annotations: ['Scan consecutive groups'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Group "a"',
+        description: 'Count 2 consecutive "a"s. Write "a" at [0], "2" at [1]. write=2.',
+        visual: {
+          array: ['a', '2', 'b', 'b', 'c', 'c', 'c'],
+          pointers: { slow: 2, fast: 2 },
+          highlights: [0, 1],
+          annotations: ['Write a, 2'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Group "b"',
+        description: 'Count 2 consecutive "b"s. Write "b" at [2], "2" at [3]. write=4.',
+        visual: {
+          array: ['a', '2', 'b', '2', 'c', 'c', 'c'],
+          pointers: { slow: 4, fast: 4 },
+          highlights: [2, 3],
+          annotations: ['Write b, 2'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Group "c"',
+        description: 'Count 3 consecutive "c"s. Write "c" at [4], "3" at [5]. write=6.',
+        visual: {
+          array: ['a', '2', 'b', '2', 'c', '3', 'c'],
+          pointers: { slow: 6, fast: 6 },
+          highlights: [4, 5],
+          annotations: ['Write c, 3'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Truncate',
+        description: 'Only first 6 characters are valid. Last element is leftover.',
+        visual: {
+          array: ['a', '2', 'b', '2', 'c', '3', 'c'],
+          highlights: [0, 1, 2, 3, 4, 5],
+          annotations: ['First 6 valid'],
+        },
+      },
+      {
+        id: 6,
+        title: 'Result',
+        description: 'Compressed length is 6: ["a","2","b","2","c","3"].',
+        visual: {
+          array: ['a', '2', 'b', '2', 'c', '3', 'c'],
+          highlights: [0, 1, 2, 3, 4, 5],
+          result: 'Length: 6',
+        },
+      },
+    ],
+  },
+
   // ==================== BIT MANIPULATION PROBLEMS ====================
 
   'single-number': {

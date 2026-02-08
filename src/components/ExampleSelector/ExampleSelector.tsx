@@ -64,7 +64,7 @@ export function ExampleSelector() {
   return (
     <div className="relative">
       <button
-        className="flex items-center gap-[var(--spacing-sm)] px-[var(--spacing-md)] py-[var(--spacing-xs)] bg-[var(--color-bg-tertiary)] border border-[var(--color-border-primary)] rounded-[var(--radius-md)] text-[var(--color-text-secondary)] text-[var(--text-base)] font-medium cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] max-[480px]:p-[var(--spacing-sm)]"
+        className="flex items-center gap-[var(--spacing-sm)] px-[var(--spacing-md)] py-[var(--spacing-xs)] bg-[var(--color-bg-tertiary)] border border-[var(--color-border-primary)] rounded-[var(--radius-md)] text-[color:var(--color-text-secondary)] text-[length:var(--text-base)] font-medium cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-bg-elevated)] hover:text-[color:var(--color-text-primary)] max-[480px]:p-[var(--spacing-sm)]"
         onClick={() => setIsOpen(!isOpen)}
         title="Browse problems"
         aria-label="Browse problems"
@@ -72,7 +72,7 @@ export function ExampleSelector() {
       >
         <Code size={16} />
         <span className="max-[480px]:hidden">Problems</span>
-        <span className="bg-[var(--color-accent-blue)] text-[var(--color-white)] px-[6px] py-[2px] rounded-[var(--radius-sm)] text-[var(--text-xs)] font-semibold">{codeExamples.length}</span>
+        <span className="bg-[var(--color-accent-blue)] text-[color:var(--color-white)] px-[6px] py-[2px] rounded-[var(--radius-sm)] text-[length:var(--text-xs)] font-semibold">{codeExamples.length}</span>
         <ChevronDown
           size={14}
           className={`transition-transform duration-[var(--transition-fast)] max-[480px]:hidden ${isOpen ? 'rotate-180' : ''}`}
@@ -90,13 +90,13 @@ export function ExampleSelector() {
           >
             {/* Search bar with filters */}
             <div className="flex items-center gap-[var(--spacing-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] border-b border-[var(--color-border-primary)] bg-[var(--color-bg-tertiary)] max-[480px]:flex-wrap max-[480px]:gap-[var(--spacing-xs)] max-[480px]:p-[var(--spacing-sm)]">
-              <Search size={14} className="text-[var(--color-text-muted)] flex-shrink-0 max-[480px]:order-0" />
+              <Search size={14} className="text-[color:var(--color-text-muted)] flex-shrink-0 max-[480px]:order-0" />
               <input
                 type="text"
                 placeholder="Search problems..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 min-w-[var(--spacing-6xl)] px-0 py-[var(--spacing-xs)] bg-transparent border-none outline-none text-[var(--color-text-primary)] text-[var(--text-base)] placeholder:text-[var(--color-text-muted)] max-[480px]:order-1 max-[480px]:flex-[1_1_60%] max-[480px]:min-w-[100px]"
+                className="flex-1 min-w-[var(--spacing-6xl)] px-0 py-[var(--spacing-xs)] bg-transparent border-none outline-none text-[color:var(--color-text-primary)] text-[length:var(--text-base)] placeholder:text-[color:var(--color-text-muted)] max-[480px]:order-1 max-[480px]:flex-[1_1_60%] max-[480px]:min-w-[100px]"
                 aria-label="Search problems"
               />
 
@@ -107,7 +107,7 @@ export function ExampleSelector() {
                   <button
                     key={diff}
                     type="button"
-                    className={`flex items-center justify-center bg-transparent border-none text-[var(--color-text-muted)] text-[var(--text-xs)] font-medium px-[var(--spacing-sm)] py-[var(--spacing-xs)] rounded-[var(--radius-sm)] cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-brand-primary-5)] hover:text-[var(--color-text-secondary)] max-[480px]:text-[var(--text-xs)] max-[480px]:px-[6px] max-[480px]:py-[3px] ${selectedDifficulty === diff ? 'bg-[var(--color-brand-primary-20)] text-[var(--color-brand-light)]' : ''} ${selectedDifficulty === diff && diff === 'easy' ? '!bg-[var(--difficulty-easy-bg)] !text-[var(--difficulty-easy)]' : ''} ${selectedDifficulty === diff && diff === 'medium' ? '!bg-[var(--difficulty-medium-bg)] !text-[var(--difficulty-medium)]' : ''} ${selectedDifficulty === diff && diff === 'hard' ? '!bg-[var(--difficulty-hard-bg)] !text-[var(--difficulty-hard)]' : ''}`}
+                    className={`flex items-center justify-center bg-transparent border-none text-[color:var(--color-text-muted)] text-[length:var(--text-xs)] font-medium px-[var(--spacing-sm)] py-[var(--spacing-xs)] rounded-[var(--radius-sm)] cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-brand-primary-5)] hover:text-[color:var(--color-text-secondary)] max-[480px]:text-[length:var(--text-xs)] max-[480px]:px-[6px] max-[480px]:py-[3px] ${selectedDifficulty === diff ? 'bg-[var(--color-brand-primary-20)] text-[color:var(--color-brand-light)]' : ''} ${selectedDifficulty === diff && diff === 'easy' ? '!bg-[var(--difficulty-easy-bg)] !text-[var(--difficulty-easy)]' : ''} ${selectedDifficulty === diff && diff === 'medium' ? '!bg-[var(--difficulty-medium-bg)] !text-[var(--difficulty-medium)]' : ''} ${selectedDifficulty === diff && diff === 'hard' ? '!bg-[var(--difficulty-hard-bg)] !text-[var(--difficulty-hard)]' : ''}`}
                     onClick={() => setSelectedDifficulty(diff)}
                     data-difficulty={diff}
                   >
@@ -117,13 +117,13 @@ export function ExampleSelector() {
               </div>
 
               {(searchQuery || selectedDifficulty !== 'all') && (
-                <span className="text-[var(--text-xs)] font-medium text-[var(--color-text-muted)] bg-[var(--color-brand-primary-10)] px-[6px] py-[2px] rounded-[var(--radius-sm)] flex-shrink-0 max-[480px]:order-4">{filteredExamples.length}</span>
+                <span className="text-[length:var(--text-xs)] font-medium text-[color:var(--color-text-muted)] bg-[var(--color-brand-primary-10)] px-[6px] py-[2px] rounded-[var(--radius-sm)] flex-shrink-0 max-[480px]:order-4">{filteredExamples.length}</span>
               )}
 
               {(searchQuery || selectedDifficulty !== 'all') && (
                 <button
                   type="button"
-                  className="flex items-center justify-center bg-transparent border-none text-[var(--color-text-muted)] cursor-pointer p-[var(--spacing-xs)] rounded-[var(--radius-sm)] transition-all duration-[var(--transition-fast)] flex-shrink-0 hover:text-[var(--difficulty-hard)] hover:bg-[var(--difficulty-hard-bg)] max-[480px]:order-2"
+                  className="flex items-center justify-center bg-transparent border-none text-[color:var(--color-text-muted)] cursor-pointer p-[var(--spacing-xs)] rounded-[var(--radius-sm)] transition-all duration-[var(--transition-fast)] flex-shrink-0 hover:text-[var(--difficulty-hard)] hover:bg-[var(--difficulty-hard-bg)] max-[480px]:order-2"
                   onClick={() => {
                     setSearchQuery('')
                     setSelectedDifficulty('all')
@@ -138,7 +138,7 @@ export function ExampleSelector() {
             {/* Categories */}
             <div className="flex flex-wrap gap-[var(--spacing-xs)] p-[var(--spacing-sm)] bg-[var(--color-bg-tertiary)] border-b border-[var(--color-border-primary)] max-h-[120px] overflow-y-auto max-[480px]:p-[var(--spacing-md)] max-[480px]:gap-[var(--spacing-sm)] max-[480px]:max-h-[100px] max-[480px]:flex-nowrap max-[480px]:overflow-x-auto max-[480px]:[-webkit-overflow-scrolling:touch]">
               <button
-                className={`flex items-center gap-[var(--spacing-xs)] px-[10px] py-[var(--spacing-xs)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] rounded-[var(--radius-sm)] text-[var(--color-text-muted)] text-[var(--text-xs)] font-medium cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-secondary)] max-[480px]:flex-shrink-0 max-[480px]:px-[var(--spacing-md)] max-[480px]:py-[6px] max-[480px]:text-[var(--text-sm)] ${!selectedCategory ? 'bg-[var(--color-accent-blue)] !border-[var(--color-accent-blue)] !text-[var(--color-white)]' : ''}`}
+                className={`flex items-center gap-[var(--spacing-xs)] px-[10px] py-[var(--spacing-xs)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] rounded-[var(--radius-sm)] text-[color:var(--color-text-muted)] text-[length:var(--text-xs)] font-medium cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-bg-elevated)] hover:text-[color:var(--color-text-secondary)] max-[480px]:flex-shrink-0 max-[480px]:px-[var(--spacing-md)] max-[480px]:py-[6px] max-[480px]:text-[length:var(--text-sm)] ${!selectedCategory ? 'bg-[var(--color-accent-blue)] !border-[var(--color-accent-blue)] !text-[color:var(--color-white)]' : ''}`}
                 onClick={() => setSelectedCategory(null)}
               >
                 All ({codeExamples.length})
@@ -146,12 +146,12 @@ export function ExampleSelector() {
               {exampleCategories.map(cat => (
                 <button
                   key={cat.id}
-                  className={`flex items-center gap-[var(--spacing-xs)] px-[10px] py-[var(--spacing-xs)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] rounded-[var(--radius-sm)] text-[var(--color-text-muted)] text-[var(--text-xs)] font-medium cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-secondary)] max-[480px]:flex-shrink-0 max-[480px]:px-[var(--spacing-md)] max-[480px]:py-[6px] max-[480px]:text-[var(--text-sm)] ${selectedCategory === cat.id ? 'bg-[var(--color-accent-blue)] !border-[var(--color-accent-blue)] !text-[var(--color-white)]' : ''}`}
+                  className={`flex items-center gap-[var(--spacing-xs)] px-[10px] py-[var(--spacing-xs)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] rounded-[var(--radius-sm)] text-[color:var(--color-text-muted)] text-[length:var(--text-xs)] font-medium cursor-pointer transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-bg-elevated)] hover:text-[color:var(--color-text-secondary)] max-[480px]:flex-shrink-0 max-[480px]:px-[var(--spacing-md)] max-[480px]:py-[6px] max-[480px]:text-[length:var(--text-sm)] ${selectedCategory === cat.id ? 'bg-[var(--color-accent-blue)] !border-[var(--color-accent-blue)] !text-[color:var(--color-white)]' : ''}`}
                   onClick={() => setSelectedCategory(cat.id)}
                 >
                   <ConceptIcon conceptId={cat.id} size={16} />
                   <span>{cat.name}</span>
-                  <span className="opacity-70 text-[var(--text-xs)]">({categoryCount[cat.id] || 0})</span>
+                  <span className="opacity-70 text-[length:var(--text-xs)]">({categoryCount[cat.id] || 0})</span>
                 </button>
               ))}
             </div>
@@ -159,7 +159,7 @@ export function ExampleSelector() {
             {/* Examples list */}
             <div className="max-h-[350px] overflow-y-auto p-[var(--spacing-xs)] max-[480px]:max-h-[calc(80vh-200px)] max-[480px]:p-[var(--spacing-sm)]">
               {filteredExamples.length === 0 ? (
-                <div className="p-[var(--spacing-lg)] text-center text-[var(--color-text-muted)] text-[var(--text-base)]">No problems found</div>
+                <div className="p-[var(--spacing-lg)] text-center text-[color:var(--color-text-muted)] text-[length:var(--text-base)]">No problems found</div>
               ) : (
                 filteredExamples.map(example => (
                   <button
@@ -168,10 +168,10 @@ export function ExampleSelector() {
                     onClick={() => handleSelectExample(example)}
                   >
                     <div className="flex items-center justify-between gap-[var(--spacing-sm)] mb-[2px]">
-                      <span className="text-[var(--text-base)] font-semibold text-[var(--color-text-primary)] max-[480px]:text-[var(--text-base)]">{example.name}</span>
+                      <span className="text-[length:var(--text-base)] font-semibold text-[color:var(--color-text-primary)] max-[480px]:text-[length:var(--text-base)]">{example.name}</span>
                       <DifficultyIndicator level={example.difficulty} size="sm" />
                     </div>
-                    <div className="text-[var(--text-xs)] text-[var(--color-text-muted)] max-[480px]:text-[var(--text-sm)] max-[480px]:mt-[var(--spacing-xs)]">{example.description}</div>
+                    <div className="text-[length:var(--text-xs)] text-[color:var(--color-text-muted)] max-[480px]:text-[length:var(--text-sm)] max-[480px]:mt-[var(--spacing-xs)]">{example.description}</div>
                   </button>
                 ))
               )}
