@@ -5,9 +5,9 @@ import { useSearch, type ConceptSource, type Difficulty } from '@/lib/search'
 
 const difficulties: { value: Difficulty | 'all'; label: string; color?: string }[] = [
   { value: 'all', label: 'All Levels' },
-  { value: 'beginner', label: 'Beginner', color: '#10b981' },
-  { value: 'intermediate', label: 'Intermediate', color: '#f59e0b' },
-  { value: 'advanced', label: 'Advanced', color: '#ef4444' },
+  { value: 'beginner', label: 'Beginner', color: 'var(--color-emerald-500)' },
+  { value: 'intermediate', label: 'Intermediate', color: 'var(--color-amber-500)' },
+  { value: 'advanced', label: 'Advanced', color: 'var(--color-red-500)' },
 ]
 
 interface PageSearchProps {

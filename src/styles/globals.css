@@ -239,8 +239,14 @@
 
   /* === Spacing === */
   --spacing: 4px;
+  --spacing-0\.5: 2px;
+  --spacing-0\.75: 3px;
+  --spacing-1: 4px;
+  --spacing-1\.25: 5px;
+  --spacing-1\.5: 6px;
   --spacing-xs: 4px;
   --spacing-sm: 8px;
+  --spacing-2\.5: 10px;
   --spacing-md: 12px;
   --spacing-lg: 16px;
   --spacing-xl: 24px;
@@ -249,6 +255,7 @@
   --spacing-4xl: 48px;
   --spacing-5xl: 64px;
   --spacing-6xl: 80px;
+  --spacing-pill: 0.35rem;
 
   /* === Typography === */
 
@@ -280,6 +287,11 @@
   --leading-snug: 1.4;
   --leading-normal: 1.5;
   --leading-relaxed: 1.6;
+
+  /* Letter spacing */
+  --letter-spacing-tight: 0.5px;
+  --letter-spacing-normal: 0.05em;
+  --letter-spacing-wide: 0.08em;
 
   /* === Border Radius === */
   --radius-*: initial;
@@ -355,6 +367,93 @@
   --animate-red-border-pulse: redBorderPulse 2s ease-in-out infinite;
   --animate-amber-warning-pulse: amberWarningPulse 1.5s ease-in-out infinite;
   --animate-teal-extract-pulse: tealExtractPulse 0.8s ease-in-out infinite;
+
+  /* === Glow Effects (for interactive elements) === */
+  --glow-xs: 0 0 4px;
+  --glow-sm: 0 0 6px;
+  --glow-md: 0 0 8px;
+  --glow-lg: 0 0 10px;
+  --glow-xl: 0 0 12px;
+  --glow-2xl: 0 0 20px;
+
+  /* === Border Widths === */
+  --border-width-1: 1px;
+  --border-width-2: 2px;
+  --border-width-3: 3px;
+  --border-width-4: 4px;
+
+  /* === Transitions === */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* === Gradients === */
+  --gradient-brand: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
+  --gradient-brand-subtle: linear-gradient(135deg, var(--color-brand-primary-10) 0%, var(--color-brand-secondary-10) 100%);
+  --gradient-brand-hover: linear-gradient(135deg, var(--color-brand-primary-15) 0%, var(--color-brand-secondary-15) 100%);
+  --gradient-page: linear-gradient(135deg, var(--color-bg-page) 0%, var(--color-bg-page-secondary) 100%);
+
+  /* === Glow Composites === */
+  --glow-brand: 0 0 20px var(--color-brand-primary-20), 0 0 40px var(--color-brand-secondary-10);
+  --glow-brand-strong: 0 0 25px var(--color-brand-primary-25), 0 0 50px var(--color-brand-secondary-15);
+  --glow-brand-text: 0 0 20px var(--color-brand-primary-30);
+
+  /* === Card / Surface Styles === */
+  --surface-card: rgba(255, 255, 255, 0.03);
+  --surface-card-hover: var(--color-brand-primary-10);
+  --border-card: rgba(255, 255, 255, 0.08);
+  --border-card-hover: var(--color-brand-primary-40);
+
+  /* === Card Theme Tokens === */
+  --card-gradient-bg: linear-gradient(135deg, var(--color-brand-primary-15), var(--color-brand-secondary-15));
+  --card-gradient-border: linear-gradient(135deg, var(--color-brand-primary-50), var(--color-brand-secondary-50));
+  --card-border: var(--color-brand-primary-30);
+  --card-border-hover: var(--color-brand-primary-50);
+  --card-glow: 0 0 20px var(--color-brand-primary-30), 0 0 40px var(--color-brand-secondary-15);
+  --card-glow-strong: 0 0 25px var(--color-brand-primary-50), 0 0 50px var(--color-brand-secondary-30);
+  --card-stat-color: var(--color-brand-primary);
+
+  /* === Neon Visualization Gradients === */
+  --gradient-neon-orange: linear-gradient(135deg, var(--color-orange-500), var(--color-amber-400));
+  --gradient-neon-blue: linear-gradient(135deg, #3b82f6, var(--color-blue-500));
+  --gradient-neon-purple: linear-gradient(135deg, var(--color-accent-purple), #ec4899);
+  --gradient-neon-emerald: linear-gradient(135deg, var(--color-emerald-500), var(--color-accent-cyan));
+  --gradient-neon-cyan: linear-gradient(135deg, #06b6d4, #0891b2);
+  --gradient-neon-gray: linear-gradient(135deg, var(--color-slate-500), var(--color-slate-400));
+  --gradient-neon-amber: linear-gradient(135deg, var(--color-amber-500), var(--color-amber-400));
+  --gradient-neon-danger: linear-gradient(135deg, var(--color-red-500), var(--color-amber-500));
+
+  /* === Difficulty Levels === */
+  --difficulty-easy: #22c55e;
+  --difficulty-easy-bg: rgba(34, 197, 94, 0.15);
+  --difficulty-medium: #eab308;
+  --difficulty-medium-bg: rgba(234, 179, 8, 0.15);
+  --difficulty-hard: #ef4444;
+  --difficulty-hard-bg: rgba(239, 68, 68, 0.15);
+  --difficulty-1: #10b981;
+  --difficulty-2: #f59e0b;
+  --difficulty-3: #ef4444;
+
+  /* === Execution State Colors === */
+  --exec-current: #388bfd33;
+  --exec-breakpoint: #f8514933;
+  --exec-return: #3fb95033;
+
+  /* === Stack Frame Colors === */
+  --stack-frame-1: #58a6ff;
+  --stack-frame-2: #a371f7;
+  --stack-frame-3: #3fb950;
+  --stack-frame-4: #d29922;
+  --stack-frame-5: #f85149;
+
+  /* === OpenGraph / Meta Image Colors === */
+  --og-bg-start: #0f0f23;
+  --og-bg-end: #1a1a2e;
+  --og-text-secondary: #888;
+
+  /* === Code Syntax Colors === */
+  --code-text: #e0e0e0;
+  --code-text-error: #f8a0a0;
 
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -433,159 +532,19 @@
 }
 
 @layer base {
-:root {
-  /* ==========================================================================
-     SEMANTIC THEME TOKENS - Gradients, glows, surfaces, composites
-     ========================================================================== */
 
-  /* Gradients */
-  --gradient-brand: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
-  --gradient-brand-subtle: linear-gradient(135deg, var(--color-brand-primary-10) 0%, var(--color-brand-secondary-10) 100%);
-  --gradient-brand-hover: linear-gradient(135deg, var(--color-brand-primary-15) 0%, var(--color-brand-secondary-15) 100%);
-  --gradient-page: linear-gradient(135deg, var(--color-bg-page) 0%, var(--color-bg-page-secondary) 100%);
-
-  /* Glows/Shadows */
-  --glow-brand: 0 0 20px var(--color-brand-primary-20), 0 0 40px var(--color-brand-secondary-10);
-  --glow-brand-strong: 0 0 25px var(--color-brand-primary-25), 0 0 50px var(--color-brand-secondary-15);
-  --glow-brand-text: 0 0 20px var(--color-brand-primary-30);
-
-  /* Card/surface styles */
-  --surface-card: rgba(255, 255, 255, 0.03);
-  --surface-card-hover: var(--color-brand-primary-10);
-  --border-card: rgba(255, 255, 255, 0.08);
-  --border-card-hover: var(--color-brand-primary-40);
-
-  /* Card theme tokens */
-  --card-gradient-bg: linear-gradient(135deg, var(--color-brand-primary-15), var(--color-brand-secondary-15));
-  --card-gradient-border: linear-gradient(135deg, var(--color-brand-primary-50), var(--color-brand-secondary-50));
-  --card-border: var(--color-brand-primary-30);
-  --card-border-hover: var(--color-brand-primary-50);
-  --card-glow: 0 0 20px var(--color-brand-primary-30), 0 0 40px var(--color-brand-secondary-15);
-  --card-glow-strong: 0 0 25px var(--color-brand-primary-50), 0 0 50px var(--color-brand-secondary-30);
-  --card-stat-color: var(--color-brand-primary);
-
-  /* Neon visualization gradients */
-  --gradient-neon-orange: linear-gradient(135deg, var(--color-orange-500), var(--color-amber-400));
-  --gradient-neon-blue: linear-gradient(135deg, #3b82f6, var(--color-blue-500));
-  --gradient-neon-purple: linear-gradient(135deg, var(--color-accent-purple), #ec4899);
-  --gradient-neon-emerald: linear-gradient(135deg, var(--color-emerald-500), var(--color-accent-cyan));
-  --gradient-neon-cyan: linear-gradient(135deg, #06b6d4, #0891b2);
-  --gradient-neon-gray: linear-gradient(135deg, var(--color-slate-500), var(--color-slate-400));
-  --gradient-neon-amber: linear-gradient(135deg, var(--color-amber-500), var(--color-amber-400));
-  --gradient-neon-danger: linear-gradient(135deg, var(--color-red-500), var(--color-amber-500));
-
-  /* Legacy aliases (for gradual migration - can remove later) */
-  --theme-cyan: var(--color-brand-primary);
-  --theme-teal: var(--color-brand-secondary);
-  --theme-cyan-15: var(--color-brand-primary-15);
-  --theme-cyan-30: var(--color-brand-primary-30);
-  --theme-cyan-50: var(--color-brand-primary-50);
-  --theme-teal-15: var(--color-brand-secondary-15);
-  --theme-teal-30: var(--color-brand-secondary-30);
-  --theme-teal-50: var(--color-brand-secondary-50);
-  --gradient-neon: var(--gradient-brand);
-  --glow-neon: var(--glow-brand);
-  --glow-neon-strong: var(--glow-brand-strong);
-  --glow-neon-text: var(--glow-brand-text);
-  --neon-purple-light: var(--color-brand-light);
-
-  /* Difficulty levels */
-  --difficulty-easy: #22c55e;
-  --difficulty-easy-bg: rgba(34, 197, 94, 0.15);
-  --difficulty-medium: #eab308;
-  --difficulty-medium-bg: rgba(234, 179, 8, 0.15);
-  --difficulty-hard: #ef4444;
-  --difficulty-hard-bg: rgba(239, 68, 68, 0.15);
-  --difficulty-1: #10b981;
-  --difficulty-2: #f59e0b;
-  --difficulty-3: #ef4444;
-
-  /* Execution state colors */
-  --exec-current: #388bfd33;
-  --exec-breakpoint: #f8514933;
-  --exec-return: #3fb95033;
-
-  /* Stack frame colors */
-  --stack-frame-1: #58a6ff;
-  --stack-frame-2: #a371f7;
-  --stack-frame-3: #3fb950;
-  --stack-frame-4: #d29922;
-  --stack-frame-5: #f85149;
-
-  /* OpenGraph / Meta image colors */
-  --og-bg-start: #0f0f23;
-  --og-bg-end: #1a1a2e;
-  --og-text-secondary: #888;
-
-  /* Code syntax colors */
-  --code-text: #e0e0e0;
-  --code-text-error: #f8a0a0;
-
-  /* Container widths */
-  --container-narrow: 600px;
-  --container-content: 900px;
-  --container-default: 1200px;
-  --container-wide: 1400px;
-
-  /* Card min-heights */
-  --card-height-sm: 180px;
-  --card-height-md: 200px;
-  --card-height-lg: 250px;
-  --card-height-xl: 300px;
-  --card-height-2xl: 350px;
-  --card-height-3xl: 450px;
-  --card-height-4xl: 500px;
-
-  /* Font sizes */
-  --font-size-2xs: 0.625rem;
-  --font-size-xs: 0.7rem;
-  --font-size-sm: 0.75rem;
-  --font-size-base: 0.85rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 2rem;
-  --font-size-4xl: 2.5rem;
-
-  /* Grid column min-widths */
-  --grid-col-sm: 250px;
-  --grid-col-md: 280px;
-
-  /* Responsive breakpoints (documentation only - cannot use in @media) */
-  /* sm: 640px - Mobile landscape, large phones */
-  /* md: 768px - Tablets, hide Monaco below this */
-  /* lg: 1024px - Desktops, full layout */
-
-  /* Use these exact values in media queries:
-   * @media (max-width: 639px) - mobile only
-   * @media (max-width: 767px) - below tablet
-   * @media (max-width: 1023px) - below desktop
-   * @media (min-width: 640px) - tablet and up
-   * @media (min-width: 768px) - tablet and up (tablet+)
-   * @media (min-width: 1024px) - desktop and up
-   */
-
-  /* Glow effects (for interactive elements) */
-  --glow-xs: 0 0 4px;
-  --glow-sm: 0 0 6px;
-  --glow-md: 0 0 8px;
-  --glow-lg: 0 0 10px;
-  --glow-xl: 0 0 12px;
-  --glow-2xl: 0 0 20px;
-
-  /* Border widths */
-  --border-width-1: 1px;
-  --border-width-2: 2px;
-  --border-width-3: 3px;
-  --border-width-4: 4px;
-
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-normal: 250ms ease;
-  --transition-slow: 350ms ease;
-
-}
+/* Responsive breakpoints (documentation only - cannot use in @media):
+ * sm: 640px - Mobile landscape, large phones
+ * md: 768px - Tablets, hide Monaco below this
+ * lg: 1024px - Desktops, full layout
+ *
+ * @media (max-width: 639px) - mobile only
+ * @media (max-width: 767px) - below tablet
+ * @media (max-width: 1023px) - below desktop
+ * @media (min-width: 640px) - tablet and up
+ * @media (min-width: 768px) - tablet and up (tablet+)
+ * @media (min-width: 1024px) - desktop and up
+ */
 
 * {
   margin: 0;

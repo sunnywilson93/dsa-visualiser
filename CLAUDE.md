@@ -71,6 +71,38 @@ npm test -- interpreter.test.ts
 - Path aliases: `@/` maps to `src/`
 - Components: PascalCase filenames; hooks: `useSomething`
 
+## CSS Design Tokens
+
+All `.module.css` files must use design tokens from `src/styles/globals.css` `@theme` block. Never hardcode raw values.
+
+### Token Reference
+
+| Category | Pattern | Example |
+|----------|---------|---------|
+| Spacing | `var(--spacing-*)` | `var(--spacing-sm)` for 8px |
+| Colors | `var(--color-*)` | `var(--color-text-primary)` |
+| Typography | `var(--text-*)`, `var(--font-weight-*)`, `var(--leading-*)`, `var(--letter-spacing-*)` | `var(--text-sm)` |
+| Borders | `var(--border-width-*)`, `var(--radius-*)` | `var(--border-width-1) solid` |
+| Transitions | `var(--transition-*)` | `var(--transition-fast)` |
+| Shadows | `var(--shadow-*)`, `var(--glow-*)` | `var(--shadow-md)` |
+
+### Spacing Scale Quick Reference
+
+`0.5`=2px, `0.75`=3px, `1`=4px, `1.25`=5px, `1.5`=6px, `xs`=4px, `sm`=8px, `2.5`=10px, `md`=12px, `lg`=16px, `xl`=24px, `pill`=0.35rem
+
+### Allowed Exceptions
+
+- **@media queries**: CSS vars can't be used in media queries; raw px breakpoints are OK
+- **calc() expressions**: `calc(var(--spacing-md) + var(--spacing-sm))` is fine
+- **Structural values**: `1fr`, `100%`, `0`, `none`, `transparent`, `auto`
+- **Scoped CSS vars**: Variables defined and consumed within the same module file
+
+### Adding New Tokens
+
+1. Check if an existing token is within 1-2px
+2. If not, add to `src/styles/globals.css` `@theme` block following naming: `--{category}-{scale}`
+3. All tokens live in `@theme` — never use `:root` for token definitions
+
 ## Testing
 
 - Vitest + React Testing Library + jsdom

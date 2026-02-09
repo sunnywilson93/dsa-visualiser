@@ -21,8 +21,8 @@ const footerLinks = {
     title: 'Practice',
     links: [
       { label: 'Arrays & Hashing', href: '/arrays-hashing' },
-      { label: 'Closures', href: '/concepts/closures' },
-      { label: 'Promises', href: '/concepts/promises-deep-dive' },
+      { label: 'Closures', href: '/concepts/js/closures' },
+      { label: 'Promises', href: '/concepts/js/promises-deep-dive' },
       { label: 'DSA Problems', href: '/concepts/dsa' },
     ],
   },

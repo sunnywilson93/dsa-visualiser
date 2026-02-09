@@ -9,18 +9,18 @@
   display: flex;
   gap: var(--spacing-sm);
   justify-content: center;
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--spacing-1);
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  padding: 0.35rem;
+  padding: var(--spacing-pill);
 }
 
 .levelBtn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px var(--spacing-md);
+  gap: var(--spacing-1\.5);
+  padding: var(--spacing-1\.5) var(--spacing-md);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   background: var(--color-white-4);
@@ -58,11 +58,11 @@
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  padding: 0.35rem;
+  padding: var(--spacing-pill);
 }
 
 .exampleBtn {
-  padding: 6px var(--spacing-md);
+  padding: var(--spacing-1\.5) var(--spacing-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   background: var(--color-white-4);
@@ -105,7 +105,7 @@
 }
 
 .phaseBadge {
-  padding: 2px var(--spacing-sm);
+  padding: var(--spacing-0\.5) var(--spacing-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   font-weight: var(--font-weight-semibold);
@@ -121,8 +121,8 @@
 
 .codeLine {
   display: flex;
-  padding: 2px var(--spacing-sm);
-  transition: background 0.2s;
+  padding: var(--spacing-0\.5) var(--spacing-sm);
+  transition: background var(--transition-fast);
 }
 
 .codeLine.activeLine {
@@ -180,10 +180,10 @@
   min-width: 120px;
   padding: var(--spacing-md);
   background: var(--color-black-40);
-  border: 2px solid var(--color-accent-purple-25);
+  border: var(--border-width-2) solid var(--color-accent-purple-25);
   border-radius: var(--radius-lg);
   text-align: center;
-  transition: all 0.3s;
+  transition: all var(--transition-normal);
 }
 
 .functionBox.activeFn {
@@ -232,7 +232,7 @@
 
 .dataValue {
   display: inline-block;
-  padding: 2px var(--spacing-sm);
+  padding: var(--spacing-0\.5) var(--spacing-sm);
   background: var(--gradient-brand);
   border-radius: var(--radius-full);
   font-family: var(--font-mono);
@@ -270,7 +270,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--color-emerald-500);
-  padding: 0.2rem 0;
+  padding: var(--spacing-0\.75) 0;
 }
 
 /* Description */
@@ -287,7 +287,7 @@
 .stepBadge {
   display: inline-block;
   background: var(--color-brand-primary-30);
-  padding: 2px var(--spacing-sm);
+  padding: var(--spacing-0\.5) var(--spacing-sm);
   border-radius: var(--radius-full);
   font-size: var(--text-2xs);
   font-weight: var(--font-weight-semibold);

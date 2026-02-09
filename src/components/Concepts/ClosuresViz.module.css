@@ -130,7 +130,7 @@
 }
 
 .lineNum {
-  width: 1.5rem;
+  width: var(--spacing-xl);
   color: var(--color-gray-800);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
@@ -153,7 +153,7 @@
 .neonBox {
   position: relative;
   border-radius: var(--radius-xl);
-  padding: 3px;
+  padding: var(--spacing-0\.75);
   background: linear-gradient(135deg, var(--neon-start), var(--neon-end));
 }
 
@@ -162,7 +162,7 @@
   border-radius: var(--radius-lg);
   min-height: 120px;
   padding: var(--spacing-md);
-  padding-top: 1.5rem;
+  padding-top: var(--spacing-xl);
 }
 
 .neonBoxHeader {
@@ -170,7 +170,7 @@
   top: -1px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 5px var(--spacing-lg);
+  padding: var(--spacing-1\.25) var(--spacing-lg);
   background: var(--color-bg-tertiary);
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   font-size: var(--text-sm);
@@ -221,7 +221,7 @@
 }
 
 .ecHeader {
-  padding: 0.35rem 0.5rem;
+  padding: var(--spacing-pill) var(--spacing-sm);
   font-size: var(--text-2xs);
   font-weight: var(--font-weight-semibold);
   color: var(--color-blue-400);
@@ -234,11 +234,11 @@
 }
 
 .ecContent {
-  padding: 0.4rem 0.5rem;
+  padding: var(--spacing-1\.5) var(--spacing-sm);
 }
 
 .ecSection {
-  margin-bottom: 0.3rem;
+  margin-bottom: var(--spacing-1\.25);
 }
 
 .ecSection:last-child {
@@ -249,19 +249,19 @@
   display: block;
   font-size: var(--text-xs);
   color: var(--color-gray-700);
-  margin-bottom: 0.15rem;
+  margin-bottom: var(--spacing-0\.5);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: var(--letter-spacing-tight);
 }
 
 .ecVar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.15rem 0.3rem;
+  padding: var(--spacing-0\.5) var(--spacing-1\.25);
   background: var(--color-black-20);
   border-radius: var(--radius-xs);
-  margin-bottom: 0.15rem;
+  margin-bottom: var(--spacing-0\.5);
 }
 
 .ecVarName {
@@ -332,7 +332,7 @@
 .heapLabel {
   font-size: var(--text-2xs);
   font-weight: var(--font-weight-semibold);
-  margin-bottom: 0.35rem;
+  margin-bottom: var(--spacing-pill);
 }
 
 .scopeBlock .heapLabel {
@@ -346,13 +346,13 @@
 .heapVars {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: var(--spacing-0\.75);
 }
 
 .heapVar {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: var(--spacing-1\.25);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
 }
@@ -370,7 +370,7 @@
   position: absolute;
   top: -6px;
   right: 6px;
-  padding: 0.1rem 0.35rem;
+  padding: var(--spacing-0\.5) var(--spacing-pill);
   background: var(--difficulty-2);
   border-radius: var(--radius-xs);
   font-size: var(--text-xs);
@@ -396,7 +396,7 @@
 }
 
 .outputLine {
-  padding: 0.15rem 0;
+  padding: var(--spacing-0\.5) 0;
 }
 
 .emptyOutput {
@@ -405,7 +405,7 @@
 
 /* Description */
 .description {
-  padding: 10px var(--spacing-md);
+  padding: var(--spacing-2\.5) var(--spacing-md);
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-lg);
@@ -470,7 +470,7 @@
 
 /* Insight */
 .insight {
-  padding: 10px var(--spacing-md);
+  padding: var(--spacing-2\.5) var(--spacing-md);
   background: var(--color-brand-primary-8);
   border: var(--border-width-1) solid var(--color-brand-primary-20);
   border-radius: var(--radius-lg);

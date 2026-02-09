@@ -6,6 +6,11 @@ export interface CodeExample {
   difficulty: 'easy' | 'medium' | 'hard'
   description: string
   code: string
+  approach?: string
+  timeComplexity?: string
+  spaceComplexity?: string
+  patternName?: string
+  whyItWorks?: string
 }
 
 // Main 9 categories for the home page
@@ -133,6 +138,11 @@ console.log("\\n--- Final Values ---");
 console.log("Counter 1:", counter1.getValue());
 console.log("Counter 2:", counter2.getValue());
 `,
+    approach: 'Create a factory function that returns an object with increment, decrement, and getValue methods. Each returned method closes over a shared count variable, demonstrating how closures preserve access to their enclosing scope even after the outer function returns.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Closure Pattern',
+    whyItWorks: 'Inner functions retain a reference to outer variables even after the outer function returns. Each call to createCounter creates a new scope with its own independent count variable.',
   },
   {
     id: 'this-binding',
@@ -173,6 +183,11 @@ let obj = {
 };
 obj.arrowMethod();
 `,
+    approach: 'Demonstrate the four rules of this binding: method call (implicit), bind (explicit hard binding), call/apply (explicit), and arrow functions (lexical). Each pattern shows how JavaScript resolves the this reference at the call site.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'This Binding Rules',
+    whyItWorks: 'The value of this is determined by how a function is called, not where it is defined. Arrow functions are the exception: they capture this lexically from their enclosing scope at creation time.',
   },
   {
     id: 'prototype-chain',
@@ -215,6 +230,11 @@ console.log("\\n=== instanceof ===");
 console.log("dog instanceof Dog:", dog instanceof Dog);
 console.log("dog instanceof Animal:", dog instanceof Animal);
 `,
+    approach: 'Set up prototypal inheritance by creating a Dog constructor that calls Animal via Animal.call(this, name), then links prototypes with Object.create(Animal.prototype). This establishes the prototype chain so Dog instances inherit Animal methods while adding their own.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Prototype Chain',
+    whyItWorks: 'JavaScript property lookup walks the prototype chain. When dog.speak() is called, the engine checks dog, then Dog.prototype, then Animal.prototype, finding the method there.',
   },
   {
     id: 'hoisting-demo',
@@ -248,6 +268,11 @@ console.log("var i after loop:", i);
 for (let j = 0; j < 3; j++) {}
 console.log("let j: not accessible");
 `,
+    approach: 'Contrast function hoisting (fully hoisted and callable before declaration), var hoisting (declaration hoisted but value is undefined), and let/const temporal dead zone (not accessible before declaration). Loop scoping highlights var leaking into outer scope versus let being block-scoped.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Hoisting and TDZ',
+    whyItWorks: 'JavaScript hoists declarations during the compile phase. Function declarations are fully initialized, var is initialized to undefined, and let/const remain uninitialized until execution reaches the declaration.',
   },
   {
     id: 'scope-chain',
@@ -286,6 +311,11 @@ function test() {
 test();
 console.log("Outside:", shadow);
 `,
+    approach: 'Nest functions to demonstrate lexical scope chain lookup. The inner function accesses its own variables, then the enclosing outer function variables, then global variables. Variable shadowing shows that a local declaration hides the outer variable of the same name without modifying it.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Lexical Scope Chain',
+    whyItWorks: 'JavaScript resolves variable references by walking outward through the lexical scope chain, stopping at the first match. Shadowing creates a new binding in the inner scope, leaving the outer binding untouched.',
   },
   {
     id: 'implement-call',
@@ -332,6 +362,11 @@ console.log("\\n=== Compare with native call ===");
 let native = greet.call(person, "Hi", "?");
 console.log("Native:", native);
 `,
+    approach: 'Attach the target function as a temporary method on the context object using a Symbol key to avoid property collisions. Invoke it via context[fnKey](...args) so that this resolves to context, then clean up by deleting the temporary property.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Context Binding Polyfill',
+    whyItWorks: 'When a function is called as a method of an object (obj.fn()), JavaScript sets this to the object. By temporarily attaching the function to the desired context, we leverage implicit this binding.',
   },
   {
     id: 'implement-apply',
@@ -373,6 +408,11 @@ let nums = [3, 1, 4, 1, 5, 9];
 let max = Math.max.apply(null, nums);
 console.log("Max of", nums, "is", max);
 `,
+    approach: 'Use the same Symbol-based temporary method technique as call(), but accept arguments as an array instead of individually. Default the args parameter to an empty array to handle calls with no arguments. Spread the array when invoking the temporary method.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Context Binding Polyfill',
+    whyItWorks: 'Apply is identical to call except it takes arguments as a single array, which is then spread. This was historically important before the spread operator existed for passing dynamic argument lists.',
   },
   {
     id: 'implement-bind',
@@ -420,6 +460,11 @@ let button = {
 let handler = button.handleClick.myBind(button);
 handler();
 `,
+    approach: 'Return a new function that closes over the original function reference, the bound context, and any partially applied arguments. When the returned function is called, concatenate the bound args with the new call args and delegate to originalFn.apply(context, allArgs). This enables both full binding and partial application.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Partial Application',
+    whyItWorks: 'The returned closure captures the original function and context permanently. Combining bound args with call-time args enables currying-like partial application where some arguments are pre-filled.',
   },
   {
     id: 'implement-new',
@@ -465,6 +510,11 @@ console.log("Greet:", p1.greet());
 console.log("\\n=== instanceof check ===");
 console.log("p1 instanceof Person:", p1 instanceof Person);
 `,
+    approach: 'Replicate the four steps of the new operator: create a blank object with Object.create(Constructor.prototype), invoke the constructor with the new object as this via Constructor.apply(obj, args), and return the constructor result if it is an object, otherwise return the created object.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Constructor Pattern',
+    whyItWorks: 'The new operator links the created object to the constructor prototype chain before calling the constructor. If the constructor returns a non-object, the newly created object is used instead.',
   },
   {
     id: 'implement-object-create',
@@ -520,6 +570,11 @@ cat.meow();
 console.log("\\n=== Prototype chain ===");
 console.log("dog's proto:", Object.getPrototypeOf(dog) === animal);
 `,
+    approach: 'Create an empty constructor function F, set F.prototype to the desired proto object, then instantiate with new F(). This produces an object whose internal [[Prototype]] points to proto. Optionally apply property descriptors via Object.defineProperties for the second argument.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Prototype Delegation',
+    whyItWorks: 'Setting F.prototype before calling new F() ensures the new object has the correct prototype link. This is the classic polyfill pattern used before Object.create was standardized in ES5.',
   },
   {
     id: 'implement-instanceof',
@@ -569,6 +624,11 @@ console.log(myInstanceof(dog, Animal));
 console.log("\\n=== Dog instanceof Array ===");
 console.log(myInstanceof(dog, Array));
 `,
+    approach: 'Walk the prototype chain of the target object using Object.getPrototypeOf in a while loop. At each step, compare the current prototype to Constructor.prototype. Return true on a match or false when the chain ends at null.',
+    timeComplexity: 'O(d)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Prototype Chain Traversal',
+    whyItWorks: 'The instanceof operator checks if Constructor.prototype exists anywhere in the object prototype chain. Walking the chain with getPrototypeOf replicates this lookup exactly.',
   },
   {
     id: 'typeof-vs-instanceof',
@@ -605,6 +665,11 @@ console.log("typeof null === 'object':", typeof null === 'object');
 console.log("typeof [] === 'object':", typeof [] === 'object');
 console.log("Array.isArray([]):", Array.isArray(arr));
 `,
+    approach: 'Compare typeof (returns a string for primitive types and "object"/"function" for references) with instanceof (walks the prototype chain). Highlight the classic gotchas: typeof null returns "object", typeof [] returns "object", and show Array.isArray as the reliable array check.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Type Checking Patterns',
+    whyItWorks: 'typeof operates on the internal type tag of a value (with the null bug being a legacy spec issue), while instanceof relies on the prototype chain. Neither alone covers all cases, so combining them or using Array.isArray is necessary.',
   },
   {
     id: 'execution-context',
@@ -660,6 +725,11 @@ function third() {
 
 first();
 `,
+    approach: 'Demonstrate the execution context stack by nesting function calls three levels deep. Each call creates a new execution context pushed onto the call stack, and each return pops it. Inner functions access outer variables through the scope chain attached to their execution context.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Execution Context Stack',
+    whyItWorks: 'Every function invocation creates an execution context with its own variable environment and scope chain. The call stack tracks which context is active, enabling JavaScript to resume the caller after the callee returns.',
   },
 
   // ==================== ASYNC JAVASCRIPT ====================
@@ -695,6 +765,11 @@ fetchUser(1)
   })
   .catch(err => console.log("Error:", err));
 `,
+    approach: 'Chain .then() calls to sequence dependent async operations: first fetch the user, then use the resolved user object to fetch their posts. Each .then() returns a new promise, enabling flat chaining instead of nesting. A single .catch() at the end handles errors from any step.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Promise Chaining',
+    whyItWorks: 'Each .then() callback receives the resolved value of the previous promise and returns a new promise. This creates a sequential pipeline where the output of one async step feeds into the next.',
   },
   {
     id: 'async-await-basics',
@@ -732,6 +807,11 @@ async function main() {
 
 main();
 `,
+    approach: 'Use async/await to write asynchronous code that reads like synchronous code. Await each fetchData call to pause execution until the promise resolves, then store the result. Wrap everything in try/catch for centralized error handling of any rejected promise.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Async/Await',
+    whyItWorks: 'The await keyword suspends the async function until the promise settles, then resumes with the resolved value. Under the hood, the engine transforms this into promise chains, but the code reads sequentially.',
   },
   {
     id: 'sequential-vs-parallel',
@@ -772,6 +852,11 @@ async function main() {
 
 main();
 `,
+    approach: 'Compare two async patterns: sequential execution using a for loop with await (each request waits for the previous one), and parallel execution using Promise.all with map (all requests fire simultaneously). This demonstrates the performance difference between serial and concurrent I/O.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Sequential vs Parallel Async',
+    whyItWorks: 'Promise.all fires all promises concurrently and waits for all to settle, taking only as long as the slowest request. Sequential await adds up all individual wait times, making it slower for independent operations.',
   },
 
   // ==================== ARRAY POLYFILLS ====================
@@ -802,6 +887,11 @@ console.log("\\n=== Extract ===");
 let users = [{ name: 'Alice' }, { name: 'Bob' }];
 console.log(users.myMap(u => u.name));
 `,
+    approach: 'Iterate through the array, apply the callback to each element with (value, index, array) arguments, and push each transformed result into a new array. The original array is never modified, preserving immutability.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'Map creates a 1:1 transformation: every input element produces exactly one output element. The callback receives the current value, index, and original array, matching the native Array.prototype.map signature.',
   },
   {
     id: 'implement-filter',
@@ -829,6 +919,11 @@ console.log("\\n=== Truthy ===");
 let mixed = [0, 1, '', 'hi', null, true];
 console.log(mixed.myFilter(Boolean));
 `,
+    approach: 'Iterate through the array and invoke the callback predicate for each element. If the predicate returns a truthy value, push the original element into a result array. Elements that fail the test are skipped, producing a subset of the original array.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'Filter tests each element against a predicate and includes only those that pass. Passing Boolean as the callback is a common idiom to remove all falsy values (0, "", null, undefined, false).',
   },
   {
     id: 'implement-reduce',
@@ -861,6 +956,11 @@ console.log([3,7,2,9].myReduce((a,b) => b>a ? b : a));
 console.log("\\n=== Flatten ===");
 console.log([[1,2],[3,4]].myReduce((a,b) => a.concat(b), []));
 `,
+    approach: 'Initialize the accumulator to the provided init value (or the first element if omitted, starting iteration from index 1). On each iteration, pass the accumulator and current element to the callback, updating the accumulator with the return value. Return the final accumulator after the loop.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'Reduce collapses an array into a single value by threading an accumulator through each iteration. The flexibility of the callback allows it to implement sum, max, flatten, groupBy, and nearly any array transformation.',
   },
   {
     id: 'implement-flat',
@@ -895,6 +995,11 @@ console.log([1, [2, [3, [4]]]].myFlat(2));
 console.log("\\n=== Infinity ===");
 console.log([1, [2, [3, [4]]]].myFlat(Infinity));
 `,
+    approach: 'Use a recursive helper function that iterates over each item. If the item is an array and the remaining depth is greater than 0, recurse with depth - 1. Otherwise, push the item to the result. Concatenate sub-results to build the flattened output.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Recursive Flattening',
+    whyItWorks: 'The depth parameter controls how many levels of nesting to unwrap. Each recursive call decrements depth by 1, so arrays nested deeper than the specified depth are left as-is. Using Infinity flattens all levels.',
   },
   {
     id: 'implement-foreach',
@@ -919,6 +1024,11 @@ let sum = 0;
 
 console.log("\\nFinal sum:", sum);
 `,
+    approach: 'Loop through the array and invoke the callback with (element, index, array) for each item. Unlike map, forEach returns undefined and is used purely for side effects. The implementation does not collect return values.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'forEach provides a cleaner syntax than a for loop for executing side effects on each element. It always iterates the entire array and cannot be short-circuited with break or return.',
   },
   {
     id: 'implement-find',
@@ -958,6 +1068,11 @@ let notFound = users.myFind(function(u) {
 });
 console.log("Result:", notFound);
 `,
+    approach: 'Iterate through the array and test each element with the callback predicate. Return the first element for which the callback returns truthy, short-circuiting the loop. If no element matches, return undefined.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'Find uses early return to stop iteration as soon as a match is found, making it more efficient than filter when only the first match is needed. Returning undefined for no match distinguishes it from returning a falsy found value.',
   },
   {
     id: 'implement-findindex',
@@ -993,6 +1108,11 @@ let noIdx = numbers.myFindIndex(function(n) {
 });
 console.log("Result:", noIdx);
 `,
+    approach: 'Loop through the array and test each element against the callback predicate. Return the index of the first element that passes the test, short-circuiting the iteration. Return -1 if no element satisfies the condition.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'FindIndex returns a numeric position rather than the element itself, which is useful when you need to know where a match occurs for subsequent splice, slice, or index-based operations.',
   },
   {
     id: 'implement-some',
@@ -1029,6 +1149,11 @@ let hasSenior = ages.mySome(function(age) {
 });
 console.log("Result:", hasSenior);
 `,
+    approach: 'Iterate through the array and test each element with the callback. Return true immediately when any element passes the test, short-circuiting the remaining iterations. Return false only if every element fails the predicate.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'Some implements existential quantification: it answers "does at least one element satisfy this condition?" Early return on the first truthy result makes it efficient for large arrays where a match is found early.',
   },
   {
     id: 'implement-every',
@@ -1063,6 +1188,11 @@ let allEven = [2, 4, 5, 8].myEvery(function(n) {
 });
 console.log("Result:", allEven);
 `,
+    approach: 'Iterate through the array and test each element with the callback. Return false immediately when any element fails the test, short-circuiting the remaining iterations. Return true only after every element has passed the predicate.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'Every implements universal quantification: it answers "do all elements satisfy this condition?" Early return on the first falsy result avoids unnecessary work, and it is the logical complement of some.',
   },
   {
     id: 'implement-includes',
@@ -1103,6 +1233,11 @@ console.log("Result:", arr.myIncludes(3, 3));
 console.log("\\nIncludes 6?");
 console.log("Result:", arr.myIncludes(6));
 `,
+    approach: 'Linear scan from the fromIndex position (defaulting to 0), using strict equality (===) to compare each element with the search value. Handle negative fromIndex by adding it to the array length. Return true on the first match or false after exhausting the array.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'Includes provides a boolean membership test that is more readable than indexOf !== -1. The fromIndex parameter enables searching from a specific position, useful for finding duplicates after a known index.',
   },
   {
     id: 'implement-indexof',
@@ -1142,6 +1277,11 @@ console.log("Result:", letters.myIndexOf('b', 2));
 console.log("\\nindexOf 'z':");
 console.log("Result:", letters.myIndexOf('z'));
 `,
+    approach: 'Linear scan from fromIndex using strict equality to find the first matching element. Handle negative fromIndex by computing the offset from the end. Return the index on the first match, or -1 if the value is not found in the remaining elements.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'IndexOf returns the numeric position of the first occurrence, enabling operations like removing duplicates, finding positions for splice, or checking existence before includes was introduced.',
   },
   {
     id: 'implement-flatmap',
@@ -1186,6 +1326,11 @@ let doubled = nums.myFlatMap(function(n) {
 });
 console.log("Result:", doubled);
 `,
+    approach: 'Apply the callback to each element (like map), then flatten the result by one level. If the callback returns an array, spread its elements into the result; if it returns a non-array value, push it directly. This combines mapping and flattening in a single pass.',
+    timeComplexity: 'O(n * m)',
+    spaceComplexity: 'O(n * m)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'FlatMap is equivalent to map followed by flat(1) but more efficient as it does both in one iteration. It is ideal when each input element maps to zero, one, or multiple output elements.',
   },
   {
     id: 'implement-concat',
@@ -1231,6 +1376,11 @@ console.log("\\nConcat mixed:");
 let mixed = a.myConcat(99, [100, 101]);
 console.log("Result:", mixed);
 `,
+    approach: 'Create a new result array, copy all elements from the original array, then iterate through each argument. If an argument is an array, spread its elements individually into the result; if it is a scalar value, push it directly. This produces a new array without mutating the originals.',
+    timeComplexity: 'O(n + m)',
+    spaceComplexity: 'O(n + m)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'Concat produces a shallow copy that merges arrays and values into a single flat array. It only flattens one level of array arguments, leaving nested arrays intact.',
   },
   {
     id: 'implement-slice',
@@ -1273,6 +1423,11 @@ console.log("Result:", arr.mySlice(-3));
 console.log("\\nslice(1, -1):");
 console.log("Result:", arr.mySlice(1, -1));
 `,
+    approach: 'Normalize start and end indices, handling undefined defaults and negative values by adding them to the array length. Iterate from the computed start to end, copying each element into a new result array without modifying the original.',
+    timeComplexity: 'O(k)',
+    spaceComplexity: 'O(k)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'Slice creates a shallow copy of a portion of the array. Negative indices count from the end, enabling patterns like arr.slice(-3) to get the last three elements without knowing the array length.',
   },
   {
     id: 'implement-reverse',
@@ -1315,6 +1470,11 @@ let chars = ['a', 'b', 'c', 'd'];
 chars.myReverse();
 console.log("Final:", chars);
 `,
+    approach: 'Use two pointers starting at the beginning and end of the array, swapping elements in place and moving the pointers inward until they meet in the middle. This reverses the array with no extra memory allocation. Return this to allow method chaining.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointer Swap',
+    whyItWorks: 'Swapping elements from both ends toward the center reverses the array in n/2 swaps. Operating in-place modifies the original array, matching the native reverse behavior.',
   },
   {
     id: 'implement-join',
@@ -1355,6 +1515,11 @@ console.log("Result:", ['a', 'b', 'c'].myJoin(' - '));
 console.log("\\nWith null/undefined:");
 console.log("Result:", [1, null, 3, undefined, 5].myJoin());
 `,
+    approach: 'Iterate through the array, concatenating each element to a result string with the separator inserted between elements. Handle the default comma separator when none is provided, and treat null/undefined values as empty strings to match native behavior.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'String concatenation with a conditional separator between elements reproduces the native join behavior, including the edge case of skipping null and undefined values.',
   },
   {
     id: 'implement-fill',
@@ -1398,6 +1563,11 @@ console.log("\\nfill(9, -2):");
 arr3.myFill(9, -2);
 console.log("Result:", arr3);
 `,
+    approach: 'Iterate over the specified range within the array, replacing each element with the given value. Normalize negative start/end indices by adding the array length, and clamp bounds to prevent out-of-range writes. The operation modifies the array in place and returns it.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Array Polyfill',
+    whyItWorks: 'Negative index normalization and bounds clamping ensure the fill range is valid, while in-place mutation avoids allocating a new array.',
   },
 
   // ==================== UTILITY FUNCTIONS ====================
@@ -1438,6 +1608,11 @@ debouncedSearch('hello');
 
 console.log("\\nOnly 'hello' triggers after pause");
 `,
+    approach: 'Return a wrapper function that resets a timer on every call using clearTimeout and setTimeout. The original function only executes after the caller stops invoking for the specified wait period. Use apply to preserve the correct this context and arguments.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Debounce Pattern',
+    whyItWorks: 'Each invocation clears the previous timer and starts a new one, so only the last call in a burst of rapid calls actually triggers the function after the wait period elapses.',
   },
   {
     id: 'implement-throttle',
@@ -1476,6 +1651,11 @@ for (let i = 0; i < 5; i++) {
 
 console.log("\\nThrottle limits rate");
 `,
+    approach: 'Track the timestamp of the last execution. On each call, check whether enough time has elapsed since the last run. If so, execute the function and update the timestamp; otherwise, skip the call. Use apply to preserve context.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Throttle Pattern',
+    whyItWorks: 'Comparing Date.now() against the last execution time guarantees the function runs at most once per interval, smoothing rapid event streams like scroll or resize.',
   },
   {
     id: 'implement-deep-clone',
@@ -1519,6 +1699,11 @@ copy.tags.push('c');
 console.log("Original:", orig.addr.city, orig.tags);
 console.log("Copy:", copy.addr.city, copy.tags);
 `,
+    approach: 'Recursively traverse the object, creating new arrays and objects at each level and cloning their contents. Use a WeakMap to track already-cloned references, which handles circular references by returning the previously created clone instead of recursing infinitely.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Deep Clone',
+    whyItWorks: 'The WeakMap acts as a visited set that maps original objects to their clones, breaking circular reference cycles while ensuring each object is only cloned once.',
   },
   {
     id: 'implement-memoize',
@@ -1552,6 +1737,11 @@ console.log("fib(10) =", memoFib(10));
 console.log("\\nAgain:");
 console.log("fib(10) =", memoFib(10));
 `,
+    approach: 'Return a wrapper that serializes arguments with JSON.stringify to create a cache key. Check if the key exists in a Map; if so, return the cached result. Otherwise, call the original function, store the result in the Map, and return it.',
+    timeComplexity: 'O(1) amortized for cache hits',
+    spaceComplexity: 'O(n) where n is unique argument combinations',
+    patternName: 'Memoization Pattern',
+    whyItWorks: 'JSON.stringify creates a deterministic string key from any combination of primitive arguments, and the Map provides O(1) lookup to avoid redundant computation on repeated calls.',
   },
   {
     id: 'implement-once',
@@ -1594,6 +1784,11 @@ console.log("  Result:", initOnce());
 console.log("\\nCall 3:");
 console.log("  Result:", initOnce());
 `,
+    approach: 'Use a closure to track whether the function has been called via a boolean flag. On the first call, execute the function, store the result, and set the flag. On subsequent calls, return the cached result without re-executing.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Once Pattern',
+    whyItWorks: 'The closure captures a mutable boolean and result variable that persist across calls, ensuring the wrapped function body runs exactly once regardless of how many times the wrapper is invoked.',
   },
   {
     id: 'implement-memoize-one',
@@ -1636,6 +1831,11 @@ console.log("Call (1, 2):", memoized(1, 2)); // cached
 console.log("Call (3, 4):", memoized(3, 4)); // new args
 console.log("Call (1, 2):", memoized(1, 2)); // NOT cached!
 `,
+    approach: 'Store only the most recent arguments and result. On each call, compare the current arguments against the last ones using strict equality. If they match, return the cached result; otherwise, recompute and update the cache with the new arguments and result.',
+    timeComplexity: 'O(k) where k is the number of arguments',
+    spaceComplexity: 'O(1)',
+    patternName: 'Single-Entry Cache',
+    whyItWorks: 'Keeping only the last call\'s result uses constant memory while still providing cache hits for the common case of consecutive identical calls, which is typical in React re-renders.',
   },
   {
     id: 'implement-promisify',
@@ -1680,6 +1880,11 @@ readFileAsync('data.txt')
   .then(data => console.log("Success:", data))
   .catch(err => console.log("Error:", err.message));
 `,
+    approach: 'Return a new function that wraps the original callback-based function in a Promise. Pass all user arguments plus a final callback to the original function. In the callback, reject on error or resolve with the result, following the Node.js (err, result) convention.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Promisify Pattern',
+    whyItWorks: 'The adapter appends an error-first callback that bridges the callback world to the Promise world, enabling async/await usage with legacy Node.js-style APIs.',
   },
   {
     id: 'implement-sleep',
@@ -1726,6 +1931,11 @@ async function fetchWithRetry(url, retries = 3) {
   }
 }
 `,
+    approach: 'Return a Promise that resolves after a setTimeout of the specified duration. This allows pausing async functions with await. Combine with a retry loop and exponential backoff to add resilience to network requests.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Sleep Utility',
+    whyItWorks: 'Wrapping setTimeout in a Promise converts a callback-based timer into an awaitable expression, enabling clean sequential delays in async/await code without nesting callbacks.',
   },
 
   // ==================== FUNCTIONAL JS ====================
@@ -1760,6 +1970,11 @@ let mult = curry((a, b) => a * b);
 let double = mult(2);
 console.log("\\ndouble(5):", double(5));
 `,
+    approach: 'Return a recursive wrapper function that accumulates arguments across calls. Compare the accumulated argument count against the original function\'s arity (fn.length). When enough arguments are collected, invoke the original function; otherwise, return a new function that continues collecting.',
+    timeComplexity: 'O(1) per partial call',
+    spaceComplexity: 'O(n) where n is the number of arguments',
+    patternName: 'Curry Pattern',
+    whyItWorks: 'Checking args.length against fn.length determines when all required parameters are present, and the rest/spread operators naturally accumulate arguments across successive partial applications.',
   },
   {
     id: 'implement-compose',
@@ -1786,6 +2001,11 @@ console.log("= addOne(double(9))");
 console.log("= addOne(18)");
 console.log("=", calc(3));
 `,
+    approach: 'Accept an array of functions and return a new function that applies them right-to-left using reduceRight. The initial value is the input argument, and each function\'s return value becomes the input to the next.',
+    timeComplexity: 'O(n) where n is the number of functions',
+    spaceComplexity: 'O(1)',
+    patternName: 'Function Composition',
+    whyItWorks: 'reduceRight naturally expresses right-to-left evaluation, mirroring the mathematical composition f(g(h(x))) where the rightmost function is applied first.',
   },
   {
     id: 'implement-pipe',
@@ -1812,6 +2032,11 @@ console.log("= square(double(4))");
 console.log("= square(8)");
 console.log("=", calc(3));
 `,
+    approach: 'Accept an array of functions and return a new function that applies them left-to-right using reduce. The initial value is the input argument, and each function\'s return value feeds into the next function in the pipeline.',
+    timeComplexity: 'O(n) where n is the number of functions',
+    spaceComplexity: 'O(1)',
+    patternName: 'Pipeline Pattern',
+    whyItWorks: 'reduce naturally expresses left-to-right evaluation, making data transformation pipelines read in the order they execute, which is more intuitive than nested function calls.',
   },
   {
     id: 'implement-curry-placeholder',
@@ -1868,6 +2093,11 @@ console.log("add(1)(2)(3):", curried(1)(2)(3));
 console.log("add(_,2)(1,3):", curried(_, 2)(1, 3));
 console.log("add(_,_,3)(1)(2):", curried(_, _, 3)(1)(2));
 `,
+    approach: 'Extend basic currying with a placeholder symbol that marks positions for deferred arguments. On each partial call, merge new arguments into placeholder positions from the previous call. Continue until all positions hold real values and the required arity is met.',
+    timeComplexity: 'O(n) per partial call for merging',
+    spaceComplexity: 'O(n) where n is the number of arguments',
+    patternName: 'Advanced Curry Pattern',
+    whyItWorks: 'The placeholder symbol acts as a sentinel value that can be detected and replaced during argument merging, allowing arguments to be supplied in any order across multiple partial applications.',
   },
   {
     id: 'implement-partial',
@@ -1918,6 +2148,11 @@ let greet2nd = partialWithPlaceholder(greet, _, 'World');
 console.log("\\ngreet(_, 'World')('Bye', '!'):");
 console.log(greet2nd('Bye', '!'));
 `,
+    approach: 'Return a new function that prepends the preset arguments to any later arguments, then calls the original function with the combined list. Extend with placeholder support by scanning preset arguments for a sentinel symbol and replacing those positions with later arguments in order.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(n) where n is the preset argument count',
+    patternName: 'Partial Application',
+    whyItWorks: 'Closures capture the preset arguments so they persist across calls, and spread syntax cleanly concatenates preset and later arguments into a single invocation of the original function.',
   },
   {
     id: 'implement-flat',
@@ -1965,6 +2200,11 @@ function flatReduce(arr, d = 1) {
 console.log("\\nReduce version:");
 console.log(JSON.stringify(flatReduce([1, [2, [3]]], 2)));
 `,
+    approach: 'Recursively iterate through the array. For each element, if it is an array and the remaining depth is greater than zero, recursively flatten it and spread the results. Otherwise, push the element directly. Also implement a reduce-based variant that concatenates flattened sub-arrays.',
+    timeComplexity: 'O(n) where n is the total number of elements',
+    spaceComplexity: 'O(n)',
+    patternName: 'Recursive Flatten',
+    whyItWorks: 'The depth parameter controls recursion depth, decrementing by one at each level so that flat(arr, 1) only flattens one level while flat(arr, Infinity) fully flattens all nesting.',
   },
   {
     id: 'implement-flatten-thunk',
@@ -2011,6 +2251,11 @@ let lazyCalc = createLazy(21);
 console.log("\\nLazy created, not yet evaluated");
 console.log("Now evaluating:", flattenThunk(lazyCalc));
 `,
+    approach: 'Repeatedly invoke the value while it is a function, replacing it with the return value each time. Continue until the result is no longer a function, then return the final non-function value. Also implement a recursive variant that achieves the same result through self-calls.',
+    timeComplexity: 'O(d) where d is the nesting depth',
+    spaceComplexity: 'O(1) iterative, O(d) recursive',
+    patternName: 'Thunk Resolution',
+    whyItWorks: 'A thunk is a nullary function wrapping a deferred value, so repeatedly calling it peels away each layer of indirection until the underlying value is reached.',
   },
 
   // ==================== DOM & EVENTS ====================
@@ -2068,6 +2313,11 @@ ee.emit('alert', 'Warning!');
 unsub();
 ee.emit('alert', 'No one listening');
 `,
+    approach: 'Maintain a dictionary mapping event names to arrays of callback functions. The on method pushes a callback and returns an unsubscribe function that filters it out. The emit method iterates over all callbacks for the given event and invokes each with the provided data.',
+    timeComplexity: 'O(n) for emit where n is subscriber count',
+    spaceComplexity: 'O(n) for stored callbacks',
+    patternName: 'Event Emitter',
+    whyItWorks: 'The publish-subscribe pattern decouples event producers from consumers through a shared registry, and returning an unsubscribe closure from on() provides clean lifecycle management.',
   },
   {
     id: 'event-delegation',
@@ -2112,6 +2362,11 @@ simulateClick('view', 4);
 
 console.log("\\nOne handler managed all events!");
 `,
+    approach: 'Register a single event handler on a parent element rather than individual handlers on each child. The handler inspects the event target\'s attributes (such as action and id) to determine which child was clicked and responds accordingly.',
+    timeComplexity: 'O(1) per event',
+    spaceComplexity: 'O(1)',
+    patternName: 'Event Delegation',
+    whyItWorks: 'DOM events bubble up from child to parent, so a single parent handler can intercept all child events. This reduces memory usage and automatically handles dynamically added children.',
   },
   {
     id: 'dom-wrapper-chaining',
@@ -2171,6 +2426,11 @@ box.css('color', 'red')
 console.log("\\nFinal styles:", box.getStyles());
 console.log("Classes:", box.getClasses());
 `,
+    approach: 'Create a wrapper object around a DOM element with methods like css, addClass, and removeClass. Each mutating method modifies the element state and returns the wrapper object itself, enabling jQuery-style fluent method chaining.',
+    timeComplexity: 'O(1) per chained method call',
+    spaceComplexity: 'O(1)',
+    patternName: 'Fluent Interface',
+    whyItWorks: 'Returning this (the wrapper) from each method allows consecutive calls to be chained on a single expression, reducing boilerplate and improving readability for DOM manipulation sequences.',
   },
   {
     id: 'find-node-in-tree',
@@ -2239,6 +2499,11 @@ console.log("Finding node:", targetA.val);
 let found = findCorrespondingNode(treeA, treeB, targetA);
 console.log("\\nFound in Tree B:", found.val);
 `,
+    approach: 'Walk from the target node up to the root in Tree A, recording the child index at each level to build a path. Then follow that same index path from the root of Tree B downward to locate the corresponding node.',
+    timeComplexity: 'O(d) where d is the tree depth',
+    spaceComplexity: 'O(d) for the path array',
+    patternName: 'Tree Path Traversal',
+    whyItWorks: 'Since both trees have identical structure, a node\'s position is uniquely identified by its index path from the root. Replaying that path in the clone tree lands on the structurally equivalent node.',
   },
   {
     id: 'dom-tree-height',
@@ -2306,6 +2571,11 @@ function getHeightBFS(root) {
 
 console.log("Height (BFS):", getHeightBFS(dom));
 `,
+    approach: 'Use DFS recursion where each leaf node returns height 1, and each internal node returns 1 plus the maximum height among its children. Also implement a BFS alternative that tracks depth level-by-level using a queue.',
+    timeComplexity: 'O(n) where n is the number of nodes',
+    spaceComplexity: 'O(h) where h is the tree height',
+    patternName: 'Tree Height Calculation',
+    whyItWorks: 'Recursively computing 1 + max(children heights) propagates the longest root-to-leaf path upward, while the BFS variant naturally discovers the maximum depth as it processes each level.',
   },
   {
     id: 'get-dom-tags',
@@ -2376,6 +2646,11 @@ function countTags(root) {
 console.log("\\nTag counts:");
 console.log(countTags(page));
 `,
+    approach: 'Traverse the tree recursively, adding each node\'s tag name (lowercased) to a Set to collect unique values. Sort the Set into an array for the final result. Extend with a counting variant that uses an object to tally occurrences of each tag.',
+    timeComplexity: 'O(n) where n is the number of nodes',
+    spaceComplexity: 'O(u) where u is the number of unique tags',
+    patternName: 'Tree Traversal Collection',
+    whyItWorks: 'A Set automatically deduplicates tag names during traversal, and lowercasing before insertion ensures case-insensitive uniqueness across mixed-case DOM trees.',
   },
 
   // ==================== OBJECT UTILITIES ====================
@@ -2418,6 +2693,11 @@ console.log(deepEqual(
 console.log("\\nArrays:");
 console.log(deepEqual([1, [2]], [1, [2]]));
 `,
+    approach: 'Recursively compare two values. First check strict equality for primitives and same-reference objects. Then verify both are objects of the same type with the same number of keys. Finally, recursively compare each key\'s value in both objects.',
+    timeComplexity: 'O(n) where n is the total number of nested properties',
+    spaceComplexity: 'O(d) where d is the nesting depth',
+    patternName: 'Deep Equality Check',
+    whyItWorks: 'Short-circuiting on strict equality handles primitives and shared references in O(1), while recursive key-by-key comparison catches structural differences at any depth.',
   },
   {
     id: 'deep-merge',
@@ -2451,6 +2731,11 @@ let config2 = { server: { ssl: true }, debug: true };
 console.log("Merged:");
 console.log(deepMerge(config1, config2));
 `,
+    approach: 'Iterate over each source object\'s keys. When both target and source values are plain objects, recursively merge them. When both are arrays, concatenate them. Otherwise, the source value overwrites the target. Process multiple sources left to right.',
+    timeComplexity: 'O(n) where n is the total number of properties',
+    spaceComplexity: 'O(n)',
+    patternName: 'Deep Merge',
+    whyItWorks: 'Recursing into nested plain objects preserves deeply nested values from both sides, while array concatenation and scalar overwriting handle the other cases predictably.',
   },
   {
     id: 'get-set-nested',
@@ -2493,6 +2778,11 @@ let obj = {};
 set(obj, 'a.b.c', 42);
 console.log(obj);
 `,
+    approach: 'Parse a dot-notation path (supporting bracket syntax for array indices) into an array of keys. For get, walk the object following each key and return the value or a default. For set, walk and auto-create missing intermediate objects, then assign the value at the final key.',
+    timeComplexity: 'O(k) where k is the path depth',
+    spaceComplexity: 'O(k) for the parsed key array',
+    patternName: 'Nested Property Access',
+    whyItWorks: 'Converting bracket notation to dot notation with a regex, then splitting on dots, normalizes all path styles into a uniform key array that can be traversed with a simple loop.',
   },
   {
     id: 'implement-object-assign',
@@ -2545,6 +2835,11 @@ let copy = objectAssign({}, nested);
 copy.a.b = 999;
 console.log("\\nShallow! Original changed:", nested.a.b);
 `,
+    approach: 'Iterate over each source object, copying its own enumerable string-keyed properties to the target using Object.keys, and its enumerable symbol-keyed properties using Object.getOwnPropertySymbols. Skip null/undefined sources and throw on null/undefined target.',
+    timeComplexity: 'O(n) where n is the total number of properties across sources',
+    spaceComplexity: 'O(1) beyond the target object',
+    patternName: 'Shallow Copy',
+    whyItWorks: 'Copying only own enumerable properties with Object.keys matches the native Object.assign specification, and later sources naturally overwrite earlier ones for the same key.',
   },
   {
     id: 'implement-object-is',
@@ -2591,6 +2886,11 @@ console.log("Object.is({}, {}):", objectIs({}, {}));
 let obj = {};
 console.log("Object.is(obj, obj):", objectIs(obj, obj));
 `,
+    approach: 'Handle the two edge cases where === gives incorrect results: NaN should equal NaN (use Number.isNaN to detect both), and -0 should not equal +0 (use 1/x to distinguish via Infinity signs). For all other values, fall through to strict equality.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Same-Value Equality',
+    whyItWorks: 'The 1/x trick exploits the fact that 1/+0 is Infinity while 1/-0 is -Infinity, distinguishing the two zeros that === considers equal. Number.isNaN correctly identifies NaN which === rejects.',
   },
   {
     id: 'implement-object-create',
@@ -2650,6 +2950,11 @@ console.log("\\nNull prototype:");
 console.log("Has toString?", 'toString' in bare);
 console.log("Value:", bare.x);
 `,
+    approach: 'Create a temporary constructor function, set its prototype to the given proto object, and instantiate it with new to produce an object with the correct prototype chain. Optionally apply property descriptors with Object.defineProperties. Handle null prototype as a special case.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Prototype Chain Setup',
+    whyItWorks: 'Setting F.prototype before calling new F() leverages JavaScript\'s constructor mechanics to create an object whose [[Prototype]] points to the desired proto, establishing the inheritance chain without a class definition.',
   },
   {
     id: 'implement-object-freeze',
@@ -2710,6 +3015,11 @@ console.log("config2.api.timeout:", config2.api.timeout); // Still 5000
 // Check frozen status
 console.log("\\nIs frozen?", Object.isFrozen(config2.api));
 `,
+    approach: 'Call Object.freeze on the top-level object, then recursively visit every property value. If a value is a non-null object, recursively deep-freeze it as well. This ensures nested objects become immutable, unlike the shallow native Object.freeze.',
+    timeComplexity: 'O(n) where n is the total number of nested properties',
+    spaceComplexity: 'O(d) where d is the nesting depth',
+    patternName: 'Deep Freeze',
+    whyItWorks: 'Object.freeze only prevents direct property modifications on the frozen object itself. Recursing into nested objects applies the same restriction at every level, making the entire object tree truly immutable.',
   },
 
   // ==================== PROMISE POLYFILLS ====================
@@ -2746,6 +3056,11 @@ promiseAll([
   delay(150, 'C')
 ]).then(r => console.log("\\nAll:", r));
 `,
+    approach: 'Return a new Promise that tracks an array of results and a completion counter. For each input promise, attach a then handler that stores the resolved value at the correct index and increments the counter. Resolve when the counter reaches the total; reject immediately on any failure.',
+    timeComplexity: 'O(n) where n is the number of promises',
+    spaceComplexity: 'O(n) for the results array',
+    patternName: 'Promise.all Polyfill',
+    whyItWorks: 'Storing results by index rather than push order preserves the original promise ordering, and the counter ensures we wait for all promises regardless of which resolves first.',
   },
   {
     id: 'promise-race',
@@ -2776,6 +3091,11 @@ promiseRace([
   delay(200, 'Slower')
 ]).then(w => console.log("\\nWinner:", w));
 `,
+    approach: 'Wrap all promises in a new Promise and attach resolve/reject handlers to each one. The first promise to settle (fulfill or reject) triggers the outer promise, making it a race to the finish.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Promise Combinator',
+    whyItWorks: 'Since Promise.resolve/reject can only be called once, the first promise to settle wins and all subsequent settlements are ignored.',
   },
   {
     id: 'promisify',
@@ -2809,6 +3129,11 @@ let readAsync = promisify(readFile);
 readAsync('test.txt').then(c => console.log("Got:", c));
 readAsync('error').catch(e => console.log("Error:", e.message));
 `,
+    approach: 'Return a wrapper function that accepts the same arguments plus appends a Node-style callback. Inside, create a new Promise and route the callback err to reject and result to resolve. This bridges callback-based APIs to promise-based code.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Promise Wrapper',
+    whyItWorks: 'Node.js callbacks follow the (err, result) convention, so the wrapper can reliably detect success vs failure and translate it into promise resolution or rejection.',
   },
   {
     id: 'promise-allsettled',
@@ -2868,6 +3193,11 @@ promiseAllSettled([
   results.forEach(r => console.log(r));
 });
 `,
+    approach: 'Return a new Promise that never rejects early. For each input promise, attach both a then and catch handler that record the outcome as a {status, value} or {status, reason} object at the correct index. Use a counter to resolve the outer promise once all have settled.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Promise Combinator',
+    whyItWorks: 'By catching rejections locally and converting them into result objects, no single rejection can short-circuit the aggregation, guaranteeing all outcomes are collected.',
   },
   {
     id: 'promise-any',
@@ -2925,6 +3255,11 @@ promiseAny([
 ]).then(v => console.log("\\nWinner:", v))
   .catch(e => console.log("All failed"));
 `,
+    approach: 'Resolve with the first fulfilled promise value, ignoring rejections until all have failed. Track rejected count and store errors by index. Only reject with an AggregateError when every promise has rejected.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Promise Combinator',
+    whyItWorks: 'The first fulfillment short-circuits to resolve the outer promise, while rejections are silently collected. Only when all promises reject does the aggregate error surface.',
   },
   {
     id: 'promise-finally',
@@ -2965,6 +3300,11 @@ fetchData(true)
   .catch(e => console.log("Error:", e.message))
   .myFinally(() => console.log("Cleanup done!"));
 `,
+    approach: 'Implement then() with two handlers: on fulfill, run the callback via Promise.resolve then return the original value; on reject, run the callback then re-throw. This ensures the callback always executes while the original result or error passes through unchanged.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Promise Wrapper',
+    whyItWorks: 'Wrapping the callback in Promise.resolve handles both sync and async callbacks, while returning the original value or re-throwing preserves the promise chain semantics.',
   },
   {
     id: 'promise-retry',
@@ -3020,6 +3360,11 @@ retry(flakyAPI, 5, 50)
   .then(r => console.log("\\nResult:", r))
   .catch(e => console.log("\\nFailed:", e.message));
 `,
+    approach: 'Accept a promise-returning function, a max retry count, and a delay between retries. On rejection, increment the attempt counter and schedule a recursive retry after the delay. Resolve on first success or reject when max retries are exhausted.',
+    timeComplexity: 'O(r) where r is the number of retries',
+    spaceComplexity: 'O(1)',
+    patternName: 'Promise Retry',
+    whyItWorks: 'Recursive scheduling via setTimeout creates a chain of attempts with a cooldown period, giving transient failures a chance to recover before exhausting the retry budget.',
   },
   {
     id: 'promise-timeout',
@@ -3057,6 +3402,11 @@ withTimeout(slowAPI(200), 100)
   .then(r => console.log("Got:", r))
   .catch(e => console.log("Error:", e.message));
 `,
+    approach: 'Create a timeout promise that rejects after the specified milliseconds, then race it against the original promise using Promise.race. Whichever settles first determines the outcome.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Promise Wrapper',
+    whyItWorks: 'Promise.race resolves or rejects as soon as either the real promise or the timeout promise settles, providing a simple deadline mechanism.',
   },
   {
     id: 'promise-throttle',
@@ -3116,6 +3466,11 @@ throttlePromises(tasks, 2).then(r => {
   console.log("\\nAll done:", r);
 });
 `,
+    approach: 'Maintain a running count and a queue index. Launch tasks up to the concurrency limit. When each task completes, decrement the running count and launch the next queued task. Resolve the outer promise when all tasks finish and none are running.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Promise Pool',
+    whyItWorks: 'The runNext function acts as a semaphore, only allowing max concurrent tasks at any time while draining the queue as slots free up.',
   },
   {
     id: 'promise-sequence',
@@ -3156,6 +3511,11 @@ sequence(tasks).then(results => {
   console.log("\\nAll results:", results);
 });
 `,
+    approach: 'Use Array.reduce to chain promise-returning functions sequentially. Start with Promise.resolve([]) as the seed, and in each iteration call fn().then() to execute the next task only after the previous one resolves. Accumulate results in the carried array.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Promise Chain',
+    whyItWorks: 'Each reduce iteration returns a promise that chains onto the previous one, creating a linear dependency graph that ensures strictly sequential execution.',
   },
   {
     id: 'create-promise',
@@ -3234,6 +3594,11 @@ new MyPromise((resolve) => {
 })
 .then(v => console.log("Second then:", v));
 `,
+    approach: 'Implement a simplified Promise class with pending/fulfilled/rejected states and a handlers queue. The constructor runs the executor synchronously, calling resolve or reject to transition state. The then method returns a new MyPromise, queuing handlers if still pending or scheduling them asynchronously if already settled.',
+    timeComplexity: 'O(n) where n is the handler chain length',
+    spaceComplexity: 'O(n)',
+    patternName: 'Promise Implementation',
+    whyItWorks: 'State machine semantics ensure a promise transitions only once, and deferred handler execution via the queue guarantees then callbacks registered before settlement are invoked when the value becomes available.',
   },
 
   // ==================== BIT MANIPULATION ====================
@@ -3265,6 +3630,11 @@ console.log("\\nFinding single number...\\n");
 let answer = singleNumber(nums);
 console.log("\\nSingle number:", answer);
 `,
+    approach: 'XOR all elements together in a single pass. Since XOR is self-inverse (a ^ a = 0) and commutative, every duplicate pair cancels out, leaving only the unique element.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'XOR Pattern',
+    whyItWorks: 'XOR of a number with itself is zero, and XOR with zero is the number itself, so all paired duplicates vanish and the lone element remains.',
   },
   {
     id: 'number-of-1-bits',
@@ -3294,6 +3664,11 @@ console.log("\\nCounting 1 bits...\\n");
 let bits = hammingWeight(num);
 console.log("\\nTotal 1 bits:", bits);
 `,
+    approach: 'Use Brian Kernighan\'s algorithm: repeatedly clear the lowest set bit with n & (n - 1) and increment a counter. The loop runs exactly as many times as there are 1-bits.',
+    timeComplexity: 'O(k) where k is the number of set bits',
+    spaceComplexity: 'O(1)',
+    patternName: 'Brian Kernighan\'s Algorithm',
+    whyItWorks: 'Subtracting 1 flips all bits from the lowest set bit downward, so ANDing with the original clears exactly one set bit per iteration.',
   },
   {
     id: 'counting-bits',
@@ -3324,6 +3699,11 @@ console.log("");
 let result = countBits(n);
 console.log("\\nResult:", result);
 `,
+    approach: 'Build a DP table where ans[i] reuses the already-computed count for i >> 1 (integer division by 2) and adds 1 if i is odd (i & 1). This avoids recomputing bit counts from scratch for each number.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Bit Counting DP',
+    whyItWorks: 'Right-shifting by 1 removes the least significant bit, and that bit count is already stored in the table. Adding back whether the removed bit was 1 completes the count.',
   },
   {
     id: 'reverse-bits',
@@ -3356,6 +3736,11 @@ console.log("\\nReversing bits (showing first 8)...\\n");
 let reversed = reverseBits(num);
 console.log("\\n...\\nReversed:", reversed);
 `,
+    approach: 'Iterate through all 32 bit positions. For each position, extract the lowest bit of n with n & 1, shift the result left by 1 and OR in the extracted bit, then right-shift n. This builds the reversed number one bit at a time.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Bit Shifting',
+    whyItWorks: 'Each iteration moves one bit from the least significant end of the input to the most significant end of the result, effectively mirroring the entire 32-bit representation.',
   },
   {
     id: 'missing-number',
@@ -3386,6 +3771,11 @@ console.log("\\nFinding missing...\\n");
 let missing = missingNumber(nums);
 console.log("\\nMissing number:", missing);
 `,
+    approach: 'Initialize XOR with n (the array length). Then XOR every index 0..n-1 and every array value together. All present numbers pair with their index and cancel out, leaving only the missing number.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'XOR Pattern',
+    whyItWorks: 'XOR-ing indices 0..n with all array values creates matched pairs for every number except the missing one, and paired XOR cancels to zero.',
   },
   {
     id: 'power-of-two',
@@ -3420,6 +3810,11 @@ console.log("Is power of 2?", isPowerOfTwo(18));
 console.log("\\n=== Test 1 ===");
 console.log("Is power of 2?", isPowerOfTwo(1));
 `,
+    approach: 'A power of two in binary has exactly one set bit. Check that n is positive, then verify n & (n - 1) equals zero. This expression clears the single set bit, leaving zero only for powers of two.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Bit Manipulation',
+    whyItWorks: 'Powers of two are the only positive integers with a single 1-bit, so n & (n - 1) which clears the lowest set bit will produce zero exclusively for them.',
   },
   {
     id: 'sum-of-two-integers',
@@ -3452,6 +3847,11 @@ console.log("\\n=== Test 2: 7 + 8 ===");
 let sum2 = getSum(7, 8);
 console.log("Result:", sum2);
 `,
+    approach: 'Simulate binary addition without arithmetic operators. XOR gives the sum bits without carry, and AND shifted left gives the carry bits. Repeat until there is no carry left.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Bit Arithmetic',
+    whyItWorks: 'XOR performs addition ignoring carries, while AND identifies positions where both bits are 1 (carry). Shifting the carry left and repeating propagates all carries to completion.',
   },
   {
     id: 'single-number-ii',
@@ -3489,6 +3889,11 @@ console.log("\\nCounting bits mod 3...\\n");
 let answer = singleNumber(nums);
 console.log("\\nSingle number:", answer);
 `,
+    approach: 'For each of the 32 bit positions, sum that bit across all numbers. Take the sum modulo 3 to isolate the unique element\'s bit at that position. Reconstruct the result by OR-ing each surviving bit back into place.',
+    timeComplexity: 'O(32n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Bit Counting',
+    whyItWorks: 'Every number appearing three times contributes a multiple of 3 to each bit position sum, so mod 3 eliminates their contribution and reveals only the single element\'s bits.',
   },
   {
     id: 'single-number-iii',
@@ -3533,6 +3938,11 @@ console.log("\\nSplitting by XOR...\\n");
 let result = singleNumber(nums);
 console.log("\\nTwo singles:", result);
 `,
+    approach: 'XOR all elements to get a ^ b where a and b are the two unique numbers. Find the rightmost set bit in a ^ b to use as a splitter, then partition all numbers into two groups by that bit. XOR within each group isolates one unique number per group.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'XOR Pattern',
+    whyItWorks: 'The differing bit guarantees a and b land in separate groups, while all duplicate pairs stay together within the same group and cancel via XOR.',
   },
   {
     id: 'bitwise-and-range',
@@ -3566,6 +3976,11 @@ console.log("=== Test: AND of [5, 7] ===");
 let r1 = rangeBitwiseAnd(5, 7);
 console.log("Result:", r1);
 `,
+    approach: 'Right-shift both left and right until they are equal, counting the shifts. The common prefix is the bits shared by all numbers in the range. Shift the prefix back left to restore the original bit positions with zeros filling the lower bits.',
+    timeComplexity: 'O(log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Bit Shifting',
+    whyItWorks: 'Any bit position where left and right differ will have at least one number in the range with a 0 at that position, causing AND to produce 0. Only the shared prefix survives.',
   },
   {
     id: 'number-complement',
@@ -3606,6 +4021,11 @@ console.log("\\n=== Test: 1 ===");
 let c2 = findComplement(1);
 console.log("Complement:", c2);
 `,
+    approach: 'Count the number of significant bits in the number, then create a mask of all 1s with that length using (1 << bits) - 1. XOR the number with the mask to flip every bit within the significant range.',
+    timeComplexity: 'O(log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Bit Masking',
+    whyItWorks: 'XOR with a mask of all 1s flips each bit (0 becomes 1, 1 becomes 0), producing the complement within the number\'s actual bit width rather than the full 32-bit width.',
   },
   {
     id: 'power-of-four',
@@ -3643,6 +4063,11 @@ console.log("Is power of 4?", isPowerOfFour(16));
 console.log("\\n=== Test: 8 ===");
 console.log("Is power of 4?", isPowerOfFour(8));
 `,
+    approach: 'First check if n is a power of two using n & (n - 1) === 0. Then verify the single set bit is at an even position (bit 0, 2, 4, ...) by ANDing with the mask 0x55555555 which has 1s at all even bit positions.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Bit Masking',
+    whyItWorks: 'Powers of four are powers of two where the set bit falls at an even index (4^0=bit 0, 4^1=bit 2, 4^2=bit 4). The 0x55555555 mask isolates exactly those positions.',
   },
   {
     id: 'alternating-bits',
@@ -3675,6 +4100,11 @@ console.log("Alternating?", hasAlternatingBits(7));
 console.log("\\n=== Test: 10 (1010) ===");
 console.log("Alternating?", hasAlternatingBits(10));
 `,
+    approach: 'XOR n with n >> 1. If bits alternate, adjacent bits always differ, so the XOR produces all 1s. Verify the result is all 1s by checking xor & (xor + 1) === 0, which is true only for numbers of the form 2^k - 1.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'XOR Pattern',
+    whyItWorks: 'Alternating bits like 101 shifted right gives 010, and XOR of these is 111 (all ones). A non-alternating pattern produces at least one 0 in the XOR result.',
   },
   {
     id: 'hamming-distance',
@@ -3711,6 +4141,11 @@ let d2 = hammingDistance(3, 1);
 console.log("Distance:", d2);
 console.log("(11 vs 01 = 1 bit)");
 `,
+    approach: 'XOR the two numbers to get a value with 1s at every bit position where they differ. Count the set bits in the XOR result using Brian Kernighan\'s algorithm (n & (n - 1) to clear the lowest set bit each iteration).',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'XOR Pattern',
+    whyItWorks: 'XOR produces 1 exactly where bits differ, so counting 1s in the XOR result directly gives the number of differing positions (Hamming distance).',
   },
   {
     id: 'maximum-xor',
@@ -3746,6 +4181,11 @@ console.log("");
 let maxXor = findMaximumXOR(nums);
 console.log("\\nMaximum XOR:", maxXor);
 `,
+    approach: 'Compare all pairs of numbers by computing their XOR and tracking the maximum. For each pair (i, j), XOR gives the combined differing bits, and the largest XOR value represents the pair with the most significant differing bits.',
+    timeComplexity: 'O(n^2)',
+    spaceComplexity: 'O(1)',
+    patternName: 'XOR Pattern',
+    whyItWorks: 'XOR of two numbers produces the largest value when they differ at the highest bit positions, so exhaustive comparison finds the optimal pair.',
   },
   {
     id: 'gray-code',
@@ -3773,6 +4213,11 @@ const n = 3
 console.log('Gray code for n =', n)
 console.log(grayCode(n))
 `,
+    approach: 'Generate 2^n Gray codes using the formula gray(i) = i ^ (i >> 1). Iterate from 0 to 2^n - 1 and apply the formula to each index. Adjacent values in the sequence differ by exactly one bit.',
+    timeComplexity: 'O(2^n)',
+    spaceComplexity: 'O(2^n)',
+    patternName: 'Bit Shifting',
+    whyItWorks: 'XOR-ing a number with its right-shifted self flips at most one bit between consecutive integers, which is exactly the Gray code property.',
   },
   {
     id: 'subsets',
@@ -3803,6 +4248,11 @@ function subsets(nums) {
 const nums = [1, 2, 3]
 subsets(nums)
 `,
+    approach: 'Enumerate all 2^n bitmasks from 0 to 2^n - 1. For each mask, include element i in the subset whenever bit i is set (mask & (1 << i)). Each mask uniquely represents one subset of the input array.',
+    timeComplexity: 'O(n * 2^n)',
+    spaceComplexity: 'O(n * 2^n)',
+    patternName: 'Bitmask Enumeration',
+    whyItWorks: 'There is a one-to-one correspondence between n-bit binary numbers and subsets of an n-element set, so iterating all masks generates every possible subset exactly once.',
   },
   {
     id: 'sort-integers-by-1-bits',
@@ -3837,6 +4287,11 @@ function sortByBits(arr) {
 const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 console.log(sortByBits(arr))
 `,
+    approach: 'Compute the popcount (number of set bits) for each integer using Brian Kernighan\'s algorithm. Sort the array with a custom comparator that orders by ascending popcount first, then by ascending numeric value for ties.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Bit Counting',
+    whyItWorks: 'The comparator encodes a two-level sort key: primary key is the number of 1-bits, secondary key is the integer value itself, producing a stable ordering by bit density.',
   },
   {
     id: 'minimum-bit-flips',
@@ -3863,6 +4318,11 @@ const start = 10 // 1010
 const goal = 7   // 0111
 console.log('Flips:', minBitFlips(start, goal))
 `,
+    approach: 'XOR start and goal to highlight the bits that differ. Count the set bits in the XOR result using Brian Kernighan\'s algorithm. Each set bit represents one required flip.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'XOR Pattern',
+    whyItWorks: 'XOR marks exactly the positions where the two numbers differ, and the count of those 1-bits equals the minimum number of single-bit flips needed to convert one number to the other.',
   },
   {
     id: 'minimum-flips-a-or-b',
@@ -3898,6 +4358,11 @@ function minFlips(a, b, c) {
 
 console.log('Flips:', minFlips(2, 6, 5)) // 2
 `,
+    approach: 'Process each bit position of a, b, and c from least significant to most significant. If c\'s bit is 0, both a and b bits must be 0, so count flips for any 1s. If c\'s bit is 1, at least one of a or b must be 1, so add a flip only if both are 0.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Bit Manipulation',
+    whyItWorks: 'Analyzing each bit independently reduces the problem to per-bit logic: a target 0-bit requires clearing both inputs (up to 2 flips), while a target 1-bit requires at most one flip if neither input contributes.',
   },
 
   // ==================== TWO POINTERS ====================
@@ -3946,6 +4411,11 @@ let target = 9;
 let result = twoSum(nums, target);
 console.log("Result:", result);
 `,
+    approach: 'Place one pointer at the start and one at the end of the sorted array. If the sum is too small, advance the left pointer to increase it. If too large, retreat the right pointer to decrease it. This converges on the target pair in one pass.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Converging)',
+    whyItWorks: 'Sorted order guarantees that moving the left pointer right increases the sum and moving the right pointer left decreases it, so each step provably eliminates at least one candidate pair.',
   },
   {
     id: 'valid-palindrome',
@@ -3995,6 +4465,11 @@ function isPalindrome(s) {
 let s = "A man, a plan, a canal: Panama";
 console.log("Is palindrome:", isPalindrome(s));
 `,
+    approach: 'First clean the string by filtering to only lowercase alphanumeric characters. Then use two converging pointers from both ends, comparing characters inward. Return false on the first mismatch or true if all pairs match.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Two Pointers (Converging)',
+    whyItWorks: 'A palindrome reads the same forwards and backwards, so comparing symmetric positions from the outside in detects any asymmetry in at most n/2 comparisons.',
   },
   {
     id: 'reverse-string',
@@ -4035,6 +4510,11 @@ function reverseString(s) {
 let chars = ["h", "e", "l", "l", "o"];
 reverseString(chars);
 `,
+    approach: 'Use two pointers starting at the beginning and end of the array. Swap the characters at both pointers, then move them inward until they meet. This reverses the array in-place without extra space.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Converging)',
+    whyItWorks: 'Swapping from both ends ensures every character reaches its mirror position in exactly n/2 swaps.',
   },
   {
     id: 'remove-duplicates-sorted',
@@ -4078,6 +4558,11 @@ function removeDuplicates(nums) {
 let nums = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4];
 removeDuplicates(nums);
 `,
+    approach: 'Use a slow pointer to track the position for the next unique element and a fast pointer to scan through the array. When the fast pointer finds a value different from nums[slow], increment slow and copy the new value there.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Same Direction)',
+    whyItWorks: 'In a sorted array, duplicates are adjacent. The slow pointer only advances when a new unique value is found, naturally compacting unique elements to the front.',
   },
   {
     id: 'move-zeroes',
@@ -4120,6 +4605,11 @@ function moveZeroes(nums) {
 let nums = [0, 1, 0, 3, 12];
 moveZeroes(nums);
 `,
+    approach: 'Use a slow pointer to track where the next non-zero element should go. The fast pointer scans the array and whenever it finds a non-zero element, swap it with the element at the slow pointer position. This partitions the array into non-zeroes followed by zeroes.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Same Direction)',
+    whyItWorks: 'Swapping non-zero elements to the slow pointer position preserves their relative order while naturally pushing zeroes to the end.',
   },
   {
     id: 'squares-sorted-array',
@@ -4172,6 +4662,11 @@ function sortedSquares(nums) {
 let nums = [-4, -1, 0, 3, 10];
 sortedSquares(nums);
 `,
+    approach: 'Use two pointers at both ends of the sorted array. Compare the absolute values (squares) at each pointer, place the larger square at the end of the result array, and move that pointer inward. Fill the result from right to left.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Two Pointers (Converging)',
+    whyItWorks: 'In a sorted array with negatives, the largest squares are at the extremes. By comparing from both ends and filling the result backwards, we produce a sorted output in one pass.',
   },
   {
     id: 'container-with-most-water',
@@ -4224,6 +4719,11 @@ function maxArea(height) {
 let height = [1, 8, 6, 2, 5, 4, 8, 3, 7];
 maxArea(height);
 `,
+    approach: 'Start with two pointers at the widest possible container. Calculate the area using the shorter line as height. Move the pointer at the shorter line inward, since moving the taller line can only decrease width without increasing the limiting height.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Converging)',
+    whyItWorks: 'The area is limited by the shorter line. Moving the shorter pointer inward is the only way to potentially find a taller line that could increase area, since decreasing width with the same height always reduces area.',
   },
   {
     id: 'three-sum',
@@ -4291,6 +4791,11 @@ function threeSum(nums) {
 let nums = [-1, 0, 1, 2, -1, -4];
 threeSum(nums);
 `,
+    approach: 'Sort the array first. Fix one element with an outer loop, then use two converging pointers on the remaining subarray to find pairs that sum to the negation of the fixed element. Skip duplicate values at each level to ensure unique triplets.',
+    timeComplexity: 'O(n^2)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Converging) + Sort',
+    whyItWorks: 'Sorting enables the two-pointer technique: if the current sum is too small, move the left pointer right to increase it; if too large, move right pointer left. Skipping duplicates prevents repeated triplets.',
   },
   {
     id: 'sort-colors',
@@ -4347,6 +4852,11 @@ function sortColors(nums) {
 let nums = [2, 0, 2, 1, 1, 0];
 sortColors(nums);
 `,
+    approach: 'Use three pointers: low tracks the boundary for 0s, high tracks the boundary for 2s, and mid scans through. When mid finds a 0, swap with low and advance both. When mid finds a 2, swap with high and only decrement high. When mid finds a 1, just advance mid.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Dutch National Flag',
+    whyItWorks: 'The three pointers partition the array into four regions: 0s (before low), 1s (low to mid), unprocessed (mid to high), and 2s (after high). Each swap places an element in its correct region.',
   },
   {
     id: 'remove-element',
@@ -4389,6 +4899,11 @@ let nums = [3, 2, 2, 3];
 let val = 3;
 removeElement(nums, val);
 `,
+    approach: 'Use a slow pointer to track the write position for kept elements. The fast pointer scans every element. When the fast pointer finds a value that is not the target, copy it to the slow position and advance slow.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Same Direction)',
+    whyItWorks: 'The slow pointer only advances for non-target elements, effectively overwriting target values and compacting the remaining elements in-place.',
   },
   {
     id: 'is-subsequence',
@@ -4433,6 +4948,11 @@ let s = "abc";
 let t = "ahbgdc";
 isSubsequence(s, t);
 `,
+    approach: 'Use two pointers, one for each string. Advance the pointer for t on every iteration. Only advance the pointer for s when the characters match. If all characters in s are matched by the end, s is a subsequence of t.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Same Direction)',
+    whyItWorks: 'A subsequence preserves order but not contiguity. By greedily matching each character of s to the earliest possible position in t, we determine if the ordering can be preserved.',
   },
   {
     id: 'merge-sorted-array',
@@ -4481,6 +5001,11 @@ let nums2 = [2, 5, 6];
 let n = 3;
 merge(nums1, m, nums2, n);
 `,
+    approach: 'Merge from the end to avoid overwriting elements in nums1. Use three pointers: one at the end of valid elements in nums1, one at the end of nums2, and one at the last position of nums1. Place the larger element at the insert position and decrement the corresponding pointer.',
+    timeComplexity: 'O(m + n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Converging from End)',
+    whyItWorks: 'Starting from the back ensures we never overwrite unprocessed nums1 elements, since the merged position is always at or beyond the current nums1 read position.',
   },
   {
     id: 'partition-labels',
@@ -4536,6 +5061,11 @@ function partitionLabels(s) {
 let s = "ababcbacadefegdehijhklij";
 partitionLabels(s);
 `,
+    approach: 'First, record the last occurrence index of each character. Then scan left to right, extending the current partition end to the maximum last-occurrence of any character seen so far. When the current index equals the partition end, the partition is complete.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Greedy + Hash Map Lookup',
+    whyItWorks: 'A partition is valid when every character within it has its final occurrence inside that partition. Tracking the farthest last-occurrence ensures no character spans two partitions.',
   },
   {
     id: 'trapping-rain-water',
@@ -4595,6 +5125,11 @@ function trap(height) {
 let height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1];
 trap(height);
 `,
+    approach: 'Use two pointers from both ends, tracking the maximum height seen from each side. Process the pointer with the smaller max height: if the current bar is shorter than its side max, the difference is trapped water. Otherwise, update the side max. Move the processed pointer inward.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Converging)',
+    whyItWorks: 'Water at any position is determined by min(leftMax, rightMax) - height. By always processing the side with the smaller max, we know the other side has a taller or equal wall, so the water level is determined solely by the current side max.',
   },
   {
     id: 'three-sum-closest',
@@ -4662,6 +5197,11 @@ let nums = [-1, 2, 1, -4];
 let target = 1;
 threeSumClosest(nums, target);
 `,
+    approach: 'Sort the array, then fix one element with an outer loop and use two converging pointers for the remaining pair. Track the sum closest to the target by comparing absolute differences. Adjust pointers based on whether the current sum is less than or greater than the target.',
+    timeComplexity: 'O(n^2)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Converging) + Sort',
+    whyItWorks: 'Sorting allows the two-pointer approach to systematically explore sums: moving left increases the sum, moving right decreases it, efficiently narrowing in on the closest possible sum.',
   },
   {
     id: 'valid-palindrome-ii',
@@ -4720,6 +5260,11 @@ function validPalindrome(s) {
 
 validPalindrome("abca")
 `,
+    approach: 'Use converging two pointers from both ends. When a mismatch is found, try two options: skip the left character or skip the right character. Check if either remaining substring forms a palindrome. If so, the original string is a palindrome with one deletion.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Converging)',
+    whyItWorks: 'A mismatch gives exactly two recovery options. Only one character can be removed, so trying both skip-left and skip-right covers all possibilities without backtracking.',
   },
   {
     id: 'boats-to-save-people',
@@ -4782,6 +5327,11 @@ function numRescueBoats(people, limit) {
 
 numRescueBoats([3, 2, 2, 1], 3)
 `,
+    approach: 'Sort people by weight. Use two pointers: pair the lightest person with the heaviest. If they fit together within the limit, both board one boat and both pointers move inward. Otherwise, the heaviest person takes a boat alone and only the right pointer moves.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Converging) + Greedy',
+    whyItWorks: 'Greedy pairing of lightest with heaviest maximizes space utilization. If the lightest cannot pair with the heaviest, no one else can pair with that heavy person either.',
   },
   {
     id: 'rotate-array',
@@ -4841,6 +5391,11 @@ function rotate(nums, k) {
 
 rotate([1, 2, 3, 4, 5, 6, 7], 3)
 `,
+    approach: 'Use the triple-reverse technique: first reverse the entire array, then reverse the first k elements, then reverse the remaining elements. Each reverse uses two converging pointers. Normalize k by taking k mod n to handle cases where k exceeds array length.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Triple Reverse)',
+    whyItWorks: 'Reversing the whole array puts elements in the right relative order but backwards. The two subsequent partial reverses flip each segment back to the correct order, completing the rotation.',
   },
   {
     id: 'four-sum',
@@ -4909,6 +5464,11 @@ function fourSum(nums, target) {
 
 fourSum([-2, -1, 0, 1, 2], 0)
 `,
+    approach: 'Sort the array, then use two nested loops to fix the first two elements. For the remaining two, use converging two pointers. Skip duplicates at every level to ensure unique quadruplets. This reduces the problem from O(n^4) brute force to O(n^3).',
+    timeComplexity: 'O(n^3)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Converging) + Sort',
+    whyItWorks: 'Sorting enables efficient duplicate skipping and the two-pointer sum search. Each nesting level fixes one more element, and the innermost two-pointer scan finds all valid pairs in linear time.',
   },
   {
     id: 'long-pressed-name',
@@ -4960,6 +5520,11 @@ function isLongPressedName(name, typed) {
 
 isLongPressedName("alex", "aaleex")
 `,
+    approach: 'Use two pointers, one for the name and one for typed. If characters match, advance both. If the typed character matches the previous typed character, it is a long press, so advance only the typed pointer. Otherwise return false. Verify all name characters were consumed.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Same Direction)',
+    whyItWorks: 'Long presses only repeat the previous character. By checking if unmatched typed characters are repeats of the prior character, we distinguish valid long presses from mistyped characters.',
   },
   {
     id: 'intersection-of-two-arrays-ii',
@@ -5031,6 +5596,11 @@ function intersect(nums1, nums2) {
 
 intersect([1, 2, 2, 1], [2, 2])
 `,
+    approach: 'Sort both arrays first. Use two pointers, one per array. When values are equal, add to the result and advance both. When they differ, advance the pointer at the smaller value to catch up. This naturally handles duplicate counts.',
+    timeComplexity: 'O(n log n + m log m)',
+    spaceComplexity: 'O(min(n, m))',
+    patternName: 'Two Pointers (Same Direction) + Sort',
+    whyItWorks: 'Sorting groups identical values together. The pointer with the smaller value advances to find a potential match, and matching consumes one occurrence from each array, correctly counting shared duplicates.',
   },
   {
     id: 'remove-duplicates-sorted-ii',
@@ -5077,6 +5647,11 @@ function removeDuplicates(nums) {
 
 removeDuplicates([1, 1, 1, 2, 2, 3])
 `,
+    approach: 'Use a slow pointer starting at index 2. The fast pointer scans from index 2 onward. Compare nums[fast] with nums[slow - 2]: if they differ, the element is safe to keep (at most 2 copies), so copy it to slow and advance slow.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Same Direction)',
+    whyItWorks: 'Comparing with nums[slow - 2] ensures at most two copies of any value survive. If nums[fast] equals nums[slow - 2], there are already two copies in the valid region, so it must be skipped.',
   },
   {
     id: 'backspace-string-compare',
@@ -5142,6 +5717,11 @@ function backspaceCompare(s, t) {
 
 backspaceCompare("ab#c", "ad#c")
 `,
+    approach: 'Process both strings from the end. For each string, skip characters when encountering backspaces by counting consecutive # symbols. Compare the next valid characters from both strings. If they differ at any point, the strings are not equal.',
+    timeComplexity: 'O(n + m)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Reverse Traversal)',
+    whyItWorks: 'Processing from the end allows us to handle backspaces without extra space. Each # cancels the preceding character, and counting skips handles consecutive backspaces correctly.',
   },
   {
     id: 'string-compression',
@@ -5200,6 +5780,11 @@ function compress(chars) {
 
 compress(["a", "a", "b", "b", "c", "c", "c"])
 `,
+    approach: 'Use a read pointer to scan groups of consecutive identical characters and a write pointer to overwrite the array in-place. For each group, write the character followed by its count digits (only if count exceeds 1). Return the write pointer as the new length.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Two Pointers (Read/Write)',
+    whyItWorks: 'The write pointer never overtakes the read pointer because the compressed form is always shorter or equal. Writing char + count digits in-place is safe since we have already read past those positions.',
   },
 
   // ==================== ARRAYS & HASHING ====================
@@ -5245,6 +5830,11 @@ let target = 9;
 let result = twoSum(nums, target);
 console.log("Result:", result);
 `,
+    approach: 'Iterate through the array, storing each number and its index in a hash map. For each element, compute the complement (target - current) and check if it exists in the map. If found, return both indices immediately.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Hash Map Lookup',
+    whyItWorks: 'The hash map provides O(1) lookup for complements. By building the map as we iterate, we ensure we only find pairs where the complement appears at a different index.',
   },
   {
     id: 'contains-duplicate',
@@ -5285,6 +5875,11 @@ containsDuplicate([1, 2, 3, 1]);
 console.log("\\n--- Test 2 ---");
 containsDuplicate([1, 2, 3, 4]);
 `,
+    approach: 'Iterate through the array, adding each element to a Set. Before adding, check if the element already exists in the Set. If it does, a duplicate has been found. If the loop completes without finding a duplicate, return false.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Hash Set Lookup',
+    whyItWorks: 'A Set provides O(1) average-case insertion and membership testing. If any element is already in the Set when we try to add it, it must have appeared earlier in the array.',
   },
   {
     id: 'valid-anagram',
@@ -5333,6 +5928,11 @@ isAnagram("anagram", "nagaram");
 console.log("\\n--- Test 2 ---");
 isAnagram("rat", "car");
 `,
+    approach: 'Count character frequencies of the first string using a hash map. Then subtract frequencies using the second string. If any character count goes below zero or a character is missing, the strings are not anagrams. Equal lengths with matching frequencies confirms an anagram.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Frequency Count',
+    whyItWorks: 'Two strings are anagrams if and only if they have identical character frequency distributions. Incrementing for one string and decrementing for the other detects any mismatch.',
   },
   {
     id: 'group-anagrams',
@@ -5373,6 +5973,11 @@ function groupAnagrams(strs) {
 let strs = ["eat", "tea", "tan", "ate", "nat", "bat"];
 groupAnagrams(strs);
 `,
+    approach: 'For each string, sort its characters to create a canonical key. Use a hash map where the key is the sorted string and the value is a list of original strings sharing that key. Strings that are anagrams of each other produce the same sorted key.',
+    timeComplexity: 'O(n * k log k)',
+    spaceComplexity: 'O(n * k)',
+    patternName: 'Hash Map Grouping',
+    whyItWorks: 'Anagrams are permutations of the same characters, so sorting them produces an identical string. This sorted form serves as a unique group identifier in the hash map.',
   },
   {
     id: 'top-k-frequent',
@@ -5422,6 +6027,11 @@ function topKFrequent(nums, k) {
 let nums = [1, 1, 1, 2, 2, 3];
 topKFrequent(nums, 2);
 `,
+    approach: 'First count element frequencies using a hash map. Then use bucket sort where the bucket index represents frequency and the bucket contents are elements with that frequency. Collect elements from the highest-frequency buckets until k elements are gathered.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Frequency Count + Bucket Sort',
+    whyItWorks: 'Bucket sort avoids the O(n log n) cost of comparison-based sorting. Since frequencies are bounded by array length, creating buckets indexed by frequency enables linear-time extraction of the top k elements.',
   },
   {
     id: 'product-except-self',
@@ -5468,6 +6078,11 @@ function productExceptSelf(nums) {
 let nums = [1, 2, 3, 4];
 productExceptSelf(nums);
 `,
+    approach: 'Build the result in two passes without using division. First pass computes prefix products: result[i] holds the product of all elements before index i. Second pass multiplies in suffix products from right to left. Each result[i] becomes prefix[i] * suffix[i].',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Prefix Product',
+    whyItWorks: 'The product of all elements except self at index i is the product of everything to its left times everything to its right. Two passes accumulate these partial products without needing division.',
   },
   {
     id: 'longest-consecutive',
@@ -5517,6 +6132,11 @@ function longestConsecutive(nums) {
 let nums = [100, 4, 200, 1, 3, 2];
 longestConsecutive(nums);
 `,
+    approach: 'Insert all numbers into a Set for O(1) lookup. For each number, check if it is the start of a sequence (num - 1 not in Set). If so, count consecutive numbers upward. Track the longest sequence found across all starting points.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Hash Set Lookup',
+    whyItWorks: 'Only starting sequence exploration from true sequence starts (where num - 1 is absent) ensures each element is visited at most twice total, achieving O(n) despite the nested while loop.',
   },
   {
     id: 'best-time-buy-sell',
@@ -5561,6 +6181,11 @@ function maxProfit(prices) {
 let prices = [7, 1, 5, 3, 6, 4];
 maxProfit(prices);
 `,
+    approach: 'Scan prices left to right, tracking the minimum price seen so far. At each day, calculate the profit if selling at the current price. Update the maximum profit whenever a better profit is found. The minimum price resets whenever a new low is encountered.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Running Minimum',
+    whyItWorks: 'The optimal buy day is always the lowest price before the sell day. By tracking the running minimum, each potential sell day is compared against the best possible buy price.',
   },
   {
     id: 'maximum-subarray',
@@ -5607,6 +6232,11 @@ function maxSubArray(nums) {
 let nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
 maxSubArray(nums);
 `,
+    approach: 'Use Kadane\'s algorithm: at each position, decide whether to extend the current subarray or start a new one. If the running sum plus the current element exceeds the element alone, extend. Otherwise, start fresh. Track the global maximum sum throughout.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Kadane\'s Algorithm',
+    whyItWorks: 'A negative running sum can only hurt future sums. Resetting when currentSum + nums[i] < nums[i] ensures we never carry forward a net-negative prefix, and the global max captures the best subarray seen.',
   },
   {
     id: 'majority-element',
@@ -5652,5 +6282,10 @@ function majorityElement(nums) {
 let nums = [2, 2, 1, 1, 1, 2, 2];
 majorityElement(nums);
 `,
+    approach: 'Use Boyer-Moore Voting: maintain a candidate and a count. When count drops to zero, adopt the current element as the new candidate. Increment count for matches, decrement for mismatches. The majority element always survives as the final candidate.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Boyer-Moore Voting',
+    whyItWorks: 'The majority element appears more than n/2 times. Every time it is "cancelled" by a different element, at most one copy is lost. Since it has more copies than all others combined, it always remains as the last candidate standing.',
   },
 ]

@@ -36,12 +36,16 @@ export function CodePanel({
 
   return (
     <div className="bg-bg-page-secondary border border-white-10 rounded-lg shadow-lg overflow-hidden">
-      <div className="flex justify-between items-center px-3 py-2 bg-surface-card">
-        <span className="inline-flex items-center gap-[3px] px-1.5 py-[3px] text-2xs font-semibold uppercase tracking-[0.08em] text-gray-200 bg-brand-primary-10 border border-brand-primary-30 rounded-full">
-          {title}
-        </span>
-        {rightElement}
-      </div>
+      {(title || rightElement) && (
+        <div className="flex justify-between items-center px-3 py-2 bg-surface-card">
+          {title ? (
+            <span className="inline-flex items-center gap-[3px] px-1.5 py-[3px] text-2xs font-semibold uppercase tracking-[0.08em] text-gray-200 bg-brand-primary-10 border border-brand-primary-30 rounded-full">
+              {title}
+            </span>
+          ) : <span />}
+          {rightElement}
+        </div>
+      )}
       <pre className="m-0 py-2 overflow-y-auto" style={{ maxHeight }}>
         {code.map((line, i) => (
           <div

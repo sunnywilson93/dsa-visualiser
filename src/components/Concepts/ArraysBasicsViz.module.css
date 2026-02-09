@@ -16,14 +16,14 @@
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
-  padding: 0.35rem;
+  padding: var(--spacing-pill);
 }
 
 .levelBtn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px var(--spacing-md);
+  gap: var(--spacing-1\.5);
+  padding: var(--spacing-1\.5) var(--spacing-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
@@ -65,11 +65,11 @@
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
-  padding: 0.35rem;
+  padding: var(--spacing-pill);
 }
 
 .exampleTab {
-  padding: 6px var(--spacing-md);
+  padding: var(--spacing-1\.5) var(--spacing-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   background: var(--color-white-4);
@@ -121,7 +121,7 @@
   color: var(--color-gray-500);
   background: var(--color-white-5);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-normal);
 }
 
 .stackItems,
@@ -184,7 +184,7 @@
   gap: var(--spacing-xs);
   padding: var(--spacing-md);
   background: var(--color-orange-8);
-  border: 2px solid var(--color-orange-40);
+  border: var(--border-width-2) solid var(--color-orange-40);
   border-radius: var(--radius-lg);
   font-family: var(--font-mono);
   transition: all var(--transition-fast);
@@ -227,7 +227,7 @@
   color: var(--color-gray-500);
   background: var(--color-white-5);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-normal);
 }
 
 .outputContent {
@@ -252,7 +252,7 @@
 .insightBox {
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-orange-8);
-  border: 1px solid var(--color-accent-orange-30);
+  border: var(--border-width-1) solid var(--color-accent-orange-30);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
   color: var(--color-gray-400);
@@ -274,7 +274,7 @@
 
 .iterationPanel {
   background: var(--color-black-40);
-  border: 2px solid var(--color-orange-50);
+  border: var(--border-width-2) solid var(--color-orange-50);
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
@@ -285,7 +285,7 @@
   gap: var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-orange-12);
-  border-bottom: 1px solid var(--color-accent-orange-30);
+  border-bottom: var(--border-width-1) solid var(--color-accent-orange-30);
 }
 
 .methodBadge {
@@ -294,7 +294,7 @@
   font-weight: var(--font-weight-bold);
   color: var(--color-white);
   background: var(--js-viz-accent);
-  padding: var(--spacing-xs) 10px;
+  padding: var(--spacing-xs) var(--spacing-2\.5);
   border-radius: var(--radius-md);
 }
 
@@ -316,7 +316,7 @@
   font-weight: var(--font-weight-semibold);
   color: var(--color-gray-500);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-normal);
   margin-bottom: var(--spacing-xs);
 }
 
@@ -339,10 +339,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.15rem;
+  gap: var(--spacing-0\.5);
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-black-30);
-  border: 2px solid var(--js-viz-border);
+  border: var(--border-width-2) solid var(--js-viz-border);
   border-radius: var(--radius-md);
   font-family: var(--font-mono);
   min-width: 50px;
@@ -414,12 +414,12 @@
 
 .accumulatorValue {
   font-family: var(--font-mono);
-  font-size: 2.5rem;
+  font-size: var(--text-4xl);
   font-weight: var(--font-weight-bold);
   color: var(--js-viz-accent);
   padding: var(--spacing-md) var(--spacing-xl);
   background: var(--color-orange-12);
-  border: 2px solid var(--color-orange-50);
+  border: var(--border-width-2) solid var(--color-orange-50);
   border-radius: var(--radius-lg);
   min-width: 100px;
   text-align: center;
@@ -467,7 +467,7 @@
   gap: var(--spacing-sm);
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-amber-15);
-  border: 1px solid var(--color-amber-500-50);
+  border: var(--border-width-1) solid var(--color-amber-500-50);
   border-radius: var(--radius-lg);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
@@ -510,7 +510,7 @@
 
   .levelBtn,
   .exampleTab {
-    padding: 5px 10px;
+    padding: var(--spacing-1\.25) var(--spacing-2\.5);
     font-size: var(--text-xs);
     min-height: 44px;
   }

@@ -166,8 +166,16 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'critical-render-path': Palette,  // Browser rendering/painting
   'prototypes': Link,               // Prototype chain links
 
+  // Engineering Foundations
+  'mental-execution-model': BrainCircuit,  // Mental model / thinking process
+  'values-and-memory': Database,           // Memory/storage
+  'expressions-vs-statements': Split,      // Two types of code
+  'reading-code': BookOpen,                // Reading/learning
+  'debugging-mindset': Search,             // Searching for bugs
+
   // Categories - JS
   'philosophy': Sparkles,
+  'foundations': Compass,                  // Engineering foundations
   'basics': BookOpen,
   'fundamentals': CircleDot,
   'core': Settings,
@@ -177,7 +185,6 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'browser': Globe,
 
   // Categories - DSA
-  'foundations': Compass,
   'data-structures': Box,
   'algorithms': Zap,
   'patterns': Puzzle,

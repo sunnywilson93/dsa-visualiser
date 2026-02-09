@@ -11,7 +11,7 @@
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--color-white-8);
   border-radius: var(--radius-full);
-  padding: 0.35rem;
+  padding: var(--spacing-pill);
 }
 
 .tabBtn {
@@ -54,7 +54,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: var(--spacing-1\.5);
   padding: var(--spacing-md);
   background: var(--color-black-30);
   border: var(--border-width-2) solid var(--color-white-10);
@@ -85,7 +85,7 @@
 
 .typeDetail {
   background: var(--color-black-40);
-  border: 2px solid;
+  border: var(--border-width-2) solid;
   border-radius: var(--radius-xl);
   padding: var(--spacing-lg);
 }
@@ -93,7 +93,7 @@
 .typeDetail h3 {
   font-size: var(--text-md);
   font-weight: var(--font-weight-semibold);
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--spacing-md);
 }
 
 .detailRow {
@@ -112,7 +112,7 @@
 .examples {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--spacing-1\.5);
 }
 
 .example {
@@ -120,7 +120,7 @@
   font-size: var(--text-xs);
   color: var(--difficulty-1);
   background: var(--color-emerald-10);
-  padding: 2px var(--spacing-sm);
+  padding: var(--spacing-0\.5) var(--spacing-sm);
   border-radius: var(--radius-sm);
 }
 
@@ -131,7 +131,7 @@
 }
 
 .noteBox {
-  margin-top: 0.75rem;
+  margin-top: var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-red-10);
   border: var(--border-width-1) solid var(--color-red-30);
@@ -143,7 +143,7 @@
 .insight {
   padding: var(--spacing-md) var(--spacing-lg);
   background: var(--color-amber-10);
-  border: 1px solid var(--color-amber-30);
+  border: var(--border-width-1) solid var(--color-amber-30);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
   color: var(--difficulty-2);
@@ -168,7 +168,7 @@
   font-size: var(--text-base);
   font-weight: var(--font-weight-semibold);
   color: var(--color-white);
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--spacing-md);
   text-align: center;
 }
 
@@ -176,7 +176,7 @@
   background: var(--color-black-40);
   border-radius: var(--radius-lg);
   padding: var(--spacing-md);
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--spacing-md);
   overflow-x: auto;
 }
 
@@ -212,7 +212,7 @@
   gap: var(--spacing-xs);
   padding: var(--spacing-sm) var(--spacing-lg);
   background: var(--color-black-30);
-  border: 2px solid;
+  border: var(--border-width-2) solid;
   border-radius: var(--radius-lg);
 }
 

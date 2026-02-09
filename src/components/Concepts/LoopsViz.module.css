@@ -16,14 +16,14 @@
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
-  padding: 0.35rem;
+  padding: var(--spacing-pill);
 }
 
 .levelBtn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px var(--spacing-md);
+  gap: var(--spacing-1\.5);
+  padding: var(--spacing-1\.5) var(--spacing-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
@@ -65,11 +65,11 @@
   background: var(--color-black-30);
   border: var(--border-width-1) solid var(--js-viz-border);
   border-radius: var(--radius-full);
-  padding: 0.35rem;
+  padding: var(--spacing-pill);
 }
 
 .exampleTab {
-  padding: 6px var(--spacing-md);
+  padding: var(--spacing-1\.5) var(--spacing-md);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   background: var(--color-white-4);
@@ -114,7 +114,7 @@
   color: var(--color-gray-500);
   background: var(--color-white-5);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-normal);
 }
 
 .boxContent {
@@ -279,7 +279,7 @@
 .callbackRef {
   font-size: 10px;
   color: var(--color-gray-400);
-  padding: 2px 6px;
+  padding: var(--spacing-0\.5) var(--spacing-1\.5);
   background: var(--color-white-10);
   border-radius: var(--radius-sm);
 }
@@ -296,7 +296,7 @@
 
   .levelBtn,
   .exampleTab {
-    padding: 5px 10px;
+    padding: var(--spacing-1\.25) var(--spacing-2\.5);
     font-size: var(--text-xs);
     min-height: 44px;
   }

@@ -1,14 +1,15 @@
 import type { MetadataRoute } from 'next'
 import { concepts } from '@/data/concepts'
-import { exampleCategories, codeExamples } from '@/data/examples'
+import { exampleCategories, codeExamples, isDsaSubcategory } from '@/data/examples'
 import { dsaPatterns } from '@/data/dsaPatterns'
 import { dsaConcepts } from '@/data/dsaConcepts'
+import { problemConcepts } from '@/data/algorithmConcepts'
 
 /**
  * Last content update timestamp.
  * Update this when making significant content changes.
  */
-export const CONTENT_LAST_UPDATED = new Date('2026-01-25')
+export const CONTENT_LAST_UPDATED = new Date('2026-02-09')
 
 const BASE_URL = 'https://jsinterview.dev'
 
@@ -101,6 +102,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   })
 
+  // Concept visualization pages (/{categoryId}/{problemId}/concept)
+  const conceptVizPages: MetadataRoute.Sitemap = Object.keys(problemConcepts)
+    .map((problemId) => {
+      const problem = codeExamples.find((p) => p.id === problemId)
+      if (!problem) return null
+      const category = exampleCategories.find(
+        (cat) => cat.id === problem.category ||
+        (cat.id === 'dsa' && isDsaSubcategory(problem.category))
+      )
+      const categoryId = category?.id || problem.category
+      return {
+        url: `${BASE_URL}/${categoryId}/${problem.id}/concept`,
+        lastModified: CONTENT_LAST_UPDATED,
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      }
+    })
+    .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
+
   return [
     ...staticPages,
     ...jsConceptPages,
@@ -108,5 +128,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...dsaPatternPages,
     ...categoryPages,
     ...problemPages,
+    ...conceptVizPages,
   ]
 }
