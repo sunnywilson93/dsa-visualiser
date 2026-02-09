@@ -1,1 +1,36 @@
 npm run lint
+
+# Skip visual check if explicitly bypassed
+if [ "$SKIP_VISUAL" = "1" ]; then
+  exit 0
+fi
+
+# Check if any visual-impacting files are staged
+VISUAL_FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(css|tsx)$' | grep -v '\.test\.' | grep -v '\.spec\.')
+
+if [ -z "$VISUAL_FILES" ]; then
+  exit 0
+fi
+
+# Check if dev server is running on port 3000
+if ! curl -s --head --max-time 3 http://localhost:3000 > /dev/null 2>&1; then
+  echo ""
+  echo "⚠️  Visual files changed but no dev server on port 3000."
+  echo "   Start 'npm run dev' and run 'npm run test:visual:smoke' before committing."
+  echo "   Or bypass with: SKIP_VISUAL=1 git commit ..."
+  echo ""
+  exit 1
+fi
+
+echo "🔍 Visual files changed — running smoke visual regression..."
+npm run test:visual:smoke
+
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Visual regression detected! Review the diff report."
+  echo "   If intentional: npm run test:visual:smoke:update"
+  echo "   To bypass: SKIP_VISUAL=1 git commit ..."
+  exit 1
+fi
+
+echo "✅ Visual smoke check passed."

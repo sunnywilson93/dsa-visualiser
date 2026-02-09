@@ -18,6 +18,8 @@
     "tokens:audit": "npx tsx scripts/tokens-audit.ts",
     "test:visual": "npx playwright test",
     "test:visual:update": "npx playwright test --update-snapshots",
+    "test:visual:smoke": "npx playwright test --config playwright.smoke.config.ts",
+    "test:visual:smoke:update": "npx playwright test --config playwright.smoke.config.ts --update-snapshots",
     "prepare": "husky"
   },
   "dependencies": {

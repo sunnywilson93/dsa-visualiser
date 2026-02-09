@@ -2,12 +2,10 @@ import { defineConfig } from '@playwright/test'
 
 export default defineConfig({
   testDir: './e2e',
-  testMatch: 'visual-regression.spec.ts',
+  testMatch: 'visual-smoke.spec.ts',
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  retries: 0,
+  reporter: 'list',
   use: {
     baseURL: 'http://localhost:3000',
     reducedMotion: 'reduce',
@@ -16,23 +14,15 @@ export default defineConfig({
     },
   },
   webServer: {
-    command: 'npm run build && npm run start',
+    command: 'npm run start',
     url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120000,
+    reuseExistingServer: true,
+    timeout: 10000,
   },
   projects: [
     {
       name: 'desktop-1440',
       use: { viewport: { width: 1440, height: 900 } },
-    },
-    {
-      name: 'tablet-768',
-      use: { viewport: { width: 768, height: 1024 } },
-    },
-    {
-      name: 'mobile-360',
-      use: { viewport: { width: 360, height: 640 } },
     },
   ],
   expect: {
