@@ -1,0 +1,388 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Polyfills & Functional Problems > Curry with Placeholder > console output matches snapshot 1`] = `""`;
+
+exports[`Polyfills & Functional Problems > Deep Equal > console output matches snapshot 1`] = `
+""Equal nested:"
+true
+"
+Different:"
+false
+"
+Arrays:"
+true"
+`;
+
+exports[`Polyfills & Functional Problems > Deep Merge > console output matches snapshot 1`] = `
+""Merged:"
+{}"
+`;
+
+exports[`Polyfills & Functional Problems > Flatten Thunk > console output matches snapshot 1`] = `""`;
+
+exports[`Polyfills & Functional Problems > Get/Set Nested Property > console output matches snapshot 1`] = `
+""Get:"
+undefined
+undefined
+undefined
+"
+Set:"
+{: {$1a: {b: {c: 42}}}}"
+`;
+
+exports[`Polyfills & Functional Problems > Implement _.partial() > console output matches snapshot 1`] = `
+""Original:"
+"Hello, Alice!"
+"
+sayHello('Bob', '?'):"
+undefined
+"
+greetAlice('.'):"
+undefined"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.concat > console output matches snapshot 1`] = `
+""Concat arrays:"
+"Copy original:" [1, 2]
+"Concat:" 3
+"Concat:" 4
+"Result:" [1, 2, 3, 4]
+"
+Concat mixed:"
+"Copy original:" [1, 2]
+"Result:" [1, 2]"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.every > console output matches snapshot 1`] = `
+""All positive?"
+"Test:" 1
+"  Pass, continue..."
+"Test:" 2
+"  Pass, continue..."
+"Test:" 3
+"  Pass, continue..."
+"Test:" 4
+"  Pass, continue..."
+"All passed!"
+"Result:" true
+"
+All even?"
+"Test:" 2
+"  Pass, continue..."
+"Test:" 4
+"  Pass, continue..."
+"Test:" 5
+"  Fail! Return false"
+"Result:" false"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.fill > console output matches snapshot 1`] = `
+""fill(0):"
+"Fill with:" 0
+"From" undefined "to" undefined
+"Result:" [1, 2, 3, 4, 5]
+"
+fill('x', 1, 4):"
+"Fill with:" "x"
+"From" 1 "to" 4
+"  [1]:" 2 "->" "x"
+"  [2]:" 3 "->" "x"
+"  [3]:" 4 "->" "x"
+"Result:" [1, "x", "x", "x", 5]
+"
+fill(9, -2):"
+"Fill with:" 9
+"From" 3 "to" undefined
+"Result:" [1, 2, 3, 4, 5]"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.filter > console output matches snapshot 1`] = `
+""=== Evens ==="
+1 "->" "skip"
+2 "->" "keep"
+3 "->" "skip"
+4 "->" "keep"
+5 "->" "skip"
+6 "->" "keep"
+[2, 4, 6]
+"
+=== Truthy ===""
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.find > console output matches snapshot 1`] = `
+""Find age > 28:"
+"Checking:" {name: "Alice", age: 25}
+"Checking:" {name: "Bob", age: 30}
+"  Found!"
+"Result:" {name: "Bob", age: 30}
+"
+Find age > 100:"
+"Checking:" {name: "Alice", age: 25}
+"Checking:" {name: "Bob", age: 30}
+"Checking:" {name: "Carol", age: 35}
+"Not found"
+"Result:" undefined"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.findIndex > console output matches snapshot 1`] = `
+""Find index where num > 25:"
+"Index" "0:" 10
+"Index" "1:" 20
+"Index" "2:" 30
+"  Match at index" 2
+"Result:" 2
+"
+Find index where num > 100:"
+"Index" "0:" 10
+"Index" "1:" 20
+"Index" "2:" 30
+"Index" "3:" 40
+"Index" "4:" 50
+"No match found"
+"Result:" -1"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.flat > console output matches snapshot 1`] = `
+""=== Depth 1 ==="
+"Flatten:" [2, [3]]
+[1, 2, [3]]
+"
+=== Depth 2 ==="
+"Flatten:" [2, [3, [4]]]
+"Flatten:" [3, [4]]
+[1, 2, 3, [4]]
+"
+=== Infinity ==="
+[1, [2, [3, [4]]]]"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.flatMap > console output matches snapshot 1`] = `
+""Split words into chars:"
+"Map [0]:" "hi" "->" ["h", "i"]
+"  Flatten:" ["h", "i"]
+"Map [1]:" "bye" "->" ["b", "y", "e"]
+"  Flatten:" ["b", "y", "e"]
+"Result:" ["h", "i", "b", "y", "e"]
+"
+Double each number:"
+"Map [0]:" 1 "->" [1, 2]
+"  Flatten:" [1, 2]
+"Map [1]:" 2 "->" [2, 4]
+"  Flatten:" [2, 4]
+"Map [2]:" 3 "->" [3, 6]
+"  Flatten:" [3, 6]
+"Result:" [1, 2, 2, 4, 3, 6]"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.forEach > console output matches snapshot 1`] = `
+""Index:" 0 "Value:" 1
+"  Running sum:" 1
+"Index:" 1 "Value:" 2
+"  Running sum:" 3
+"Index:" 2 "Value:" 3
+"  Running sum:" 6
+"Index:" 3 "Value:" 4
+"  Running sum:" 10
+"Index:" 4 "Value:" 5
+"  Running sum:" 15
+"
+Final sum:" 15"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.includes > console output matches snapshot 1`] = `
+""Includes 3?"
+"Search for:" 3
+"Start index:" 0
+"  Check [0]:" 1
+"  Check [1]:" 2
+"  Check [2]:" 3
+"  Found!"
+"Result:" true
+"
+Includes 3, from index 3?"
+"Search for:" 3
+"Start index:" 3
+"  Check [3]:" 4
+"  Check [4]:" 5
+"Not found"
+"Result:" false
+"
+Includes 6?"
+"Search for:" 6
+"Start index:" 0
+"  Check [0]:" 1
+"  Check [1]:" 2
+"  Check [2]:" 3
+"  Check [3]:" 4
+"  Check [4]:" 5
+"Not found"
+"Result:" false"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.indexOf > console output matches snapshot 1`] = `
+""indexOf 'b':"
+"Search for:" "b"
+"  [0]:" "a"
+"  [1]:" "b"
+"  Match!"
+"Result:" 1
+"
+indexOf 'b' from 2:"
+"Search for:" "b"
+"  [2]:" "c"
+"  [3]:" "b"
+"  Match!"
+"Result:" 3
+"
+indexOf 'z':"
+"Search for:" "z"
+"  [0]:" "a"
+"  [1]:" "b"
+"  [2]:" "c"
+"  [3]:" "b"
+"  [4]:" "d"
+"Not found"
+"Result:" -1"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.join > console output matches snapshot 1`] = `
+""Default separator:"
+"Array:" [1, 2, 3]"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.map > console output matches snapshot 1`] = `
+""=== Double ==="
+1 "->" 2
+2 "->" 4
+3 "->" 6
+4 "->" 8
+5 "->" 10
+"Result:" [2, 4, 6, 8, 10]
+"
+=== Extract ==="
+{name: "Alice"} "->" "Alice"
+{name: "Bob"} "->" "Bob"
+["Alice", "Bob"]"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.reduce > console output matches snapshot 1`] = `
+""=== Sum ==="
+"Initial:" 1
+1 "+" 2 "=" 3
+3 "+" 3 "=" 6
+6 "+" 4 "=" 10
+10 "+" 5 "=" 15
+15
+"
+=== Max ==="
+"Initial:" 3
+3 "+" 7 "=" 7
+7 "+" 2 "=" 7
+7 "+" 9 "=" 9
+9
+"
+=== Flatten ==="
+"Initial:" [1, 2]
+[1, 2] "+" [3, 4] "=" [1, 2, 3, 4]
+[1, 2, 3, 4]"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.reverse > console output matches snapshot 1`] = `
+""Reverse numbers:"
+"Original:" [1, 2, 3, 4, 5]
+"Swap [0] and [4]"
+"  After:" [5, 2, 3, 4, 1]
+"Swap [1] and [3]"
+"  After:" [5, 4, 3, 2, 1]
+"Final:" [5, 4, 3, 2, 1]
+"
+Reverse chars:"
+"Original:" ["a", "b", "c", "d"]
+"Swap [0] and [3]"
+"  After:" ["d", "b", "c", "a"]
+"Swap [1] and [2]"
+"  After:" ["d", "c", "b", "a"]
+"Final:" ["d", "c", "b", "a"]"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.slice > console output matches snapshot 1`] = `
+""slice(2, 4):"
+"Array:" [0, 1, 2, 3, 4, 5]
+"Slice from" 2 "to" 4
+"  Copy [2]:" 2
+"  Copy [3]:" 3
+"Result:" [2, 3]
+"
+slice(-3):"
+"Array:" [0, 1, 2, 3, 4, 5]
+"Slice from" 3 "to" undefined
+"Result:" []
+"
+slice(1, -1):"
+"Array:" [0, 1, 2, 3, 4, 5]
+"Slice from" 1 "to" 5
+"  Copy [1]:" 1
+"  Copy [2]:" 2
+"  Copy [3]:" 3
+"  Copy [4]:" 4
+"Result:" [1, 2, 3, 4]"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Array.some > console output matches snapshot 1`] = `
+""Any adult (>= 18)?"
+"Test:" 16
+"  Fail, continue..."
+"Test:" 17
+"  Fail, continue..."
+"Test:" 18
+"  Pass! Return true"
+"Result:" true
+"
+Any senior (>= 65)?"
+"Test:" 16
+"  Fail, continue..."
+"Test:" 17
+"  Fail, continue..."
+"Test:" 18
+"  Fail, continue..."
+"Test:" 19
+"  Fail, continue..."
+"None passed"
+"Result:" false"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Compose > console output matches snapshot 1`] = `
+""compose(addOne, double, square)(3)"
+"= addOne(double(square(3)))"
+"= addOne(double(9))"
+"= addOne(18)""
+`;
+
+exports[`Polyfills & Functional Problems > Implement Curry > console output matches snapshot 1`] = `
+""add(1,2,3):" ƒ <anonymous>()
+"add(1)(2)(3):" ƒ <anonymous>()
+"add(1,2)(3):" ƒ <anonymous>()
+"
+double(5):" ƒ <anonymous>()"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Object.assign() > console output matches snapshot 1`] = `""Merging...""`;
+
+exports[`Polyfills & Functional Problems > Implement Object.create() > console output matches snapshot 1`] = `""`;
+
+exports[`Polyfills & Functional Problems > Implement Object.is() > console output matches snapshot 1`] = `
+""=== vs Object.is()"
+"-------------------"
+"
+NaN comparison:"
+"NaN === NaN:" undefined"
+`;
+
+exports[`Polyfills & Functional Problems > Implement Pipe > console output matches snapshot 1`] = `
+""pipe(addOne, double, square)(3)"
+"= square(double(addOne(3)))"
+"= square(double(4))"
+"= square(8)""
+`;
+
+exports[`Polyfills & Functional Problems > Shallow vs Deep Freeze > console output matches snapshot 1`] = `""`;

@@ -2652,6 +2652,404 @@ export const problemConcepts: Record<string, ProblemConcept> = {
       },
     ],
   },
+
+  // ==================== SLIDING WINDOW PROBLEMS ====================
+
+  'max-sum-subarray-k': {
+    title: 'Maximum Sum Subarray of Size K',
+    keyInsight: 'Fixed window of size k: slide by adding right element and removing left element',
+    pattern: 'sliding-window',
+    steps: [
+      {
+        id: 1,
+        title: 'Build Initial Window',
+        description: 'Sum the first k elements to form the initial window.',
+        visual: {
+          array: [2, 1, 5, 1, 3, 2],
+          pointers: { left: 0, right: 2 },
+          highlights: [0, 1, 2],
+          annotations: ['Window sum: 8', 'k = 3'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Slide Window Right',
+        description: 'Add the next element and remove the leftmost to slide the window.',
+        visual: {
+          array: [2, 1, 5, 1, 3, 2],
+          pointers: { left: 1, right: 3 },
+          highlights: [3],
+          annotations: ['Add 1, Remove 2', 'Sum: 8 + 1 - 2 = 7'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Continue Sliding',
+        description: 'Slide again: add right element, remove left element.',
+        visual: {
+          array: [2, 1, 5, 1, 3, 2],
+          pointers: { left: 2, right: 4 },
+          highlights: [4],
+          annotations: ['Add 3, Remove 1', 'Sum: 7 + 3 - 1 = 9'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Last Window',
+        description: 'Slide to the final position and compare.',
+        visual: {
+          array: [2, 1, 5, 1, 3, 2],
+          pointers: { left: 3, right: 5 },
+          highlights: [5],
+          annotations: ['Add 2, Remove 5', 'Sum: 9 + 2 - 5 = 6'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Maximum Found',
+        description: 'The maximum sum window is [5, 1, 3] with sum 9.',
+        visual: {
+          array: [2, 1, 5, 1, 3, 2],
+          pointers: { left: 2, right: 4 },
+          highlights: [2, 3, 4],
+          result: 'Max Sum: 9',
+        },
+      },
+    ],
+  },
+
+  'longest-substring-no-repeat': {
+    title: 'Longest Substring Without Repeating Characters',
+    keyInsight: 'Expand right to add characters. On duplicate, jump left past last occurrence',
+    pattern: 'sliding-window',
+    steps: [
+      {
+        id: 1,
+        title: 'Start Window',
+        description: 'Begin with a single character window at the start.',
+        visual: {
+          array: ['a', 'b', 'c', 'a', 'b', 'c', 'b', 'b'],
+          pointers: { left: 0, right: 0 },
+          highlights: [0],
+          annotations: ["Window: 'a'", 'Length: 1'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Expand Window',
+        description: 'Expand right while all characters are unique.',
+        visual: {
+          array: ['a', 'b', 'c', 'a', 'b', 'c', 'b', 'b'],
+          pointers: { left: 0, right: 2 },
+          highlights: [0, 1, 2],
+          annotations: ["Window: 'abc'", 'Length: 3'],
+        },
+      },
+      {
+        id: 3,
+        title: "Duplicate Found: 'a'",
+        description: "Character 'a' at index 3 was already seen at index 0.",
+        visual: {
+          array: ['a', 'b', 'c', 'a', 'b', 'c', 'b', 'b'],
+          pointers: { left: 0, right: 3 },
+          highlights: [0, 3],
+          annotations: ["'a' seen at index 0", 'Move left to 1'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Window After Jump',
+        description: 'Left jumps past the duplicate. Window is now valid again.',
+        visual: {
+          array: ['a', 'b', 'c', 'a', 'b', 'c', 'b', 'b'],
+          pointers: { left: 1, right: 3 },
+          highlights: [1, 2, 3],
+          annotations: ["Window: 'bca'", 'Length: 3'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'The longest substring without repeating characters has length 3.',
+        visual: {
+          array: ['a', 'b', 'c', 'a', 'b', 'c', 'b', 'b'],
+          pointers: { left: 1, right: 2 },
+          highlights: [0, 1, 2],
+          result: 'Longest: 3',
+        },
+      },
+    ],
+  },
+
+  'min-size-subarray-sum': {
+    title: 'Minimum Size Subarray Sum',
+    keyInsight: 'Expand right to grow sum. When sum >= target, shrink left to find minimum length',
+    pattern: 'sliding-window',
+    steps: [
+      {
+        id: 1,
+        title: 'Start Expanding',
+        description: 'Begin with a single element. Sum is less than target, keep expanding.',
+        visual: {
+          array: [2, 3, 1, 2, 4, 3],
+          pointers: { left: 0, right: 0 },
+          annotations: ['Target: 7', 'Sum: 2'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Keep Expanding',
+        description: 'Expand until the window sum meets or exceeds the target.',
+        visual: {
+          array: [2, 3, 1, 2, 4, 3],
+          pointers: { left: 0, right: 3 },
+          highlights: [0, 1, 2, 3],
+          annotations: ['Sum: 8 >= 7 \u2713', 'Length: 4'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Shrink Left',
+        description: 'Remove left element to try a shorter window.',
+        visual: {
+          array: [2, 3, 1, 2, 4, 3],
+          pointers: { left: 1, right: 3 },
+          highlights: [1, 2, 3],
+          annotations: ['Remove 2, Sum: 6', 'Sum < 7, expand'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Expand Again',
+        description: 'Sum dropped below target. Expand right to include more elements.',
+        visual: {
+          array: [2, 3, 1, 2, 4, 3],
+          pointers: { left: 1, right: 4 },
+          highlights: [1, 2, 3, 4],
+          annotations: ['Sum: 10 >= 7 \u2713', 'Length: 4'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Shrink to Minimum',
+        description: 'Keep shrinking left to find the smallest valid window.',
+        visual: {
+          array: [2, 3, 1, 2, 4, 3],
+          pointers: { left: 3, right: 4 },
+          highlights: [3, 4],
+          annotations: ['Sum: 6... expand more'],
+        },
+      },
+      {
+        id: 6,
+        title: 'Found Minimum',
+        description: 'Window [4, 3] sums to 7 with length 2. This is the minimum.',
+        visual: {
+          array: [2, 3, 1, 2, 4, 3],
+          pointers: { left: 4, right: 5 },
+          highlights: [4, 5],
+          annotations: ['Sum: 7 >= 7 \u2713'],
+          result: 'Min Length: 2',
+        },
+      },
+    ],
+  },
+
+  'max-consecutive-ones-iii': {
+    title: 'Max Consecutive Ones III',
+    keyInsight: 'Maintain window with at most k zeros. Shrink left when zero count exceeds k',
+    pattern: 'sliding-window',
+    steps: [
+      {
+        id: 1,
+        title: 'Start Window',
+        description: 'Begin expanding. First three elements are all ones.',
+        visual: {
+          array: [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0],
+          pointers: { left: 0, right: 2 },
+          highlights: [0, 1, 2],
+          annotations: ['All ones', 'Zeros: 0, k: 2'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Hit Zeros',
+        description: 'Window now contains two zeros, which equals our budget k.',
+        visual: {
+          array: [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0],
+          pointers: { left: 0, right: 4 },
+          highlights: [3, 4],
+          annotations: ['Two zeros in window', 'Zeros: 2 = k'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Too Many Zeros',
+        description: 'Third zero encountered. Zero count exceeds k, must shrink.',
+        visual: {
+          array: [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0],
+          pointers: { left: 0, right: 5 },
+          highlights: [5],
+          annotations: ['Zeros: 3 > k!', 'Shrink left'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Shrink Past Zeros',
+        description: 'Move left past zeros until count is back within budget.',
+        visual: {
+          array: [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0],
+          pointers: { left: 3, right: 8 },
+          highlights: [3, 4, 5, 6, 7, 8],
+          annotations: ['Zeros: 2 = k', 'Length: 6'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Maximum Window',
+        description: 'The longest window with at most 2 zeros has length 6.',
+        visual: {
+          array: [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0],
+          pointers: { left: 3, right: 8 },
+          highlights: [3, 4, 5, 6, 7, 8],
+          result: 'Max Length: 6',
+        },
+      },
+    ],
+  },
+
+  'permutation-in-string': {
+    title: 'Permutation in String',
+    keyInsight: 'Fixed window of s1.length over s2. Window is a permutation when character frequencies match',
+    pattern: 'sliding-window',
+    steps: [
+      {
+        id: 1,
+        title: 'Build Target Frequency',
+        description: 'Count character frequencies of s1 to know what to match.',
+        visual: {
+          array: ['e', 'i', 'd', 'b', 'a', 'o', 'o', 'o'],
+          annotations: ["s1 = 'ab'", 'Need: a:1, b:1'],
+        },
+      },
+      {
+        id: 2,
+        title: 'First Window',
+        description: 'Check the first window of size 2.',
+        visual: {
+          array: ['e', 'i', 'd', 'b', 'a', 'o', 'o', 'o'],
+          pointers: { left: 0, right: 1 },
+          highlights: [0, 1],
+          annotations: ["Window: 'ei'", 'No match'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Slide Window',
+        description: 'Slide the window and check frequencies again.',
+        visual: {
+          array: ['e', 'i', 'd', 'b', 'a', 'o', 'o', 'o'],
+          pointers: { left: 1, right: 2 },
+          highlights: [1, 2],
+          annotations: ["Window: 'id'", 'No match'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Found Match!',
+        description: 'Window contains b and a — frequencies match s1.',
+        visual: {
+          array: ['e', 'i', 'd', 'b', 'a', 'o', 'o', 'o'],
+          pointers: { left: 3, right: 4 },
+          highlights: [3, 4],
+          annotations: ["Window: 'ba'", 'Frequencies match! \u2713'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Permutation Found',
+        description: 'A permutation of s1 exists in s2.',
+        visual: {
+          array: ['e', 'i', 'd', 'b', 'a', 'o', 'o', 'o'],
+          pointers: { left: 3, right: 4 },
+          highlights: [3, 4],
+          result: true,
+        },
+      },
+    ],
+  },
+
+  'min-window-substring': {
+    title: 'Minimum Window Substring',
+    keyInsight: 'Expand right until all target characters covered, then shrink left to minimize',
+    pattern: 'sliding-window',
+    steps: [
+      {
+        id: 1,
+        title: 'Target Characters',
+        description: 'Identify which characters we need to cover from string t.',
+        visual: {
+          array: ['A', 'D', 'O', 'B', 'E', 'C', 'O', 'D', 'E', 'B', 'A', 'N', 'C'],
+          annotations: ['Need: A:1, B:1, C:1'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Expand to Cover',
+        description: 'Expand right until all target characters are in the window.',
+        visual: {
+          array: ['A', 'D', 'O', 'B', 'E', 'C', 'O', 'D', 'E', 'B', 'A', 'N', 'C'],
+          pointers: { left: 0, right: 5 },
+          highlights: [0, 3, 5],
+          annotations: ['Have A, B, C', "Window: 'ADOBEC'"],
+        },
+      },
+      {
+        id: 3,
+        title: 'Shrink Left',
+        description: 'Try to shrink from left. Removing A loses coverage.',
+        visual: {
+          array: ['A', 'D', 'O', 'B', 'E', 'C', 'O', 'D', 'E', 'B', 'A', 'N', 'C'],
+          pointers: { left: 3, right: 5 },
+          highlights: [3, 5],
+          annotations: ['Lost A at 0', 'Need A again'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Expand More',
+        description: 'Expand right to find another A and restore coverage.',
+        visual: {
+          array: ['A', 'D', 'O', 'B', 'E', 'C', 'O', 'D', 'E', 'B', 'A', 'N', 'C'],
+          pointers: { left: 3, right: 10 },
+          highlights: [3, 5, 10],
+          annotations: ['Have A, B, C again', "Window: 'BECODEBA'"],
+        },
+      },
+      {
+        id: 5,
+        title: 'Shrink to Minimum',
+        description: 'Shrink left aggressively. Window BANC covers all characters.',
+        visual: {
+          array: ['A', 'D', 'O', 'B', 'E', 'C', 'O', 'D', 'E', 'B', 'A', 'N', 'C'],
+          pointers: { left: 9, right: 12 },
+          highlights: [9, 10, 11, 12],
+          annotations: ["Window: 'BANC'", 'All chars covered'],
+        },
+      },
+      {
+        id: 6,
+        title: 'Minimum Window',
+        description: 'BANC is the shortest substring containing A, B, and C.',
+        visual: {
+          array: ['A', 'D', 'O', 'B', 'E', 'C', 'O', 'D', 'E', 'B', 'A', 'N', 'C'],
+          pointers: { left: 9, right: 12 },
+          highlights: [9, 10, 11, 12],
+          result: "Min Window: 'BANC'",
+        },
+      },
+    ],
+  },
 }
 
 // ============================================================================

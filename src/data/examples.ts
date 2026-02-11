@@ -5787,6 +5787,624 @@ compress(["a", "a", "b", "b", "c", "c", "c"])
     whyItWorks: 'The write pointer never overtakes the read pointer because the compressed form is always shorter or equal. Writing char + count digits in-place is safe since we have already read past those positions.',
   },
 
+  // ==================== SLIDING WINDOW ====================
+  {
+    id: 'max-sum-subarray-k',
+    name: 'Maximum Sum Subarray of Size K',
+    category: 'sliding-window',
+    difficulty: 'easy',
+    description: 'Find the maximum sum of any contiguous subarray of size k',
+    code: `// Maximum Sum Subarray of Size K
+// Fixed-size window: build first window, then slide
+
+function maxSumSubarrayK(arr, k) {
+  let windowSum = 0;
+  let maxSum = 0;
+
+  console.log("Array:", arr);
+  console.log("Window size k:", k);
+  console.log("");
+
+  // Build the first window
+  for (let i = 0; i < k; i++) {
+    windowSum = windowSum + arr[i];
+    console.log("Building window: added", arr[i], "=> sum =", windowSum);
+  }
+  maxSum = windowSum;
+  console.log("Initial window sum:", windowSum);
+  console.log("");
+
+  // Slide the window
+  for (let i = k; i < arr.length; i++) {
+    let removed = arr[i - k];
+    let added = arr[i];
+    windowSum = windowSum + added - removed;
+    console.log("Slide: remove", removed, ", add", added, "=> sum =", windowSum);
+
+    if (windowSum > maxSum) {
+      maxSum = windowSum;
+      console.log("  New max sum:", maxSum);
+    }
+  }
+
+  console.log("");
+  console.log("Result:", maxSum);
+  return maxSum;
+}
+
+let result = maxSumSubarrayK([2, 1, 5, 1, 3, 2], 3);
+console.log("Result:", result);
+`,
+    approach: 'Build the initial window by summing the first k elements. Then slide the window one position at a time: add the new right element and subtract the element that falls off the left. Track the maximum sum seen across all window positions.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Sliding Window (Fixed Size)',
+    whyItWorks: 'Each window position differs from the previous by exactly one element added and one removed. By maintaining a running sum, we avoid recomputing the entire sum for each position, reducing the work from O(n*k) to O(n).',
+  },
+  {
+    id: 'max-average-subarray',
+    name: 'Maximum Average Subarray I',
+    category: 'sliding-window',
+    difficulty: 'easy',
+    description: 'Find the contiguous subarray of size k with the maximum average',
+    code: `// Maximum Average Subarray I
+// Fixed-size window: track sum, divide by k at the end
+
+function findMaxAverage(nums, k) {
+  let windowSum = 0;
+  let maxSum = 0;
+
+  console.log("Array:", nums);
+  console.log("Window size k:", k);
+  console.log("");
+
+  // Build the first window
+  for (let i = 0; i < k; i++) {
+    windowSum = windowSum + nums[i];
+    console.log("Building window: added", nums[i], "=> sum =", windowSum);
+  }
+  maxSum = windowSum;
+  console.log("Initial window sum:", windowSum);
+  console.log("");
+
+  // Slide the window
+  for (let i = k; i < nums.length; i++) {
+    let removed = nums[i - k];
+    let added = nums[i];
+    windowSum = windowSum + added - removed;
+    console.log("Slide: remove", removed, ", add", added, "=> sum =", windowSum);
+
+    if (windowSum > maxSum) {
+      maxSum = windowSum;
+      console.log("  New max sum:", maxSum);
+    }
+  }
+
+  let maxAvg = maxSum / k;
+  console.log("");
+  console.log("Max sum:", maxSum, "/ k:", k, "= average:", maxAvg);
+  console.log("Result:", maxAvg);
+  return maxAvg;
+}
+
+let result = findMaxAverage([1, 12, -5, -6, 50, 3], 4);
+console.log("Result:", result);
+`,
+    approach: 'Use the same fixed-size sliding window as Maximum Sum Subarray. Build the first window of k elements, then slide across, tracking the maximum sum. At the end, divide the maximum sum by k to get the maximum average.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Sliding Window (Fixed Size)',
+    whyItWorks: 'Since k is constant, the subarray with the maximum sum also has the maximum average. We only need to divide once at the end rather than at each step, keeping the logic simple and efficient.',
+  },
+  {
+    id: 'longest-substring-no-repeat',
+    name: 'Longest Substring Without Repeating Characters',
+    category: 'sliding-window',
+    difficulty: 'medium',
+    description: 'Find the length of the longest substring without repeating characters',
+    code: `// Longest Substring Without Repeating Characters
+// Variable window with Map tracking last seen index
+
+function lengthOfLongestSubstring(s) {
+  let charMap = new Map();
+  let left = 0;
+  let maxLen = 0;
+
+  console.log("String:", s);
+  console.log("");
+
+  for (let right = 0; right < s.length; right++) {
+    let ch = s.charAt(right);
+    console.log("right:", right, "char:", ch);
+
+    if (charMap.has(ch)) {
+      let lastSeen = charMap.get(ch);
+      console.log("  Duplicate! Last seen at index", lastSeen);
+      if (lastSeen >= left) {
+        left = lastSeen + 1;
+        console.log("  Move left to", left);
+      }
+    }
+
+    charMap.set(ch, right);
+    let windowLen = right - left + 1;
+    console.log("  Window [" + left + ".." + right + "], length:", windowLen);
+
+    if (windowLen > maxLen) {
+      maxLen = windowLen;
+      console.log("  New max length:", maxLen);
+    }
+    console.log("");
+  }
+
+  console.log("Result:", maxLen);
+  return maxLen;
+}
+
+let result = lengthOfLongestSubstring("abcabcbb");
+console.log("Result:", result);
+`,
+    approach: 'Maintain a variable-size window with a Map storing each character and its most recent index. Expand right one character at a time. When a duplicate is found and its last index is within the current window, jump the left pointer past it. Track the maximum window length throughout.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(min(n, m))',
+    patternName: 'Sliding Window (Variable Size)',
+    whyItWorks: 'The Map lets us instantly detect duplicates and know where to move the left pointer. By jumping left directly past the duplicate instead of shrinking one step at a time, each character is processed at most twice (once by right, once by left), giving linear time.',
+  },
+  {
+    id: 'min-size-subarray-sum',
+    name: 'Minimum Size Subarray Sum',
+    category: 'sliding-window',
+    difficulty: 'medium',
+    description: 'Find the minimal length subarray with sum greater than or equal to target',
+    code: `// Minimum Size Subarray Sum
+// Expand right to grow sum, shrink left when sum >= target
+
+function minSubArrayLen(target, nums) {
+  let left = 0;
+  let windowSum = 0;
+  let minLen = 999999;
+
+  console.log("Target:", target);
+  console.log("Array:", nums);
+  console.log("");
+
+  for (let right = 0; right < nums.length; right++) {
+    windowSum = windowSum + nums[right];
+    console.log("Add nums[" + right + "] =", nums[right], "=> sum =", windowSum);
+
+    while (windowSum >= target) {
+      let windowLen = right - left + 1;
+      console.log("  Sum >= target! Window [" + left + ".." + right + "], length:", windowLen);
+
+      if (windowLen < minLen) {
+        minLen = windowLen;
+        console.log("  New min length:", minLen);
+      }
+
+      console.log("  Shrink: remove nums[" + left + "] =", nums[left]);
+      windowSum = windowSum - nums[left];
+      left++;
+    }
+    console.log("");
+  }
+
+  let answer = minLen;
+  if (minLen === 999999) {
+    answer = 0;
+  }
+  console.log("Result:", answer);
+  return answer;
+}
+
+let result = minSubArrayLen(7, [2, 3, 1, 2, 4, 3]);
+console.log("Result:", result);
+`,
+    approach: 'Use a variable-size window. Expand right to include more elements and grow the running sum. Whenever the sum meets or exceeds the target, try shrinking from the left to find the smallest valid window, updating the minimum length each time.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Sliding Window (Variable Size)',
+    whyItWorks: 'Each element is added once (right pointer) and removed at most once (left pointer), so the total work is O(2n) = O(n). The inner while loop shrinks greedily, ensuring we find the smallest window that satisfies the sum condition.',
+  },
+  {
+    id: 'max-consecutive-ones-iii',
+    name: 'Max Consecutive Ones III',
+    category: 'sliding-window',
+    difficulty: 'medium',
+    description: 'Find the longest subarray of 1s after flipping at most k zeros',
+    code: `// Max Consecutive Ones III
+// Track zero count in window, shrink when zeros > k
+
+function longestOnes(nums, k) {
+  let left = 0;
+  let zeroCount = 0;
+  let maxLen = 0;
+
+  console.log("Array:", nums);
+  console.log("Max flips k:", k);
+  console.log("");
+
+  for (let right = 0; right < nums.length; right++) {
+    if (nums[right] === 0) {
+      zeroCount++;
+      console.log("right:", right, "found 0, zeroCount:", zeroCount);
+    } else {
+      console.log("right:", right, "found 1");
+    }
+
+    while (zeroCount > k) {
+      console.log("  Too many zeros! Shrink from left:", left);
+      if (nums[left] === 0) {
+        zeroCount--;
+        console.log("  Removed a zero, zeroCount:", zeroCount);
+      }
+      left++;
+    }
+
+    let windowLen = right - left + 1;
+    console.log("  Window [" + left + ".." + right + "], length:", windowLen);
+
+    if (windowLen > maxLen) {
+      maxLen = windowLen;
+      console.log("  New max length:", maxLen);
+    }
+    console.log("");
+  }
+
+  console.log("Result:", maxLen);
+  return maxLen;
+}
+
+let result = longestOnes([1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], 2);
+console.log("Result:", result);
+`,
+    approach: 'Maintain a window where the number of zeros does not exceed k. Expand right and count zeros. When zero count exceeds k, shrink from the left until the count is valid again. The window length at each step represents a valid sequence of 1s with at most k flips.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Sliding Window (Variable Size)',
+    whyItWorks: 'The window invariant guarantees at most k zeros inside, meaning all zeros in the window can be flipped to 1s. By tracking zero count instead of actually flipping, we efficiently find the longest valid subarray in a single pass.',
+  },
+  {
+    id: 'longest-repeating-char-replacement',
+    name: 'Longest Repeating Character Replacement',
+    category: 'sliding-window',
+    difficulty: 'medium',
+    description: 'Find the longest substring where you can replace at most k characters to make all same',
+    code: `// Longest Repeating Character Replacement
+// Window is valid if (window size - max frequency) <= k
+
+function characterReplacement(s, k) {
+  let charFreq = new Map();
+  let left = 0;
+  let maxFreq = 0;
+  let maxLen = 0;
+
+  console.log("String:", s);
+  console.log("Max replacements k:", k);
+  console.log("");
+
+  for (let right = 0; right < s.length; right++) {
+    let ch = s.charAt(right);
+    let count = 0;
+    if (charFreq.has(ch)) {
+      count = charFreq.get(ch);
+    }
+    count++;
+    charFreq.set(ch, count);
+
+    if (count > maxFreq) {
+      maxFreq = count;
+    }
+
+    console.log("right:", right, "char:", ch, "freq:", count, "maxFreq:", maxFreq);
+
+    let windowSize = right - left + 1;
+    let replacements = windowSize - maxFreq;
+
+    if (replacements > k) {
+      console.log("  Need", replacements, "replacements > k, shrink from left");
+      let leftChar = s.charAt(left);
+      let leftCount = charFreq.get(leftChar);
+      charFreq.set(leftChar, leftCount - 1);
+      left++;
+    }
+
+    windowSize = right - left + 1;
+    console.log("  Window [" + left + ".." + right + "], size:", windowSize);
+
+    if (windowSize > maxLen) {
+      maxLen = windowSize;
+      console.log("  New max length:", maxLen);
+    }
+    console.log("");
+  }
+
+  console.log("Result:", maxLen);
+  return maxLen;
+}
+
+let result = characterReplacement("AABABBA", 1);
+console.log("Result:", result);
+`,
+    approach: 'Track character frequencies in the current window and the maximum frequency of any single character. The window is valid when (window size - max frequency) <= k, meaning the non-majority characters can all be replaced within k operations. When invalid, shrink from the left by one.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Sliding Window (Variable Size)',
+    whyItWorks: 'The key insight is that we never need to decrease maxFreq when shrinking. Even if maxFreq is stale, a window can only grow larger if a truly higher frequency is found. This means the window size only increases when we find a better answer, giving us the correct maximum.',
+  },
+  {
+    id: 'permutation-in-string',
+    name: 'Permutation in String',
+    category: 'sliding-window',
+    difficulty: 'medium',
+    description: 'Check if one string contains a permutation of another',
+    code: `// Permutation in String
+// Fixed window of s1.length over s2, compare frequency maps
+
+function mapsEqual(map1, map2) {
+  if (map1.size !== map2.size) {
+    return false;
+  }
+  let keys1 = [];
+  map1.forEach(function(val, key) {
+    keys1.push(key);
+  });
+  for (let i = 0; i < keys1.length; i++) {
+    let key = keys1[i];
+    if (!map2.has(key)) {
+      return false;
+    }
+    if (map1.get(key) !== map2.get(key)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function checkInclusion(s1, s2) {
+  let len1 = s1.length;
+  let len2 = s2.length;
+
+  console.log("s1:", s1, "s2:", s2);
+  console.log("Window size:", len1);
+  console.log("");
+
+  if (len1 > len2) {
+    console.log("s1 longer than s2, impossible");
+    console.log("Result: false");
+    return false;
+  }
+
+  // Build frequency map for s1
+  let s1Freq = new Map();
+  for (let i = 0; i < len1; i++) {
+    let ch = s1.charAt(i);
+    let count = 0;
+    if (s1Freq.has(ch)) {
+      count = s1Freq.get(ch);
+    }
+    s1Freq.set(ch, count + 1);
+  }
+  console.log("s1 frequency map built");
+
+  // Build frequency map for first window in s2
+  let windowFreq = new Map();
+  for (let i = 0; i < len1; i++) {
+    let ch = s2.charAt(i);
+    let count = 0;
+    if (windowFreq.has(ch)) {
+      count = windowFreq.get(ch);
+    }
+    windowFreq.set(ch, count + 1);
+  }
+  console.log("Initial window frequency map built");
+
+  if (mapsEqual(s1Freq, windowFreq)) {
+    console.log("Match found at index 0!");
+    console.log("Result: true");
+    return true;
+  }
+
+  // Slide the window
+  for (let i = len1; i < len2; i++) {
+    let addChar = s2.charAt(i);
+    let removeChar = s2.charAt(i - len1);
+    console.log("Slide: add '" + addChar + "', remove '" + removeChar + "'");
+
+    // Add new character
+    let addCount = 0;
+    if (windowFreq.has(addChar)) {
+      addCount = windowFreq.get(addChar);
+    }
+    windowFreq.set(addChar, addCount + 1);
+
+    // Remove old character
+    let removeCount = windowFreq.get(removeChar);
+    if (removeCount === 1) {
+      windowFreq.delete(removeChar);
+    } else {
+      windowFreq.set(removeChar, removeCount - 1);
+    }
+
+    if (mapsEqual(s1Freq, windowFreq)) {
+      let startIdx = i - len1 + 1;
+      console.log("Match found at index " + startIdx + "!");
+      console.log("Result: true");
+      return true;
+    }
+  }
+
+  console.log("No permutation found");
+  console.log("Result: false");
+  return false;
+}
+
+let result = checkInclusion("ab", "eidbaooo");
+console.log("Result:", result);
+`,
+    approach: 'Build a frequency map for s1. Slide a fixed-size window of length s1.length over s2, maintaining a frequency map for the current window. At each position, compare the two frequency maps. If they match, s2 contains a permutation of s1.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Sliding Window (Fixed Size + Frequency)',
+    whyItWorks: 'Two strings are permutations of each other if and only if they have identical character frequencies. By maintaining a sliding frequency map, we check every possible substring of the correct length in O(1) amortized time per position.',
+  },
+  {
+    id: 'min-window-substring',
+    name: 'Minimum Window Substring',
+    category: 'sliding-window',
+    difficulty: 'hard',
+    description: 'Find the smallest substring that contains all characters of another string',
+    code: `// Minimum Window Substring
+// Expand right until all chars covered, then shrink left to minimize
+
+function minWindow(s, t) {
+  console.log("s:", s);
+  console.log("t:", t);
+  console.log("");
+
+  if (s.length < t.length) {
+    console.log("s shorter than t, impossible");
+    console.log("Result: empty string");
+    return "";
+  }
+
+  // Build frequency map for t
+  let tFreq = new Map();
+  for (let i = 0; i < t.length; i++) {
+    let ch = t.charAt(i);
+    let count = 0;
+    if (tFreq.has(ch)) {
+      count = tFreq.get(ch);
+    }
+    tFreq.set(ch, count + 1);
+  }
+  console.log("t has", tFreq.size, "unique characters");
+
+  let windowFreq = new Map();
+  let formed = 0;
+  let required = tFreq.size;
+  let left = 0;
+  let minLen = 999999;
+  let minLeft = 0;
+  let minRight = 0;
+
+  for (let right = 0; right < s.length; right++) {
+    let ch = s.charAt(right);
+    let count = 0;
+    if (windowFreq.has(ch)) {
+      count = windowFreq.get(ch);
+    }
+    windowFreq.set(ch, count + 1);
+
+    // Check if this character's frequency matches t's requirement
+    if (tFreq.has(ch) && windowFreq.get(ch) === tFreq.get(ch)) {
+      formed++;
+      console.log("right:", right, "char:", ch, "- formed:", formed + "/" + required);
+    } else {
+      console.log("right:", right, "char:", ch);
+    }
+
+    // Try to shrink the window
+    while (formed === required) {
+      let windowLen = right - left + 1;
+      console.log("  All chars covered! Window [" + left + ".." + right + "], length:", windowLen);
+
+      if (windowLen < minLen) {
+        minLen = windowLen;
+        minLeft = left;
+        minRight = right;
+        console.log("  New min window: length", minLen);
+      }
+
+      // Shrink from left
+      let leftChar = s.charAt(left);
+      let leftCount = windowFreq.get(leftChar);
+      windowFreq.set(leftChar, leftCount - 1);
+
+      if (tFreq.has(leftChar) && windowFreq.get(leftChar) < tFreq.get(leftChar)) {
+        formed--;
+        console.log("  Shrink: removed '" + leftChar + "', lost coverage, formed:", formed + "/" + required);
+      } else {
+        console.log("  Shrink: removed '" + leftChar + "'");
+      }
+      left++;
+    }
+  }
+
+  let answer = "";
+  if (minLen !== 999999) {
+    answer = s.slice(minLeft, minRight + 1);
+  }
+  console.log("");
+  console.log("Result:", answer);
+  return answer;
+}
+
+let result = minWindow("ADOBECODEBANC", "ABC");
+console.log("Result:", result);
+`,
+    approach: 'Build a frequency map for t to know what characters are required. Expand the window rightward, tracking how many unique characters have met their required frequency (formed counter). Once all are met, shrink from the left to find the minimum valid window, updating the answer each time.',
+    timeComplexity: 'O(n + m)',
+    spaceComplexity: 'O(n + m)',
+    patternName: 'Sliding Window (Variable Size + Frequency)',
+    whyItWorks: 'The formed counter tracks how many of t\u0027s unique characters are fully satisfied. Expanding right can only increase or maintain formed, while shrinking left can only decrease or maintain it. This monotonic behavior ensures we find the global minimum window efficiently.',
+  },
+  {
+    id: 'sliding-window-maximum',
+    name: 'Sliding Window Maximum',
+    category: 'sliding-window',
+    difficulty: 'hard',
+    description: 'Find the maximum in each sliding window of size k',
+    code: `// Sliding Window Maximum
+// Monotonic deque (as array of indices): front is always the max
+
+function maxSlidingWindow(nums, k) {
+  let deque = [];
+  let result = [];
+
+  console.log("Array:", nums);
+  console.log("Window size k:", k);
+  console.log("");
+
+  for (let i = 0; i < nums.length; i++) {
+    // Remove indices outside the window from front
+    while (deque.length > 0 && deque[0] <= i - k) {
+      console.log("Remove front index", deque[0], "(out of window)");
+      deque.splice(0, 1);
+    }
+
+    // Remove indices of smaller elements from back
+    while (deque.length > 0 && nums[deque[deque.length - 1]] <= nums[i]) {
+      let removed = deque[deque.length - 1];
+      console.log("Remove back index", removed, "(nums[" + removed + "] =", nums[removed], "<= nums[" + i + "] =", nums[i] + ")");
+      deque.splice(deque.length - 1, 1);
+    }
+
+    deque.push(i);
+    console.log("Push index", i, "(value:", nums[i] + "), deque:", deque);
+
+    // Window is fully formed starting at index k-1
+    if (i >= k - 1) {
+      let maxVal = nums[deque[0]];
+      result.push(maxVal);
+      console.log("  Window max:", maxVal, "=> result so far:", result);
+    }
+    console.log("");
+  }
+
+  console.log("Result:", result);
+  return result;
+}
+
+let result = maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3);
+console.log("Result:", result);
+`,
+    approach: 'Use an array as a monotonic deque storing indices in decreasing order of their values. For each new element, remove indices from the back that have smaller values (they can never be the max), and remove indices from the front that are outside the window. The front of the deque is always the index of the current window maximum.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(k)',
+    patternName: 'Sliding Window (Monotonic Deque)',
+    whyItWorks: 'Each index is pushed and popped at most once across the entire traversal, giving amortized O(1) per element. The decreasing invariant ensures the front is always the maximum. Removing out-of-window indices from the front keeps only valid candidates.',
+  },
+
   // ==================== ARRAYS & HASHING ====================
   {
     id: 'two-sum',

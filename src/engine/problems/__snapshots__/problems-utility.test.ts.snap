@@ -1,0 +1,79 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Utility & DOM Problems > DOM Wrapper with Chaining > console output matches snapshot 1`] = `
+""Selected:" "div"
+"  Set" "color" "=" "red"
+"  Set" "fontSize" "=" "16px"
+"  Added class:" "active"
+"  Added class:" "visible"
+"  Removed class:" "hidden"
+"
+Final styles:" {color: "red", fontSize: "16px"}
+"Classes:" ["active", "visible"]"
+`;
+
+exports[`Utility & DOM Problems > Event Delegation > console output matches snapshot 1`] = `
+""Registered click handler"
+"
+Click event - action:" "delete" "id:" 1
+"  -> Deleting item" 1
+"
+Click event - action:" "edit" "id:" 2
+"  -> Editing item" 2
+"
+Click event - action:" "delete" "id:" 3
+"  -> Deleting item" 3
+"
+Click event - action:" "view" "id:" 4
+"  -> Unknown action:" "view"
+"
+One handler managed all events!""
+`;
+
+exports[`Utility & DOM Problems > Event Emitter > console output matches snapshot 1`] = `
+""Subscribed to:" "message"
+"Subscribed to:" "alert"
+"
+Emit:" "message"
+"  Got message:" "Hello"
+"
+Emit:" "alert"
+"  Alert:" "Warning!"
+"Unsubscribed from:" "alert"
+"
+Emit:" "alert""
+`;
+
+exports[`Utility & DOM Problems > Get All DOM Tags > console output matches snapshot 1`] = `""All unique tags:""`;
+
+exports[`Utility & DOM Problems > Get DOM Tree Height > console output matches snapshot 1`] = `
+""DOM Structure:"
+"html > head > title"
+"     > body > div > p > span"
+"           > footer"
+"
+Tree Height:" 5
+"Height (BFS):" 0"
+`;
+
+exports[`Utility & DOM Problems > Implement _.once() > console output matches snapshot 1`] = `
+""Call 1:"
+"  First call, executing...""
+`;
+
+exports[`Utility & DOM Problems > Implement Debounce > console output matches snapshot 1`] = `
+""Typing..."
+"  Set timeout 300ms""
+`;
+
+exports[`Utility & DOM Problems > Implement Deep Clone > console output matches snapshot 1`] = `""`;
+
+exports[`Utility & DOM Problems > Implement Memoize > console output matches snapshot 1`] = `""`;
+
+exports[`Utility & DOM Problems > Implement Throttle > console output matches snapshot 1`] = `""Rapid events:""`;
+
+exports[`Utility & DOM Problems > Implement memoizeOne() > console output matches snapshot 1`] = `""  Cache MISS (new args)""`;
+
+exports[`Utility & DOM Problems > Implement promisify() > console output matches snapshot 1`] = `""Using promisified function:""`;
+
+exports[`Utility & DOM Problems > Implement sleep() > console output matches snapshot 1`] = `""`;

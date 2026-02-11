@@ -1,0 +1,116 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`JS Core Problems > Closure Counter > console output matches snapshot 1`] = `
+""Counter created with:" 0
+"Counter created with:" 100
+"
+--- Counter 1 ---"
+"After increment:" 1
+"After increment:" 2
+"After increment:" 3
+"
+--- Counter 2 ---"
+"After decrement:" 99
+"After decrement:" 98
+"
+--- Final Values ---"
+"Counter 1:" 3
+"Counter 2:" 98"
+`;
+
+exports[`JS Core Problems > Execution Context > console output matches snapshot 1`] = `
+""=== Global Execution Context ==="
+"globalVar:" "I'm global"
+"
+=== Function Execution Context ==="
+"Outer context created"
+"Can access globalVar:" "I'm global"
+"
+Inner context created"
+"Can access innerVar:" "I'm in inner"
+"Can access outerVar:" "I'm in outer"
+"Can access globalVar:" "I'm global"
+"
+Back to outer context"
+"
+=== Context Stack Demo ==="
+"first() pushed to stack"
+"second() pushed to stack"
+"third() pushed to stack"
+"third() about to pop"
+"second() about to pop"
+"first() about to pop""
+`;
+
+exports[`JS Core Problems > Hoisting Demo > console output matches snapshot 1`] = `
+""=== Function Hoisting ==="
+"Hello! Functions are hoisted."
+"
+=== var Hoisting ==="
+"x before:" undefined
+"x after:" 5
+"
+=== let/const TDZ ==="
+"y after:" 10
+"
+=== Loop scoping ==="
+"var i after loop:" undefined
+"let j: not accessible""
+`;
+
+exports[`JS Core Problems > Implement Object.create > console output matches snapshot 1`] = `""=== Creating with prototype ===""`;
+
+exports[`JS Core Problems > Implement apply() > console output matches snapshot 1`] = `""=== Testing myApply ===""`;
+
+exports[`JS Core Problems > Implement bind() > console output matches snapshot 1`] = `""=== Partial Application ===""`;
+
+exports[`JS Core Problems > Implement call() > console output matches snapshot 1`] = `""=== Testing myCall ===""`;
+
+exports[`JS Core Problems > Implement instanceof > console output matches snapshot 1`] = `""`;
+
+exports[`JS Core Problems > Implement new Operator > console output matches snapshot 1`] = `
+""=== Using myNew ==="
+"Creating instance of:" undefined"
+`;
+
+exports[`JS Core Problems > Prototype Chain > console output matches snapshot 1`] = `""`;
+
+exports[`JS Core Problems > Scope Chain > console output matches snapshot 1`] = `
+""inner:" "inner"
+"outer:" "outer"
+"global:" "global"
+"
+=== Shadowing ==="
+"Inside:" "local"
+"Outside:" "local""
+`;
+
+exports[`JS Core Problems > This Binding > console output matches snapshot 1`] = `
+""=== Method call ==="
+"Hello, I am Alice"
+"
+=== Using bind() ===""
+`;
+
+exports[`JS Core Problems > typeof vs instanceof > console output matches snapshot 1`] = `
+""=== typeof examples ==="
+"typeof 42:" "number"
+"typeof 'hello':" "string"
+"typeof true:" "boolean"
+"typeof undefined:" "undefined"
+"typeof null:" "object"
+"typeof {}:" "object"
+"typeof []:" "object"
+"typeof function(){}:" "function"
+"
+=== instanceof examples ==="
+"[] instanceof Array:" undefined
+"[] instanceof Object:" undefined
+"{} instanceof Object:" undefined
+"date instanceof Date:" undefined
+"
+=== Gotchas ==="
+"typeof null === 'object':" true
+"typeof [] === 'object':" true
+"Array.isArray([]):" true"
+`;

@@ -1,0 +1,656 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > 3Sum > console output matches snapshot 1`] = `
+""Sorted:" [-4, -1, -1, 0, 1, 2]
+""
+"Fixed i:" 0 "value:" -4
+"  left:" 1 "right:" 5
+" " -4 "+" -1 "+" 2 "=" -3
+"  left:" 2 "right:" 5
+" " -4 "+" -1 "+" 2 "=" -3
+"  left:" 3 "right:" 5
+" " -4 "+" 0 "+" 2 "=" -2
+"  left:" 4 "right:" 5
+" " -4 "+" 1 "+" 2 "=" -1
+""
+"Fixed i:" 1 "value:" -1
+"  left:" 2 "right:" 5
+" " -1 "+" -1 "+" 2 "=" 0
+"  Found triplet!"
+"  left:" 3 "right:" 4
+" " -1 "+" 0 "+" 1 "=" 0
+"  Found triplet!"
+"""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > 4Sum > console output matches snapshot 1`] = `
+""Array:" [-2, -1, 0, 1, 2] "Target:" 0
+"Sorted:" [-2, -1, 0, 1, 2]
+""
+"a:" 0 "b:" 1 "left:" 2 "right:" 4 "values:" -2 -1 0 2 "sum:" -1
+"a:" 0 "b:" 1 "left:" 3 "right:" 4 "values:" -2 -1 1 2 "sum:" 0
+"  Found quadruplet!" [-2, -1, 1, 2]
+"a:" 0 "b:" 2 "left:" 3 "right:" 4 "values:" -2 0 1 2 "sum:" 1
+"a:" 1 "b:" 2 "left:" 3 "right:" 4 "values:" -1 0 1 2 "sum:" 2
+""
+"All quadruplets:" [[-2, -1, 1, 2]]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Alternating Bits > console output matches snapshot 1`] = `
+""=== Test: 5 (101) ==="
+"Number:" 5
+"n XOR (n >> 1) =" 7
+"xor & (xor + 1) =" 0
+"Alternating?" true
+"
+=== Test: 7 (111) ==="
+"Number:" 7
+"n XOR (n >> 1) =" 4
+"xor & (xor + 1) =" 4
+"Alternating?" false
+"
+=== Test: 10 (1010) ==="
+"Number:" 10
+"n XOR (n >> 1) =" 15
+"xor & (xor + 1) =" 0
+"Alternating?" true"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Best Time to Buy and Sell Stock > console output matches snapshot 1`] = `
+""Prices:" [7, 1, 5, 3, 6, 4]
+""
+"Day" "0:" "price =" 7
+"  Profit if sell today:" undefined
+""
+"Day" "1:" "price =" 1
+"  Profit if sell today:" undefined
+""
+"Day" "2:" "price =" 5
+"  Profit if sell today:" undefined
+""
+"Day" "3:" "price =" 3
+"  Profit if sell today:" undefined
+""
+"Day" "4:" "price =" 6
+"  Profit if sell today:" undefined
+""
+"Day" "5:" "price =" 4
+"  Profit if sell today:" undefined
+""
+"Maximum profit:" 0"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Bitwise AND of Range > console output matches snapshot 1`] = `
+""=== Test: AND of [5, 7] ==="
+"Finding common prefix..."
+"Left:" 5 "Right:" 7
+"Shift" 1 ": L=2" "R=3"
+"Shift" 2 ": L=1" "R=1"
+"
+Prefix:" 1 "shifted:" 4
+"Result:" 4"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Container With Most Water > console output matches snapshot 1`] = `
+""Heights:" [1, 8, 6, 2, 5, 4, 8, 3, 7]
+""
+"left:" 0 "right:" 8
+"Heights:" 1 "and" 7
+"Area = min(1,7) *" 8 "=" 8
+"New max water:" 8
+"Left shorter, move left"
+""
+"left:" 1 "right:" 8
+"Heights:" 8 "and" 7
+"Area = min(8,7) *" 7 "=" 49
+"New max water:" 49
+"Right shorter/equal, move right"
+""
+"left:" 1 "right:" 7
+"Heights:" 8 "and" 3
+"Area = min(8,3) *" 6 "=" 18
+"Right shorter/equal, move right"
+""
+"left:" 1 "right:" 6
+"Heights:" 8 "and" 8
+"Area = min(8,8) *" 5 "=" 40
+"Right shorter/equal, move right"
+""
+"left:" 1 "right:" 5
+"Heights:" 8 "and" 4
+"Area = min(8,4) *" 4 "=" 16
+"Right shorter/equal, move right"
+""
+"left:" 1 "right:" 4
+"Heights:" 8 "and" 5
+"Area = min(8,5) *" 3 "=" 15
+"Right shorter/equal, move right"
+""
+"left:" 1 "right:" 3
+"Heights:" 8 "and" 2
+"Area = min(8,2) *" 2 "=" 4
+"Right shorter/equal, move right"
+""
+"left:" 1 "right:" 2
+"Heights:" 8 "and" 6
+"Area = min(8,6) *" 1 "=" 6
+"Right shorter/equal, move right"
+""
+"Maximum water:" 49"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Contains Duplicate > console output matches snapshot 1`] = `
+""--- Test 1 ---"
+"Checking for duplicates in:" [1, 2, 3, 1]
+""
+"Checking:" 1
+"Added to set. Set size:" undefined
+""
+"Checking:" 2
+"Added to set. Set size:" undefined
+""
+"Checking:" 3
+"Added to set. Set size:" undefined
+""
+"Checking:" 1
+"Added to set. Set size:" undefined
+""
+"No duplicates found"
+"
+--- Test 2 ---"
+"Checking for duplicates in:" [1, 2, 3, 4]
+""
+"Checking:" 1
+"Added to set. Set size:" undefined
+""
+"Checking:" 2
+"Added to set. Set size:" undefined
+""
+"Checking:" 3
+"Added to set. Set size:" undefined
+""
+"Checking:" 4
+"Added to set. Set size:" undefined
+""
+"No duplicates found""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Counting Bits > console output matches snapshot 1`] = `
+""Count bits from 0 to" 5
+""
+"i=1: bits[0] + 1 = 1"
+"i=2: bits[1] + 0 = 1"
+"i=3: bits[1] + 1 = 2"
+"i=4: bits[2] + 0 = 1"
+"i=5: bits[2] + 1 = 2"
+"
+Result:" [0, 1, 1, 2, 1, 2]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Gray Code > console output matches snapshot 1`] = `
+""Gray code for n =" 3
+"i =" 0 "gray =" 0
+"i =" 1 "gray =" 1
+"i =" 2 "gray =" 3
+"i =" 3 "gray =" 2
+"i =" 4 "gray =" 6
+"i =" 5 "gray =" 7
+"i =" 6 "gray =" 5
+"i =" 7 "gray =" 4
+[0, 1, 3, 2, 6, 7, 5, 4]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Group Anagrams > console output matches snapshot 1`] = `
+""Grouping anagrams:" ["eat", "tea", "tan", "ate", "nat", "bat"]
+"""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Hamming Distance > console output matches snapshot 1`] = `
+""=== Test: 1 vs 4 ==="
+"x =" 1 "y =" 4
+"x XOR y =" 5
+"Distance:" 2
+"(001 vs 100 = 2 bits)"
+"
+=== Test: 3 vs 1 ==="
+"x =" 3 "y =" 1
+"x XOR y =" 2
+"Distance:" 1
+"(11 vs 01 = 1 bit)""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Intersection of Two Arrays II > console output matches snapshot 1`] = `
+""Array 1:" [1, 2, 2, 1]
+"Array 2:" [2, 2]
+"Sorted 1:" [1, 1, 2, 2]
+"Sorted 2:" [2, 2]
+""
+"p1:" 0 "(1) p2:" 0 "(2)"
+"  1 < 2, advance p1"
+"p1:" 1 "(1) p2:" 0 "(2)"
+"  1 < 2, advance p1"
+"p1:" 2 "(2) p2:" 0 "(2)"
+"  Equal! Add" 2 "to result"
+"p1:" 3 "(2) p2:" 1 "(2)"
+"  Equal! Add" 2 "to result"
+""
+"Intersection:" [2, 2]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Consecutive Sequence > console output matches snapshot 1`] = `
+""Array:" [100, 4, 200, 1, 3, 2]
+"Set:" [undefined]
+""
+"Longest consecutive:" 0"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Majority Element > console output matches snapshot 1`] = `
+""Array:" [2, 2, 1, 1, 1, 2, 2]
+"Looking for element appearing >" 3.5 "times"
+""
+"Index" "0:" 2
+"  New candidate:" 2
+"  Match! Count:" 1
+""
+"Index" "1:" 2
+"  Match! Count:" 2
+""
+"Index" "2:" 1
+"  Different. Count:" 1
+""
+"Index" "3:" 1
+"  Different. Count:" 0
+""
+"Index" "4:" 1
+"  New candidate:" 1
+"  Match! Count:" 1
+""
+"Index" "5:" 2
+"  Different. Count:" 0
+""
+"Index" "6:" 2
+"  New candidate:" 2
+"  Match! Count:" 1
+""
+"Majority element:" 2"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum Subarray (Kadane) > console output matches snapshot 1`] = `
+""Array:" [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+"Starting with:" -2
+""
+"Index" "1:" 1
+"  Current sum before:" -2
+"  Start new subarray:" 1
+"  New max sum!" 1
+""
+"Index" "2:" -3
+"  Current sum before:" 1
+"  Extend subarray:" -2
+""
+"Index" "3:" 4
+"  Current sum before:" -2
+"  Start new subarray:" 4
+"  New max sum!" 4
+""
+"Index" "4:" -1
+"  Current sum before:" 4
+"  Extend subarray:" 3
+""
+"Index" "5:" 2
+"  Current sum before:" 3
+"  Extend subarray:" 5
+"  New max sum!" 5
+""
+"Index" "6:" 1
+"  Current sum before:" 5
+"  Extend subarray:" 6
+"  New max sum!" 6
+""
+"Index" "7:" -5
+"  Current sum before:" 6
+"  Extend subarray:" 1
+""
+"Index" "8:" 4
+"  Current sum before:" 1
+"  Extend subarray:" 5
+""
+"Maximum subarray sum:" 6"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum XOR > console output matches snapshot 1`] = `
+""Array:" [3, 10, 5, 25, 2, 8]
+""
+"Finding max XOR pairs...
+"
+3 "^" 10 "=" 9 "(new max!)"
+3 "^" 25 "=" 26 "(new max!)"
+5 "^" 25 "=" 28 "(new max!)"
+"
+Maximum XOR:" 28"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Bit Flips > console output matches snapshot 1`] = `""Flips:" 3"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Flips A OR B > console output matches snapshot 1`] = `""Flips:" 3"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Missing Number > console output matches snapshot 1`] = `
+""Array:" [3, 0, 1]
+"Range: [0, 1, 2, 3]"
+"
+Finding missing...
+"
+"Start with n =" 3
+"XOR with i=0, nums[i]=3 => 0"
+"XOR with i=1, nums[i]=0 => 1"
+"XOR with i=2, nums[i]=1 => 2"
+"
+Missing number:" 2"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number Complement > console output matches snapshot 1`] = `
+""=== Test: 5 (101) ==="
+"Number:" 5
+"Bits needed:" 3
+"Mask:" 7
+"num XOR mask:" 2
+"Complement:" 2 "(010 = 2)"
+"
+=== Test: 1 ==="
+"Number:" 1
+"Bits needed:" 1
+"Mask:" 1
+"num XOR mask:" 0
+"Complement:" 0"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number of 1 Bits > console output matches snapshot 1`] = `
+""Number:" 11 "(binary: 1011)"
+"
+Counting 1 bits...
+"
+"n =" 11 "| Removing lowest 1 bit"
+"After: n =" 10 "| count =" 1
+"n =" 10 "| Removing lowest 1 bit"
+"After: n =" 8 "| count =" 2
+"n =" 8 "| Removing lowest 1 bit"
+"After: n =" 0 "| count =" 3
+"
+Total 1 bits:" 3"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Power of Four > console output matches snapshot 1`] = `
+""=== Test: 16 ==="
+"n =" 16
+"Is power of 2?" true
+"Bit at even position?" true
+"Is power of 4?" true
+"
+=== Test: 8 ==="
+"n =" 8
+"Is power of 2?" true
+"Bit at even position?" false
+"Is power of 4?" false"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Power of Two > console output matches snapshot 1`] = `
+""=== Test 16 ==="
+"n =" 16
+"n - 1 =" 15
+"n & (n-1) =" 0
+"Is power of 2?" true
+"
+=== Test 18 ==="
+"n =" 18
+"n - 1 =" 17
+"n & (n-1) =" 16
+"Is power of 2?" false
+"
+=== Test 1 ==="
+"n =" 1
+"n - 1 =" 0
+"n & (n-1) =" 0
+"Is power of 2?" true"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Product of Array Except Self > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove Duplicates from Sorted Array II > console output matches snapshot 1`] = `
+""Array:" [1, 1, 1, 2, 2, 3]
+""
+"fast:" 2 "slow:" 2 "nums[fast]:" 1 "nums[slow-2]:" 1
+"  1 === 1, skip (already have 2)"
+"  Array so far:" [1, 1, 1, 2, 2, 3]
+"fast:" 3 "slow:" 2 "nums[fast]:" 2 "nums[slow-2]:" 1
+"  2 !== 1, copy to position" 2
+"  Array so far:" [1, 1, 2, 2, 2, 3]
+"fast:" 4 "slow:" 3 "nums[fast]:" 2 "nums[slow-2]:" 1
+"  2 !== 1, copy to position" 3
+"  Array so far:" [1, 1, 2, 2, 2, 3]
+"fast:" 5 "slow:" 4 "nums[fast]:" 3 "nums[slow-2]:" 2
+"  3 !== 2, copy to position" 4
+"  Array so far:" [1, 1, 2, 2, 3, 3]
+""
+"Final length:" 5
+"Array:" [1, 1, 2, 2, 3]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse Bits > console output matches snapshot 1`] = `
+""Original:" 43261596
+"
+Reversing bits (showing first 8)...
+"
+"Bit" "0:" 0 "| result:" 0
+"Bit" "1:" 0 "| result:" 0
+"Bit" "2:" 1 "| result:" 1
+"Bit" "3:" 1 "| result:" 3
+"Bit" "4:" 1 "| result:" 7
+"Bit" "5:" 0 "| result:" 14
+"Bit" "6:" 0 "| result:" 28
+"Bit" "7:" 1 "| result:" 57
+"
+...
+Reversed:" 964176192"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Rotate Array > console output matches snapshot 1`] = `
+""Array:" [1, 2, 3, 4, 5, 6, 7]
+"Rotate by:" 3
+""
+"Effective k:" 3
+""
+"Step 1: Reverse entire array"
+"  Result:" [7, 6, 5, 4, 3, 2, 1]
+""
+"Step 2: Reverse first" 3 "elements"
+"  Result:" [5, 6, 7, 4, 3, 2, 1]
+""
+"Step 3: Reverse elements from index" 3 "to" 6
+"  Result:" [5, 6, 7, 1, 2, 3, 4]
+""
+"Final rotated array:" [5, 6, 7, 1, 2, 3, 4]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Single Number > console output matches snapshot 1`] = `
+""Array:" [4, 1, 2, 1, 2]
+"
+Finding single number...
+"
+"XOR:" 0 "^" 4
+"Result:" 4
+"XOR:" 4 "^" 1
+"Result:" 5
+"XOR:" 5 "^" 2
+"Result:" 7
+"XOR:" 7 "^" 1
+"Result:" 6
+"XOR:" 6 "^" 2
+"Result:" 4
+"
+Single number:" 4"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Single Number II > console output matches snapshot 1`] = `
+""Array:" [2, 2, 3, 2]
+"
+Counting bits mod 3...
+"
+"Bit" 0 ": sum=1" "mod3=1"
+"Bit" 1 ": sum=4" "mod3=1"
+"
+Single number:" 3"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Single Number III > console output matches snapshot 1`] = `
+""Array:" [1, 2, 1, 3, 2, 5]
+"
+Splitting by XOR...
+"
+"XOR of all:" 6
+"Rightmost diff bit:" 2
+"Group 1 result:" 3
+"Group 2 result:" 5
+"
+Two singles:" [3, 5]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sort Integers by 1 Bits > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Subsets > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sum of Two Integers > console output matches snapshot 1`] = `
+""=== Test 1: 5 + 3 ==="
+"Adding" 5 "and" 3
+"Sum:" 6 "| Carry:" 2
+"Sum:" 4 "| Carry:" 4
+"Sum:" 0 "| Carry:" 8
+"Sum:" 8 "| Carry:" 0
+"Result:" 8
+"
+=== Test 2: 7 + 8 ==="
+"Adding" 7 "and" 8
+"Sum:" 15 "| Carry:" 0
+"Result:" 15"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Top K Frequent Elements > console output matches snapshot 1`] = `
+""Finding top" 2 "frequent in:" [1, 1, 1, 2, 2, 3]
+""
+"Frequencies:" {1: 3, 2: 2, 3: 1}"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Trapping Rain Water > console output matches snapshot 1`] = `
+""Heights:" [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+""
+"left:" 0 "right:" 11
+"leftMax:" 0 "rightMax:" 0
+"New leftMax:" 0
+"Total water so far:" 0
+""
+"left:" 1 "right:" 11
+"leftMax:" 0 "rightMax:" 0
+"New rightMax:" 1
+"Total water so far:" 0
+""
+"left:" 1 "right:" 10
+"leftMax:" 0 "rightMax:" 1
+"New leftMax:" 1
+"Total water so far:" 0
+""
+"left:" 2 "right:" 10
+"leftMax:" 1 "rightMax:" 1
+"Trap" 1 "units at position" 2
+"Total water so far:" 1
+""
+"left:" 3 "right:" 10
+"leftMax:" 1 "rightMax:" 1
+"New rightMax:" 2
+"Total water so far:" 1
+""
+"left:" 3 "right:" 9
+"leftMax:" 1 "rightMax:" 2
+"Trap" 1 "units at position" 9
+"Total water so far:" 2
+""
+"left:" 3 "right:" 8
+"leftMax:" 1 "rightMax:" 2
+"New rightMax:" 2
+"Total water so far:" 2
+""
+"left:" 3 "right:" 7
+"leftMax:" 1 "rightMax:" 2
+"New leftMax:" 2
+"Total water so far:" 2
+""
+"left:" 4 "right:" 7
+"leftMax:" 2 "rightMax:" 2
+"Trap" 1 "units at position" 4
+"Total water so far:" 3
+""
+"left:" 5 "right:" 7
+"leftMax:" 2 "rightMax:" 2
+"Trap" 2 "units at position" 5
+"Total water so far:" 5
+""
+"left:" 6 "right:" 7
+"leftMax:" 2 "rightMax:" 2
+"Trap" 1 "units at position" 6
+"Total water so far:" 6
+""
+"Total trapped water:" 6"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Two Sum > console output matches snapshot 1`] = `
+""Finding two numbers that sum to" 9
+"Array:" [2, 7, 11, 15]
+""
+"Index" "0:" 2
+"Need complement:" 7
+"Added to map:" 2 "->" 0
+"Map:" {2: 0}
+""
+"Index" "1:" 7
+"Need complement:" 2
+"Found!" 2 "at index" 0
+"Result:" [0, 1]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Two Sum II (Sorted) > console output matches snapshot 1`] = `
+""Finding two numbers that sum to" 9
+"Array:" [2, 7, 11, 15]
+""
+"left:" 0 "right:" 3
+2 "+" 15 "=" 17
+"Sum too big, move right pointer left"
+""
+"left:" 0 "right:" 2
+2 "+" 11 "=" 13
+"Sum too big, move right pointer left"
+""
+"left:" 0 "right:" 1
+2 "+" 7 "=" 9
+"Found! Indices:" 0 1
+"Result:" [0, 1]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Valid Anagram > console output matches snapshot 1`] = `
+""--- Test 1 ---"
+"Comparing:" "anagram" "vs" "nagaram"
+""
+"Frequency of s:" {a: 3, n: 1, g: 1, r: 1, m: 1}
+"After" "n:" {a: 3, n: 0, g: 1, r: 1, m: 1}
+"After" "a:" {a: 2, n: 0, g: 1, r: 1, m: 1}
+"After" "g:" {a: 2, n: 0, g: 0, r: 1, m: 1}
+"After" "a:" {a: 1, n: 0, g: 0, r: 1, m: 1}
+"After" "r:" {a: 1, n: 0, g: 0, r: 0, m: 1}
+"After" "a:" {a: 0, n: 0, g: 0, r: 0, m: 1}
+"After" "m:" {a: 0, n: 0, g: 0, r: 0, m: 0}
+"
+All characters matched - valid anagram!"
+"
+--- Test 2 ---"
+"Comparing:" "rat" "vs" "car"
+""
+"Frequency of s:" {r: 1, a: 1, t: 1}
+"Character" "c" "not found or exhausted""
+`;

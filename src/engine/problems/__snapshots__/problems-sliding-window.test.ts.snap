@@ -1,0 +1,198 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Sliding Window Problems > Longest Repeating Character Replacement > console output matches snapshot 1`] = `
+""String:" "AABABBA"
+"Max replacements k:" 1
+""
+"Result:" 0
+"Result:" 0"
+`;
+
+exports[`Sliding Window Problems > Longest Substring Without Repeating Characters > console output matches snapshot 1`] = `
+""String:" "abcabcbb"
+""
+"Result:" 0
+"Result:" 0"
+`;
+
+exports[`Sliding Window Problems > Max Consecutive Ones III > console output matches snapshot 1`] = `
+""Array:" [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0]
+"Max flips k:" 2
+""
+"right:" 0 "found 1"
+"  Window [0..0], length:" 1
+"  New max length:" 1
+""
+"right:" 1 "found 1"
+"  Window [0..1], length:" 2
+"  New max length:" 2
+""
+"right:" 2 "found 1"
+"  Window [0..2], length:" 3
+"  New max length:" 3
+""
+"right:" 3 "found 0, zeroCount:" 1
+"  Window [0..3], length:" 4
+"  New max length:" 4
+""
+"right:" 4 "found 0, zeroCount:" 2
+"  Window [0..4], length:" 5
+"  New max length:" 5
+""
+"right:" 5 "found 0, zeroCount:" 3
+"  Too many zeros! Shrink from left:" 0
+"  Too many zeros! Shrink from left:" 1
+"  Too many zeros! Shrink from left:" 2
+"  Too many zeros! Shrink from left:" 3
+"  Removed a zero, zeroCount:" 2
+"  Window [4..5], length:" 2
+""
+"right:" 6 "found 1"
+"  Window [4..6], length:" 3
+""
+"right:" 7 "found 1"
+"  Window [4..7], length:" 4
+""
+"right:" 8 "found 1"
+"  Window [4..8], length:" 5
+""
+"right:" 9 "found 1"
+"  Window [4..9], length:" 6
+"  New max length:" 6
+""
+"right:" 10 "found 0, zeroCount:" 3
+"  Too many zeros! Shrink from left:" 4
+"  Removed a zero, zeroCount:" 2
+"  Window [5..10], length:" 6
+""
+"Result:" 6
+"Result:" 6"
+`;
+
+exports[`Sliding Window Problems > Maximum Average Subarray I > console output matches snapshot 1`] = `
+""Array:" [1, 12, -5, -6, 50, 3]
+"Window size k:" 4
+""
+"Building window: added" 1 "=> sum =" 1
+"Building window: added" 12 "=> sum =" 13
+"Building window: added" -5 "=> sum =" 8
+"Building window: added" -6 "=> sum =" 2
+"Initial window sum:" 2
+""
+"Slide: remove" 1 ", add" 50 "=> sum =" 51
+"  New max sum:" 51
+"Slide: remove" 12 ", add" 3 "=> sum =" 42
+""
+"Max sum:" 51 "/ k:" 4 "= average:" 12.75
+"Result:" 12.75
+"Result:" 12.75"
+`;
+
+exports[`Sliding Window Problems > Maximum Sum Subarray of Size K > console output matches snapshot 1`] = `
+""Array:" [2, 1, 5, 1, 3, 2]
+"Window size k:" 3
+""
+"Building window: added" 2 "=> sum =" 2
+"Building window: added" 1 "=> sum =" 3
+"Building window: added" 5 "=> sum =" 8
+"Initial window sum:" 8
+""
+"Slide: remove" 2 ", add" 1 "=> sum =" 7
+"Slide: remove" 1 ", add" 3 "=> sum =" 9
+"  New max sum:" 9
+"Slide: remove" 5 ", add" 2 "=> sum =" 6
+""
+"Result:" 9
+"Result:" 9"
+`;
+
+exports[`Sliding Window Problems > Minimum Size Subarray Sum > console output matches snapshot 1`] = `
+""Target:" 7
+"Array:" [2, 3, 1, 2, 4, 3]
+""
+"Add nums[0] =" 2 "=> sum =" 2
+""
+"Add nums[1] =" 3 "=> sum =" 5
+""
+"Add nums[2] =" 1 "=> sum =" 6
+""
+"Add nums[3] =" 2 "=> sum =" 8
+"  Sum >= target! Window [0..3], length:" 4
+"  New min length:" 4
+"  Shrink: remove nums[0] =" 2
+""
+"Add nums[4] =" 4 "=> sum =" 10
+"  Sum >= target! Window [1..4], length:" 4
+"  Shrink: remove nums[1] =" 3
+"  Sum >= target! Window [2..4], length:" 3
+"  New min length:" 3
+"  Shrink: remove nums[2] =" 1
+""
+"Add nums[5] =" 3 "=> sum =" 9
+"  Sum >= target! Window [3..5], length:" 3
+"  Shrink: remove nums[3] =" 2
+"  Sum >= target! Window [4..5], length:" 2
+"  New min length:" 2
+"  Shrink: remove nums[4] =" 4
+""
+"Result:" 2
+"Result:" 2"
+`;
+
+exports[`Sliding Window Problems > Minimum Window Substring > console output matches snapshot 1`] = `
+""s:" "ADOBECODEBANC"
+"t:" "ABC"
+""
+"t has" undefined "unique characters"
+""
+"Result:" ""
+"Result:" """
+`;
+
+exports[`Sliding Window Problems > Permutation in String > console output matches snapshot 1`] = `
+""s1:" "ab" "s2:" "eidbaooo"
+"Window size:" undefined
+""
+"s1 frequency map built"
+"Initial window frequency map built"
+"Match found at index 0!"
+"Result: true"
+"Result:" true"
+`;
+
+exports[`Sliding Window Problems > Sliding Window Maximum > console output matches snapshot 1`] = `
+""Array:" [1, 3, -1, -3, 5, 3, 6, 7]
+"Window size k:" 3
+""
+"Push index" 0 "(value:" "1), deque:" [0]
+""
+"Remove back index" 0 "(nums[0] =" 1 "<= nums[1] =" "3)"
+"Push index" 1 "(value:" "3), deque:" [1]
+""
+"Push index" 2 "(value:" "-1), deque:" [1, 2]
+"  Window max:" 3 "=> result so far:" [3]
+""
+"Push index" 3 "(value:" "-3), deque:" [1, 2, 3]
+"  Window max:" 3 "=> result so far:" [3, 3]
+""
+"Remove front index" 1 "(out of window)"
+"Remove back index" 3 "(nums[3] =" -3 "<= nums[4] =" "5)"
+"Remove back index" 2 "(nums[2] =" -1 "<= nums[4] =" "5)"
+"Push index" 4 "(value:" "5), deque:" [4]
+"  Window max:" 5 "=> result so far:" [3, 3, 5]
+""
+"Push index" 5 "(value:" "3), deque:" [4, 5]
+"  Window max:" 5 "=> result so far:" [3, 3, 5, 5]
+""
+"Remove back index" 5 "(nums[5] =" 3 "<= nums[6] =" "6)"
+"Remove back index" 4 "(nums[4] =" 5 "<= nums[6] =" "6)"
+"Push index" 6 "(value:" "6), deque:" [6]
+"  Window max:" 6 "=> result so far:" [3, 3, 5, 5, 6]
+""
+"Remove back index" 6 "(nums[6] =" 6 "<= nums[7] =" "7)"
+"Push index" 7 "(value:" "7), deque:" [7]
+"  Window max:" 7 "=> result so far:" [3, 3, 5, 5, 6, 7]
+""
+"Result:" [3, 3, 5, 5, 6, 7]
+"Result:" [3, 3, 5, 5, 6, 7]"
+`;
