@@ -7443,4 +7443,664 @@ console.log(calculate(" 3/2 "));
     patternName: 'Stack (Operator Precedence)',
     whyItWorks: 'Deferring only addition and subtraction while executing multiplication and division immediately preserves precedence without requiring a full expression tree.',
   },
+
+  // ─── Binary Search ───────────────────────────────────────────────
+
+  {
+    id: 'binary-search-basic',
+    name: 'Binary Search',
+    category: 'binary-search',
+    difficulty: 'easy',
+    description: 'Given a sorted array of integers and a target, return the index of the target or -1 if not found',
+    code: `// Binary Search
+// Compare midpoint to target, narrow half each step
+
+function binarySearch(nums, target) {
+  let left = 0;
+  let right = nums.length - 1;
+
+  console.log("Array:", nums, "Target:", target);
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("left:", left, "right:", right, "mid:", mid, "value:", nums[mid]);
+
+    if (nums[mid] === target) {
+      console.log("Found target at index", mid);
+      return mid;
+    } else if (nums[mid] < target) {
+      console.log(nums[mid], "< target, search right half");
+      left = mid + 1;
+    } else {
+      console.log(nums[mid], "> target, search left half");
+      right = mid - 1;
+    }
+  }
+
+  console.log("Target not found, return -1");
+  return -1;
+}
+
+console.log("Result:", binarySearch([-1, 0, 3, 5, 9, 12], 9));
+`,
+    approach: 'Maintain two pointers enclosing the search space. Compute the midpoint and compare its value to the target. If equal, return. If less, discard the left half. If greater, discard the right half. Repeat until the pointers cross.',
+    timeComplexity: 'O(log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Classic)',
+    whyItWorks: 'Array is sorted, so comparing the midpoint tells us which half contains the target, eliminating half the search space each iteration.',
+  },
+  {
+    id: 'search-insert-position',
+    name: 'Search Insert Position',
+    category: 'binary-search',
+    difficulty: 'easy',
+    description: 'Given a sorted array and a target, return the index if found or where it would be inserted to keep sorted order',
+    code: `// Search Insert Position
+// Binary search; when not found, left pointer is the insert index
+
+function searchInsert(nums, target) {
+  let left = 0;
+  let right = nums.length - 1;
+
+  console.log("Array:", nums, "Target:", target);
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("left:", left, "right:", right, "mid:", mid, "value:", nums[mid]);
+
+    if (nums[mid] === target) {
+      console.log("Found target at index", mid);
+      return mid;
+    } else if (nums[mid] < target) {
+      console.log(nums[mid], "< target, move left to", mid + 1);
+      left = mid + 1;
+    } else {
+      console.log(nums[mid], "> target, move right to", mid - 1);
+      right = mid - 1;
+    }
+  }
+
+  console.log("Not found, insert position is left:", left);
+  return left;
+}
+
+console.log("Result:", searchInsert([1, 3, 5, 6], 5));
+console.log("Result:", searchInsert([1, 3, 5, 6], 2));
+`,
+    approach: 'Run standard binary search. If the target is found, return its index. If the loop ends without a match, the left pointer has passed the right pointer and sits exactly at the position where the target should be inserted.',
+    timeComplexity: 'O(log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Classic)',
+    whyItWorks: 'When the loop ends, left pointer sits at the exact position where the target should be inserted to maintain sorted order.',
+  },
+  {
+    id: 'first-last-position',
+    name: 'Find First and Last Position',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Given a sorted array, find the starting and ending position of a target value. Return [-1, -1] if not found',
+    code: `// Find First and Last Position of Element in Sorted Array
+// Two binary searches: left-biased and right-biased
+
+function findFirst(nums, target) {
+  let left = 0;
+  let right = nums.length - 1;
+  let result = -1;
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("[findFirst] left:", left, "right:", right, "mid:", mid, "value:", nums[mid]);
+
+    if (nums[mid] === target) {
+      result = mid;
+      console.log("Found at", mid, "but keep searching left");
+      right = mid - 1;
+    } else if (nums[mid] < target) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+
+  return result;
+}
+
+function findLast(nums, target) {
+  let left = 0;
+  let right = nums.length - 1;
+  let result = -1;
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("[findLast] left:", left, "right:", right, "mid:", mid, "value:", nums[mid]);
+
+    if (nums[mid] === target) {
+      result = mid;
+      console.log("Found at", mid, "but keep searching right");
+      left = mid + 1;
+    } else if (nums[mid] < target) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+
+  return result;
+}
+
+function searchRange(nums, target) {
+  console.log("Array:", nums, "Target:", target);
+  let first = findFirst(nums, target);
+  let last = findLast(nums, target);
+  console.log("First:", first, "Last:", last);
+  return [first, last];
+}
+
+console.log("Result:", searchRange([5, 7, 7, 8, 8, 10], 8));
+`,
+    approach: 'Run binary search twice. The first search is left-biased: when it finds the target, it records the index and keeps searching left. The second is right-biased and keeps searching right. Together they find both boundaries.',
+    timeComplexity: 'O(log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Boundary Finding)',
+    whyItWorks: 'Running binary search twice with different bias — left-biased continues searching left even after finding a match to find the first occurrence, right-biased does the opposite.',
+  },
+  {
+    id: 'search-rotated-array',
+    name: 'Search in Rotated Sorted Array',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'A sorted array has been rotated at some pivot. Search for a target value in O(log n) time',
+    code: `// Search in Rotated Sorted Array
+// Determine which half is sorted, then check if target is in that range
+
+function search(nums, target) {
+  let left = 0;
+  let right = nums.length - 1;
+
+  console.log("Array:", nums, "Target:", target);
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("left:", left, "right:", right, "mid:", mid, "value:", nums[mid]);
+
+    if (nums[mid] === target) {
+      console.log("Found target at index", mid);
+      return mid;
+    }
+
+    if (nums[left] <= nums[mid]) {
+      console.log("Left half [" + left + ".." + mid + "] is sorted");
+      if (target >= nums[left] && target < nums[mid]) {
+        console.log("Target in sorted left half, move right to", mid - 1);
+        right = mid - 1;
+      } else {
+        console.log("Target not in left half, move left to", mid + 1);
+        left = mid + 1;
+      }
+    } else {
+      console.log("Right half [" + mid + ".." + right + "] is sorted");
+      if (target > nums[mid] && target <= nums[right]) {
+        console.log("Target in sorted right half, move left to", mid + 1);
+        left = mid + 1;
+      } else {
+        console.log("Target not in right half, move right to", mid - 1);
+        right = mid - 1;
+      }
+    }
+  }
+
+  console.log("Target not found, return -1");
+  return -1;
+}
+
+console.log("Result:", search([4, 5, 6, 7, 0, 1, 2], 0));
+`,
+    approach: 'At each step, identify which half around mid is properly sorted by comparing endpoints. If the target falls within the sorted half, search there. Otherwise, search the other half. One half is always sorted in a rotated array.',
+    timeComplexity: 'O(log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Rotated Array)',
+    whyItWorks: 'After rotation, at least one half around mid is always sorted. Checking which half is sorted lets us determine if the target falls in that range or the other half.',
+  },
+  {
+    id: 'find-min-rotated',
+    name: 'Find Minimum in Rotated Sorted Array',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Find the minimum element in a sorted array that has been rotated',
+    code: `// Find Minimum in Rotated Sorted Array
+// Compare mid to right to decide which half holds the minimum
+
+function findMin(nums) {
+  let left = 0;
+  let right = nums.length - 1;
+
+  console.log("Array:", nums);
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("left:", left, "right:", right, "mid:", mid, "value:", nums[mid]);
+
+    if (nums[mid] > nums[right]) {
+      console.log(nums[mid], ">", nums[right], "-> min is in right half, move left to", mid + 1);
+      left = mid + 1;
+    } else {
+      console.log(nums[mid], "<=", nums[right], "-> min is in left half including mid, move right to", mid);
+      right = mid;
+    }
+  }
+
+  console.log("Minimum found at index", left, "value:", nums[left]);
+  return nums[left];
+}
+
+console.log("Result:", findMin([3, 4, 5, 1, 2]));
+`,
+    approach: 'Compare mid element to the rightmost element. If mid is greater, the rotation point (minimum) must be to the right. Otherwise, it is at mid or to the left. Narrow until left meets right.',
+    timeComplexity: 'O(log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Rotated Array)',
+    whyItWorks: 'If mid element is greater than right element, the minimum must be in the right half (the rotation point is there). Otherwise, it is in the left half including mid.',
+  },
+  {
+    id: 'find-peak-element',
+    name: 'Find Peak Element',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Find any element that is strictly greater than its neighbors. nums[-1] = nums[n] = -infinity',
+    code: `// Find Peak Element
+// Move toward the uphill direction; a peak is guaranteed that way
+
+function findPeakElement(nums) {
+  let left = 0;
+  let right = nums.length - 1;
+
+  console.log("Array:", nums);
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("left:", left, "right:", right, "mid:", mid, "value:", nums[mid], "next:", nums[mid + 1]);
+
+    if (nums[mid] < nums[mid + 1]) {
+      console.log("Uphill to right, move left to", mid + 1);
+      left = mid + 1;
+    } else {
+      console.log("Uphill to left or at peak, move right to", mid);
+      right = mid;
+    }
+  }
+
+  console.log("Peak at index", left, "value:", nums[left]);
+  return left;
+}
+
+console.log("Result:", findPeakElement([1, 2, 1, 3, 5, 6, 4]));
+`,
+    approach: 'Compare mid to its right neighbor. If the right neighbor is larger, a peak must exist to the right (uphill). If mid is larger, a peak exists at mid or to the left. Converge left and right until they meet at a peak.',
+    timeComplexity: 'O(log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Boundary Finding)',
+    whyItWorks: 'If the right neighbor is larger, climbing right guarantees a peak exists there (array drops to -infinity at boundaries). Same logic applies for left. Always move toward the uphill direction.',
+  },
+  {
+    id: 'koko-eating-bananas',
+    name: 'Koko Eating Bananas',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Koko can eat bananas at speed k per hour. Given piles and h hours, find the minimum k to eat all bananas in time',
+    code: `// Koko Eating Bananas
+// Binary search on eating speed; check feasibility for each candidate
+
+function canFinish(piles, k, h) {
+  let hours = 0;
+  for (let i = 0; i < piles.length; i++) {
+    hours += Math.ceil(piles[i] / k);
+  }
+  console.log("  Speed:", k, "-> total hours:", hours, hours <= h ? "(ok)" : "(too slow)");
+  return hours <= h;
+}
+
+function minEatingSpeed(piles, h) {
+  let left = 1;
+  let right = 0;
+  for (let i = 0; i < piles.length; i++) {
+    if (piles[i] > right) right = piles[i];
+  }
+
+  console.log("Piles:", piles, "Hours:", h);
+  console.log("Search range: [" + left + ", " + right + "]");
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("left:", left, "right:", right, "mid:", mid);
+
+    if (canFinish(piles, mid, h)) {
+      console.log("Speed", mid, "works, try slower -> right =", mid);
+      right = mid;
+    } else {
+      console.log("Speed", mid, "too slow, try faster -> left =", mid + 1);
+      left = mid + 1;
+    }
+  }
+
+  console.log("Minimum speed:", left);
+  return left;
+}
+
+console.log("Result:", minEatingSpeed([3, 6, 7, 11], 8));
+`,
+    approach: 'Binary search on the eating speed from 1 to max(piles). For each candidate speed, compute total hours needed by summing ceil(pile/speed). If total hours fits within h, try a slower speed. Otherwise increase.',
+    timeComplexity: 'O(n log m) where m is max pile',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search on Answer',
+    whyItWorks: 'If Koko can finish at speed k, she can also finish at speed k+1 (monotonic). Binary search the speed from 1 to max(piles), checking feasibility each time.',
+  },
+  {
+    id: 'capacity-to-ship',
+    name: 'Capacity To Ship Packages',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Find the least weight capacity of a ship so that all packages can be shipped within d days (packages must stay in order)',
+    code: `// Capacity To Ship Packages Within D Days
+// Binary search on capacity; greedily assign packages to days
+
+function canShip(weights, capacity, days) {
+  let daysNeeded = 1;
+  let currentLoad = 0;
+
+  for (let i = 0; i < weights.length; i++) {
+    if (currentLoad + weights[i] > capacity) {
+      daysNeeded++;
+      currentLoad = weights[i];
+    } else {
+      currentLoad += weights[i];
+    }
+  }
+
+  console.log("  Capacity:", capacity, "-> days needed:", daysNeeded, daysNeeded <= days ? "(ok)" : "(too many)");
+  return daysNeeded <= days;
+}
+
+function shipWithinDays(weights, days) {
+  let left = 0;
+  let right = 0;
+  for (let i = 0; i < weights.length; i++) {
+    if (weights[i] > left) left = weights[i];
+    right += weights[i];
+  }
+
+  console.log("Weights:", weights, "Days:", days);
+  console.log("Search range: [" + left + ", " + right + "]");
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("left:", left, "right:", right, "mid:", mid);
+
+    if (canShip(weights, mid, days)) {
+      console.log("Capacity", mid, "works, try smaller -> right =", mid);
+      right = mid;
+    } else {
+      console.log("Capacity", mid, "not enough, try larger -> left =", mid + 1);
+      left = mid + 1;
+    }
+  }
+
+  console.log("Minimum capacity:", left);
+  return left;
+}
+
+console.log("Result:", shipWithinDays([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5));
+`,
+    approach: 'Binary search on ship capacity from max(weights) to sum(weights). For each candidate capacity, greedily load packages into consecutive days and count days needed. If it fits within d days, try smaller capacity.',
+    timeComplexity: 'O(n log S) where S is sum of weights',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search on Answer',
+    whyItWorks: 'If capacity C works, C+1 also works (monotonic). Search space is [max(weights), sum(weights)]. For each candidate, greedily assign packages to days.',
+  },
+  {
+    id: 'split-array-largest-sum',
+    name: 'Split Array Largest Sum',
+    category: 'binary-search',
+    difficulty: 'hard',
+    description: 'Split an array into k non-empty continuous subarrays to minimize the largest subarray sum',
+    code: `// Split Array Largest Sum
+// Binary search on the maximum allowed subarray sum
+
+function canSplit(nums, maxSum, k) {
+  let splits = 1;
+  let currentSum = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (currentSum + nums[i] > maxSum) {
+      splits++;
+      currentSum = nums[i];
+    } else {
+      currentSum += nums[i];
+    }
+  }
+
+  console.log("  maxSum:", maxSum, "-> splits needed:", splits, splits <= k ? "(ok)" : "(too many)");
+  return splits <= k;
+}
+
+function splitArray(nums, k) {
+  let left = 0;
+  let right = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] > left) left = nums[i];
+    right += nums[i];
+  }
+
+  console.log("Array:", nums, "k:", k);
+  console.log("Search range: [" + left + ", " + right + "]");
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2);
+    console.log("left:", left, "right:", right, "mid:", mid);
+
+    if (canSplit(nums, mid, k)) {
+      console.log("maxSum", mid, "works, try smaller -> right =", mid);
+      right = mid;
+    } else {
+      console.log("maxSum", mid, "not enough, try larger -> left =", mid + 1);
+      left = mid + 1;
+    }
+  }
+
+  console.log("Minimum largest sum:", left);
+  return left;
+}
+
+console.log("Result:", splitArray([7, 2, 5, 10, 8], 2));
+`,
+    approach: 'Binary search on the answer: the maximum subarray sum ranges from max(nums) to sum(nums). For each candidate, greedily partition the array — start a new split whenever the running sum exceeds the candidate. Check if k or fewer splits suffice.',
+    timeComplexity: 'O(n log S) where S is sum of array',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search on Answer',
+    whyItWorks: 'If we can split with max sum = X, then X+1 also works (monotonic). Binary search on the maximum subarray sum from max(nums) to sum(nums), checking if k or fewer splits suffice.',
+  },
+  {
+    id: 'search-2d-matrix',
+    name: 'Search a 2D Matrix',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Search for a target in a matrix where each row is sorted and first element of each row is greater than last element of previous row',
+    code: `// Search a 2D Matrix
+// Treat matrix as a flat sorted array, map index to row/col
+
+function searchMatrix(matrix, target) {
+  let rows = matrix.length;
+  let cols = matrix[0].length;
+  let left = 0;
+  let right = rows * cols - 1;
+
+  console.log("Matrix:", matrix);
+  console.log("Target:", target, "Total elements:", rows * cols);
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    let row = Math.floor(mid / cols);
+    let col = mid % cols;
+    let value = matrix[row][col];
+    console.log("left:", left, "right:", right, "mid:", mid, "-> [" + row + "][" + col + "] =", value);
+
+    if (value === target) {
+      console.log("Found target at [" + row + "][" + col + "]");
+      return true;
+    } else if (value < target) {
+      console.log(value, "< target, search right half");
+      left = mid + 1;
+    } else {
+      console.log(value, "> target, search left half");
+      right = mid - 1;
+    }
+  }
+
+  console.log("Target not found");
+  return false;
+}
+
+console.log("Result:", searchMatrix([[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], 3));
+`,
+    approach: 'Treat the matrix as one virtual sorted array of length rows*cols. Use a single binary search with index mapping: row = floor(mid / cols), col = mid % cols. Compare the mapped value to the target.',
+    timeComplexity: 'O(log(m*n))',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Classic)',
+    whyItWorks: 'The entire matrix is effectively one sorted array. Map virtual index to row/col: row = floor(mid / cols), col = mid % cols.',
+  },
+  {
+    id: 'median-two-sorted-arrays',
+    name: 'Median of Two Sorted Arrays',
+    category: 'binary-search',
+    difficulty: 'hard',
+    description: 'Find the median of two sorted arrays in O(log(min(m,n))) time',
+    code: `// Median of Two Sorted Arrays
+// Binary search on partition of the smaller array
+
+function findMedianSortedArrays(nums1, nums2) {
+  if (nums1.length > nums2.length) {
+    let temp = nums1;
+    nums1 = nums2;
+    nums2 = temp;
+  }
+
+  let m = nums1.length;
+  let n = nums2.length;
+  let left = 0;
+  let right = m;
+  let half = Math.floor((m + n + 1) / 2);
+
+  console.log("nums1:", nums1, "nums2:", nums2);
+  console.log("Total:", m + n, "Half:", half);
+
+  while (left <= right) {
+    let i = Math.floor((left + right) / 2);
+    let j = half - i;
+
+    let nums1Left = i > 0 ? nums1[i - 1] : -Infinity;
+    let nums1Right = i < m ? nums1[i] : Infinity;
+    let nums2Left = j > 0 ? nums2[j - 1] : -Infinity;
+    let nums2Right = j < n ? nums2[j] : Infinity;
+
+    console.log("i:", i, "j:", j);
+    console.log("  nums1Left:", nums1Left, "nums1Right:", nums1Right);
+    console.log("  nums2Left:", nums2Left, "nums2Right:", nums2Right);
+
+    if (nums1Left <= nums2Right && nums2Left <= nums1Right) {
+      let maxLeft = nums1Left > nums2Left ? nums1Left : nums2Left;
+      let minRight = nums1Right < nums2Right ? nums1Right : nums2Right;
+
+      if ((m + n) % 2 === 1) {
+        console.log("Odd total, median:", maxLeft);
+        return maxLeft;
+      } else {
+        let median = (maxLeft + minRight) / 2;
+        console.log("Even total, median: (" + maxLeft + " + " + minRight + ") / 2 =", median);
+        return median;
+      }
+    } else if (nums1Left > nums2Right) {
+      console.log("nums1Left too large, move right to", i - 1);
+      right = i - 1;
+    } else {
+      console.log("nums2Left too large, move left to", i + 1);
+      left = i + 1;
+    }
+  }
+
+  return -1;
+}
+
+console.log("Result:", findMedianSortedArrays([1, 3], [2]));
+`,
+    approach: 'Ensure nums1 is the shorter array. Binary search on the partition index i of nums1, compute j for nums2 so the left half has exactly half the total elements. Valid partition means max(left sides) <= min(right sides).',
+    timeComplexity: 'O(log(min(m,n)))',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Boundary Finding)',
+    whyItWorks: 'Binary search on where to partition the smaller array. The combined partition must have exactly half the total elements, and max of left side must be less than or equal to min of right side.',
+  },
+  {
+    id: 'time-based-key-value',
+    name: 'Time Based Key-Value Store',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Design a key-value store that supports set(key, value, timestamp) and get(key, timestamp) returning value with largest timestamp <= given timestamp',
+    code: `// Time Based Key-Value Store
+// Store values with timestamps, binary search on get
+
+function TimeMap() {
+  let store = {};
+
+  function set(key, value, timestamp) {
+    if (!store[key]) {
+      store[key] = [];
+    }
+    store[key].push({ value: value, time: timestamp });
+    console.log("SET key:", key, "value:", value, "time:", timestamp);
+  }
+
+  function get(key, timestamp) {
+    console.log("GET key:", key, "time:", timestamp);
+
+    if (!store[key]) {
+      console.log("  Key not found, return empty");
+      return "";
+    }
+
+    let entries = store[key];
+    let left = 0;
+    let right = entries.length - 1;
+    let result = "";
+
+    while (left <= right) {
+      let mid = Math.floor((left + right) / 2);
+      console.log("  left:", left, "right:", right, "mid:", mid, "entry time:", entries[mid].time, "value:", entries[mid].value);
+
+      if (entries[mid].time <= timestamp) {
+        result = entries[mid].value;
+        console.log("  Time", entries[mid].time, "<= query, candidate:", result);
+        left = mid + 1;
+      } else {
+        console.log("  Time", entries[mid].time, "> query, search left");
+        right = mid - 1;
+      }
+    }
+
+    console.log("  Result:", result);
+    return result;
+  }
+
+  return { set: set, get: get };
+}
+
+let tm = TimeMap();
+tm.set("foo", "bar", 1);
+tm.set("foo", "bar2", 4);
+console.log("get(foo, 4):", tm.get("foo", 4));
+console.log("get(foo, 3):", tm.get("foo", 3));
+`,
+    approach: 'Store entries per key in timestamp-sorted order (set calls are already chronological). On get, binary search the entries for the largest timestamp that does not exceed the query timestamp.',
+    timeComplexity: 'O(log n) per get',
+    spaceComplexity: 'O(n)',
+    patternName: 'Binary Search (Boundary Finding)',
+    whyItWorks: 'Values for each key are stored in timestamp order. Binary search finds the rightmost entry with timestamp <= the query timestamp.',
+  },
 ]

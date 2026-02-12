@@ -1,6 +1,6 @@
 import type { DSAPattern } from '@/components/DSAPatterns/types'
 
-export const DSA_PATTERN_IDS = ['two-pointers', 'hash-map', 'bit-manipulation'] as const
+export const DSA_PATTERN_IDS = ['two-pointers', 'hash-map', 'bit-manipulation', 'binary-search'] as const
 export type DSAPatternId = typeof DSA_PATTERN_IDS[number]
 
 export const dsaPatterns: DSAPattern[] = [
@@ -114,6 +114,49 @@ export const dsaPatterns: DSAPattern[] = [
       space: 'O(1)',
     },
     relatedProblems: ['single-number', 'counting-bits', 'reverse-bits'],
+  },
+  {
+    id: 'binary-search',
+    name: 'Binary Search',
+    slug: 'binary-search',
+    description: 'Eliminate half the search space each iteration by comparing the midpoint against a condition, reducing O(n) linear scans to O(log n).',
+    whenToUse: [
+      'Searching for a target in a sorted array or matrix',
+      'Finding the first or last occurrence of a value (boundary finding)',
+      'Searching in a rotated sorted array',
+      'Optimizing over a monotonic answer space (minimize maximum, maximize minimum)',
+    ],
+    variants: [
+      {
+        id: 'classic',
+        name: 'Classic Sorted Array',
+        description: 'Search for an exact target in a sorted array by comparing the midpoint and eliminating the irrelevant half.',
+        whenToUse: 'Target exists or does not exist in sorted array, search insert position',
+      },
+      {
+        id: 'boundary-finding',
+        name: 'Boundary Finding (First/Last)',
+        description: 'Find the leftmost or rightmost position where a condition changes. Continue searching even after finding a match.',
+        whenToUse: 'First/last occurrence, first bad version, search range, finding transition point',
+      },
+      {
+        id: 'rotated-array',
+        name: 'Rotated Array Search',
+        description: 'At least one half is always sorted after rotation. Determine which half is sorted, then decide which half to search.',
+        whenToUse: 'Search in rotated sorted array, find minimum in rotated array',
+      },
+      {
+        id: 'answer-space',
+        name: 'Binary Search on Answer',
+        description: 'When the answer itself is monotonic (if X works, X+1 also works), binary search the answer space instead of a data structure.',
+        whenToUse: 'Koko eating bananas, capacity to ship packages, split array largest sum, minimize maximum',
+      },
+    ],
+    complexity: {
+      time: 'O(log n)',
+      space: 'O(1)',
+    },
+    relatedProblems: ['binary-search-basic', 'search-insert-position', 'first-last-position', 'search-rotated-array', 'find-min-rotated', 'koko-eating-bananas'],
   },
 ]
 

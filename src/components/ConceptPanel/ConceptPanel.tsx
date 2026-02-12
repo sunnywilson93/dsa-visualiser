@@ -9,6 +9,7 @@ import type { ShortcutMap } from '@/hooks'
 import { TwoPointersConcept } from './TwoPointersConcept'
 import { BitManipulationConcept } from './BitManipulationConcept'
 import { SlidingWindowConcept } from './SlidingWindowConcept'
+import { BinarySearchConcept } from './BinarySearchConcept'
 
 interface ConceptPanelProps {
   title: string
@@ -104,6 +105,8 @@ export function ConceptPanel({
         return <BitManipulationConcept step={step} />
       case 'sliding-window':
         return <SlidingWindowConcept step={step} />
+      case 'binary-search':
+        return <BinarySearchConcept step={step} />
       default:
         return <TwoPointersConcept step={step} type={type} />
     }

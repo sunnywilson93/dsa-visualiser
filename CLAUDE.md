@@ -1,117 +1,187 @@
-# CLAUDE.md
+# CLAUDE.md — Enforced Rules
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+> Every rule here is a HARD constraint. Violating any rule is a bug.
 
-## Project Overview
+## Pre-Flight Checklist (BEFORE writing any code)
 
-A visual learning platform for JavaScript concepts and DSA (Data Structures & Algorithms) interview preparation. Features interactive visualizations, a custom JavaScript interpreter with step-by-step execution, and concept explanations.
+1. Read the files you are modifying — NEVER guess at existing code
+2. Scan for existing patterns in nearby files — match them exactly
+3. Check if a reusable component already exists in `src/components/ui/` or `src/components/` before creating anything new
+4. Check `src/styles/globals.css` `@theme` block for available tokens before inventing values
+5. Plan the approach — check for duplication and circular dependency risks
 
 ## Commands
 
 ```bash
-npm run dev          # Start Next.js dev server
-npm run build        # Production build
-npm run lint         # ESLint checks
-npm test             # Vitest in watch mode
-npm run test:run     # Single test run (CI)
-npm run test:coverage # Coverage report
+npm run dev              # Dev server
+npm run build            # Production build (MUST pass before committing)
+npm run lint             # ESLint (MUST pass before committing)
+npm test -- <file>       # Run specific test
+npm run test:run         # All tests (CI mode)
+npm run tokens:audit     # Audit CSS token usage
 ```
 
-Run a single test file:
-```bash
-npm test -- interpreter.test.ts
+---
+
+## 1. TypeScript — STRICT, NO EXCEPTIONS
+
+- NEVER use `any`. Use `unknown` + type guards, generics, or proper interfaces
+- NEVER use `@ts-ignore` or `@ts-expect-error` — fix the type instead
+- NEVER use `as` type assertions unless narrowing from `unknown` after a runtime check
+- ALL function parameters and return types MUST be explicitly typed
+- ALL component props MUST have a dedicated `interface` or `type` (e.g., `interface FooProps`)
+- ALL shared types go in `src/types/index.ts` — component-local types stay in the component file
+- Export types separately: `export type { FooProps }` (not mixed with value exports)
+- tsconfig has `"strict": true` — respect all strict checks
+
+## 2. CSS — Token-First, Tailwind Config is Source of Truth
+
+### The Rule
+
+ALL styling values MUST come from the design token system defined in `src/styles/globals.css` `@theme` block. This is a Tailwind v4 project — the `@theme` block IS the Tailwind config.
+
+### NEVER hardcode these:
+
+| Property | WRONG | RIGHT |
+|----------|-------|-------|
+| Colors | `#38bdf8`, `rgba(...)` | `var(--color-accent-blue)`, `var(--color-white-10)` |
+| Spacing | `8px`, `1rem`, `12px` | `var(--spacing-sm)`, `var(--spacing-md)` |
+| Font size | `14px`, `0.85rem` | `var(--text-sm)`, `var(--text-base)` |
+| Font weight | `600`, `bold` | `var(--font-weight-semibold)`, `var(--font-weight-bold)` |
+| Border radius | `4px`, `8px` | `var(--radius-sm)`, `var(--radius-lg)` |
+| Border width | `1px`, `2px` | `var(--border-width-1)`, `var(--border-width-2)` |
+| Transitions | `0.2s ease` | `var(--transition-fast)` |
+| Shadows | `0 4px 6px ...` | `var(--shadow-md)` |
+| Line height | `1.5` | `var(--leading-normal)` |
+
+### Allowed raw values (NOT violations):
+
+- `@media` queries — CSS vars cannot be used in media queries
+- `calc()` expressions combining tokens — `calc(var(--spacing-md) + var(--spacing-sm))`
+- Structural values — `100%`, `0`, `none`, `transparent`, `auto`, `1fr`, `fit-content`
+- Position offsets in layout — `top: -6px` for structural positioning
+- Scoped CSS vars defined and consumed within the same `.module.css` file
+
+### Tailwind v4 Type Hint Rule
+
+When using BOTH font-size and color as Tailwind classes on the same element, ALWAYS use type hints:
 ```
-
-## Architecture
-
-### Core Systems
-
-**JavaScript Interpreter Engine** (`src/engine/`)
-- `parser.ts` - Parses code to AST using Acorn
-- `interpreter.ts` - Executes AST step-by-step, tracks state (scopes, call stack, variables)
-- `runtime.ts` - Runtime value representations and formatting
-- The interpreter generates execution "steps" that power the visualizations
-
-**Execution State** (`src/store/executionStore.ts`)
-- Zustand store managing: code, parsed AST, execution steps, current step index, playback state, breakpoints
-- Components subscribe to specific slices for reactive updates
-
-**Two Concept Systems**:
-1. **JavaScript Concepts** (`src/data/concepts.ts`) - Interactive learning modules for JS fundamentals (hoisting, closures, event loop, prototypes, etc.) with code examples and visualizations
-2. **Algorithm Concepts** (`src/data/algorithmConcepts.ts`) - Problem-specific step-by-step visualizations for DSA patterns (hash-map, two-pointers, bit-manipulation)
-
-### Routing Structure
-
-- `/` - Home page with category grid
-- `/concepts` - JS concepts overview
-- `/concepts/[conceptId]` - Individual JS concept page
-- `/[categoryId]` - Problem category listing (e.g., `/arrays-hashing`)
-- `/[categoryId]/[problemId]` - Practice page with code editor + interpreter
-- `/[categoryId]/[problemId]/concept` - Algorithm visualization for specific problem
-
-### Component Patterns
-
-- Visualization components in `src/components/Concepts/` (e.g., `HoistingViz.tsx`, `ClosuresViz.tsx`)
-- Algorithm-specific visualizers in `src/components/ConceptPanel/` (e.g., `HashMapConcept.tsx`, `TwoPointersConcept.tsx`)
-- `src/components/Visualization/` - Array and binary visualizations for interpreter output
-
-### Data Flow
-
-1. User writes code in `CodeEditor`
-2. Code is parsed via `parser.ts` → AST stored in executionStore
-3. Interpreter walks AST, produces array of execution steps
-4. User steps through execution; `currentStep` index updates
-5. Components (`CallStack`, `Variables`, `Console`, `VisualizationPanel`) render current step's state
-
-## Code Style
-
-- TypeScript + React functional components
-- 2 spaces, single quotes, no semicolons
-- CSS Modules: `Component.module.css` imported as `styles`
-- Path aliases: `@/` maps to `src/`
-- Components: PascalCase filenames; hooks: `useSomething`
-
-## CSS Design Tokens
-
-All `.module.css` files must use design tokens from `src/styles/globals.css` `@theme` block. Never hardcode raw values.
-
-### Token Reference
-
-| Category | Pattern | Example |
-|----------|---------|---------|
-| Spacing | `var(--spacing-*)` | `var(--spacing-sm)` for 8px |
-| Colors | `var(--color-*)` | `var(--color-text-primary)` |
-| Typography | `var(--text-*)`, `var(--font-weight-*)`, `var(--leading-*)`, `var(--letter-spacing-*)` | `var(--text-sm)` |
-| Borders | `var(--border-width-*)`, `var(--radius-*)` | `var(--border-width-1) solid` |
-| Transitions | `var(--transition-*)` | `var(--transition-fast)` |
-| Shadows | `var(--shadow-*)`, `var(--glow-*)` | `var(--shadow-md)` |
-
-### Spacing Scale Quick Reference
-
-`0.5`=2px, `0.75`=3px, `1`=4px, `1.25`=5px, `1.5`=6px, `xs`=4px, `sm`=8px, `2.5`=10px, `md`=12px, `lg`=16px, `xl`=24px, `pill`=0.35rem
-
-### Allowed Exceptions
-
-- **@media queries**: CSS vars can't be used in media queries; raw px breakpoints are OK
-- **calc() expressions**: `calc(var(--spacing-md) + var(--spacing-sm))` is fine
-- **Structural values**: `1fr`, `100%`, `0`, `none`, `transparent`, `auto`
-- **Scoped CSS vars**: Variables defined and consumed within the same module file
+WRONG: text-[var(--text-base)] text-[var(--color-text-muted)]
+RIGHT: text-[length:var(--text-base)] text-[color:var(--color-text-muted)]
+```
 
 ### Adding New Tokens
 
-1. Check if an existing token is within 1-2px
-2. If not, add to `src/styles/globals.css` `@theme` block following naming: `--{category}-{scale}`
-3. All tokens live in `@theme` — never use `:root` for token definitions
+1. First — check if an existing token is close enough (within 1-2px)
+2. If not, add to `src/styles/globals.css` `@theme` block following pattern: `--{category}-{scale}`
+3. NEVER add tokens to `:root` — all tokens live in `@theme`
 
-## Testing
+### Common Utility Classes
 
-- Vitest + React Testing Library + jsdom
-- Tests colocated with source: `*.test.ts` or `*.test.tsx`
-- Setup in `src/__tests__/setup.ts`
-- Critical tests: interpreter logic, parser, execution store
+Global utilities live in `src/styles/globals.css` `@layer utilities` block. Check for existing utilities before writing custom CSS:
+- `.scrollbar-hide` — hides scrollbars
+- `.container-*` — max-width containers (narrow/content/default/wide)
+- `.min-h-card-*` — card min-heights
+- `.grid-cols-auto-*` — auto-fill grid columns
+- `.drop-shadow-glow-*` — glow effects
 
-## Key Types (`src/types/index.ts`)
+## 3. CSS Consistency Rules
 
-- `ConceptType` - Algorithm pattern types (hash-map, two-pointers, bit-manipulation, etc.)
-- `ConceptStep` - Single step in algorithm visualization with visual state
-- `Concept` - JS concept definition with examples, key points, interview tips
+- EVERY component uses CSS Modules: `ComponentName.module.css` imported as `styles`
+- NEVER use inline styles — use CSS Modules or Tailwind classes
+- NEVER mix CSS Modules and Tailwind for the same property on the same element
+- Class composition: use `clsx()` (already installed) for conditional classes
+- ALWAYS use the same spacing scale — if siblings use `var(--spacing-sm)`, new elements in that group MUST too
+- Border pattern: `var(--border-width-1) solid var(--color-border-primary)` — ALWAYS this order
+
+## 4. Component Architecture — Reusability is MANDATORY
+
+### Before Creating a New Component
+
+1. Search `src/components/` — does a similar component already exist?
+2. Search `src/components/ui/` — is there a shared primitive you should use?
+3. If the pattern appears 2+ times, it MUST be a shared component
+
+### Component Rules
+
+- EVERY component is a React functional component with TypeScript
+- EVERY component has a named export (no default exports)
+- EVERY component's props are defined as an interface: `interface ComponentNameProps`
+- File structure: `src/components/ComponentName/ComponentName.tsx` + `ComponentName.module.css` + `index.ts`
+- Barrel exports: each component directory has an `index.ts` that re-exports
+
+### Shared UI Components (`src/components/ui/`)
+
+These MUST be used instead of recreating:
+- `NeonBox` — themed container with glow variants
+- `CodePanel` / `CodeLine` — code display blocks
+- `LevelSelector` — difficulty/level picker
+- `ExampleTabs` — tabbed example switcher
+- `VariantSelector` — variant picker
+- `StepBadge` — step indicator badge
+
+### State Management
+
+- Global state: Zustand store (`src/store/executionStore.ts`)
+- Component state: `useState` / `useReducer`
+- NEVER prop-drill more than 2 levels — use Zustand or context instead
+- NEVER mutate state directly — Zustand uses Immer for immutable updates
+
+## 5. App Consistency Rules
+
+### Code Style
+
+- 2 spaces indentation, single quotes, no semicolons
+- Path alias: `@/` maps to `src/` — ALWAYS use `@/` imports, never relative `../../`
+- Naming: PascalCase for components, camelCase for functions/variables, UPPER_SNAKE for constants
+- Files: PascalCase for components (`Button.tsx`), camelCase for utilities (`formatValue.ts`)
+
+### Architecture Patterns
+
+- `src/engine/` — interpreter logic (parser, interpreter, runtime). NEVER import React here
+- `src/store/` — Zustand stores. NEVER import components here
+- `src/data/` — static data definitions. NEVER import stores or components here
+- `src/components/` — React components. Can import from engine, store, data
+- `src/types/` — shared TypeScript types
+- `src/app/` — Next.js pages and layouts (App Router)
+
+### Routing
+
+- `/` — Home
+- `/concepts/js/[conceptId]` — JS concept page
+- `/concepts/dsa/[conceptId]` — DSA concept page
+- `/[categoryId]` — Problem category listing
+- `/[categoryId]/[problemId]` — Practice page
+- `/[categoryId]/[problemId]/concept` — Algorithm visualization
+
+### No Dead Code
+
+- NEVER leave commented-out code
+- NEVER leave unused imports, variables, or functions
+- NEVER add `// removed` or `// deprecated` comments — just delete
+
+## 6. Testing
+
+- Framework: Vitest + React Testing Library + jsdom
+- Tests colocated: `ComponentName.test.tsx` next to `ComponentName.tsx`
+- MUST test: interpreter logic, parser, execution store, shared utilities
+- Use `describe` / `it` blocks with clear descriptions
+- Setup: `src/__tests__/setup.ts`
+
+## 7. Pre-Commit Enforcement
+
+Husky runs on every commit:
+1. `npm run lint` — ESLint with `next/core-web-vitals`
+2. Visual regression smoke test (if `.css` or `.tsx` files changed)
+
+NEVER use `--no-verify` to skip hooks.
+
+## 8. Anti-Patterns — NEVER Do These
+
+- NEVER create a new file when you can extend an existing one
+- NEVER add comments that restate what the code does — only explain WHY when non-obvious
+- NEVER introduce circular dependencies between modules
+- NEVER change existing behavior unless explicitly asked
+- NEVER add `console.log` in committed code (use proper error handling)
+- NEVER create duplicate utilities — search first, reuse existing
+- NEVER use `!important` in CSS unless overriding third-party styles (Monaco)

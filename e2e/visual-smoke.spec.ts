@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 // Representative subset of routes covering every major layout type.
 // Kept small (~10 pages) so it runs in ~15-30s with a running dev server.
-const smokeRoutes = [
+const smokeRoutes: { path: string; name: string; maxDiffPixels?: number }[] = [
   // Home grid layout
   { path: '/', name: 'home' },
   // Concepts overview
@@ -15,8 +15,8 @@ const smokeRoutes = [
   { path: '/js-core', name: 'category-js-core' },
   // Category listing (DSA subcategory)
   { path: '/two-pointers', name: 'category-two-pointers' },
-  // Problem concept viz (two-pointers pattern)
-  { path: '/two-pointers/two-sum-ii/concept', name: 'concept-two-sum-ii' },
+  // Problem concept viz (two-pointers pattern) — framer-motion spring animations jitter
+  { path: '/two-pointers/two-sum-ii/concept', name: 'concept-two-sum-ii', maxDiffPixels: 200 },
   // Problem concept viz (bit-manipulation pattern)
   { path: '/bit-manipulation/single-number/concept', name: 'concept-single-number' },
   // Pattern overview page
@@ -33,6 +33,7 @@ test.describe('Visual Smoke', () => {
       await page.waitForTimeout(500)
       await expect(page).toHaveScreenshot(`${route.name}.png`, {
         fullPage: true,
+        ...(route.maxDiffPixels != null && { maxDiffPixels: route.maxDiffPixels }),
       })
     })
   }

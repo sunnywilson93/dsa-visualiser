@@ -3050,6 +3050,421 @@ export const problemConcepts: Record<string, ProblemConcept> = {
       },
     ],
   },
+
+  // ==================== BINARY SEARCH PROBLEMS ====================
+
+  'binary-search-basic': {
+    title: 'Binary Search (Classic)',
+    keyInsight: 'Compare mid with target. If target < mid, search left half. If target > mid, search right half.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Initialize Pointers',
+        description: 'Set left=0, right=5. Target is 9.',
+        visual: {
+          array: [-1, 0, 3, 5, 9, 12],
+          pointers: { left: 0, right: 5 },
+          annotations: ['Target: 9'],
+        },
+      },
+      {
+        id: 2,
+        title: 'First Mid Calculation',
+        description: 'mid=(0+5)/2=2, arr[2]=3. 3 < 9, search right half.',
+        visual: {
+          array: [-1, 0, 3, 5, 9, 12],
+          pointers: { left: 0, right: 5, mid: 2 },
+          highlights: [2],
+          annotations: ['arr[2] = 3 < 9', 'Search right half →'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Narrow to Right',
+        description: 'left=3, mid=(3+5)/2=4, arr[4]=9. Found!',
+        visual: {
+          array: [-1, 0, 3, 5, 9, 12],
+          pointers: { left: 3, right: 5, mid: 4 },
+          highlights: [4],
+          annotations: ['arr[4] = 9 = target ✓'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Target Found',
+        description: 'arr[4]=9 equals target. Return index 4.',
+        visual: {
+          array: [-1, 0, 3, 5, 9, 12],
+          pointers: { left: 3, right: 5, mid: 4 },
+          highlights: [4],
+          result: 'Found at index 4',
+        },
+      },
+      {
+        id: 5,
+        title: 'Why O(log n)',
+        description: 'Halved from 6→3→1. Only 2 comparisons for 6 elements.',
+        visual: {
+          array: [-1, 0, 3, 5, 9, 12],
+          highlights: [4],
+          annotations: ['6 elements → 2 comparisons', 'O(log n) time'],
+          result: 'Index: 4',
+        },
+      },
+    ],
+  },
+
+  'search-insert-position': {
+    title: 'Search Insert Position',
+    keyInsight: 'When target is not found, left pointer lands exactly at the insertion point.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Initialize',
+        description: 'left=0, right=3. Searching for 2.',
+        visual: {
+          array: [1, 3, 5, 6],
+          pointers: { left: 0, right: 3 },
+          annotations: ['Target: 2'],
+        },
+      },
+      {
+        id: 2,
+        title: 'First Mid',
+        description: 'mid=1, arr[1]=3. 3 > 2, search left.',
+        visual: {
+          array: [1, 3, 5, 6],
+          pointers: { left: 0, right: 3, mid: 1 },
+          highlights: [1],
+          annotations: ['arr[1] = 3 > 2', '← Search left half'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Narrow Left',
+        description: 'right=0, mid=0, arr[0]=1. 1 < 2, search right.',
+        visual: {
+          array: [1, 3, 5, 6],
+          pointers: { left: 0, right: 0, mid: 0 },
+          highlights: [0],
+          annotations: ['arr[0] = 1 < 2', 'Search right half →'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Loop Ends',
+        description: 'left=1, right=0. left > right, loop exits. left=1 is insertion point.',
+        visual: {
+          array: [1, 3, 5, 6],
+          pointers: { left: 1, right: 0 },
+          annotations: ['left > right → loop ends', 'left = 1 is insert position'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'Insert 2 at index 1 to maintain sorted order: [1, 2, 3, 5, 6]',
+        visual: {
+          array: [1, 3, 5, 6],
+          highlights: [1],
+          annotations: ['[1, 2, 3, 5, 6]'],
+          result: 'Insert at index 1',
+        },
+      },
+    ],
+  },
+
+  'first-last-position': {
+    title: 'Find First and Last Position',
+    keyInsight: 'Run binary search twice: left-biased keeps searching left after finding target, right-biased keeps searching right.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Find first and last occurrence of 8 in sorted array.',
+        visual: {
+          array: [5, 7, 7, 8, 8, 10],
+          pointers: { left: 0, right: 5 },
+          annotations: ['Target: 8', 'Phase 1: Find first occurrence'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Find First: Mid=2',
+        description: 'arr[2]=7 < 8, search right.',
+        visual: {
+          array: [5, 7, 7, 8, 8, 10],
+          pointers: { left: 0, right: 5, mid: 2 },
+          highlights: [2],
+          annotations: ['arr[2] = 7 < 8', 'Search right half →'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Find First: Mid=4',
+        description: 'arr[4]=8 = target! But keep searching LEFT for earlier occurrence.',
+        visual: {
+          array: [5, 7, 7, 8, 8, 10],
+          pointers: { left: 3, right: 5, mid: 4 },
+          highlights: [4],
+          annotations: ['arr[4] = 8 = target', 'Keep searching left for first'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Find First: Result',
+        description: 'right=3, mid=3, arr[3]=8 = target. left=3, right=2. First occurrence at index 3.',
+        visual: {
+          array: [5, 7, 7, 8, 8, 10],
+          pointers: { left: 3, right: 3, mid: 3 },
+          highlights: [3],
+          annotations: ['First 8 at index 3'],
+          result: 'First: index 3',
+        },
+      },
+      {
+        id: 5,
+        title: 'Find Last: Reset',
+        description: 'Start Phase 2. left=0, right=5. Now search right-biased.',
+        visual: {
+          array: [5, 7, 7, 8, 8, 10],
+          pointers: { left: 0, right: 5 },
+          annotations: ['Phase 2: Find last occurrence'],
+        },
+      },
+      {
+        id: 6,
+        title: 'Find Last: Mid=4',
+        description: 'arr[4]=8 = target! Keep searching RIGHT for later occurrence.',
+        visual: {
+          array: [5, 7, 7, 8, 8, 10],
+          pointers: { left: 3, right: 5, mid: 4 },
+          highlights: [4],
+          annotations: ['arr[4] = 8 = target', 'Keep searching right for last'],
+        },
+      },
+      {
+        id: 7,
+        title: 'Result',
+        description: 'First at 3, Last at 4.',
+        visual: {
+          array: [5, 7, 7, 8, 8, 10],
+          highlights: [3, 4],
+          annotations: ['Range: [3, 4]'],
+          result: '[3, 4]',
+        },
+      },
+    ],
+  },
+
+  'search-rotated-array': {
+    title: 'Search in Rotated Sorted Array',
+    keyInsight: 'After rotation, one half around mid is always sorted. Check if target falls in the sorted half.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Initialize',
+        description: 'Rotated array. left=0, right=6. Looking for 0.',
+        visual: {
+          array: [4, 5, 6, 7, 0, 1, 2],
+          pointers: { left: 0, right: 6 },
+          annotations: ['Target: 0', 'Rotated at index 4'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Mid=3, arr[3]=7',
+        description: 'Left half [4,5,6,7] is sorted (arr[0]=4 <= arr[3]=7). Is target in [4..7]? No (0 < 4). Search right.',
+        visual: {
+          array: [4, 5, 6, 7, 0, 1, 2],
+          pointers: { left: 0, right: 6, mid: 3 },
+          highlights: [3],
+          annotations: ['Left half [4,5,6,7] is sorted', '0 not in [4..7] → search right'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Narrow Right',
+        description: 'left=4, right=6, mid=5, arr[5]=1. Left half [0,1] is sorted (arr[4]=0 <= arr[5]=1). Is 0 in [0..1]? Yes! Search left.',
+        visual: {
+          array: [4, 5, 6, 7, 0, 1, 2],
+          pointers: { left: 4, right: 6, mid: 5 },
+          highlights: [5],
+          annotations: ['Left half [0,1] is sorted', '0 is in [0..1] → search left'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Found',
+        description: 'left=4, right=4, mid=4, arr[4]=0 = target!',
+        visual: {
+          array: [4, 5, 6, 7, 0, 1, 2],
+          pointers: { left: 4, right: 4, mid: 4 },
+          highlights: [4],
+          annotations: ['arr[4] = 0 = target ✓'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'Target 0 found at index 4.',
+        visual: {
+          array: [4, 5, 6, 7, 0, 1, 2],
+          highlights: [4],
+          result: 'Found at index 4',
+        },
+      },
+      {
+        id: 6,
+        title: 'Key Takeaway',
+        description: 'One half is always sorted. Check if target is in the sorted range to decide direction.',
+        visual: {
+          array: [4, 5, 6, 7, 0, 1, 2],
+          annotations: ['One half is ALWAYS sorted', 'Check sorted half range to decide'],
+          result: 'Index: 4',
+        },
+      },
+    ],
+  },
+
+  'find-min-rotated': {
+    title: 'Find Minimum in Rotated Sorted Array',
+    keyInsight: 'If arr[mid] > arr[right], the minimum is in the right half (rotation point is there). Otherwise, it is in the left half including mid.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Initialize',
+        description: 'Rotated sorted array. Minimum is at the rotation point.',
+        visual: {
+          array: [3, 4, 5, 1, 2],
+          pointers: { left: 0, right: 4 },
+          annotations: ['Find rotation point (minimum)'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Mid=2, arr[2]=5',
+        description: 'arr[2]=5 > arr[4]=2. Minimum must be in right half.',
+        visual: {
+          array: [3, 4, 5, 1, 2],
+          pointers: { left: 0, right: 4, mid: 2 },
+          highlights: [2],
+          annotations: ['arr[2]=5 > arr[4]=2', 'Min is in right half →'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Narrow Right',
+        description: 'left=3, right=4, mid=3, arr[3]=1. arr[3]=1 <= arr[4]=2. Min is at mid or left of mid.',
+        visual: {
+          array: [3, 4, 5, 1, 2],
+          pointers: { left: 3, right: 4, mid: 3 },
+          highlights: [3],
+          annotations: ['arr[3]=1 ≤ arr[4]=2', '← Min is at mid or left'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Converged',
+        description: 'right=3, left=3. Pointers converge. arr[3]=1 is the minimum.',
+        visual: {
+          array: [3, 4, 5, 1, 2],
+          pointers: { left: 3, right: 3 },
+          highlights: [3],
+          annotations: ['Converged at index 3'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'Minimum is 1 at index 3 (the rotation point).',
+        visual: {
+          array: [3, 4, 5, 1, 2],
+          highlights: [3],
+          annotations: ['Rotation point found'],
+          result: 'Minimum: 1',
+        },
+      },
+    ],
+  },
+
+  'find-peak-element': {
+    title: 'Find Peak Element',
+    keyInsight: 'If the right neighbor is larger, a peak must exist to the right (array drops to -∞ at boundary). Always move uphill.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Initialize',
+        description: 'Find any peak (greater than both neighbors). nums[-1] = nums[n] = -∞.',
+        visual: {
+          array: [1, 2, 1, 3, 5, 6, 4],
+          pointers: { left: 0, right: 6 },
+          annotations: ['Any peak works', 'Boundary = -∞'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Mid=3, arr[3]=3',
+        description: 'arr[4]=5 > arr[3]=3. Going uphill to the right. Peak must exist right.',
+        visual: {
+          array: [1, 2, 1, 3, 5, 6, 4],
+          pointers: { left: 0, right: 6, mid: 3 },
+          highlights: [3],
+          annotations: ['arr[4]=5 > arr[3]=3', 'Uphill right → peak exists right'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Narrow Right',
+        description: 'left=4, right=6, mid=5, arr[5]=6. arr[6]=4 < arr[5]=6. Going downhill right. Peak is at mid or left.',
+        visual: {
+          array: [1, 2, 1, 3, 5, 6, 4],
+          pointers: { left: 4, right: 6, mid: 5 },
+          highlights: [5],
+          annotations: ['arr[6]=4 < arr[5]=6', 'Downhill right → peak at/before mid'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Narrow Left',
+        description: 'left=4, right=5, mid=4, arr[4]=5. arr[5]=6 > arr[4]=5. Uphill right.',
+        visual: {
+          array: [1, 2, 1, 3, 5, 6, 4],
+          pointers: { left: 4, right: 5, mid: 4 },
+          highlights: [4],
+          annotations: ['arr[5]=6 > arr[4]=5', 'Uphill right →'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Converged',
+        description: 'left=5, right=5. arr[5]=6 is a peak (6 > 5 and 6 > 4).',
+        visual: {
+          array: [1, 2, 1, 3, 5, 6, 4],
+          pointers: { left: 5, right: 5 },
+          highlights: [5],
+          annotations: ['6 > 5 (left) and 6 > 4 (right)'],
+        },
+      },
+      {
+        id: 6,
+        title: 'Result',
+        description: 'Peak found at index 5, value 6.',
+        visual: {
+          array: [1, 2, 1, 3, 5, 6, 4],
+          highlights: [5],
+          annotations: ['Always move uphill', 'Guaranteed to find a peak'],
+          result: 'Peak at index 5 (value: 6)',
+        },
+      },
+    ],
+  },
 }
 
 // ============================================================================
