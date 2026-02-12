@@ -8103,4 +8103,1002 @@ console.log("get(foo, 3):", tm.get("foo", 3));
     patternName: 'Binary Search (Boundary Finding)',
     whyItWorks: 'Values for each key are stored in timestamp order. Binary search finds the rightmost entry with timestamp <= the query timestamp.',
   },
+  {
+    id: 'reverse-linked-list',
+    name: 'Reverse Linked List',
+    category: 'linked-list',
+    categories: ['linked-list'],
+    difficulty: 'easy',
+    description: 'Reverse a singly linked list in-place using three pointers',
+    code: `// Reverse Linked List
+// Use three pointers: prev, curr, next
+
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function buildList(arr) {
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  for (let i = 0; i < arr.length; i++) {
+    curr.next = new ListNode(arr[i]);
+    curr = curr.next;
+  }
+  return dummy.next;
+}
+
+function printList(head) {
+  let vals = [];
+  let curr = head;
+  while (curr !== null) {
+    vals.push(curr.val);
+    curr = curr.next;
+  }
+  console.log("List:", vals.join(" -> "));
+}
+
+function reverseList(head) {
+  let prev = null;
+  let curr = head;
+
+  console.log("Original:");
+  printList(head);
+
+  while (curr !== null) {
+    let next = curr.next;
+    curr.next = prev;
+    console.log("Reversed node", curr.val, "| prev:", prev ? prev.val : "null");
+    prev = curr;
+    curr = next;
+  }
+
+  console.log("Reversed:");
+  printList(prev);
+  return prev;
+}
+
+let head = buildList([1, 2, 3, 4, 5]);
+reverseList(head);
+`,
+    approach: 'Walk the list with three pointers: prev (initially null), curr (initially head), and next (saved before rewiring). At each step, point curr.next back to prev, then advance prev and curr forward. When curr is null, prev is the new head.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Linked List (Reversal)',
+    whyItWorks: 'Each node is visited exactly once and its next pointer is redirected to the previous node. By the end of the traversal prev points to the last node visited, which is the new head of the reversed list.',
+  },
+  {
+    id: 'merge-two-sorted-lists',
+    name: 'Merge Two Sorted Lists',
+    category: 'linked-list',
+    categories: ['linked-list'],
+    difficulty: 'easy',
+    description: 'Merge two sorted linked lists into one sorted list',
+    code: `// Merge Two Sorted Lists
+// Use a dummy head node and compare nodes one by one
+
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function buildList(arr) {
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  for (let i = 0; i < arr.length; i++) {
+    curr.next = new ListNode(arr[i]);
+    curr = curr.next;
+  }
+  return dummy.next;
+}
+
+function printList(head) {
+  let vals = [];
+  let curr = head;
+  while (curr !== null) {
+    vals.push(curr.val);
+    curr = curr.next;
+  }
+  console.log("List:", vals.join(" -> "));
+}
+
+function mergeTwoLists(l1, l2) {
+  let dummy = new ListNode(0);
+  let tail = dummy;
+
+  console.log("List 1:");
+  printList(l1);
+  console.log("List 2:");
+  printList(l2);
+
+  while (l1 !== null && l2 !== null) {
+    if (l1.val <= l2.val) {
+      console.log("Pick", l1.val, "from list 1");
+      tail.next = l1;
+      l1 = l1.next;
+    } else {
+      console.log("Pick", l2.val, "from list 2");
+      tail.next = l2;
+      l2 = l2.next;
+    }
+    tail = tail.next;
+  }
+
+  if (l1 !== null) {
+    console.log("Append remaining from list 1");
+    tail.next = l1;
+  }
+  if (l2 !== null) {
+    console.log("Append remaining from list 2");
+    tail.next = l2;
+  }
+
+  console.log("Merged:");
+  printList(dummy.next);
+  return dummy.next;
+}
+
+let l1 = buildList([1, 3, 5]);
+let l2 = buildList([2, 4, 6]);
+mergeTwoLists(l1, l2);
+`,
+    approach: 'Create a dummy head node and a tail pointer. Compare the heads of both lists, attach the smaller node to tail, and advance that list pointer. When one list is exhausted, append the remaining nodes of the other.',
+    timeComplexity: 'O(n + m)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Linked List (Dummy Node + Merge)',
+    whyItWorks: 'Both input lists are already sorted. By always picking the smaller head node, the merged list maintains sorted order. The dummy node eliminates edge cases when the merged list is empty.',
+  },
+  {
+    id: 'linked-list-cycle',
+    name: 'Linked List Cycle',
+    category: 'linked-list',
+    categories: ['linked-list'],
+    difficulty: 'easy',
+    description: 'Detect if a linked list has a cycle using constant space',
+    code: `// Linked List Cycle
+// Floyd's tortoise and hare algorithm
+
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function hasCycle(head) {
+  let slow = head;
+  let fast = head;
+  let step = 0;
+
+  while (fast !== null && fast.next !== null) {
+    slow = slow.next;
+    fast = fast.next.next;
+    step++;
+    console.log("Step " + step + " | slow:", slow.val, "| fast:", fast ? fast.val : "null");
+
+    if (slow === fast) {
+      console.log("Cycle detected! slow and fast met at node", slow.val);
+      return true;
+    }
+  }
+
+  console.log("No cycle found");
+  return false;
+}
+
+// Build list WITHOUT cycle: 1 -> 2 -> 3 -> 4 -> null
+let n1 = new ListNode(1);
+let n2 = new ListNode(2);
+let n3 = new ListNode(3);
+let n4 = new ListNode(4);
+n1.next = n2;
+n2.next = n3;
+n3.next = n4;
+
+console.log("--- Test 1: no cycle ---");
+hasCycle(n1);
+
+// Build list WITH cycle: 1 -> 2 -> 3 -> 4 -> 2 (cycle)
+let c1 = new ListNode(1);
+let c2 = new ListNode(2);
+let c3 = new ListNode(3);
+let c4 = new ListNode(4);
+c1.next = c2;
+c2.next = c3;
+c3.next = c4;
+c4.next = c2;
+
+console.log("--- Test 2: cycle at node 2 ---");
+hasCycle(c1);
+`,
+    approach: 'Use two pointers: slow moves one step at a time, fast moves two steps. If a cycle exists, fast will eventually lap slow and they will meet. If fast reaches null, there is no cycle.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Linked List (Fast/Slow Runner)',
+    whyItWorks: 'In a cycle, the fast pointer closes the gap by one node per step. Since the gap shrinks monotonically, the two pointers are guaranteed to meet within one full traversal of the cycle.',
+  },
+  {
+    id: 'middle-of-linked-list',
+    name: 'Middle of Linked List',
+    category: 'linked-list',
+    categories: ['linked-list'],
+    difficulty: 'medium',
+    description: 'Find the middle node of a linked list in a single pass',
+    code: `// Middle of Linked List
+// Fast pointer moves 2x, slow ends at middle
+
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function buildList(arr) {
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  for (let i = 0; i < arr.length; i++) {
+    curr.next = new ListNode(arr[i]);
+    curr = curr.next;
+  }
+  return dummy.next;
+}
+
+function printList(head) {
+  let vals = [];
+  let curr = head;
+  while (curr !== null) {
+    vals.push(curr.val);
+    curr = curr.next;
+  }
+  console.log("List:", vals.join(" -> "));
+}
+
+function middleNode(head) {
+  let slow = head;
+  let fast = head;
+  let step = 0;
+
+  console.log("Input:");
+  printList(head);
+
+  while (fast !== null && fast.next !== null) {
+    slow = slow.next;
+    fast = fast.next.next;
+    step++;
+    console.log("Step " + step + " | slow:", slow.val, "| fast:", fast ? fast.val : "null");
+  }
+
+  console.log("Middle node:", slow.val);
+  return slow;
+}
+
+let head1 = buildList([1, 2, 3, 4, 5]);
+middleNode(head1);
+
+console.log("---");
+
+let head2 = buildList([1, 2, 3, 4, 5, 6]);
+middleNode(head2);
+`,
+    approach: 'Use two pointers starting at the head. Move slow one step and fast two steps on each iteration. When fast reaches the end, slow is at the middle. For even-length lists, this returns the second of the two middle nodes.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Linked List (Fast/Slow Runner)',
+    whyItWorks: 'The fast pointer traverses the list at double speed, so when it finishes the slow pointer has covered exactly half the distance, landing on the middle node.',
+  },
+  {
+    id: 'remove-nth-from-end',
+    name: 'Remove Nth Node from End',
+    category: 'linked-list',
+    categories: ['linked-list'],
+    difficulty: 'medium',
+    description: 'Remove the nth node from the end of a linked list in one pass',
+    code: `// Remove Nth Node from End
+// Advance fast pointer n steps first, then move both
+
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function buildList(arr) {
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  for (let i = 0; i < arr.length; i++) {
+    curr.next = new ListNode(arr[i]);
+    curr = curr.next;
+  }
+  return dummy.next;
+}
+
+function printList(head) {
+  let vals = [];
+  let curr = head;
+  while (curr !== null) {
+    vals.push(curr.val);
+    curr = curr.next;
+  }
+  console.log("List:", vals.join(" -> "));
+}
+
+function removeNthFromEnd(head, n) {
+  let dummy = new ListNode(0);
+  dummy.next = head;
+  let fast = dummy;
+  let slow = dummy;
+
+  console.log("Input:");
+  printList(head);
+  console.log("Remove nth from end, n =", n);
+
+  for (let i = 0; i <= n; i++) {
+    fast = fast.next;
+    console.log("Advance fast to:", fast ? fast.val : "null");
+  }
+
+  while (fast !== null) {
+    slow = slow.next;
+    fast = fast.next;
+    console.log("Move both | slow:", slow.val, "| fast:", fast ? fast.val : "null");
+  }
+
+  console.log("Removing node:", slow.next.val);
+  slow.next = slow.next.next;
+
+  console.log("Result:");
+  printList(dummy.next);
+  return dummy.next;
+}
+
+let head = buildList([1, 2, 3, 4, 5]);
+removeNthFromEnd(head, 2);
+`,
+    approach: 'Use a dummy node before the head to handle edge cases. Advance the fast pointer n+1 steps ahead so there is a gap of n nodes between fast and slow. Move both until fast reaches null. Slow is now just before the target node, so skip it.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Linked List (Two-Pointer Gap)',
+    whyItWorks: 'By maintaining a fixed gap of n nodes between fast and slow, when fast reaches the end of the list, slow is positioned exactly one node before the nth-from-end node, allowing a simple pointer rewire to remove it.',
+  },
+  {
+    id: 'add-two-numbers',
+    name: 'Add Two Numbers',
+    category: 'linked-list',
+    categories: ['linked-list'],
+    difficulty: 'medium',
+    description: 'Add two numbers represented as linked lists with digits in reverse order',
+    code: `// Add Two Numbers
+// Traverse both lists, sum digits + carry, build result list
+
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function buildList(arr) {
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  for (let i = 0; i < arr.length; i++) {
+    curr.next = new ListNode(arr[i]);
+    curr = curr.next;
+  }
+  return dummy.next;
+}
+
+function printList(head) {
+  let vals = [];
+  let curr = head;
+  while (curr !== null) {
+    vals.push(curr.val);
+    curr = curr.next;
+  }
+  console.log("List:", vals.join(" -> "));
+}
+
+function addTwoNumbers(l1, l2) {
+  let dummy = new ListNode(0);
+  let tail = dummy;
+  let carry = 0;
+
+  console.log("Number 1:");
+  printList(l1);
+  console.log("Number 2:");
+  printList(l2);
+
+  while (l1 !== null || l2 !== null || carry > 0) {
+    let v1 = l1 !== null ? l1.val : 0;
+    let v2 = l2 !== null ? l2.val : 0;
+    let sum = v1 + v2 + carry;
+    carry = Math.floor(sum / 10);
+    let digit = sum % 10;
+
+    console.log(v1, "+", v2, "+ carry", (sum - v1 - v2), "=", sum, "| digit:", digit, "| carry:", carry);
+
+    tail.next = new ListNode(digit);
+    tail = tail.next;
+
+    if (l1 !== null) l1 = l1.next;
+    if (l2 !== null) l2 = l2.next;
+  }
+
+  console.log("Result (342 + 465 = 807):");
+  printList(dummy.next);
+  return dummy.next;
+}
+
+let l1 = buildList([2, 4, 3]);
+let l2 = buildList([5, 6, 4]);
+addTwoNumbers(l1, l2);
+`,
+    approach: 'Use a dummy node to build the result list. Traverse both input lists simultaneously, summing corresponding digits plus any carry from the previous column. Create a new node for each digit and propagate the carry until both lists and the carry are exhausted.',
+    timeComplexity: 'O(max(n, m))',
+    spaceComplexity: 'O(max(n, m))',
+    patternName: 'Linked List (Dummy Node + Carry)',
+    whyItWorks: 'Since digits are stored in reverse order, the head of each list is the ones place, which is exactly where addition starts. Processing left to right mirrors grade-school addition from least significant to most significant digit.',
+  },
+  {
+    id: 'reorder-list',
+    name: 'Reorder List',
+    category: 'linked-list',
+    difficulty: 'medium',
+    description: 'Reorder list L0->L1->...->Ln to L0->Ln->L1->Ln-1->...',
+    code: `// Reorder List
+// Find middle, reverse second half, merge alternating
+
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function buildList(arr) {
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  for (let i = 0; i < arr.length; i++) {
+    curr.next = new ListNode(arr[i]);
+    curr = curr.next;
+  }
+  return dummy.next;
+}
+
+function printList(head) {
+  let vals = [];
+  let curr = head;
+  while (curr) {
+    vals.push(curr.val);
+    curr = curr.next;
+  }
+  console.log(vals.join(" -> "));
+}
+
+function reorderList(head) {
+  if (!head || !head.next) return;
+
+  console.log("Original list:");
+  printList(head);
+
+  // Step 1: Find middle using slow/fast pointers
+  let slow = head;
+  let fast = head;
+  while (fast.next && fast.next.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  console.log("Middle node:", slow.val);
+
+  // Step 2: Reverse the second half
+  let prev = null;
+  let curr = slow.next;
+  slow.next = null;
+  while (curr) {
+    let next = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+  }
+  let secondHalf = prev;
+  console.log("First half:");
+  printList(head);
+  console.log("Reversed second half:");
+  printList(secondHalf);
+
+  // Step 3: Merge alternating
+  let first = head;
+  let second = secondHalf;
+  while (second) {
+    let tmp1 = first.next;
+    let tmp2 = second.next;
+    first.next = second;
+    second.next = tmp1;
+    console.log("Merged:", first.val, "->", second.val);
+    first = tmp1;
+    second = tmp2;
+  }
+
+  console.log("Reordered list:");
+  printList(head);
+}
+
+let list = buildList([1, 2, 3, 4, 5]);
+reorderList(list);
+`,
+    approach: 'Three-step process: (1) find the middle node using slow/fast pointers, (2) reverse the second half of the list in place, (3) merge the two halves by alternating nodes from each. No extra space needed beyond pointers.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Linked List (Find Middle + Reverse + Merge)',
+    whyItWorks: 'Finding the middle splits the list into two equal halves. Reversing the second half lets us pair the first node with the last, second with second-to-last, etc. Alternating merge weaves them into the required order.',
+  },
+  {
+    id: 'swap-nodes-in-pairs',
+    name: 'Swap Nodes in Pairs',
+    category: 'linked-list',
+    difficulty: 'medium',
+    description: 'Swap every two adjacent nodes by rewiring pointers (not just swapping values)',
+    code: `// Swap Nodes in Pairs
+// Use a prev pointer to rewire each pair
+
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function buildList(arr) {
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  for (let i = 0; i < arr.length; i++) {
+    curr.next = new ListNode(arr[i]);
+    curr = curr.next;
+  }
+  return dummy.next;
+}
+
+function printList(head) {
+  let vals = [];
+  let curr = head;
+  while (curr) {
+    vals.push(curr.val);
+    curr = curr.next;
+  }
+  console.log(vals.join(" -> "));
+}
+
+function swapPairs(head) {
+  console.log("Original list:");
+  printList(head);
+
+  let dummy = new ListNode(0);
+  dummy.next = head;
+  let prev = dummy;
+
+  while (prev.next && prev.next.next) {
+    let first = prev.next;
+    let second = prev.next.next;
+
+    console.log("Swapping pair:", first.val, "and", second.val);
+
+    // Rewire pointers
+    first.next = second.next;
+    second.next = first;
+    prev.next = second;
+
+    console.log("  prev ->", second.val, "->", first.val, "->", (first.next ? first.next.val : "null"));
+
+    prev = first;
+  }
+
+  console.log("Result:");
+  printList(dummy.next);
+  return dummy.next;
+}
+
+swapPairs(buildList([1, 2, 3, 4]));
+console.log("");
+swapPairs(buildList([1, 2, 3, 4, 5]));
+`,
+    approach: 'Use a dummy node before the head. Walk through the list with a prev pointer. For each pair (first, second), rewire: prev.next = second, first.next = second.next, second.next = first. Advance prev to first (which is now the second node in the swapped pair).',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Linked List (Pointer Manipulation)',
+    whyItWorks: 'A dummy node simplifies head swaps. Each pair swap only needs three pointer reassignments. The prev pointer ensures the preceding node always links to the new front of each swapped pair.',
+  },
+  {
+    id: 'copy-list-random-pointer',
+    name: 'Copy List with Random Pointer',
+    category: 'linked-list',
+    difficulty: 'medium',
+    description: 'Deep copy a linked list where each node has a next and a random pointer',
+    code: `// Copy List with Random Pointer
+// Use a plain object as a map from original to cloned node
+
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+    this.random = null;
+  }
+}
+
+function copyRandomList(head) {
+  if (!head) return null;
+
+  console.log("Building clone map...");
+  let map = {};
+  let curr = head;
+  let id = 0;
+
+  // First pass: create cloned nodes and map originals to clones
+  while (curr) {
+    curr._id = id;
+    map[id] = new Node(curr.val);
+    console.log("  Clone node", id, "val:", curr.val);
+    curr = curr.next;
+    id++;
+  }
+
+  // Second pass: set next and random pointers
+  curr = head;
+  while (curr) {
+    let clone = map[curr._id];
+    if (curr.next) {
+      clone.next = map[curr.next._id];
+    }
+    if (curr.random) {
+      clone.random = map[curr.random._id];
+      console.log("  Node", curr._id, "(val:" + curr.val + ") random ->", curr.random._id, "(val:" + curr.random.val + ")");
+    } else {
+      console.log("  Node", curr._id, "(val:" + curr.val + ") random -> null");
+    }
+    curr = curr.next;
+  }
+
+  // Print cloned list
+  let cloneHead = map[0];
+  let c = cloneHead;
+  while (c) {
+    let randomVal = c.random ? c.random.val : "null";
+    console.log("Clone val:", c.val, "random:", randomVal);
+    c = c.next;
+  }
+
+  console.log("Deep copy complete. Original and clone are independent.");
+  return cloneHead;
+}
+
+// Build test case: [7,13,11,10,1]
+// random pointers: 7->null, 13->7, 11->1, 10->11, 1->7
+let n0 = new Node(7);
+let n1 = new Node(13);
+let n2 = new Node(11);
+let n3 = new Node(10);
+let n4 = new Node(1);
+n0.next = n1; n1.next = n2; n2.next = n3; n3.next = n4;
+n0.random = null;
+n1.random = n0;
+n2.random = n4;
+n3.random = n2;
+n4.random = n0;
+
+console.log("Original list: 7 -> 13 -> 11 -> 10 -> 1");
+let cloned = copyRandomList(n0);
+`,
+    approach: 'Two-pass approach using a hash map. First pass: iterate through the original list and create a clone of each node, storing the mapping in a plain object keyed by node ID. Second pass: iterate again to set next and random pointers on each clone using the map.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Linked List (Hash Map Clone)',
+    whyItWorks: 'The map provides O(1) lookup from any original node to its clone. The first pass ensures every clone exists before the second pass wires up next and random pointers, which may point to any node in the list.',
+  },
+  {
+    id: 'reverse-nodes-k-group',
+    name: 'Reverse Nodes in k-Group',
+    category: 'linked-list',
+    difficulty: 'hard',
+    description: 'Reverse the nodes of a linked list k at a time and return the modified list',
+    code: `// Reverse Nodes in k-Group
+// Check if k nodes remain, reverse them, connect groups
+
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function buildList(arr) {
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  for (let i = 0; i < arr.length; i++) {
+    curr.next = new ListNode(arr[i]);
+    curr = curr.next;
+  }
+  return dummy.next;
+}
+
+function printList(head) {
+  let vals = [];
+  let curr = head;
+  while (curr) {
+    vals.push(curr.val);
+    curr = curr.next;
+  }
+  console.log(vals.join(" -> "));
+}
+
+function reverseKGroup(head, k) {
+  console.log("Original list:");
+  printList(head);
+  console.log("k =", k);
+  console.log("");
+
+  let dummy = new ListNode(0);
+  dummy.next = head;
+  let groupPrev = dummy;
+  let groupNum = 0;
+
+  while (true) {
+    // Check if k nodes remain
+    let kth = groupPrev;
+    for (let i = 0; i < k; i++) {
+      kth = kth.next;
+      if (!kth) {
+        console.log("Fewer than k nodes remain, done.");
+        printList(dummy.next);
+        return dummy.next;
+      }
+    }
+    let groupNext = kth.next;
+    groupNum++;
+    console.log("Group", groupNum + ": reversing", k, "nodes");
+
+    // Reverse k nodes
+    let prev = groupNext;
+    let curr = groupPrev.next;
+    for (let i = 0; i < k; i++) {
+      let next = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = next;
+    }
+
+    // Connect to previous group
+    let tail = groupPrev.next;
+    groupPrev.next = prev;
+    groupPrev = tail;
+
+    console.log("  After reversing group", groupNum + ":");
+    printList(dummy.next);
+  }
+}
+
+reverseKGroup(buildList([1, 2, 3, 4, 5]), 3);
+console.log("");
+reverseKGroup(buildList([1, 2, 3, 4, 5]), 2);
+`,
+    approach: 'Use a dummy node and process the list in groups of k. For each group: (1) check if k nodes remain by advancing a pointer k times, (2) reverse the k nodes in place, (3) connect the reversed group to the previous group tail. If fewer than k nodes remain, leave them as-is.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Linked List (K-Group Reversal)',
+    whyItWorks: 'Each node is visited at most twice (once to count, once to reverse). The groupPrev pointer tracks where the reversed group should be attached, ensuring groups connect correctly. Leftover nodes stay in original order.',
+  },
+  {
+    id: 'merge-k-sorted-lists',
+    name: 'Merge k Sorted Lists',
+    category: 'linked-list',
+    difficulty: 'hard',
+    description: 'Merge k sorted linked lists into one sorted linked list using divide and conquer',
+    code: `// Merge k Sorted Lists
+// Divide and conquer: recursively merge pairs
+
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function buildList(arr) {
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  for (let i = 0; i < arr.length; i++) {
+    curr.next = new ListNode(arr[i]);
+    curr = curr.next;
+  }
+  return dummy.next;
+}
+
+function printList(head) {
+  let vals = [];
+  let curr = head;
+  while (curr) {
+    vals.push(curr.val);
+    curr = curr.next;
+  }
+  console.log(vals.join(" -> "));
+}
+
+function mergeTwoLists(l1, l2) {
+  let dummy = new ListNode(0);
+  let curr = dummy;
+  while (l1 && l2) {
+    if (l1.val <= l2.val) {
+      curr.next = l1;
+      l1 = l1.next;
+    } else {
+      curr.next = l2;
+      l2 = l2.next;
+    }
+    curr = curr.next;
+  }
+  curr.next = l1 ? l1 : l2;
+  return dummy.next;
+}
+
+function mergeKLists(lists) {
+  if (lists.length === 0) return null;
+
+  console.log("Merging", lists.length, "lists:");
+  for (let i = 0; i < lists.length; i++) {
+    let vals = [];
+    let curr = lists[i];
+    while (curr) {
+      vals.push(curr.val);
+      curr = curr.next;
+    }
+    console.log("  List " + i + ": " + vals.join(" -> "));
+  }
+  console.log("");
+
+  let interval = 1;
+  let round = 0;
+  while (interval < lists.length) {
+    round++;
+    console.log("Round", round + ": merging pairs with interval", interval);
+    for (let i = 0; i + interval < lists.length; i = i + interval * 2) {
+      console.log("  Merging list", i, "with list", (i + interval));
+      lists[i] = mergeTwoLists(lists[i], lists[i + interval]);
+    }
+    interval = interval * 2;
+  }
+
+  console.log("");
+  console.log("Final merged list:");
+  printList(lists[0]);
+  return lists[0];
+}
+
+let lists = [
+  buildList([1, 4, 5]),
+  buildList([1, 3, 4]),
+  buildList([2, 6])
+];
+mergeKLists(lists);
+`,
+    approach: 'Use iterative divide and conquer. Merge pairs of adjacent lists in each round, doubling the interval each time. This reduces k lists to 1 in O(log k) rounds. Each round processes all N total nodes once via the two-list merge.',
+    timeComplexity: 'O(N log k)',
+    spaceComplexity: 'O(log k)',
+    patternName: 'Linked List (Divide & Conquer Merge)',
+    whyItWorks: 'Merging pairs halves the number of lists each round, giving log k rounds. Each round touches all N nodes exactly once. This is more efficient than merging one list at a time, which would be O(N*k).',
+  },
+  {
+    id: 'lru-cache',
+    name: 'LRU Cache',
+    category: 'linked-list',
+    difficulty: 'hard',
+    description: 'Implement an LRU Cache with O(1) get and put using a doubly linked list and hash map',
+    code: `// LRU Cache
+// Doubly linked list for order + plain object for O(1) lookup
+
+class DLLNode {
+  constructor(key, val) {
+    this.key = key;
+    this.val = val;
+    this.prev = null;
+    this.next = null;
+  }
+}
+
+class LRUCache {
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.map = {};
+    this.size = 0;
+    // Sentinel nodes to avoid null checks
+    this.head = new DLLNode(0, 0);
+    this.tail = new DLLNode(0, 0);
+    this.head.next = this.tail;
+    this.tail.prev = this.head;
+    console.log("LRU Cache created with capacity:", capacity);
+  }
+
+  _addToFront(node) {
+    node.next = this.head.next;
+    node.prev = this.head;
+    this.head.next.prev = node;
+    this.head.next = node;
+  }
+
+  _removeNode(node) {
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+  }
+
+  _moveToFront(node) {
+    this._removeNode(node);
+    this._addToFront(node);
+  }
+
+  _evictLRU() {
+    let lru = this.tail.prev;
+    console.log("  Evicting LRU key:", lru.key, "val:", lru.val);
+    this._removeNode(lru);
+    delete this.map[lru.key];
+    this.size--;
+  }
+
+  get(key) {
+    if (this.map[key] !== undefined) {
+      let node = this.map[key];
+      this._moveToFront(node);
+      console.log("get(" + key + ") =>", node.val, "(moved to front)");
+      return node.val;
+    }
+    console.log("get(" + key + ") => -1 (not found)");
+    return -1;
+  }
+
+  put(key, value) {
+    console.log("put(" + key + ",", value + ")");
+    if (this.map[key] !== undefined) {
+      let node = this.map[key];
+      node.val = value;
+      this._moveToFront(node);
+      console.log("  Updated existing key", key);
+    } else {
+      if (this.size === this.capacity) {
+        this._evictLRU();
+      }
+      let node = new DLLNode(key, value);
+      this.map[key] = node;
+      this._addToFront(node);
+      this.size++;
+      console.log("  Inserted new key", key);
+    }
+    this._printOrder();
+  }
+
+  _printOrder() {
+    let order = [];
+    let curr = this.head.next;
+    while (curr !== this.tail) {
+      order.push("(" + curr.key + ":" + curr.val + ")");
+      curr = curr.next;
+    }
+    console.log("  Order (MRU->LRU):", order.join(" -> "));
+  }
+}
+
+let cache = new LRUCache(2);
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);
+cache.put(3, 3);
+cache.get(2);
+cache.get(3);
+`,
+    approach: 'Combine a doubly linked list (for O(1) insert/remove/reorder) with a plain object hash map (for O(1) key lookup). The list maintains access order: most recently used at the front, least recently used at the back. Sentinel head/tail nodes eliminate null-check edge cases.',
+    timeComplexity: 'O(1) per get/put',
+    spaceComplexity: 'O(capacity)',
+    patternName: 'Linked List (Doubly LL + Hash Map)',
+    whyItWorks: 'The hash map gives O(1) access to any node by key. The doubly linked list gives O(1) removal and insertion at any position. Together they maintain LRU order: every access moves the node to the front, and eviction always removes from the back.',
+  },
 ]

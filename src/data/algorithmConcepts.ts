@@ -3465,6 +3465,1445 @@ export const problemConcepts: Record<string, ProblemConcept> = {
       },
     ],
   },
+
+  // ==================== LINKED LIST PROBLEMS ====================
+
+  'reverse-linked-list': {
+    title: 'Reverse Linked List',
+    keyInsight: 'Three pointers (prev, curr, next) walk through the list, flipping each arrow backward',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Initialize prev = null, curr = head. We will flip each arrow from curr to prev.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { prev: 'null', curr: 'n1' },
+            highlightNodes: ['n1'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Reverse First Arrow',
+        description: 'Save next = 2. Point 1→null. Move prev to 1, curr to 2.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: null },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { prev: 'n1', curr: 'n2' },
+            highlightNodes: ['n1', 'n2'],
+            highlightEdges: [['n1', 'null']],
+            annotations: ['1 → null'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Reverse Second Arrow',
+        description: 'Save next = 3. Point 2→1. Move prev to 2, curr to 3.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: null },
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { prev: 'n2', curr: 'n3' },
+            highlightNodes: ['n2', 'n3'],
+            highlightEdges: [['n2', 'n1']],
+            annotations: ['2 → 1'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'Reverse Third Arrow',
+        description: 'Save next = 4. Point 3→2. Move prev to 3, curr to 4.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: null },
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n3', value: 3, next: 'n2' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { prev: 'n3', curr: 'n4' },
+            highlightNodes: ['n3', 'n4'],
+            highlightEdges: [['n3', 'n2']],
+            annotations: ['3 → 2'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'Reverse Fourth Arrow',
+        description: 'Save next = 5. Point 4→3. Move prev to 4, curr to 5.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: null },
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n3', value: 3, next: 'n2' },
+              { id: 'n4', value: 4, next: 'n3' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { prev: 'n4', curr: 'n5' },
+            highlightNodes: ['n4', 'n5'],
+            highlightEdges: [['n4', 'n3']],
+            annotations: ['4 → 3'],
+          },
+        },
+      },
+      {
+        id: 6,
+        title: 'Done — List Reversed',
+        description: 'Point 5→4. curr becomes null, prev is the new head.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n5', value: 5, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n1', value: 1, next: null },
+            ],
+            pointers: { head: 'n5' },
+            highlightNodes: ['n5'],
+            annotations: ['New head = 5'],
+          },
+          result: '5 → 4 → 3 → 2 → 1',
+        },
+      },
+    ],
+  },
+
+  'merge-two-sorted-lists': {
+    title: 'Merge Two Sorted Lists',
+    keyInsight: 'Dummy head eliminates edge cases; always attach the smaller node',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Two sorted lists and a dummy node. Tail pointer starts at dummy.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: null },
+            ],
+            secondList: [
+              { id: 'm1', value: 2, next: 'm2' },
+              { id: 'm2', value: 4, next: 'm3' },
+              { id: 'm3', value: 6, next: null },
+            ],
+            detachedNodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 3, next: 'n3' },
+              { id: 'n3', value: 5, next: null },
+            ],
+            pointers: { tail: 'd0', p1: 'n1', p2: 'm1' },
+            annotations: ['List 1: [1,3,5]', 'List 2: [2,4,6]'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Compare 1 vs 2',
+        description: '1 < 2, attach node 1 to tail. Advance p1 to 3.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n1' },
+              { id: 'n1', value: 1, next: null },
+            ],
+            secondList: [
+              { id: 'm1', value: 2, next: 'm2' },
+              { id: 'm2', value: 4, next: 'm3' },
+              { id: 'm3', value: 6, next: null },
+            ],
+            detachedNodes: [
+              { id: 'n2', value: 3, next: 'n3' },
+              { id: 'n3', value: 5, next: null },
+            ],
+            pointers: { tail: 'n1', p1: 'n2', p2: 'm1' },
+            highlightNodes: ['n1'],
+            annotations: ['1 < 2 → attach 1'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Compare 3 vs 2',
+        description: '2 < 3, attach node 2. Advance p2 to 4.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n1' },
+              { id: 'n1', value: 1, next: 'm1' },
+              { id: 'm1', value: 2, next: null },
+            ],
+            secondList: [
+              { id: 'm2', value: 4, next: 'm3' },
+              { id: 'm3', value: 6, next: null },
+            ],
+            detachedNodes: [
+              { id: 'n2', value: 3, next: 'n3' },
+              { id: 'n3', value: 5, next: null },
+            ],
+            pointers: { tail: 'm1', p1: 'n2', p2: 'm2' },
+            highlightNodes: ['m1'],
+            annotations: ['2 < 3 → attach 2'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'Compare 3 vs 4',
+        description: '3 < 4, attach node 3. Advance p1 to 5.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n1' },
+              { id: 'n1', value: 1, next: 'm1' },
+              { id: 'm1', value: 2, next: 'n2' },
+              { id: 'n2', value: 3, next: null },
+            ],
+            secondList: [
+              { id: 'm2', value: 4, next: 'm3' },
+              { id: 'm3', value: 6, next: null },
+            ],
+            detachedNodes: [
+              { id: 'n3', value: 5, next: null },
+            ],
+            pointers: { tail: 'n2', p1: 'n3', p2: 'm2' },
+            highlightNodes: ['n2'],
+            annotations: ['3 < 4 → attach 3'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'Attach Remaining',
+        description: 'Continue comparing: 4 < 5 → attach 4, then 5 < 6 → attach 5, then attach 6.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n1' },
+              { id: 'n1', value: 1, next: 'm1' },
+              { id: 'm1', value: 2, next: 'n2' },
+              { id: 'n2', value: 3, next: 'm2' },
+              { id: 'm2', value: 4, next: 'n3' },
+              { id: 'n3', value: 5, next: 'm3' },
+              { id: 'm3', value: 6, next: null },
+            ],
+            pointers: { tail: 'm3' },
+            highlightNodes: ['m2', 'n3', 'm3'],
+            annotations: ['4, 5, 6 attached in order'],
+          },
+        },
+      },
+      {
+        id: 6,
+        title: 'Result',
+        description: 'Return dummy.next. Merged list is sorted.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'm1' },
+              { id: 'm1', value: 2, next: 'n2' },
+              { id: 'n2', value: 3, next: 'm2' },
+              { id: 'm2', value: 4, next: 'n3' },
+              { id: 'n3', value: 5, next: 'm3' },
+              { id: 'm3', value: 6, next: null },
+            ],
+            pointers: { head: 'n1' },
+            highlightNodes: ['n1'],
+          },
+          result: '1 → 2 → 3 → 4 → 5 → 6',
+        },
+      },
+    ],
+  },
+
+  'linked-list-cycle': {
+    title: 'Linked List Cycle',
+    keyInsight: 'Fast moves 2x; if there\'s a cycle, fast laps slow — they MUST meet',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'List has a cycle: 5→3. Slow and fast both start at head.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: 'n3' },
+            ],
+            pointers: { slow: 'n1', fast: 'n1' },
+            cycleTarget: 'n3',
+            annotations: ['Cycle: 5 → 3'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Step 1',
+        description: 'Slow moves to 2. Fast moves to 3 (two steps).',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: 'n3' },
+            ],
+            pointers: { slow: 'n2', fast: 'n3' },
+            cycleTarget: 'n3',
+            highlightNodes: ['n2', 'n3'],
+            annotations: ['Slow: 1→2', 'Fast: 1→2→3'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Step 2',
+        description: 'Slow moves to 3. Fast moves to 5 (two steps: 3→4→5).',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: 'n3' },
+            ],
+            pointers: { slow: 'n3', fast: 'n5' },
+            cycleTarget: 'n3',
+            highlightNodes: ['n3', 'n5'],
+            annotations: ['Slow: 2→3', 'Fast: 3→4→5'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'They Meet!',
+        description: 'Slow moves to 4. Fast moves to 4 (two steps: 5→3→4). They collide at node 4.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: 'n3' },
+            ],
+            pointers: { slow: 'n4', fast: 'n4' },
+            cycleTarget: 'n3',
+            highlightNodes: ['n4'],
+            annotations: ['Slow: 3→4', 'Fast: 5→3→4', 'COLLISION!'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'Cycle Detected',
+        description: 'Slow and fast met, confirming a cycle exists. Return true.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: 'n3' },
+            ],
+            cycleTarget: 'n3',
+            highlightNodes: ['n3', 'n4', 'n5'],
+            annotations: ['Cycle in nodes 3→4→5→3'],
+          },
+          result: true,
+        },
+      },
+    ],
+  },
+
+  'middle-of-linked-list': {
+    title: 'Middle of Linked List',
+    keyInsight: 'When fast reaches the end, slow is exactly at the middle',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Both slow and fast start at head node 1.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { slow: 'n1', fast: 'n1' },
+            highlightNodes: ['n1'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Step 1',
+        description: 'Slow moves to 2. Fast jumps to 3.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { slow: 'n2', fast: 'n3' },
+            highlightNodes: ['n2', 'n3'],
+            annotations: ['Slow +1', 'Fast +2'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Step 2',
+        description: 'Slow moves to 3. Fast jumps to 5.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { slow: 'n3', fast: 'n5' },
+            highlightNodes: ['n3', 'n5'],
+            annotations: ['Slow +1', 'Fast +2'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'Fast at End',
+        description: 'Fast has reached the last node (no next). Slow is at the middle.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { slow: 'n3', fast: 'n5' },
+            highlightNodes: ['n3'],
+            annotations: ['Fast at end → slow is middle'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'Middle node is 3. Return the sublist starting from node 3.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            highlightNodes: ['n3', 'n4', 'n5'],
+            annotations: ['Middle → [3, 4, 5]'],
+          },
+          result: 'Middle node: 3',
+        },
+      },
+    ],
+  },
+
+  'remove-nth-from-end': {
+    title: 'Remove Nth Node From End',
+    keyInsight: 'Create an N-node gap between two pointers, then the trailing pointer lands at the target',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup with Dummy',
+        description: 'Add dummy before head. Both pointers start at dummy. n=2 means remove 2nd from end.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n1' },
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { fast: 'd0', slow: 'd0' },
+            annotations: ['n = 2'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Advance Fast by N',
+        description: 'Move fast 2 steps ahead to create the gap.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n1' },
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { fast: 'n2', slow: 'd0' },
+            highlightNodes: ['n2'],
+            annotations: ['Gap = 2 nodes'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Move Both Together',
+        description: 'Move both pointers one step at a time until fast reaches the end.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n1' },
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { fast: 'n4', slow: 'n2' },
+            highlightNodes: ['n2', 'n4'],
+            annotations: ['Both move together'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'Fast at End',
+        description: 'Fast at node 5 (last). Slow is at node 3, one before the target.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n1' },
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { fast: 'n5', slow: 'n3' },
+            highlightNodes: ['n3', 'n4', 'n5'],
+            annotations: ['Slow.next = target (4)'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'Remove Node',
+        description: 'Set slow.next = slow.next.next, skipping node 4.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n1' },
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { slow: 'n3' },
+            highlightNodes: ['n3', 'n5'],
+            highlightEdges: [['n3', 'n5']],
+            annotations: ['3.next = 5 (skip 4)'],
+          },
+        },
+      },
+      {
+        id: 6,
+        title: 'Result',
+        description: 'Node 4 removed. Return dummy.next as new head.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { head: 'n1' },
+          },
+          result: '1 → 2 → 3 → 5',
+        },
+      },
+    ],
+  },
+
+  'add-two-numbers': {
+    title: 'Add Two Numbers',
+    keyInsight: 'Process digit by digit with carry, like grade-school addition on linked lists',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Two numbers in reverse digit order: 342 as [2,4,3] and 465 as [5,6,4].',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 2, next: 'n2' },
+              { id: 'n2', value: 4, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            secondList: [
+              { id: 'm1', value: 5, next: 'm2' },
+              { id: 'm2', value: 6, next: 'm3' },
+              { id: 'm3', value: 4, next: null },
+            ],
+            pointers: { p1: 'n1', p2: 'm1' },
+            annotations: ['342 + 465 = ?', 'carry = 0'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Digit 1: 2 + 5 = 7',
+        description: '2 + 5 + carry(0) = 7. No carry. Create result node 7.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 2, next: 'n2' },
+              { id: 'n2', value: 4, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            secondList: [
+              { id: 'm1', value: 5, next: 'm2' },
+              { id: 'm2', value: 6, next: 'm3' },
+              { id: 'm3', value: 4, next: null },
+            ],
+            detachedNodes: [
+              { id: 'r1', value: 7, next: null },
+            ],
+            pointers: { p1: 'n2', p2: 'm2' },
+            highlightNodes: ['n1', 'm1', 'r1'],
+            annotations: ['2 + 5 = 7', 'carry = 0'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Digit 2: 4 + 6 = 10',
+        description: '4 + 6 + carry(0) = 10. Write 0, carry 1.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 2, next: 'n2' },
+              { id: 'n2', value: 4, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            secondList: [
+              { id: 'm1', value: 5, next: 'm2' },
+              { id: 'm2', value: 6, next: 'm3' },
+              { id: 'm3', value: 4, next: null },
+            ],
+            detachedNodes: [
+              { id: 'r1', value: 7, next: 'r2' },
+              { id: 'r2', value: 0, next: null },
+            ],
+            pointers: { p1: 'n3', p2: 'm3' },
+            highlightNodes: ['n2', 'm2', 'r2'],
+            annotations: ['4 + 6 = 10', 'carry = 1'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'Digit 3: 3 + 4 + 1 = 8',
+        description: '3 + 4 + carry(1) = 8. No carry. Create result node 8.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 2, next: 'n2' },
+              { id: 'n2', value: 4, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            secondList: [
+              { id: 'm1', value: 5, next: 'm2' },
+              { id: 'm2', value: 6, next: 'm3' },
+              { id: 'm3', value: 4, next: null },
+            ],
+            detachedNodes: [
+              { id: 'r1', value: 7, next: 'r2' },
+              { id: 'r2', value: 0, next: 'r3' },
+              { id: 'r3', value: 8, next: null },
+            ],
+            highlightNodes: ['n3', 'm3', 'r3'],
+            annotations: ['3 + 4 + 1 = 8', 'carry = 0'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'All Digits Processed',
+        description: 'Both lists exhausted, no remaining carry.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'r1', value: 7, next: 'r2' },
+              { id: 'r2', value: 0, next: 'r3' },
+              { id: 'r3', value: 8, next: null },
+            ],
+            pointers: { head: 'r1' },
+            highlightNodes: ['r1', 'r2', 'r3'],
+            annotations: ['Result: 807'],
+          },
+        },
+      },
+      {
+        id: 6,
+        title: 'Result',
+        description: '342 + 465 = 807, stored as [7, 0, 8] in reverse order.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'r1', value: 7, next: 'r2' },
+              { id: 'r2', value: 0, next: 'r3' },
+              { id: 'r3', value: 8, next: null },
+            ],
+            pointers: { head: 'r1' },
+          },
+          result: '7 → 0 → 8 (807)',
+        },
+      },
+    ],
+  },
+
+  'reorder-list': {
+    title: 'Reorder List',
+    keyInsight: 'Find middle → reverse second half → merge alternating = three classic patterns in one',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Original List',
+        description: 'We need to reorder [1,2,3,4,5] into [1,5,2,4,3].',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            annotations: ['Goal: L0→Ln→L1→Ln-1→...'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Find Middle',
+        description: 'Use slow/fast pointers. Middle is node 3. Split into [1,2,3] and [4,5].',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            secondList: [
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            highlightNodes: ['n3'],
+            annotations: ['First half: [1,2,3]', 'Second half: [4,5]'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Reverse Second Half',
+        description: 'Reverse [4,5] to get [5,4].',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            secondList: [
+              { id: 'n5', value: 5, next: 'n4' },
+              { id: 'n4', value: 4, next: null },
+            ],
+            highlightNodes: ['n5', 'n4'],
+            annotations: ['Reversed: [5,4]'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'Merge Step 1',
+        description: 'Interleave: take 1 from first, 5 from second, 2 from first, 4 from second.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n5' },
+              { id: 'n5', value: 5, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            highlightNodes: ['n1', 'n5', 'n2', 'n4'],
+            highlightEdges: [['n1', 'n5'], ['n5', 'n2'], ['n2', 'n4']],
+            annotations: ['1→5→2→4→...'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'Merge Step 2',
+        description: 'Node 3 is the last remaining node, attached at the end.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n5' },
+              { id: 'n5', value: 5, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            highlightNodes: ['n3'],
+            highlightEdges: [['n4', 'n3']],
+            annotations: ['...4→3'],
+          },
+        },
+      },
+      {
+        id: 6,
+        title: 'Done',
+        description: 'List reordered in-place to [1,5,2,4,3].',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n5' },
+              { id: 'n5', value: 5, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            pointers: { head: 'n1' },
+          },
+          result: '1 → 5 → 2 → 4 → 3',
+        },
+      },
+    ],
+  },
+
+  'swap-nodes-in-pairs': {
+    title: 'Swap Nodes in Pairs',
+    keyInsight: 'Rewire prev→second→first→rest for each pair; a dummy node handles the head swap',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup with Dummy',
+        description: 'Add dummy before [1,2,3,4]. prev starts at dummy.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n1' },
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: null },
+            ],
+            pointers: { prev: 'd0' },
+            annotations: ['Pairs: (1,2) and (3,4)'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Swap Pair (1, 2)',
+        description: 'first=1, second=2. Rewire: D→2→1→3. prev moves to node 1.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n2' },
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n1', value: 1, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: null },
+            ],
+            pointers: { prev: 'n1' },
+            highlightNodes: ['n1', 'n2'],
+            highlightEdges: [['d0', 'n2'], ['n2', 'n1'], ['n1', 'n3']],
+            annotations: ['D→2→1→3'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Swap Pair (3, 4)',
+        description: 'first=3, second=4. Rewire: 1→4→3→null. prev moves to node 3.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n2' },
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n1', value: 1, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            pointers: { prev: 'n3' },
+            highlightNodes: ['n3', 'n4'],
+            highlightEdges: [['n1', 'n4'], ['n4', 'n3']],
+            annotations: ['1→4→3→null'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'No More Pairs',
+        description: 'No more nodes to swap. All pairs are processed.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'd0', value: 'D', next: 'n2' },
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n1', value: 1, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            annotations: ['All pairs swapped'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'Return dummy.next. [1,2,3,4] became [2,1,4,3].',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n1', value: 1, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            pointers: { head: 'n2' },
+          },
+          result: '2 → 1 → 4 → 3',
+        },
+      },
+    ],
+  },
+
+  'copy-list-random-pointer': {
+    title: 'Copy List with Random Pointer',
+    keyInsight: 'Hash map from original→clone lets you wire random pointers in a second pass',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Original List',
+        description: 'Each node has next and random pointers. Random: 1→3, 2→1, 3→2.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            annotations: ['Random: 1→3, 2→1, 3→2'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Pass 1: Create Clone Nodes',
+        description: 'Iterate through the list, create a clone for each node. Store original→clone in a map.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            detachedNodes: [
+              { id: 'r1', value: 1, next: null },
+              { id: 'r2', value: 2, next: null },
+              { id: 'r3', value: 3, next: null },
+            ],
+            highlightNodes: ['r1', 'r2', 'r3'],
+            annotations: ['Map: n1→r1, n2→r2, n3→r3'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Pass 2: Wire Next Pointers',
+        description: 'For each original node, set clone.next = map[original.next].',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            detachedNodes: [
+              { id: 'r1', value: 1, next: 'r2' },
+              { id: 'r2', value: 2, next: 'r3' },
+              { id: 'r3', value: 3, next: null },
+            ],
+            highlightEdges: [['r1', 'r2'], ['r2', 'r3']],
+            annotations: ['Next pointers wired'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'Pass 2: Wire Random Pointers',
+        description: 'For each original node, set clone.random = map[original.random].',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: null },
+            ],
+            detachedNodes: [
+              { id: 'r1', value: 1, next: 'r2' },
+              { id: 'r2', value: 2, next: 'r3' },
+              { id: 'r3', value: 3, next: null },
+            ],
+            highlightNodes: ['r1', 'r2', 'r3'],
+            annotations: ['Random: r1→r3, r2→r1, r3→r2', 'Deep copy complete'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'Return the cloned head. Deep copy with both next and random pointers.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'r1', value: 1, next: 'r2' },
+              { id: 'r2', value: 2, next: 'r3' },
+              { id: 'r3', value: 3, next: null },
+            ],
+            pointers: { head: 'r1' },
+            annotations: ['Random: 1→3, 2→1, 3→2'],
+          },
+          result: 'Deep copy with random pointers',
+        },
+      },
+    ],
+  },
+
+  'reverse-nodes-k-group': {
+    title: 'Reverse Nodes in K-Group',
+    keyInsight: 'Count k nodes ahead, reverse that segment, connect to the result of the next group',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'List [1,2,3,4,5] with k=3. Reverse groups of 3.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            annotations: ['k = 3', 'Group 1: [1,2,3]', 'Remaining: [4,5]'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Count K=3 Nodes',
+        description: 'Count ahead: 1, 2, 3. We have k nodes, so reverse this group.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n3' },
+              { id: 'n3', value: 3, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            highlightNodes: ['n1', 'n2', 'n3'],
+            annotations: ['3 nodes found → reverse'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Reverse Group 1',
+        description: 'Reverse [1,2,3] to [3,2,1]. Node 1 will later connect to the next group.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n3', value: 3, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n1', value: 1, next: null },
+            ],
+            secondList: [
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            highlightNodes: ['n3', 'n2', 'n1'],
+            highlightEdges: [['n3', 'n2'], ['n2', 'n1']],
+            annotations: ['Group 1 reversed: [3,2,1]'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'Connect Groups',
+        description: 'Link the tail of reversed group (node 1) to the next group (node 4).',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n3', value: 3, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n1', value: 1, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            highlightEdges: [['n1', 'n4']],
+            annotations: ['1 → 4 (connect groups)'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'Check Remaining',
+        description: 'Count ahead from node 4: only 2 nodes (4, 5). Less than k=3, so leave as-is.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n3', value: 3, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n1', value: 1, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            highlightNodes: ['n4', 'n5'],
+            annotations: ['Only 2 nodes < k=3', 'Keep original order'],
+          },
+        },
+      },
+      {
+        id: 6,
+        title: 'Result',
+        description: 'First group reversed, remaining nodes unchanged.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n3', value: 3, next: 'n2' },
+              { id: 'n2', value: 2, next: 'n1' },
+              { id: 'n1', value: 1, next: 'n4' },
+              { id: 'n4', value: 4, next: 'n5' },
+              { id: 'n5', value: 5, next: null },
+            ],
+            pointers: { head: 'n3' },
+          },
+          result: '3 → 2 → 1 → 4 → 5',
+        },
+      },
+    ],
+  },
+
+  'merge-k-sorted-lists': {
+    title: 'Merge K Sorted Lists',
+    keyInsight: 'Divide-and-conquer: merge pairs of lists, halving the count each round',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Initial K=3 Lists',
+        description: 'Three sorted lists: [1,4,5], [1,3,4], and [2,6].',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 4, next: 'n3' },
+              { id: 'n3', value: 5, next: null },
+            ],
+            secondList: [
+              { id: 'm1', value: 1, next: 'm2' },
+              { id: 'm2', value: 3, next: 'm3' },
+              { id: 'm3', value: 4, next: null },
+            ],
+            detachedNodes: [
+              { id: 'r1', value: 2, next: 'r2' },
+              { id: 'r2', value: 6, next: null },
+            ],
+            annotations: ['List 0: [1,4,5]', 'List 1: [1,3,4]', 'List 2: [2,6]'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Round 1: Merge Lists 0 + 1',
+        description: 'Merge [1,4,5] and [1,3,4] using standard two-list merge.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'n2' },
+              { id: 'n2', value: 4, next: 'n3' },
+              { id: 'n3', value: 5, next: null },
+            ],
+            secondList: [
+              { id: 'm1', value: 1, next: 'm2' },
+              { id: 'm2', value: 3, next: 'm3' },
+              { id: 'm3', value: 4, next: null },
+            ],
+            highlightNodes: ['n1', 'm1'],
+            annotations: ['Merging pair: List 0 + List 1'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Round 1 Result',
+        description: 'Lists 0+1 merged into [1,1,3,4,4,5]. List 2 [2,6] waits for next round.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'm1' },
+              { id: 'm1', value: 1, next: 'm2' },
+              { id: 'm2', value: 3, next: 'n2' },
+              { id: 'n2', value: 4, next: 'm3' },
+              { id: 'm3', value: 4, next: 'n3' },
+              { id: 'n3', value: 5, next: null },
+            ],
+            detachedNodes: [
+              { id: 'r1', value: 2, next: 'r2' },
+              { id: 'r2', value: 6, next: null },
+            ],
+            highlightNodes: ['n1', 'm1', 'm2', 'n2', 'm3', 'n3'],
+            annotations: ['Merged: [1,1,3,4,4,5]', 'Waiting: [2,6]'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'Round 2: Merge Result + List 2',
+        description: 'Merge [1,1,3,4,4,5] with [2,6] to produce the final sorted list.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'm1' },
+              { id: 'm1', value: 1, next: 'm2' },
+              { id: 'm2', value: 3, next: 'n2' },
+              { id: 'n2', value: 4, next: 'm3' },
+              { id: 'm3', value: 4, next: 'n3' },
+              { id: 'n3', value: 5, next: null },
+            ],
+            detachedNodes: [
+              { id: 'r1', value: 2, next: 'r2' },
+              { id: 'r2', value: 6, next: null },
+            ],
+            highlightNodes: ['n1', 'r1'],
+            annotations: ['Final merge round'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'Result',
+        description: 'All three lists merged into one sorted list.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n1', value: 1, next: 'm1' },
+              { id: 'm1', value: 1, next: 'r1' },
+              { id: 'r1', value: 2, next: 'm2' },
+              { id: 'm2', value: 3, next: 'n2' },
+              { id: 'n2', value: 4, next: 'm3' },
+              { id: 'm3', value: 4, next: 'n3' },
+              { id: 'n3', value: 5, next: 'r2' },
+              { id: 'r2', value: 6, next: null },
+            ],
+            pointers: { head: 'n1' },
+          },
+          result: '1 → 1 → 2 → 3 → 4 → 4 → 5 → 6',
+        },
+      },
+    ],
+  },
+
+  'lru-cache': {
+    title: 'LRU Cache',
+    keyInsight: 'Doubly linked list orders by recency; hash map gives O(1) lookup — together they make O(1) LRU',
+    pattern: 'linked-list',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup Empty Cache',
+        description: 'Capacity = 2. Doubly linked list with head/tail sentinels. Hash map is empty.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n0', value: 'H', next: 'n9' },
+              { id: 'n9', value: 'T', next: null },
+            ],
+            pointers: { head: 'n0', tail: 'n9' },
+            annotations: ['Capacity: 2', 'Map: {}', 'H ↔ T (sentinels)'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'put(1, 1)',
+        description: 'Insert key=1. Add node after head sentinel. Map: {1→node}.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n0', value: 'H', next: 'n1' },
+              { id: 'n1', value: '1:1', next: 'n9' },
+              { id: 'n9', value: 'T', next: null },
+            ],
+            pointers: { head: 'n0', tail: 'n9' },
+            highlightNodes: ['n1'],
+            annotations: ['Map: {1→node}', 'Size: 1/2'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'put(2, 2)',
+        description: 'Insert key=2. Add after head (most recent). Map: {1→node, 2→node}.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n0', value: 'H', next: 'n2' },
+              { id: 'n2', value: '2:2', next: 'n1' },
+              { id: 'n1', value: '1:1', next: 'n9' },
+              { id: 'n9', value: 'T', next: null },
+            ],
+            pointers: { head: 'n0', tail: 'n9' },
+            highlightNodes: ['n2'],
+            annotations: ['Map: {1, 2}', 'Size: 2/2 (full)'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'get(1) → Move to Front',
+        description: 'Key 1 found via map. Remove from current position, re-insert after head.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n0', value: 'H', next: 'n1' },
+              { id: 'n1', value: '1:1', next: 'n2' },
+              { id: 'n2', value: '2:2', next: 'n9' },
+              { id: 'n9', value: 'T', next: null },
+            ],
+            pointers: { head: 'n0', tail: 'n9' },
+            highlightNodes: ['n1'],
+            annotations: ['get(1) = 1', '1 moved to front', '2 is now LRU'],
+          },
+        },
+      },
+      {
+        id: 5,
+        title: 'put(3, 3) — Evict LRU',
+        description: 'Cache full. Evict LRU (node before tail = key 2). Insert key 3 after head.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n0', value: 'H', next: 'n3' },
+              { id: 'n3', value: '3:3', next: 'n1' },
+              { id: 'n1', value: '1:1', next: 'n9' },
+              { id: 'n9', value: 'T', next: null },
+            ],
+            pointers: { head: 'n0', tail: 'n9' },
+            highlightNodes: ['n3'],
+            annotations: ['Evicted key 2', 'Map: {1, 3}', 'Size: 2/2'],
+          },
+        },
+      },
+      {
+        id: 6,
+        title: 'get(2) → -1',
+        description: 'Key 2 not in map (was evicted). Return -1.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n0', value: 'H', next: 'n3' },
+              { id: 'n3', value: '3:3', next: 'n1' },
+              { id: 'n1', value: '1:1', next: 'n9' },
+              { id: 'n9', value: 'T', next: null },
+            ],
+            pointers: { head: 'n0', tail: 'n9' },
+            annotations: ['get(2) = -1', 'Key 2 was evicted'],
+          },
+        },
+      },
+      {
+        id: 7,
+        title: 'Final State',
+        description: 'Cache holds keys 3 and 1. Key 3 is most recent, key 1 is LRU.',
+        visual: {
+          linkedList: {
+            nodes: [
+              { id: 'n0', value: 'H', next: 'n3' },
+              { id: 'n3', value: '3:3', next: 'n1' },
+              { id: 'n1', value: '1:1', next: 'n9' },
+              { id: 'n9', value: 'T', next: null },
+            ],
+            pointers: { head: 'n0', tail: 'n9' },
+            annotations: ['Most recent: 3', 'LRU: 1'],
+          },
+          result: 'O(1) get and put via map + doubly linked list',
+        },
+      },
+    ],
+  },
 }
 
 // ============================================================================

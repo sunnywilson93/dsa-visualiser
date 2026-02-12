@@ -29,6 +29,7 @@ export interface DSAConcept {
   commonMistakes?: string[]
   interviewTips?: string[]
   relatedProblems?: string[]  // Links to problem IDs
+  learningPath?: { stage: string; problemIds: string[] }[]
 }
 
 export const dsaConcepts: DSAConcept[] = [
@@ -1184,7 +1185,38 @@ while (current !== null) {
       'Fast/slow pointer technique solves many problems',
       'Know trade-offs vs arrays: insert O(1) vs access O(n)',
     ],
-    relatedProblems: ['reverse-linked-list', 'linked-list-cycle', 'merge-two-sorted-lists'],
+    relatedProblems: [
+      'reverse-linked-list',
+      'merge-two-sorted-lists',
+      'linked-list-cycle',
+      'middle-of-linked-list',
+      'remove-nth-from-end',
+      'add-two-numbers',
+      'reorder-list',
+      'swap-nodes-in-pairs',
+      'copy-list-random-pointer',
+      'reverse-nodes-k-group',
+      'merge-k-sorted-lists',
+      'lru-cache',
+    ],
+    learningPath: [
+      {
+        stage: 'Foundation',
+        problemIds: ['reverse-linked-list', 'merge-two-sorted-lists'],
+      },
+      {
+        stage: 'Runner Technique',
+        problemIds: ['linked-list-cycle', 'middle-of-linked-list', 'remove-nth-from-end'],
+      },
+      {
+        stage: 'Construction',
+        problemIds: ['add-two-numbers', 'reorder-list', 'swap-nodes-in-pairs'],
+      },
+      {
+        stage: 'Advanced',
+        problemIds: ['copy-list-random-pointer', 'reverse-nodes-k-group', 'merge-k-sorted-lists', 'lru-cache'],
+      },
+    ],
   },
 ]
 

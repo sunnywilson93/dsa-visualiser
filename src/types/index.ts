@@ -269,6 +269,7 @@ export type ConceptType =
   | 'bit-manipulation'         // Binary grid operations
   | 'sliding-window'           // Frame over array
   | 'binary-search'            // Halving search space
+  | 'linked-list'              // Node chains with pointers
 
 export interface ConceptStep {
   id: number
@@ -283,6 +284,7 @@ export interface ConceptVisualState {
   highlights?: number[]              // Indices to highlight
   binary?: BinaryConceptState
   hashMap?: HashMapVisualState
+  linkedList?: LinkedListVisualState
   annotations?: string[]             // Text annotations on the visual
   result?: number | string | boolean
 }
@@ -303,6 +305,23 @@ export interface HashMapVisualState {
   phase?: string
   lookupKey?: string
   lookupResult?: 'found' | 'not-found'
+}
+
+export interface LinkedListNodeState {
+  id: string
+  value: number | string
+  next: string | null
+}
+
+export interface LinkedListVisualState {
+  nodes: LinkedListNodeState[]
+  pointers?: Record<string, string>
+  highlightNodes?: string[]
+  highlightEdges?: [string, string][]
+  cycleTarget?: string
+  secondList?: LinkedListNodeState[]
+  detachedNodes?: LinkedListNodeState[]
+  annotations?: string[]
 }
 
 export interface BinaryConceptState {

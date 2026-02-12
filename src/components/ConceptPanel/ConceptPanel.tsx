@@ -10,6 +10,7 @@ import { TwoPointersConcept } from './TwoPointersConcept'
 import { BitManipulationConcept } from './BitManipulationConcept'
 import { SlidingWindowConcept } from './SlidingWindowConcept'
 import { BinarySearchConcept } from './BinarySearchConcept'
+import { LinkedListConcept } from './LinkedListConcept'
 
 interface ConceptPanelProps {
   title: string
@@ -107,6 +108,8 @@ export function ConceptPanel({
         return <SlidingWindowConcept step={step} />
       case 'binary-search':
         return <BinarySearchConcept step={step} />
+      case 'linked-list':
+        return <LinkedListConcept step={step} type={type} />
       default:
         return <TwoPointersConcept step={step} type={type} />
     }
