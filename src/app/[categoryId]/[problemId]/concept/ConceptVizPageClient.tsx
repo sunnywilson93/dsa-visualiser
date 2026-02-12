@@ -7,7 +7,12 @@ import { NavBar } from '@/components/NavBar'
 import { ConceptPanel } from '@/components/ConceptPanel'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { RelatedPatterns } from '@/components/CrossLinks'
-import { codeExamples, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
+import {
+  codeExamples,
+  dsaSubcategories,
+  getExampleCategoryIds,
+  isDsaSubcategory,
+} from '@/data/examples'
 import { getConceptForProblem, getConceptSteps } from '@/data/algorithmConcepts'
 
 export default function ConceptVizPageClient() {
@@ -16,14 +21,30 @@ export default function ConceptVizPageClient() {
   const problemId = params.problemId as string
 
   const problem = codeExamples.find((p) => p.id === problemId)
+  const routeSubcategory = dsaSubcategories.find((s) => s.id === categoryId)
 
-  const getSubcategoryName = () => {
-    if (!problem || !isDsaSubcategory(problem.category)) return null
-    const sub = dsaSubcategories.find((s) => s.id === problem.category)
-    return sub?.name
+  const getSubcategory = () => {
+    if (!problem) return null
+
+    if (
+      routeSubcategory &&
+      getExampleCategoryIds(problem).includes(routeSubcategory.id)
+    ) {
+      return routeSubcategory
+    }
+
+    if (isDsaSubcategory(problem.category)) {
+      return dsaSubcategories.find((s) => s.id === problem.category) ?? null
+    }
+
+    const taggedSubcategory = getExampleCategoryIds(problem).find((id) =>
+      isDsaSubcategory(id)
+    )
+    if (!taggedSubcategory) return null
+    return dsaSubcategories.find((s) => s.id === taggedSubcategory) ?? null
   }
 
-  const subcategoryName = getSubcategoryName()
+  const subcategory = getSubcategory()
 
   // Get concept data
   const { categoryConcept, insight } = problem
@@ -35,8 +56,8 @@ export default function ConceptVizPageClient() {
 
   // Build breadcrumbs
   const breadcrumbs = [
-    { label: 'DSA', path: `/${categoryId}` },
-    ...(subcategoryName ? [{ label: subcategoryName, path: `/${categoryId}` }] : []),
+    { label: 'DSA', path: '/dsa' },
+    ...(subcategory ? [{ label: subcategory.name, path: `/${subcategory.id}` }] : []),
     { label: problem?.name || problemId, path: `/${categoryId}/${problemId}` },
   ]
 

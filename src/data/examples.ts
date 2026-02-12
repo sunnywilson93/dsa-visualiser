@@ -4521,6 +4521,95 @@ reverseString(chars);
     whyItWorks: 'Swapping from both ends ensures every character reaches its mirror position in exactly n/2 swaps.',
   },
   {
+    id: 'reverse-vowels-of-a-string',
+    name: 'Reverse Vowels of a String',
+    category: 'two-pointers',
+    categories: ['two-pointers', 'strings'],
+    difficulty: 'easy',
+    description: 'Reverse only vowels in a string while keeping other characters in place',
+    code: `// Reverse Vowels of a String
+// Two pointers from both ends; swap only when both are vowels
+
+function isVowel(ch) {
+  return "aeiouAEIOU".indexOf(ch) >= 0
+}
+
+function reverseVowels(s) {
+  let chars = s.split('')
+  let left = 0
+  let right = chars.length - 1
+
+  while (left < right) {
+    while (left < right && !isVowel(chars[left])) {
+      left++
+    }
+    while (left < right && !isVowel(chars[right])) {
+      right--
+    }
+
+    if (left < right) {
+      let temp = chars[left]
+      chars[left] = chars[right]
+      chars[right] = temp
+      left++
+      right--
+    }
+  }
+
+  return chars.join('')
+}
+
+console.log(reverseVowels("leetcode"))
+console.log(reverseVowels("hello"))
+`,
+    approach: 'Use two pointers that move toward each other from both ends. Advance each pointer until it finds a vowel, then swap the vowels and continue inward.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Two Pointers (Converging)',
+    whyItWorks: 'Converging pointers ensure each vowel pair is swapped exactly once while non-vowels are skipped and left untouched.',
+  },
+  {
+    id: 'reverse-words-in-a-string',
+    name: 'Reverse Words in a String',
+    category: 'two-pointers',
+    categories: ['two-pointers', 'strings'],
+    difficulty: 'medium',
+    description: 'Reverse word order and remove extra spaces',
+    code: `// Reverse Words in a String
+// Scan from right to left and capture words
+
+function reverseWords(s) {
+  let words = []
+  let right = s.length - 1
+
+  while (right >= 0) {
+    while (right >= 0 && s[right] === ' ') {
+      right--
+    }
+    if (right < 0) break
+
+    let left = right
+    while (left >= 0 && s[left] !== ' ') {
+      left--
+    }
+
+    words.push(s.slice(left + 1, right + 1))
+    right = left - 1
+  }
+
+  return words.join(' ')
+}
+
+console.log(reverseWords("  the sky  is blue  "))
+console.log(reverseWords("hello world"))
+`,
+    approach: 'Scan from the end of the string. Skip spaces, then capture each word boundary and append it to a result list. Join captured words with single spaces.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Two Pointers (Reverse Traversal)',
+    whyItWorks: 'Reading words from right to left directly builds reversed word order without an extra full reverse step.',
+  },
+  {
     id: 'remove-duplicates-sorted',
     name: 'Remove Duplicates (Sorted)',
     category: 'two-pointers',
@@ -6252,6 +6341,63 @@ console.log("Result:", result);
     whyItWorks: 'Two strings are permutations of each other if and only if they have identical character frequencies. By maintaining a sliding frequency map, we check every possible substring of the correct length in O(1) amortized time per position.',
   },
   {
+    id: 'find-all-anagrams-in-a-string',
+    name: 'Find All Anagrams in a String',
+    category: 'sliding-window',
+    categories: ['sliding-window', 'strings'],
+    difficulty: 'medium',
+    description: 'Return all start indices where p\'s anagram appears in s',
+    code: `// Find All Anagrams in a String
+// Fixed-size sliding window with 26-length frequency arrays
+
+function findAnagrams(s, p) {
+  if (p.length > s.length) return []
+
+  let need = new Array(26).fill(0)
+  let window = new Array(26).fill(0)
+
+  for (let i = 0; i < p.length; i++) {
+    need[p.charCodeAt(i) - 97]++
+    window[s.charCodeAt(i) - 97]++
+  }
+
+  let result = []
+
+  function sameFreq() {
+    for (let i = 0; i < 26; i++) {
+      if (need[i] !== window[i]) return false
+    }
+    return true
+  }
+
+  if (sameFreq()) {
+    result.push(0)
+  }
+
+  for (let right = p.length; right < s.length; right++) {
+    let addIdx = s.charCodeAt(right) - 97
+    let removeIdx = s.charCodeAt(right - p.length) - 97
+    window[addIdx]++
+    window[removeIdx]--
+
+    if (sameFreq()) {
+      result.push(right - p.length + 1)
+    }
+  }
+
+  return result
+}
+
+console.log(findAnagrams("cbaebabacd", "abc"))
+console.log(findAnagrams("abab", "ab"))
+`,
+    approach: 'Keep a fixed-size window of length p.length over s. Compare window character frequency to p\'s frequency at each step and record matching start indices.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Sliding Window (Fixed Size + Frequency)',
+    whyItWorks: 'A substring is an anagram of p exactly when all character counts match. Sliding updates only two character counts per step.',
+  },
+  {
     id: 'min-window-substring',
     name: 'Minimum Window Substring',
     category: 'sliding-window',
@@ -6555,6 +6701,81 @@ isAnagram("rat", "car");
     spaceComplexity: 'O(1)',
     patternName: 'Frequency Count',
     whyItWorks: 'Two strings are anagrams if and only if they have identical character frequency distributions. Incrementing for one string and decrementing for the other detects any mismatch.',
+  },
+  {
+    id: 'first-unique-character',
+    name: 'First Unique Character in a String',
+    category: 'arrays-hashing',
+    categories: ['arrays-hashing', 'strings'],
+    difficulty: 'easy',
+    description: 'Return the index of the first non-repeating character',
+    code: `// First Unique Character in a String
+// Count frequency, then scan again for first character with count 1
+
+function firstUniqChar(s) {
+  let freq = new Map()
+
+  for (let i = 0; i < s.length; i++) {
+    let ch = s[i]
+    freq.set(ch, (freq.get(ch) || 0) + 1)
+  }
+
+  for (let i = 0; i < s.length; i++) {
+    if (freq.get(s[i]) === 1) {
+      return i
+    }
+  }
+
+  return -1
+}
+
+console.log(firstUniqChar("leetcode"))
+console.log(firstUniqChar("aabb"))
+`,
+    approach: 'First pass counts character frequencies. Second pass returns the first index whose character appears exactly once.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Frequency Count',
+    whyItWorks: 'Counting first guarantees we know global uniqueness before selecting the earliest valid position.',
+  },
+  {
+    id: 'ransom-note',
+    name: 'Ransom Note',
+    category: 'arrays-hashing',
+    categories: ['arrays-hashing', 'strings'],
+    difficulty: 'easy',
+    description: 'Check if ransomNote can be built from magazine letters',
+    code: `// Ransom Note
+// Count magazine letters, consume counts for ransomNote
+
+function canConstruct(ransomNote, magazine) {
+  let freq = new Map()
+
+  for (let i = 0; i < magazine.length; i++) {
+    let ch = magazine[i]
+    freq.set(ch, (freq.get(ch) || 0) + 1)
+  }
+
+  for (let i = 0; i < ransomNote.length; i++) {
+    let ch = ransomNote[i]
+    let count = freq.get(ch) || 0
+    if (count === 0) {
+      return false
+    }
+    freq.set(ch, count - 1)
+  }
+
+  return true
+}
+
+console.log(canConstruct("aa", "aab"))
+console.log(canConstruct("aa", "ab"))
+`,
+    approach: 'Build a frequency map from magazine. Traverse ransomNote and decrement counts for needed letters. If any required letter count is unavailable, return false.',
+    timeComplexity: 'O(n + m)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Frequency Count',
+    whyItWorks: 'Every ransom letter must consume one matching magazine letter. Frequency tracking enforces one-to-one usage.',
   },
   {
     id: 'group-anagrams',
@@ -7442,6 +7663,493 @@ console.log(calculate(" 3/2 "));
     spaceComplexity: 'O(n)',
     patternName: 'Stack (Operator Precedence)',
     whyItWorks: 'Deferring only addition and subtraction while executing multiplication and division immediately preserves precedence without requiring a full expression tree.',
+  },
+
+  // ==================== STRINGS ====================
+  {
+    id: 'find-index-first-occurrence',
+    name: 'Find the Index of the First Occurrence',
+    category: 'strings',
+    difficulty: 'easy',
+    description: 'Return the first index where needle appears in haystack, or -1',
+    code: `// Find the Index of the First Occurrence in a String (strStr)
+// Check each possible start position in haystack
+
+function strStr(haystack, needle) {
+  if (needle.length === 0) return 0
+  if (needle.length > haystack.length) return -1
+
+  for (let start = 0; start <= haystack.length - needle.length; start++) {
+    let matched = true
+
+    for (let i = 0; i < needle.length; i++) {
+      if (haystack[start + i] !== needle[i]) {
+        matched = false
+        break
+      }
+    }
+
+    if (matched) {
+      return start
+    }
+  }
+
+  return -1
+}
+
+console.log(strStr("sadbutsad", "sad"))
+console.log(strStr("leetcode", "leeto"))
+`,
+    approach: 'Try every possible starting index in haystack where needle could fit and compare characters sequentially.',
+    timeComplexity: 'O(n * m)',
+    spaceComplexity: 'O(1)',
+    patternName: 'String Scan (Brute Force)',
+    whyItWorks: 'Any valid match must start at one of these positions, so checking each candidate start guarantees the first occurrence is found.',
+  },
+  {
+    id: 'longest-common-prefix',
+    name: 'Longest Common Prefix',
+    category: 'strings',
+    difficulty: 'easy',
+    description: 'Find the longest prefix shared by all strings in an array',
+    code: `// Longest Common Prefix
+// Start with first string as prefix and shrink until all strings match it
+
+function longestCommonPrefix(strs) {
+  if (strs.length === 0) return ""
+
+  let prefix = strs[0]
+
+  for (let i = 1; i < strs.length; i++) {
+    while (strs[i].indexOf(prefix) !== 0) {
+      prefix = prefix.slice(0, prefix.length - 1)
+      if (prefix.length === 0) return ""
+    }
+  }
+
+  return prefix
+}
+
+console.log(longestCommonPrefix(["flower", "flow", "flight"]))
+console.log(longestCommonPrefix(["dog", "racecar", "car"]))
+`,
+    approach: 'Initialize prefix with the first string, then keep shrinking it until each remaining string starts with that prefix.',
+    timeComplexity: 'O(n * m)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Prefix Reduction',
+    whyItWorks: 'The common prefix cannot be longer than the shortest mismatch point, so repeated shrinking converges to the maximal shared prefix.',
+  },
+  {
+    id: 'length-of-last-word',
+    name: 'Length of Last Word',
+    category: 'strings',
+    difficulty: 'easy',
+    description: 'Return the length of the final word in a string',
+    code: `// Length of Last Word
+// Walk from end: skip spaces, then count characters
+
+function lengthOfLastWord(s) {
+  let i = s.length - 1
+
+  while (i >= 0 && s[i] === ' ') {
+    i--
+  }
+
+  let len = 0
+  while (i >= 0 && s[i] !== ' ') {
+    len++
+    i--
+  }
+
+  return len
+}
+
+console.log(lengthOfLastWord("Hello World"))
+console.log(lengthOfLastWord("   fly me   to   the moon  "))
+`,
+    approach: 'Traverse from the end, skip trailing spaces, then count contiguous non-space characters.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Reverse Traversal',
+    whyItWorks: 'The last word is exactly the first non-space segment encountered from the end.',
+  },
+  {
+    id: 'count-binary-substrings',
+    name: 'Count Binary Substrings',
+    category: 'strings',
+    difficulty: 'medium',
+    description: 'Count substrings with equal consecutive 0s and 1s',
+    code: `// Count Binary Substrings
+// Track lengths of consecutive groups and add min(prevGroup, currGroup)
+
+function countBinarySubstrings(s) {
+  let prevGroup = 0
+  let currGroup = 1
+  let total = 0
+
+  for (let i = 1; i < s.length; i++) {
+    if (s[i] === s[i - 1]) {
+      currGroup++
+    } else {
+      total += Math.min(prevGroup, currGroup)
+      prevGroup = currGroup
+      currGroup = 1
+    }
+  }
+
+  total += Math.min(prevGroup, currGroup)
+  return total
+}
+
+console.log(countBinarySubstrings("00110011"))
+console.log(countBinarySubstrings("10101"))
+`,
+    approach: 'Compress the string into run lengths of consecutive equal characters and add the minimum of each adjacent run pair.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Run-Length Grouping',
+    whyItWorks: 'A valid substring across a 0/1 boundary can use at most the shorter adjacent run length.',
+  },
+  {
+    id: 'string-to-integer-atoi',
+    name: 'String to Integer (atoi)',
+    category: 'strings',
+    categories: ['strings', 'math'],
+    difficulty: 'medium',
+    description: 'Parse a string into a 32-bit signed integer with clamping',
+    code: `// String to Integer (atoi)
+// Skip spaces, parse sign and digits, clamp to int32 range
+
+function myAtoi(s) {
+  let i = 0
+  let sign = 1
+  let num = 0
+  let INT_MAX = 2147483647
+  let INT_MIN = -2147483648
+
+  while (i < s.length && s[i] === ' ') i++
+
+  if (i < s.length && (s[i] === '+' || s[i] === '-')) {
+    sign = s[i] === '-' ? -1 : 1
+    i++
+  }
+
+  while (i < s.length && s[i] >= '0' && s[i] <= '9') {
+    num = num * 10 + (s.charCodeAt(i) - 48)
+
+    if (sign === 1 && num > INT_MAX) return INT_MAX
+    if (sign === -1 && -num < INT_MIN) return INT_MIN
+    i++
+  }
+
+  return sign * num
+}
+
+console.log(myAtoi("42"))
+console.log(myAtoi("   -42"))
+console.log(myAtoi("4193 with words"))
+`,
+    approach: 'Skip leading spaces, parse an optional sign, read contiguous digits, and clamp overflow to the 32-bit signed integer range.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'String Parsing',
+    whyItWorks: 'The parser follows the exact deterministic token order required by the specification and safely caps out-of-range values.',
+  },
+  {
+    id: 'multiply-strings',
+    name: 'Multiply Strings',
+    category: 'strings',
+    categories: ['strings', 'math'],
+    difficulty: 'medium',
+    description: 'Multiply two non-negative integer strings without converting to big integers',
+    code: `// Multiply Strings
+// Grade-school multiplication with positional accumulation
+
+function multiply(num1, num2) {
+  if (num1 === "0" || num2 === "0") return "0"
+
+  let result = new Array(num1.length + num2.length).fill(0)
+
+  for (let i = num1.length - 1; i >= 0; i--) {
+    for (let j = num2.length - 1; j >= 0; j--) {
+      let n1 = num1.charCodeAt(i) - 48
+      let n2 = num2.charCodeAt(j) - 48
+      let mul = n1 * n2
+
+      let p2 = i + j + 1
+      let p1 = i + j
+
+      let sum = mul + result[p2]
+      result[p2] = sum % 10
+      result[p1] += Math.floor(sum / 10)
+    }
+  }
+
+  let start = 0
+  while (start < result.length && result[start] === 0) start++
+  return result.slice(start).join('')
+}
+
+console.log(multiply("123", "456"))
+console.log(multiply("99", "99"))
+`,
+    approach: 'Use an integer array to store partial products by place value, like manual multiplication. Accumulate products and carries at the correct indices.',
+    timeComplexity: 'O(n * m)',
+    spaceComplexity: 'O(n + m)',
+    patternName: 'Digit Simulation',
+    whyItWorks: 'Each digit pair contributes to a fixed place-value slot. Summing and carrying in that slot-by-slot structure reproduces exact integer multiplication.',
+  },
+  {
+    id: 'text-justification',
+    name: 'Text Justification',
+    category: 'strings',
+    categories: ['strings', 'greedy'],
+    difficulty: 'hard',
+    description: 'Format words into fully justified lines of width maxWidth',
+    code: `// Text Justification
+// Greedily pack as many words as possible per line and distribute spaces
+
+function fullJustify(words, maxWidth) {
+  let result = []
+  let i = 0
+
+  while (i < words.length) {
+    let lineLen = words[i].length
+    let j = i + 1
+
+    while (j < words.length && lineLen + 1 + words[j].length <= maxWidth) {
+      lineLen += 1 + words[j].length
+      j++
+    }
+
+    let wordCount = j - i
+    let line = ""
+
+    if (j === words.length || wordCount === 1) {
+      for (let k = i; k < j; k++) {
+        if (k > i) line += ' '
+        line += words[k]
+      }
+      while (line.length < maxWidth) line += ' '
+    } else {
+      let totalChars = 0
+      for (let k = i; k < j; k++) totalChars += words[k].length
+
+      let totalSpaces = maxWidth - totalChars
+      let slots = wordCount - 1
+      let evenSpaces = Math.floor(totalSpaces / slots)
+      let extra = totalSpaces % slots
+
+      for (let k = i; k < j; k++) {
+        line += words[k]
+        if (k < j - 1) {
+          let spaces = evenSpaces + (k - i < extra ? 1 : 0)
+          for (let s = 0; s < spaces; s++) line += ' '
+        }
+      }
+    }
+
+    result.push(line)
+    i = j
+  }
+
+  return result
+}
+
+console.log(fullJustify(["This", "is", "an", "example", "of", "text", "justification."], 16))
+`,
+    approach: 'Greedily pack words into each line. For non-final multi-word lines, distribute spaces as evenly as possible and place extras on the left. Left-justify final or single-word lines.',
+    timeComplexity: 'O(total characters)',
+    spaceComplexity: 'O(total characters)',
+    patternName: 'Greedy Line Packing',
+    whyItWorks: 'Taking the maximum words per line preserves minimal remaining width, then deterministic space distribution satisfies exact width constraints.',
+  },
+
+  // ==================== DYNAMIC PROGRAMMING ====================
+  {
+    id: 'palindromic-substrings',
+    name: 'Palindromic Substrings',
+    category: 'dynamic-programming',
+    categories: ['dynamic-programming', 'strings'],
+    difficulty: 'medium',
+    description: 'Count all palindromic substrings in a string',
+    code: `// Palindromic Substrings
+// Expand around every center (odd and even)
+
+function countSubstrings(s) {
+  let count = 0
+
+  function expand(left, right) {
+    while (left >= 0 && right < s.length && s[left] === s[right]) {
+      count++
+      left--
+      right++
+    }
+  }
+
+  for (let i = 0; i < s.length; i++) {
+    expand(i, i)
+    expand(i, i + 1)
+  }
+
+  return count
+}
+
+console.log(countSubstrings("abc"))
+console.log(countSubstrings("aaa"))
+`,
+    approach: 'Treat each index (and gap between indices) as a palindrome center, then expand while characters match.',
+    timeComplexity: 'O(n^2)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Expand Around Center',
+    whyItWorks: 'Every palindrome has a unique center, so enumerating all centers counts all palindromic substrings exactly once.',
+  },
+  {
+    id: 'longest-palindromic-substring',
+    name: 'Longest Palindromic Substring',
+    category: 'dynamic-programming',
+    categories: ['dynamic-programming', 'strings'],
+    difficulty: 'medium',
+    description: 'Find the longest palindromic substring',
+    code: `// Longest Palindromic Substring
+// Expand around each center and track best range
+
+function longestPalindrome(s) {
+  if (s.length < 2) return s
+
+  let bestStart = 0
+  let bestLen = 1
+
+  function expand(left, right) {
+    while (left >= 0 && right < s.length && s[left] === s[right]) {
+      left--
+      right++
+    }
+    return [left + 1, right - left - 1]
+  }
+
+  for (let i = 0; i < s.length; i++) {
+    let odd = expand(i, i)
+    let even = expand(i, i + 1)
+    let candidate = odd[1] > even[1] ? odd : even
+
+    if (candidate[1] > bestLen) {
+      bestStart = candidate[0]
+      bestLen = candidate[1]
+    }
+  }
+
+  return s.slice(bestStart, bestStart + bestLen)
+}
+
+console.log(longestPalindrome("babad"))
+console.log(longestPalindrome("cbbd"))
+`,
+    approach: 'Expand around every odd and even center and keep the longest palindrome span encountered.',
+    timeComplexity: 'O(n^2)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Expand Around Center',
+    whyItWorks: 'The longest palindrome must appear from some center expansion, so checking all centers guarantees optimality.',
+  },
+  {
+    id: 'edit-distance',
+    name: 'Edit Distance',
+    category: 'dynamic-programming',
+    categories: ['dynamic-programming', 'strings'],
+    difficulty: 'hard',
+    description: 'Compute minimum operations to convert word1 to word2',
+    code: `// Edit Distance
+// dp[i][j] = min edits to convert first i chars of word1 into first j chars of word2
+
+function minDistance(word1, word2) {
+  let m = word1.length
+  let n = word2.length
+  let dp = new Array(m + 1)
+
+  for (let i = 0; i <= m; i++) {
+    dp[i] = new Array(n + 1).fill(0)
+  }
+
+  for (let i = 0; i <= m; i++) dp[i][0] = i
+  for (let j = 0; j <= n; j++) dp[0][j] = j
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (word1[i - 1] === word2[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1]
+      } else {
+        let insertCost = dp[i][j - 1]
+        let deleteCost = dp[i - 1][j]
+        let replaceCost = dp[i - 1][j - 1]
+        dp[i][j] = 1 + Math.min(insertCost, deleteCost, replaceCost)
+      }
+    }
+  }
+
+  return dp[m][n]
+}
+
+console.log(minDistance("horse", "ros"))
+console.log(minDistance("intention", "execution"))
+`,
+    approach: 'Use 2D DP where each state compares prefixes. If current chars match, carry diagonal value; otherwise take min of insert/delete/replace transitions plus one.',
+    timeComplexity: 'O(m * n)',
+    spaceComplexity: 'O(m * n)',
+    patternName: '2D Dynamic Programming',
+    whyItWorks: 'Optimal edit sequence has optimal substructure over smaller prefix pairs, which DP enumerates exhaustively.',
+  },
+  {
+    id: 'regular-expression-matching',
+    name: 'Regular Expression Matching',
+    category: 'dynamic-programming',
+    categories: ['dynamic-programming', 'strings'],
+    difficulty: 'hard',
+    description: 'Implement regex matching with . and * for full-string match',
+    code: `// Regular Expression Matching
+// dp[i][j] = whether s[0..i) matches p[0..j)
+
+function isMatch(s, p) {
+  let m = s.length
+  let n = p.length
+  let dp = new Array(m + 1)
+
+  for (let i = 0; i <= m; i++) {
+    dp[i] = new Array(n + 1).fill(false)
+  }
+
+  dp[0][0] = true
+
+  for (let j = 2; j <= n; j++) {
+    if (p[j - 1] === '*') {
+      dp[0][j] = dp[0][j - 2]
+    }
+  }
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (p[j - 1] === '.' || p[j - 1] === s[i - 1]) {
+        dp[i][j] = dp[i - 1][j - 1]
+      } else if (p[j - 1] === '*') {
+        dp[i][j] = dp[i][j - 2]
+        if (p[j - 2] === '.' || p[j - 2] === s[i - 1]) {
+          dp[i][j] = dp[i][j] || dp[i - 1][j]
+        }
+      }
+    }
+  }
+
+  return dp[m][n]
+}
+
+console.log(isMatch("aa", "a"))
+console.log(isMatch("aa", "a*"))
+console.log(isMatch("ab", ".*"))
+`,
+    approach: 'Build DP over string/pattern prefixes. Handle normal char or dot with diagonal transition, and star with either zero-occurrence or consume-one-character transitions.',
+    timeComplexity: 'O(m * n)',
+    spaceComplexity: 'O(m * n)',
+    patternName: '2D Dynamic Programming',
+    whyItWorks: 'Each pattern operator defines deterministic transitions from smaller prefix states, making full-match validity a DP reachability problem.',
   },
 
   // ─── Binary Search ───────────────────────────────────────────────

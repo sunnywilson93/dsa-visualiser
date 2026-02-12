@@ -79,11 +79,13 @@ export default function CategoryPageClient() {
 
   const handleProblemClick = useCallback(
     (problem: CodeExample) => {
-      // For subcategory pages, use the problem's actual category for the URL
-      const urlCategory = isSubcategoryPage ? problem.category : categoryId
+      const urlCategory =
+        isDsa && selectedSubcategory && hasCategory(problem, selectedSubcategory)
+          ? selectedSubcategory
+          : categoryId
       router.push(`/${urlCategory}/${problem.id}`)
     },
-    [categoryId, router, isSubcategoryPage]
+    [categoryId, isDsa, router, selectedSubcategory]
   )
 
   const handleCategoryClick = useCallback(
@@ -180,7 +182,7 @@ export default function CategoryPageClient() {
 
   // Build breadcrumbs based on page type
   const breadcrumbs = isSubcategoryPage
-    ? [{ label: 'DSA', path: '/' }, { label: category.name }]
+    ? [{ label: 'DSA', path: '/dsa' }, { label: category.name }]
     : [{ label: category.name }]
 
   return (
