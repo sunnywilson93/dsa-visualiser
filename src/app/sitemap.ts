@@ -9,7 +9,7 @@ import { problemConcepts } from '@/data/algorithmConcepts'
  * Last content update timestamp.
  * Update this when making significant content changes.
  */
-export const CONTENT_LAST_UPDATED = new Date('2026-02-09')
+export const CONTENT_LAST_UPDATED = new Date('2026-02-12')
 
 const BASE_URL = 'https://jsinterview.dev'
 

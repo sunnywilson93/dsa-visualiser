@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { type CodeExample, codeExamples, exampleCategories, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
+import { CONTENT_LAST_UPDATED } from '@/app/sitemap'
 import PracticePageClient from './PracticePageClient'
 import { ProblemSEOContent } from '@/components/ProblemSEOContent/ProblemSEOContent'
 import { StructuredData } from '@/components/StructuredData'
@@ -123,6 +124,8 @@ function generateArticleSchema(problem: CodeExample, categoryId: string) {
     },
     articleSection: 'Coding Challenges',
     keywords: `${problem.name}, JavaScript, ${problem.patternName || 'coding'}, interview preparation`,
+    datePublished: CONTENT_LAST_UPDATED.toISOString(),
+    dateModified: CONTENT_LAST_UPDATED.toISOString(),
   }
 }
 

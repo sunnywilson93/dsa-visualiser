@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { getPatternBySlug, dsaPatterns } from '@/data/dsaPatterns'
+import { CONTENT_LAST_UPDATED } from '@/app/sitemap'
 import PatternPageClient from './PatternPageClient'
 import { StructuredData } from '@/components/StructuredData'
+import { generateBreadcrumbSchema } from '@/lib/seo/breadcrumb'
 
 interface Props {
   params: Promise<{ patternId: string }>
@@ -38,38 +40,6 @@ export async function generateStaticParams() {
   }))
 }
 
-function generateBreadcrumbSchema(pattern: NonNullable<ReturnType<typeof getPatternBySlug>>) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://jsinterview.dev',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Concepts',
-        item: 'https://jsinterview.dev/concepts',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: 'DSA Patterns',
-        item: 'https://jsinterview.dev/concepts/dsa/patterns',
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: pattern.name,
-        item: `https://jsinterview.dev/concepts/dsa/patterns/${pattern.slug}`,
-      },
-    ],
-  }
-}
 
 function generateArticleSchema(pattern: NonNullable<ReturnType<typeof getPatternBySlug>>) {
   return {
@@ -92,6 +62,8 @@ function generateArticleSchema(pattern: NonNullable<ReturnType<typeof getPattern
     },
     articleSection: 'Algorithm Tutorials',
     keywords: `${pattern.name}, algorithm, DSA, coding interview`,
+    datePublished: CONTENT_LAST_UPDATED.toISOString(),
+    dateModified: CONTENT_LAST_UPDATED.toISOString(),
   }
 }
 
@@ -103,7 +75,12 @@ export default async function PatternPage({ params }: Props) {
     return <PatternPageClient patternId={patternId} />
   }
 
-  const breadcrumbSchema = generateBreadcrumbSchema(pattern)
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Concepts', path: '/concepts' },
+    { name: 'DSA Patterns', path: '/concepts/dsa' },
+    { name: pattern.name },
+  ])
   const articleSchema = generateArticleSchema(pattern)
 
   return (

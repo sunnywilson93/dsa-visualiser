@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { getConceptById, concepts } from '@/data/concepts'
+import { CONTENT_LAST_UPDATED } from '@/app/sitemap'
 import ConceptPageClient from './ConceptPageClient'
 import { StructuredData } from '@/components/StructuredData'
+import { generateBreadcrumbSchema } from '@/lib/seo/breadcrumb'
 
 interface Props {
   params: { conceptId: string }
@@ -78,32 +80,6 @@ function generateFAQSchema(concept: NonNullable<ReturnType<typeof getConceptById
   }
 }
 
-function generateBreadcrumbSchema(concept: NonNullable<ReturnType<typeof getConceptById>>) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://jsinterview.dev',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Concepts',
-        item: 'https://jsinterview.dev/concepts',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: concept.title,
-        item: `https://jsinterview.dev/concepts/js/${concept.id}`,
-      },
-    ],
-  }
-}
 
 function generateArticleSchema(concept: NonNullable<ReturnType<typeof getConceptById>>) {
   return {
@@ -126,6 +102,8 @@ function generateArticleSchema(concept: NonNullable<ReturnType<typeof getConcept
     },
     articleSection: 'JavaScript Tutorials',
     keywords: `${concept.title}, JavaScript, interview preparation, coding`,
+    datePublished: CONTENT_LAST_UPDATED.toISOString(),
+    dateModified: CONTENT_LAST_UPDATED.toISOString(),
   }
 }
 
@@ -137,7 +115,12 @@ export default function ConceptPage({ params }: Props) {
   }
 
   const faqSchema = generateFAQSchema(concept)
-  const breadcrumbSchema = generateBreadcrumbSchema(concept)
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Concepts', path: '/concepts' },
+    { name: 'JavaScript', path: '/concepts/js' },
+    { name: concept.title },
+  ])
   const articleSchema = generateArticleSchema(concept)
 
   return (

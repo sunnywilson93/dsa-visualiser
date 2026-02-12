@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { getDSAConceptById, dsaConcepts } from '@/data/dsaConcepts'
+import { CONTENT_LAST_UPDATED } from '@/app/sitemap'
 import DSAConceptPageClient from './DSAConceptPageClient'
 import { StructuredData } from '@/components/StructuredData'
+import { generateBreadcrumbSchema } from '@/lib/seo/breadcrumb'
 
 interface Props {
   params: { conceptId: string }
@@ -78,36 +80,29 @@ function generateFAQSchema(concept: NonNullable<ReturnType<typeof getDSAConceptB
   }
 }
 
-function generateBreadcrumbSchema(concept: NonNullable<ReturnType<typeof getDSAConceptById>>) {
+function generateArticleSchema(concept: NonNullable<ReturnType<typeof getDSAConceptById>>) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://jsinterview.dev',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Concepts',
-        item: 'https://jsinterview.dev/concepts',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: 'DSA',
-        item: 'https://jsinterview.dev/concepts/dsa',
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: concept.title,
-        item: `https://jsinterview.dev/concepts/dsa/${concept.id}`,
-      },
-    ],
+    '@type': 'Article',
+    headline: `${concept.title} - DSA Concept Explained`,
+    description: concept.description,
+    author: {
+      '@type': 'Organization',
+      name: 'JS Interview Prep',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'JS Interview Prep',
+      url: 'https://jsinterview.dev',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://jsinterview.dev/concepts/dsa/${concept.id}`,
+    },
+    articleSection: 'DSA Tutorials',
+    keywords: `${concept.title}, data structures, algorithms, coding interview`,
+    datePublished: CONTENT_LAST_UPDATED.toISOString(),
+    dateModified: CONTENT_LAST_UPDATED.toISOString(),
   }
 }
 
@@ -119,12 +114,19 @@ export default function DSAConceptPage({ params }: Props) {
   }
 
   const faqSchema = generateFAQSchema(concept)
-  const breadcrumbSchema = generateBreadcrumbSchema(concept)
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Concepts', path: '/concepts' },
+    { name: 'DSA', path: '/concepts/dsa' },
+    { name: concept.title },
+  ])
+  const articleSchema = generateArticleSchema(concept)
 
   return (
     <>
       <StructuredData data={faqSchema} />
       <StructuredData data={breadcrumbSchema} />
+      <StructuredData data={articleSchema} />
       <DSAConceptPageClient />
     </>
   )

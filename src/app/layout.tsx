@@ -51,32 +51,41 @@ export const metadata: Metadata = {
   },
 }
 
-// Static JSON-LD structured data for SEO
+// Static JSON-LD structured data for SEO — consolidated as @graph
 const jsonLd = {
-  website: {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "JS Interview Prep",
-    "alternateName": ["JavaScript Interview Preparation", "JS Interview"],
-    "url": "https://jsinterview.dev",
-    "description": "Master JavaScript through interactive visualization and real-time code execution",
-  },
-  education: {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "JS Interview Prep",
-    "url": "https://jsinterview.dev",
-    "description": "Free interactive platform to master JavaScript through visualization for learning and technical interviews",
-    "areaServed": "Worldwide",
-  },
-  app: {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "JS Interview Prep",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "Web Browser",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  }
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "JS Interview Prep",
+      "alternateName": ["JavaScript Interview Preparation", "JS Interview"],
+      "url": "https://jsinterview.dev",
+      "description": "Master JavaScript through interactive visualization and real-time code execution",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://jsinterview.dev/?q={search_term_string}",
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "JS Interview Prep",
+      "url": "https://jsinterview.dev",
+      "description": "Free interactive platform to master JavaScript through visualization for learning and technical interviews",
+      "areaServed": "Worldwide",
+      "logo": "https://jsinterview.dev/favicon.svg",
+      "sameAs": [
+        "https://github.com/sunnywilson93/dsa-visualiser",
+      ],
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "JS Interview Prep",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web Browser",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    },
+  ],
 }
 
 export default function RootLayout({
@@ -89,15 +98,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.website) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.education) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.app) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body>
