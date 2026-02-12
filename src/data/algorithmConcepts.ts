@@ -4904,6 +4904,318 @@ export const problemConcepts: Record<string, ProblemConcept> = {
       },
     ],
   },
+
+  // ==================== SORTING PROBLEMS ====================
+
+  'merge-sort': {
+    title: 'Merge Sort',
+    keyInsight: 'Divide in half recursively, then merge sorted halves back together',
+    pattern: 'sorting',
+    steps: [
+      {
+        id: 1,
+        title: 'Start: Unsorted Array',
+        description: 'Split the array in half recursively until single elements.',
+        visual: {
+          array: [38, 27, 43, 3, 9, 82, 10],
+          annotations: ['Split into halves'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Divide Left Half',
+        description: '[38, 27, 43] splits into [38] and [27, 43], then [27] and [43].',
+        visual: {
+          array: [38, 27, 43, 3, 9, 82, 10],
+          highlights: [0, 1, 2],
+          annotations: ['[38] [27] [43] \u2014 base cases'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Merge [27] + [43]',
+        description: 'Compare front elements: 27 < 43. Result: [27, 43].',
+        visual: {
+          array: [38, 27, 43, 3, 9, 82, 10],
+          highlights: [1, 2],
+          annotations: ['27 < 43 \u2192 [27, 43]'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Merge [38] + [27, 43]',
+        description: '27 < 38 \u2192 take 27. Then 38 < 43 \u2192 take 38. Then 43. Result: [27, 38, 43].',
+        visual: {
+          array: [27, 38, 43, 3, 9, 82, 10],
+          highlights: [0, 1, 2],
+          annotations: ['Left half sorted: [27, 38, 43]'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Merge Right Half Similarly',
+        description: '[3, 9, 82, 10] \u2192 [3, 9] + [10, 82] \u2192 [3, 9, 10, 82].',
+        visual: {
+          array: [27, 38, 43, 3, 9, 10, 82],
+          highlights: [3, 4, 5, 6],
+          annotations: ['Right half sorted: [3, 9, 10, 82]'],
+        },
+      },
+      {
+        id: 6,
+        title: 'Final Merge',
+        description: 'Merge [27, 38, 43] + [3, 9, 10, 82]. Compare front elements repeatedly.',
+        visual: {
+          array: [3, 9, 10, 27, 38, 43, 82],
+          highlights: [0, 1, 2, 3, 4, 5, 6],
+          result: 'Sorted: [3, 9, 10, 27, 38, 43, 82]',
+        },
+      },
+    ],
+  },
+
+  'quick-sort': {
+    title: 'Quick Sort (Partition)',
+    keyInsight: 'Partition places pivot in correct position \u2014 elements left are smaller, right are larger',
+    pattern: 'sorting',
+    steps: [
+      {
+        id: 1,
+        title: 'Choose Pivot',
+        description: 'Pick last element (70) as pivot. Goal: put everything < 70 left, > 70 right.',
+        visual: {
+          array: [10, 80, 30, 90, 40, 50, 70],
+          highlights: [6],
+          pointers: { i: 0, j: 0 },
+          annotations: ['Pivot: 70'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Scan: 10 < 70',
+        description: '10 < pivot. Swap arr[i] with arr[j], advance i. (10 stays in place)',
+        visual: {
+          array: [10, 80, 30, 90, 40, 50, 70],
+          highlights: [0, 6],
+          pointers: { i: 1, j: 1 },
+          annotations: ['10 < 70 \u2192 keep left'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Scan: 80 \u2265 70',
+        description: '80 \u2265 pivot. Skip (j advances but i stays).',
+        visual: {
+          array: [10, 80, 30, 90, 40, 50, 70],
+          highlights: [1, 6],
+          pointers: { i: 1, j: 2 },
+          annotations: ['80 \u2265 70 \u2192 skip'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Scan: 30 < 70',
+        description: '30 < pivot. Swap 30 with 80 (swap arr[i] and arr[j]).',
+        visual: {
+          array: [10, 30, 80, 90, 40, 50, 70],
+          highlights: [1, 2, 6],
+          pointers: { i: 2, j: 3 },
+          annotations: ['Swap 80 \u2194 30'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Continue Scanning',
+        description: '90 \u2265 70 skip. 40 < 70 swap with 80. 50 < 70 swap with 90.',
+        visual: {
+          array: [10, 30, 40, 50, 80, 90, 70],
+          highlights: [2, 3, 6],
+          pointers: { i: 4, j: 6 },
+          annotations: ['After all scans'],
+        },
+      },
+      {
+        id: 6,
+        title: 'Place Pivot',
+        description: 'Swap pivot (70) with arr[i] (80). Pivot is now at index 4 \u2014 its CORRECT position!',
+        visual: {
+          array: [10, 30, 40, 50, 70, 90, 80],
+          highlights: [4],
+          annotations: ['70 is in correct final position!', '< 70: [10,30,40,50]', '> 70: [90,80]'],
+        },
+      },
+      {
+        id: 7,
+        title: 'Recurse Both Sides',
+        description: 'Recursively quicksort [10, 30, 40, 50] and [90, 80]. Each partition places one more element.',
+        visual: {
+          array: [10, 30, 40, 50, 70, 80, 90],
+          highlights: [0, 1, 2, 3, 4, 5, 6],
+          result: 'Sorted: [10, 30, 40, 50, 70, 80, 90]',
+        },
+      },
+    ],
+  },
+
+  'merge-intervals': {
+    title: 'Merge Intervals',
+    keyInsight: 'Sort by start time, then merge overlapping by comparing prev.end with curr.start',
+    pattern: 'sorting',
+    steps: [
+      {
+        id: 1,
+        title: 'Input Intervals',
+        description: 'Unsorted intervals: [[1,3], [2,6], [8,10], [15,18]]',
+        visual: {
+          array: ['[1,3]', '[2,6]', '[8,10]', '[15,18]'],
+          annotations: ['Already sorted by start in this example'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Start with First',
+        description: 'Add [1,3] to result. Now check next interval.',
+        visual: {
+          array: ['[1,3]', '[2,6]', '[8,10]', '[15,18]'],
+          highlights: [0],
+          annotations: ['Result: [[1,3]]'],
+        },
+      },
+      {
+        id: 3,
+        title: '[2,6] Overlaps with [1,3]',
+        description: '2 \u2264 3 (curr.start \u2264 prev.end) \u2192 overlap! Merge to [1, max(3,6)] = [1,6].',
+        visual: {
+          array: ['[1,6]', '[2,6]', '[8,10]', '[15,18]'],
+          highlights: [0, 1],
+          annotations: ['Merged: [1,3] + [2,6] = [1,6]'],
+        },
+      },
+      {
+        id: 4,
+        title: '[8,10] No Overlap',
+        description: '8 > 6 (curr.start > prev.end) \u2192 no overlap. Add [8,10] as new.',
+        visual: {
+          array: ['[1,6]', '[8,10]', '[15,18]'],
+          highlights: [1],
+          annotations: ['Result: [[1,6], [8,10]]'],
+        },
+      },
+      {
+        id: 5,
+        title: '[15,18] No Overlap',
+        description: '15 > 10 \u2192 no overlap. Add [15,18].',
+        visual: {
+          array: ['[1,6]', '[8,10]', '[15,18]'],
+          highlights: [0, 1, 2],
+          result: 'Merged: [[1,6], [8,10], [15,18]]',
+        },
+      },
+    ],
+  },
+
+  'kth-largest-element': {
+    title: 'Kth Largest (QuickSelect)',
+    keyInsight: 'Partition once, then only recurse into the side containing the target index',
+    pattern: 'sorting',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Find 2nd largest in [3, 2, 1, 5, 6, 4]. That\'s index 4 in sorted order.',
+        visual: {
+          array: [3, 2, 1, 5, 6, 4],
+          annotations: ['k=2, target index = 6-2 = 4'],
+        },
+      },
+      {
+        id: 2,
+        title: 'First Partition (pivot=4)',
+        description: 'Partition around 4. Elements < 4 go left, \u2265 4 go right.',
+        visual: {
+          array: [3, 2, 1, 4, 6, 5],
+          highlights: [3],
+          annotations: ['Pivot 4 at index 3', 'Target is index 4 \u2192 go RIGHT'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Recurse Right [6, 5]',
+        description: 'Only search [6, 5]. Partition around 5.',
+        visual: {
+          array: [3, 2, 1, 4, 5, 6],
+          highlights: [4],
+          annotations: ['Pivot 5 at index 4', 'Index 4 == target!'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Found!',
+        description: 'Pivot landed at index 4 = our target. The 2nd largest is 5.',
+        visual: {
+          array: [3, 2, 1, 4, 5, 6],
+          highlights: [4],
+          result: '2nd largest = 5',
+        },
+      },
+    ],
+  },
+
+  'largest-number': {
+    title: 'Largest Number',
+    keyInsight: 'Compare by concatenation: "9"+"34"="934" vs "34"+"9"="349" \u2192 9 comes first',
+    pattern: 'sorting',
+    steps: [
+      {
+        id: 1,
+        title: 'Input Numbers',
+        description: 'Arrange [3, 30, 34, 5, 9] to form the largest number.',
+        visual: {
+          array: [3, 30, 34, 5, 9],
+          annotations: ['Convert to strings for comparison'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Compare 3 vs 30',
+        description: '"330" vs "303". 330 > 303, so 3 comes before 30.',
+        visual: {
+          array: ['3', '30', '34', '5', '9'],
+          highlights: [0, 1],
+          annotations: ['"3"+"30"="330" > "30"+"3"="303"'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Compare 5 vs 9',
+        description: '"59" vs "95". 95 > 59, so 9 comes before 5.',
+        visual: {
+          array: ['3', '30', '34', '5', '9'],
+          highlights: [3, 4],
+          annotations: ['"9"+"5"="95" > "5"+"9"="59"'],
+        },
+      },
+      {
+        id: 4,
+        title: 'After Full Sort',
+        description: 'Custom comparator sorts: [9, 5, 34, 3, 30].',
+        visual: {
+          array: ['9', '5', '34', '3', '30'],
+          highlights: [0, 1, 2, 3, 4],
+          annotations: ['Each pair: ab > ba means a first'],
+        },
+      },
+      {
+        id: 5,
+        title: 'Join Result',
+        description: 'Concatenate: "9" + "5" + "34" + "3" + "30" = "9534330".',
+        visual: {
+          array: ['9', '5', '34', '3', '30'],
+          result: '"9534330"',
+        },
+      },
+    ],
+  },
 }
 
 // ============================================================================

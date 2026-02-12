@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { concepts } from '@/data/concepts'
-import { exampleCategories, codeExamples, isDsaSubcategory } from '@/data/examples'
+import { exampleCategories, dsaSubcategories, codeExamples, isDsaSubcategory } from '@/data/examples'
 import { dsaPatterns } from '@/data/dsaPatterns'
 import { dsaConcepts } from '@/data/dsaConcepts'
 import { problemConcepts } from '@/data/algorithmConcepts'
@@ -78,7 +78,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  // Problem category pages (/{categoryId})
+  // Problem category pages (/{categoryId}) — main categories + DSA subcategories
   const categoryPages: MetadataRoute.Sitemap = exampleCategories.map((category) => ({
     url: `${BASE_URL}/${category.id}`,
     lastModified: CONTENT_LAST_UPDATED,
@@ -86,13 +86,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
+  // DSA subcategory pages (/{subcategoryId}) — e.g. /sorting, /two-pointers
+  const dsaSubcategoryPages: MetadataRoute.Sitemap = dsaSubcategories.map((sub) => ({
+    url: `${BASE_URL}/${sub.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
   // Problem practice pages (/{categoryId}/{problemId})
   const problemPages: MetadataRoute.Sitemap = codeExamples.map((problem) => {
     const category = exampleCategories.find(
       (cat) => cat.id === problem.category ||
-      (cat.id === 'dsa' && problem.category.startsWith('dsa-'))
+      (cat.id === 'dsa' && isDsaSubcategory(problem.category))
     )
-    const categoryId = category?.id || 'dsa'
+    const categoryId = category?.id || problem.category
 
     return {
       url: `${BASE_URL}/${categoryId}/${problem.id}`,
@@ -127,6 +135,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...dsaConceptPages,
     ...dsaPatternPages,
     ...categoryPages,
+    ...dsaSubcategoryPages,
     ...problemPages,
     ...conceptVizPages,
   ]

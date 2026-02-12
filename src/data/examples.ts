@@ -4613,6 +4613,7 @@ console.log(reverseWords("hello world"))
     id: 'remove-duplicates-sorted',
     name: 'Remove Duplicates (Sorted)',
     category: 'two-pointers',
+    categories: ['two-pointers', 'sorting'],
     difficulty: 'easy',
     description: 'Remove duplicates from sorted array in-place, return new length',
     code: `// Remove Duplicates from Sorted Array
@@ -4708,6 +4709,7 @@ moveZeroes(nums);
     id: 'squares-sorted-array',
     name: 'Squares of Sorted Array',
     category: 'two-pointers',
+    categories: ['two-pointers', 'sorting'],
     difficulty: 'easy',
     description: 'Return squares of sorted array in sorted order (handles negatives)',
     code: `// Squares of a Sorted Array
@@ -4894,6 +4896,7 @@ threeSum(nums);
     id: 'sort-colors',
     name: 'Sort Colors (Dutch Flag)',
     category: 'two-pointers',
+    categories: ['two-pointers', 'sorting'],
     difficulty: 'medium',
     description: 'Sort array of 0s, 1s, 2s in-place using three pointers',
     code: `// Sort Colors - Dutch National Flag
@@ -5051,6 +5054,7 @@ isSubsequence(s, t);
     id: 'merge-sorted-array',
     name: 'Merge Sorted Array',
     category: 'two-pointers',
+    categories: ['two-pointers', 'sorting'],
     difficulty: 'easy',
     description: 'Merge two sorted arrays into first array in-place',
     code: `// Merge Sorted Array In-Place
@@ -9808,5 +9812,772 @@ cache.get(3);
     spaceComplexity: 'O(capacity)',
     patternName: 'Linked List (Doubly LL + Hash Map)',
     whyItWorks: 'The hash map gives O(1) access to any node by key. The doubly linked list gives O(1) removal and insertion at any position. Together they maintain LRU order: every access moves the node to the front, and eviction always removes from the back.',
+  },
+  {
+    id: 'bubble-sort',
+    name: 'Bubble Sort',
+    category: 'sorting',
+    difficulty: 'easy',
+    description: 'Implement bubble sort to sort an array in ascending order',
+    code: `// Bubble Sort
+// Repeatedly swap adjacent elements if out of order
+// After each pass, largest unsorted "bubbles" to end
+
+function bubbleSort(nums) {
+  let n = nums.length;
+  console.log("Initial:", [...nums]);
+
+  for (let i = 0; i < n - 1; i++) {
+    let swapped = false;
+
+    for (let j = 0; j < n - 1 - i; j++) {
+      if (nums[j] > nums[j + 1]) {
+        [nums[j], nums[j + 1]] = [nums[j + 1], nums[j]];
+        swapped = true;
+        console.log("  Swap:", nums[j], "<->", nums[j + 1], "=>", [...nums]);
+      }
+    }
+
+    console.log("Pass", i + 1, ":", [...nums]);
+
+    if (!swapped) {
+      console.log("No swaps needed - already sorted!");
+      break;
+    }
+  }
+
+  console.log("Sorted:", [...nums]);
+  return nums;
+}
+
+let nums = [64, 34, 25, 12, 22, 11, 90];
+bubbleSort(nums);
+`,
+    approach: 'Iterate through the array repeatedly, comparing adjacent pairs and swapping them if out of order. After each full pass, the largest unsorted element reaches its correct position at the end. Optimize with an early exit flag: if no swaps occur in a pass, the array is already sorted.',
+    timeComplexity: 'O(n\u00b2)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Basic Sort',
+    whyItWorks: 'Each pass guarantees the next largest element reaches its final position. The early exit optimization makes the best case O(n) for nearly sorted arrays, though average and worst cases remain O(n\u00b2).',
+  },
+  {
+    id: 'insertion-sort',
+    name: 'Insertion Sort',
+    category: 'sorting',
+    difficulty: 'easy',
+    description: 'Implement insertion sort \u2014 build sorted array one element at a time',
+    code: `// Insertion Sort
+// Build sorted portion from left to right
+// Insert each element into its correct position
+
+function insertionSort(nums) {
+  console.log("Initial:", [...nums]);
+
+  for (let i = 1; i < nums.length; i++) {
+    let key = nums[i];
+    let j = i - 1;
+
+    console.log("\\nInserting", key, "into sorted portion:", nums.slice(0, i));
+
+    while (j >= 0 && nums[j] > key) {
+      nums[j + 1] = nums[j];
+      console.log("  Shift", nums[j], "right");
+      j--;
+    }
+
+    nums[j + 1] = key;
+    console.log("  Place", key, "at index", j + 1);
+    console.log("  Array:", [...nums]);
+  }
+
+  console.log("\\nSorted:", [...nums]);
+  return nums;
+}
+
+let nums = [12, 11, 13, 5, 6];
+insertionSort(nums);
+`,
+    approach: 'Build a sorted portion from left to right. For each new element, shift larger sorted elements one position right to make room, then insert the element at its correct position. This mimics how most people sort playing cards in their hand.',
+    timeComplexity: 'O(n\u00b2)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Basic Sort',
+    whyItWorks: 'The sorted portion grows by one element each iteration. Shifting creates the correct gap. Best case O(n) for nearly sorted arrays since inner loop barely runs. Preferred over bubble sort for small or nearly sorted data.',
+  },
+  {
+    id: 'merge-sort',
+    name: 'Merge Sort',
+    category: 'sorting',
+    difficulty: 'easy',
+    description: 'Implement merge sort using divide-and-conquer',
+    code: `// Merge Sort
+// Divide array in half, sort each half, merge back
+// Classic divide-and-conquer algorithm
+
+function mergeSort(arr, depth = 0) {
+  let indent = "  ".repeat(depth);
+
+  if (arr.length <= 1) {
+    console.log(indent + "Base case:", arr);
+    return arr;
+  }
+
+  let mid = Math.floor(arr.length / 2);
+  console.log(indent + "Split:", arr, "->", arr.slice(0, mid), "|", arr.slice(mid));
+
+  let left = mergeSort(arr.slice(0, mid), depth + 1);
+  let right = mergeSort(arr.slice(mid), depth + 1);
+
+  let merged = merge(left, right);
+  console.log(indent + "Merge:", left, "+", right, "=", merged);
+  return merged;
+}
+
+function merge(left, right) {
+  let result = [];
+  let i = 0, j = 0;
+
+  while (i < left.length && j < right.length) {
+    if (left[i] <= right[j]) {
+      result.push(left[i]);
+      i++;
+    } else {
+      result.push(right[j]);
+      j++;
+    }
+  }
+
+  while (i < left.length) {
+    result.push(left[i]);
+    i++;
+  }
+
+  while (j < right.length) {
+    result.push(right[j]);
+    j++;
+  }
+
+  return result;
+}
+
+let arr = [38, 27, 43, 3, 9, 82, 10];
+console.log("Result:", mergeSort(arr));
+`,
+    approach: 'Recursively divide the array in half until single elements remain (base case). Then merge pairs of sorted subarrays by comparing elements from each, always taking the smaller one. The merge step runs in O(n) and there are O(log n) levels of recursion.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Divide and Conquer Sort',
+    whyItWorks: 'Dividing halves the problem size each time (log n levels). Merging two sorted arrays takes linear time because both are already sorted \u2014 just compare front elements. Stability is preserved because equal elements from the left array are taken first.',
+  },
+  {
+    id: 'quick-sort',
+    name: 'Quick Sort',
+    category: 'sorting',
+    difficulty: 'medium',
+    description: 'Implement quicksort with partition \u2014 the most important sort for interviews',
+    code: `// Quick Sort
+// Pick a pivot, partition array around it
+// Elements < pivot go left, > pivot go right
+// Pivot ends up in its CORRECT final position
+
+function quickSort(arr, lo = 0, hi = arr.length - 1, depth = 0) {
+  if (lo >= hi) return arr;
+
+  let indent = "  ".repeat(depth);
+  console.log(indent + "Sorting [" + lo + ".." + hi + "]:", arr.slice(lo, hi + 1));
+
+  let pivotIdx = partition(arr, lo, hi, indent);
+  console.log(indent + "Pivot", arr[pivotIdx], "at index", pivotIdx);
+  console.log(indent + "Array:", [...arr]);
+
+  quickSort(arr, lo, pivotIdx - 1, depth + 1);
+  quickSort(arr, pivotIdx + 1, hi, depth + 1);
+
+  return arr;
+}
+
+function partition(arr, lo, hi, indent) {
+  let pivot = arr[hi];
+  let i = lo;
+
+  console.log(indent + "  Pivot value:", pivot);
+
+  for (let j = lo; j < hi; j++) {
+    if (arr[j] < pivot) {
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+      i++;
+    }
+  }
+
+  [arr[i], arr[hi]] = [arr[hi], arr[i]];
+  return i;
+}
+
+let arr = [10, 80, 30, 90, 40, 50, 70];
+quickSort(arr);
+console.log("\\nSorted:", arr);
+`,
+    approach: 'Choose the last element as pivot. Partition the array so all elements less than the pivot are on the left and all greater are on the right. The pivot lands in its correct final position. Recursively sort the two partitions. The partition function is the key operation.',
+    timeComplexity: 'O(n log n) average, O(n\u00b2) worst',
+    spaceComplexity: 'O(log n)',
+    patternName: 'Partition Sort',
+    whyItWorks: 'Partition places the pivot in its correct position in O(n) time. On average, the pivot splits the array roughly in half, giving O(log n) recursive levels. Worst case occurs when the pivot is always the min or max (sorted input), giving O(n) levels.',
+  },
+  {
+    id: 'valid-anagram-sort',
+    name: 'Valid Anagram (Sorting)',
+    category: 'sorting',
+    categories: ['sorting', 'strings'],
+    difficulty: 'easy',
+    description: 'Check if two strings are anagrams by sorting and comparing',
+    code: `// Valid Anagram - Sorting Approach
+// If two strings are anagrams, sorting them
+// produces the same string
+
+function isAnagram(s, t) {
+  if (s.length !== t.length) {
+    console.log("Different lengths:", s.length, "vs", t.length);
+    return false;
+  }
+
+  let sortedS = s.split("").sort().join("");
+  let sortedT = t.split("").sort().join("");
+
+  console.log("String 1:", s);
+  console.log("Sorted 1:", sortedS);
+  console.log("String 2:", t);
+  console.log("Sorted 2:", sortedT);
+  console.log("Match:", sortedS === sortedT);
+
+  return sortedS === sortedT;
+}
+
+console.log("--- Test 1 ---");
+isAnagram("anagram", "nagaram");
+
+console.log("\\n--- Test 2 ---");
+isAnagram("rat", "car");
+
+console.log("\\n--- Test 3 ---");
+isAnagram("listen", "silent");
+`,
+    approach: 'Sort both strings alphabetically and compare. If they are anagrams, their sorted forms will be identical. This is simpler than the hash map approach but trades O(n) time for O(n log n) due to sorting.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Sort + Compare',
+    whyItWorks: 'Anagrams are permutations of the same characters. Sorting normalizes any permutation to a canonical form, so two anagrams produce identical sorted strings. The tradeoff vs frequency counting: simpler code but slower for large inputs.',
+  },
+  {
+    id: 'merge-intervals',
+    name: 'Merge Intervals',
+    category: 'sorting',
+    categories: ['sorting', 'arrays-hashing'],
+    difficulty: 'medium',
+    description: 'Merge all overlapping intervals \u2014 classic FAANG sorting problem',
+    code: `// Merge Intervals
+// Sort by start time, then merge overlapping
+// Two intervals overlap if: prev.end >= curr.start
+
+function merge(intervals) {
+  if (intervals.length <= 1) return intervals;
+
+  intervals.sort((a, b) => a[0] - b[0]);
+  console.log("Sorted intervals:", intervals.map(i => "[" + i + "]").join(", "));
+
+  let merged = [intervals[0]];
+
+  for (let i = 1; i < intervals.length; i++) {
+    let prev = merged[merged.length - 1];
+    let curr = intervals[i];
+
+    console.log("\\nCompare:", "[" + prev + "]", "vs", "[" + curr + "]");
+
+    if (prev[1] >= curr[0]) {
+      prev[1] = Math.max(prev[1], curr[1]);
+      console.log("  Overlap! Merge to:", "[" + prev + "]");
+    } else {
+      merged.push(curr);
+      console.log("  No overlap. Add new interval.");
+    }
+
+    console.log("  Result so far:", merged.map(i => "[" + i + "]").join(", "));
+  }
+
+  console.log("\\nFinal:", merged.map(i => "[" + i + "]").join(", "));
+  return merged;
+}
+
+merge([[1,3],[2,6],[8,10],[15,18]]);
+console.log("");
+merge([[1,4],[4,5]]);
+`,
+    approach: 'Sort intervals by start time. Initialize the result with the first interval. For each subsequent interval, check if it overlaps with the last merged interval (prev.end >= curr.start). If so, extend the previous interval. Otherwise, add the current interval as new.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Sort + Linear Scan',
+    whyItWorks: 'Sorting by start time ensures we only need to compare each interval with the last merged one. If the current interval starts before or at the previous end, they overlap. Taking the max of ends handles contained intervals correctly.',
+  },
+  {
+    id: 'meeting-rooms',
+    name: 'Meeting Rooms',
+    category: 'sorting',
+    categories: ['sorting', 'arrays-hashing'],
+    difficulty: 'easy',
+    description: 'Can a person attend all meetings? Check for overlapping intervals',
+    code: `// Meeting Rooms
+// Sort by start time, check for any overlap
+// Overlap exists if: prev.end > curr.start
+
+function canAttendMeetings(intervals) {
+  if (intervals.length <= 1) return true;
+
+  intervals.sort((a, b) => a[0] - b[0]);
+  console.log("Meetings sorted by start:");
+  intervals.forEach((m, i) => console.log("  " + (i + 1) + ".", m[0] + ":00 - " + m[1] + ":00"));
+  console.log("");
+
+  for (let i = 1; i < intervals.length; i++) {
+    let prev = intervals[i - 1];
+    let curr = intervals[i];
+
+    console.log("Check: [" + prev + "] vs [" + curr + "]");
+
+    if (prev[1] > curr[0]) {
+      console.log("  CONFLICT! Meeting ending at " + prev[1] + ":00 overlaps with meeting starting at " + curr[0] + ":00");
+      return false;
+    }
+
+    console.log("  OK - no overlap");
+  }
+
+  console.log("\\nCan attend all meetings!");
+  return true;
+}
+
+console.log("--- Schedule 1 ---");
+canAttendMeetings([[0,30],[5,10],[15,20]]);
+
+console.log("\\n--- Schedule 2 ---");
+canAttendMeetings([[7,10],[2,4]]);
+`,
+    approach: 'Sort meetings by start time. Then check each consecutive pair: if any meeting starts before the previous one ends, there is a conflict. This is the simplest interval overlap detection.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Sort + Linear Scan',
+    whyItWorks: 'Sorting by start time means the only possible overlaps are between consecutive meetings. If meeting B starts before meeting A ends (prev.end > curr.start), they overlap. One pass after sorting is sufficient.',
+  },
+  {
+    id: 'meeting-rooms-ii',
+    name: 'Meeting Rooms II',
+    category: 'sorting',
+    categories: ['sorting', 'arrays-hashing'],
+    difficulty: 'medium',
+    description: 'Find minimum number of conference rooms needed',
+    code: `// Meeting Rooms II
+// Separate start and end times, sort both
+// Count overlapping meetings using two pointers
+
+function minMeetingRooms(intervals) {
+  let starts = intervals.map(i => i[0]).sort((a, b) => a - b);
+  let ends = intervals.map(i => i[1]).sort((a, b) => a - b);
+
+  console.log("Meetings:", intervals.map(i => "[" + i + "]").join(", "));
+  console.log("Starts:", starts);
+  console.log("Ends:  ", ends);
+  console.log("");
+
+  let rooms = 0;
+  let maxRooms = 0;
+  let s = 0, e = 0;
+
+  while (s < starts.length) {
+    if (starts[s] < ends[e]) {
+      rooms++;
+      console.log("Time " + starts[s] + ": Meeting starts. Rooms needed:", rooms);
+      s++;
+    } else {
+      rooms--;
+      console.log("Time " + ends[e] + ": Meeting ends. Rooms needed:", rooms);
+      e++;
+    }
+
+    maxRooms = Math.max(maxRooms, rooms);
+  }
+
+  console.log("\\nMinimum rooms needed:", maxRooms);
+  return maxRooms;
+}
+
+minMeetingRooms([[0,30],[5,10],[15,20]]);
+console.log("");
+minMeetingRooms([[7,10],[2,4]]);
+`,
+    approach: 'Separate start and end times into two sorted arrays. Use two pointers to sweep through time: when a meeting starts, increment rooms needed; when one ends, decrement. Track the maximum rooms needed at any point. This is equivalent to a line sweep algorithm.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Sort + Two Pointers (Sweep Line)',
+    whyItWorks: 'Sorting starts and ends separately lets us process events in chronological order. A start event before the earliest pending end means we need an additional room. Processing ends independently works because we only care about the count of concurrent meetings, not which specific meetings overlap.',
+  },
+  {
+    id: 'largest-number',
+    name: 'Largest Number',
+    category: 'sorting',
+    categories: ['sorting', 'strings'],
+    difficulty: 'medium',
+    description: 'Arrange numbers to form the largest possible number',
+    code: `// Largest Number
+// Custom comparator: compare string concatenation
+// "9" + "34" = "934" vs "34" + "9" = "349"
+
+function largestNumber(nums) {
+  let strs = nums.map(String);
+
+  strs.sort((a, b) => {
+    let ab = a + b;
+    let ba = b + a;
+    console.log("Compare:", a, "vs", b, "->", ab, "vs", ba, "->", ab > ba ? a + " first" : b + " first");
+    return ab > ba ? -1 : 1;
+  });
+
+  console.log("\\nSorted order:", strs);
+
+  if (strs[0] === "0") {
+    console.log("All zeros!");
+    return "0";
+  }
+
+  let result = strs.join("");
+  console.log("Result:", result);
+  return result;
+}
+
+console.log("--- Test 1 ---");
+largestNumber([10, 2]);
+
+console.log("\\n--- Test 2 ---");
+largestNumber([3, 30, 34, 5, 9]);
+`,
+    approach: 'Convert numbers to strings. Sort with a custom comparator that compares the concatenation a+b vs b+a. If a+b is larger, a should come first. Join the sorted strings. Handle edge case where all numbers are 0.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Custom Comparator',
+    whyItWorks: 'The comparator defines a total ordering: if ab > ba, then a should precede b. This greedy choice is provably optimal because it maximizes the contribution of each number in its position. The edge case check for leading zeros handles inputs like [0, 0].',
+  },
+  {
+    id: 'sort-characters-by-frequency',
+    name: 'Sort Characters by Frequency',
+    category: 'sorting',
+    categories: ['sorting', 'arrays-hashing', 'strings'],
+    difficulty: 'medium',
+    description: 'Sort characters by how often they appear, most frequent first',
+    code: `// Sort Characters by Frequency
+// Count frequency, then sort by count
+// Two approaches: sort vs bucket sort
+
+function frequencySort(s) {
+  let freq = {};
+  for (let char of s) {
+    freq[char] = (freq[char] || 0) + 1;
+  }
+
+  console.log("String:", s);
+  console.log("Frequencies:", freq);
+
+  let chars = Object.keys(freq);
+  chars.sort((a, b) => freq[b] - freq[a]);
+
+  console.log("Sorted by frequency:", chars.map(c => c + ":" + freq[c]));
+
+  let result = "";
+  for (let char of chars) {
+    result += char.repeat(freq[char]);
+    console.log("  Add", char, "x" + freq[char], "->", result);
+  }
+
+  console.log("Result:", result);
+  return result;
+}
+
+console.log("--- Test 1 ---");
+frequencySort("tree");
+
+console.log("\\n--- Test 2 ---");
+frequencySort("cccaaa");
+
+console.log("\\n--- Test 3 ---");
+frequencySort("Aabb");
+`,
+    approach: 'Count character frequencies using a hash map. Sort the unique characters by their frequency in descending order. Build the result by repeating each character by its count. Alternative: use bucket sort indexed by frequency for O(n) time.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Frequency Count + Sort',
+    whyItWorks: 'The hash map captures frequency in O(n). Sorting by frequency groups characters by their count. Repeating each character by its frequency reconstructs the string in the desired order. Bucket sort variant avoids the O(n log n) comparison sort.',
+  },
+  {
+    id: 'relative-sort-array',
+    name: 'Relative Sort Array',
+    category: 'sorting',
+    categories: ['sorting', 'arrays-hashing'],
+    difficulty: 'easy',
+    description: 'Sort array according to the order defined by another array',
+    code: `// Relative Sort Array
+// Sort arr1 so elements in arr2 come first
+// (in arr2's order), rest sorted ascending
+
+function relativeSortArray(arr1, arr2) {
+  let orderMap = {};
+  arr2.forEach((val, idx) => {
+    orderMap[val] = idx;
+  });
+
+  console.log("arr1:", arr1);
+  console.log("arr2 (order):", arr2);
+  console.log("Order map:", orderMap);
+
+  arr1.sort((a, b) => {
+    let aInArr2 = orderMap[a] !== undefined;
+    let bInArr2 = orderMap[b] !== undefined;
+
+    if (aInArr2 && bInArr2) {
+      return orderMap[a] - orderMap[b];
+    }
+    if (aInArr2) return -1;
+    if (bInArr2) return 1;
+    return a - b;
+  });
+
+  console.log("Result:", arr1);
+  return arr1;
+}
+
+relativeSortArray(
+  [2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19],
+  [2, 1, 4, 3, 9, 6]
+);
+`,
+    approach: 'Build a map from arr2 values to their indices (defining custom order). Sort arr1 with a comparator: if both elements are in arr2, sort by their arr2 index. If only one is in arr2, it comes first. If neither is in arr2, sort numerically.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Custom Order Sort',
+    whyItWorks: 'The order map encodes arr2 as a priority system. The three-branch comparator handles all cases: both in arr2 (use their relative order), one in arr2 (prioritize it), neither in arr2 (default ascending). This produces the exact custom ordering requested.',
+  },
+  {
+    id: 'sort-array-by-parity',
+    name: 'Sort Array by Parity',
+    category: 'sorting',
+    categories: ['sorting', 'arrays-hashing'],
+    difficulty: 'easy',
+    description: 'Move all even numbers before odd numbers',
+    code: `// Sort Array by Parity
+// Partition: evens first, odds after
+// Two-pointer approach (like partition in quicksort)
+
+function sortArrayByParity(nums) {
+  console.log("Input:", [...nums]);
+
+  let left = 0;
+  let right = nums.length - 1;
+
+  while (left < right) {
+    if (nums[left] % 2 === 0) {
+      console.log("  " + nums[left], "is even, skip (left++)");
+      left++;
+    } else if (nums[right] % 2 === 1) {
+      console.log("  " + nums[right], "is odd, skip (right--)");
+      right--;
+    } else {
+      console.log("  Swap", nums[left], "(odd) <->", nums[right], "(even)");
+      [nums[left], nums[right]] = [nums[right], nums[left]];
+      left++;
+      right--;
+    }
+    console.log("  Array:", [...nums], "  left=" + left, "right=" + right);
+  }
+
+  console.log("Result:", [...nums]);
+  return nums;
+}
+
+sortArrayByParity([3, 1, 2, 4]);
+console.log("");
+sortArrayByParity([0, 1, 2, 3, 4]);
+`,
+    approach: 'Use two pointers from both ends. If left points to even, advance left. If right points to odd, retreat right. If left is odd and right is even, swap them. This is a simplified partition (like QuickSort) around the condition "is even".',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Partition',
+    whyItWorks: 'The two-pointer partition ensures all even numbers migrate to the left portion and all odd numbers to the right. Each element is visited at most once from each side, giving O(n) time. This is the same partition logic used in QuickSort, simplified to a boolean condition.',
+  },
+  {
+    id: 'kth-largest-element',
+    name: 'Kth Largest Element',
+    category: 'sorting',
+    categories: ['sorting', 'arrays-hashing'],
+    difficulty: 'medium',
+    description: 'Find the kth largest element using QuickSelect (partition)',
+    code: `// Kth Largest Element - QuickSelect
+// Use partition from QuickSort to find kth element
+// Average O(n) instead of O(n log n) full sort
+
+function findKthLargest(nums, k) {
+  let target = nums.length - k;
+  console.log("Array:", [...nums]);
+  console.log("Finding", k + "th largest (index", target, "in sorted)");
+  console.log("");
+
+  return quickSelect(nums, 0, nums.length - 1, target);
+}
+
+function quickSelect(nums, lo, hi, target) {
+  let pivotIdx = partition(nums, lo, hi);
+
+  console.log("Partition around", nums[pivotIdx], "at index", pivotIdx);
+  console.log("  Array:", [...nums]);
+
+  if (pivotIdx === target) {
+    console.log("  Found! The answer is", nums[pivotIdx]);
+    return nums[pivotIdx];
+  } else if (pivotIdx < target) {
+    console.log("  Target is RIGHT of pivot, search [" + (pivotIdx + 1) + ".." + hi + "]");
+    return quickSelect(nums, pivotIdx + 1, hi, target);
+  } else {
+    console.log("  Target is LEFT of pivot, search [" + lo + ".." + (pivotIdx - 1) + "]");
+    return quickSelect(nums, lo, pivotIdx - 1, target);
+  }
+}
+
+function partition(nums, lo, hi) {
+  let pivot = nums[hi];
+  let i = lo;
+
+  for (let j = lo; j < hi; j++) {
+    if (nums[j] <= pivot) {
+      [nums[i], nums[j]] = [nums[j], nums[i]];
+      i++;
+    }
+  }
+
+  [nums[i], nums[hi]] = [nums[hi], nums[i]];
+  return i;
+}
+
+findKthLargest([3, 2, 1, 5, 6, 4], 2);
+console.log("");
+findKthLargest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4);
+`,
+    approach: 'Use QuickSelect: partition the array around a pivot (same as QuickSort). If the pivot lands at the target index (n-k for kth largest), we found it. If pivot is left of target, recurse right; if right, recurse left. Only recurse into ONE side, unlike QuickSort.',
+    timeComplexity: 'O(n) average, O(n\u00b2) worst',
+    spaceComplexity: 'O(1)',
+    patternName: 'QuickSelect (Partition)',
+    whyItWorks: 'Partition places one element in its correct sorted position in O(n). Since we only recurse into the half containing our target, the work halves each time on average: n + n/2 + n/4 + ... = 2n = O(n). This is fundamentally faster than sorting the entire array.',
+  },
+  {
+    id: 'insert-interval',
+    name: 'Insert Interval',
+    category: 'sorting',
+    categories: ['sorting', 'arrays-hashing'],
+    difficulty: 'medium',
+    description: 'Insert a new interval and merge if necessary',
+    code: `// Insert Interval
+// Intervals are already sorted
+// Find where new interval overlaps, merge those
+
+function insert(intervals, newInterval) {
+  let result = [];
+  let i = 0;
+
+  console.log("Intervals:", intervals.map(x => "[" + x + "]").join(", "));
+  console.log("Insert:", "[" + newInterval + "]");
+  console.log("");
+
+  // Add all intervals BEFORE the new one
+  while (i < intervals.length && intervals[i][1] < newInterval[0]) {
+    result.push(intervals[i]);
+    console.log("Before (no overlap):", "[" + intervals[i] + "]");
+    i++;
+  }
+
+  // Merge overlapping intervals
+  while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
+    console.log("Overlap with:", "[" + intervals[i] + "]");
+    newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+    newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+    console.log("  Merged to:", "[" + newInterval + "]");
+    i++;
+  }
+
+  result.push(newInterval);
+  console.log("Add merged:", "[" + newInterval + "]");
+
+  // Add all intervals AFTER
+  while (i < intervals.length) {
+    result.push(intervals[i]);
+    console.log("After (no overlap):", "[" + intervals[i] + "]");
+    i++;
+  }
+
+  console.log("\\nResult:", result.map(x => "[" + x + "]").join(", "));
+  return result;
+}
+
+insert([[1,3],[6,9]], [2,5]);
+console.log("");
+insert([[1,2],[3,5],[6,7],[8,10],[12,16]], [4,8]);
+`,
+    approach: 'Since intervals are already sorted, make three passes: (1) add all intervals ending before the new one starts, (2) merge all intervals overlapping with the new one by extending the new interval\'s start/end, (3) add all remaining intervals after the merged region.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Sort + Merge (Pre-sorted)',
+    whyItWorks: 'The three-phase approach exploits sorted order: intervals before the new one cannot overlap (they end too early), intervals after cannot overlap (they start too late). Only the middle group overlaps, and we merge them by expanding the new interval to encompass all overlapping ranges.',
+  },
+  {
+    id: 'non-overlapping-intervals',
+    name: 'Non-Overlapping Intervals',
+    category: 'sorting',
+    categories: ['sorting', 'greedy'],
+    difficulty: 'medium',
+    description: 'Find minimum number of intervals to remove for no overlaps',
+    code: `// Non-Overlapping Intervals
+// Sort by END time (greedy choice!)
+// Count overlapping intervals to remove
+
+function eraseOverlapIntervals(intervals) {
+  if (intervals.length <= 1) return 0;
+
+  intervals.sort((a, b) => a[1] - b[1]);
+
+  console.log("Sorted by end time:");
+  intervals.forEach(i => console.log("  [" + i + "]"));
+  console.log("");
+
+  let removals = 0;
+  let prevEnd = intervals[0][1];
+  console.log("Keep: [" + intervals[0] + "] (first)");
+
+  for (let i = 1; i < intervals.length; i++) {
+    let curr = intervals[i];
+
+    if (curr[0] < prevEnd) {
+      removals++;
+      console.log("Remove: [" + curr + "] (starts at " + curr[0] + " < prevEnd " + prevEnd + ")");
+    } else {
+      console.log("Keep: [" + curr + "] (starts at " + curr[0] + " >= prevEnd " + prevEnd + ")");
+      prevEnd = curr[1];
+    }
+  }
+
+  console.log("\\nTotal removals:", removals);
+  return removals;
+}
+
+eraseOverlapIntervals([[1,2],[2,3],[3,4],[1,3]]);
+console.log("");
+eraseOverlapIntervals([[1,2],[1,2],[1,2]]);
+console.log("");
+eraseOverlapIntervals([[1,100],[11,22],[1,11],[2,12]]);
+`,
+    approach: 'Sort intervals by END time (this is the key greedy insight). Keep the first interval. For each subsequent interval, if it starts before the previous end, it overlaps and must be removed. Otherwise, keep it and update the end boundary.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Sort + Greedy',
+    whyItWorks: 'Sorting by end time and always keeping the interval that ends earliest leaves maximum room for future intervals. This greedy choice is optimal because an interval with an earlier end time can never be worse than one with a later end time — it blocks fewer future intervals.',
   },
 ]

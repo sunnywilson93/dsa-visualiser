@@ -1,6 +1,6 @@
 import type { DSAPattern } from '@/components/DSAPatterns/types'
 
-export const DSA_PATTERN_IDS = ['two-pointers', 'hash-map', 'bit-manipulation', 'binary-search'] as const
+export const DSA_PATTERN_IDS = ['two-pointers', 'hash-map', 'bit-manipulation', 'binary-search', 'sorting'] as const
 export type DSAPatternId = typeof DSA_PATTERN_IDS[number]
 
 export const dsaPatterns: DSAPattern[] = [
@@ -157,6 +157,49 @@ export const dsaPatterns: DSAPattern[] = [
       space: 'O(1)',
     },
     relatedProblems: ['binary-search-basic', 'search-insert-position', 'first-last-position', 'search-rotated-array', 'find-min-rotated', 'koko-eating-bananas'],
+  },
+  {
+    id: 'sorting',
+    name: 'Sorting',
+    slug: 'sorting',
+    description: 'Use sorting as a preprocessing step to simplify problems, or apply partition logic for in-place rearrangement. Many interview problems become trivial once the array is sorted.',
+    whenToUse: [
+      'Interval problems (merge, insert, non-overlapping)',
+      'Finding closest pairs or grouping adjacent elements',
+      'Problems requiring custom ordering (largest number, frequency sort)',
+      'In-place partitioning (sort colors, sort by parity)',
+    ],
+    variants: [
+      {
+        id: 'sort-and-scan',
+        name: 'Sort + Linear Scan',
+        description: 'Sort the array first, then scan linearly to find the answer. Sorting makes adjacent elements comparable.',
+        whenToUse: 'Merge intervals, meeting rooms, 3Sum, closest pairs',
+      },
+      {
+        id: 'custom-comparator',
+        name: 'Custom Comparator',
+        description: 'Define a custom sort order using a comparator function. The key insight is choosing what to compare.',
+        whenToUse: 'Largest number, sort by frequency, relative sort, custom ordering',
+      },
+      {
+        id: 'partition',
+        name: 'Partition / Dutch Flag',
+        description: 'Rearrange elements in-place by partitioning around a condition without fully sorting.',
+        whenToUse: 'Sort colors (0s, 1s, 2s), sort by parity, QuickSelect for Kth element',
+      },
+      {
+        id: 'bucket-counting',
+        name: 'Bucket / Counting Sort',
+        description: 'When values are bounded, use counting or bucket sort for O(n) time instead of O(n log n).',
+        whenToUse: 'Top K frequent, sort characters by frequency, bounded integer sorting',
+      },
+    ],
+    complexity: {
+      time: 'O(n log n)',
+      space: 'O(1) to O(n)',
+    },
+    relatedProblems: ['merge-intervals', 'meeting-rooms', 'largest-number', 'sort-colors', 'kth-largest-element', 'sort-characters-by-frequency'],
   },
 ]
 

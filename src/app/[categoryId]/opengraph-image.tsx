@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og'
-import { exampleCategories, getExamplesByCategory } from '@/data/examples'
+import { exampleCategories, dsaSubcategories, getExamplesByCategory } from '@/data/examples'
 
 export const alt = 'JavaScript Practice Problems'
 export const size = { width: 1200, height: 630 }
@@ -12,6 +12,7 @@ export default async function Image({
 }) {
   const { categoryId } = await params
   const category = exampleCategories.find((c) => c.id === categoryId)
+    || dsaSubcategories.find((s) => s.id === categoryId)
   const problemCount = getExamplesByCategory(categoryId).length
 
   return new ImageResponse(

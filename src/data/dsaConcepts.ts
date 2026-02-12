@@ -1218,6 +1218,211 @@ while (current !== null) {
       },
     ],
   },
+  // ============================================================================
+  // ALGORITHMS
+  // ============================================================================
+  {
+    id: 'sorting-algorithms',
+    title: 'Sorting Algorithms',
+    category: 'algorithms',
+    difficulty: 'intermediate',
+    description: 'Sorting algorithms arrange elements in a specific order. Understanding sorting is essential because it\'s a preprocessing step for many problems, and partition logic from QuickSort appears in disguised forms across FAANG interviews. Know the tradeoffs: stability, in-place vs extra space, and when comparison-based sorts hit their O(n log n) lower bound.',
+    shortDescription: 'Arranging elements efficiently',
+    keyPoints: [
+      'Comparison sorts cannot beat O(n log n) average case',
+      'Stable sort preserves relative order of equal elements',
+      'In-place sort uses O(1) extra space (QuickSort, HeapSort)',
+      'Merge Sort: O(n log n) guaranteed, stable, but O(n) space',
+      'QuickSort: O(n log n) average, O(n²) worst, in-place, unstable',
+      'Partition logic from QuickSort is reused in many interview problems',
+      'Non-comparison sorts (Counting, Radix, Bucket) achieve O(n) when values are bounded',
+      'JavaScript Array.sort() uses TimSort — O(n log n), stable',
+    ],
+    examples: [
+      {
+        title: 'Bubble Sort — O(n²)',
+        code: `function bubbleSort(arr) {
+  const n = arr.length
+
+  for (let i = 0; i < n - 1; i++) {
+    let swapped = false
+
+    for (let j = 0; j < n - 1 - i; j++) {
+      if (arr[j] > arr[j + 1]) {
+        ;[arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+        swapped = true
+      }
+    }
+
+    if (!swapped) break
+  }
+
+  return arr
+}
+
+bubbleSort([64, 34, 25, 12, 22, 11, 90])
+// After each pass, largest unsorted element
+// "bubbles" to its correct position`,
+        explanation: 'Simple but slow. Good for teaching; never use in production. Early exit if no swaps makes best case O(n) for nearly sorted arrays.',
+      },
+      {
+        title: 'Merge Sort — O(n log n)',
+        code: `function mergeSort(arr) {
+  if (arr.length <= 1) return arr
+
+  const mid = Math.floor(arr.length / 2)
+  const left = mergeSort(arr.slice(0, mid))
+  const right = mergeSort(arr.slice(mid))
+
+  return merge(left, right)
+}
+
+function merge(left, right) {
+  const result = []
+  let i = 0, j = 0
+
+  while (i < left.length && j < right.length) {
+    if (left[i] <= right[j]) {
+      result.push(left[i++])
+    } else {
+      result.push(right[j++])
+    }
+  }
+
+  return [...result, ...left.slice(i), ...right.slice(j)]
+}
+
+mergeSort([38, 27, 43, 3, 9, 82, 10])
+// Divide → sort halves → merge back`,
+        explanation: 'Divide-and-conquer. Always O(n log n). Stable. Uses O(n) extra space. The merge step is the key — it combines two sorted arrays in linear time.',
+      },
+      {
+        title: 'QuickSort — Partition Logic',
+        code: `function quickSort(arr, lo = 0, hi = arr.length - 1) {
+  if (lo >= hi) return arr
+
+  const pivot = partition(arr, lo, hi)
+  quickSort(arr, lo, pivot - 1)
+  quickSort(arr, pivot + 1, hi)
+
+  return arr
+}
+
+function partition(arr, lo, hi) {
+  const pivot = arr[hi]
+  let i = lo
+
+  for (let j = lo; j < hi; j++) {
+    if (arr[j] < pivot) {
+      ;[arr[i], arr[j]] = [arr[j], arr[i]]
+      i++
+    }
+  }
+
+  ;[arr[i], arr[hi]] = [arr[hi], arr[i]]
+  return i
+}
+
+quickSort([10, 80, 30, 90, 40, 50, 70])
+// Partition places pivot in correct position
+// Elements left of pivot are smaller
+// Elements right of pivot are larger`,
+        explanation: 'In-place, O(n log n) average. The partition function is the star — it appears in QuickSelect (Kth largest), Dutch Flag (sort colors), and many FAANG problems.',
+      },
+      {
+        title: 'Counting Sort — O(n + k)',
+        code: `function countingSort(arr) {
+  const max = Math.max(...arr)
+  const count = new Array(max + 1).fill(0)
+
+  for (const num of arr) {
+    count[num]++
+  }
+
+  const result = []
+  for (let i = 0; i <= max; i++) {
+    while (count[i] > 0) {
+      result.push(i)
+      count[i]--
+    }
+  }
+
+  return result
+}
+
+countingSort([4, 2, 2, 8, 3, 3, 1])
+// Not comparison-based — counts occurrences
+// O(n + k) where k is the range of values`,
+        explanation: 'When values are bounded (e.g., ages 0-150, grades 0-100), counting sort beats O(n log n). This same idea powers bucket sort and Top K Frequent Elements.',
+      },
+    ],
+    complexity: {
+      best: {
+        'Bubble Sort': 'O(n)',
+        'Merge Sort': 'O(n log n)',
+        'QuickSort': 'O(n log n)',
+        'Counting Sort': 'O(n + k)',
+      },
+      average: {
+        'Bubble Sort': 'O(n²)',
+        'Merge Sort': 'O(n log n)',
+        'QuickSort': 'O(n log n)',
+        'Counting Sort': 'O(n + k)',
+      },
+      worst: {
+        'Bubble Sort': 'O(n²)',
+        'Merge Sort': 'O(n log n)',
+        'QuickSort': 'O(n²)',
+        'Counting Sort': 'O(n + k)',
+      },
+    },
+    commonMistakes: [
+      'Using bubble sort in production (always O(n²) average)',
+      'Forgetting QuickSort worst case is O(n²) on sorted input with bad pivot',
+      'Confusing stable vs unstable — matters when sorting objects by multiple keys',
+      'Not recognizing when a problem needs sorting as preprocessing (intervals, custom order)',
+      'Implementing sort from scratch when Array.sort() with custom comparator suffices',
+    ],
+    interviewTips: [
+      'You rarely implement sort from scratch — but you MUST understand partition logic',
+      'When you see intervals, pairs, or "closest/largest" — think sort first',
+      'Custom comparators: (a, b) => a - b ascending, (a, b) => b - a descending',
+      'Partition logic solves: Kth largest (QuickSelect), Sort Colors, Sort Array by Parity',
+      'Know TimSort: JS/Python built-in, stable, O(n log n), uses merge + insertion',
+    ],
+    relatedProblems: [
+      'bubble-sort',
+      'insertion-sort',
+      'merge-sort',
+      'quick-sort',
+      'merge-intervals',
+      'meeting-rooms',
+      'meeting-rooms-ii',
+      'largest-number',
+      'sort-characters-by-frequency',
+      'sort-colors',
+      'kth-largest-element',
+      'non-overlapping-intervals',
+    ],
+    learningPath: [
+      {
+        stage: 'Foundation',
+        problemIds: ['bubble-sort', 'insertion-sort', 'merge-sort'],
+      },
+      {
+        stage: 'Efficient Sorts',
+        problemIds: ['quick-sort', 'sort-colors'],
+      },
+      {
+        stage: 'Sort as Tool',
+        problemIds: ['merge-intervals', 'meeting-rooms', 'largest-number'],
+      },
+      {
+        stage: 'Advanced',
+        problemIds: ['kth-largest-element', 'meeting-rooms-ii', 'non-overlapping-intervals'],
+      },
+    ],
+  },
 ]
 
 export const dsaConceptCategories = [
@@ -1231,11 +1436,12 @@ export const dsaConceptCategories = [
 const relatedDSAConceptsMap: Record<string, string[]> = {
   'big-o-notation': ['binary-system', 'arrays', 'hash-tables', 'linked-lists'],
   'binary-system': ['big-o-notation', 'arrays', 'hash-tables'],
-  'arrays': ['big-o-notation', 'hash-tables', 'stacks', 'queues'],
+  'arrays': ['big-o-notation', 'hash-tables', 'stacks', 'queues', 'sorting-algorithms'],
   'hash-tables': ['big-o-notation', 'arrays'],
   'stacks': ['arrays', 'queues', 'linked-lists'],
   'queues': ['arrays', 'stacks', 'linked-lists'],
   'linked-lists': ['arrays', 'stacks', 'queues'],
+  'sorting-algorithms': ['arrays', 'big-o-notation', 'linked-lists'],
 }
 
 export function getDSAConceptById(id: string): DSAConcept | undefined {

@@ -270,6 +270,7 @@ export type ConceptType =
   | 'sliding-window'           // Frame over array
   | 'binary-search'            // Halving search space
   | 'linked-list'              // Node chains with pointers
+  | 'sorting'                  // Sort + scan/partition operations
 
 export interface ConceptStep {
   id: number
