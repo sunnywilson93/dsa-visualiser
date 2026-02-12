@@ -187,6 +187,8 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Counting Bits > cons
 Result:" [0, 1, 1, 2, 1, 2]"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Daily Temperatures > console output matches snapshot 1`] = `""`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Gray Code > console output matches snapshot 1`] = `
 ""Gray code for n =" 3
 "i =" 0 "gray =" 0
@@ -236,6 +238,8 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Intersection of Two 
 ""
 "Intersection:" [2, 2]"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Largest Rectangle in Histogram > console output matches snapshot 1`] = `"10"`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Consecutive Sequence > console output matches snapshot 1`] = `
 ""Array:" [100, 4, 200, 1, 3, 2]
@@ -347,6 +351,10 @@ Finding missing...
 "
 Missing number:" 2"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Next Greater Element I > console output matches snapshot 1`] = `"[-1, 3, -1]"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Next Greater Element II > console output matches snapshot 1`] = `""`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number Complement > console output matches snapshot 1`] = `
 ""=== Test: 5 (101) ==="

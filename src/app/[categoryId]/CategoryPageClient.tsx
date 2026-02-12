@@ -14,6 +14,7 @@ import {
   exampleCategories,
   dsaSubcategories,
   getExamplesByCategory,
+  hasCategory,
   type CodeExample,
 } from '@/data/examples'
 
@@ -63,7 +64,7 @@ export default function CategoryPageClient() {
     if (isSubcategoryPage) return allProblems
     // If on DSA page with subcategory filter selected
     if (!selectedSubcategory) return allProblems
-    return allProblems.filter((p) => p.category === selectedSubcategory)
+    return allProblems.filter((p) => hasCategory(p, selectedSubcategory))
   }, [allProblems, selectedSubcategory, isSubcategoryPage])
 
   const isComingSoon = (selectedSubcategory || isSubcategoryPage) && subcategoryProblems.length === 0

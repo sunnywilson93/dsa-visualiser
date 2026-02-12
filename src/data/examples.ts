@@ -50,8 +50,12 @@ export const dsaSubcategories = [
 ]
 
 // Helper to get all categories for a problem
-const getAllCategories = (example: CodeExample): string[] => {
+export const getExampleCategoryIds = (example: CodeExample): string[] => {
   return example.categories || [example.category]
+}
+
+export const hasCategory = (example: CodeExample, categoryId: string): boolean => {
+  return getExampleCategoryIds(example).includes(categoryId)
 }
 
 // Helper to check if a category is a DSA subcategory
@@ -59,7 +63,7 @@ export const isDsaSubcategory = (cat: string) => dsaSubcategories.some(s => s.id
 
 // Check if example belongs to a DSA subcategory
 const isDsaExample = (example: CodeExample): boolean => {
-  return getAllCategories(example).some(cat => isDsaSubcategory(cat))
+  return getExampleCategoryIds(example).some(cat => isDsaSubcategory(cat))
 }
 
 // Get examples by category (problem appears in all its categories)
@@ -67,7 +71,7 @@ export const getExamplesByCategory = (categoryId: string) => {
   if (categoryId === 'dsa') {
     return codeExamples.filter(e => isDsaExample(e))
   }
-  return codeExamples.filter(e => getAllCategories(e).includes(categoryId))
+  return codeExamples.filter(e => hasCategory(e, categoryId))
 }
 
 // Get unique problem count for DSA (no double counting)
@@ -6905,5 +6909,538 @@ majorityElement(nums);
     spaceComplexity: 'O(1)',
     patternName: 'Boyer-Moore Voting',
     whyItWorks: 'The majority element appears more than n/2 times. Every time it is "cancelled" by a different element, at most one copy is lost. Since it has more copies than all others combined, it always remains as the last candidate standing.',
+  },
+  {
+    id: 'valid-parentheses',
+    name: 'Valid Parentheses',
+    category: 'stack',
+    categories: ['stack', 'strings'],
+    difficulty: 'easy',
+    description: 'Check whether every opening bracket is closed in the correct order',
+    code: `// Valid Parentheses
+// Push opening brackets, match on closing brackets
+
+function isValid(s) {
+  let stack = [];
+  let pairs = {
+    ')': '(',
+    ']': '[',
+    '}': '{'
+  };
+
+  console.log("Input:", s);
+
+  for (let i = 0; i < s.length; i++) {
+    let ch = s[i];
+
+    if (ch === '(' || ch === '[' || ch === '{') {
+      stack.push(ch);
+      console.log("Push", ch, "stack:", stack);
+    } else {
+      let top = stack.pop();
+      console.log("Pop", top, "for", ch);
+      if (top !== pairs[ch]) {
+        console.log("Mismatch -> false");
+        return false;
+      }
+    }
+  }
+
+  let valid = stack.length === 0;
+  console.log("Remaining stack:", stack, "valid:", valid);
+  return valid;
+}
+
+isValid("()[]{}");
+isValid("([)]");
+`,
+    approach: 'Scan characters left to right and use a stack for opening brackets. For each closing bracket, pop from the stack and verify the pair matches. At the end, the stack must be empty for the string to be valid.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Stack (Bracket Matching)',
+    whyItWorks: 'The most recent unmatched opening bracket must be matched first, which is exactly LIFO order. Any mismatch or leftover opening bracket means invalid nesting.',
+  },
+  {
+    id: 'min-stack',
+    name: 'Min Stack',
+    category: 'stack',
+    difficulty: 'easy',
+    description: 'Design a stack that supports getMin in constant time',
+    code: `// Min Stack
+// Maintain two stacks: values and minimums
+
+class MinStack {
+  constructor() {
+    this.stack = [];
+    this.minStack = [];
+  }
+
+  push(val) {
+    this.stack.push(val);
+    if (this.minStack.length === 0 || val <= this.getMin()) {
+      this.minStack.push(val);
+    }
+  }
+
+  pop() {
+    let removed = this.stack.pop();
+    if (removed === this.getMin()) {
+      this.minStack.pop();
+    }
+    return removed;
+  }
+
+  top() {
+    return this.stack[this.stack.length - 1];
+  }
+
+  getMin() {
+    return this.minStack[this.minStack.length - 1];
+  }
+}
+
+let minStack = new MinStack();
+minStack.push(3);
+minStack.push(5);
+minStack.push(2);
+minStack.push(2);
+console.log(minStack.getMin());
+minStack.pop();
+console.log(minStack.getMin());
+`,
+    approach: 'Use one stack for values and a second stack to track current minimum values. Push into the min stack whenever the new value is smaller than or equal to the current minimum. When popping, also pop from min stack if the removed value equals the current minimum.',
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Auxiliary Stack',
+    whyItWorks: 'The min stack stores the minimum value for each state where minimum changes. This keeps current minimum available at the top, so getMin is constant time.',
+  },
+  {
+    id: 'evaluate-rpn',
+    name: 'Evaluate Reverse Polish Notation',
+    category: 'stack',
+    categories: ['stack', 'math'],
+    difficulty: 'medium',
+    description: 'Evaluate an expression in Reverse Polish Notation',
+    code: `// Evaluate Reverse Polish Notation
+// Numbers push onto stack, operators consume two values
+
+function evalRPN(tokens) {
+  let stack = [];
+  let operators = "+-*/";
+
+  for (let i = 0; i < tokens.length; i++) {
+    let token = tokens[i];
+
+    if (operators.indexOf(token) >= 0) {
+      let b = stack.pop();
+      let a = stack.pop();
+      let result = 0;
+
+      if (token === '+') result = a + b;
+      if (token === '-') result = a - b;
+      if (token === '*') result = a * b;
+      if (token === '/') result = Math.trunc(a / b);
+
+      stack.push(result);
+      console.log(a, token, b, "=", result);
+    } else {
+      stack.push(Number(token));
+      console.log("Push", token);
+    }
+  }
+
+  return stack[0];
+}
+
+console.log(evalRPN(["2", "1", "+", "3", "*"]));
+`,
+    approach: 'Use a stack to process tokens. Push numbers directly. For operators, pop the top two numbers, apply the operation in order (first popped is right operand), and push the result back.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Stack Evaluation',
+    whyItWorks: 'RPN places operators after their operands, so by the time an operator is seen, both required operands are on top of the stack and can be reduced into one value.',
+  },
+  {
+    id: 'daily-temperatures',
+    name: 'Daily Temperatures',
+    category: 'stack',
+    categories: ['stack', 'arrays-hashing'],
+    difficulty: 'medium',
+    description: 'For each day, find how many days until a warmer temperature',
+    code: `// Daily Temperatures
+// Monotonic decreasing stack of indices
+
+function dailyTemperatures(temperatures) {
+  let result = new Array(temperatures.length).fill(0);
+  let stack = [];
+
+  for (let i = 0; i < temperatures.length; i++) {
+    while (
+      stack.length > 0 &&
+      temperatures[i] > temperatures[stack[stack.length - 1]]
+    ) {
+      let prev = stack.pop();
+      result[prev] = i - prev;
+      console.log("Day", prev, "waits", result[prev], "days");
+    }
+    stack.push(i);
+  }
+
+  return result;
+}
+
+console.log(dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73]));
+`,
+    approach: 'Maintain a stack of unresolved indices with decreasing temperatures. When a warmer day arrives, repeatedly pop colder indices and fill their wait times. Push current index afterward.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Monotonic Stack (Decreasing)',
+    whyItWorks: 'Each index enters and leaves the stack at most once. The stack invariant guarantees the first warmer day for a popped index is the current index.',
+  },
+  {
+    id: 'next-greater-element-i',
+    name: 'Next Greater Element I',
+    category: 'stack',
+    categories: ['stack', 'arrays-hashing'],
+    difficulty: 'easy',
+    description: 'Find next greater element for each value in nums1 based on nums2',
+    code: `// Next Greater Element I
+// Build next-greater map from nums2 using monotonic stack
+
+function nextGreaterElement(nums1, nums2) {
+  let stack = [];
+  let nextMap = {};
+
+  for (let i = 0; i < nums2.length; i++) {
+    let value = nums2[i];
+
+    while (stack.length > 0 && value > stack[stack.length - 1]) {
+      let smaller = stack.pop();
+      nextMap[smaller] = value;
+    }
+    stack.push(value);
+  }
+
+  while (stack.length > 0) {
+    nextMap[stack.pop()] = -1;
+  }
+
+  let result = [];
+  for (let i = 0; i < nums1.length; i++) {
+    result.push(nextMap[nums1[i]]);
+  }
+  return result;
+}
+
+console.log(nextGreaterElement([4, 1, 2], [1, 3, 4, 2]));
+`,
+    approach: 'Process nums2 with a monotonic decreasing stack. When current value is greater than stack top, it becomes the next greater element for popped values. Store this in a map, then answer nums1 queries from the map.',
+    timeComplexity: 'O(n + m)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Monotonic Stack + Hash Map',
+    whyItWorks: 'The stack keeps values waiting for a larger element. The first value that pops them is their nearest greater element to the right.',
+  },
+  {
+    id: 'next-greater-element-ii',
+    name: 'Next Greater Element II',
+    category: 'stack',
+    categories: ['stack', 'arrays-hashing'],
+    difficulty: 'medium',
+    description: 'Find next greater element in a circular array',
+    code: `// Next Greater Element II
+// Simulate circular traversal with 2*n loop
+
+function nextGreaterElements(nums) {
+  let n = nums.length;
+  let result = new Array(n).fill(-1);
+  let stack = [];
+
+  for (let i = 0; i < 2 * n; i++) {
+    let idx = i % n;
+    let value = nums[idx];
+
+    while (stack.length > 0 && nums[stack[stack.length - 1]] < value) {
+      let prevIdx = stack.pop();
+      result[prevIdx] = value;
+    }
+
+    if (i < n) {
+      stack.push(idx);
+    }
+  }
+
+  return result;
+}
+
+console.log(nextGreaterElements([1, 2, 1]));
+`,
+    approach: 'Use a monotonic decreasing stack of indices and iterate twice over the array using modulo arithmetic. The first pass pushes indices; both passes resolve next greater values by popping smaller elements.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Monotonic Stack (Circular Array)',
+    whyItWorks: 'Doubling traversal exposes wrap-around candidates while preserving nearest-right semantics. Each index is pushed once and popped once, so total work stays linear.',
+  },
+  {
+    id: 'largest-rectangle-in-histogram',
+    name: 'Largest Rectangle in Histogram',
+    category: 'stack',
+    categories: ['stack', 'arrays-hashing'],
+    difficulty: 'hard',
+    description: 'Find the largest rectangle area in a histogram',
+    code: `// Largest Rectangle in Histogram
+// Monotonic increasing stack of indices
+
+function largestRectangleArea(heights) {
+  let stack = [];
+  let maxArea = 0;
+
+  for (let i = 0; i <= heights.length; i++) {
+    let currentHeight = i === heights.length ? 0 : heights[i];
+
+    while (
+      stack.length > 0 &&
+      currentHeight < heights[stack[stack.length - 1]]
+    ) {
+      let height = heights[stack.pop()];
+      let leftBoundary = stack.length === 0 ? -1 : stack[stack.length - 1];
+      let width = i - leftBoundary - 1;
+      let area = height * width;
+      if (area > maxArea) maxArea = area;
+    }
+
+    stack.push(i);
+  }
+
+  return maxArea;
+}
+
+console.log(largestRectangleArea([2, 1, 5, 6, 2, 3]));
+`,
+    approach: 'Keep indices of bars in increasing-height order. When a shorter bar appears, repeatedly pop taller bars and compute rectangle area where the popped bar is the limiting height. Use a trailing zero height to flush remaining bars.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Monotonic Stack (Increasing)',
+    whyItWorks: 'When a bar is popped, the current index is the first smaller bar on the right and new stack top is first smaller bar on the left, giving exact maximal width for that height.',
+  },
+  {
+    id: 'car-fleet',
+    name: 'Car Fleet',
+    category: 'stack',
+    categories: ['stack', 'sorting'],
+    difficulty: 'hard',
+    description: 'Count how many car fleets arrive at the target',
+    code: `// Car Fleet
+// Sort by position, process from closest to target backward
+
+function carFleet(target, position, speed) {
+  let cars = [];
+  for (let i = 0; i < position.length; i++) {
+    cars.push([position[i], speed[i]]);
+  }
+
+  cars.sort((a, b) => a[0] - b[0]);
+
+  let fleets = 0;
+  let lastTime = 0;
+
+  for (let i = cars.length - 1; i >= 0; i--) {
+    let pos = cars[i][0];
+    let spd = cars[i][1];
+    let time = (target - pos) / spd;
+
+    if (time > lastTime) {
+      fleets++;
+      lastTime = time;
+    }
+  }
+
+  return fleets;
+}
+
+console.log(carFleet(12, [10, 8, 0, 5, 3], [2, 4, 1, 1, 3]));
+`,
+    approach: 'Pair positions with speeds and sort by position. Traverse from the car nearest to target backward, computing each car travel time. If a car needs more time than the fleet ahead, it forms a new fleet; otherwise it merges into the existing fleet.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Sort + Monotonic Time Stack',
+    whyItWorks: 'Going right to left ensures every car only interacts with the nearest fleet ahead. Non-increasing fleet times represent merges, while an increased time starts a new fleet.',
+  },
+  {
+    id: 'simplify-path',
+    name: 'Simplify Path',
+    category: 'stack',
+    categories: ['stack', 'strings'],
+    difficulty: 'medium',
+    description: 'Simplify an absolute Unix-style file path',
+    code: `// Simplify Path
+// Use stack for canonical directory traversal
+
+function simplifyPath(path) {
+  let parts = path.split("/");
+  let stack = [];
+
+  for (let i = 0; i < parts.length; i++) {
+    let part = parts[i];
+    if (part === "" || part === ".") {
+      continue;
+    }
+    if (part === "..") {
+      if (stack.length > 0) stack.pop();
+    } else {
+      stack.push(part);
+    }
+  }
+
+  return "/" + stack.join("/");
+}
+
+console.log(simplifyPath("/home//foo/"));
+console.log(simplifyPath("/a/./b/../../c/"));
+`,
+    approach: 'Split the path by slash and process tokens with a stack. Ignore empty and dot tokens, pop for double-dot tokens when possible, and push normal directory names. Join stack contents with slashes for the canonical path.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Stack Path Normalization',
+    whyItWorks: 'Each token updates directory state locally: entering pushes, parent traversal pops. The stack always represents the current canonical absolute path.',
+  },
+  {
+    id: 'remove-k-digits',
+    name: 'Remove K Digits',
+    category: 'stack',
+    categories: ['stack', 'greedy', 'strings'],
+    difficulty: 'hard',
+    description: 'Remove k digits from a number string to produce the smallest possible number',
+    code: `// Remove K Digits
+// Greedy + monotonic increasing stack
+
+function removeKdigits(num, k) {
+  let stack = [];
+
+  for (let i = 0; i < num.length; i++) {
+    let digit = num[i];
+    while (k > 0 && stack.length > 0 && stack[stack.length - 1] > digit) {
+      stack.pop();
+      k--;
+    }
+    stack.push(digit);
+  }
+
+  while (k > 0) {
+    stack.pop();
+    k--;
+  }
+
+  let result = stack.join("");
+  let idx = 0;
+  while (idx < result.length && result[idx] === '0') {
+    idx++;
+  }
+
+  result = result.slice(idx);
+  return result === "" ? "0" : result;
+}
+
+console.log(removeKdigits("1432219", 3));
+`,
+    approach: 'Use a monotonic increasing stack of digits. While the current digit is smaller than stack top and removals remain, pop larger digits to reduce the number lexicographically. Remove any extra digits from the end, then strip leading zeros.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Monotonic Stack + Greedy',
+    whyItWorks: 'Earlier digits have higher place value impact. Greedily removing larger preceding digits when a smaller digit appears yields the smallest final number.',
+  },
+  {
+    id: 'decode-string',
+    name: 'Decode String',
+    category: 'stack',
+    categories: ['stack', 'strings'],
+    difficulty: 'medium',
+    description: 'Decode nested repetition patterns like 3[a2[c]]',
+    code: `// Decode String
+// Stack current string and repeat count when entering bracket
+
+function decodeString(s) {
+  let countStack = [];
+  let stringStack = [];
+  let current = "";
+  let number = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    let ch = s[i];
+
+    if (ch >= '0' && ch <= '9') {
+      number = number * 10 + Number(ch);
+    } else if (ch === '[') {
+      countStack.push(number);
+      stringStack.push(current);
+      number = 0;
+      current = "";
+    } else if (ch === ']') {
+      let repeat = countStack.pop();
+      let prev = stringStack.pop();
+      current = prev + current.repeat(repeat);
+    } else {
+      current += ch;
+    }
+  }
+
+  return current;
+}
+
+console.log(decodeString("3[a2[c]]"));
+`,
+    approach: 'Track nested context with two stacks: one for repeat counts and one for partial strings. On opening bracket, push current context. On closing bracket, pop and expand the built segment by its repeat count.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Stack (Nested State)',
+    whyItWorks: 'Each bracketed level saves its outer state, so nested expansions resolve inner to outer in LIFO order and rebuild the final decoded string correctly.',
+  },
+  {
+    id: 'basic-calculator-ii',
+    name: 'Basic Calculator II',
+    category: 'stack',
+    categories: ['stack', 'math', 'strings'],
+    difficulty: 'medium',
+    description: 'Evaluate expression with +, -, *, / and non-negative integers',
+    code: `// Basic Calculator II
+// Use stack to handle operator precedence
+
+function calculate(s) {
+  let stack = [];
+  let number = 0;
+  let sign = '+';
+
+  for (let i = 0; i <= s.length; i++) {
+    let ch = i < s.length ? s[i] : '#';
+
+    if (ch >= '0' && ch <= '9') {
+      number = number * 10 + Number(ch);
+    }
+
+    if ((ch < '0' || ch > '9') && ch !== ' ') {
+      if (sign === '+') stack.push(number);
+      if (sign === '-') stack.push(-number);
+      if (sign === '*') stack.push(stack.pop() * number);
+      if (sign === '/') stack.push(Math.trunc(stack.pop() / number));
+
+      sign = ch;
+      number = 0;
+    }
+  }
+
+  let result = 0;
+  for (let i = 0; i < stack.length; i++) {
+    result += stack[i];
+  }
+  return result;
+}
+
+console.log(calculate("3+2*2"));
+console.log(calculate(" 3/2 "));
+`,
+    approach: 'Scan the expression once, building the current number. When an operator boundary is reached, apply the previous operator: push for plus/minus, or immediately combine with stack top for multiply/divide. Sum stack at the end.',
+    timeComplexity: 'O(n)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Stack (Operator Precedence)',
+    whyItWorks: 'Deferring only addition and subtraction while executing multiplication and division immediately preserves precedence without requiring a full expression tree.',
   },
 ]
