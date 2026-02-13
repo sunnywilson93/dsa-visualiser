@@ -1,5 +1,12 @@
 import type { CodeExample } from '@/data/examples'
+import { CONTENT_LAST_UPDATED } from '@/app/sitemap'
+import { linkTerms } from '@/lib/seo/termLinker'
 import styles from './ProblemSEOContent.module.css'
+
+const formattedDate = CONTENT_LAST_UPDATED.toLocaleDateString('en-US', {
+  month: 'short',
+  year: 'numeric',
+})
 
 interface ProblemSEOContentProps {
   problem: CodeExample
@@ -15,7 +22,7 @@ export function ProblemSEOContent({ problem }: ProblemSEOContentProps) {
 
         <div className={styles.section}>
           <h3 className={styles.subheading}>Approach</h3>
-          <p className={styles.text}>{problem.approach}</p>
+          <p className={styles.text}>{linkTerms(problem.approach)}</p>
         </div>
 
         {(problem.timeComplexity || problem.spaceComplexity) && (
@@ -48,9 +55,11 @@ export function ProblemSEOContent({ problem }: ProblemSEOContentProps) {
         {problem.whyItWorks && (
           <div className={styles.section}>
             <h3 className={styles.subheading}>Why It Works</h3>
-            <p className={styles.text}>{problem.whyItWorks}</p>
+            <p className={styles.text}>{linkTerms(problem.whyItWorks)}</p>
           </div>
         )}
+
+        <p className={styles.updatedDate}>Updated {formattedDate}</p>
       </div>
     </section>
   )

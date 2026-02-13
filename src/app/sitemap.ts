@@ -14,7 +14,7 @@ import { problemConcepts } from '@/data/algorithmConcepts'
  * Last content update timestamp.
  * Update this when making significant content changes.
  */
-export const CONTENT_LAST_UPDATED = new Date('2026-02-12')
+export const CONTENT_LAST_UPDATED = new Date('2026-02-13')
 
 const BASE_URL = 'https://jsinterview.dev'
 
@@ -56,6 +56,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: CONTENT_LAST_UPDATED,
       changeFrequency: 'monthly',
       priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/concepts/dsa/roadmap`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/concepts/js/cheatsheet`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
   ]
 

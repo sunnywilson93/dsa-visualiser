@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Search, Layers, ArrowRight } from 'lucide-react'
+import { Search, Layers, ArrowRight, Map } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { SearchResultsList, usePageSearch, PageSearchControls } from '@/components/Search'
 import { ConceptIcon } from '@/components/Icons'
@@ -31,6 +31,16 @@ export default function DSAConceptsClient() {
             Build a strong foundation before tackling patterns and problems.
           </p>
         </header>
+
+        <Link
+          href="/concepts/dsa/roadmap"
+          className="flex items-center gap-3 mb-6 px-4 py-3 rounded-xl border border-brand-primary-20 bg-brand-primary-5 no-underline transition-all duration-200 hover:border-brand-primary-40 hover:bg-brand-primary-10 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+        >
+          <Map size={18} className="text-brand-primary shrink-0" />
+          <span className="text-sm font-medium text-text-bright">DSA Learning Roadmap</span>
+          <span className="text-xs text-text-muted hidden sm:inline">Step-by-step path from foundations to advanced patterns</span>
+          <ArrowRight size={14} className="text-brand-primary ml-auto shrink-0" />
+        </Link>
 
         <PageSearchControls
           search={search}

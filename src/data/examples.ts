@@ -15,38 +15,159 @@ export interface CodeExample {
 
 // Main 9 categories for the home page
 export const exampleCategories = [
-  { id: 'js-core', name: 'JavaScript Core', description: 'Closures, this, prototypes, hoisting, scope' },
-  { id: 'async-js', name: 'Async JavaScript', description: 'Promises, async/await, event loop patterns' },
-  { id: 'array-polyfills', name: 'Array Polyfills', description: 'Implement map, filter, reduce, flat' },
-  { id: 'utility-functions', name: 'Utility Functions', description: 'Debounce, throttle, deep clone, memoize' },
-  { id: 'functional-js', name: 'Functional JS', description: 'Curry, compose, pipe, partial application' },
-  { id: 'dom-events', name: 'DOM & Events', description: 'Event emitter, delegation, pub/sub' },
-  { id: 'object-utils', name: 'Object Utilities', description: 'Deep equal, merge, get/set nested props' },
-  { id: 'promise-polyfills', name: 'Promise Polyfills', description: 'Promise.all, race, allSettled, promisify' },
-  { id: 'dsa', name: 'DSA', description: 'Data structures & algorithms' },
+  {
+    id: 'js-core',
+    name: 'JavaScript Core',
+    description: 'Closures, this, prototypes, hoisting, scope',
+    longDescription: 'Master the fundamental building blocks of JavaScript that interviewers test most frequently. These problems cover closures, the `this` keyword, prototype chains, hoisting behavior, and scope rules. Understanding these concepts deeply is essential for senior-level frontend interviews, where you may be asked to explain or predict output from tricky code snippets.',
+  },
+  {
+    id: 'async-js',
+    name: 'Async JavaScript',
+    description: 'Promises, async/await, event loop patterns',
+    longDescription: 'Practice asynchronous JavaScript patterns that are central to modern web development. These problems cover Promises, async/await, the event loop, microtask queues, and concurrency control. Interviewers use these to assess whether you can reason about execution order, handle race conditions, and build reliable asynchronous workflows.',
+  },
+  {
+    id: 'array-polyfills',
+    name: 'Array Polyfills',
+    description: 'Implement map, filter, reduce, flat',
+    longDescription: 'Implement Array.prototype methods from scratch to demonstrate deep understanding of JavaScript fundamentals. Polyfill problems like map, filter, reduce, and flat test your ability to work with callbacks, handle edge cases, and write production-quality code. These are among the most common JavaScript interview questions at top tech companies.',
+  },
+  {
+    id: 'utility-functions',
+    name: 'Utility Functions',
+    description: 'Debounce, throttle, deep clone, memoize',
+    longDescription: 'Build commonly-used utility functions that appear in nearly every JavaScript codebase. Problems like debounce, throttle, deep clone, and memoize test your ability to manage state, timing, and recursion. These are practical problems that demonstrate real-world engineering skills beyond academic algorithm knowledge.',
+  },
+  {
+    id: 'functional-js',
+    name: 'Functional JS',
+    description: 'Curry, compose, pipe, partial application',
+    longDescription: 'Explore functional programming patterns in JavaScript including currying, composition, piping, and partial application. These problems test your understanding of higher-order functions, closures, and function transformation techniques. Functional patterns are increasingly popular in modern React and state management libraries.',
+  },
+  {
+    id: 'dom-events',
+    name: 'DOM & Events',
+    description: 'Event emitter, delegation, pub/sub',
+    longDescription: 'Build DOM interaction patterns and event systems from scratch. These problems cover custom event emitters, event delegation, the publish-subscribe pattern, and DOM manipulation. Frontend interviews frequently test these skills to evaluate your understanding of browser APIs and design patterns for building interactive user interfaces.',
+  },
+  {
+    id: 'object-utils',
+    name: 'Object Utilities',
+    description: 'Deep equal, merge, get/set nested props',
+    longDescription: 'Implement object manipulation utilities that handle deeply nested structures. Problems like deep equality checking, recursive merging, and safe property access test your ability to traverse complex data structures and handle edge cases. These utilities are fundamental building blocks in frameworks like Lodash and Immer.',
+  },
+  {
+    id: 'promise-polyfills',
+    name: 'Promise Polyfills',
+    description: 'Promise.all, race, allSettled, promisify',
+    longDescription: 'Recreate Promise static methods and async utilities to demonstrate mastery of JavaScript concurrency. Implementing Promise.all, Promise.race, Promise.allSettled, and promisify requires understanding Promise resolution, error propagation, and the microtask queue. These are high-signal interview questions that separate junior from senior engineers.',
+  },
+  {
+    id: 'dsa',
+    name: 'DSA',
+    description: 'Data structures & algorithms',
+    longDescription: 'Practice data structures and algorithms problems commonly asked in technical coding interviews. Covering arrays, linked lists, trees, graphs, dynamic programming, and more, these problems develop your ability to choose the right data structure, analyze time and space complexity, and implement efficient solutions under interview pressure.',
+  },
 ]
 
 // DSA subcategories for filtering within DSA page
 export const dsaSubcategories = [
-  { id: 'arrays-hashing', name: 'Arrays & Hashing' },
-  { id: 'two-pointers', name: 'Two Pointers' },
-  { id: 'sliding-window', name: 'Sliding Window' },
-  { id: 'stack', name: 'Stack' },
-  { id: 'binary-search', name: 'Binary Search' },
-  { id: 'linked-list', name: 'Linked List' },
-  { id: 'strings', name: 'Strings' },
-  { id: 'sorting', name: 'Sorting' },
-  { id: 'recursion', name: 'Recursion' },
-  { id: 'dynamic-programming', name: 'Dynamic Programming' },
-  { id: 'greedy', name: 'Greedy' },
-  { id: 'backtracking', name: 'Backtracking' },
-  { id: 'graphs', name: 'Graphs' },
-  { id: 'trees', name: 'Trees' },
-  { id: 'trie', name: 'Trie' },
-  { id: 'heap', name: 'Heap' },
-  { id: 'intervals', name: 'Intervals' },
-  { id: 'bit-manipulation', name: 'Bit Manipulation' },
-  { id: 'math', name: 'Math & Geometry' },
+  {
+    id: 'arrays-hashing',
+    name: 'Arrays & Hashing',
+    longDescription: 'Arrays and hash maps are the most fundamental data structures in coding interviews. These problems test your ability to use hash maps for O(1) lookups, frequency counting, and complement finding. Nearly every interview starts with an array problem, making this the highest-priority category to master.',
+  },
+  {
+    id: 'two-pointers',
+    name: 'Two Pointers',
+    longDescription: 'The two pointers technique reduces O(n\u00b2) brute force solutions to O(n) by maintaining two indices that traverse the data structure simultaneously. These problems cover converging pointers on sorted arrays, slow/fast pointers for cycle detection, and partitioning techniques like the Dutch National Flag.',
+  },
+  {
+    id: 'sliding-window',
+    name: 'Sliding Window',
+    longDescription: 'Sliding window problems maintain a dynamic range over an array or string, expanding and contracting to find optimal subarrays or substrings. This pattern is essential for problems involving contiguous sequences with constraints on sum, length, or character frequency.',
+  },
+  {
+    id: 'stack',
+    name: 'Stack',
+    longDescription: 'Stack problems leverage the Last-In-First-Out (LIFO) property to track state, match brackets, evaluate expressions, and find next greater/smaller elements. The monotonic stack variant is especially common in interviews for efficiently solving problems that would otherwise require O(n\u00b2) comparisons.',
+  },
+  {
+    id: 'binary-search',
+    name: 'Binary Search',
+    longDescription: 'Binary search eliminates half the search space each iteration, reducing O(n) scans to O(log n). Beyond simple sorted array lookups, interview problems apply binary search to rotated arrays, boundary finding, and even answer spaces where you binary search on the result itself.',
+  },
+  {
+    id: 'linked-list',
+    name: 'Linked List',
+    longDescription: 'Linked list problems test your ability to manipulate pointers and handle edge cases with null references. Common patterns include reversing lists, detecting cycles with Floyd\u2019s algorithm, merging sorted lists, and using dummy nodes to simplify insertion logic.',
+  },
+  {
+    id: 'strings',
+    name: 'Strings',
+    longDescription: 'String manipulation problems cover pattern matching, palindrome detection, substring searches, and character frequency analysis. These problems often combine with hash maps or two-pointer techniques and require careful handling of edge cases like empty strings and Unicode characters.',
+  },
+  {
+    id: 'sorting',
+    name: 'Sorting',
+    longDescription: 'Sorting serves as both an interview topic and a preprocessing step for other problems. Beyond implementing classic algorithms like merge sort and quicksort, interview problems test custom comparators, partition logic, and the insight that sorting can transform O(n\u00b2) problems into O(n log n) solutions.',
+  },
+  {
+    id: 'recursion',
+    name: 'Recursion',
+    longDescription: 'Recursion problems train you to break complex problems into smaller subproblems and trust the recursive leap of faith. These problems cover tree traversals, permutation generation, divide-and-conquer strategies, and converting recursive solutions to iterative ones using explicit stacks.',
+  },
+  {
+    id: 'dynamic-programming',
+    name: 'Dynamic Programming',
+    longDescription: 'Dynamic programming optimizes recursive solutions by storing and reusing computed results. These problems cover 1D and 2D DP, memoization vs. tabulation, and classic patterns like knapsack, longest common subsequence, and coin change. DP is considered the hardest interview category but follows learnable patterns.',
+  },
+  {
+    id: 'greedy',
+    name: 'Greedy',
+    longDescription: 'Greedy algorithms make locally optimal choices at each step, hoping to find a global optimum. These problems test your ability to identify when a greedy approach is correct and prove it works. Common interview topics include activity selection, interval scheduling, and jump game variants.',
+  },
+  {
+    id: 'backtracking',
+    name: 'Backtracking',
+    longDescription: 'Backtracking systematically explores all possible solutions by building candidates incrementally and abandoning paths that cannot lead to a valid solution. These problems cover permutations, combinations, subsets, N-Queens, and Sudoku solving, testing your ability to prune search spaces efficiently.',
+  },
+  {
+    id: 'graphs',
+    name: 'Graphs',
+    longDescription: 'Graph problems test your ability to model relationships and traverse connected components. These problems cover BFS, DFS, topological sorting, shortest paths, and cycle detection. Recognizing when a problem is actually a graph problem in disguise is a key interview skill.',
+  },
+  {
+    id: 'trees',
+    name: 'Trees',
+    longDescription: 'Tree problems are among the most frequently asked in coding interviews. These problems cover binary tree traversals (inorder, preorder, postorder), BST operations, tree construction from traversals, and advanced topics like lowest common ancestor and tree serialization.',
+  },
+  {
+    id: 'trie',
+    name: 'Trie',
+    longDescription: 'Tries (prefix trees) efficiently store and search strings by sharing common prefixes. These problems cover implementing tries from scratch, autocomplete systems, word search in grids, and wildcard pattern matching. Tries are the optimal choice when dealing with dictionary lookups or prefix-based queries.',
+  },
+  {
+    id: 'heap',
+    name: 'Heap',
+    longDescription: 'Heaps (priority queues) maintain the minimum or maximum element accessible in O(1) time with O(log n) insertions and deletions. These problems cover top-k elements, merge-k-sorted-lists, median finding with two heaps, and task scheduling with deadlines.',
+  },
+  {
+    id: 'intervals',
+    name: 'Intervals',
+    longDescription: 'Interval problems require sorting by start or end time and then processing overlaps, merges, or gaps. These problems cover merging overlapping intervals, inserting new intervals, meeting room scheduling, and finding minimum platforms. The key technique is sorting followed by a linear scan.',
+  },
+  {
+    id: 'bit-manipulation',
+    name: 'Bit Manipulation',
+    longDescription: 'Bit manipulation uses bitwise operators to solve problems with O(1) space that would otherwise require extra data structures. These problems cover XOR tricks for finding unique elements, bit counting, power-of-two checks, and subset generation using bitmasks.',
+  },
+  {
+    id: 'math',
+    name: 'Math & Geometry',
+    longDescription: 'Math and geometry problems test your ability to identify mathematical patterns and apply formulas. These problems cover modular arithmetic, prime numbers, GCD/LCM, matrix operations, and coordinate geometry. They often have elegant O(1) solutions that replace brute force approaches.',
+  },
 ]
 
 // Helper to get all categories for a problem

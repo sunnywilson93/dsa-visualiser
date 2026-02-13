@@ -4,6 +4,7 @@ import { CategoryCarousel } from '@/components/CategoryCarousel'
 import { ConceptIcon } from '@/components/Icons'
 import { DifficultyMiniBar } from '@/components/DifficultyIndicator'
 import { HeroStats } from '@/components/HeroStats'
+import { StructuredData } from '@/components/StructuredData'
 import { exampleCategories, dsaSubcategories, getExamplesByCategory, getAllJsExamples, getProblemCountByCategory } from '@/data/examples'
 import { concepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
@@ -14,6 +15,39 @@ import { dsaPatterns } from '@/data/dsaPatterns'
 const jsCategories = exampleCategories.filter(c => c.id !== 'dsa')
 const dsaProblems = getExamplesByCategory('dsa')
 const allJsProblems = getAllJsExamples()
+const totalProblems = allJsProblems.length + dsaProblems.length
+const totalConcepts = concepts.length + dsaConcepts.length + dsaPatterns.length
+
+const homeFAQSchema = {
+  '@context': 'https://schema.org' as const,
+  '@type': 'FAQPage' as const,
+  mainEntity: [
+    {
+      '@type': 'Question' as const,
+      name: 'How should I prepare for JavaScript coding interviews?',
+      acceptedAnswer: {
+        '@type': 'Answer' as const,
+        text: `Start by understanding core JavaScript concepts like closures, prototypes, and the event loop. Then practice implementing common utilities (debounce, throttle, deep clone) and array polyfills (map, filter, reduce). Finally, solve data structure and algorithm problems. JS Interview Prep covers ${totalConcepts} concepts and ${totalProblems} interactive problems with step-by-step visualization.`,
+      },
+    },
+    {
+      '@type': 'Question' as const,
+      name: 'What topics are covered on JS Interview Prep?',
+      acceptedAnswer: {
+        '@type': 'Answer' as const,
+        text: `The platform covers ${concepts.length} JavaScript concepts (closures, event loop, prototypes, async patterns), ${dsaConcepts.length + dsaPatterns.length} DSA topics (arrays, trees, graphs, dynamic programming), and ${totalProblems} coding problems across ${jsCategories.length + dsaSubcategories.length} categories. Every problem includes an interactive step-through debugger that visualizes execution.`,
+      },
+    },
+    {
+      '@type': 'Question' as const,
+      name: 'Is JS Interview Prep free?',
+      acceptedAnswer: {
+        '@type': 'Answer' as const,
+        text: 'Yes, JS Interview Prep is completely free. All concepts, problems, and interactive visualizations are available without any account or payment. The platform is designed to help developers prepare for frontend and coding interviews with hands-on practice.',
+      },
+    },
+  ],
+}
 
 // Featured concepts: very-high interview frequency, diverse topics
 const featuredConceptIds = ['scope-basics', 'closure-definition', 'array-iteration-methods', 'microtask-queue']
@@ -27,6 +61,7 @@ const dsaPreviewSubcategories = dsaSubcategories.slice(0, 8)
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-bg-page from-0% to-bg-page-secondary to-100%">
+      <StructuredData data={homeFAQSchema} />
       <NavBar />
 
       {/* Hero */}

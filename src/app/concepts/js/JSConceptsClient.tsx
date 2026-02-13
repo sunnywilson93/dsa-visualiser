@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Search, ArrowRight } from 'lucide-react'
+import { Search, ArrowRight, FileText } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { SearchResultsList } from '@/components/Search'
 import { usePageSearch } from '@/components/Search'
@@ -35,6 +35,16 @@ export default function JSConceptsClient() {
             Master JavaScript through organized learning paths. Explore concepts by topic.
           </p>
         </header>
+
+        <Link
+          href="/concepts/js/cheatsheet"
+          className="flex items-center gap-3 mb-6 px-4 py-3 rounded-xl border border-brand-primary-20 bg-brand-primary-5 no-underline transition-all duration-200 hover:border-brand-primary-40 hover:bg-brand-primary-10 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+        >
+          <FileText size={18} className="text-brand-primary shrink-0" />
+          <span className="text-sm font-medium text-text-bright">Interview Cheatsheet</span>
+          <span className="text-xs text-text-muted hidden sm:inline">Key points from all {concepts.length} concepts in one scannable page</span>
+          <ArrowRight size={14} className="text-brand-primary ml-auto shrink-0" />
+        </Link>
 
         <PageSearchControls
           search={search}

@@ -78,3 +78,10 @@
   font-weight: var(--font-weight-medium);
   width: fit-content;
 }
+
+.updatedDate {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  padding-top: var(--spacing-sm);
+  border-top: var(--border-width-1) solid var(--color-white-6);
+}

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Clock, ArrowRight } from 'lucide-react'
+import { Clock, ArrowRight, Map, FileText } from 'lucide-react'
 import { NavBar } from '@/components/NavBar'
 import { ConceptIcon } from '@/components/Icons/ConceptIcon'
 import { concepts, conceptCategories } from '@/data/concepts'
@@ -155,6 +155,32 @@ export default function ConceptsPage() {
               </Link>
             ))}
           </div>
+        </section>
+
+        {/* Quick Links */}
+        <section className="mt-10 grid grid-cols-2 gap-4 max-md:grid-cols-1 animate-[fadeIn_0.4s_ease-out_300ms_both]">
+          <Link
+            href="/concepts/js/cheatsheet"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white-10 bg-white-3 no-underline transition-all duration-200 hover:border-brand-primary-30 hover:bg-brand-primary-5 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+          >
+            <FileText size={18} className="text-brand-primary shrink-0" />
+            <div className="min-w-0">
+              <span className="text-sm font-semibold text-text-bright block">JS Interview Cheatsheet</span>
+              <span className="text-xs text-text-muted">All key points in one page</span>
+            </div>
+            <ArrowRight size={14} className="text-brand-primary ml-auto shrink-0" />
+          </Link>
+          <Link
+            href="/concepts/dsa/roadmap"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white-10 bg-white-3 no-underline transition-all duration-200 hover:border-brand-primary-30 hover:bg-brand-primary-5 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+          >
+            <Map size={18} className="text-brand-primary shrink-0" />
+            <div className="min-w-0">
+              <span className="text-sm font-semibold text-text-bright block">DSA Learning Roadmap</span>
+              <span className="text-xs text-text-muted">Step-by-step learning path</span>
+            </div>
+            <ArrowRight size={14} className="text-brand-primary ml-auto shrink-0" />
+          </Link>
         </section>
       </main>
 

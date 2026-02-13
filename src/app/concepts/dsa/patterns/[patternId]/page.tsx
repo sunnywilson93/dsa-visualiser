@@ -41,6 +41,42 @@ export async function generateStaticParams() {
 }
 
 
+function generateFAQSchema(pattern: NonNullable<ReturnType<typeof getPatternBySlug>>) {
+  const faqs: { question: string; answer: string }[] = []
+
+  faqs.push({
+    question: `When should I use the ${pattern.name} pattern?`,
+    answer: pattern.whenToUse.join('. ') + '.',
+  })
+
+  if (pattern.variants.length > 0) {
+    faqs.push({
+      question: `What are the variants of the ${pattern.name} pattern?`,
+      answer: pattern.variants
+        .map((v) => `${v.name}: ${v.description}`)
+        .join(' '),
+    })
+  }
+
+  faqs.push({
+    question: `What is the time and space complexity of the ${pattern.name} pattern?`,
+    answer: `The typical time complexity is ${pattern.complexity.time} and the space complexity is ${pattern.complexity.space}.`,
+  })
+
+  return {
+    '@context': 'https://schema.org' as const,
+    '@type': 'FAQPage' as const,
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question' as const,
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer' as const,
+        text: faq.answer,
+      },
+    })),
+  }
+}
+
 function generateArticleSchema(pattern: NonNullable<ReturnType<typeof getPatternBySlug>>) {
   return {
     '@context': 'https://schema.org',
@@ -75,6 +111,7 @@ export default async function PatternPage({ params }: Props) {
     return <PatternPageClient patternId={patternId} />
   }
 
+  const faqSchema = generateFAQSchema(pattern)
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', path: '/' },
     { name: 'Concepts', path: '/concepts' },
@@ -83,11 +120,20 @@ export default async function PatternPage({ params }: Props) {
   ])
   const articleSchema = generateArticleSchema(pattern)
 
+  const formattedDate = CONTENT_LAST_UPDATED.toLocaleDateString('en-US', {
+    month: 'short',
+    year: 'numeric',
+  })
+
   return (
     <>
+      <StructuredData data={faqSchema} />
       <StructuredData data={breadcrumbSchema} />
       <StructuredData data={articleSchema} />
       <PatternPageClient patternId={patternId} />
+      <div className="sr-only">
+        <time dateTime={CONTENT_LAST_UPDATED.toISOString()}>Updated {formattedDate}</time>
+      </div>
     </>
   )
 }

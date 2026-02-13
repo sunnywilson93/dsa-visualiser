@@ -123,12 +123,20 @@ export default function ConceptPage({ params }: Props) {
   ])
   const articleSchema = generateArticleSchema(concept)
 
+  const formattedDate = CONTENT_LAST_UPDATED.toLocaleDateString('en-US', {
+    month: 'short',
+    year: 'numeric',
+  })
+
   return (
     <>
       <StructuredData data={faqSchema} />
       <StructuredData data={breadcrumbSchema} />
       <StructuredData data={articleSchema} />
       <ConceptPageClient />
+      <div className="sr-only">
+        <time dateTime={CONTENT_LAST_UPDATED.toISOString()}>Updated {formattedDate}</time>
+      </div>
     </>
   )
 }
