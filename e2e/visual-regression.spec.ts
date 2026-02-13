@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test'
 
+const baseURL = process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:3000'
+
 // Static routes that always exist
 const staticRoutes = [
   { path: '/', name: 'home' },
@@ -212,6 +214,24 @@ const allRoutes = [
 ]
 
 test.describe('Visual Regression', () => {
+  let appReachable = false
+
+  test.beforeAll(async () => {
+    try {
+      const response = await fetch(baseURL, { method: 'GET' })
+      appReachable = response.status > 0 && response.status < 500
+    } catch {
+      appReachable = false
+    }
+  })
+
+  test.beforeEach(() => {
+    test.skip(
+      !appReachable,
+      `App server not reachable at ${baseURL}. Start the app and set PLAYWRIGHT_BASE_URL if needed.`,
+    )
+  })
+
   for (const route of allRoutes) {
     test(`${route.name} renders correctly`, async ({ page }) => {
       await page.goto(route.path)

@@ -8827,6 +8827,665 @@ console.log(findCheapestPrice(4, [
     whyItWorks: 'Any path with at most K stops has at most K+1 edges. Each iteration allows one extra edge, and relaxation accumulates best costs constrained by edge count.',
   },
 
+  {
+    id: 'implement-trie-prefix-tree',
+    name: 'Implement Trie (Prefix Tree)',
+    category: 'trie',
+    difficulty: 'easy',
+    description: 'Build insert/search/startsWith on a trie of characters',
+    code: `// Implement Trie (Prefix Tree)
+
+class TrieNode {
+  constructor() {
+    this.children = {}
+    this.isEnd = false
+  }
+}
+
+class Trie {
+  constructor() {
+    this.root = new TrieNode()
+  }
+
+  insert(word) {
+    let node = this.root
+    for (const ch of word) {
+      node.children[ch] = node.children[ch] || new TrieNode()
+      node = node.children[ch]
+    }
+    node.isEnd = true
+  }
+
+  search(word) {
+    let node = this.root
+    for (const ch of word) {
+      if (!node.children[ch]) return false
+      node = node.children[ch]
+    }
+    return node.isEnd
+  }
+
+  startsWith(prefix) {
+    let node = this.root
+    for (const ch of prefix) {
+      if (!node.children[ch]) return false
+      node = node.children[ch]
+    }
+    return true
+  }
+}
+
+const trie = new Trie()
+trie.insert('apple')
+trie.insert('app')
+console.log('search app', trie.search('app'))
+console.log('startsWith ap', trie.startsWith('ap'))`,
+    approach: 'Use nested child pointers under each node. Insert writes each character path and marks the terminal node. Search/startsWith walk the same path and check terminal or complete prefix existence.',
+    timeComplexity: 'O(L)',
+    spaceComplexity: 'O(total characters)',
+    patternName: 'Trie Construction and Lookup',
+    whyItWorks: 'Shared prefixes are stored once in the tree, and every query touches at most L nodes for an L-length word.',
+  },
+
+  {
+    id: 'design-add-and-search-words-data-structure',
+    name: 'Design Add and Search Words Data Structure',
+    category: 'trie',
+    categories: ['trie', 'strings', 'recursion'],
+    difficulty: 'medium',
+    description: 'Support addWord and search with wildcard dot matching',
+    code: `// Design Add and Search Words Data Structure
+// LeetCode 211
+
+class TrieNode {
+  constructor() {
+    this.children = {}
+    this.isEnd = false
+  }
+}
+
+class WordDictionary {
+  constructor() {
+    this.root = new TrieNode()
+  }
+
+  addWord(word) {
+    let node = this.root
+    for (const ch of word) {
+      node.children[ch] = node.children[ch] || new TrieNode()
+      node = node.children[ch]
+    }
+    node.isEnd = true
+  }
+
+  search(word) {
+    const dfs = (index, node) => {
+      if (index === word.length) return node.isEnd
+
+      const ch = word[index]
+      if (ch === '.') {
+        for (const key of Object.keys(node.children)) {
+          if (dfs(index + 1, node.children[key])) return true
+        }
+        return false
+      }
+
+      if (!node.children[ch]) return false
+      return dfs(index + 1, node.children[ch])
+    }
+
+    return dfs(0, this.root)
+  }
+}
+
+const dict = new WordDictionary()
+dict.addWord('bad')
+dict.addWord('dad')
+dict.addWord('mad')
+console.log(dict.search('pad')) // false
+console.log(dict.search('.ad')) // true
+console.log(dict.search('b..')) // true`,
+    approach: "Store all words in trie. For wildcard '.', branch over every child at that trie depth with DFS/backtracking.",
+    timeComplexity: 'O(L) average, O(L * alphabet) worst',
+    spaceComplexity: 'O(total characters)',
+    patternName: 'Trie with DFS Wildcards',
+    whyItWorks: 'Literal words follow a single path. Wildcards branch to all children, which is equivalent to checking every matching character transition at that level.',
+  },
+
+  {
+    id: 'replace-words',
+    name: 'Replace Words',
+    category: 'trie',
+    categories: ['trie', 'strings'],
+    difficulty: 'medium',
+    description: 'Replace words in a sentence by the shortest dictionary root',
+    code: `// Replace Words
+// Replace each word with the shortest root present in dictionary
+
+class TrieNode {
+  constructor() {
+    this.children = {}
+    this.isEnd = false
+  }
+}
+
+class Trie {
+  constructor() {
+    this.root = new TrieNode()
+  }
+
+  insert(word) {
+    let node = this.root
+    for (const ch of word) {
+      node.children[ch] = node.children[ch] || new TrieNode()
+      node = node.children[ch]
+    }
+    node.isEnd = true
+  }
+
+  getRootOrNull(word) {
+    let node = this.root
+    let built = ''
+    for (const ch of word) {
+      if (!node.children[ch]) return null
+      built += ch
+      node = node.children[ch]
+      if (node.isEnd) return built
+    }
+    return null
+  }
+}
+
+function replaceWords(dictionary, sentence) {
+  const trie = new Trie()
+  for (const root of dictionary) trie.insert(root)
+
+  return sentence
+    .split(' ')
+    .map(word => {
+      const replacement = trie.getRootOrNull(word)
+      return replacement || word
+    })
+    .join(' ')
+}
+
+console.log(replaceWords(['cat', 'bat', 'rat'], 'the cattle was rattled by the battery'))
+`,
+    approach: 'Insert all roots in trie. For each word, walk characters until a terminal root node appears and replace immediately.',
+    timeComplexity: 'O(D * R + S * L)',
+    spaceComplexity: 'O(D * R)',
+    patternName: 'Trie Prefix Replacement',
+    whyItWorks: 'First terminal reached in the trie walk is the shortest matching root because we process from left to right in a single pass.',
+  },
+
+  {
+    id: 'search-suggestions-system',
+    name: 'Search Suggestions System',
+    category: 'trie',
+    categories: ['trie', 'strings'],
+    difficulty: 'hard',
+    description: 'Return up to 3 lexicographically sorted suggestions while typing each prefix',
+    code: `// Search Suggestions System
+
+class SuggestNode {
+  constructor() {
+    this.children = {}
+    this.suggestions = []
+  }
+}
+
+class ProductSuggester {
+  constructor(products) {
+    this.root = new SuggestNode()
+    for (const product of products.sort()) {
+      this.insert(product)
+    }
+  }
+
+  insert(product) {
+    let node = this.root
+    for (const ch of product) {
+      node.children[ch] = node.children[ch] || new SuggestNode()
+      node = node.children[ch]
+
+      node.suggestions.push(product)
+      if (node.suggestions.length > 3) {
+        node.suggestions.pop()
+      }
+    }
+  }
+
+  suggestionsForKeyword(keyword) {
+    let node = this.root
+    const out = []
+
+    for (const ch of keyword) {
+      if (!node || !node.children[ch]) {
+        out.push([])
+        node = null
+      } else {
+        node = node.children[ch]
+        out.push([...node.suggestions])
+      }
+    }
+
+    return out
+  }
+}
+
+const products = ['mobile', 'mouse', 'moneypot', 'monitor', 'mousepad', 'monitoring']
+const suggester = new ProductSuggester(products)
+console.log(suggester.suggestionsForKeyword('mo'))
+`,
+    approach: 'Keep sorted suggestions at each node while inserting products, so each typed character returns precomputed top 3 without full rescanning.',
+    timeComplexity: 'O(P * L + C * A)',
+    spaceComplexity: 'O(P * L)',
+    patternName: 'Trie Prefix Suggestions',
+    whyItWorks: 'Sorting first and maintaining capped suggestion lists gives fast lookup per character and constant per-result retrieval at query time.',
+  },
+
+  {
+    id: 'stream-of-characters',
+    name: 'Stream of Characters',
+    category: 'trie',
+    categories: ['trie', 'recursion', 'strings'],
+    difficulty: 'hard',
+    description: 'Implement a stream checker that detects any suffix matching inserted words',
+    code: `// Stream of Characters
+
+class TrieNode {
+  constructor() {
+    this.children = {}
+    this.isEnd = false
+  }
+}
+
+class StreamChecker {
+  constructor(words) {
+    this.root = new TrieNode()
+    this.stream = []
+    this.maxWordLen = 0
+
+    for (const word of words) {
+      this.maxWordLen = Math.max(this.maxWordLen, word.length)
+      let node = this.root
+
+      for (let i = word.length - 1; i >= 0; i--) {
+        const ch = word[i]
+        node.children[ch] = node.children[ch] || new TrieNode()
+        node = node.children[ch]
+      }
+      node.isEnd = true
+    }
+  }
+
+  query(letter) {
+    this.stream.push(letter)
+    if (this.stream.length > this.maxWordLen) this.stream.shift()
+
+    let node = this.root
+    for (let i = this.stream.length - 1; i >= 0; i--) {
+      const ch = this.stream[i]
+      if (!node.children[ch]) return false
+      node = node.children[ch]
+      if (node.isEnd) return true
+    }
+
+    return false
+  }
+}
+
+const streamChecker = new StreamChecker(['cd', 'f', 'kl'])
+console.log(streamChecker.query('a')) // false
+console.log(streamChecker.query('c')) // false
+console.log(streamChecker.query('d')) // true
+console.log(streamChecker.query('f')) // true
+console.log(streamChecker.query('k')) // false
+console.log(streamChecker.query('l')) // true
+`,
+    approach: 'Build trie over reversed words. Append new letters to stream and scan all suffixes from end against trie in O(maxWordLen) per query.',
+    timeComplexity: 'O(M)',
+    spaceComplexity: 'O(total characters)',
+    patternName: 'Reverse Trie for Streaming Prefix/Suffix Match',
+    whyItWorks: 'Any matching word suffix appears as a reversed prefix from the newest stream characters, so checking backwards in reverse-trie detects all endings.',
+  },
+
+  {
+    id: 'word-search-ii',
+    name: 'Word Search II',
+    category: 'trie',
+    categories: ['trie', 'strings', 'backtracking', 'recursion', 'graphs'],
+    difficulty: 'hard',
+    description: 'Find all words in a board using trie-guided DFS',
+    code: `// Word Search II
+// LeetCode 212
+
+class TrieNode {
+  constructor() {
+    this.children = {}
+    this.word = ''
+  }
+}
+
+function findWords(board, words) {
+  const root = new TrieNode()
+
+  function insert(word) {
+    let node = root
+    for (const ch of word) {
+      node.children[ch] = node.children[ch] || new TrieNode()
+      node = node.children[ch]
+    }
+    node.word = word
+  }
+
+  for (const word of words) insert(word)
+
+  const rows = board.length
+  const cols = board[0].length
+  const found = []
+
+  function dfs(r, c, node) {
+    if (r < 0 || c < 0 || r === rows || c === cols || !node) return
+    const ch = board[r][c]
+    if (ch === '#') return
+    if (!node.children[ch]) return
+
+    const next = node.children[ch]
+    if (next.word) {
+      found.push(next.word)
+      next.word = ''
+    }
+
+    board[r][c] = '#'
+    const dirs = [[1,0], [-1,0], [0,1], [0,-1]]
+    for (const [dr, dc] of dirs) {
+      dfs(r + dr, c + dc, next)
+    }
+    board[r][c] = ch
+  }
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      dfs(r, c, root)
+    }
+  }
+
+  return found
+}
+
+console.log(
+  findWords(
+    [
+      ['o', 'a', 'a', 'n'],
+      ['e', 't', 'a', 'e'],
+      ['i', 'h', 'k', 'r'],
+      ['i', 'f', 'l', 'v'],
+    ],
+    ['oath', 'pea', 'eat', 'rain']
+  )
+)
+`,
+    approach: 'Insert all dictionary words in trie, then DFS the board; prune branches when next character is absent in trie.',
+    timeComplexity: 'O(M * N * 4^L)',
+    spaceComplexity: 'O(W * L)',
+    patternName: 'Trie + Grid DFS (Pruned)',
+    whyItWorks: 'Trie prunes non-prefix paths early, preventing exponential growth from branches that can never form a valid word.',
+  },
+
+  {
+    id: 'short-encoding-of-words',
+    name: 'Short Encoding of Words',
+    category: 'trie',
+    categories: ['trie', 'strings'],
+    difficulty: 'medium',
+    description: 'Minimize encoded length by merging shared suffixes in a trie',
+    code: `// Short Encoding of Words
+// LeetCode 820
+
+class TrieNode {
+  constructor() {
+    this.children = {}
+  }
+}
+
+function minimumLengthEncoding(words) {
+  const uniqueWords = [...new Set(words)]
+  const root = new TrieNode()
+  uniqueWords.sort((a, b) => b.length - a.length)
+
+  let total = 0
+
+  for (const word of uniqueWords) {
+    let node = root
+    let addedNew = false
+
+    for (let i = word.length - 1; i >= 0; i--) {
+      const ch = word[i]
+      if (!node.children[ch]) {
+        node.children[ch] = new TrieNode()
+        addedNew = true
+      }
+      node = node.children[ch]
+    }
+
+    if (addedNew) total += word.length + 1
+  }
+
+  return total
+}
+
+console.log(minimumLengthEncoding(['time', 'me', 'bell']))
+console.log(minimumLengthEncoding(['me', 'time', 'bell', 'me']))
+`,
+    approach: 'Insert reversed words into trie in descending length order. Add length only when the word contributes new nodes.',
+    timeComplexity: 'O(M * L)',
+    spaceComplexity: 'O(M * L)',
+    patternName: 'Reverse Trie Deduplication',
+    whyItWorks: 'If a word is suffix of a longer word, its path already exists in reversed trie and adds no new encoded characters.',
+  },
+
+  {
+    id: 'magic-dictionary',
+    name: 'Magic Dictionary',
+    category: 'trie',
+    categories: ['trie', 'strings', 'recursion'],
+    difficulty: 'hard',
+    description: 'Implement buildDict + search allowing one character mismatch',
+    code: `// Magic Dictionary
+// LeetCode 676
+
+class TrieNode {
+  constructor() {
+    this.children = {}
+    this.isEnd = false
+  }
+}
+
+class MagicDictionary {
+  constructor() {
+    this.root = new TrieNode()
+  }
+
+  buildDict(dictionary) {
+    for (const word of dictionary) {
+      let node = this.root
+      for (const ch of word) {
+        node.children[ch] = node.children[ch] || new TrieNode()
+        node = node.children[ch]
+      }
+      node.isEnd = true
+    }
+  }
+
+  search(searchWord) {
+    const dfs = (index, node, usedEdit) => {
+      if (index === searchWord.length) {
+        return usedEdit && node.isEnd
+      }
+
+      const ch = searchWord[index]
+      for (const next of Object.keys(node.children)) {
+        const child = node.children[next]
+        const mismatch = next !== ch ? 1 : 0
+        if (usedEdit && mismatch) continue
+        if (dfs(index + 1, child, usedEdit || mismatch)) return true
+      }
+
+      return false
+    }
+
+    return dfs(0, this.root, false)
+  }
+}
+
+const magic = new MagicDictionary()
+magic.buildDict(['hello', 'hallo', 'leetcode'])
+console.log(magic.search('hello'))   // true (hallo)
+console.log(magic.search('hhllo'))   // true (hello)
+console.log(magic.search('hell'))    // false
+`,
+    approach: 'Store all words in trie. During search, DFS tracks whether one mismatch has already been used.',
+    timeComplexity: 'O(L * alphabet)',
+    spaceComplexity: 'O(total characters)',
+    patternName: 'Trie with One-Mismatch DFS',
+    whyItWorks: 'The dictionary path must match exactly except one allowed mismatch. DFS explores all characters and only succeeds when length ends with exactly one change.',
+  },
+
+  {
+    id: 'maximum-xor-of-two-numbers-trie',
+    name: 'Maximum XOR of Two Numbers (Trie)',
+    category: 'trie',
+    categories: ['trie', 'bit-manipulation'],
+    difficulty: 'hard',
+    description: 'Use bitwise trie to maximize xor value',
+    code: `// Maximum XOR of Two Numbers in a Trie
+// LeetCode 1707 variant: O(N * 31)
+
+class BitNode {
+  constructor() {
+    this.children = {}
+  }
+}
+
+function insert(root, num) {
+  let node = root
+  for (let bit = 30; bit >= 0; bit--) {
+    const current = ((num >> bit) & 1).toString()
+    node.children[current] = node.children[current] || new BitNode()
+    node = node.children[current]
+  }
+}
+
+function bestMatch(root, num) {
+  let node = root
+  let value = 0
+
+  for (let bit = 30; bit >= 0; bit--) {
+    const current = ((num >> bit) & 1).toString()
+    const preferred = current === '0' ? '1' : '0'
+
+    if (node.children[preferred]) {
+      value += 1 << bit
+      node = node.children[preferred]
+    } else {
+      node = node.children[current]
+    }
+  }
+
+  return value
+}
+
+function findMaximumXOR(nums) {
+  const root = new BitNode()
+  let maxXor = 0
+  insert(root, nums[0])
+
+  for (let i = 1; i < nums.length; i++) {
+    const num = nums[i]
+    maxXor = Math.max(maxXor, bestMatch(root, num))
+    insert(root, num)
+  }
+
+  return maxXor
+}
+
+console.log(findMaximumXOR([3, 10, 5, 25, 2, 8]))
+`,
+    approach: 'Insert numbers into a 0/1 bit trie. For each new number, greedily choose opposite bits to maximize xor at highest positions first.',
+    timeComplexity: 'O(N * B)',
+    spaceComplexity: 'O(N * B)',
+    patternName: 'Bitwise Trie Greedy',
+    whyItWorks: 'A 1 in a higher bit contributes more than all lower bits, so greedy choice of opposite child at each level maximizes total xor.',
+  },
+
+  {
+    id: 'longest-word-in-dictionary',
+    name: 'Longest Word in Dictionary',
+    category: 'trie',
+    categories: ['trie', 'strings', 'recursion'],
+    difficulty: 'hard',
+    description: 'Find the longest word that can be built one character at a time',
+    code: `// Longest Word in Dictionary
+// Find the longest word where all prefixes also exist
+
+class TrieNode {
+  constructor() {
+    this.children = {}
+    this.isEnd = false
+  }
+}
+
+function longestWord(words) {
+  const root = new TrieNode()
+
+  function insert(word) {
+    let node = root
+    for (const ch of word) {
+      node.children[ch] = node.children[ch] || new TrieNode()
+      node = node.children[ch]
+    }
+    node.isEnd = true
+  }
+
+  for (const word of words) insert(word)
+
+  let best = ''
+
+  function dfs(node, path) {
+    for (const ch of Object.keys(node.children).sort()) {
+      const child = node.children[ch]
+      if (!child.isEnd) continue
+
+      const candidate = path + ch
+      if (candidate.length > best.length || (candidate.length === best.length && candidate < best)) {
+        best = candidate
+      }
+
+      dfs(child, candidate)
+    }
+  }
+
+  for (const [ch, child] of Object.entries(root.children)) {
+    if (child.isEnd) {
+      const candidate = ch
+      if (candidate.length > best.length || candidate < best) best = candidate
+      dfs(child, candidate)
+    }
+  }
+
+  return best
+}
+
+console.log(longestWord(['w', 'wo', 'wor', 'worl', 'world', 'hello', 'hell', 'he']))
+`,
+    approach: 'Insert all words, then DFS only through nodes that are complete words and keep the longest valid chain.',
+    timeComplexity: 'O(W * L)',
+    spaceComplexity: 'O(W * L)',
+    patternName: 'Trie Prefix Validity',
+    whyItWorks: 'A valid chain requires every prefix to be present; DFS restricted to terminal nodes automatically explores exactly those candidates.',
+  },
+
   // ==================== STRINGS ====================
   {
     id: 'find-index-first-occurrence',

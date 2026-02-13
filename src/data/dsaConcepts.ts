@@ -1295,6 +1295,182 @@ dfs([[1, 2], [2], [3], []], 0)  // [0, 1, 2, 3]`,
   },
 
   {
+    id: 'trie',
+    title: 'Trie (Prefix Tree)',
+    category: 'data-structures',
+    difficulty: 'beginner',
+    description:
+      'A trie is a tree of characters that gives fast insert, exact search, and prefix lookup. It is the default structure for string-dictionary problems, autocomplete, word filtering, and wildcard matching.',
+    shortDescription: 'Fast prefix lookup and word-based search',
+    keyPoints: [
+      'Trie nodes store children by character plus a terminal flag',
+      'Insert/search/startsWith operate in O(word length)',
+      'Prefix sharing turns many repeated strings from O(n*m) checks to O(m) checks',
+      'Use tries when constraints ask for many prefix queries on words',
+      'In DFS/word-grid problems, trie + pruning can cut huge search space',
+      'Choose recursive or iterative traversal; recursion gives clean backtracking for grids',
+    ],
+    examples: [
+      {
+        title: 'Trie Insert + Search',
+        code: `class TrieNode {
+  constructor() {
+    this.children = {}
+    this.isEndOfWord = false
+  }
+}
+
+class Trie {
+  constructor() {
+    this.root = new TrieNode()
+  }
+
+  insert(word) {
+    let node = this.root
+    for (const ch of word) {
+      node.children[ch] = node.children[ch] || new TrieNode()
+      node = node.children[ch]
+    }
+    node.isEndOfWord = true
+  }
+
+  search(word) {
+    let node = this.root
+    for (const ch of word) {
+      if (!node.children[ch]) return false
+      node = node.children[ch]
+    }
+    return node.isEndOfWord
+  }
+
+  startsWith(prefix) {
+    let node = this.root
+    for (const ch of prefix) {
+      if (!node.children[ch]) return false
+      node = node.children[ch]
+    }
+    return true
+  }
+}
+
+const trie = new Trie()
+trie.insert('cat')
+trie.insert('car')
+console.log(trie.search('cat')) // true
+console.log(trie.startsWith('ca')) // true`,
+        explanation: 'Each character follows an edge in the tree. Shared prefixes reuse nodes and keep each operation linear in word length.'
+      },
+      {
+        title: 'Top 3 Suggestions by Prefix',
+        code: `class SuggestionTrieNode {
+  constructor() {
+    this.children = {}
+    this.products = []
+  }
+}
+
+class ProductSuggester {
+  constructor() {
+    this.root = new SuggestionTrieNode()
+  }
+
+  insert(product) {
+    let node = this.root
+    for (const ch of product) {
+      node.children[ch] = node.children[ch] || new SuggestionTrieNode()
+      node = node.children[ch]
+
+      node.products.push(product)
+      node.products.sort()
+      if (node.products.length > 3) {
+        node.products.pop()
+      }
+    }
+  }
+
+  getSuggestions(word) {
+    let node = this.root
+    const result = []
+
+    for (let i = 0; i < word.length; i++) {
+      const ch = word[i]
+      if (!node || !node.children[ch]) {
+        result.push([])
+        node = null
+      } else {
+        node = node.children[ch]
+        result.push([...node.products])
+      }
+    }
+
+    return result
+  }
+}
+
+const words = ['apple', 'app', 'apricot', 'banana', 'baton', 'bat']
+const suggester = new ProductSuggester()
+for (const word of words.sort()) {
+  suggester.insert(word)
+}
+
+console.log(suggester.getSuggestions('ba'))`,
+        explanation: 'Storing limited suggestions at each node avoids scanning all words for every typed character.'
+      },
+    ],
+    complexity: {
+      average: {
+        'Insert': 'O(L)',
+        'Search': 'O(L)',
+        'StartsWith': 'O(L)',
+        'Memory': 'O(total characters)',
+      },
+    },
+    commonMistakes: [
+      'Forgetting end-of-word marker leads to false positives on prefixes',
+      'Not handling duplicate words during insert',
+      'Mixing mutable node arrays with object keying incorrectly',
+      'Forgetting to restore board state in trie + DFS grid problems',
+      'Not limiting returned suggestions when using trie-based autocomplete',
+    ],
+    interviewTips: [
+      'Always start word problems by clarifying alphabet and case rules',
+      'If many strings exist and queries are prefixes, start with a trie',
+      'State complexity in terms of word length and total characters',
+      'For advanced tries, explain how pruning shrinks recursion branching',
+    ],
+    relatedProblems: [
+      'implement-trie-prefix-tree',
+      'design-add-and-search-words-data-structure',
+      'replace-words',
+      'search-suggestions-system',
+      'stream-of-characters',
+      'word-search-ii',
+      'short-encoding-of-words',
+      'magic-dictionary',
+      'maximum-xor-of-two-numbers-trie',
+      'longest-word-in-dictionary',
+    ],
+    learningPath: [
+      {
+        stage: 'Prefix Foundations',
+        problemIds: ['implement-trie-prefix-tree', 'design-add-and-search-words-data-structure'],
+      },
+      {
+        stage: 'Dictionary Querying',
+        problemIds: ['replace-words', 'search-suggestions-system', 'stream-of-characters'],
+      },
+      {
+        stage: 'Trie + Search',
+        problemIds: ['magic-dictionary', 'word-search-ii'],
+      },
+      {
+        stage: 'Advanced Applications',
+        problemIds: ['short-encoding-of-words', 'maximum-xor-of-two-numbers-trie', 'longest-word-in-dictionary'],
+      },
+    ],
+  },
+
+  {
     id: 'linked-lists',
     title: 'Linked Lists',
     category: 'data-structures',
@@ -1908,13 +2084,14 @@ const relatedDSAConceptsMap: Record<string, string[]> = {
   'big-o-notation': ['binary-system', 'arrays', 'hash-tables', 'linked-lists'],
   'binary-system': ['big-o-notation', 'arrays', 'hash-tables'],
   'arrays': ['big-o-notation', 'hash-tables', 'stacks', 'queues', 'sorting-algorithms'],
-  'hash-tables': ['big-o-notation', 'arrays'],
+  'hash-tables': ['big-o-notation', 'arrays', 'trie'],
   'stacks': ['arrays', 'queues', 'linked-lists', 'graphs'],
   'queues': ['arrays', 'stacks', 'linked-lists', 'graphs'],
   'linked-lists': ['arrays', 'stacks', 'queues'],
-  'recursion': ['sorting-algorithms', 'graphs'],
+  'recursion': ['sorting-algorithms', 'graphs', 'trie'],
   'graphs': ['stacks', 'queues', 'recursion'],
-  'trees': ['recursion', 'queues', 'binary-system'],
+  'trees': ['recursion', 'queues', 'binary-system', 'trie'],
+  'trie': ['hash-tables', 'trees', 'recursion'],
   'sorting-algorithms': ['arrays', 'big-o-notation', 'linked-lists'],
   'backtracking': ['recursion'],
 }

@@ -2653,6 +2653,571 @@ export const problemConcepts: Record<string, ProblemConcept> = {
     ],
   },
 
+  // ==================== TRIE PROBLEMS ====================
+
+  'implement-trie-prefix-tree': {
+    title: 'Implement Trie (Prefix Tree)',
+    keyInsight: 'Store each word as a path of characters; inserts and lookups follow the same walk.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Create the Root',
+        description: 'Start with an empty root node.',
+        visual: {
+          hashMap: { entries: [] },
+          annotations: ['No characters yet'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Insert Words',
+        description: 'Insert "cat" and "car" by walking each character path.',
+        visual: {
+          array: ['cat', 'car'],
+          hashMap: {
+            entries: [
+              { key: 'c', value: 1, isNew: true },
+              { key: 'ca', value: 2, isNew: true },
+              { key: 'cat', value: 3, isNew: true },
+              { key: 'car', value: 3, isNew: true },
+            ],
+          },
+          annotations: ['Share prefix c-a between both words'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Search and Prefix',
+        description: '"search(\"cat\")" requires full path + terminal node, "startsWith(\"ca\")" only needs the path.',
+        visual: {
+          array: ['c', 'a', 't'],
+          highlights: [0, 1, 2],
+          hashMap: {
+            entries: [
+              { key: 'cat', value: 3, isLookup: true },
+              { key: 'ca', value: 2, isLookup: true },
+            ],
+          },
+          result: 'search=true, startsWith=true',
+        },
+      },
+    ],
+  },
+
+  'design-add-and-search-words-data-structure': {
+    title: 'Design Add and Search Words Data Structure',
+    keyInsight: 'Literal characters use one trie child; "." wildcards branch to all children once at that level.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Add Dictionary Words',
+        description: 'Insert bad, dad, and mad into the trie.',
+        visual: {
+          array: ['bad', 'dad', 'mad'],
+          hashMap: {
+            entries: [
+              { key: 'b', value: 1, isNew: true },
+              { key: 'd', value: 1, isNew: true },
+              { key: 'm', value: 1, isNew: true },
+            ],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Exact Match',
+        description: 'search(\"bad\") follows a single path b-a-d and must land at terminal node.',
+        visual: {
+          array: ['b', 'a', 'd'],
+          hashMap: {
+            entries: [
+              { key: 'bad', value: 3, isLookup: true },
+            ],
+            lookupKey: 'bad',
+            lookupResult: 'found',
+          },
+          result: true,
+        },
+      },
+      {
+        id: 3,
+        title: 'Wildcard Match',
+        description: 'search(\".ad\") branches at first char and validates all child options in parallel.',
+        visual: {
+          array: ['.', 'a', 'd'],
+          hashMap: {
+            entries: [
+              { key: 'bad', value: 3, isLookup: true },
+              { key: 'dad', value: 3, isLookup: true },
+              { key: 'mad', value: 3, isLookup: true },
+            ],
+            lookupKey: '.',
+            lookupResult: 'found',
+          },
+          result: true,
+        },
+      },
+    ],
+  },
+
+  'replace-words': {
+    title: 'Replace Words',
+    keyInsight: 'Insert all roots first, then for each sentence word return first prefix that is terminal in the trie.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Build Root Set',
+        description: 'Insert cat, bat, rat into trie.',
+        visual: {
+          array: ['cat', 'bat', 'rat'],
+          hashMap: {
+            entries: [
+              { key: 'cat', value: 3, isNew: true },
+              { key: 'bat', value: 3, isNew: true },
+              { key: 'rat', value: 3, isNew: true },
+            ],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Replace Each Token',
+        description: 'For "cattle", scan chars and stop at first terminal root "cat".',
+        visual: {
+          array: ['cattle', 'cattle', 'rattled'],
+          highlights: [0],
+          hashMap: {
+            entries: [
+              { key: 'cat', value: 3, isLookup: true },
+              { key: 'bat', value: 3, isLookup: true },
+              { key: 'rat', value: 3, isLookup: true },
+            ],
+          },
+          result: 'cat',
+        },
+      },
+      {
+        id: 3,
+        title: 'Final Sentence',
+        description: 'Only words with no matching root stay unchanged.',
+        visual: {
+          array: ['the', 'cattle', 'was', 'rattled', 'by', 'the', 'battery'],
+          highlights: [1, 3, 6],
+          result: 'the cat was rat by the bat',
+        },
+      },
+    ],
+  },
+
+  'search-suggestions-system': {
+    title: 'Search Suggestions System',
+    keyInsight: 'Store products in trie and keep best suggestions at each node to avoid rescanning the full word list.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Insert Sorted Products',
+        description: 'mobile, mouse, moneypot, monitor are inserted and each node keeps top 3 candidates.',
+        visual: {
+          array: ['mobile', 'mouse', 'moneypot', 'monitor'],
+          hashMap: {
+            entries: [
+              { key: 'm', value: 4, isNew: true },
+              { key: 'mo', value: 4, isNew: true },
+              { key: 'mon', value: 2, isNew: true },
+            ],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Type "mo"',
+        description: 'Traverse to node "mo" and read precomputed suggestion list.',
+        visual: {
+          array: ['mobile', 'moneypot', 'monitor', 'mouse'],
+          highlights: [0, 1, 2],
+          hashMap: {
+            entries: [
+              { key: 'mo', value: 3, isLookup: true },
+              { key: 'mob', value: 1, isLookup: true },
+            ],
+          },
+          result: ['mobile', 'moneypot', 'monitor'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Continue Typing',
+        description: 'Longer prefix narrows to fewer matches but still reads direct top-3 cache.',
+        visual: {
+          array: ['mobile', 'mouse'],
+          highlights: [0, 1],
+          hashMap: {
+            entries: [
+              { key: 'mou', value: 2, isLookup: true },
+            ],
+          },
+          result: ['mobile', 'mouse'],
+        },
+      },
+    ],
+  },
+
+  'stream-of-characters': {
+    title: 'Stream of Characters',
+    keyInsight: 'Insert reversed dictionary words, then check stream suffixes by walking backward through the reversed trie.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Build Reversed Trie',
+        description: 'cd, f, kl become dc, f, lk in storage.',
+        visual: {
+          array: ['cd', 'f', 'kl'],
+          hashMap: {
+            entries: [
+              { key: 'dc', value: 2, isNew: true },
+              { key: 'f', value: 1, isNew: true },
+              { key: 'lk', value: 2, isNew: true },
+            ],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Query Stream',
+        description: 'Letters arrive one by one; each query tests reversed suffixes up to max word length.',
+        visual: {
+          array: ['a', 'c', 'd'],
+          highlights: [2],
+          hashMap: {
+            entries: [
+              { key: 'dc', value: 2, lookupResult: 'not-found' },
+              { key: 'cd', value: 2, isLookup: true },
+            ],
+            lookupKey: 'cd',
+            lookupResult: 'found',
+          },
+          result: false,
+        },
+      },
+      {
+        id: 3,
+        title: 'Match Detection',
+        description: 'Next character that creates suffix \"cd\" returns true.',
+        visual: {
+          array: ['c', 'd', 'c'],
+          hashMap: {
+            entries: [
+              { key: 'dc', value: 2, isLookup: true },
+            ],
+            lookupKey: 'cd',
+            lookupResult: 'found',
+          },
+          result: true,
+        },
+      },
+    ],
+  },
+
+  'word-search-ii': {
+    title: 'Word Search II',
+    keyInsight: 'Prune DFS on board cells by checking whether the current path exists as trie prefix.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Build Word Trie',
+        description: 'Insert oath, pea, eat, and rain before DFS.',
+        visual: {
+          array: ['oath', 'pea', 'eat', 'rain'],
+          hashMap: {
+            entries: [
+              { key: 'o', value: 1, isNew: true },
+              { key: 'p', value: 1, isNew: true },
+              { key: 'e', value: 1, isNew: true },
+              { key: 'r', value: 1, isNew: true },
+            ],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Start DFS with Prefix',
+        description: 'Cell "o" is valid start because trie has that edge.',
+        visual: {
+          array: ['o', 'a', 't', 'h'],
+          highlights: [0, 1, 2, 3],
+          hashMap: {
+            entries: [
+              { key: 'o', value: 1 },
+              { key: 'oa', value: 1 },
+              { key: 'oat', value: 1 },
+              { key: 'oath', value: 1, isLookup: true },
+            ],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Emit Found Word',
+        description: 'When prefix hits a word node, record result and backtrack to explore remaining paths.',
+        visual: {
+          result: ['oath'],
+          hashMap: {
+            entries: [
+              { key: 'oath', value: 1, isLookup: true },
+            ],
+          },
+        },
+      },
+    ],
+  },
+
+  'short-encoding-of-words': {
+    title: 'Short Encoding of Words',
+    keyInsight: 'A word that is a suffix of another adds no new nodes in reversed trie, so it contributes 0 length.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Insert Reversed Words',
+        description: 'time, me, bell become reversed words for suffix checking.',
+        visual: {
+          array: ['time', 'me', 'bell'],
+          hashMap: {
+            entries: [
+              { key: 'time', value: 4, isNew: true },
+              { key: 'me', value: 2, isNew: true },
+              { key: 'bell', value: 4, isNew: true },
+            ],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Add New Nodes for time',
+        description: 'time adds full path, so it contributes length+1 (5).',
+        visual: {
+          array: ['t', 'i', 'm', 'e'],
+          hashMap: {
+            entries: [
+              { key: 'e', value: 1, isNew: true },
+              { key: 'em', value: 2, isNew: true },
+              { key: 'emi', value: 3, isNew: true },
+            ],
+          },
+          result: 5,
+        },
+      },
+      {
+        id: 3,
+        title: 'Skip Existing Suffix Nodes',
+        description: 'me is already present as suffix of time, so it adds no extra nodes.',
+        visual: {
+          array: ['m', 'e'],
+          hashMap: {
+            entries: [
+              { key: 'e', value: 1 },
+              { key: 'em', value: 2 },
+            ],
+          },
+          result: 5,
+        },
+      },
+    ],
+  },
+
+  'magic-dictionary': {
+    title: 'Magic Dictionary',
+    keyInsight: 'While scanning searchWord, allow exactly one changed character in the trie path.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Build Dictionary',
+        description: 'Store hello, hallo, leetcode as words.',
+        visual: {
+          hashMap: {
+            entries: [
+              { key: 'hello', value: 1, isNew: true },
+              { key: 'hallo', value: 1, isNew: true },
+              { key: 'leetcode', value: 1, isNew: true },
+            ],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Search with One Mismatch',
+        description: 'hhllo: first mismatch used at index 1, then exact match continues.',
+        visual: {
+          array: ['h', 'h', 'l', 'l', 'o'],
+          highlights: [1],
+          hashMap: {
+            entries: [
+              { key: 'hello', value: 1 },
+              { key: 'hallo', value: 1, isLookup: true },
+              { key: 'mismatchUsed', value: 1, isLookup: true },
+            ],
+          },
+          result: true,
+        },
+      },
+      {
+        id: 3,
+        title: 'Reject Exact Match as-is',
+        description: 'search(\"hello\") requires one mismatch, exact path alone is not accepted.',
+        visual: {
+          array: ['h', 'e', 'l', 'l', 'o'],
+          hashMap: {
+            entries: [
+              { key: 'hello', value: 1 },
+              { key: 'mismatchUsed', value: 0 },
+            ],
+          },
+          result: true,
+          annotations: ['\"hell\" no change => false for exactly same word'],
+        },
+      },
+    ],
+  },
+
+  'maximum-xor-of-two-numbers-trie': {
+    title: 'Maximum XOR of Two Numbers',
+    keyInsight: 'At each bit level, prefer the opposite bit in trie to maximize XOR contribution.',
+    pattern: 'bit-manipulation',
+    steps: [
+      {
+        id: 1,
+        title: 'Start with First Value',
+        description: 'Build trie from 3 (00000011).',
+        visual: {
+          binary: {
+            numbers: [{ label: '3', value: 3 }],
+            annotations: ['Only one number in trie, so no pair to compare yet.'],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Add 10 and Query',
+        description: 'Insert 10 (00001010), then query it. Greedy opposite-bit traversal gives 9.',
+        visual: {
+          binary: {
+            numbers: [
+              { label: '3', value: 3 },
+              { label: 'query:10', value: 10 },
+              { label: 'best:', value: 9 },
+            ],
+            operator: '^',
+            result: 9,
+            activeBits: [3, 2, 1],
+            annotations: ['10 ^ 3 = 9', 'Current max = 9'],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Insert 5 and Improve',
+        description: 'Insert 5 (00000101) and query it. Best partner becomes 10 -> xor 15.',
+        visual: {
+          binary: {
+            numbers: [
+              { label: '10', value: 10 },
+              { label: 'query:5', value: 5 },
+              { label: 'best:', value: 15 },
+            ],
+            operator: '^',
+            result: 15,
+            activeBits: [3, 2, 1, 0],
+            annotations: ['5 ^ 10 = 15', 'Current max updates to 15'],
+          },
+        },
+      },
+      {
+        id: 4,
+        title: 'Insert 25 for Global Maximum',
+        description: 'Insert 25 (11001). Querying it finds partner 5 with xor 28, the final maximum.',
+        visual: {
+          binary: {
+            numbers: [
+              { label: '5', value: 5 },
+              { label: 'query:25', value: 25 },
+              { label: 'best:', value: 28 },
+            ],
+            operator: '^',
+            result: 28,
+            activeBits: [4, 3, 2],
+            annotations: ['25 ^ 5 = 28', 'Global max becomes 28'],
+          },
+        },
+      },
+    ],
+  },
+
+  'longest-word-in-dictionary': {
+    title: 'Longest Word in Dictionary',
+    keyInsight: 'Only traverse trie nodes marked as end of word; every prefix on the route must be valid.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Insert Words',
+        description: 'Mark terminals for all words in trie.',
+        visual: {
+          array: ['w', 'wo', 'wor', 'worl', 'world', 'hello', 'hell', 'he'],
+          hashMap: {
+            entries: [
+              { key: 'w', value: 1, isNew: true },
+              { key: 'wo', value: 2, isNew: true },
+              { key: 'wor', value: 3, isNew: true },
+              { key: 'worl', value: 4, isNew: true },
+              { key: 'world', value: 5, isNew: true },
+              { key: 'h', value: 1, isNew: true },
+              { key: 'he', value: 2, isNew: true },
+            ],
+          },
+        },
+      },
+      {
+        id: 2,
+        title: 'Validate Prefixes',
+        description: 'Skip branches where prefix is not terminal (hello has missing intermediate terminal at h/e/l/l)',
+        visual: {
+          array: ['world', 'hello'],
+          highlights: [0],
+          hashMap: {
+            entries: [
+              { key: 'w', value: 1 },
+              { key: 'wo', value: 1 },
+              { key: 'wor', value: 1 },
+              { key: 'worl', value: 1 },
+              { key: 'world', value: 1, isLookup: true },
+            ],
+          },
+        },
+      },
+      {
+        id: 3,
+        title: 'Select Best Answer',
+        description: 'Compare valid candidates and keep longest, then lexicographically smallest on ties.',
+        visual: {
+          hashMap: {
+            entries: [
+              { key: 'world', value: 5, isLookup: true },
+              { key: 'hell', value: 4 },
+            ],
+          },
+          result: 'world',
+        },
+      },
+    ],
+  },
+
   // ==================== SLIDING WINDOW PROBLEMS ====================
 
   'max-sum-subarray-k': {

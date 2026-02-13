@@ -7,6 +7,7 @@ import type { ConceptStep, ConceptType } from '@/types'
 import { useKeyboardShortcuts } from '@/hooks'
 import type { ShortcutMap } from '@/hooks'
 import { TwoPointersConcept } from './TwoPointersConcept'
+import { HashMapConcept } from './HashMapConcept'
 import { BitManipulationConcept } from './BitManipulationConcept'
 import { SlidingWindowConcept } from './SlidingWindowConcept'
 import { BinarySearchConcept } from './BinarySearchConcept'
@@ -102,6 +103,8 @@ export function ConceptPanel({
       case 'two-pointers-same-dir':
       case 'two-pointers-partition':
         return <TwoPointersConcept step={step} type={type} />
+      case 'hash-map':
+        return <HashMapConcept step={step} />
       case 'bit-manipulation':
         return <BitManipulationConcept step={step} />
       case 'sliding-window':

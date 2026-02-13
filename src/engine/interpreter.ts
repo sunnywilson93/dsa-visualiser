@@ -791,9 +791,10 @@ export class Interpreter {
       const methodName = (callee.property as ASTNode).name
       if (methodName === 'stringify') {
         const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
-        const jsArgs = args.map((arg) => toJSValue(arg))
+        const jsArgs = args.map((arg: RuntimeValue) => toJSValue(arg))
         try {
-          const result = JSON.stringify(...jsArgs)
+          const [value, replacer, space] = jsArgs
+          const result = JSON.stringify(value, replacer as any, space as any)
           if (result === undefined) {
             return createUndefined()
           }

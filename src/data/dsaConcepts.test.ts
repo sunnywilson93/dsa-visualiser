@@ -79,3 +79,29 @@ describe('trees concept integrity', () => {
     })
   })
 })
+
+describe('trie concept integrity', () => {
+  const trieConcept = getDSAConceptById('trie')
+  const problemIds = new Set(codeExamples.map((problem) => problem.id))
+
+  it('exists and has related problems', () => {
+    expect(trieConcept).toBeDefined()
+    expect(trieConcept?.relatedProblems?.length).toBeGreaterThan(0)
+  })
+
+  it('maps every related problem to an existing id', () => {
+    trieConcept?.relatedProblems?.forEach((problemId) => {
+      expect(problemIds.has(problemId)).toBe(true)
+    })
+  })
+
+  it('defines a valid learning path', () => {
+    expect(trieConcept?.learningPath?.length).toBeGreaterThan(0)
+    trieConcept?.learningPath?.forEach((stage) => {
+      expect(stage.problemIds.length).toBeGreaterThan(0)
+      stage.problemIds.forEach((problemId) => {
+        expect(problemIds.has(problemId)).toBe(true)
+      })
+    })
+  })
+})

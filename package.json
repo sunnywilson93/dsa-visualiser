@@ -16,10 +16,12 @@
     "check:vars": "npx tsx scripts/check-vars.ts",
     "check:keyframes": "npx tsx scripts/check-keyframes.ts",
     "tokens:audit": "npx tsx scripts/tokens-audit.ts",
-    "test:visual": "npx playwright test",
-    "test:visual:update": "npx playwright test --update-snapshots",
-    "test:visual:smoke": "npx playwright test --config playwright.smoke.config.ts",
-    "test:visual:smoke:update": "npx playwright test --config playwright.smoke.config.ts --update-snapshots",
+    "test:visual": "PLAYWRIGHT_SKIP_SERVER=1 npx playwright test",
+    "test:visual:update": "PLAYWRIGHT_SKIP_SERVER=1 npx playwright test --update-snapshots",
+    "test:visual:smoke": "PLAYWRIGHT_SKIP_SERVER=1 npx playwright test --config playwright.smoke.config.ts",
+    "test:visual:smoke:update": "PLAYWRIGHT_SKIP_SERVER=1 npx playwright test --config playwright.smoke.config.ts --update-snapshots",
+    "test:concept-routes": "PLAYWRIGHT_SKIP_SERVER=1 npx playwright test --config playwright.concept-routes.config.ts",
+    "test:concept-routes:server": "PLAYWRIGHT_SKIP_SERVER=1 PLAYWRIGHT_BASE_URL=http://localhost:3000 npx playwright test --config playwright.concept-routes.config.ts",
     "prepare": "husky"
   },
   "dependencies": {

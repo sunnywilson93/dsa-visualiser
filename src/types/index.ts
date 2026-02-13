@@ -287,7 +287,7 @@ export interface ConceptVisualState {
   hashMap?: HashMapVisualState
   linkedList?: LinkedListVisualState
   annotations?: string[]             // Text annotations on the visual
-  result?: number | string | boolean
+  result?: number | string | boolean | (number | string)[]
 }
 
 export interface HashMapEntry {
@@ -296,6 +296,7 @@ export interface HashMapEntry {
   isNew?: boolean
   isLookup?: boolean
   isDecrement?: boolean
+  lookupResult?: 'found' | 'not-found'
 }
 
 export interface HashMapVisualState {
@@ -330,6 +331,7 @@ export interface BinaryConceptState {
   operator?: '&' | '|' | '^' | '<<' | '>>' | '~'
   result?: number
   activeBits?: number[]  // Which bit positions to highlight
+  annotations?: string[]
 }
 
 export interface CategoryConcept {

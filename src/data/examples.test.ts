@@ -3,9 +3,11 @@ import {
   codeExamples,
   getExamplesByCategory,
   getExampleCategoryIds,
+  isDsaSubcategory,
   hasCategory,
   type CodeExample,
 } from './examples'
+import { conceptCoverageBaseline } from './conceptCoverageBaseline'
 
 describe('examples category helpers', () => {
   it('falls back to primary category when categories[] is missing', () => {
@@ -161,5 +163,66 @@ describe('FAANG tree curriculum mapping', () => {
     expect(treesProblems).toContain('find-node-in-tree')
     expect(treesProblems).toContain('construct-bst-from-sorted-array')
     expect(treesProblems).toContain('path-sum-iii')
+  })
+})
+
+describe('FAANG trie curriculum mapping', () => {
+  const curriculumToProblemId = [
+    { question: 'Implement Trie (Prefix Tree)', id: 'implement-trie-prefix-tree' },
+    { question: 'Design Add and Search Words Data Structure', id: 'design-add-and-search-words-data-structure' },
+    { question: 'Replace Words', id: 'replace-words' },
+    { question: 'Search Suggestions System', id: 'search-suggestions-system' },
+    { question: 'Stream of Characters', id: 'stream-of-characters' },
+    { question: 'Word Search II', id: 'word-search-ii' },
+    { question: 'Short Encoding of Words', id: 'short-encoding-of-words' },
+    { question: 'Magic Dictionary', id: 'magic-dictionary' },
+    { question: 'Maximum XOR of Two Numbers (Trie)', id: 'maximum-xor-of-two-numbers-trie' },
+    { question: 'Longest Word in Dictionary', id: 'longest-word-in-dictionary' },
+  ] as const
+
+  it('maps every planned trie curriculum question to an existing problem id', () => {
+    const ids = new Set(codeExamples.map((problem) => problem.id))
+
+    curriculumToProblemId.forEach(({ question, id }) => {
+      expect(ids.has(id), `${question} -> ${id} should exist`).toBe(true)
+    })
+  })
+
+  it('preserves trie problem tagging and multi-topic overlap', () => {
+    const trieProblems = getExamplesByCategory('trie').map((problem) => problem.id)
+    expect(trieProblems).toContain('search-suggestions-system')
+    expect(trieProblems).toContain('word-search-ii')
+
+    const wordSearch = getExamplesByCategory('strings').find((problem) => problem.id === 'word-search-ii')
+    expect(wordSearch?.categories).toContain('backtracking')
+
+    const maxXor = getExamplesByCategory('bit-manipulation').find((problem) => problem.id === 'maximum-xor-of-two-numbers-trie')
+    expect(maxXor).toBeDefined()
+  })
+})
+
+describe('code example corpus health', () => {
+  it('maintains baseline corpus size and identifier uniqueness', () => {
+    const ids = codeExamples.map((problem) => problem.id)
+    const uniqueIds = new Set(ids)
+    const duplicateCount = ids.length - uniqueIds.size
+
+    expect(ids.length).toBeGreaterThanOrEqual(conceptCoverageBaseline.totalCodeExamples)
+    expect(uniqueIds.size).toBeGreaterThanOrEqual(conceptCoverageBaseline.uniqueCodeExamples)
+    expect(duplicateCount).toBeLessThanOrEqual(
+      conceptCoverageBaseline.totalCodeExamples - conceptCoverageBaseline.uniqueCodeExamples,
+    )
+  })
+
+  it('tracks DSA tagged example coverage at expected scale', () => {
+    const dsaProblemIds = new Set(
+      codeExamples
+        .filter((problem) => getExampleCategoryIds(problem).some(isDsaSubcategory))
+        .map((problem) => problem.id),
+    )
+
+    expect(dsaProblemIds.size).toBeGreaterThanOrEqual(
+      conceptCoverageBaseline.dsaProblemCount,
+    )
   })
 })
