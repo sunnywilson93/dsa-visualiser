@@ -1,6 +1,6 @@
 import type { DSAPattern } from '@/components/DSAPatterns/types'
 
-export const DSA_PATTERN_IDS = ['two-pointers', 'hash-map', 'bit-manipulation', 'binary-search', 'sorting'] as const
+export const DSA_PATTERN_IDS = ['two-pointers', 'hash-map', 'bit-manipulation', 'binary-search', 'sorting', 'heap'] as const
 export type DSAPatternId = typeof DSA_PATTERN_IDS[number]
 
 export const dsaPatterns: DSAPattern[] = [
@@ -200,6 +200,43 @@ export const dsaPatterns: DSAPattern[] = [
       space: 'O(1) to O(n)',
     },
     relatedProblems: ['merge-intervals', 'meeting-rooms', 'largest-number', 'sort-colors', 'kth-largest-element', 'sort-characters-by-frequency'],
+  },
+  {
+    id: 'heap',
+    name: 'Heap',
+    slug: 'heap',
+    description: 'Use a heap (priority queue) when you repeatedly need the minimum or maximum of a changing set while also inserting and deleting values efficiently.',
+    whenToUse: [
+      'Finding top-k frequent or top-k largest elements',
+      'Merging multiple sorted streams or linked lists',
+      'Scheduling tasks by earliest deadline or smallest processing time',
+      'Shortest-path variants where you need a dynamic smallest-distance choice',
+    ],
+    variants: [
+      {
+        id: 'min-heap',
+        name: 'Min-Heap (Priority Queue)',
+        description: 'Keep the smallest element available in O(1) and rebalance neighbors in O(log n) after insert/remove.',
+        whenToUse: 'Need frequent minimum extraction like earliest end time, shortest distance, or smallest remaining value',
+      },
+      {
+        id: 'max-heap',
+        name: 'Max-Heap (Priority Queue)',
+        description: 'Keep the largest element available quickly and drop smaller ones when capacity is limited.',
+        whenToUse: 'Need running maximums or top-k selection while scanning a stream',
+      },
+      {
+        id: 'heap-selection',
+        name: 'Heap Selection',
+        description: 'When sorting is overkill, keep only a bounded heap of size k and maintain the best candidates.',
+        whenToUse: 'Top-k, kth element, and streaming order-statistics without full sort',
+      },
+    ],
+    complexity: {
+      time: 'O(log n)',
+      space: 'O(n)',
+    },
+    relatedProblems: ['top-k-frequent', 'kth-largest-element', 'merge-k-sorted-lists', 'meeting-rooms-ii', 'network-delay-time'],
   },
 ]
 

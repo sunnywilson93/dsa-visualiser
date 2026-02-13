@@ -20,16 +20,19 @@ describe('JS Core Problems', () => {
 
       if (shouldSkip) {
         it.skip('executes (skipped: crashes interpreter)', () => {})
+        it.skip('completes with expected step count (skipped: crashes interpreter)', () => {})
+        it.skip('produces expected console output (skipped: crashes interpreter)', () => {})
       } else {
         it('executes without errors', () => {
           const result = executeProblem(problem.code)
           expect(result.error).toBeNull()
         })
 
-        it('completes within step limit', () => {
+        it('completes with expected step count', () => {
           const result = executeProblem(problem.code)
           expect(result.stepCount).toBeGreaterThan(0)
           expect(result.stepCount).toBeLessThan(10000)
+          expect(result.stepCount).toMatchSnapshot()
         })
 
         it('console output matches snapshot', () => {

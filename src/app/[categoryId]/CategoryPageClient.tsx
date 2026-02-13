@@ -28,7 +28,7 @@ const subcategoryToConcept: Record<string, { id: string; name: string }> = {
   'stack': { id: 'stacks', name: 'Stacks' },
   'linked-list': { id: 'linked-lists', name: 'Linked Lists' },
   'trees': { id: 'trees', name: 'Trees' },
-  'heap': { id: 'heaps', name: 'Heaps' },
+  'heap': { id: 'heap', name: 'Heap' },
   'graphs': { id: 'graphs', name: 'Graphs' },
 }
 

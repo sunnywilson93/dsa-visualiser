@@ -1,5 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Two Pointers Problems > 3Sum > completes with expected step count 1`] = `611`;
+
 exports[`Two Pointers Problems > 3Sum > console output matches snapshot 1`] = `
 ""Sorted:" [-4, -1, -1, 0, 1, 2]
 ""
@@ -23,6 +25,8 @@ exports[`Two Pointers Problems > 3Sum > console output matches snapshot 1`] = `
 """
 `;
 
+exports[`Two Pointers Problems > 3Sum Closest > completes with expected step count 1`] = `327`;
+
 exports[`Two Pointers Problems > 3Sum Closest > console output matches snapshot 1`] = `
 ""Sorted:" [-4, -1, 1, 2]
 "Target:" 1
@@ -43,6 +47,8 @@ exports[`Two Pointers Problems > 3Sum Closest > console output matches snapshot 
 "Closest sum:" 2"
 `;
 
+exports[`Two Pointers Problems > 4Sum > completes with expected step count 1`] = `365`;
+
 exports[`Two Pointers Problems > 4Sum > console output matches snapshot 1`] = `
 ""Array:" [-2, -1, 0, 1, 2] "Target:" 0
 "Sorted:" [-2, -1, 0, 1, 2]
@@ -56,14 +62,22 @@ exports[`Two Pointers Problems > 4Sum > console output matches snapshot 1`] = `
 "All quadruplets:" [[-2, -1, 1, 2]]"
 `;
 
+exports[`Two Pointers Problems > Backspace String Compare > completes with expected step count 1`] = `131`;
+
 exports[`Two Pointers Problems > Backspace String Compare > console output matches snapshot 1`] = `
 ""s:" "ab#c"
 "t:" "ad#c"
 ""
+"i:" 3 "char:" "c" "| j:" 3 "char:" "c"
+"  Match: 'c'"
+"i:" 0 "char:" "a" "| j:" 0 "char:" "a"
+"  Match: 'a'"
 ""
 "All characters matched!"
 "Result: true""
 `;
+
+exports[`Two Pointers Problems > Boats to Save People > completes with expected step count 1`] = `235`;
 
 exports[`Two Pointers Problems > Boats to Save People > console output matches snapshot 1`] = `
 ""People:" [3, 2, 2, 1] "Limit:" 3
@@ -81,6 +95,8 @@ exports[`Two Pointers Problems > Boats to Save People > console output matches s
 "  One person left, needs own boat"
 "Total boats needed:" 3"
 `;
+
+exports[`Two Pointers Problems > Container With Most Water > completes with expected step count 1`] = `268`;
 
 exports[`Two Pointers Problems > Container With Most Water > console output matches snapshot 1`] = `
 ""Heights:" [1, 8, 6, 2, 5, 4, 8, 3, 7]
@@ -130,6 +146,8 @@ exports[`Two Pointers Problems > Container With Most Water > console output matc
 "Maximum water:" 49"
 `;
 
+exports[`Two Pointers Problems > Intersection of Two Arrays II > completes with expected step count 1`] = `271`;
+
 exports[`Two Pointers Problems > Intersection of Two Arrays II > console output matches snapshot 1`] = `
 ""Array 1:" [1, 2, 2, 1]
 "Array 2:" [2, 2]
@@ -148,22 +166,64 @@ exports[`Two Pointers Problems > Intersection of Two Arrays II > console output 
 "Intersection:" [2, 2]"
 `;
 
+exports[`Two Pointers Problems > Is Subsequence > completes with expected step count 1`] = `106`;
+
 exports[`Two Pointers Problems > Is Subsequence > console output matches snapshot 1`] = `
 ""s:" "abc"
 "t:" "ahbgdc"
 "Check if s is subsequence of t"
 ""
-"Matched" 0 "of" undefined "characters"
-"Is subsequence:" undefined"
+"i:" 0 "j:" 0
+"s[i]:" "a" "t[j]:" "a"
+"Match! Advance both pointers"
+""
+"i:" 1 "j:" 1
+"s[i]:" "b" "t[j]:" "h"
+"No match, advance j only"
+""
+"i:" 1 "j:" 2
+"s[i]:" "b" "t[j]:" "b"
+"Match! Advance both pointers"
+""
+"i:" 2 "j:" 3
+"s[i]:" "c" "t[j]:" "g"
+"No match, advance j only"
+""
+"i:" 2 "j:" 4
+"s[i]:" "c" "t[j]:" "d"
+"No match, advance j only"
+""
+"i:" 2 "j:" 5
+"s[i]:" "c" "t[j]:" "c"
+"Match! Advance both pointers"
+""
+"Matched" 3 "of" 3 "characters"
+"Is subsequence:" true"
 `;
+
+exports[`Two Pointers Problems > Long Pressed Name > completes with expected step count 1`] = `87`;
 
 exports[`Two Pointers Problems > Long Pressed Name > console output matches snapshot 1`] = `
 ""Name:" "alex"
 "Typed:" "aaleex"
 ""
+"i:" 0 "j:" 0 "name[i]:" "a" "typed[j]:" "a"
+"  Match! Advance both"
+"i:" 1 "j:" 1 "name[i]:" "l" "typed[j]:" "a"
+"  Long press of 'a', advance typed only"
+"i:" 1 "j:" 2 "name[i]:" "l" "typed[j]:" "l"
+"  Match! Advance both"
+"i:" 2 "j:" 3 "name[i]:" "e" "typed[j]:" "e"
+"  Match! Advance both"
+"i:" 3 "j:" 4 "name[i]:" "x" "typed[j]:" "e"
+"  Long press of 'e', advance typed only"
+"i:" 3 "j:" 5 "name[i]:" "x" "typed[j]:" "x"
+"  Match! Advance both"
 ""
-"Not all name characters consumed, i:" 0 "name.length:" undefined"
+"All name characters matched:" true"
 `;
+
+exports[`Two Pointers Problems > Merge Sorted Array > completes with expected step count 1`] = `101`;
 
 exports[`Two Pointers Problems > Merge Sorted Array > console output matches snapshot 1`] = `
 ""nums1:" [1, 2, 3, 0, 0, 0] "(first" 3 "are valid)"
@@ -187,6 +247,8 @@ exports[`Two Pointers Problems > Merge Sorted Array > console output matches sna
 ""
 "Merged:" [1, 2, 2, 3, 5, 6]"
 `;
+
+exports[`Two Pointers Problems > Move Zeroes > completes with expected step count 1`] = `95`;
 
 exports[`Two Pointers Problems > Move Zeroes > console output matches snapshot 1`] = `
 ""Original:" [0, 1, 0, 3, 12]
@@ -217,13 +279,56 @@ exports[`Two Pointers Problems > Move Zeroes > console output matches snapshot 1
 "Final:" [1, 3, 12, 0, 0]"
 `;
 
+exports[`Two Pointers Problems > Partition Labels > completes with expected step count 1`] = `525`;
+
 exports[`Two Pointers Problems > Partition Labels > console output matches snapshot 1`] = `
 ""String:" "ababcbacadefegdehijhklij"
 ""
-"Last occurrence of each char:" {}
+"Last occurrence of each char:" {a: 8, b: 5, c: 7, d: 14, e: 15, f: 11, g: 13, h: 19, i: 22, j: 23, k: 20, l: 21}
 ""
-"Partition sizes:" []"
+"i:" 0 "char:" "a" "lastIndex:" 8
+"Extend partition end to" 8
+"i:" 1 "char:" "b" "lastIndex:" 5
+"i:" 2 "char:" "a" "lastIndex:" 8
+"i:" 3 "char:" "b" "lastIndex:" 5
+"i:" 4 "char:" "c" "lastIndex:" 7
+"i:" 5 "char:" "b" "lastIndex:" 5
+"i:" 6 "char:" "a" "lastIndex:" 8
+"i:" 7 "char:" "c" "lastIndex:" 7
+"i:" 8 "char:" "a" "lastIndex:" 8
+"Partition complete! Size:" 9
+"Partition:" "ababcbaca"
+""
+"i:" 9 "char:" "d" "lastIndex:" 14
+"Extend partition end to" 14
+"i:" 10 "char:" "e" "lastIndex:" 15
+"Extend partition end to" 15
+"i:" 11 "char:" "f" "lastIndex:" 11
+"i:" 12 "char:" "e" "lastIndex:" 15
+"i:" 13 "char:" "g" "lastIndex:" 13
+"i:" 14 "char:" "d" "lastIndex:" 14
+"i:" 15 "char:" "e" "lastIndex:" 15
+"Partition complete! Size:" 7
+"Partition:" "defegde"
+""
+"i:" 16 "char:" "h" "lastIndex:" 19
+"Extend partition end to" 19
+"i:" 17 "char:" "i" "lastIndex:" 22
+"Extend partition end to" 22
+"i:" 18 "char:" "j" "lastIndex:" 23
+"Extend partition end to" 23
+"i:" 19 "char:" "h" "lastIndex:" 19
+"i:" 20 "char:" "k" "lastIndex:" 20
+"i:" 21 "char:" "l" "lastIndex:" 21
+"i:" 22 "char:" "i" "lastIndex:" 22
+"i:" 23 "char:" "j" "lastIndex:" 23
+"Partition complete! Size:" 8
+"Partition:" "hijhklij"
+""
+"Partition sizes:" [9, 7, 8]"
 `;
+
+exports[`Two Pointers Problems > Remove Duplicates (Sorted) > completes with expected step count 1`] = `162`;
 
 exports[`Two Pointers Problems > Remove Duplicates (Sorted) > console output matches snapshot 1`] = `
 ""Original:" [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]
@@ -272,6 +377,8 @@ exports[`Two Pointers Problems > Remove Duplicates (Sorted) > console output mat
 "Unique elements:" [0, 1, 2, 3, 4]"
 `;
 
+exports[`Two Pointers Problems > Remove Duplicates from Sorted Array II > completes with expected step count 1`] = `115`;
+
 exports[`Two Pointers Problems > Remove Duplicates from Sorted Array II > console output matches snapshot 1`] = `
 ""Array:" [1, 1, 1, 2, 2, 3]
 ""
@@ -291,6 +398,8 @@ exports[`Two Pointers Problems > Remove Duplicates from Sorted Array II > consol
 "Final length:" 5
 "Array:" [1, 1, 2, 2, 3]"
 `;
+
+exports[`Two Pointers Problems > Remove Element > completes with expected step count 1`] = `76`;
 
 exports[`Two Pointers Problems > Remove Element > console output matches snapshot 1`] = `
 ""Array:" [3, 2, 2, 3]
@@ -320,6 +429,8 @@ exports[`Two Pointers Problems > Remove Element > console output matches snapsho
 "Valid elements:" [2, 2]"
 `;
 
+exports[`Two Pointers Problems > Reverse String > completes with expected step count 1`] = `45`;
+
 exports[`Two Pointers Problems > Reverse String > console output matches snapshot 1`] = `
 ""Original:" ["h", "e", "l", "l", "o"]
 ""
@@ -333,6 +444,22 @@ exports[`Two Pointers Problems > Reverse String > console output matches snapsho
 ""
 "Reversed:" ["o", "l", "l", "e", "h"]"
 `;
+
+exports[`Two Pointers Problems > Reverse Vowels of a String > completes with expected step count 1`] = `180`;
+
+exports[`Two Pointers Problems > Reverse Vowels of a String > console output matches snapshot 1`] = `
+""leotcede"
+"holle""
+`;
+
+exports[`Two Pointers Problems > Reverse Words in a String > completes with expected step count 1`] = `249`;
+
+exports[`Two Pointers Problems > Reverse Words in a String > console output matches snapshot 1`] = `
+""blue is sky the"
+"world hello""
+`;
+
+exports[`Two Pointers Problems > Rotate Array > completes with expected step count 1`] = `97`;
 
 exports[`Two Pointers Problems > Rotate Array > console output matches snapshot 1`] = `
 ""Array:" [1, 2, 3, 4, 5, 6, 7]
@@ -351,6 +478,8 @@ exports[`Two Pointers Problems > Rotate Array > console output matches snapshot 
 ""
 "Final rotated array:" [5, 6, 7, 1, 2, 3, 4]"
 `;
+
+exports[`Two Pointers Problems > Sort Colors (Dutch Flag) > completes with expected step count 1`] = `123`;
 
 exports[`Two Pointers Problems > Sort Colors (Dutch Flag) > console output matches snapshot 1`] = `
 ""Original:" [2, 0, 2, 1, 1, 0]
@@ -389,6 +518,8 @@ exports[`Two Pointers Problems > Sort Colors (Dutch Flag) > console output match
 "Sorted:" [0, 0, 1, 1, 2, 2]"
 `;
 
+exports[`Two Pointers Problems > Squares of Sorted Array > completes with expected step count 1`] = `159`;
+
 exports[`Two Pointers Problems > Squares of Sorted Array > console output matches snapshot 1`] = `
 ""Input:" [-4, -1, 0, 3, 10]
 ""
@@ -420,24 +551,28 @@ exports[`Two Pointers Problems > Squares of Sorted Array > console output matche
 "Final:" [0, 1, 9, 16, 100]"
 `;
 
+exports[`Two Pointers Problems > String Compression > completes with expected step count 1`] = `166`;
+
 exports[`Two Pointers Problems > String Compression > console output matches snapshot 1`] = `
 ""Input:" ["a", "a", "b", "b", "c", "c", "c"]
 ""
 "Group: 'a' x 2"
 "  Write: 'a' + '2'"
-"  Array so far:" ["a", "a", "b", "b", "c", "c", "c"] "write:" 1
+"  Array so far:" ["a", "2", "b", "b", "c", "c", "c"] "write:" 2
 ""
 "Group: 'b' x 2"
 "  Write: 'b' + '2'"
-"  Array so far:" ["a", "b", "b", "b", "c", "c", "c"] "write:" 2
+"  Array so far:" ["a", "2", "b", "2", "c", "c", "c"] "write:" 4
 ""
 "Group: 'c' x 3"
 "  Write: 'c' + '3'"
-"  Array so far:" ["a", "b", "c", "b", "c", "c", "c"] "write:" 3
+"  Array so far:" ["a", "2", "b", "2", "c", "3", "c"] "write:" 6
 ""
-"Compressed length:" 3
-"Result:" ["a", "b", "c"]"
+"Compressed length:" 6
+"Result:" ["a", "2", "b", "2", "c", "3"]"
 `;
+
+exports[`Two Pointers Problems > Trapping Rain Water > completes with expected step count 1`] = `220`;
 
 exports[`Two Pointers Problems > Trapping Rain Water > console output matches snapshot 1`] = `
 ""Heights:" [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
@@ -500,6 +635,8 @@ exports[`Two Pointers Problems > Trapping Rain Water > console output matches sn
 "Total trapped water:" 6"
 `;
 
+exports[`Two Pointers Problems > Two Sum II (Sorted) > completes with expected step count 1`] = `64`;
+
 exports[`Two Pointers Problems > Two Sum II (Sorted) > console output matches snapshot 1`] = `
 ""Finding two numbers that sum to" 9
 "Array:" [2, 7, 11, 15]
@@ -518,17 +655,66 @@ exports[`Two Pointers Problems > Two Sum II (Sorted) > console output matches sn
 "Result:" [0, 1]"
 `;
 
+exports[`Two Pointers Problems > Valid Palindrome > completes with expected step count 1`] = `504`;
+
 exports[`Two Pointers Problems > Valid Palindrome > console output matches snapshot 1`] = `
 ""Original:" "A man, a plan, a canal: Panama"
-"Cleaned:" ""
+"Cleaned:" "amanaplanacanalpanama"
+""
+"left:" 0 "right:" 20
+"Comparing:" "a" "vs" "a"
+"Match!"
+""
+"left:" 1 "right:" 19
+"Comparing:" "m" "vs" "m"
+"Match!"
+""
+"left:" 2 "right:" 18
+"Comparing:" "a" "vs" "a"
+"Match!"
+""
+"left:" 3 "right:" 17
+"Comparing:" "n" "vs" "n"
+"Match!"
+""
+"left:" 4 "right:" 16
+"Comparing:" "a" "vs" "a"
+"Match!"
+""
+"left:" 5 "right:" 15
+"Comparing:" "p" "vs" "p"
+"Match!"
+""
+"left:" 6 "right:" 14
+"Comparing:" "l" "vs" "l"
+"Match!"
+""
+"left:" 7 "right:" 13
+"Comparing:" "a" "vs" "a"
+"Match!"
+""
+"left:" 8 "right:" 12
+"Comparing:" "n" "vs" "n"
+"Match!"
+""
+"left:" 9 "right:" 11
+"Comparing:" "a" "vs" "a"
+"Match!"
 ""
 "All characters matched - it's a palindrome!"
 "Is palindrome:" true"
 `;
 
+exports[`Two Pointers Problems > Valid Palindrome II > completes with expected step count 1`] = `57`;
+
 exports[`Two Pointers Problems > Valid Palindrome II > console output matches snapshot 1`] = `
 ""String:" "abca"
 ""
-""
-"Already a palindrome, no removal needed""
+"left:" 0 "(a) right:" 3 "(a)"
+"  Match!"
+"left:" 1 "(b) right:" 2 "(c)"
+"  Mismatch! Try skipping left or right"
+"  Skip left (b):" true
+"  Skip right (c):" true
+"  Can be palindrome:" true"
 `;

@@ -1,5 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > 3Sum > completes with expected step count 1`] = `611`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > 3Sum > console output matches snapshot 1`] = `
 ""Sorted:" [-4, -1, -1, 0, 1, 2]
 ""
@@ -23,6 +25,30 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > 3Sum > console outpu
 """
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > 3Sum Closest > completes with expected step count 1`] = `327`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > 3Sum Closest > console output matches snapshot 1`] = `
+""Sorted:" [-4, -1, 1, 2]
+"Target:" 1
+""
+"Fixed i:" 0 "value:" -4
+"  left:" 1 "right:" 3
+" " -4 "+" -1 "+" 2 "=" -3
+"  New closest:" -3 "(diff:" "4)"
+"  left:" 2 "right:" 3
+" " -4 "+" 1 "+" 2 "=" -1
+"  New closest:" -1 "(diff:" "2)"
+""
+"Fixed i:" 1 "value:" -1
+"  left:" 2 "right:" 3
+" " -1 "+" 1 "+" 2 "=" 2
+"  New closest:" 2 "(diff:" "1)"
+""
+"Closest sum:" 2"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > 4Sum > completes with expected step count 1`] = `365`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > 4Sum > console output matches snapshot 1`] = `
 ""Array:" [-2, -1, 0, 1, 2] "Target:" 0
 "Sorted:" [-2, -1, 0, 1, 2]
@@ -35,6 +61,12 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > 4Sum > console outpu
 ""
 "All quadruplets:" [[-2, -1, 1, 2]]"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Add Two Numbers > completes with expected step count 1`] = `4095`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Add Two Numbers > console output matches snapshot 1`] = `""Number 1:""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Alternating Bits > completes with expected step count 1`] = `46`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Alternating Bits > console output matches snapshot 1`] = `
 ""=== Test: 5 (101) ==="
@@ -55,6 +87,27 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Alternating Bits > c
 "xor & (xor + 1) =" 0
 "Alternating?" true"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Backspace String Compare > completes with expected step count 1`] = `131`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Backspace String Compare > console output matches snapshot 1`] = `
+""s:" "ab#c"
+"t:" "ad#c"
+""
+"i:" 3 "char:" "c" "| j:" 3 "char:" "c"
+"  Match: 'c'"
+"i:" 0 "char:" "a" "| j:" 0 "char:" "a"
+"  Match: 'a'"
+""
+"All characters matched!"
+"Result: true""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Basic Calculator II > completes with expected step count 1`] = `17`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Basic Calculator II > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Best Time to Buy and Sell Stock > completes with expected step count 1`] = `111`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Best Time to Buy and Sell Stock > console output matches snapshot 1`] = `
 ""Prices:" [7, 1, 5, 3, 6, 4]
@@ -80,6 +133,39 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Best Time to Buy and
 "Maximum profit:" 0"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Search > completes with expected step count 1`] = `39`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Search > console output matches snapshot 1`] = `
+""Array:" [-1, 0, 3, 5, 9, 12] "Target:" 9
+"left:" 0 "right:" 5 "mid:" 2 "value:" 3
+3 "< target, search right half"
+"left:" 3 "right:" 5 "mid:" 4 "value:" 9
+"Found target at index" 4
+"Result:" 4"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Tree Inorder Traversal > completes with expected step count 1`] = `90`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Tree Inorder Traversal > console output matches snapshot 1`] = `"[4, 2, 5, 1, 3, 6]"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Tree Level Order Traversal > completes with expected step count 1`] = `117`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Tree Level Order Traversal > console output matches snapshot 1`] = `"[[3], [9, 20], [15, 7]]"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Tree Postorder Traversal > completes with expected step count 1`] = `86`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Tree Postorder Traversal > console output matches snapshot 1`] = `"[4, 5, 2, 6, 3, 1]"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Tree Preorder Traversal > completes with expected step count 1`] = `86`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Tree Preorder Traversal > console output matches snapshot 1`] = `"[1, 2, 4, 5, 3, 6]"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Tree Right Side View > completes with expected step count 1`] = `120`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Binary Tree Right Side View > console output matches snapshot 1`] = `"[1, 3, 7]"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Bitwise AND of Range > completes with expected step count 1`] = `38`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Bitwise AND of Range > console output matches snapshot 1`] = `
 ""=== Test: AND of [5, 7] ==="
 "Finding common prefix..."
@@ -90,6 +176,93 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Bitwise AND of Range
 Prefix:" 1 "shifted:" 4
 "Result:" 4"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Boats to Save People > completes with expected step count 1`] = `235`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Boats to Save People > console output matches snapshot 1`] = `
+""People:" [3, 2, 2, 1] "Limit:" 3
+"Sorted:" [1, 2, 2, 3]
+""
+"left:" 0 "(1) right:" 3 "(3)"
+"  Too heavy! 3 goes alone"
+"  Boats used so far:" 1
+""
+"left:" 0 "(1) right:" 2 "(2)"
+"  Pair fits! 1 + 2 = 3 <= 3"
+"  Boats used so far:" 2
+""
+"left:" 1 "(2) right:" 1 "(2)"
+"  One person left, needs own boat"
+"Total boats needed:" 3"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Bubble Sort > completes with expected step count 1`] = `513`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Bubble Sort > console output matches snapshot 1`] = `
+""Initial:" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 64 "<->" 34 "=>" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 34 "<->" 25 "=>" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 25 "<->" 12 "=>" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 22 "<->" 11 "=>" [64, 34, 25, 12, 22, 11, 90]
+"Pass" 1 ":" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 64 "<->" 34 "=>" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 34 "<->" 25 "=>" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 25 "<->" 12 "=>" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 22 "<->" 11 "=>" [64, 34, 25, 12, 22, 11, 90]
+"Pass" 2 ":" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 64 "<->" 34 "=>" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 34 "<->" 25 "=>" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 25 "<->" 12 "=>" [64, 34, 25, 12, 22, 11, 90]
+"Pass" 3 ":" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 64 "<->" 34 "=>" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 34 "<->" 25 "=>" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 25 "<->" 12 "=>" [64, 34, 25, 12, 22, 11, 90]
+"Pass" 4 ":" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 64 "<->" 34 "=>" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 34 "<->" 25 "=>" [64, 34, 25, 12, 22, 11, 90]
+"Pass" 5 ":" [64, 34, 25, 12, 22, 11, 90]
+"  Swap:" 64 "<->" 34 "=>" [64, 34, 25, 12, 22, 11, 90]
+"Pass" 6 ":" [64, 34, 25, 12, 22, 11, 90]
+"Sorted:" [64, 34, 25, 12, 22, 11, 90]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Capacity To Ship Packages > completes with expected step count 1`] = `759`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Capacity To Ship Packages > console output matches snapshot 1`] = `
+""Weights:" [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] "Days:" 5
+"Search range: [10, 55]"
+"left:" 10 "right:" 55 "mid:" 32
+"  Capacity:" 32 "-> days needed:" 2 "(ok)"
+"Capacity" 32 "works, try smaller -> right =" 32
+"left:" 10 "right:" 32 "mid:" 21
+"  Capacity:" 21 "-> days needed:" 3 "(ok)"
+"Capacity" 21 "works, try smaller -> right =" 21
+"left:" 10 "right:" 21 "mid:" 15
+"  Capacity:" 15 "-> days needed:" 5 "(ok)"
+"Capacity" 15 "works, try smaller -> right =" 15
+"left:" 10 "right:" 15 "mid:" 12
+"  Capacity:" 12 "-> days needed:" 6 "(too many)"
+"Capacity" 12 "not enough, try larger -> left =" 13
+"left:" 13 "right:" 15 "mid:" 14
+"  Capacity:" 14 "-> days needed:" 6 "(too many)"
+"Capacity" 14 "not enough, try larger -> left =" 15
+"Minimum capacity:" 15
+"Result:" 15"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Car Fleet > completes with expected step count 1`] = `174`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Car Fleet > console output matches snapshot 1`] = `"3"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Cheapest Flights Within K Stops > completes with expected step count 1`] = `11`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Cheapest Flights Within K Stops > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Clone Graph > completes with expected step count 1`] = `32`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Clone Graph > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Container With Most Water > completes with expected step count 1`] = `268`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Container With Most Water > console output matches snapshot 1`] = `
 ""Heights:" [1, 8, 6, 2, 5, 4, 8, 3, 7]
@@ -139,41 +312,107 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Container With Most 
 "Maximum water:" 49"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Contains Duplicate > completes with expected step count 1`] = `126`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Contains Duplicate > console output matches snapshot 1`] = `
 ""--- Test 1 ---"
 "Checking for duplicates in:" [1, 2, 3, 1]
 ""
 "Checking:" 1
-"Added to set. Set size:" undefined
+"Added to set. Set size:" 1
 ""
 "Checking:" 2
-"Added to set. Set size:" undefined
+"Added to set. Set size:" 2
 ""
 "Checking:" 3
-"Added to set. Set size:" undefined
+"Added to set. Set size:" 3
 ""
 "Checking:" 1
-"Added to set. Set size:" undefined
-""
-"No duplicates found"
+"Duplicate found!" 1
 "
 --- Test 2 ---"
 "Checking for duplicates in:" [1, 2, 3, 4]
 ""
 "Checking:" 1
-"Added to set. Set size:" undefined
+"Added to set. Set size:" 1
 ""
 "Checking:" 2
-"Added to set. Set size:" undefined
+"Added to set. Set size:" 2
 ""
 "Checking:" 3
-"Added to set. Set size:" undefined
+"Added to set. Set size:" 3
 ""
 "Checking:" 4
-"Added to set. Set size:" undefined
+"Added to set. Set size:" 4
 ""
 "No duplicates found""
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Convert Sorted Array to BST > completes with expected step count 1`] = `139`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Convert Sorted Array to BST > console output matches snapshot 1`] = `
+""{
+  "val": 4,
+  "left": {
+    "val": 2,
+    "left": {
+      "val": 1,
+      "left": null,
+      "right": null
+    },
+    "right": {
+      "val": 3,
+      "left": null,
+      "right": null
+    }
+  },
+  "right": {
+    "val": 6,
+    "left": {
+      "val": 5,
+      "left": null,
+      "right": null
+    },
+    "right": {
+      "val": 7,
+      "left": null,
+      "right": null
+    }
+  }
+}""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Copy List with Random Pointer > completes with expected step count 1`] = `261`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Copy List with Random Pointer > console output matches snapshot 1`] = `
+""Original list: 7 -> 13 -> 11 -> 10 -> 1"
+"Building clone map..."
+"  Clone node" 0 "val:" undefined
+"  Clone node" 1 "val:" undefined
+"  Clone node" 2 "val:" undefined
+"  Clone node" 3 "val:" undefined
+"  Clone node" 4 "val:" undefined
+"  Node" 0 undefined
+"  Node" 1 undefined 0 undefined
+"  Node" 2 undefined 4 undefined
+"  Node" 3 undefined 2 undefined
+"  Node" 4 undefined 0 undefined
+"Clone val:" undefined "random:" "null"
+"Clone val:" undefined "random:" undefined
+"Clone val:" undefined "random:" undefined
+"Clone val:" undefined "random:" undefined
+"Clone val:" undefined "random:" undefined
+"Deep copy complete. Original and clone are independent.""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Count Binary Substrings > completes with expected step count 1`] = `127`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Count Binary Substrings > console output matches snapshot 1`] = `
+"6
+4"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Counting Bits > completes with expected step count 1`] = `115`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Counting Bits > console output matches snapshot 1`] = `
 ""Count bits from 0 to" 5
@@ -187,7 +426,164 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Counting Bits > cons
 Result:" [0, 1, 1, 2, 1, 2]"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Course Schedule > completes with expected step count 1`] = `5`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Course Schedule > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Course Schedule II > completes with expected step count 1`] = `5`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Course Schedule II > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Daily Temperatures > completes with expected step count 1`] = `7`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Daily Temperatures > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Decode String > completes with expected step count 1`] = `18`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Decode String > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Design Add and Search Words Data Structure > completes with expected step count 1`] = `4`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Design Add and Search Words Data Structure > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Diameter of Binary Tree > completes with expected step count 1`] = `140`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Diameter of Binary Tree > console output matches snapshot 1`] = `"5"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Edit Distance > completes with expected step count 1`] = `14`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Edit Distance > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Evaluate Reverse Polish Notation > completes with expected step count 1`] = `16`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Evaluate Reverse Polish Notation > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find All Anagrams in a String > completes with expected step count 1`] = `8`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find All Anagrams in a String > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find First and Last Position > completes with expected step count 1`] = `120`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find First and Last Position > console output matches snapshot 1`] = `
+""Array:" [5, 7, 7, 8, 8, 10] "Target:" 8
+"[findFirst] left:" 0 "right:" 5 "mid:" 2 "value:" 7
+"[findFirst] left:" 3 "right:" 5 "mid:" 4 "value:" 8
+"Found at" 4 "but keep searching left"
+"[findFirst] left:" 3 "right:" 3 "mid:" 3 "value:" 8
+"Found at" 3 "but keep searching left"
+"[findLast] left:" 0 "right:" 5 "mid:" 2 "value:" 7
+"[findLast] left:" 3 "right:" 5 "mid:" 4 "value:" 8
+"Found at" 4 "but keep searching right"
+"[findLast] left:" 5 "right:" 5 "mid:" 5 "value:" 10
+"First:" 3 "Last:" 4
+"Result:" [3, 4]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find Minimum in Rotated Sorted Array > completes with expected step count 1`] = `48`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find Minimum in Rotated Sorted Array > console output matches snapshot 1`] = `
+""Array:" [3, 4, 5, 1, 2]
+"left:" 0 "right:" 4 "mid:" 2 "value:" 5
+5 ">" 2 "-> min is in right half, move left to" 3
+"left:" 3 "right:" 4 "mid:" 3 "value:" 1
+1 "<=" 2 "-> min is in left half including mid, move right to" 3
+"Minimum found at index" 3 "value:" 1
+"Result:" 1"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find Node in DOM Trees > completes with expected step count 1`] = `113`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find Node in DOM Trees > console output matches snapshot 1`] = `
+""Finding node:" "B1"
+"Path from root:" [1, 0]
+"  Navigate to child" 1
+"  Navigate to child" 0
+"
+Found in Tree B:" "B1""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find Peak Element > completes with expected step count 1`] = `67`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find Peak Element > console output matches snapshot 1`] = `
+""Array:" [1, 2, 1, 3, 5, 6, 4]
+"left:" 0 "right:" 6 "mid:" 3 "value:" 3 "next:" 5
+"Uphill to right, move left to" 4
+"left:" 4 "right:" 6 "mid:" 5 "value:" 6 "next:" 4
+"Uphill to left or at peak, move right to" 5
+"left:" 4 "right:" 5 "mid:" 4 "value:" 5 "next:" 6
+"Uphill to right, move left to" 5
+"Peak at index" 5 "value:" 6
+"Result:" 5"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find if Path Exists in Graph > completes with expected step count 1`] = `8`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find if Path Exists in Graph > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find the Index of the First Occurrence > completes with expected step count 1`] = `150`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find the Index of the First Occurrence > console output matches snapshot 1`] = `
+"0
+-1"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find the Smallest Divisor Given a Threshold > completes with expected step count 1`] = `194`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Find the Smallest Divisor Given a Threshold > console output matches snapshot 1`] = `
+""nums:" [1, 2, 5, 9] "threshold:" 6
+"divisor:" 5 "sum:" 5
+"divisor:" 3 "sum:" 7
+"divisor:" 4 "sum:" 7
+"Smallest divisor:" 5
+"Result:" 5"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > First Bad Version > completes with expected step count 1`] = `44`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > First Bad Version > console output matches snapshot 1`] = `
+""Versions:" 5 "bad starts at" 4
+"left:" 1 "right:" 5 "mid:" 3
+"Version" 3 "is good -> check later"
+"left:" 4 "right:" 5 "mid:" 4
+"Version" 4 "is bad -> check earlier"
+"First bad version:" 4
+"Result:" 4"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > First Unique Character in a String > completes with expected step count 1`] = `156`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > First Unique Character in a String > console output matches snapshot 1`] = `
+"0
+-1"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Flood Fill > completes with expected step count 1`] = `302`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Flood Fill > console output matches snapshot 1`] = `"[[2, 2, 2], [2, 2, 0], [2, 0, 1]]"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Get All DOM Tags > completes with expected step count 1`] = `358`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Get All DOM Tags > console output matches snapshot 1`] = `
+""All unique tags:"
+["a", "body", "div", "footer", "h1", "head", "html", "img", "meta", "p", "span", "title"]
+"
+Tag counts:"
+{html: 1, head: 1, title: 1, meta: 1, body: 1, div: 2, h1: 1, p: 2, span: 1, a: 1, img: 1, footer: 1}"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Get DOM Tree Height > completes with expected step count 1`] = `145`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Get DOM Tree Height > console output matches snapshot 1`] = `
+""DOM Structure:"
+"html > head > title"
+"     > body > div > p > span"
+"           > footer"
+"
+Tree Height:" 5
+"Height (BFS):" 0"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Gray Code > completes with expected step count 1`] = `87`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Gray Code > console output matches snapshot 1`] = `
 ""Gray code for n =" 3
@@ -202,10 +598,32 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Gray Code > console 
 [0, 1, 3, 2, 6, 7, 5, 4]"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Group Anagrams > completes with expected step count 1`] = `95`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Group Anagrams > console output matches snapshot 1`] = `
 ""Grouping anagrams:" ["eat", "tea", "tan", "ate", "nat", "bat"]
+""
+"String:" "eat" "-> Key:" "aet"
+"Groups so far:" {aet: ["eat"]}
+""
+"String:" "tea" "-> Key:" "aet"
+"Groups so far:" {aet: ["eat", "tea"]}
+""
+"String:" "tan" "-> Key:" "ant"
+"Groups so far:" {aet: ["eat", "tea"], ant: ["tan"]}
+""
+"String:" "ate" "-> Key:" "aet"
+"Groups so far:" {aet: ["eat", "tea", "ate"], ant: ["tan"]}
+""
+"String:" "nat" "-> Key:" "ant"
+"Groups so far:" {aet: ["eat", "tea", "ate"], ant: ["tan", "nat"]}
+""
+"String:" "bat" "-> Key:" "abt"
+"Groups so far:" {aet: ["eat", "tea", "ate"], ant: ["tan", "nat"], abt: ["bat"]}
 """
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Hamming Distance > completes with expected step count 1`] = `52`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Hamming Distance > console output matches snapshot 1`] = `
 ""=== Test: 1 vs 4 ==="
@@ -220,6 +638,72 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Hamming Distance > c
 "Distance:" 1
 "(11 vs 01 = 1 bit)""
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Implement Trie (Prefix Tree) > completes with expected step count 1`] = `4`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Implement Trie (Prefix Tree) > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Insert Interval > completes with expected step count 1`] = `246`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Insert Interval > console output matches snapshot 1`] = `
+""Intervals:" ", "
+"Insert:" undefined
+""
+"Overlap with:" undefined
+"  Merged to:" undefined
+"Add merged:" undefined
+"After (no overlap):" undefined
+"
+Result:" ", "
+""
+"Intervals:" ", , , , "
+"Insert:" undefined
+""
+"Before (no overlap):" undefined
+"Overlap with:" undefined
+"  Merged to:" undefined
+"Overlap with:" undefined
+"  Merged to:" undefined
+"Overlap with:" undefined
+"  Merged to:" undefined
+"Add merged:" undefined
+"After (no overlap):" undefined
+"
+Result:" ", , ""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Insertion Sort > completes with expected step count 1`] = `164`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Insertion Sort > console output matches snapshot 1`] = `
+""Initial:" [12, 11, 13, 5, 6]
+"
+Inserting" 11 "into sorted portion:" [12]
+"  Shift" 12 "right"
+"  Place" 11 "at index" 0
+"  Array:" [11, 12, 13, 5, 6]
+"
+Inserting" 13 "into sorted portion:" [11, 12]
+"  Place" 13 "at index" 2
+"  Array:" [11, 12, 13, 5, 6]
+"
+Inserting" 5 "into sorted portion:" [11, 12, 13]
+"  Shift" 13 "right"
+"  Shift" 12 "right"
+"  Shift" 11 "right"
+"  Place" 5 "at index" 0
+"  Array:" [5, 11, 12, 13, 6]
+"
+Inserting" 6 "into sorted portion:" [5, 11, 12, 13]
+"  Shift" 13 "right"
+"  Shift" 12 "right"
+"  Shift" 11 "right"
+"  Place" 6 "at index" 1
+"  Array:" [5, 6, 11, 12, 13]
+"
+Sorted:" [5, 6, 11, 12, 13]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Intersection of Two Arrays II > completes with expected step count 1`] = `271`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Intersection of Two Arrays II > console output matches snapshot 1`] = `
 ""Array 1:" [1, 2, 2, 1]
@@ -239,14 +723,298 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Intersection of Two 
 "Intersection:" [2, 2]"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Invert Binary Tree > completes with expected step count 1`] = `48`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Invert Binary Tree > console output matches snapshot 1`] = `
+"undefined
+undefined"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Is Subsequence > completes with expected step count 1`] = `106`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Is Subsequence > console output matches snapshot 1`] = `
+""s:" "abc"
+"t:" "ahbgdc"
+"Check if s is subsequence of t"
+""
+"i:" 0 "j:" 0
+"s[i]:" "a" "t[j]:" "a"
+"Match! Advance both pointers"
+""
+"i:" 1 "j:" 1
+"s[i]:" "b" "t[j]:" "h"
+"No match, advance j only"
+""
+"i:" 1 "j:" 2
+"s[i]:" "b" "t[j]:" "b"
+"Match! Advance both pointers"
+""
+"i:" 2 "j:" 3
+"s[i]:" "c" "t[j]:" "g"
+"No match, advance j only"
+""
+"i:" 2 "j:" 4
+"s[i]:" "c" "t[j]:" "d"
+"No match, advance j only"
+""
+"i:" 2 "j:" 5
+"s[i]:" "c" "t[j]:" "c"
+"Match! Advance both pointers"
+""
+"Matched" 3 "of" 3 "characters"
+"Is subsequence:" true"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Keys and Rooms > completes with expected step count 1`] = `136`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Keys and Rooms > console output matches snapshot 1`] = `
+"false
+false"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Koko Eating Bananas > completes with expected step count 1`] = `253`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Koko Eating Bananas > console output matches snapshot 1`] = `
+""Piles:" [3, 6, 7, 11] "Hours:" 8
+"Search range: [1, 11]"
+"left:" 1 "right:" 11 "mid:" 6
+"  Speed:" 6 "-> total hours:" 6 "(ok)"
+"Speed" 6 "works, try slower -> right =" 6
+"left:" 1 "right:" 6 "mid:" 3
+"  Speed:" 3 "-> total hours:" 10 "(too slow)"
+"Speed" 3 "too slow, try faster -> left =" 4
+"left:" 4 "right:" 6 "mid:" 5
+"  Speed:" 5 "-> total hours:" 8 "(ok)"
+"Speed" 5 "works, try slower -> right =" 5
+"left:" 4 "right:" 5 "mid:" 4
+"  Speed:" 4 "-> total hours:" 8 "(ok)"
+"Speed" 4 "works, try slower -> right =" 4
+"Minimum speed:" 4
+"Result:" 4"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Kth Largest Element > completes with expected step count 1`] = `548`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Kth Largest Element > console output matches snapshot 1`] = `
+""Array:" [3, 2, 1, 5, 6, 4]
+"Finding" "2th largest (index" 4 "in sorted)"
+""
+"Partition around" 5 "at index" 3
+"  Array:" [3, 2, 1, 5, 6, 4]
+"  Target is RIGHT of pivot, search [4..5]"
+"Partition around" 6 "at index" 4
+"  Array:" [3, 2, 1, 5, 6, 4]
+"  Found! The answer is" 6
+""
+"Array:" [3, 2, 3, 1, 2, 4, 5, 5, 6]
+"Finding" "4th largest (index" 5 "in sorted)"
+""
+"Partition around" 6 "at index" 8
+"  Array:" [3, 2, 3, 1, 2, 4, 5, 5, 6]
+"  Target is LEFT of pivot, search [0..7]"
+"Partition around" 5 "at index" 7
+"  Array:" [3, 2, 3, 1, 2, 4, 5, 5, 6]
+"  Target is LEFT of pivot, search [0..6]"
+"Partition around" 5 "at index" 6
+"  Array:" [3, 2, 3, 1, 2, 4, 5, 5, 6]
+"  Target is LEFT of pivot, search [0..5]"
+"Partition around" 4 "at index" 5
+"  Array:" [3, 2, 3, 1, 2, 4, 5, 5, 6]
+"  Found! The answer is" 4"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Kth Smallest in BST > completes with expected step count 1`] = `78`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Kth Smallest in BST > console output matches snapshot 1`] = `"3"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > LRU Cache > completes with expected step count 1`] = `4`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > LRU Cache > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Largest Number > completes with expected step count 1`] = `5`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Largest Number > console output matches snapshot 1`] = `""--- Test 1 ---""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Largest Rectangle in Histogram > completes with expected step count 1`] = `224`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Largest Rectangle in Histogram > console output matches snapshot 1`] = `"10"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Length of Last Word > completes with expected step count 1`] = `84`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Length of Last Word > console output matches snapshot 1`] = `
+"5
+4"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Linked List Cycle > completes with expected step count 1`] = `152`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Linked List Cycle > console output matches snapshot 1`] = `
+""--- Test 1: no cycle ---"
+"Step 1 | slow:" undefined "| fast:" undefined
+"Step 2 | slow:" undefined "| fast:" "null"
+"Step 3 | slow:" undefined "| fast:" "null"
+"Step 4 | slow:" undefined "| fast:" "null"
+"Cycle detected! slow and fast met at node" undefined
+"--- Test 2: cycle at node 2 ---"
+"Step 1 | slow:" undefined "| fast:" undefined
+"Step 2 | slow:" undefined "| fast:" undefined
+"Step 3 | slow:" undefined "| fast:" undefined
+"Cycle detected! slow and fast met at node" undefined"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Long Pressed Name > completes with expected step count 1`] = `87`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Long Pressed Name > console output matches snapshot 1`] = `
+""Name:" "alex"
+"Typed:" "aaleex"
+""
+"i:" 0 "j:" 0 "name[i]:" "a" "typed[j]:" "a"
+"  Match! Advance both"
+"i:" 1 "j:" 1 "name[i]:" "l" "typed[j]:" "a"
+"  Long press of 'a', advance typed only"
+"i:" 1 "j:" 2 "name[i]:" "l" "typed[j]:" "l"
+"  Match! Advance both"
+"i:" 2 "j:" 3 "name[i]:" "e" "typed[j]:" "e"
+"  Match! Advance both"
+"i:" 3 "j:" 4 "name[i]:" "x" "typed[j]:" "e"
+"  Long press of 'e', advance typed only"
+"i:" 3 "j:" 5 "name[i]:" "x" "typed[j]:" "x"
+"  Match! Advance both"
+""
+"All name characters matched:" true"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Common Prefix > completes with expected step count 1`] = `109`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Common Prefix > console output matches snapshot 1`] = `
+""fl"
+"""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Consecutive Sequence > completes with expected step count 1`] = `18`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Consecutive Sequence > console output matches snapshot 1`] = `
 ""Array:" [100, 4, 200, 1, 3, 2]
-"Set:" [undefined]
+"Set:" []
 ""
 "Longest consecutive:" 0"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Palindromic Substring > completes with expected step count 1`] = `443`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Palindromic Substring > console output matches snapshot 1`] = `
+""bab"
+"bb""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Repeating Character Replacement > completes with expected step count 1`] = `288`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Repeating Character Replacement > console output matches snapshot 1`] = `
+""String:" "AABABBA"
+"Max replacements k:" 1
+""
+"right:" 0 "char:" "A" "freq:" 1 "maxFreq:" 1
+"  Window [0..0], size:" 1
+"  New max length:" 1
+""
+"right:" 1 "char:" "A" "freq:" 2 "maxFreq:" 2
+"  Window [0..1], size:" 2
+"  New max length:" 2
+""
+"right:" 2 "char:" "B" "freq:" 1 "maxFreq:" 2
+"  Window [0..2], size:" 3
+"  New max length:" 3
+""
+"right:" 3 "char:" "A" "freq:" 3 "maxFreq:" 3
+"  Window [0..3], size:" 4
+"  New max length:" 4
+""
+"right:" 4 "char:" "B" "freq:" 2 "maxFreq:" 3
+"  Need" 2 "replacements > k, shrink from left"
+"  Window [1..4], size:" 4
+""
+"right:" 5 "char:" "B" "freq:" 3 "maxFreq:" 3
+"  Need" 2 "replacements > k, shrink from left"
+"  Window [2..5], size:" 4
+""
+"right:" 6 "char:" "A" "freq:" 2 "maxFreq:" 3
+"  Need" 2 "replacements > k, shrink from left"
+"  Window [3..6], size:" 4
+""
+"Result:" 4
+"Result:" 4"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Substring Without Repeating Characters > completes with expected step count 1`] = `231`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Substring Without Repeating Characters > console output matches snapshot 1`] = `
+""String:" "abcabcbb"
+""
+"right:" 0 "char:" "a"
+"  Window [0..0], length:" 1
+"  New max length:" 1
+""
+"right:" 1 "char:" "b"
+"  Window [0..1], length:" 2
+"  New max length:" 2
+""
+"right:" 2 "char:" "c"
+"  Window [0..2], length:" 3
+"  New max length:" 3
+""
+"right:" 3 "char:" "a"
+"  Duplicate! Last seen at index" 0
+"  Move left to" 1
+"  Window [1..3], length:" 3
+""
+"right:" 4 "char:" "b"
+"  Duplicate! Last seen at index" 1
+"  Move left to" 2
+"  Window [2..4], length:" 3
+""
+"right:" 5 "char:" "c"
+"  Duplicate! Last seen at index" 2
+"  Move left to" 3
+"  Window [3..5], length:" 3
+""
+"right:" 6 "char:" "b"
+"  Duplicate! Last seen at index" 4
+"  Move left to" 5
+"  Window [5..6], length:" 2
+""
+"right:" 7 "char:" "b"
+"  Duplicate! Last seen at index" 6
+"  Move left to" 7
+"  Window [7..7], length:" 1
+""
+"Result:" 3
+"Result:" 3"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Word in Dictionary > completes with expected step count 1`] = `167`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Longest Word in Dictionary > console output matches snapshot 1`] = `""""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Lowest Common Ancestor in BST > completes with expected step count 1`] = `26`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Lowest Common Ancestor in BST > console output matches snapshot 1`] = `"6"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Magic Dictionary > completes with expected step count 1`] = `4`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Magic Dictionary > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Magnetic Force Between Two Balls > completes with expected step count 1`] = `196`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Magnetic Force Between Two Balls > console output matches snapshot 1`] = `
+""Positions:" [1, 2, 3, 4, 7] "m:" 3
+"force:" 3
+"force:" 5
+"force:" 4
+"Maximum minimum force:" 3
+"Result:" 3"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Majority Element > completes with expected step count 1`] = `128`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Majority Element > console output matches snapshot 1`] = `
 ""Array:" [2, 2, 1, 1, 1, 2, 2]
@@ -278,6 +1046,93 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Majority Element > c
 ""
 "Majority element:" 2"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Max Area of Island > completes with expected step count 1`] = `674`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Max Area of Island > console output matches snapshot 1`] = `"5"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Max Consecutive Ones III > completes with expected step count 1`] = `315`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Max Consecutive Ones III > console output matches snapshot 1`] = `
+""Array:" [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0]
+"Max flips k:" 2
+""
+"right:" 0 "found 1"
+"  Window [0..0], length:" 1
+"  New max length:" 1
+""
+"right:" 1 "found 1"
+"  Window [0..1], length:" 2
+"  New max length:" 2
+""
+"right:" 2 "found 1"
+"  Window [0..2], length:" 3
+"  New max length:" 3
+""
+"right:" 3 "found 0, zeroCount:" 1
+"  Window [0..3], length:" 4
+"  New max length:" 4
+""
+"right:" 4 "found 0, zeroCount:" 2
+"  Window [0..4], length:" 5
+"  New max length:" 5
+""
+"right:" 5 "found 0, zeroCount:" 3
+"  Too many zeros! Shrink from left:" 0
+"  Too many zeros! Shrink from left:" 1
+"  Too many zeros! Shrink from left:" 2
+"  Too many zeros! Shrink from left:" 3
+"  Removed a zero, zeroCount:" 2
+"  Window [4..5], length:" 2
+""
+"right:" 6 "found 1"
+"  Window [4..6], length:" 3
+""
+"right:" 7 "found 1"
+"  Window [4..7], length:" 4
+""
+"right:" 8 "found 1"
+"  Window [4..8], length:" 5
+""
+"right:" 9 "found 1"
+"  Window [4..9], length:" 6
+"  New max length:" 6
+""
+"right:" 10 "found 0, zeroCount:" 3
+"  Too many zeros! Shrink from left:" 4
+"  Removed a zero, zeroCount:" 2
+"  Window [5..10], length:" 6
+""
+"Result:" 6
+"Result:" 6"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum Average Subarray I > completes with expected step count 1`] = `96`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum Average Subarray I > console output matches snapshot 1`] = `
+""Array:" [1, 12, -5, -6, 50, 3]
+"Window size k:" 4
+""
+"Building window: added" 1 "=> sum =" 1
+"Building window: added" 12 "=> sum =" 13
+"Building window: added" -5 "=> sum =" 8
+"Building window: added" -6 "=> sum =" 2
+"Initial window sum:" 2
+""
+"Slide: remove" 1 ", add" 50 "=> sum =" 51
+"  New max sum:" 51
+"Slide: remove" 12 ", add" 3 "=> sum =" 42
+""
+"Max sum:" 51 "/ k:" 4 "= average:" 12.75
+"Result:" 12.75
+"Result:" 12.75"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum Depth of Binary Tree > completes with expected step count 1`] = `67`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum Depth of Binary Tree > console output matches snapshot 1`] = `""depth:" 3"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum Subarray (Kadane) > completes with expected step count 1`] = `185`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum Subarray (Kadane) > console output matches snapshot 1`] = `
 ""Array:" [-2, 1, -3, 4, -1, 2, 1, -5, 4]
@@ -322,6 +1177,28 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum Subarray (Ka
 "Maximum subarray sum:" 6"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum Sum Subarray of Size K > completes with expected step count 1`] = `99`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum Sum Subarray of Size K > console output matches snapshot 1`] = `
+""Array:" [2, 1, 5, 1, 3, 2]
+"Window size k:" 3
+""
+"Building window: added" 2 "=> sum =" 2
+"Building window: added" 1 "=> sum =" 3
+"Building window: added" 5 "=> sum =" 8
+"Initial window sum:" 8
+""
+"Slide: remove" 2 ", add" 1 "=> sum =" 7
+"Slide: remove" 1 ", add" 3 "=> sum =" 9
+"  New max sum:" 9
+"Slide: remove" 5 ", add" 2 "=> sum =" 6
+""
+"Result:" 9
+"Result:" 9"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum XOR > completes with expected step count 1`] = `234`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum XOR > console output matches snapshot 1`] = `
 ""Array:" [3, 10, 5, 25, 2, 8]
 ""
@@ -334,9 +1211,261 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum XOR > consol
 Maximum XOR:" 28"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum XOR of Two Numbers (Trie) > completes with expected step count 1`] = `20`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Maximum XOR of Two Numbers (Trie) > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Median of Two Sorted Arrays > completes with expected step count 1`] = `87`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Median of Two Sorted Arrays > console output matches snapshot 1`] = `
+""nums1:" [2] "nums2:" [1, 3]
+"Total:" 3 "Half:" 2
+"i:" 0 "j:" 2
+"  nums1Left:" NaN "nums1Right:" 2
+"  nums2Left:" 3 "nums2Right:" undefined
+"nums2Left too large, move left to" 1
+"i:" 1 "j:" 1
+"  nums1Left:" 2 "nums1Right:" undefined
+"  nums2Left:" 1 "nums2Right:" 3
+"nums2Left too large, move left to" 2
+"Result:" -1"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Meeting Rooms > completes with expected step count 1`] = `139`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Meeting Rooms > console output matches snapshot 1`] = `
+""--- Schedule 1 ---"
+"Meetings sorted by start:"
+"  1." "0:00 - 30:00"
+"  2." "5:00 - 10:00"
+"  3." "15:00 - 20:00"
+""
+undefined
+"  CONFLICT! Meeting ending at 30:00 overlaps with meeting starting at 5:00"
+"
+--- Schedule 2 ---"
+"Meetings sorted by start:"
+"  1." "2:00 - 4:00"
+"  2." "7:00 - 10:00"
+""
+undefined
+"  OK - no overlap"
+"
+Can attend all meetings!""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Meeting Rooms II > completes with expected step count 1`] = `203`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Meeting Rooms II > console output matches snapshot 1`] = `
+""Meetings:" ", , "
+"Starts:" [0, 5, 15]
+"Ends:  " [10, 20, 30]
+""
+"Time 0: Meeting starts. Rooms needed:" 1
+"Time 5: Meeting starts. Rooms needed:" 2
+"Time 10: Meeting ends. Rooms needed:" 1
+"Time 15: Meeting starts. Rooms needed:" 2
+"
+Minimum rooms needed:" 2
+""
+"Meetings:" ", "
+"Starts:" [2, 7]
+"Ends:  " [4, 10]
+""
+"Time 2: Meeting starts. Rooms needed:" 1
+"Time 4: Meeting ends. Rooms needed:" 0
+"Time 7: Meeting starts. Rooms needed:" 1
+"
+Minimum rooms needed:" 1"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Merge Intervals > completes with expected step count 1`] = `150`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Merge Intervals > console output matches snapshot 1`] = `
+""Sorted intervals:" ", , , "
+"
+Compare:" undefined "vs" undefined
+"  Overlap! Merge to:" undefined
+"  Result so far:" ""
+"
+Final:" ""
+""
+"Sorted intervals:" ", "
+"
+Compare:" undefined "vs" undefined
+"  Overlap! Merge to:" undefined
+"  Result so far:" ""
+"
+Final:" """
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Merge Sort > completes with expected step count 1`] = `120`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Merge Sort > console output matches snapshot 1`] = `
+""Split:" [38, 27, 43, 3, 9, 82, 10] "->" [38, 27, 43] "|" [3, 9, 82, 10]
+"  Split:" [38, 27, 43] "->" [38] "|" [27, 43]
+"    Base case:" [38]
+"    Base case:" []
+"  Merge:" [38] "+" [] "=" [38]
+"  Base case:" []
+"Merge:" [38] "+" [] "=" [38]
+"Result:" [38]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Merge Sorted Array > completes with expected step count 1`] = `101`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Merge Sorted Array > console output matches snapshot 1`] = `
+""nums1:" [1, 2, 3, 0, 0, 0] "(first" 3 "are valid)"
+"nums2:" [2, 5, 6]
+""
+"p1:" 2 "p2:" 2 "pos:" 5
+"6 >= 3" "- take from nums2"
+"nums1:" [1, 2, 3, 0, 0, 6]
+""
+"p1:" 2 "p2:" 1 "pos:" 4
+"5 >= 3" "- take from nums2"
+"nums1:" [1, 2, 3, 0, 5, 6]
+""
+"p1:" 2 "p2:" 0 "pos:" 3
+3 ">" 2 "- take from nums1"
+"nums1:" [1, 2, 3, 3, 5, 6]
+""
+"p1:" 1 "p2:" 0 "pos:" 2
+"2 >= 2" "- take from nums2"
+"nums1:" [1, 2, 2, 3, 5, 6]
+""
+"Merged:" [1, 2, 2, 3, 5, 6]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Merge Two Sorted Lists > completes with expected step count 1`] = `4094`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Merge Two Sorted Lists > console output matches snapshot 1`] = `""List 1:""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Merge k Sorted Lists > completes with expected step count 1`] = `380`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Merge k Sorted Lists > console output matches snapshot 1`] = `
+""Merging" 3 "lists:"
+"  List 0:  ->  -> "
+"  List 1:  ->  -> "
+"  List 2:  -> "
+""
+"Round" "1: merging pairs with interval" 1
+"  Merging list" 0 "with list" 1
+"Round" "2: merging pairs with interval" 2
+"  Merging list" 0 "with list" 2
+""
+"Final merged list:"
+" ->  ->  ->  ->  ->  ->  -> ""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Middle of Linked List > completes with expected step count 1`] = `4077`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Middle of Linked List > console output matches snapshot 1`] = `""Input:""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Min Stack > completes with expected step count 1`] = `4`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Min Stack > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Bit Flips > completes with expected step count 1`] = `34`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Bit Flips > console output matches snapshot 1`] = `""Flips:" 3"`;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Flips A OR B > completes with expected step count 1`] = `71`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Flips A OR B > console output matches snapshot 1`] = `""Flips:" 3"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Number of Days to Make m Bouquets > completes with expected step count 1`] = `14`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Number of Days to Make m Bouquets > console output matches snapshot 1`] = `
+""Bloom days:" [1, 10, 3, 10, 2] "m:" 3 "k:" 1
+"Minimum days:" Infinity
+"Result:" Infinity"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Size Subarray Sum > completes with expected step count 1`] = `217`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Size Subarray Sum > console output matches snapshot 1`] = `
+""Target:" 7
+"Array:" [2, 3, 1, 2, 4, 3]
+""
+"Add nums[0] =" 2 "=> sum =" 2
+""
+"Add nums[1] =" 3 "=> sum =" 5
+""
+"Add nums[2] =" 1 "=> sum =" 6
+""
+"Add nums[3] =" 2 "=> sum =" 8
+"  Sum >= target! Window [0..3], length:" 4
+"  New min length:" 4
+"  Shrink: remove nums[0] =" 2
+""
+"Add nums[4] =" 4 "=> sum =" 10
+"  Sum >= target! Window [1..4], length:" 4
+"  Shrink: remove nums[1] =" 3
+"  Sum >= target! Window [2..4], length:" 3
+"  New min length:" 3
+"  Shrink: remove nums[2] =" 1
+""
+"Add nums[5] =" 3 "=> sum =" 9
+"  Sum >= target! Window [3..5], length:" 3
+"  Shrink: remove nums[3] =" 2
+"  Sum >= target! Window [4..5], length:" 2
+"  New min length:" 2
+"  Shrink: remove nums[4] =" 4
+""
+"Result:" 2
+"Result:" 2"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Window Substring > completes with expected step count 1`] = `610`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Minimum Window Substring > console output matches snapshot 1`] = `
+""s:" "ADOBECODEBANC"
+"t:" "ABC"
+""
+"t has" 3 "unique characters"
+"right:" 0 "char:" "A" "- formed:" "1/3"
+"right:" 1 "char:" "D"
+"right:" 2 "char:" "O"
+"right:" 3 "char:" "B" "- formed:" "2/3"
+"right:" 4 "char:" "E"
+"right:" 5 "char:" "C" "- formed:" "3/3"
+"  All chars covered! Window [0..5], length:" 6
+"  New min window: length" 6
+"  Shrink: removed 'A', lost coverage, formed:" "2/3"
+"right:" 6 "char:" "O"
+"right:" 7 "char:" "D"
+"right:" 8 "char:" "E"
+"right:" 9 "char:" "B"
+"right:" 10 "char:" "A" "- formed:" "3/3"
+"  All chars covered! Window [1..10], length:" 10
+"  Shrink: removed 'D'"
+"  All chars covered! Window [2..10], length:" 9
+"  Shrink: removed 'O'"
+"  All chars covered! Window [3..10], length:" 8
+"  Shrink: removed 'B'"
+"  All chars covered! Window [4..10], length:" 7
+"  Shrink: removed 'E'"
+"  All chars covered! Window [5..10], length:" 6
+"  Shrink: removed 'C', lost coverage, formed:" "2/3"
+"right:" 11 "char:" "N"
+"right:" 12 "char:" "C" "- formed:" "3/3"
+"  All chars covered! Window [6..12], length:" 7
+"  Shrink: removed 'O'"
+"  All chars covered! Window [7..12], length:" 6
+"  Shrink: removed 'D'"
+"  All chars covered! Window [8..12], length:" 5
+"  New min window: length" 5
+"  Shrink: removed 'E'"
+"  All chars covered! Window [9..12], length:" 4
+"  New min window: length" 4
+"  Shrink: removed 'B', lost coverage, formed:" "2/3"
+""
+"Result:" "BANC"
+"Result:" "BANC""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Missing Number > completes with expected step count 1`] = `62`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Missing Number > console output matches snapshot 1`] = `
 ""Array:" [3, 0, 1]
@@ -352,9 +1481,95 @@ Finding missing...
 Missing number:" 2"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Move Zeroes > completes with expected step count 1`] = `95`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Move Zeroes > console output matches snapshot 1`] = `
+""Original:" [0, 1, 0, 3, 12]
+""
+"slow:" 0 "fast:" 0
+"nums[fast]:" 0
+"Zero, skip"
+""
+"slow:" 0 "fast:" 1
+"nums[fast]:" 1
+"Non-zero found! Swapped to position" 0
+"Array:" [1, 0, 0, 3, 12]
+""
+"slow:" 1 "fast:" 2
+"nums[fast]:" 0
+"Zero, skip"
+""
+"slow:" 1 "fast:" 3
+"nums[fast]:" 3
+"Non-zero found! Swapped to position" 1
+"Array:" [1, 3, 0, 0, 12]
+""
+"slow:" 2 "fast:" 4
+"nums[fast]:" 12
+"Non-zero found! Swapped to position" 2
+"Array:" [1, 3, 12, 0, 0]
+""
+"Final:" [1, 3, 12, 0, 0]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Multiply Strings > completes with expected step count 1`] = `9`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Multiply Strings > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Network Delay Time > completes with expected step count 1`] = `7`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Network Delay Time > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Next Greater Element I > completes with expected step count 1`] = `112`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Next Greater Element I > console output matches snapshot 1`] = `"[-1, 3, -1]"`;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Next Greater Element II > completes with expected step count 1`] = `8`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Next Greater Element II > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Non-Overlapping Intervals > completes with expected step count 1`] = `322`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Non-Overlapping Intervals > console output matches snapshot 1`] = `
+""Sorted by end time:"
+undefined
+undefined
+undefined
+undefined
+""
+undefined
+undefined
+undefined
+undefined
+"
+Total removals:" 1
+""
+"Sorted by end time:"
+undefined
+undefined
+undefined
+""
+undefined
+undefined
+undefined
+"
+Total removals:" 2
+""
+"Sorted by end time:"
+undefined
+undefined
+undefined
+undefined
+""
+undefined
+undefined
+undefined
+undefined
+"
+Total removals:" 2"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number Complement > completes with expected step count 1`] = `65`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number Complement > console output matches snapshot 1`] = `
 ""=== Test: 5 (101) ==="
@@ -372,6 +1587,8 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number Complement > 
 "Complement:" 0"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number of 1 Bits > completes with expected step count 1`] = `40`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number of 1 Bits > console output matches snapshot 1`] = `
 ""Number:" 11 "(binary: 1011)"
 "
@@ -387,6 +1604,107 @@ Counting 1 bits...
 Total 1 bits:" 3"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number of Islands > completes with expected step count 1`] = `442`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number of Islands > console output matches snapshot 1`] = `"2"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number of Provinces > completes with expected step count 1`] = `11`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Number of Provinces > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Palindromic Substrings > completes with expected step count 1`] = `185`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Palindromic Substrings > console output matches snapshot 1`] = `
+"3
+6"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Partition Labels > completes with expected step count 1`] = `525`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Partition Labels > console output matches snapshot 1`] = `
+""String:" "ababcbacadefegdehijhklij"
+""
+"Last occurrence of each char:" {a: 8, b: 5, c: 7, d: 14, e: 15, f: 11, g: 13, h: 19, i: 22, j: 23, k: 20, l: 21}
+""
+"i:" 0 "char:" "a" "lastIndex:" 8
+"Extend partition end to" 8
+"i:" 1 "char:" "b" "lastIndex:" 5
+"i:" 2 "char:" "a" "lastIndex:" 8
+"i:" 3 "char:" "b" "lastIndex:" 5
+"i:" 4 "char:" "c" "lastIndex:" 7
+"i:" 5 "char:" "b" "lastIndex:" 5
+"i:" 6 "char:" "a" "lastIndex:" 8
+"i:" 7 "char:" "c" "lastIndex:" 7
+"i:" 8 "char:" "a" "lastIndex:" 8
+"Partition complete! Size:" 9
+"Partition:" "ababcbaca"
+""
+"i:" 9 "char:" "d" "lastIndex:" 14
+"Extend partition end to" 14
+"i:" 10 "char:" "e" "lastIndex:" 15
+"Extend partition end to" 15
+"i:" 11 "char:" "f" "lastIndex:" 11
+"i:" 12 "char:" "e" "lastIndex:" 15
+"i:" 13 "char:" "g" "lastIndex:" 13
+"i:" 14 "char:" "d" "lastIndex:" 14
+"i:" 15 "char:" "e" "lastIndex:" 15
+"Partition complete! Size:" 7
+"Partition:" "defegde"
+""
+"i:" 16 "char:" "h" "lastIndex:" 19
+"Extend partition end to" 19
+"i:" 17 "char:" "i" "lastIndex:" 22
+"Extend partition end to" 22
+"i:" 18 "char:" "j" "lastIndex:" 23
+"Extend partition end to" 23
+"i:" 19 "char:" "h" "lastIndex:" 19
+"i:" 20 "char:" "k" "lastIndex:" 20
+"i:" 21 "char:" "l" "lastIndex:" 21
+"i:" 22 "char:" "i" "lastIndex:" 22
+"i:" 23 "char:" "j" "lastIndex:" 23
+"Partition complete! Size:" 8
+"Partition:" "hijhklij"
+""
+"Partition sizes:" [9, 7, 8]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Path Sum > completes with expected step count 1`] = `66`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Path Sum > console output matches snapshot 1`] = `"true"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Path Sum III > completes with expected step count 1`] = `403`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Path Sum III > console output matches snapshot 1`] = `"2"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Peak Index in Mountain Array > completes with expected step count 1`] = `60`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Peak Index in Mountain Array > console output matches snapshot 1`] = `
+""Mountain array:" [0, 2, 3, 5, 4, 1]
+"left:" 0 "right:" 5 "mid:" 2 "next:" 5
+"Climbing up, move right"
+"left:" 3 "right:" 5 "mid:" 4 "next:" 1
+"Climbing down, move left"
+"left:" 3 "right:" 4 "mid:" 3 "next:" 4
+"Climbing down, move left"
+"Peak index:" 3
+"Result:" 3"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Permutation in String > completes with expected step count 1`] = `86`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Permutation in String > console output matches snapshot 1`] = `
+""s1:" "ab" "s2:" "eidbaooo"
+"Window size:" 2
+""
+"s1 frequency map built"
+"Initial window frequency map built"
+"Match found at index 0!"
+"Result: true"
+"Result:" true"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Power of Four > completes with expected step count 1`] = `39`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Power of Four > console output matches snapshot 1`] = `
 ""=== Test: 16 ==="
 "n =" 16
@@ -400,6 +1718,8 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Power of Four > cons
 "Bit at even position?" false
 "Is power of 4?" false"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Power of Two > completes with expected step count 1`] = `46`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Power of Two > console output matches snapshot 1`] = `
 ""=== Test 16 ==="
@@ -421,7 +1741,103 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Power of Two > conso
 "Is power of 2?" true"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Product of Array Except Self > completes with expected step count 1`] = `9`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Product of Array Except Self > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Quick Sort > completes with expected step count 1`] = `315`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Quick Sort > console output matches snapshot 1`] = `
+""Sorting [0..6]:" [10, 80, 30, 90, 40, 50, 70]
+"  Pivot value:" 70
+"Pivot" 40 "at index" 4
+"Array:" [10, 80, 30, 90, 40, 50, 70]
+"  Sorting [0..3]:" [10, 80, 30, 90]
+"    Pivot value:" 90
+"  Pivot" 90 "at index" 3
+"  Array:" [10, 80, 30, 90, 40, 50, 70]
+"    Sorting [0..2]:" [10, 80, 30]
+"      Pivot value:" 30
+"    Pivot" 80 "at index" 1
+"    Array:" [10, 80, 30, 90, 40, 50, 70]
+"  Sorting [5..6]:" [50, 70]
+"    Pivot value:" 70
+"  Pivot" 70 "at index" 6
+"  Array:" [10, 80, 30, 90, 40, 50, 70]
+"
+Sorted:" [10, 80, 30, 90, 40, 50, 70]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Ransom Note > completes with expected step count 1`] = `107`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Ransom Note > console output matches snapshot 1`] = `
+"true
+false"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Regular Expression Matching > completes with expected step count 1`] = `14`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Regular Expression Matching > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Relative Sort Array > completes with expected step count 1`] = `301`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Relative Sort Array > console output matches snapshot 1`] = `
+""arr1:" [2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19]
+"arr2 (order):" [2, 1, 4, 3, 9, 6]
+"Order map:" {1: 1, 2: 0, 3: 3, 4: 2, 6: 5, 9: 4}
+"Result:" [2, 2, 2, 1, 4, 3, 3, 9, 6, 7, 19]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove Duplicates (Sorted) > completes with expected step count 1`] = `162`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove Duplicates (Sorted) > console output matches snapshot 1`] = `
+""Original:" [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]
+""
+"slow:" 0 "fast:" 1
+"nums[slow]:" 0 "nums[fast]:" 0
+"Duplicate, skip"
+""
+"slow:" 0 "fast:" 2
+"nums[slow]:" 0 "nums[fast]:" 1
+"Found new unique! Moved to position" 1
+"Array now:" [0, 1, 1, 1, 1, 2, 2, 3, 3, 4]
+""
+"slow:" 1 "fast:" 3
+"nums[slow]:" 1 "nums[fast]:" 1
+"Duplicate, skip"
+""
+"slow:" 1 "fast:" 4
+"nums[slow]:" 1 "nums[fast]:" 1
+"Duplicate, skip"
+""
+"slow:" 1 "fast:" 5
+"nums[slow]:" 1 "nums[fast]:" 2
+"Found new unique! Moved to position" 2
+"Array now:" [0, 1, 2, 1, 1, 2, 2, 3, 3, 4]
+""
+"slow:" 2 "fast:" 6
+"nums[slow]:" 2 "nums[fast]:" 2
+"Duplicate, skip"
+""
+"slow:" 2 "fast:" 7
+"nums[slow]:" 2 "nums[fast]:" 3
+"Found new unique! Moved to position" 3
+"Array now:" [0, 1, 2, 3, 1, 2, 2, 3, 3, 4]
+""
+"slow:" 3 "fast:" 8
+"nums[slow]:" 3 "nums[fast]:" 3
+"Duplicate, skip"
+""
+"slow:" 3 "fast:" 9
+"nums[slow]:" 3 "nums[fast]:" 4
+"Found new unique! Moved to position" 4
+"Array now:" [0, 1, 2, 3, 4, 2, 2, 3, 3, 4]
+""
+"New length:" 5
+"Unique elements:" [0, 1, 2, 3, 4]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove Duplicates from Sorted Array II > completes with expected step count 1`] = `115`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove Duplicates from Sorted Array II > console output matches snapshot 1`] = `
 ""Array:" [1, 1, 1, 2, 2, 3]
@@ -443,6 +1859,66 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove Duplicates fr
 "Array:" [1, 1, 2, 2, 3]"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove Element > completes with expected step count 1`] = `76`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove Element > console output matches snapshot 1`] = `
+""Array:" [3, 2, 2, 3]
+"Remove value:" 3
+""
+"slow:" 0 "fast:" 0
+"nums[fast]:" 3
+"Skip, it's the target value"
+"Array:" [3, 2, 2, 3]
+""
+"slow:" 0 "fast:" 1
+"nums[fast]:" 2
+"Keep element, copy to position" 0
+"Array:" [2, 2, 2, 3]
+""
+"slow:" 1 "fast:" 2
+"nums[fast]:" 2
+"Keep element, copy to position" 1
+"Array:" [2, 2, 2, 3]
+""
+"slow:" 2 "fast:" 3
+"nums[fast]:" 3
+"Skip, it's the target value"
+"Array:" [2, 2, 2, 3]
+""
+"New length:" 2
+"Valid elements:" [2, 2]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove K Digits > completes with expected step count 1`] = `128`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove K Digits > console output matches snapshot 1`] = `""1219""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove Nth Node from End > completes with expected step count 1`] = `4079`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Remove Nth Node from End > console output matches snapshot 1`] = `""Input:""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reorder List > completes with expected step count 1`] = `247`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reorder List > console output matches snapshot 1`] = `
+""Original list:"
+" ->  ->  ->  -> "
+"Middle node:" undefined
+"First half:"
+" ->  -> "
+"Reversed second half:"
+" -> "
+"Merged:" undefined "->" undefined
+"Merged:" undefined "->" undefined
+"Reordered list:"
+" ->  ->  ->  -> ""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Replace Words > completes with expected step count 1`] = `9`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Replace Words > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse Bits > completes with expected step count 1`] = `446`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse Bits > console output matches snapshot 1`] = `
 ""Original:" 43261596
 "
@@ -461,6 +1937,69 @@ Reversing bits (showing first 8)...
 Reversed:" 964176192"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse Linked List > completes with expected step count 1`] = `4076`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse Linked List > console output matches snapshot 1`] = `""Original:""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse Nodes in k-Group > completes with expected step count 1`] = `602`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse Nodes in k-Group > console output matches snapshot 1`] = `
+""Original list:"
+" ->  ->  ->  -> "
+"k =" 3
+""
+"Group" "1: reversing" 3 "nodes"
+"  After reversing group" "1:"
+" ->  ->  ->  -> "
+"Fewer than k nodes remain, done."
+" ->  ->  ->  -> "
+""
+"Original list:"
+" ->  ->  ->  -> "
+"k =" 2
+""
+"Group" "1: reversing" 2 "nodes"
+"  After reversing group" "1:"
+" ->  ->  ->  -> "
+"Group" "2: reversing" 2 "nodes"
+"  After reversing group" "2:"
+" ->  ->  ->  -> "
+"Fewer than k nodes remain, done."
+" ->  ->  ->  -> ""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse String > completes with expected step count 1`] = `45`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse String > console output matches snapshot 1`] = `
+""Original:" ["h", "e", "l", "l", "o"]
+""
+"left:" 0 "right:" 4
+"Swapping" "h" "and" "o"
+"After swap:" ["o", "e", "l", "l", "h"]
+""
+"left:" 1 "right:" 3
+"Swapping" "e" "and" "l"
+"After swap:" ["o", "l", "l", "e", "h"]
+""
+"Reversed:" ["o", "l", "l", "e", "h"]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse Vowels of a String > completes with expected step count 1`] = `180`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse Vowels of a String > console output matches snapshot 1`] = `
+""leotcede"
+"holle""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse Words in a String > completes with expected step count 1`] = `249`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Reverse Words in a String > console output matches snapshot 1`] = `
+""blue is sky the"
+"world hello""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Rotate Array > completes with expected step count 1`] = `97`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Rotate Array > console output matches snapshot 1`] = `
 ""Array:" [1, 2, 3, 4, 5, 6, 7]
 "Rotate by:" 3
@@ -478,6 +2017,110 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Rotate Array > conso
 ""
 "Final rotated array:" [5, 6, 7, 1, 2, 3, 4]"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Rotting Oranges > completes with expected step count 1`] = `205`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Rotting Oranges > console output matches snapshot 1`] = `"-1"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Same Tree > completes with expected step count 1`] = `81`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Same Tree > console output matches snapshot 1`] = `
+"true
+false"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search Insert Position > completes with expected step count 1`] = `89`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search Insert Position > console output matches snapshot 1`] = `
+""Array:" [1, 3, 5, 6] "Target:" 5
+"left:" 0 "right:" 3 "mid:" 1 "value:" 3
+3 "< target, move left to" 2
+"left:" 2 "right:" 3 "mid:" 2 "value:" 5
+"Found target at index" 2
+"Result:" 2
+"Array:" [1, 3, 5, 6] "Target:" 2
+"left:" 0 "right:" 3 "mid:" 1 "value:" 3
+3 "> target, move right to" 0
+"left:" 0 "right:" 0 "mid:" 0 "value:" 1
+1 "< target, move left to" 1
+"Not found, insert position is left:" 1
+"Result:" 1"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search Suggestions System > completes with expected step count 1`] = `6`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search Suggestions System > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search a 2D Matrix > completes with expected step count 1`] = `116`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search a 2D Matrix > console output matches snapshot 1`] = `
+""Matrix:" [[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]]
+"Target:" 3 "Total elements:" 12
+"left:" 0 "right:" 11 "mid:" 5 "-> [1][1] =" 11
+11 "> target, search left half"
+"left:" 0 "right:" 4 "mid:" 2 "-> [0][2] =" 5
+5 "> target, search left half"
+"left:" 0 "right:" 1 "mid:" 0 "-> [0][0] =" 1
+1 "< target, search right half"
+"left:" 1 "right:" 1 "mid:" 1 "-> [0][1] =" 3
+"Found target at [0][1]"
+"Result:" true"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search a 2D Matrix II > completes with expected step count 1`] = `80`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search a 2D Matrix II > console output matches snapshot 1`] = `
+""Matrix:" [[1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], [10, 13, 14, 17, 24], [18, 21, 23, 26, 30]]
+"Target:" 5
+"row:" 0 "col:" 4 "value:" 15
+"Value too high, move left"
+"row:" 0 "col:" 3 "value:" 11
+"Value too high, move left"
+"row:" 0 "col:" 2 "value:" 7
+"Value too high, move left"
+"row:" 0 "col:" 1 "value:" 4
+"Value too low, move down"
+"row:" 1 "col:" 1 "value:" 5
+"Found target at" 1 1
+"Result:" true"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search in Rotated Sorted Array > completes with expected step count 1`] = `76`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search in Rotated Sorted Array > console output matches snapshot 1`] = `
+""Array:" [4, 5, 6, 7, 0, 1, 2] "Target:" 0
+"left:" 0 "right:" 6 "mid:" 3 "value:" 7
+"Left half [0..3] is sorted"
+"Target not in left half, move left to" 4
+"left:" 4 "right:" 6 "mid:" 5 "value:" 1
+"Left half [4..5] is sorted"
+"Target in sorted left half, move right to" 4
+"left:" 4 "right:" 4 "mid:" 4 "value:" 0
+"Found target at index" 4
+"Result:" 4"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search in Rotated Sorted Array II > completes with expected step count 1`] = `22`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Search in Rotated Sorted Array II > console output matches snapshot 1`] = `
+""Array:" [2, 5, 6, 0, 0, 1, 2] "Target:" 0
+"left:" 0 "right:" 6 "mid:" 3 "value:" 0
+"Found target at index" 3
+"Result:" true"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Short Encoding of Words > completes with expected step count 1`] = `29`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Short Encoding of Words > console output matches snapshot 1`] = `
+"0
+0"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Simplify Path > completes with expected step count 1`] = `16`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Simplify Path > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Single Number > completes with expected step count 1`] = `65`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Single Number > console output matches snapshot 1`] = `
 ""Array:" [4, 1, 2, 1, 2]
@@ -498,6 +2141,8 @@ Finding single number...
 Single number:" 4"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Single Number II > completes with expected step count 1`] = `1685`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Single Number II > console output matches snapshot 1`] = `
 ""Array:" [2, 2, 3, 2]
 "
@@ -508,6 +2153,8 @@ Counting bits mod 3...
 "
 Single number:" 3"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Single Number III > completes with expected step count 1`] = `137`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Single Number III > console output matches snapshot 1`] = `
 ""Array:" [1, 2, 1, 3, 2, 5]
@@ -522,9 +2169,230 @@ Splitting by XOR...
 Two singles:" [3, 5]"
 `;
 
-exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sort Integers by 1 Bits > console output matches snapshot 1`] = `""`;
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sliding Window Maximum > completes with expected step count 1`] = `357`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sliding Window Maximum > console output matches snapshot 1`] = `
+""Array:" [1, 3, -1, -3, 5, 3, 6, 7]
+"Window size k:" 3
+""
+"Push index" 0 "(value:" "1), deque:" [0]
+""
+"Remove back index" 0 "(nums[0] =" 1 "<= nums[1] =" "3)"
+"Push index" 1 "(value:" "3), deque:" [1]
+""
+"Push index" 2 "(value:" "-1), deque:" [1, 2]
+"  Window max:" 3 "=> result so far:" [3]
+""
+"Push index" 3 "(value:" "-3), deque:" [1, 2, 3]
+"  Window max:" 3 "=> result so far:" [3, 3]
+""
+"Remove front index" 1 "(out of window)"
+"Remove back index" 3 "(nums[3] =" -3 "<= nums[4] =" "5)"
+"Remove back index" 2 "(nums[2] =" -1 "<= nums[4] =" "5)"
+"Push index" 4 "(value:" "5), deque:" [4]
+"  Window max:" 5 "=> result so far:" [3, 3, 5]
+""
+"Push index" 5 "(value:" "3), deque:" [4, 5]
+"  Window max:" 5 "=> result so far:" [3, 3, 5, 5]
+""
+"Remove back index" 5 "(nums[5] =" 3 "<= nums[6] =" "6)"
+"Remove back index" 4 "(nums[4] =" 5 "<= nums[6] =" "6)"
+"Push index" 6 "(value:" "6), deque:" [6]
+"  Window max:" 6 "=> result so far:" [3, 3, 5, 5, 6]
+""
+"Remove back index" 6 "(nums[6] =" 6 "<= nums[7] =" "7)"
+"Push index" 7 "(value:" "7), deque:" [7]
+"  Window max:" 7 "=> result so far:" [3, 3, 5, 5, 6, 7]
+""
+"Result:" [3, 3, 5, 5, 6, 7]
+"Result:" [3, 3, 5, 5, 6, 7]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sort Array by Parity > completes with expected step count 1`] = `124`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sort Array by Parity > console output matches snapshot 1`] = `
+""Input:" [3, 1, 2, 4]
+"  Swap" 3 "(odd) <->" 4 "(even)"
+"  Array:" [3, 1, 2, 4] "  left=1" "right=2"
+"  Swap" 1 "(odd) <->" 2 "(even)"
+"  Array:" [3, 1, 2, 4] "  left=2" "right=1"
+"Result:" [3, 1, 2, 4]
+""
+"Input:" [0, 1, 2, 3, 4]
+"  0" "is even, skip (left++)"
+"  Array:" [0, 1, 2, 3, 4] "  left=1" "right=4"
+"  Swap" 1 "(odd) <->" 4 "(even)"
+"  Array:" [0, 1, 2, 3, 4] "  left=2" "right=3"
+"  2" "is even, skip (left++)"
+"  Array:" [0, 1, 2, 3, 4] "  left=3" "right=3"
+"Result:" [0, 1, 2, 3, 4]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sort Characters by Frequency > completes with expected step count 1`] = `241`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sort Characters by Frequency > console output matches snapshot 1`] = `
+""--- Test 1 ---"
+"String:" "tree"
+"Frequencies:" {t: 1, r: 1, e: 2}
+"Sorted by frequency:" ["e:2", "t:1", "r:1"]
+"  Add" "e" "x2" "->" "ee"
+"  Add" "t" "x1" "->" "eet"
+"  Add" "r" "x1" "->" "eetr"
+"Result:" "eetr"
+"
+--- Test 2 ---"
+"String:" "cccaaa"
+"Frequencies:" {c: 3, a: 3}
+"Sorted by frequency:" ["c:3", "a:3"]
+"  Add" "c" "x3" "->" "ccc"
+"  Add" "a" "x3" "->" "cccaaa"
+"Result:" "cccaaa"
+"
+--- Test 3 ---"
+"String:" "Aabb"
+"Frequencies:" {A: 1, a: 1, b: 2}
+"Sorted by frequency:" ["b:2", "A:1", "a:1"]
+"  Add" "b" "x2" "->" "bb"
+"  Add" "A" "x1" "->" "bbA"
+"  Add" "a" "x1" "->" "bbAa"
+"Result:" "bbAa""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sort Colors (Dutch Flag) > completes with expected step count 1`] = `123`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sort Colors (Dutch Flag) > console output matches snapshot 1`] = `
+""Original:" [2, 0, 2, 1, 1, 0]
+"0=red, 1=white, 2=blue"
+""
+"low:" 0 "mid:" 0 "high:" 5
+"Current element:" 2
+"Found 2, swap to high position"
+"Array:" [0, 0, 2, 1, 1, 2]
+""
+"low:" 0 "mid:" 0 "high:" 4
+"Current element:" 0
+"Found 0, swap to low position"
+"Array:" [0, 0, 2, 1, 1, 2]
+""
+"low:" 1 "mid:" 1 "high:" 4
+"Current element:" 0
+"Found 0, swap to low position"
+"Array:" [0, 0, 2, 1, 1, 2]
+""
+"low:" 2 "mid:" 2 "high:" 4
+"Current element:" 2
+"Found 2, swap to high position"
+"Array:" [0, 0, 1, 1, 2, 2]
+""
+"low:" 2 "mid:" 2 "high:" 3
+"Current element:" 1
+"Found 1, already in place"
+"Array:" [0, 0, 1, 1, 2, 2]
+""
+"low:" 2 "mid:" 3 "high:" 3
+"Current element:" 1
+"Found 1, already in place"
+"Array:" [0, 0, 1, 1, 2, 2]
+""
+"Sorted:" [0, 0, 1, 1, 2, 2]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sort Integers by 1 Bits > completes with expected step count 1`] = `705`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sort Integers by 1 Bits > console output matches snapshot 1`] = `"[0, 1, 2, 4, 8, 3, 5, 6, 7]"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Split Array Largest Sum > completes with expected step count 1`] = `366`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Split Array Largest Sum > console output matches snapshot 1`] = `
+""Array:" [7, 2, 5, 10, 8] "k:" 2
+"Search range: [10, 32]"
+"left:" 10 "right:" 32 "mid:" 21
+"  maxSum:" 21 "-> splits needed:" 2 "(ok)"
+"maxSum" 21 "works, try smaller -> right =" 21
+"left:" 10 "right:" 21 "mid:" 15
+"  maxSum:" 15 "-> splits needed:" 3 "(too many)"
+"maxSum" 15 "not enough, try larger -> left =" 16
+"left:" 16 "right:" 21 "mid:" 18
+"  maxSum:" 18 "-> splits needed:" 2 "(ok)"
+"maxSum" 18 "works, try smaller -> right =" 18
+"left:" 16 "right:" 18 "mid:" 17
+"  maxSum:" 17 "-> splits needed:" 3 "(too many)"
+"maxSum" 17 "not enough, try larger -> left =" 18
+"Minimum largest sum:" 18
+"Result:" 18"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Squares of Sorted Array > completes with expected step count 1`] = `159`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Squares of Sorted Array > console output matches snapshot 1`] = `
+""Input:" [-4, -1, 0, 3, 10]
+""
+"left:" 0 "right:" 4
+-4 "^2 =" 16 "," 10 "^2 =" 100
+"Right square larger/equal, place" 100 "at position" 4
+"Result so far:" [0, 0, 0, 0, 100]
+""
+"left:" 0 "right:" 3
+-4 "^2 =" 16 "," 3 "^2 =" 9
+"Left square larger, place" 16 "at position" 3
+"Result so far:" [0, 0, 0, 16, 100]
+""
+"left:" 1 "right:" 3
+-1 "^2 =" 1 "," 3 "^2 =" 9
+"Right square larger/equal, place" 9 "at position" 2
+"Result so far:" [0, 0, 9, 16, 100]
+""
+"left:" 1 "right:" 2
+-1 "^2 =" 1 "," 0 "^2 =" 0
+"Left square larger, place" 1 "at position" 1
+"Result so far:" [0, 1, 9, 16, 100]
+""
+"left:" 2 "right:" 2
+0 "^2 =" 0 "," 0 "^2 =" 0
+"Right square larger/equal, place" 0 "at position" 0
+"Result so far:" [0, 1, 9, 16, 100]
+""
+"Final:" [0, 1, 9, 16, 100]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Stream of Characters > completes with expected step count 1`] = `4`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Stream of Characters > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > String Compression > completes with expected step count 1`] = `166`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > String Compression > console output matches snapshot 1`] = `
+""Input:" ["a", "a", "b", "b", "c", "c", "c"]
+""
+"Group: 'a' x 2"
+"  Write: 'a' + '2'"
+"  Array so far:" ["a", "2", "b", "b", "c", "c", "c"] "write:" 2
+""
+"Group: 'b' x 2"
+"  Write: 'b' + '2'"
+"  Array so far:" ["a", "2", "b", "2", "c", "c", "c"] "write:" 4
+""
+"Group: 'c' x 3"
+"  Write: 'c' + '3'"
+"  Array so far:" ["a", "2", "b", "2", "c", "3", "c"] "write:" 6
+""
+"Compressed length:" 6
+"Result:" ["a", "2", "b", "2", "c", "3"]"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > String to Integer (atoi) > completes with expected step count 1`] = `200`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > String to Integer (atoi) > console output matches snapshot 1`] = `
+"42
+-42
+4193"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Subsets > completes with expected step count 1`] = `40`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Subsets > console output matches snapshot 1`] = `""`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sum of Two Integers > completes with expected step count 1`] = `66`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sum of Two Integers > console output matches snapshot 1`] = `
 ""=== Test 1: 5 + 3 ==="
@@ -541,11 +2409,66 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Sum of Two Integers 
 "Result:" 15"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Swap Nodes in Pairs > completes with expected step count 1`] = `346`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Swap Nodes in Pairs > console output matches snapshot 1`] = `
+""Original list:"
+" ->  ->  -> "
+"Swapping pair:" undefined "and" undefined
+"  prev ->" undefined "->" undefined "->" undefined
+"Swapping pair:" undefined "and" undefined
+"  prev ->" undefined "->" undefined "->" "null"
+"Result:"
+" ->  ->  -> "
+""
+"Original list:"
+" ->  ->  ->  -> "
+"Swapping pair:" undefined "and" undefined
+"  prev ->" undefined "->" undefined "->" undefined
+"Swapping pair:" undefined "and" undefined
+"  prev ->" undefined "->" undefined "->" undefined
+"Result:"
+" ->  ->  ->  -> ""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Symmetric Tree > completes with expected step count 1`] = `69`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Symmetric Tree > console output matches snapshot 1`] = `"true"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Text Justification > completes with expected step count 1`] = `342`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Text Justification > console output matches snapshot 1`] = `"["This    is    an", "example  of text", "justification.  "]"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Time Based Key-Value Store > completes with expected step count 1`] = `147`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Time Based Key-Value Store > console output matches snapshot 1`] = `
+""SET key:" "foo" "value:" "bar" "time:" 1
+"SET key:" "foo" "value:" "bar2" "time:" 4
+"GET key:" "foo" "time:" 4
+"  left:" 0 "right:" 1 "mid:" 0 "entry time:" 1 "value:" "bar"
+"  Time" 1 "<= query, candidate:" "bar"
+"  left:" 1 "right:" 1 "mid:" 1 "entry time:" 4 "value:" "bar2"
+"  Time" 4 "<= query, candidate:" "bar2"
+"  Result:" "bar2"
+"get(foo, 4):" "bar2"
+"GET key:" "foo" "time:" 3
+"  left:" 0 "right:" 1 "mid:" 0 "entry time:" 1 "value:" "bar"
+"  Time" 1 "<= query, candidate:" "bar"
+"  left:" 1 "right:" 1 "mid:" 1 "entry time:" 4 "value:" "bar2"
+"  Time" 4 "> query, search left"
+"  Result:" "bar"
+"get(foo, 3):" "bar""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Top K Frequent Elements > completes with expected step count 1`] = `40`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Top K Frequent Elements > console output matches snapshot 1`] = `
 ""Finding top" 2 "frequent in:" [1, 1, 1, 2, 2, 3]
 ""
 "Frequencies:" {1: 3, 2: 2, 3: 1}"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Trapping Rain Water > completes with expected step count 1`] = `220`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Trapping Rain Water > console output matches snapshot 1`] = `
 ""Heights:" [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
@@ -608,6 +2531,8 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Trapping Rain Water 
 "Total trapped water:" 6"
 `;
 
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Two Sum > completes with expected step count 1`] = `51`;
+
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Two Sum > console output matches snapshot 1`] = `
 ""Finding two numbers that sum to" 9
 "Array:" [2, 7, 11, 15]
@@ -622,6 +2547,8 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Two Sum > console ou
 "Found!" 2 "at index" 0
 "Result:" [0, 1]"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Two Sum II (Sorted) > completes with expected step count 1`] = `64`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Two Sum II (Sorted) > console output matches snapshot 1`] = `
 ""Finding two numbers that sum to" 9
@@ -640,6 +2567,33 @@ exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Two Sum II (Sorted) 
 "Found! Indices:" 0 1
 "Result:" [0, 1]"
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Valid Anagram (Sorting) > completes with expected step count 1`] = `64`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Valid Anagram (Sorting) > console output matches snapshot 1`] = `
+""--- Test 1 ---"
+"String 1:" "anagram"
+"Sorted 1:" "aaagmnr"
+"String 2:" "nagaram"
+"Sorted 2:" "aaagmnr"
+"Match:" true
+"
+--- Test 2 ---"
+"String 1:" "rat"
+"Sorted 1:" "art"
+"String 2:" "car"
+"Sorted 2:" "acr"
+"Match:" false
+"
+--- Test 3 ---"
+"String 1:" "listen"
+"Sorted 1:" "eilnst"
+"String 2:" "silent"
+"Sorted 2:" "eilnst"
+"Match:" true"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Valid Anagram > completes with expected step count 1`] = `154`;
 
 exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Valid Anagram > console output matches snapshot 1`] = `
 ""--- Test 1 ---"
@@ -662,3 +2616,93 @@ All characters matched - valid anagram!"
 "Frequency of s:" {r: 1, a: 1, t: 1}
 "Character" "c" "not found or exhausted""
 `;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Valid Palindrome > completes with expected step count 1`] = `504`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Valid Palindrome > console output matches snapshot 1`] = `
+""Original:" "A man, a plan, a canal: Panama"
+"Cleaned:" "amanaplanacanalpanama"
+""
+"left:" 0 "right:" 20
+"Comparing:" "a" "vs" "a"
+"Match!"
+""
+"left:" 1 "right:" 19
+"Comparing:" "m" "vs" "m"
+"Match!"
+""
+"left:" 2 "right:" 18
+"Comparing:" "a" "vs" "a"
+"Match!"
+""
+"left:" 3 "right:" 17
+"Comparing:" "n" "vs" "n"
+"Match!"
+""
+"left:" 4 "right:" 16
+"Comparing:" "a" "vs" "a"
+"Match!"
+""
+"left:" 5 "right:" 15
+"Comparing:" "p" "vs" "p"
+"Match!"
+""
+"left:" 6 "right:" 14
+"Comparing:" "l" "vs" "l"
+"Match!"
+""
+"left:" 7 "right:" 13
+"Comparing:" "a" "vs" "a"
+"Match!"
+""
+"left:" 8 "right:" 12
+"Comparing:" "n" "vs" "n"
+"Match!"
+""
+"left:" 9 "right:" 11
+"Comparing:" "a" "vs" "a"
+"Match!"
+""
+"All characters matched - it's a palindrome!"
+"Is palindrome:" true"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Valid Palindrome II > completes with expected step count 1`] = `57`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Valid Palindrome II > console output matches snapshot 1`] = `
+""String:" "abca"
+""
+"left:" 0 "(a) right:" 3 "(a)"
+"  Match!"
+"left:" 1 "(b) right:" 2 "(c)"
+"  Mismatch! Try skipping left or right"
+"  Skip left (b):" true
+"  Skip right (c):" true
+"  Can be palindrome:" true"
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Valid Parentheses > completes with expected step count 1`] = `134`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Valid Parentheses > console output matches snapshot 1`] = `
+""Input:" "()[]{}"
+"Push" "(" "stack:" ["("]
+"Pop" "(" "for" ")"
+"Push" "[" "stack:" ["["]
+"Pop" "[" "for" "]"
+"Push" "{" "stack:" ["{"]
+"Pop" "{" "for" "}"
+"Remaining stack:" [] "valid:" true
+"Input:" "([)]"
+"Push" "(" "stack:" ["("]
+"Push" "[" "stack:" ["(", "["]
+"Pop" "[" "for" ")"
+"Mismatch -> false""
+`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Validate Binary Search Tree > completes with expected step count 1`] = `65`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Validate Binary Search Tree > console output matches snapshot 1`] = `"true"`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Word Search II > completes with expected step count 1`] = `440`;
+
+exports[`DSA Problems (Bit Manipulation & Arrays/Hashing) > Word Search II > console output matches snapshot 1`] = `"[]"`;

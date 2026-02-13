@@ -7398,6 +7398,7 @@ groupAnagrams(strs);
     id: 'top-k-frequent',
     name: 'Top K Frequent Elements',
     category: 'arrays-hashing',
+    categories: ['arrays-hashing', 'heap'],
     difficulty: 'medium',
     description: 'Find the k most frequent elements using bucket sort',
     code: `// Top K Frequent Elements - Bucket Sort
@@ -11779,6 +11780,7 @@ reverseKGroup(buildList([1, 2, 3, 4, 5]), 2);
     id: 'merge-k-sorted-lists',
     name: 'Merge k Sorted Lists',
     category: 'linked-list',
+    categories: ['linked-list', 'heap'],
     difficulty: 'hard',
     description: 'Merge k sorted linked lists into one sorted linked list using divide and conquer',
     code: `// Merge k Sorted Lists
@@ -12343,7 +12345,7 @@ canAttendMeetings([[7,10],[2,4]]);
     id: 'meeting-rooms-ii',
     name: 'Meeting Rooms II',
     category: 'sorting',
-    categories: ['sorting', 'arrays-hashing'],
+    categories: ['sorting', 'arrays-hashing', 'heap'],
     difficulty: 'medium',
     description: 'Find minimum number of conference rooms needed',
     code: `// Meeting Rooms II
@@ -12585,7 +12587,7 @@ sortArrayByParity([0, 1, 2, 3, 4]);
     id: 'kth-largest-element',
     name: 'Kth Largest Element',
     category: 'sorting',
-    categories: ['sorting', 'arrays-hashing', 'recursion'],
+    categories: ['sorting', 'arrays-hashing', 'recursion', 'heap'],
     difficulty: 'medium',
     description: 'Find the kth largest element using QuickSelect (partition)',
     code: `// Kth Largest Element - QuickSelect

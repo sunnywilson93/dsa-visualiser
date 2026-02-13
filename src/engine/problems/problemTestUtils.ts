@@ -1,4 +1,4 @@
-import { codeExamples } from '@/data/examples'
+import { codeExamples, getProblemRouteCategoryIds } from '../../data/examples'
 import { parseCode } from '../parser'
 import { Interpreter } from '../interpreter'
 
@@ -6,9 +6,7 @@ import { Interpreter } from '../interpreter'
  * Problems that crash the interpreter (infinite recursion, etc.)
  * These get parse-only tests instead of execution tests.
  */
-export const CRASH_SKIP_LIST = new Set([
-  'find-node-in-tree', // Maximum call stack size exceeded
-])
+export const CRASH_SKIP_LIST = new Set<string>([])
 
 export interface ExecutionResult {
   steps: ReturnType<Interpreter['execute']>
@@ -68,5 +66,19 @@ export function getProblemsForCategory(category: string) {
   return codeExamples.filter(p => {
     const cats = p.categories ?? [p.category]
     return cats.includes(category)
+  })
+}
+
+/**
+ * Get all DSA problems across all DSA subcategories, deduplicated by ID.
+ */
+export function getDsaProblems() {
+  const seen = new Set<string>()
+
+  return codeExamples.filter((problem) => {
+    if (!getProblemRouteCategoryIds(problem).includes('dsa')) return false
+    if (seen.has(problem.id)) return false
+    seen.add(problem.id)
+    return true
   })
 }

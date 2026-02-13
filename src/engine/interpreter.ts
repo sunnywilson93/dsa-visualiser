@@ -1150,6 +1150,20 @@ export class Interpreter {
       }
     }
 
+    // Non-primitive equality (null === null, array === array, etc.)
+    if (op === '===') {
+      return createPrimitive(this.runtimeValuesEqual(left, right))
+    }
+    if (op === '!==') {
+      return createPrimitive(!this.runtimeValuesEqual(left, right))
+    }
+    if (op === '==') {
+      return createPrimitive(this.runtimeValuesEqual(left, right))
+    }
+    if (op === '!=') {
+      return createPrimitive(!this.runtimeValuesEqual(left, right))
+    }
+
     return createUndefined()
   }
 
@@ -1256,6 +1270,32 @@ export class Interpreter {
       }
     }
 
+    // String property access
+    if (obj.type === 'primitive' && obj.dataType === 'string' && prop.type === 'primitive') {
+      const s = obj.value as string
+      if (prop.value === 'length') {
+        return createPrimitive(s.length)
+      }
+      if (prop.dataType === 'number') {
+        const index = prop.value as number
+        return createPrimitive(s[index] ?? undefined)
+      }
+    }
+
+    // Set/Map size access
+    if (obj.type === 'object' && prop.type === 'primitive') {
+      const valueKey = String(prop.value)
+      const mapData = (obj as unknown as Record<string, unknown>).__mapData as Map<string | number, RuntimeValue> | undefined
+      if (mapData && valueKey === 'size') {
+        return createPrimitive(mapData.size)
+      }
+
+      const setData = (obj as unknown as Record<string, unknown>).__setData as Set<RuntimeValue> | undefined
+      if (setData && valueKey === 'size') {
+        return createPrimitive(setData.size)
+      }
+    }
+
     // Object access
     if (obj.type === 'object' && prop.type === 'primitive') {
       const key = String(prop.value)
@@ -1268,9 +1308,31 @@ export class Interpreter {
   }
 
   private executeArrayExpression(node: ASTNode): RuntimeValue {
-    const elements = (node.elements || []).map((el: ASTNode | null) =>
-      el ? this.executeNode(el) : createUndefined()
-    )
+    const elements: RuntimeValue[] = []
+
+    for (const el of (node.elements || []) as ASTNode[]) {
+      if (!el) {
+        elements.push(createUndefined())
+      } else if (el.type === 'SpreadElement') {
+        const spread = this.executeNode(el.argument as ASTNode)
+        if (spread.type === 'array') {
+          elements.push(...spread.elements)
+        } else if (spread.type === 'object') {
+          const setData = (spread as unknown as Record<string, unknown>).__setData as Set<RuntimeValue> | undefined
+          if (setData) {
+            for (const item of setData) {
+              elements.push(item)
+            }
+          }
+        } else if (spread.type === 'primitive' && spread.dataType === 'string') {
+          for (const ch of spread.value as string) {
+            elements.push(createPrimitive(ch))
+          }
+        }
+      } else {
+        elements.push(this.executeNode(el))
+      }
+    }
 
     const arr = createArray(elements)
     this.recordStep(node, 'expression', `Create array: ${formatValue(arr)}`)
@@ -1574,8 +1636,7 @@ export class Interpreter {
         const fromIndex = args[1]?.type === 'primitive' ? (args[1].value as number) : 0
         let result = -1
         for (let i = fromIndex; i < arr.elements.length; i++) {
-          const el = arr.elements[i]
-          if (el.type === 'primitive' && searchValue.type === 'primitive' && el.value === searchValue.value) {
+          if (this.runtimeValuesEqual(arr.elements[i], searchValue)) {
             result = i
             break
           }
@@ -1588,7 +1649,7 @@ export class Interpreter {
         const searchValue = args[0]
         let found = false
         for (const el of arr.elements) {
-          if (el.type === 'primitive' && searchValue.type === 'primitive' && el.value === searchValue.value) {
+          if (this.runtimeValuesEqual(el, searchValue)) {
             found = true
             break
           }
@@ -1896,21 +1957,25 @@ export class Interpreter {
     switch (method) {
       case 'add': {
         const value = args[0] ?? createUndefined()
-        set.add(value)
+        const existingValue = this.findSetValue(set, value)
+        if (!existingValue) {
+          set.add(value)
+        }
         this.recordStep(node, 'expression', `Set.add(${formatValue(value)})`)
         return node.callee ? (this.executeNode((node.callee as ASTNode).object as ASTNode)) : createObject({})
       }
       
       case 'has': {
         const value = args[0] ?? createUndefined()
-        const hasValue = set.has(value)
+        const hasValue = this.findSetValue(set, value) !== undefined
         this.recordStep(node, 'expression', `Set.has(${formatValue(args[0])}) → ${hasValue}`)
         return createPrimitive(hasValue)
       }
       
       case 'delete': {
         const value = args[0] ?? createUndefined()
-        const deleted = set.delete(value)
+        const existingValue = this.findSetValue(set, value)
+        const deleted = existingValue ? set.delete(existingValue) : false
         this.recordStep(node, 'expression', `Set.delete(${formatValue(args[0])}) → ${deleted}`)
         return createPrimitive(deleted)
       }
@@ -1928,6 +1993,34 @@ export class Interpreter {
       default:
         return createUndefined()
     }
+  }
+
+  private findSetValue(set: Set<RuntimeValue>, value: RuntimeValue): RuntimeValue | undefined {
+    for (const item of set) {
+      if (this.runtimeValuesEqual(item, value)) {
+        return item
+      }
+    }
+
+    return undefined
+  }
+
+  private runtimeValuesEqual(a: RuntimeValue, b: RuntimeValue): boolean {
+    if (a.type !== b.type) return false
+
+    if (a.type === 'primitive' && b.type === 'primitive') {
+      if (a.dataType !== b.dataType) return false
+      if (a.dataType === 'number' && Number.isNaN(a.value as number) && Number.isNaN(b.value as number)) {
+        return true
+      }
+      return a.value === b.value
+    }
+
+    if (a.type === 'null' || a.type === 'undefined') {
+      return true
+    }
+
+    return a === b
   }
 
   // String methods

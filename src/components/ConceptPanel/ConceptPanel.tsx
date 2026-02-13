@@ -31,12 +31,17 @@ export function ConceptPanel({
   const [isPlaying, setIsPlaying] = useState(false)
   const [playbackSpeed, setPlaybackSpeed] = useState(1500) // ms per step
 
-  const step = steps[currentStep]
   const totalSteps = steps.length
+  const stepIndex = totalSteps === 0 ? 0 : Math.min(Math.max(currentStep, 0), totalSteps - 1)
+  const step = steps[stepIndex]
 
   // Auto-advance when playing
   useEffect(() => {
     if (!isPlaying) return
+    if (totalSteps === 0) {
+      setIsPlaying(false)
+      return
+    }
 
     const timer = setInterval(() => {
       setCurrentStep((prev) => {
@@ -51,12 +56,23 @@ export function ConceptPanel({
     return () => clearInterval(timer)
   }, [isPlaying, totalSteps, playbackSpeed])
 
+  useEffect(() => {
+    setCurrentStep(0)
+    setIsPlaying(false)
+  }, [steps, type])
+
   const handlePrev = useCallback(() => {
-    setCurrentStep((prev) => Math.max(0, prev - 1))
-  }, [])
+    setCurrentStep((prev) => {
+      const normalized = Math.min(prev, totalSteps - 1)
+      return Math.max(0, normalized - 1)
+    })
+  }, [totalSteps])
 
   const handleNext = useCallback(() => {
-    setCurrentStep((prev) => Math.min(totalSteps - 1, prev + 1))
+    setCurrentStep((prev) => {
+      const normalized = Math.min(prev, totalSteps - 1)
+      return Math.min(totalSteps - 1, normalized + 1)
+    })
   }, [totalSteps])
 
   const handleReset = useCallback(() => {
@@ -65,11 +81,11 @@ export function ConceptPanel({
   }, [])
 
   const handlePlayPause = useCallback(() => {
-    if (currentStep >= totalSteps - 1) {
+    if (stepIndex >= totalSteps - 1) {
       setCurrentStep(0)
     }
     setIsPlaying((prev) => !prev)
-  }, [currentStep, totalSteps])
+  }, [stepIndex, totalSteps])
 
   // Keyboard shortcuts (unified with rest of app)
   const shortcuts = useMemo<ShortcutMap>(() => ({
@@ -139,7 +155,7 @@ export function ConceptPanel({
           <div className="flex-1 flex flex-col bg-[var(--color-bg-page-secondary)] rounded-lg p-2">
             <AnimatePresence mode="wait">
               <motion.div
-                key={currentStep}
+                key={stepIndex}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -148,7 +164,7 @@ export function ConceptPanel({
               >
                 <div className="flex items-center gap-2">
                   <span className="text-2xs font-semibold px-2 py-0.5 bg-[var(--color-brand-primary-30)] border border-[var(--color-brand-primary-50)] text-[var(--color-brand-light)] rounded-full shadow-[var(--glow-md)_var(--color-brand-primary-20)]">
-                    Step {currentStep + 1}
+                    Step {stepIndex + 1}
                   </span>
                   <span className="text-base font-semibold text-white">{step.title}</span>
                 </div>
@@ -176,7 +192,7 @@ export function ConceptPanel({
             <button
               className="flex items-center justify-center w-7 h-7 bg-white/5 border border-white/15 rounded-md text-gray-400 hover:not-disabled:bg-[var(--color-brand-primary-15)] hover:not-disabled:border-[var(--color-brand-primary-40)] hover:not-disabled:text-white hover:not-disabled:shadow-[var(--glow-md)_var(--color-brand-primary-20)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
               onClick={handlePrev}
-              disabled={currentStep === 0}
+              disabled={stepIndex === 0}
               title="Previous (←)"
             >
               <SkipBack size={14} />
@@ -193,7 +209,7 @@ export function ConceptPanel({
             <button
               className="flex items-center justify-center w-7 h-7 bg-white/5 border border-white/15 rounded-md text-gray-400 hover:not-disabled:bg-[var(--color-brand-primary-15)] hover:not-disabled:border-[var(--color-brand-primary-40)] hover:not-disabled:text-white hover:not-disabled:shadow-[var(--glow-md)_var(--color-brand-primary-20)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
               onClick={handleNext}
-              disabled={currentStep === totalSteps - 1}
+              disabled={stepIndex >= totalSteps - 1}
               title="Next (→)"
             >
               <SkipForward size={14} />
@@ -204,11 +220,11 @@ export function ConceptPanel({
             <div className="flex-1 h-1 bg-white/10 rounded-xs overflow-hidden">
               <div
                 className="h-full bg-[var(--gradient-brand)] rounded-xs shadow-[var(--glow-md)_var(--color-brand-primary-50)] transition-all duration-150"
-                style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
+                style={{ width: `${((stepIndex + 1) / totalSteps) * 100}%` }}
               />
             </div>
             <span className="text-2xs font-mono text-gray-600 whitespace-nowrap">
-              {currentStep + 1} / {totalSteps}
+              {stepIndex + 1} / {totalSteps}
             </span>
           </div>
 

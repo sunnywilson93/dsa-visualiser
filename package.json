@@ -22,6 +22,8 @@
     "test:visual:smoke:update": "PLAYWRIGHT_SKIP_SERVER=1 npx playwright test --config playwright.smoke.config.ts --update-snapshots",
     "test:concept-routes": "PLAYWRIGHT_SKIP_SERVER=1 npx playwright test --config playwright.concept-routes.config.ts",
     "test:concept-routes:server": "PLAYWRIGHT_SKIP_SERVER=1 PLAYWRIGHT_BASE_URL=http://localhost:3000 npx playwright test --config playwright.concept-routes.config.ts",
+    "test:dsa-analyze": "PLAYWRIGHT_SKIP_SERVER=1 npx playwright test --config playwright.dsa-analyze.config.ts",
+    "test:dsa-analyze:server": "PLAYWRIGHT_SKIP_SERVER=1 PLAYWRIGHT_BASE_URL=http://localhost:3000 npx playwright test --config playwright.dsa-analyze.config.ts",
     "prepare": "husky"
   },
   "dependencies": {

@@ -1,38 +1,66 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Async & Promise Problems > Async/Await Basics > completes with expected step count 1`] = `6`;
+
 exports[`Async & Promise Problems > Async/Await Basics > console output matches snapshot 1`] = `
 ""Starting...
 ""
 `;
 
+exports[`Async & Promise Problems > Auto-retry Promise > completes with expected step count 1`] = `14`;
+
 exports[`Async & Promise Problems > Auto-retry Promise > console output matches snapshot 1`] = `""=== Retry Demo ===""`;
+
+exports[`Async & Promise Problems > Create Your Own Promise > completes with expected step count 1`] = `5`;
 
 exports[`Async & Promise Problems > Create Your Own Promise > console output matches snapshot 1`] = `""=== Testing MyPromise ===""`;
 
+exports[`Async & Promise Problems > Implement Promise.all > completes with expected step count 1`] = `38`;
+
 exports[`Async & Promise Problems > Implement Promise.all > console output matches snapshot 1`] = `""`;
+
+exports[`Async & Promise Problems > Implement Promise.allSettled > completes with expected step count 1`] = `39`;
 
 exports[`Async & Promise Problems > Implement Promise.allSettled > console output matches snapshot 1`] = `""=== Testing allSettled ===""`;
 
+exports[`Async & Promise Problems > Implement Promise.any > completes with expected step count 1`] = `39`;
+
 exports[`Async & Promise Problems > Implement Promise.any > console output matches snapshot 1`] = `""=== First success wins ===""`;
+
+exports[`Async & Promise Problems > Implement Promise.finally > completes with expected step count 1`] = `12`;
 
 exports[`Async & Promise Problems > Implement Promise.finally > console output matches snapshot 1`] = `""=== Success case ===""`;
 
+exports[`Async & Promise Problems > Implement Promise.race > completes with expected step count 1`] = `38`;
+
 exports[`Async & Promise Problems > Implement Promise.race > console output matches snapshot 1`] = `""`;
 
+exports[`Async & Promise Problems > Implement Promisify > completes with expected step count 1`] = `16`;
+
 exports[`Async & Promise Problems > Implement Promisify > console output matches snapshot 1`] = `""`;
+
+exports[`Async & Promise Problems > Promise Chaining > completes with expected step count 1`] = `25`;
 
 exports[`Async & Promise Problems > Promise Chaining > console output matches snapshot 1`] = `
 ""Fetching user..."
 "Fetching user...""
 `;
 
+exports[`Async & Promise Problems > Promise with Timeout > completes with expected step count 1`] = `11`;
+
 exports[`Async & Promise Problems > Promise with Timeout > console output matches snapshot 1`] = `""=== Fast enough ===""`;
 
+exports[`Async & Promise Problems > Sequence Async Tasks > completes with expected step count 1`] = `16`;
+
 exports[`Async & Promise Problems > Sequence Async Tasks > console output matches snapshot 1`] = `""=== Sequential Execution ===""`;
+
+exports[`Async & Promise Problems > Sequential vs Parallel > completes with expected step count 1`] = `7`;
 
 exports[`Async & Promise Problems > Sequential vs Parallel > console output matches snapshot 1`] = `
 ""
 Parallel is faster!""
 `;
+
+exports[`Async & Promise Problems > Throttle Promises > completes with expected step count 1`] = `30`;
 
 exports[`Async & Promise Problems > Throttle Promises > console output matches snapshot 1`] = `""=== Max 2 concurrent ===""`;

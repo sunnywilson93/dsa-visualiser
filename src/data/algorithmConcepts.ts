@@ -5635,6 +5635,142 @@ export const problemConcepts: Record<string, ProblemConcept> = {
     ],
   },
 
+  'top-k-frequent': {
+    title: 'Top K Frequent Elements',
+    keyInsight: 'Count each value first, then select K values with largest frequency; frequency drives the ranking order.',
+    pattern: 'hash-map',
+    steps: [
+      {
+        id: 1,
+        title: 'Count Frequencies',
+        description: 'Scan nums and store counts per value.',
+        visual: {
+          hashMap: {
+            entries: [
+              { key: '1', value: 3 },
+              { key: '2', value: 2 },
+              { key: '3', value: 1 },
+            ],
+            phase: 'frequency count',
+            secondArray: [1, 2, 3],
+            currentIndex: 3,
+            lookupKey: '1',
+          },
+          annotations: ['freq(1)=3', 'freq(2)=2', 'freq(3)=1'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Build Ranked List',
+        description: 'Convert map entries to (value, frequency) pairs and order by frequency descending.',
+        visual: {
+          array: ['1:3', '2:2', '3:1'],
+          highlights: [0, 1],
+          annotations: ['Sort by frequency first', '1 and 2 are top candidates'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Take Top K',
+        description: 'Keep only first K pairs and return their values.',
+        visual: {
+          array: [1, 2],
+          result: '[1, 2]',
+          annotations: ['K=2 → answer = [1, 2]'],
+        },
+      },
+    ],
+  },
+
+  'network-delay-time': {
+    title: 'Network Delay Time',
+    keyInsight: 'This is weighted shortest path from one source: repeatedly finalize the nearest unreached node and relax its outgoing edges.',
+    pattern: 'sorting',
+    steps: [
+      {
+        id: 1,
+        title: 'Initialize Distances',
+        description: 'Start with source distance 0 and others as infinity.',
+        visual: {
+          array: [0, '∞', '∞', '∞', '∞'],
+          annotations: ['dist[source=1] = 0', 'Others unknown'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Relax Edges from Closest Node',
+        description: 'Pick current closest unreached node and update neighbors if we can improve their distances.',
+        visual: {
+          array: [0, 2, 4, 6, '∞'],
+          highlights: [1, 2, 3],
+          pointers: { node: 0 },
+          annotations: [
+            'Visit node 1',
+            'Edge 1→2 with weight 2 updates dist(2)',
+            'Edge 1→3 with weight 4 updates dist(3)',
+          ],
+        },
+      },
+      {
+        id: 3,
+        title: 'Finish with Minimum Total Time',
+        description: 'After all reachable nodes are finalized, the answer is the maximum of finite distances.',
+        visual: {
+          array: [0, 2, 4, 6, 3],
+          highlights: [0, 1, 2, 3],
+          result: 'max distance = 6',
+        },
+      },
+    ],
+  },
+
+  'meeting-rooms-ii': {
+    title: 'Meeting Rooms II',
+    keyInsight: 'Sort starts and ends; sweep with two pointers to count how many meetings overlap at any time.',
+    pattern: 'sorting',
+    steps: [
+      {
+        id: 1,
+        title: 'Sort Start and End Arrays',
+        description: 'Start list: [0, 5, 15], end list: [10, 10, 20] after sorting.',
+        visual: {
+          array: ['[0,5,15]', '[10,10,20]'],
+          annotations: ['starts sorted', 'ends sorted'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Sweep and Allocate',
+        description: 'Compare current start with current end. If start < end, overlaps require one more room.',
+        visual: {
+          array: ['0', '5', '15', '30'],
+          pointers: { start: 0, end: 0 },
+          annotations: ['0 >=? 10 → new room'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Release and Continue',
+        description: 'When a meeting ends, reuse that room by moving end pointer.',
+        visual: {
+          array: ['0', '5', '15', '30'],
+          pointers: { start: 1, end: 1 },
+          highlights: [0],
+          annotations: ['Start pointer meets an end', 'Rooms can be reused'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Result',
+        description: 'The peak concurrent count is the minimum rooms needed.',
+        visual: {
+          array: ['0', '5', '15', '30'],
+          result: 'rooms = 2',
+        },
+      },
+    ],
+  },
+
   'lru-cache': {
     title: 'LRU Cache',
     keyInsight: 'Doubly linked list orders by recency; hash map gives O(1) lookup — together they make O(1) LRU',

@@ -1,19 +1,94 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Sliding Window Problems > Find All Anagrams in a String > completes with expected step count 1`] = `8`;
+
+exports[`Sliding Window Problems > Find All Anagrams in a String > console output matches snapshot 1`] = `""`;
+
+exports[`Sliding Window Problems > Longest Repeating Character Replacement > completes with expected step count 1`] = `288`;
+
 exports[`Sliding Window Problems > Longest Repeating Character Replacement > console output matches snapshot 1`] = `
 ""String:" "AABABBA"
 "Max replacements k:" 1
 ""
-"Result:" 0
-"Result:" 0"
+"right:" 0 "char:" "A" "freq:" 1 "maxFreq:" 1
+"  Window [0..0], size:" 1
+"  New max length:" 1
+""
+"right:" 1 "char:" "A" "freq:" 2 "maxFreq:" 2
+"  Window [0..1], size:" 2
+"  New max length:" 2
+""
+"right:" 2 "char:" "B" "freq:" 1 "maxFreq:" 2
+"  Window [0..2], size:" 3
+"  New max length:" 3
+""
+"right:" 3 "char:" "A" "freq:" 3 "maxFreq:" 3
+"  Window [0..3], size:" 4
+"  New max length:" 4
+""
+"right:" 4 "char:" "B" "freq:" 2 "maxFreq:" 3
+"  Need" 2 "replacements > k, shrink from left"
+"  Window [1..4], size:" 4
+""
+"right:" 5 "char:" "B" "freq:" 3 "maxFreq:" 3
+"  Need" 2 "replacements > k, shrink from left"
+"  Window [2..5], size:" 4
+""
+"right:" 6 "char:" "A" "freq:" 2 "maxFreq:" 3
+"  Need" 2 "replacements > k, shrink from left"
+"  Window [3..6], size:" 4
+""
+"Result:" 4
+"Result:" 4"
 `;
+
+exports[`Sliding Window Problems > Longest Substring Without Repeating Characters > completes with expected step count 1`] = `231`;
 
 exports[`Sliding Window Problems > Longest Substring Without Repeating Characters > console output matches snapshot 1`] = `
 ""String:" "abcabcbb"
 ""
-"Result:" 0
-"Result:" 0"
+"right:" 0 "char:" "a"
+"  Window [0..0], length:" 1
+"  New max length:" 1
+""
+"right:" 1 "char:" "b"
+"  Window [0..1], length:" 2
+"  New max length:" 2
+""
+"right:" 2 "char:" "c"
+"  Window [0..2], length:" 3
+"  New max length:" 3
+""
+"right:" 3 "char:" "a"
+"  Duplicate! Last seen at index" 0
+"  Move left to" 1
+"  Window [1..3], length:" 3
+""
+"right:" 4 "char:" "b"
+"  Duplicate! Last seen at index" 1
+"  Move left to" 2
+"  Window [2..4], length:" 3
+""
+"right:" 5 "char:" "c"
+"  Duplicate! Last seen at index" 2
+"  Move left to" 3
+"  Window [3..5], length:" 3
+""
+"right:" 6 "char:" "b"
+"  Duplicate! Last seen at index" 4
+"  Move left to" 5
+"  Window [5..6], length:" 2
+""
+"right:" 7 "char:" "b"
+"  Duplicate! Last seen at index" 6
+"  Move left to" 7
+"  Window [7..7], length:" 1
+""
+"Result:" 3
+"Result:" 3"
 `;
+
+exports[`Sliding Window Problems > Max Consecutive Ones III > completes with expected step count 1`] = `315`;
 
 exports[`Sliding Window Problems > Max Consecutive Ones III > console output matches snapshot 1`] = `
 ""Array:" [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0]
@@ -69,6 +144,8 @@ exports[`Sliding Window Problems > Max Consecutive Ones III > console output mat
 "Result:" 6"
 `;
 
+exports[`Sliding Window Problems > Maximum Average Subarray I > completes with expected step count 1`] = `96`;
+
 exports[`Sliding Window Problems > Maximum Average Subarray I > console output matches snapshot 1`] = `
 ""Array:" [1, 12, -5, -6, 50, 3]
 "Window size k:" 4
@@ -88,6 +165,8 @@ exports[`Sliding Window Problems > Maximum Average Subarray I > console output m
 "Result:" 12.75"
 `;
 
+exports[`Sliding Window Problems > Maximum Sum Subarray of Size K > completes with expected step count 1`] = `99`;
+
 exports[`Sliding Window Problems > Maximum Sum Subarray of Size K > console output matches snapshot 1`] = `
 ""Array:" [2, 1, 5, 1, 3, 2]
 "Window size k:" 3
@@ -105,6 +184,8 @@ exports[`Sliding Window Problems > Maximum Sum Subarray of Size K > console outp
 "Result:" 9
 "Result:" 9"
 `;
+
+exports[`Sliding Window Problems > Minimum Size Subarray Sum > completes with expected step count 1`] = `217`;
 
 exports[`Sliding Window Problems > Minimum Size Subarray Sum > console output matches snapshot 1`] = `
 ""Target:" 7
@@ -139,19 +220,59 @@ exports[`Sliding Window Problems > Minimum Size Subarray Sum > console output ma
 "Result:" 2"
 `;
 
+exports[`Sliding Window Problems > Minimum Window Substring > completes with expected step count 1`] = `610`;
+
 exports[`Sliding Window Problems > Minimum Window Substring > console output matches snapshot 1`] = `
 ""s:" "ADOBECODEBANC"
 "t:" "ABC"
 ""
-"t has" undefined "unique characters"
+"t has" 3 "unique characters"
+"right:" 0 "char:" "A" "- formed:" "1/3"
+"right:" 1 "char:" "D"
+"right:" 2 "char:" "O"
+"right:" 3 "char:" "B" "- formed:" "2/3"
+"right:" 4 "char:" "E"
+"right:" 5 "char:" "C" "- formed:" "3/3"
+"  All chars covered! Window [0..5], length:" 6
+"  New min window: length" 6
+"  Shrink: removed 'A', lost coverage, formed:" "2/3"
+"right:" 6 "char:" "O"
+"right:" 7 "char:" "D"
+"right:" 8 "char:" "E"
+"right:" 9 "char:" "B"
+"right:" 10 "char:" "A" "- formed:" "3/3"
+"  All chars covered! Window [1..10], length:" 10
+"  Shrink: removed 'D'"
+"  All chars covered! Window [2..10], length:" 9
+"  Shrink: removed 'O'"
+"  All chars covered! Window [3..10], length:" 8
+"  Shrink: removed 'B'"
+"  All chars covered! Window [4..10], length:" 7
+"  Shrink: removed 'E'"
+"  All chars covered! Window [5..10], length:" 6
+"  Shrink: removed 'C', lost coverage, formed:" "2/3"
+"right:" 11 "char:" "N"
+"right:" 12 "char:" "C" "- formed:" "3/3"
+"  All chars covered! Window [6..12], length:" 7
+"  Shrink: removed 'O'"
+"  All chars covered! Window [7..12], length:" 6
+"  Shrink: removed 'D'"
+"  All chars covered! Window [8..12], length:" 5
+"  New min window: length" 5
+"  Shrink: removed 'E'"
+"  All chars covered! Window [9..12], length:" 4
+"  New min window: length" 4
+"  Shrink: removed 'B', lost coverage, formed:" "2/3"
 ""
-"Result:" ""
-"Result:" """
+"Result:" "BANC"
+"Result:" "BANC""
 `;
+
+exports[`Sliding Window Problems > Permutation in String > completes with expected step count 1`] = `86`;
 
 exports[`Sliding Window Problems > Permutation in String > console output matches snapshot 1`] = `
 ""s1:" "ab" "s2:" "eidbaooo"
-"Window size:" undefined
+"Window size:" 2
 ""
 "s1 frequency map built"
 "Initial window frequency map built"
@@ -159,6 +280,8 @@ exports[`Sliding Window Problems > Permutation in String > console output matche
 "Result: true"
 "Result:" true"
 `;
+
+exports[`Sliding Window Problems > Sliding Window Maximum > completes with expected step count 1`] = `357`;
 
 exports[`Sliding Window Problems > Sliding Window Maximum > console output matches snapshot 1`] = `
 ""Array:" [1, 3, -1, -3, 5, 3, 6, 7]

@@ -1015,6 +1015,182 @@ queue.shift()  // 1 (first added)
   },
 
   {
+    id: 'heap',
+    title: 'Heaps & Priority Queues',
+    category: 'data-structures',
+    difficulty: 'intermediate',
+    description: 'A heap is a complete binary tree with a strict parent-child ordering rule. In a min-heap, parents are always smaller than children; in a max-heap, parents are always larger. This lets you repeatedly get the "best next" item in O(1) and update the heap in O(log n).',
+    shortDescription: 'Fast min/max access with efficient updates',
+    keyPoints: [
+      'Parent index = floor((i - 1) / 2), children = 2i + 1 and 2i + 2',
+      'Min-heap gives fast smallest-value retrieval (peek)',
+      'Max-heap gives fast largest-value retrieval (peek)',
+      'Insert and extract both rebalance along one root-to-leaf path',
+      'Ideal for top-k / streaming selection problems',
+      'Priority queues are heaps used with custom priority keys',
+    ],
+    examples: [
+      {
+        title: 'Min-Heap Operations',
+        code: `class MinHeap {
+  constructor() {
+    this.values = []
+  }
+
+  insert(value) {
+    this.values.push(value)
+    this.bubbleUp()
+  }
+
+  peek() {
+    return this.values[0]
+  }
+
+  extractMin() {
+    if (this.values.length === 0) return null
+    if (this.values.length === 1) return this.values.pop()
+
+    const min = this.values[0]
+    this.values[0] = this.values.pop()
+    this.bubbleDown()
+    return min
+  }
+
+  bubbleUp() {
+    let index = this.values.length - 1
+    while (index > 0) {
+      const parentIndex = Math.floor((index - 1) / 2)
+      if (this.values[parentIndex] <= this.values[index]) break
+
+      ;[this.values[parentIndex], this.values[index]] = [this.values[index], this.values[parentIndex]]
+      index = parentIndex
+    }
+  }
+
+  bubbleDown() {
+    let index = 0
+    const n = this.values.length
+
+    while (true) {
+      const leftIndex = index * 2 + 1
+      const rightIndex = index * 2 + 2
+      let smallestIndex = index
+
+      if (leftIndex < n && this.values[leftIndex] < this.values[smallestIndex]) {
+        smallestIndex = leftIndex
+      }
+      if (rightIndex < n && this.values[rightIndex] < this.values[smallestIndex]) {
+        smallestIndex = rightIndex
+      }
+      if (smallestIndex === index) break
+
+      ;[this.values[index], this.values[smallestIndex]] = [this.values[smallestIndex], this.values[index]]
+      index = smallestIndex
+    }
+  }
+}
+
+const heap = new MinHeap()
+heap.insert(5)
+heap.insert(2)
+heap.insert(8)
+heap.insert(1)
+
+heap.peek() // 1
+heap.extractMin() // 1
+heap.extractMin() // 2`,
+        explanation: 'Insert and extract are each O(log n); peek is O(1).'
+      },
+      {
+        title: 'Top K Frequent with Heap Concept',
+        code: `// Count frequencies first
+const freq = new Map()
+for (const num of [1, 2, 2, 3, 3, 3]) {
+  freq.set(num, (freq.get(num) || 0) + 1)
+}
+
+// Turn each [value, frequency] pair into a candidate
+// Keep only top 2 elements in a min-heap of fixed size
+const pairs = Array.from(freq.entries())
+console.log('Pairs:', pairs)
+// [[1,1], [2,2], [3,3]]
+
+// If we only need k elements, keep a small heap and drop low frequency items quickly`,
+        explanation: 'Heaps are useful when you only need the top-k frequencies, not full sorted order.'
+      },
+      {
+        title: 'Merge K Sorted Lists Idea',
+        code: `// Push each list head into a min-heap
+// Extract the smallest, then push next node from that same list.
+// Repeat until heap is empty.
+
+function explainMergeKSortedLists() {
+  const example = [
+    [1, 4, 5],
+    [1, 3, 4],
+    [2, 6],
+  ]
+
+  console.log('Input lists:', example)
+  console.log('Keep heap of current smallest heads: 1, 1, 2')
+  console.log('Extract 1, then add 4 from first list')
+  console.log('Extract 1, then add 3 from second list')
+  console.log('... and so on')
+}
+
+explainMergeKSortedLists()`,
+        explanation: 'This pattern shows why heaps excel at repeatedly selecting the current global minimum from many sorted sources.'
+      },
+    ],
+    complexity: {
+      average: {
+        'Insert': 'O(log n)',
+        'Extract min/max': 'O(log n)',
+        'Peek': 'O(1)',
+        'Build from list': 'O(n)',
+      },
+      worst: {
+        'Insert': 'O(log n)',
+        'Extract min/max': 'O(log n)',
+      },
+    },
+    commonMistakes: [
+      'Using O(n log n) sort when a heap of size k gives O(n log k)',
+      'Swapping wrong child when bubbling down (breaks heap property)',
+      'Forgetting to rebalance after extract',
+      'Building custom compare rules when built-in library already exists in some languages',
+      'Confusing min-heap and max-heap priority direction in examples',
+    ],
+    interviewTips: [
+      'Start by clarifying whether you need smallest-first or largest-first',
+      'Explain why repeated global selection is exactly what heaps optimize',
+      'Track heap size if you only need top k (not the full structure)',
+      'For coding interviews, write parent/child helper methods to avoid index mistakes',
+    ],
+    relatedProblems: [
+      'top-k-frequent',
+      'kth-largest-element',
+      'merge-k-sorted-lists',
+      'meeting-rooms-ii',
+      'network-delay-time',
+    ],
+    learningPath: [
+      {
+        stage: 'Core Operations',
+        problemIds: ['top-k-frequent', 'kth-largest-element'],
+      },
+      {
+        stage: 'Multiple Sources',
+        problemIds: ['merge-k-sorted-lists', 'meeting-rooms-ii'],
+      },
+      {
+        stage: 'Priority Scheduling',
+        problemIds: ['network-delay-time'],
+      },
+    ],
+  },
+
+  {
     id: 'graphs',
     title: 'Graphs',
     category: 'algorithms',
@@ -2083,16 +2259,17 @@ export const dsaConceptCategories = [
 const relatedDSAConceptsMap: Record<string, string[]> = {
   'big-o-notation': ['binary-system', 'arrays', 'hash-tables', 'linked-lists'],
   'binary-system': ['big-o-notation', 'arrays', 'hash-tables'],
-  'arrays': ['big-o-notation', 'hash-tables', 'stacks', 'queues', 'sorting-algorithms'],
+  'arrays': ['big-o-notation', 'hash-tables', 'stacks', 'queues', 'heap', 'sorting-algorithms'],
   'hash-tables': ['big-o-notation', 'arrays', 'trie'],
-  'stacks': ['arrays', 'queues', 'linked-lists', 'graphs'],
-  'queues': ['arrays', 'stacks', 'linked-lists', 'graphs'],
-  'linked-lists': ['arrays', 'stacks', 'queues'],
+  'stacks': ['arrays', 'queues', 'linked-lists', 'graphs', 'heap'],
+  'queues': ['arrays', 'stacks', 'linked-lists', 'graphs', 'heap'],
+  'heap': ['arrays', 'hash-tables', 'linked-lists', 'graphs', 'sorting-algorithms'],
+  'linked-lists': ['arrays', 'stacks', 'queues', 'heap'],
   'recursion': ['sorting-algorithms', 'graphs', 'trie'],
-  'graphs': ['stacks', 'queues', 'recursion'],
+  'graphs': ['stacks', 'queues', 'recursion', 'heap'],
   'trees': ['recursion', 'queues', 'binary-system', 'trie'],
   'trie': ['hash-tables', 'trees', 'recursion'],
-  'sorting-algorithms': ['arrays', 'big-o-notation', 'linked-lists'],
+  'sorting-algorithms': ['arrays', 'big-o-notation', 'linked-lists', 'heap'],
   'backtracking': ['recursion'],
 }
 

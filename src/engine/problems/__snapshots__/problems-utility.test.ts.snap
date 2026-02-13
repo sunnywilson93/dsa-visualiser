@@ -1,5 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Utility & DOM Problems > DOM Wrapper with Chaining > completes with expected step count 1`] = `58`;
+
 exports[`Utility & DOM Problems > DOM Wrapper with Chaining > console output matches snapshot 1`] = `
 ""Selected:" "div"
 "  Set" "color" "=" "red"
@@ -11,6 +13,8 @@ exports[`Utility & DOM Problems > DOM Wrapper with Chaining > console output mat
 Final styles:" {color: "red", fontSize: "16px"}
 "Classes:" ["active", "visible"]"
 `;
+
+exports[`Utility & DOM Problems > Event Delegation > completes with expected step count 1`] = `48`;
 
 exports[`Utility & DOM Problems > Event Delegation > console output matches snapshot 1`] = `
 ""Registered click handler"
@@ -30,6 +34,8 @@ Click event - action:" "view" "id:" 4
 One handler managed all events!""
 `;
 
+exports[`Utility & DOM Problems > Event Emitter > completes with expected step count 1`] = `101`;
+
 exports[`Utility & DOM Problems > Event Emitter > console output matches snapshot 1`] = `
 ""Subscribed to:" "message"
 "Subscribed to:" "alert"
@@ -41,10 +47,32 @@ Emit:" "alert"
 "  Alert:" "Warning!"
 "Unsubscribed from:" "alert"
 "
-Emit:" "alert""
+Emit:" "alert"
+"  Alert:" "No one listening""
 `;
 
-exports[`Utility & DOM Problems > Get All DOM Tags > console output matches snapshot 1`] = `""All unique tags:""`;
+exports[`Utility & DOM Problems > Find Node in DOM Trees > completes with expected step count 1`] = `113`;
+
+exports[`Utility & DOM Problems > Find Node in DOM Trees > console output matches snapshot 1`] = `
+""Finding node:" "B1"
+"Path from root:" [1, 0]
+"  Navigate to child" 1
+"  Navigate to child" 0
+"
+Found in Tree B:" "B1""
+`;
+
+exports[`Utility & DOM Problems > Get All DOM Tags > completes with expected step count 1`] = `358`;
+
+exports[`Utility & DOM Problems > Get All DOM Tags > console output matches snapshot 1`] = `
+""All unique tags:"
+["a", "body", "div", "footer", "h1", "head", "html", "img", "meta", "p", "span", "title"]
+"
+Tag counts:"
+{html: 1, head: 1, title: 1, meta: 1, body: 1, div: 2, h1: 1, p: 2, span: 1, a: 1, img: 1, footer: 1}"
+`;
+
+exports[`Utility & DOM Problems > Get DOM Tree Height > completes with expected step count 1`] = `145`;
 
 exports[`Utility & DOM Problems > Get DOM Tree Height > console output matches snapshot 1`] = `
 ""DOM Structure:"
@@ -56,24 +84,40 @@ Tree Height:" 5
 "Height (BFS):" 0"
 `;
 
+exports[`Utility & DOM Problems > Implement _.once() > completes with expected step count 1`] = `14`;
+
 exports[`Utility & DOM Problems > Implement _.once() > console output matches snapshot 1`] = `
 ""Call 1:"
 "  First call, executing...""
 `;
+
+exports[`Utility & DOM Problems > Implement Debounce > completes with expected step count 1`] = `14`;
 
 exports[`Utility & DOM Problems > Implement Debounce > console output matches snapshot 1`] = `
 ""Typing..."
 "  Set timeout 300ms""
 `;
 
+exports[`Utility & DOM Problems > Implement Deep Clone > completes with expected step count 1`] = `12`;
+
 exports[`Utility & DOM Problems > Implement Deep Clone > console output matches snapshot 1`] = `""`;
 
-exports[`Utility & DOM Problems > Implement Memoize > console output matches snapshot 1`] = `""`;
+exports[`Utility & DOM Problems > Implement Memoize > completes with expected step count 1`] = `13`;
+
+exports[`Utility & DOM Problems > Implement Memoize > console output matches snapshot 1`] = `""Cache MISS:" "10""`;
+
+exports[`Utility & DOM Problems > Implement Throttle > completes with expected step count 1`] = `15`;
 
 exports[`Utility & DOM Problems > Implement Throttle > console output matches snapshot 1`] = `""Rapid events:""`;
 
+exports[`Utility & DOM Problems > Implement memoizeOne() > completes with expected step count 1`] = `13`;
+
 exports[`Utility & DOM Problems > Implement memoizeOne() > console output matches snapshot 1`] = `""  Cache MISS (new args)""`;
 
+exports[`Utility & DOM Problems > Implement promisify() > completes with expected step count 1`] = `17`;
+
 exports[`Utility & DOM Problems > Implement promisify() > console output matches snapshot 1`] = `""Using promisified function:""`;
+
+exports[`Utility & DOM Problems > Implement sleep() > completes with expected step count 1`] = `4`;
 
 exports[`Utility & DOM Problems > Implement sleep() > console output matches snapshot 1`] = `""`;

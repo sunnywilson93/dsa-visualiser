@@ -1,6 +1,10 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Polyfills & Functional Problems > Curry with Placeholder > completes with expected step count 1`] = `1`;
+
 exports[`Polyfills & Functional Problems > Curry with Placeholder > console output matches snapshot 1`] = `""`;
+
+exports[`Polyfills & Functional Problems > Deep Equal > completes with expected step count 1`] = `156`;
 
 exports[`Polyfills & Functional Problems > Deep Equal > console output matches snapshot 1`] = `
 ""Equal nested:"
@@ -13,22 +17,30 @@ Arrays:"
 true"
 `;
 
+exports[`Polyfills & Functional Problems > Deep Merge > completes with expected step count 1`] = `16`;
+
 exports[`Polyfills & Functional Problems > Deep Merge > console output matches snapshot 1`] = `
 ""Merged:"
 {}"
 `;
 
+exports[`Polyfills & Functional Problems > Flatten Thunk > completes with expected step count 1`] = `3`;
+
 exports[`Polyfills & Functional Problems > Flatten Thunk > console output matches snapshot 1`] = `""`;
+
+exports[`Polyfills & Functional Problems > Get/Set Nested Property > completes with expected step count 1`] = `140`;
 
 exports[`Polyfills & Functional Problems > Get/Set Nested Property > console output matches snapshot 1`] = `
 ""Get:"
 undefined
 undefined
-undefined
+"default"
 "
 Set:"
 {: {$1a: {b: {c: 42}}}}"
 `;
+
+exports[`Polyfills & Functional Problems > Implement _.partial() > completes with expected step count 1`] = `41`;
 
 exports[`Polyfills & Functional Problems > Implement _.partial() > console output matches snapshot 1`] = `
 ""Original:"
@@ -41,6 +53,8 @@ greetAlice('.'):"
 undefined"
 `;
 
+exports[`Polyfills & Functional Problems > Implement Array.concat > completes with expected step count 1`] = `52`;
+
 exports[`Polyfills & Functional Problems > Implement Array.concat > console output matches snapshot 1`] = `
 ""Concat arrays:"
 "Copy original:" [1, 2]
@@ -52,6 +66,8 @@ Concat mixed:"
 "Copy original:" [1, 2]
 "Result:" [1, 2]"
 `;
+
+exports[`Polyfills & Functional Problems > Implement Array.every > completes with expected step count 1`] = `114`;
 
 exports[`Polyfills & Functional Problems > Implement Array.every > console output matches snapshot 1`] = `
 ""All positive?"
@@ -76,11 +92,18 @@ All even?"
 "Result:" false"
 `;
 
+exports[`Polyfills & Functional Problems > Implement Array.fill > completes with expected step count 1`] = `169`;
+
 exports[`Polyfills & Functional Problems > Implement Array.fill > console output matches snapshot 1`] = `
 ""fill(0):"
 "Fill with:" 0
-"From" undefined "to" undefined
-"Result:" [1, 2, 3, 4, 5]
+"From" 0 "to" 5
+"  [0]:" 1 "->" 0
+"  [1]:" 2 "->" 0
+"  [2]:" 3 "->" 0
+"  [3]:" 4 "->" 0
+"  [4]:" 5 "->" 0
+"Result:" [0, 0, 0, 0, 0]
 "
 fill('x', 1, 4):"
 "Fill with:" "x"
@@ -92,9 +115,13 @@ fill('x', 1, 4):"
 "
 fill(9, -2):"
 "Fill with:" 9
-"From" 3 "to" undefined
-"Result:" [1, 2, 3, 4, 5]"
+"From" 3 "to" 5
+"  [3]:" 4 "->" 9
+"  [4]:" 5 "->" 9
+"Result:" [1, 2, 3, 9, 9]"
 `;
+
+exports[`Polyfills & Functional Problems > Implement Array.filter > completes with expected step count 1`] = `115`;
 
 exports[`Polyfills & Functional Problems > Implement Array.filter > console output matches snapshot 1`] = `
 ""=== Evens ==="
@@ -108,6 +135,8 @@ exports[`Polyfills & Functional Problems > Implement Array.filter > console outp
 "
 === Truthy ===""
 `;
+
+exports[`Polyfills & Functional Problems > Implement Array.find > completes with expected step count 1`] = `90`;
 
 exports[`Polyfills & Functional Problems > Implement Array.find > console output matches snapshot 1`] = `
 ""Find age > 28:"
@@ -123,6 +152,8 @@ Find age > 100:"
 "Not found"
 "Result:" undefined"
 `;
+
+exports[`Polyfills & Functional Problems > Implement Array.findIndex > completes with expected step count 1`] = `125`;
 
 exports[`Polyfills & Functional Problems > Implement Array.findIndex > console output matches snapshot 1`] = `
 ""Find index where num > 25:"
@@ -142,6 +173,8 @@ Find index where num > 100:"
 "Result:" -1"
 `;
 
+exports[`Polyfills & Functional Problems > Implement Array.flat > completes with expected step count 1`] = `135`;
+
 exports[`Polyfills & Functional Problems > Implement Array.flat > console output matches snapshot 1`] = `
 ""=== Depth 1 ==="
 "Flatten:" [2, [3]]
@@ -155,6 +188,8 @@ exports[`Polyfills & Functional Problems > Implement Array.flat > console output
 === Infinity ==="
 [1, [2, [3, [4]]]]"
 `;
+
+exports[`Polyfills & Functional Problems > Implement Array.flatMap > completes with expected step count 1`] = `149`;
 
 exports[`Polyfills & Functional Problems > Implement Array.flatMap > console output matches snapshot 1`] = `
 ""Split words into chars:"
@@ -174,6 +209,8 @@ Double each number:"
 "Result:" [1, 2, 2, 4, 3, 6]"
 `;
 
+exports[`Polyfills & Functional Problems > Implement Array.forEach > completes with expected step count 1`] = `70`;
+
 exports[`Polyfills & Functional Problems > Implement Array.forEach > console output matches snapshot 1`] = `
 ""Index:" 0 "Value:" 1
 "  Running sum:" 1
@@ -188,6 +225,8 @@ exports[`Polyfills & Functional Problems > Implement Array.forEach > console out
 "
 Final sum:" 15"
 `;
+
+exports[`Polyfills & Functional Problems > Implement Array.includes > completes with expected step count 1`] = `154`;
 
 exports[`Polyfills & Functional Problems > Implement Array.includes > console output matches snapshot 1`] = `
 ""Includes 3?"
@@ -219,6 +258,8 @@ Includes 6?"
 "Result:" false"
 `;
 
+exports[`Polyfills & Functional Problems > Implement Array.indexOf > completes with expected step count 1`] = `136`;
+
 exports[`Polyfills & Functional Problems > Implement Array.indexOf > console output matches snapshot 1`] = `
 ""indexOf 'b':"
 "Search for:" "b"
@@ -245,10 +286,37 @@ indexOf 'z':"
 "Result:" -1"
 `;
 
+exports[`Polyfills & Functional Problems > Implement Array.join > completes with expected step count 1`] = `241`;
+
 exports[`Polyfills & Functional Problems > Implement Array.join > console output matches snapshot 1`] = `
 ""Default separator:"
-"Array:" [1, 2, 3]"
+"Array:" [1, 2, 3]
+"Separator:" "",""
+"  After [0]:" ""1""
+"  After [1]:" ""1,2""
+"  After [2]:" ""1,2,3""
+"Result:" "1,2,3"
+"
+Custom separator:"
+"Array:" ["a", "b", "c"]
+"Separator:" "" - ""
+"  After [0]:" ""a""
+"  After [1]:" ""a - b""
+"  After [2]:" ""a - b - c""
+"Result:" "a - b - c"
+"
+With null/undefined:"
+"Array:" [1, null, 3, undefined, 5]
+"Separator:" "",""
+"  After [0]:" ""1""
+"  After [1]:" ""1,""
+"  After [2]:" ""1,,3""
+"  After [3]:" ""1,,3,""
+"  After [4]:" ""1,,3,,5""
+"Result:" "1,,3,,5""
 `;
+
+exports[`Polyfills & Functional Problems > Implement Array.map > completes with expected step count 1`] = `121`;
 
 exports[`Polyfills & Functional Problems > Implement Array.map > console output matches snapshot 1`] = `
 ""=== Double ==="
@@ -265,9 +333,12 @@ exports[`Polyfills & Functional Problems > Implement Array.map > console output 
 ["Alice", "Bob"]"
 `;
 
+exports[`Polyfills & Functional Problems > Implement Array.reduce > completes with expected step count 1`] = `180`;
+
 exports[`Polyfills & Functional Problems > Implement Array.reduce > console output matches snapshot 1`] = `
 ""=== Sum ==="
-"Initial:" 1
+"Initial:" 0
+0 "+" 1 "=" 1
 1 "+" 2 "=" 3
 3 "+" 3 "=" 6
 6 "+" 4 "=" 10
@@ -282,10 +353,13 @@ exports[`Polyfills & Functional Problems > Implement Array.reduce > console outp
 9
 "
 === Flatten ==="
-"Initial:" [1, 2]
+"Initial:" []
+[] "+" [1, 2] "=" [1, 2]
 [1, 2] "+" [3, 4] "=" [1, 2, 3, 4]
 [1, 2, 3, 4]"
 `;
+
+exports[`Polyfills & Functional Problems > Implement Array.reverse > completes with expected step count 1`] = `97`;
 
 exports[`Polyfills & Functional Problems > Implement Array.reverse > console output matches snapshot 1`] = `
 ""Reverse numbers:"
@@ -305,6 +379,8 @@ Reverse chars:"
 "Final:" ["d", "c", "b", "a"]"
 `;
 
+exports[`Polyfills & Functional Problems > Implement Array.slice > completes with expected step count 1`] = `172`;
+
 exports[`Polyfills & Functional Problems > Implement Array.slice > console output matches snapshot 1`] = `
 ""slice(2, 4):"
 "Array:" [0, 1, 2, 3, 4, 5]
@@ -315,8 +391,11 @@ exports[`Polyfills & Functional Problems > Implement Array.slice > console outpu
 "
 slice(-3):"
 "Array:" [0, 1, 2, 3, 4, 5]
-"Slice from" 3 "to" undefined
-"Result:" []
+"Slice from" 3 "to" 6
+"  Copy [3]:" 3
+"  Copy [4]:" 4
+"  Copy [5]:" 5
+"Result:" [3, 4, 5]
 "
 slice(1, -1):"
 "Array:" [0, 1, 2, 3, 4, 5]
@@ -327,6 +406,8 @@ slice(1, -1):"
 "  Copy [4]:" 4
 "Result:" [1, 2, 3, 4]"
 `;
+
+exports[`Polyfills & Functional Problems > Implement Array.some > completes with expected step count 1`] = `111`;
 
 exports[`Polyfills & Functional Problems > Implement Array.some > console output matches snapshot 1`] = `
 ""Any adult (>= 18)?"
@@ -351,12 +432,16 @@ Any senior (>= 65)?"
 "Result:" false"
 `;
 
+exports[`Polyfills & Functional Problems > Implement Compose > completes with expected step count 1`] = `14`;
+
 exports[`Polyfills & Functional Problems > Implement Compose > console output matches snapshot 1`] = `
 ""compose(addOne, double, square)(3)"
 "= addOne(double(square(3)))"
 "= addOne(double(9))"
 "= addOne(18)""
 `;
+
+exports[`Polyfills & Functional Problems > Implement Curry > completes with expected step count 1`] = `67`;
 
 exports[`Polyfills & Functional Problems > Implement Curry > console output matches snapshot 1`] = `
 ""add(1,2,3):" ƒ <anonymous>()
@@ -366,17 +451,25 @@ exports[`Polyfills & Functional Problems > Implement Curry > console output matc
 double(5):" ƒ <anonymous>()"
 `;
 
+exports[`Polyfills & Functional Problems > Implement Object.assign() > completes with expected step count 1`] = `11`;
+
 exports[`Polyfills & Functional Problems > Implement Object.assign() > console output matches snapshot 1`] = `""Merging...""`;
 
+exports[`Polyfills & Functional Problems > Implement Object.create() > completes with expected step count 1`] = `19`;
+
 exports[`Polyfills & Functional Problems > Implement Object.create() > console output matches snapshot 1`] = `""`;
+
+exports[`Polyfills & Functional Problems > Implement Object.is() > completes with expected step count 1`] = `8`;
 
 exports[`Polyfills & Functional Problems > Implement Object.is() > console output matches snapshot 1`] = `
 ""=== vs Object.is()"
 "-------------------"
 "
 NaN comparison:"
-"NaN === NaN:" undefined"
+"NaN === NaN:" true"
 `;
+
+exports[`Polyfills & Functional Problems > Implement Pipe > completes with expected step count 1`] = `14`;
 
 exports[`Polyfills & Functional Problems > Implement Pipe > console output matches snapshot 1`] = `
 ""pipe(addOne, double, square)(3)"
@@ -384,5 +477,7 @@ exports[`Polyfills & Functional Problems > Implement Pipe > console output match
 "= square(double(4))"
 "= square(8)""
 `;
+
+exports[`Polyfills & Functional Problems > Shallow vs Deep Freeze > completes with expected step count 1`] = `5`;
 
 exports[`Polyfills & Functional Problems > Shallow vs Deep Freeze > console output matches snapshot 1`] = `""`;
