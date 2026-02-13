@@ -8,3 +8,7 @@ dist
 .vercel
 playwright-report/
 test-results/
+.playwright-mcp/
+app.log
+skills/
+video-gen/
