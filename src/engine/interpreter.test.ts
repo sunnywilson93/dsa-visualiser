@@ -190,6 +190,19 @@ describe('Interpreter', () => {
       const finalScope = steps[steps.length - 1].scopes[0]
       expect(getPrimitiveValue(finalScope.variables.len)).toBe(5)
     })
+
+    it('should handle Array.sort', () => {
+      const steps = executeCode(`
+        let nums = [3, 1, 2];
+        nums.sort((a, b) => a - b);
+        let desc = nums.sort((a, b) => b - a);
+      `)
+
+      const finalScope = steps[steps.length - 1].scopes[0]
+      const nums = finalScope.variables.desc
+      const elements = nums.elements.map(item => getPrimitiveValue(item))
+      expect(elements).toEqual([3, 2, 1])
+    })
   })
 
   describe('Loops', () => {
@@ -424,6 +437,28 @@ describe('Interpreter', () => {
   })
 
   describe('Error Handling', () => {
+    it('should handle JSON.stringify calls', () => {
+      const steps = executeCode(`
+        const payload = { name: 'root', count: 2 };
+        const str = JSON.stringify(payload);
+      `)
+
+      const finalScope = steps[steps.length - 1].scopes[0]
+      expect(finalScope.variables.str).toBeDefined()
+      expect(getPrimitiveValue(finalScope.variables.str)).toBe('{"name":"root","count":2}')
+    })
+
+    it('should handle cyclic objects without stack overflow', () => {
+      const steps = executeCode(`
+        const node = { val: 1 };
+        node.next = node;
+        console.log(node);
+      `)
+
+      const lastStep = steps[steps.length - 1]
+      expect(lastStep.description.startsWith('Error')).toBe(false)
+    })
+
     it('should handle division by zero', () => {
       const steps = executeCode(`
         let x = 10 / 0;

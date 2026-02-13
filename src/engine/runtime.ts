@@ -87,38 +87,66 @@ export function createUndefined(): UndefinedValue {
  * Deep clone a runtime value for state capture
  */
 export function cloneValue(value: RuntimeValue): RuntimeValue {
+  return cloneValueInternal(value, new WeakMap())
+}
+
+function cloneValueInternal(value: RuntimeValue, seen: WeakMap<object, RuntimeValue>): RuntimeValue {
   switch (value.type) {
     case 'primitive':
     case 'null':
     case 'undefined':
       return { ...value }
 
-    case 'array':
-      return {
-        ...value,
-        elements: value.elements.map(cloneValue),
-      }
+    case 'array': {
+      const cached = seen.get(value as object)
+      if (cached) return cached
 
-    case 'object':
+      const clonedArray = {
+        ...value,
+        elements: [] as RuntimeValue[],
+      }
+      seen.set(value as object, clonedArray)
+      clonedArray.elements = value.elements.map((entry) => cloneValueInternal(entry, seen))
+      return clonedArray
+    }
+
+    case 'object': {
+      const cached = seen.get(value as object)
+      if (cached) return cached
+
+      const clonedObj = {
+        ...value,
+        properties: {} as Record<string, RuntimeValue>,
+      }
+      seen.set(value as object, clonedObj)
+
       const clonedProps: Record<string, RuntimeValue> = {}
       for (const [key, val] of Object.entries(value.properties)) {
-        clonedProps[key] = cloneValue(val)
+        clonedProps[key] = cloneValueInternal(val, seen)
       }
-      const clonedObj = { ...value, properties: clonedProps }
+      clonedObj.properties = clonedProps
+
       // Clone Map/Set internal data so each step has its own snapshot
       const mapData = (value as unknown as Record<string, Map<string | number, RuntimeValue>>).__mapData
       if (mapData) {
-        const clonedMap = new Map<string | number, RuntimeValue>(mapData.entries())
+        const clonedMap = new Map<string | number, RuntimeValue>()
+        for (const [key, storedValue] of mapData.entries()) {
+          clonedMap.set(key, cloneValueInternal(storedValue, seen))
+        }
         ;(clonedObj as unknown as Record<string, unknown>).__mapData = clonedMap
         ;(clonedObj as unknown as Record<string, unknown>).__isMap = true
       }
       const setData = (value as unknown as Record<string, Set<RuntimeValue>>).__setData
       if (setData) {
-        const clonedSet = new Set<RuntimeValue>(setData)
+        const clonedSet = new Set<RuntimeValue>()
+        for (const storedValue of setData.values()) {
+          clonedSet.add(cloneValueInternal(storedValue, seen))
+        }
         ;(clonedObj as unknown as Record<string, unknown>).__setData = clonedSet
         ;(clonedObj as unknown as Record<string, unknown>).__isSet = true
       }
       return clonedObj
+    }
 
     case 'function':
       return { ...value }
@@ -184,6 +212,14 @@ export function toJSValue(runtimeValue: RuntimeValue): unknown {
  * Format a runtime value for display
  */
 export function formatValue(value: RuntimeValue, compact = false): string {
+  return formatValueInternal(value, compact, new WeakSet())
+}
+
+function formatValueInternal(
+  value: RuntimeValue,
+  compact: boolean,
+  seen: WeakSet<object>
+): string {
   switch (value.type) {
     case 'primitive':
       if (value.dataType === 'string') {
@@ -198,19 +234,32 @@ export function formatValue(value: RuntimeValue, compact = false): string {
       return 'undefined'
 
     case 'array':
+      if (seen.has(value as object)) {
+        return '[Circular]'
+      }
+      seen.add(value as object)
+
       if (compact && value.elements.length > 10) {
-        const preview = value.elements.slice(0, 10).map(e => formatValue(e, true)).join(', ')
+        const preview = value.elements.slice(0, 10).map(e => formatValueInternal(e, true, seen)).join(', ')
         return `[${preview}, ...]`
       }
-      return `[${value.elements.map(e => formatValue(e, true)).join(', ')}]`
+      return `[${value.elements.map(e => formatValueInternal(e, true, seen)).join(', ')}]`
 
     case 'object':
+      if (seen.has(value as object)) {
+        return '[Circular]'
+      }
+      seen.add(value as object)
+
       const entries = Object.entries(value.properties)
       if (compact && entries.length > 5) {
-        const preview = entries.slice(0, 5).map(([k, v]) => `${k}: ${formatValue(v, true)}`).join(', ')
+        const preview = entries
+          .slice(0, 5)
+          .map(([k, v]) => `${k}: ${formatValueInternal(v, true, seen)}`)
+          .join(', ')
         return `{${preview}, ...}`
       }
-      return `{${entries.map(([k, v]) => `${k}: ${formatValue(v, true)}`).join(', ')}}`
+      return `{${entries.map(([k, v]) => `${k}: ${formatValueInternal(v, true, seen)}`).join(', ')}}`
 
     case 'function':
       return `ƒ ${value.name}()`

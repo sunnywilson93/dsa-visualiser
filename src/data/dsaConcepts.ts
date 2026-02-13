@@ -1015,6 +1015,286 @@ queue.shift()  // 1 (first added)
   },
 
   {
+    id: 'graphs',
+    title: 'Graphs',
+    category: 'algorithms',
+    difficulty: 'beginner',
+    description: 'Graphs model relationships between things: people, cities, files, dependencies, grids, and state machines. Most hard interview questions reduce to traversal, reachability, or shortest-path on a graph.',
+    shortDescription: 'Nodes, edges, traversal, and reachability',
+    keyPoints: [
+      'Build the graph first: adjacency list is the most common interview-ready format',
+      'BFS is your first tool for shortest path in unweighted graphs',
+      'DFS is useful for connectivity, components, and state exploration',
+      'Visited tracking is non-negotiable: it prevents infinite loops',
+      'For dependency problems, topological ordering often replaces recursion guessing',
+      'For weighted shortest path, track current distance and relax edges',
+      'Practice by writing reusable helpers: buildGraph, bfs, dfs, visit',
+    ],
+    examples: [
+      {
+        title: 'Build Adjacency List',
+        code: `function buildGraph(n, edges) {
+  const graph = Array.from({ length: n }, () => [])
+
+  for (const [from, to] of edges) {
+    graph[from].push(to)
+  }
+
+  return graph
+}
+
+buildGraph(4, [[0, 1], [1, 2], [2, 3]])
+// [[1], [2], [3], []]`,
+        explanation: 'Use an array of neighbor arrays for fast traversal.'
+      },
+      {
+        title: 'BFS Traversal',
+        code: `function bfs(graph, start) {
+  const queue = [start]
+  const seen = new Set([start])
+  const order = []
+
+  while (queue.length > 0) {
+    const node = queue.shift()
+    order.push(node)
+
+    for (const next of graph[node]) {
+      if (!seen.has(next)) {
+        seen.add(next)
+        queue.push(next)
+      }
+    }
+  }
+
+  return order
+}
+
+bfs([[1, 2], [2], [3], []], 0)  // [0, 1, 2, 3]`,
+        explanation: 'BFS explores layer by layer and naturally finds minimum edges in unweighted graphs.'
+      },
+      {
+        title: 'DFS Traversal',
+        code: `function dfs(graph, start) {
+  const seen = new Set()
+  const order = []
+
+  function visit(node) {
+    if (seen.has(node)) return
+    seen.add(node)
+    order.push(node)
+
+    for (const next of graph[node]) {
+      visit(next)
+    }
+  }
+
+  visit(start)
+  return order
+}
+
+dfs([[1, 2], [2], [3], []], 0)  // [0, 1, 2, 3]`,
+        explanation: 'DFS uses recursion/depth and a visited set to avoid revisiting nodes.'
+      },
+    ],
+    complexity: {
+      average: {
+        'Adjacency list memory': 'O(V + E)',
+        'BFS / DFS': 'O(V + E)',
+        'Path check': 'O(V + E)',
+      },
+      worst: {
+        'Build + Traverse': 'O(V + E)',
+      },
+    },
+    commonMistakes: [
+      'Forgetting to build the graph before solving the problem',
+      'Marking visited too late (causing duplicate work or cycles)',
+      'Assuming edges are directed when they are undirected',
+      'Using DFS recursion for very deep graphs without considering stack limits',
+      'Ignoring disconnected components in traversal problems',
+    ],
+    interviewTips: [
+      'State graph representation first in your first 30 seconds',
+      'Start with BFS or DFS on brute structure before optimizing',
+      'If cycle exists, mention how you avoid infinite loops',
+      'For prerequisites/dependencies, describe indegree + queue immediately',
+    ],
+    relatedProblems: [
+      'number-of-islands',
+      'flood-fill',
+      'max-area-of-island',
+      'clone-graph',
+      'find-if-path-exists',
+      'keys-and-rooms',
+      'number-of-provinces',
+      'course-schedule',
+      'course-schedule-ii',
+      'rotting-oranges',
+      'network-delay-time',
+      'cheapest-flights-within-k-stops',
+    ],
+    learningPath: [
+      {
+        stage: 'Graph Foundations',
+        problemIds: [
+          'number-of-islands',
+          'flood-fill',
+          'max-area-of-island',
+        ],
+      },
+      {
+        stage: 'Reachability & Connectivity',
+        problemIds: ['find-if-path-exists', 'keys-and-rooms', 'number-of-provinces', 'clone-graph'],
+      },
+      {
+        stage: 'Dependencies',
+        problemIds: ['course-schedule', 'course-schedule-ii'],
+      },
+      {
+        stage: 'Path & Cost',
+        problemIds: ['rotting-oranges', 'network-delay-time', 'cheapest-flights-within-k-stops'],
+      },
+    ],
+  },
+
+  {
+    id: 'trees',
+    title: 'Trees',
+    category: 'data-structures',
+    difficulty: 'intermediate',
+    description: 'Trees are hierarchical structures with parent-child relationships. They naturally model nested data, path problems, search spaces, and recursive decomposition.',
+    shortDescription: 'Hierarchical data and recursion',
+    keyPoints: [
+      'A node can have multiple children (general tree) or up to two children (binary tree)',
+      'Tree questions often map to recursion with clear base and recursive steps',
+      'Traversal order matters: inorder, preorder, postorder, and level-order',
+      'Many tree problems are either "find/compare path", "measure property", or "transform tree"',
+      'Height/diameter/path problems often combine DFS with state accumulation',
+      'Binary search tree adds ordering: left < root < right',
+      'Balance affects time complexity and recursion depth',
+    ],
+    examples: [
+      {
+        title: 'Tree Height (DFS)',
+        code: `function maxDepth(root) {
+  if (!root) return 0
+  return 1 + Math.max(maxDepth(root.left), maxDepth(root.right))
+}`,
+        explanation: 'Height is 1 + max(left, right) on each node.',
+      },
+      {
+        title: 'Level-Order Traversal (BFS)',
+        code: `function levelOrder(root) {
+  if (!root) return []
+
+  const result = []
+  const queue = [root]
+
+  while (queue.length > 0) {
+    const levelSize = queue.length
+    const level = []
+
+    for (let i = 0; i < levelSize; i++) {
+      const node = queue.shift()
+      level.push(node.val)
+      if (node.left) queue.push(node.left)
+      if (node.right) queue.push(node.right)
+    }
+
+    result.push(level)
+  }
+
+  return result
+}`,
+        explanation: 'BFS naturally groups nodes by depth using a queue and level counts.',
+      },
+      {
+        title: 'Inorder Traversal',
+        code: `function inorder(root, values = []) {
+  if (!root) return values
+  inorder(root.left, values)
+  values.push(root.val)
+  inorder(root.right, values)
+  return values
+}`,
+        explanation: 'For BSTs, inorder output is sorted.',
+      },
+    ],
+    complexity: {
+      average: {
+        'Lookup (balanced BST)': 'O(log n)',
+        'Lookup (degenerate)': 'O(n)',
+        'Insert': 'O(log n) / O(n)',
+        'Delete': 'O(log n) / O(n)',
+        'Traversal': 'O(n)',
+      },
+    },
+    commonMistakes: [
+      'Forgetting base cases on null nodes in recursion',
+      'Losing state in path problems (sum, distance, constraints)',
+      'Mistaking node visit order (preorder/inorder/postorder)',
+      'Confusing recursion state depth with global max values',
+      'Ignoring height/width edge cases on empty and single-node trees',
+      'Applying binary-search-tree assumptions to non-BST trees',
+    ],
+    interviewTips: [
+      'Start with a DFS template before adding logic',
+      'Use level-by-level reasoning for BFS questions',
+      'Write examples manually before coding complex cases',
+      'Track both return value and accumulator state in one pass when needed',
+      'Talk complexity using n nodes and height h',
+    ],
+    relatedProblems: [
+      'find-node-in-tree',
+      'dom-tree-height',
+      'get-dom-tags',
+      'binary-tree-inorder-traversal',
+      'binary-tree-level-order',
+      'same-tree',
+      'symmetric-tree',
+      'path-sum',
+      'diameter-of-binary-tree',
+      'validate-bst',
+      'lowest-common-ancestor-bst',
+      'construct-bst-from-sorted-array',
+    ],
+    learningPath: [
+      {
+        stage: 'Tree Foundations',
+        problemIds: [
+          'find-node-in-tree',
+          'dom-tree-height',
+          'get-dom-tags',
+          'binary-tree-inorder-traversal',
+        ],
+      },
+      {
+        stage: 'Traversal & Shapes',
+        problemIds: [
+          'binary-tree-preorder-traversal',
+          'binary-tree-postorder-traversal',
+          'binary-tree-level-order',
+          'binary-tree-right-side-view',
+        ],
+      },
+      {
+        stage: 'Tree Logic',
+        problemIds: ['same-tree', 'symmetric-tree', 'path-sum', 'path-sum-iii'],
+      },
+      {
+        stage: 'Advanced Tree Applications',
+        problemIds: [
+          'diameter-of-binary-tree',
+          'validate-bst',
+          'lowest-common-ancestor-bst',
+          'kth-smallest-in-bst',
+          'construct-bst-from-sorted-array',
+        ],
+      },
+    ],
+  },
+
+  {
     id: 'linked-lists',
     title: 'Linked Lists',
     category: 'data-structures',
@@ -1221,6 +1501,197 @@ while (current !== null) {
   // ============================================================================
   // ALGORITHMS
   // ============================================================================
+  {
+    id: 'recursion',
+    title: 'Recursion',
+    category: 'algorithms',
+    difficulty: 'intermediate',
+    description:
+      'Recursion solves problems by expressing a solution in terms of smaller, self-similar subproblems. The key is a clear base case, a correct recursive step, and a clean combine step.',
+    shortDescription: 'Think smaller, solve, then combine',
+    keyPoints: [
+      'Every recursive function needs a base case that stops further calls',
+      'The recursive step must move toward the base case',
+      'The combine step is where you build the final answer from recursive results',
+      'Divide-and-conquer uses recursion when the combine step is deterministic',
+      'Call stack depth equals recursion depth and can be a practical limit',
+    ],
+    examples: [
+      {
+        title: 'Factorial (Base + Recursive Case)',
+        code: `function factorial(n) {
+  if (n <= 1) return 1
+  return n * factorial(n - 1)
+}
+
+factorial(5) // 120`,
+        explanation:
+          'Base case handles n<=1. For n>1, we reduce the same problem size by 1 and multiply by n on the way back.',
+      },
+      {
+        title: 'Recursive Binary Search',
+        code: `function binarySearch(arr, target, left = 0, right = arr.length - 1) {
+  if (left > right) return -1
+
+  const mid = Math.floor((left + right) / 2)
+  if (arr[mid] === target) return mid
+
+  if (target < arr[mid]) {
+    return binarySearch(arr, target, left, mid - 1)
+  }
+  return binarySearch(arr, target, mid + 1, right)
+}
+
+binarySearch([1, 3, 5, 7, 9], 7) // 3`,
+        explanation:
+          'Each call reduces the search range in half. Time complexity is O(log n) because each level removes about half the candidates.',
+      },
+      {
+        title: 'Tree DFS (Depth First)',
+        code: `function maxDepth(node) {
+  if (!node) return 0
+  const left = maxDepth(node.left)
+  const right = maxDepth(node.right)
+  return Math.max(left, right) + 1
+}`,
+        explanation:
+          'Tree questions often become recursion naturally because each node has the same subproblem on left and right child.',
+      },
+    ],
+    complexity: {
+      best: {
+        'Tail-recursive loops': 'O(n)',
+        'Tree DFS': 'O(n)',
+        'Divide-and-Conquer': 'O(n log n)',
+      },
+      average: {
+        'Factorial': 'O(n)',
+        'Binary Search': 'O(log n)',
+        'Divide-and-Conquer': 'O(n log n)',
+      },
+      worst: {
+        'Tail-recursive loops': 'O(n)',
+        'Binary Search': 'O(log n)',
+        'Skewed recursion': 'O(n)',
+      },
+    },
+    commonMistakes: [
+      'Forgetting the base case causes infinite recursion',
+      'Not reducing input toward base case creates an infinite loop',
+      'Passing wrong arguments into recursive calls',
+      'Ignoring call stack depth for deep input',
+      'Using recursion when an iterative approach is simpler for constraints',
+    ],
+    interviewTips: [
+      'State the state of one recursive call before moving to the next',
+      'Write base case first, then recursion, then combine',
+      'Trace one sample input by hand before coding',
+      'Mention O(recursion depth) space from call stack',
+    ],
+    relatedProblems: [
+      'merge-sort',
+      'quick-sort',
+      'dom-tree-height',
+      'get-dom-tags',
+      'kth-largest-element',
+    ],
+    learningPath: [
+      {
+        stage: 'Foundation',
+        problemIds: ['merge-sort', 'quick-sort'],
+      },
+      {
+        stage: 'Tree Thinking',
+        problemIds: ['dom-tree-height', 'get-dom-tags'],
+      },
+      {
+        stage: 'Divide & Conquer',
+        problemIds: ['kth-largest-element'],
+      },
+    ],
+  },
+  {
+    id: 'backtracking',
+    title: 'Backtracking',
+    category: 'algorithms',
+    difficulty: 'advanced',
+    description:
+      'Backtracking explores choices in a search tree, prunes paths that cannot lead to valid solutions, and explores alternatives by undoing state.',
+    shortDescription: 'Try options, prune, and backtrack cleanly',
+    keyPoints: [
+      'Define the state needed for one recursive path',
+      'Choose one decision, recurse, then revert to explore the next decision',
+      'Prune early when constraints are already violated',
+      'Return booleans for feasibility or collect candidate sets for enumeration',
+      'Complexity is often exponential, so explain pruning and constraints',
+    ],
+    examples: [
+      {
+        title: 'Subsets by State Choices',
+        code: `function backtrack(nums, index, path, result) {
+  if (index === nums.length) {
+    result.push(path.slice())
+    return
+  }
+
+  path.push(nums[index])
+  backtrack(nums, index + 1, path, result)
+  path.pop()
+
+  backtrack(nums, index + 1, path, result)
+}
+
+// Backtracking tree: include / exclude each element`,
+        explanation:
+          'This is the core include-exclude pattern. Push state, recurse, revert, then recurse without that choice.',
+      },
+      {
+        title: 'Palindrome-at-most-once Delete',
+        code: `function canSkipOne(left, right, s, skipped) {
+  if (left >= right) return true
+  if (s[left] === s[right]) return canSkipOne(left + 1, right - 1, s, skipped)
+
+  if (skipped) return false
+  return canSkipOne(left + 1, right, s, true) || canSkipOne(left, right - 1, s, true)
+}`,
+        explanation:
+          'At one mismatch, we branch into at most two safe choices and stop exploring further branches once already skipped once.',
+      },
+    ],
+    complexity: {
+      best: {
+        'Pruned search': 'Depends on branching',
+      },
+      average: {
+        'Backtracking enumeration': 'Exponential',
+      },
+      worst: {
+        'Subsets / combinations': 'O(2^n)',
+      },
+    },
+    commonMistakes: [
+      'Forgetting to restore state when returning from recursion',
+      'Not pruning invalid states early',
+      'Returning arrays by reference without cloning',
+      'Underestimating time complexity in interviews',
+    ],
+    interviewTips: [
+      'Draw decision tree first; label "choose / skip" branches',
+      'Track exactly what is part of current path state',
+      'Use boolean returns for feasibility questions',
+      'State pruning conditions clearly to justify complexity',
+    ],
+    relatedProblems: [
+      'subsets',
+      'valid-palindrome-ii',
+    ],
+    learningPath: [
+      {
+        stage: 'Decision Branching',
+        problemIds: ['subsets', 'valid-palindrome-ii'],
+      },
+    ],
+  },
   {
     id: 'sorting-algorithms',
     title: 'Sorting Algorithms',
@@ -1438,10 +1909,14 @@ const relatedDSAConceptsMap: Record<string, string[]> = {
   'binary-system': ['big-o-notation', 'arrays', 'hash-tables'],
   'arrays': ['big-o-notation', 'hash-tables', 'stacks', 'queues', 'sorting-algorithms'],
   'hash-tables': ['big-o-notation', 'arrays'],
-  'stacks': ['arrays', 'queues', 'linked-lists'],
-  'queues': ['arrays', 'stacks', 'linked-lists'],
+  'stacks': ['arrays', 'queues', 'linked-lists', 'graphs'],
+  'queues': ['arrays', 'stacks', 'linked-lists', 'graphs'],
   'linked-lists': ['arrays', 'stacks', 'queues'],
+  'recursion': ['sorting-algorithms', 'graphs'],
+  'graphs': ['stacks', 'queues', 'recursion'],
+  'trees': ['recursion', 'queues', 'binary-system'],
   'sorting-algorithms': ['arrays', 'big-o-notation', 'linked-lists'],
+  'backtracking': ['recursion'],
 }
 
 export function getDSAConceptById(id: string): DSAConcept | undefined {

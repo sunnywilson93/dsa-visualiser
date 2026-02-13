@@ -123,3 +123,43 @@ describe('FAANG string curriculum mapping', () => {
     expect(ids.has('check-inclusion')).toBe(false)
   })
 })
+
+describe('FAANG tree curriculum mapping', () => {
+  const curriculumToProblemId = [
+    { question: 'Find Node in DOM Trees', id: 'find-node-in-tree' },
+    { question: 'Get DOM Tree Height', id: 'dom-tree-height' },
+    { question: 'Get All DOM Tags', id: 'get-dom-tags' },
+    { question: 'Inorder Traversal', id: 'binary-tree-inorder-traversal' },
+    { question: 'Preorder Traversal', id: 'binary-tree-preorder-traversal' },
+    { question: 'Postorder Traversal', id: 'binary-tree-postorder-traversal' },
+    { question: 'Maximum Depth of Binary Tree', id: 'maximum-depth-binary-tree' },
+    { question: 'Symmetric Tree', id: 'symmetric-tree' },
+    { question: 'Binary Tree Level Order Traversal', id: 'binary-tree-level-order' },
+    { question: 'Binary Tree Right Side View', id: 'binary-tree-right-side-view' },
+    { question: 'Same Tree', id: 'same-tree' },
+    { question: 'Invert Binary Tree', id: 'invert-binary-tree' },
+    { question: 'Path Sum', id: 'path-sum' },
+    { question: 'Path Sum III', id: 'path-sum-iii' },
+    { question: 'Diameter of Binary Tree', id: 'diameter-of-binary-tree' },
+    { question: 'Validate Binary Search Tree', id: 'validate-bst' },
+    { question: 'Lowest Common Ancestor in BST', id: 'lowest-common-ancestor-bst' },
+    { question: 'Kth Smallest in BST', id: 'kth-smallest-in-bst' },
+    { question: 'Construct BST from Sorted Array', id: 'construct-bst-from-sorted-array' },
+  ] as const
+
+  it('maps every planned tree curriculum question to an existing problem id', () => {
+    const ids = new Set(codeExamples.map((problem) => problem.id))
+
+    curriculumToProblemId.forEach(({ question, id }) => {
+      expect(ids.has(id), `${question} -> ${id} should exist`).toBe(true)
+    })
+  })
+
+  it('includes tree questions in trees subcategory and preserves multi-topic tagging', () => {
+    const treesProblems = getExamplesByCategory('trees').map((problem) => problem.id)
+    expect(treesProblems).toContain('dom-tree-height')
+    expect(treesProblems).toContain('find-node-in-tree')
+    expect(treesProblems).toContain('construct-bst-from-sorted-array')
+    expect(treesProblems).toContain('path-sum-iii')
+  })
+})

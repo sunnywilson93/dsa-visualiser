@@ -1,6 +1,11 @@
 import type { MetadataRoute } from 'next'
 import { concepts } from '@/data/concepts'
-import { exampleCategories, dsaSubcategories, codeExamples, isDsaSubcategory } from '@/data/examples'
+import {
+  exampleCategories,
+  dsaSubcategories,
+  codeExamples,
+  getProblemRouteCategoryIds,
+} from '@/data/examples'
 import { dsaPatterns } from '@/data/dsaPatterns'
 import { dsaConcepts } from '@/data/dsaConcepts'
 import { problemConcepts } from '@/data/algorithmConcepts'
@@ -95,39 +100,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }))
 
   // Problem practice pages (/{categoryId}/{problemId})
-  const problemPages: MetadataRoute.Sitemap = codeExamples.map((problem) => {
-    const category = exampleCategories.find(
-      (cat) => cat.id === problem.category ||
-      (cat.id === 'dsa' && isDsaSubcategory(problem.category))
-    )
-    const categoryId = category?.id || problem.category
-
-    return {
-      url: `${BASE_URL}/${categoryId}/${problem.id}`,
+  const categoryUrls = new Map([...exampleCategories, ...dsaSubcategories].map((cat) => [cat.id, cat.id]))
+  const problemPages: MetadataRoute.Sitemap = codeExamples.flatMap((problem) =>
+    getProblemRouteCategoryIds(problem).map((categoryId) => ({
+      url: `${BASE_URL}/${categoryUrls.get(categoryId) || problem.category}/${problem.id}`,
       lastModified: CONTENT_LAST_UPDATED,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
-    }
-  })
+    })),
+  )
 
   // Concept visualization pages (/{categoryId}/{problemId}/concept)
   const conceptVizPages: MetadataRoute.Sitemap = Object.keys(problemConcepts)
-    .map((problemId) => {
+    .flatMap((problemId) => {
       const problem = codeExamples.find((p) => p.id === problemId)
-      if (!problem) return null
-      const category = exampleCategories.find(
-        (cat) => cat.id === problem.category ||
-        (cat.id === 'dsa' && isDsaSubcategory(problem.category))
-      )
-      const categoryId = category?.id || problem.category
-      return {
-        url: `${BASE_URL}/${categoryId}/${problem.id}/concept`,
+      if (!problem) return []
+      return getProblemRouteCategoryIds(problem).map((categoryId) => ({
+        url: `${BASE_URL}/${categoryUrls.get(categoryId) || problem.category}/${problem.id}/concept`,
         lastModified: CONTENT_LAST_UPDATED,
         changeFrequency: 'monthly' as const,
         priority: 0.7,
-      }
+      }))
     })
-    .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
 
   return [
     ...staticPages,

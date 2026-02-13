@@ -15,6 +15,7 @@ import {
   dsaSubcategories,
   getExamplesByCategory,
   hasCategory,
+  getExampleCategoryIds,
   type CodeExample,
 } from '@/data/examples'
 
@@ -22,6 +23,8 @@ import {
 const subcategoryToConcept: Record<string, { id: string; name: string }> = {
   'bit-manipulation': { id: 'binary-system', name: 'Binary & Bit Manipulation' },
   'arrays-hashing': { id: 'hash-tables', name: 'Hash Tables' },
+  'recursion': { id: 'recursion', name: 'Recursion' },
+  'backtracking': { id: 'backtracking', name: 'Backtracking' },
   'stack': { id: 'stacks', name: 'Stacks' },
   'linked-list': { id: 'linked-lists', name: 'Linked Lists' },
   'trees': { id: 'trees', name: 'Trees' },
@@ -70,12 +73,28 @@ export default function CategoryPageClient() {
   const isComingSoon = (selectedSubcategory || isSubcategoryPage) && subcategoryProblems.length === 0
 
   const getCategoryForProblem = useCallback((problem: CodeExample): CategoryInfo => {
+    if (isSubcategoryPage && hasCategory(problem, categoryId)) {
+      const directSubcat = dsaSubcategoryMap.get(categoryId)
+      if (directSubcat) return { id: directSubcat.id, name: directSubcat.name }
+    }
+
+    if (selectedSubcategory && hasCategory(problem, selectedSubcategory)) {
+      const selected = dsaSubcategoryMap.get(selectedSubcategory)
+      if (selected) return { id: selected.id, name: selected.name }
+    }
+
+    const directSubcategory = getExampleCategoryIds(problem).find((cat) => isDsaSubcategoryId(cat))
+    if (directSubcategory) {
+      const dsaSub = dsaSubcategoryMap.get(directSubcategory)
+      if (dsaSub) return { id: dsaSub.id, name: dsaSub.name }
+    }
+
     const subcat = dsaSubcategoryMap.get(problem.category)
     const mainCat = categoryMap.get(problem.category)
     if (subcat) return { id: subcat.id, name: subcat.name }
     if (mainCat) return { id: mainCat.id, name: mainCat.name }
     return { id: problem.category, name: problem.category }
-  }, [])
+  }, [categoryId, isSubcategoryPage, selectedSubcategory])
 
   const handleProblemClick = useCallback(
     (problem: CodeExample) => {

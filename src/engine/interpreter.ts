@@ -18,6 +18,8 @@ import {
   cloneValue,
   isTruthy,
   formatValue,
+  toJSValue,
+  toRuntimeValue,
 } from './runtime'
 
 const MAX_STEPS = 10000
@@ -777,6 +779,38 @@ export class Interpreter {
         const result = builtin(...args)
         this.recordStep(node, 'expression', `Object.${methodName}() → ${formatValue(result)}`)
         return result
+      }
+    }
+
+    // Check for JSON static methods (e.g., JSON.stringify)
+    if (
+      callee.type === 'MemberExpression' &&
+      (callee.object as ASTNode).type === 'Identifier' &&
+      ((callee.object as ASTNode).name === 'JSON')
+    ) {
+      const methodName = (callee.property as ASTNode).name
+      if (methodName === 'stringify') {
+        const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
+        const jsArgs = args.map((arg) => toJSValue(arg))
+        try {
+          const result = JSON.stringify(...jsArgs)
+          if (result === undefined) {
+            return createUndefined()
+          }
+          return createPrimitive(result)
+        } catch (error) {
+          throw new Error(error instanceof Error ? error.message : String(error))
+        }
+      }
+
+      if (methodName === 'parse') {
+        const args = (node.arguments || []).map((arg: ASTNode) => this.executeNode(arg))
+        const text = toJSValue(args[0])
+        if (typeof text !== 'string') {
+          throw new Error('JSON.parse expects a string input')
+        }
+        const parsed = JSON.parse(text)
+        return toRuntimeValue(parsed)
       }
     }
 
@@ -1626,6 +1660,31 @@ export class Interpreter {
         return arr
       }
 
+      case 'sort': {
+        const comparator = args[0]
+        const sortedElements = [...arr.elements]
+
+        if (comparator && comparator.type === 'function') {
+          sortedElements.sort((left, right) => {
+            const result = this.invokeCallback(comparator, [left, right], node)
+            if (result.type === 'primitive' && result.dataType === 'number') {
+              return result.value as number
+            }
+            return 0
+          })
+        } else {
+          sortedElements.sort((left, right) => {
+            const leftValue = this.runtimeValueToString(left)
+            const rightValue = this.runtimeValueToString(right)
+            return leftValue.localeCompare(rightValue)
+          })
+        }
+
+        arr.elements = sortedElements
+        this.recordStep(node, 'array-modify', `Array.sort() → ${formatValue(arr)}`)
+        return arr
+      }
+
       // Callback-based array methods
       case 'forEach': {
         const callback = args[0]
@@ -2037,6 +2096,19 @@ export class Interpreter {
 
     // Check for built-in undefined behavior
     return createUndefined()
+  }
+
+  private runtimeValueToString(value: RuntimeValue): string {
+    if (value.type === 'primitive') {
+      return String(value.value)
+    }
+    if (value.type === 'null') {
+      return 'null'
+    }
+    if (value.type === 'undefined') {
+      return 'undefined'
+    }
+    return formatValue(value)
   }
 
   private setVariable(name: string, value: RuntimeValue): void {

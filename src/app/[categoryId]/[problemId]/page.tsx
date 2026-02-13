@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { type CodeExample, codeExamples, exampleCategories, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
+import { type CodeExample, codeExamples, exampleCategories, dsaSubcategories, getProblemRouteCategoryIds } from '@/data/examples'
 import { CONTENT_LAST_UPDATED } from '@/app/sitemap'
 import PracticePageClient from './PracticePageClient'
 import { ProblemSEOContent } from '@/components/ProblemSEOContent/ProblemSEOContent'
@@ -16,16 +16,18 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return codeExamples.map((problem) => {
-    const category = exampleCategories.find(
-      (cat) => cat.id === problem.category ||
-      (cat.id === 'dsa' && isDsaSubcategory(problem.category))
-    )
-    return {
-      categoryId: category?.id || problem.category,
-      problemId: problem.id,
-    }
+  const routeParams: Array<{ categoryId: string; problemId: string }> = []
+
+  codeExamples.forEach((problem) => {
+    getProblemRouteCategoryIds(problem).forEach((categoryId) => {
+      routeParams.push({
+        categoryId,
+        problemId: problem.id,
+      })
+    })
   })
+
+  return routeParams
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

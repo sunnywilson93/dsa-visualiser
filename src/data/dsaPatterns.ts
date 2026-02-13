@@ -156,7 +156,7 @@ export const dsaPatterns: DSAPattern[] = [
       time: 'O(log n)',
       space: 'O(1)',
     },
-    relatedProblems: ['binary-search-basic', 'search-insert-position', 'first-last-position', 'search-rotated-array', 'find-min-rotated', 'koko-eating-bananas'],
+    relatedProblems: ['binary-search-basic', 'search-insert-position', 'first-last-position', 'first-bad-version', 'search-rotated-array', 'search-rotated-array-ii', 'find-min-rotated', 'find-peak-element', 'peak-index-in-mountain-array', 'koko-eating-bananas', 'capacity-to-ship', 'find-smallest-divisor', 'minimum-number-of-days', 'magnetic-force-between-balls', 'search-2d-matrix', 'search-2d-matrix-ii', 'split-array-largest-sum', 'median-two-sorted-arrays'],
   },
   {
     id: 'sorting',

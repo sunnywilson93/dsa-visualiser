@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { codeExamples, exampleCategories, dsaSubcategories, isDsaSubcategory } from '@/data/examples'
+import { codeExamples, exampleCategories, dsaSubcategories, getProblemRouteCategoryIds } from '@/data/examples'
 import { getConceptForProblem, problemConcepts, type ProblemConcept } from '@/data/algorithmConcepts'
 import ConceptVizPageClient from './ConceptVizPageClient'
 import { StructuredData } from '@/components/StructuredData'
@@ -15,18 +15,20 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return codeExamples
+  const routeParams: Array<{ categoryId: string; problemId: string }> = []
+
+  codeExamples
     .filter((problem) => problemConcepts[problem.id])
-    .map((problem) => {
-      const category = exampleCategories.find(
-        (cat) => cat.id === problem.category ||
-        (cat.id === 'dsa' && isDsaSubcategory(problem.category))
-      )
-      return {
-        categoryId: category?.id || problem.category,
-        problemId: problem.id,
-      }
+    .forEach((problem) => {
+      getProblemRouteCategoryIds(problem).forEach((categoryId) => {
+        routeParams.push({
+          categoryId,
+          problemId: problem.id,
+        })
+      })
     })
+
+  return routeParams
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

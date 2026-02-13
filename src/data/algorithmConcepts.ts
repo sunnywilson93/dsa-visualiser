@@ -3466,6 +3466,300 @@ export const problemConcepts: Record<string, ProblemConcept> = {
     ],
   },
 
+  'first-bad-version': {
+    title: 'First Bad Version',
+    keyInsight: 'Binary search the version space and keep the earliest index where isBadVersion(mid) is true.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Initialize',
+        description: 'Versions 1..n, with all good versions before the first bad version.',
+        visual: {
+          array: [1, 2, 3, 4, 5, 6, 7],
+          pointers: { left: 0, right: 6 },
+          annotations: ['False ... false ... true ... true'],
+        },
+      },
+      {
+        id: 2,
+        title: 'First Mid Check',
+        description: 'mid=3, isBadVersion(4)=true, so first bad is at 4 or earlier.',
+        visual: {
+          array: [1, 2, 3, 4, 5, 6, 7],
+          pointers: { left: 0, right: 6, mid: 3 },
+          highlights: [3],
+          annotations: ['Move right to mid'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Second Check',
+        description: 'mid=1, isBadVersion(2)=false, so first bad is after 2.',
+        visual: {
+          array: [1, 2, 3, 4, 5, 6, 7],
+          pointers: { left: 2, right: 3, mid: 1 },
+          highlights: [1],
+          annotations: ['Move left to mid + 1'],
+        },
+      },
+      {
+        id: 4,
+        title: 'Converge',
+        description: 'left and right meet at first bad version index.',
+        visual: {
+          array: [1, 2, 3, 4, 5, 6, 7],
+          pointers: { left: 4, right: 4, mid: 4 },
+          highlights: [4],
+          result: 'First bad = 4',
+        },
+      },
+    ],
+  },
+
+  'search-rotated-array-ii': {
+    title: 'Search in Rotated Sorted Array II',
+    keyInsight: 'Use normal rotated-array logic, but shrink both ends when duplicates block ordering.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Find target in [2, 5, 6, 0, 0, 1, 2].',
+        visual: {
+          array: [2, 5, 6, 0, 0, 1, 2],
+          pointers: { left: 0, right: 6 },
+          annotations: ['Rotated with duplicates'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Mid=3, Value=0',
+        description: 'mid is not target. Boundaries and mid differ, so decide sorted half as normal.',
+        visual: {
+          array: [2, 5, 6, 0, 0, 1, 2],
+          pointers: { left: 0, right: 6, mid: 3 },
+          highlights: [3],
+          annotations: ['arr[mid] = 0'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Target Found',
+        description: 'arr[3] == target, so return true.',
+        visual: {
+          array: [2, 5, 6, 0, 0, 1, 2],
+          highlights: [3],
+          annotations: ['Target found at 3'],
+          result: 'true',
+        },
+      },
+    ],
+  },
+
+  'peak-index-in-mountain-array': {
+    title: 'Peak Index in Mountain Array',
+    keyInsight: 'Compare middle with next element; if it is increasing, peak is right; else peak is at mid or left.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Mountain array [0, 2, 3, 5, 4, 1].',
+        visual: {
+          array: [0, 2, 3, 5, 4, 1],
+          pointers: { left: 0, right: 5 },
+          annotations: ['Increasing then decreasing'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Mid=2, Value=3',
+        description: '3 < 5 (next), move left boundary to mid + 1.',
+        visual: {
+          array: [0, 2, 3, 5, 4, 1],
+          pointers: { left: 3, right: 5, mid: 2 },
+          highlights: [2, 3],
+          annotations: ['Ascending slope, peak right'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Converged',
+        description: 'left meets right at index 3, the peak index.',
+        visual: {
+          array: [0, 2, 3, 5, 4, 1],
+          pointers: { left: 3, right: 3 },
+          highlights: [3],
+          result: 'Peak index 3',
+        },
+      },
+    ],
+  },
+
+  'find-smallest-divisor': {
+    title: 'Smallest Divisor Given a Threshold',
+    keyInsight: 'Binary search divisor; feasibility is monotonic because larger divisors never increase required sum.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Setup',
+        description: 'Binary search divisor from 1 to max(nums).',
+        visual: {
+          array: [1, 2, 5, 9],
+          pointers: { left: 1, right: 9 },
+          annotations: ['Threshold = 6'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Try mid=5',
+        description: 'Compute ceil(1/5)+ceil(2/5)+ceil(5/5)+ceil(9/5)=1+1+1+2=5 <= 6. Try smaller.',
+        visual: {
+          array: [1, 2, 5, 9],
+          pointers: { left: 1, right: 4 },
+          annotations: ['5 works, try smaller'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Converge',
+        description: 'Move through search space until smallest valid divisor remains.',
+        visual: {
+          array: [1, 2, 5, 9],
+          pointers: { left: 4, right: 5 },
+          highlights: [4],
+          annotations: ['Answer = 4'],
+          result: 'Smallest divisor: 4',
+        },
+      },
+    ],
+  },
+
+  'minimum-number-of-days': {
+    title: 'Minimum Number of Days to Make m Bouquets',
+    keyInsight: 'Monotonic predicate: if day d is feasible, any later day is feasible.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Binary Search Days',
+        description: 'Search days in the min..max bloom range.',
+        visual: {
+          array: [1, 10, 3, 10, 2],
+          pointers: { left: 1, right: 10 },
+          annotations: ['m=3, k=1'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Day 5 Feasible',
+        description: 'All bloom days <=5 form 3 bouquets of size 1, so 5 is feasible.',
+        visual: {
+          array: [1, 10, 3, 10, 2],
+          pointers: { left: 1, right: 4 },
+          highlights: [0, 2, 4],
+          annotations: ['3 blooms available'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Result',
+        description: 'Converge to smallest feasible day.',
+        visual: {
+          array: [1, 10, 3, 10, 2],
+          pointers: { left: 3, right: 3 },
+          highlights: [0, 2, 4],
+          result: 'Minimum day: 3',
+        },
+      },
+    ],
+  },
+
+  'magnetic-force-between-balls': {
+    title: 'Magnetic Force Between Two Balls',
+    keyInsight: 'Binary search minimum distance and greedily place balls whenever spacing is large enough.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Sort and Search',
+        description: 'Positions [1, 2, 3, 4, 7], m=3. Search distance from 1..6.',
+        visual: {
+          array: [1, 2, 3, 4, 7],
+          pointers: { left: 1, right: 6 },
+          annotations: ['Greedy placement check'],
+        },
+      },
+      {
+        id: 2,
+        title: 'Try mid=3',
+        description: 'Place at 1 and 4 gives distance 3; place next at 7 gives distance 3. Feasible.',
+        visual: {
+          array: [1, 2, 3, 4, 7],
+          highlights: [0, 3, 4],
+          pointers: { left: 4, right: 6 },
+          annotations: ['Distance 3 works'],
+        },
+      },
+      {
+        id: 3,
+        title: 'Try larger distance',
+        description: 'Move to higher candidate. Distance 4 still feasible, then narrow.',
+        visual: {
+          array: [1, 2, 3, 4, 7],
+          highlights: [0, 4],
+          pointers: { left: 4, right: 6 },
+          annotations: ['Answer max distance = 3'],
+          result: 'Max min distance: 3',
+        },
+      },
+    ],
+  },
+
+  'search-2d-matrix-ii': {
+    title: 'Search a 2D Matrix II',
+    keyInsight: 'Start top-right and eliminate one row/column per comparison.',
+    pattern: 'binary-search',
+    steps: [
+      {
+        id: 1,
+        title: 'Start at Top-Right',
+        description: 'Move from (0,4) in a matrix sorted by rows and columns.',
+        visual: {
+          array: [1, 4, 7, 11, 15, 2, 5, 8, 12, 19, 3, 6, 9, 16, 22, 10, 13, 14, 17, 24, 18, 21, 23, 26, 30],
+          pointers: { row: 0, col: 4 },
+          annotations: ['Target=5'],
+          highlights: [4],
+        },
+      },
+      {
+        id: 2,
+        title: 'Move Left',
+        description: '15 > 5 so eliminate first row by moving left.',
+        visual: {
+          array: [1, 4, 7, 11, 15, 2, 5, 8, 12, 19, 3, 6, 9, 16, 22, 10, 13, 14, 17, 24, 18, 21, 23, 26, 30],
+          pointers: { row: 0, col: 3 },
+          annotations: ['15 too high, move left'],
+          highlights: [3],
+        },
+      },
+      {
+        id: 3,
+        title: 'Move Down',
+        description: '11 > 5, move left again to 7. then 7 > 5, move down to 3rd row? continue until target found.',
+        visual: {
+          array: [1, 4, 7, 11, 15, 2, 5, 8, 12, 19, 3, 6, 9, 16, 22, 10, 13, 14, 17, 24, 18, 21, 23, 26, 30],
+          pointers: { row: 1, col: 1 },
+          highlights: [6],
+          annotations: ['Found 5 at row 1, col 1'],
+          result: 'Found',
+        },
+      },
+    ],
+  },
+
   // ==================== LINKED LIST PROBLEMS ====================
 
   'reverse-linked-list': {

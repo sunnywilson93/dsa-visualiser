@@ -54,12 +54,20 @@ export const getExampleCategoryIds = (example: CodeExample): string[] => {
   return example.categories || [example.category]
 }
 
+// Helper to check if a category is a DSA subcategory
+export const isDsaSubcategory = (cat: string) => dsaSubcategories.some(s => s.id === cat)
+
+export const getProblemRouteCategoryIds = (example: CodeExample): string[] => {
+  const categories = Array.from(new Set(getExampleCategoryIds(example)))
+  if (categories.some((cat) => isDsaSubcategory(cat)) && !categories.includes('dsa')) {
+    categories.push('dsa')
+  }
+  return categories
+}
+
 export const hasCategory = (example: CodeExample, categoryId: string): boolean => {
   return getExampleCategoryIds(example).includes(categoryId)
 }
-
-// Helper to check if a category is a DSA subcategory
-export const isDsaSubcategory = (cat: string) => dsaSubcategories.some(s => s.id === cat)
 
 // Check if example belongs to a DSA subcategory
 const isDsaExample = (example: CodeExample): boolean => {
@@ -2440,6 +2448,7 @@ console.log("Classes:", box.getClasses());
     id: 'find-node-in-tree',
     name: 'Find Node in DOM Trees',
     category: 'dom-events',
+    categories: ['dom-events', 'trees'],
     difficulty: 'medium',
     description: 'Find corresponding node in cloned tree',
     code: `// Given same node in Tree A, find it in identical Tree B
@@ -2513,6 +2522,7 @@ console.log("\\nFound in Tree B:", found.val);
     id: 'dom-tree-height',
     name: 'Get DOM Tree Height',
     category: 'dom-events',
+    categories: ['dom-events', 'trees', 'recursion'],
     difficulty: 'easy',
     description: 'Find max depth of DOM tree',
     code: `// Get height/depth of a DOM tree
@@ -2585,6 +2595,7 @@ console.log("Height (BFS):", getHeightBFS(dom));
     id: 'get-dom-tags',
     name: 'Get All DOM Tags',
     category: 'dom-events',
+    categories: ['dom-events', 'trees', 'recursion'],
     difficulty: 'easy',
     description: 'Collect unique tags in DOM tree',
     code: `// Get all unique tag names in a DOM tree
@@ -2655,6 +2666,561 @@ console.log(countTags(page));
     spaceComplexity: 'O(u) where u is the number of unique tags',
     patternName: 'Tree Traversal Collection',
     whyItWorks: 'A Set automatically deduplicates tag names during traversal, and lowercasing before insertion ensures case-insensitive uniqueness across mixed-case DOM trees.',
+  },
+  {
+    id: 'binary-tree-inorder-traversal',
+    name: 'Binary Tree Inorder Traversal',
+    category: 'trees',
+    difficulty: 'easy',
+    description: 'Traverse a binary tree in left-root-right order',
+    code: `function inorderTraversal(node, result = []) {
+  if (!node) return result
+  inorderTraversal(node.left, result)
+  result.push(node.val)
+  inorderTraversal(node.right, result)
+  return result
+}
+
+function makeTree() {
+  return {
+    val: 1,
+    left: {
+      val: 2,
+      left: { val: 4, left: null, right: null },
+      right: { val: 5, left: null, right: null },
+    },
+    right: {
+      val: 3,
+      left: null,
+      right: { val: 6, left: null, right: null },
+    },
+  }
+}
+
+const root = makeTree()
+console.log(inorderTraversal(root)) // [4,2,5,1,3,6]`,
+    approach: 'Use DFS recursion and visit order: left subtree, current node, then right subtree.',
+    timeComplexity: 'O(n) where n is node count',
+    spaceComplexity: 'O(h) where h is tree height',
+    patternName: 'DFS Tree Traversal',
+    whyItWorks: 'Each node is processed once after its left descendants and before its right descendants, matching the inorder definition.',
+  },
+  {
+    id: 'binary-tree-preorder-traversal',
+    name: 'Binary Tree Preorder Traversal',
+    category: 'trees',
+    difficulty: 'easy',
+    description: 'Traverse a binary tree in root-left-right order',
+    code: `function preorderTraversal(node, result = []) {
+  if (!node) return result
+  result.push(node.val)
+  preorderTraversal(node.left, result)
+  preorderTraversal(node.right, result)
+  return result
+}
+
+const root = {
+  val: 1,
+  left: {
+    val: 2,
+    left: { val: 4, left: null, right: null },
+    right: { val: 5, left: null, right: null },
+  },
+  right: {
+    val: 3,
+    left: null,
+    right: { val: 6, left: null, right: null },
+  },
+}
+
+console.log(preorderTraversal(root)) // [1,2,4,5,3,6]`,
+    approach: 'Process the current node first, then recursively traverse left and right children.',
+    timeComplexity: 'O(n) where n is node count',
+    spaceComplexity: 'O(h) where h is tree height',
+    patternName: 'DFS Tree Traversal',
+    whyItWorks: 'Root-first order is useful for copy, serialization, and expression-tree evaluation.',
+  },
+  {
+    id: 'binary-tree-postorder-traversal',
+    name: 'Binary Tree Postorder Traversal',
+    category: 'trees',
+    difficulty: 'easy',
+    description: 'Traverse a binary tree in left-right-root order',
+    code: `function postorderTraversal(node, result = []) {
+  if (!node) return result
+  postorderTraversal(node.left, result)
+  postorderTraversal(node.right, result)
+  result.push(node.val)
+  return result
+}
+
+const root = {
+  val: 1,
+  left: {
+    val: 2,
+    left: { val: 4, left: null, right: null },
+    right: { val: 5, left: null, right: null },
+  },
+  right: {
+    val: 3,
+    left: null,
+    right: { val: 6, left: null, right: null },
+  },
+}
+
+console.log(postorderTraversal(root)) // [4,5,2,6,3,1]`,
+    approach: 'Recursively visit left and right children first, then process the current node.',
+    timeComplexity: 'O(n) where n is node count',
+    spaceComplexity: 'O(h) where h is tree height',
+    patternName: 'DFS Tree Traversal',
+    whyItWorks: 'Each node is pushed only after both subtrees are complete, which is why this order is used for post-processing.',
+  },
+  {
+    id: 'maximum-depth-binary-tree',
+    name: 'Maximum Depth of Binary Tree',
+    category: 'trees',
+    difficulty: 'easy',
+    description: 'Find longest root-to-leaf path length',
+    code: `function maxDepth(node) {
+  if (!node) return 0
+  return 1 + Math.max(maxDepth(node.left), maxDepth(node.right))
+}
+
+const tree = {
+  val: 3,
+  left: {
+    val: 9,
+    left: null,
+    right: null,
+  },
+  right: {
+    val: 20,
+    left: { val: 15, left: null, right: null },
+    right: { val: 7, left: null, right: null },
+  },
+}
+
+console.log('depth:', maxDepth(tree)) // 3`,
+    approach: 'Base case returns 0 for null. For non-null node, return 1 + max depth from either subtree.',
+    timeComplexity: 'O(n) where n is node count',
+    spaceComplexity: 'O(h) where h is tree height',
+    patternName: 'Tree Height Calculation',
+    whyItWorks: 'The deepest path must come from either left or right subtree plus the current node.',
+  },
+  {
+    id: 'symmetric-tree',
+    name: 'Symmetric Tree',
+    category: 'trees',
+    difficulty: 'medium',
+    description: 'Check if a binary tree is mirror-symmetric',
+    code: `function isSymmetric(root) {
+  if (!root) return true
+  return isMirror(root.left, root.right)
+}
+
+function isMirror(left, right) {
+  if (!left && !right) return true
+  if (!left || !right) return false
+  return left.val === right.val &&
+    isMirror(left.left, right.right) &&
+    isMirror(left.right, right.left)
+}
+
+const tree = {
+  val: 1,
+  left: { val: 2, left: { val: 3, left: null, right: null }, right: { val: 4, left: null, right: null } },
+  right: { val: 2, left: { val: 4, left: null, right: null }, right: { val: 3, left: null, right: null } },
+}
+
+console.log(isSymmetric(tree)) // true`,
+    approach: 'Compare two opposite branches recursively and ensure each pair of nodes mirrors value and structure.',
+    timeComplexity: 'O(n) where n is node count',
+    spaceComplexity: 'O(h) where h is tree height',
+    patternName: 'Tree Symmetry Check',
+    whyItWorks: 'A tree is symmetric only if left subtree and right subtree are mirror images at every level.',
+  },
+  {
+    id: 'binary-tree-level-order',
+    name: 'Binary Tree Level Order Traversal',
+    category: 'trees',
+    difficulty: 'medium',
+    description: 'Traverse level by level with BFS',
+    code: `function levelOrder(root) {
+  if (!root) return []
+
+  const result = []
+  const queue = [root]
+
+  while (queue.length > 0) {
+    const levelSize = queue.length
+    const level = []
+
+    for (let i = 0; i < levelSize; i++) {
+      const node = queue.shift()
+      level.push(node.val)
+      if (node.left) queue.push(node.left)
+      if (node.right) queue.push(node.right)
+    }
+
+    result.push(level)
+  }
+
+  return result
+}
+
+const root = {
+  val: 3,
+  left: {
+    val: 9,
+    left: null,
+    right: null,
+  },
+  right: {
+    val: 20,
+    left: { val: 15, left: null, right: null },
+    right: { val: 7, left: null, right: null },
+  },
+}
+
+console.log(levelOrder(root)) // [[3], [9, 20], [15, 7]]`,
+    approach: 'Use a queue to process one tree level at a time, enqueuing children as you go.',
+    timeComplexity: 'O(n) where n is node count',
+    spaceComplexity: 'O(w) where w is max width',
+    patternName: 'BFS Tree Traversal',
+    whyItWorks: 'Queue naturally keeps nodes in arrival order, so level boundaries are processed in order.',
+  },
+  {
+    id: 'binary-tree-right-side-view',
+    name: 'Binary Tree Right Side View',
+    category: 'trees',
+    difficulty: 'medium',
+    description: 'Get the nodes visible from the right side',
+    code: `function rightSideView(root) {
+  if (!root) return []
+
+  const result = []
+  const queue = [root]
+
+  while (queue.length > 0) {
+    let levelSize = queue.length
+    let last = null
+
+    while (levelSize > 0) {
+      const node = queue.shift()
+      last = node.val
+      if (node.left) queue.push(node.left)
+      if (node.right) queue.push(node.right)
+      levelSize--
+    }
+
+    result.push(last)
+  }
+
+  return result
+}
+
+const root = {
+  val: 1,
+  left: {
+    val: 2,
+    left: { val: 4, left: null, right: null },
+    right: { val: 5, left: null, right: null },
+  },
+  right: { val: 3, left: null, right: { val: 7, left: null, right: null } },
+}
+
+console.log(rightSideView(root)) // [1, 3, 7]`,
+    approach: 'Perform BFS per level and keep the last visited node value from each level.',
+    timeComplexity: 'O(n) where n is node count',
+    spaceComplexity: 'O(w) where w is max width',
+    patternName: 'Level-Order + Projection',
+    whyItWorks: 'At each level, the last node processed by left-to-right traversal is the rightmost visible node.',
+  },
+  {
+    id: 'same-tree',
+    name: 'Same Tree',
+    category: 'trees',
+    difficulty: 'easy',
+    description: 'Check if two trees are identical',
+    code: `function isSameTree(p, q) {
+  if (!p && !q) return true
+  if (!p || !q) return false
+  return p.val === q.val &&
+    isSameTree(p.left, q.left) &&
+    isSameTree(p.right, q.right)
+}
+
+const a = { val: 1, left: { val: 2, left: null, right: null }, right: { val: 3, left: null, right: null } }
+const b = { val: 1, left: { val: 2, left: null, right: null }, right: { val: 3, left: null, right: null } }
+const c = { val: 1, left: null, right: { val: 3, left: null, right: null } }
+
+console.log(isSameTree(a, b)) // true
+console.log(isSameTree(a, c)) // false`,
+    approach: 'Recursively compare roots, and then both left and right child pairs.',
+    timeComplexity: 'O(n) where n is number of compared nodes',
+    spaceComplexity: 'O(h) where h is tree height',
+    patternName: 'Structural Comparison',
+    whyItWorks: 'Two trees are identical only if their roots match and all corresponding subtrees are identical.',
+  },
+  {
+    id: 'invert-binary-tree',
+    name: 'Invert Binary Tree',
+    category: 'trees',
+    difficulty: 'medium',
+    description: 'Flip every node by swapping child pointers',
+    code: `function invertTree(root) {
+  if (!root) return null
+
+  const left = invertTree(root.left)
+  const right = invertTree(root.right)
+
+  root.left = right
+  root.right = left
+  return root
+}
+
+const root = {
+  val: 4,
+  left: { val: 2, left: { val: 1, left: null, right: null }, right: { val: 3, left: null, right: null } },
+  right: { val: 7, left: { val: 6, left: null, right: null }, right: { val: 9, left: null, right: null } },
+}
+
+console.log(invertTree(root))
+console.log(JSON.stringify(root))
+// Output: {"val":4,... left-right swapped...}`,
+    approach: 'Recursively invert children first, then swap node.left and node.right.',
+    timeComplexity: 'O(n) where n is node count',
+    spaceComplexity: 'O(h) where h is tree height',
+    patternName: 'Tree Transformation',
+    whyItWorks: 'Every node is independent: swapping both children at each node flips the entire subtree.',
+  },
+  {
+    id: 'path-sum',
+    name: 'Path Sum',
+    category: 'trees',
+    difficulty: 'easy',
+    description: 'Check if root-to-leaf path sums to target',
+    code: `function hasPathSum(node, targetSum) {
+  if (!node) return false
+  const remaining = targetSum - node.val
+  if (!node.left && !node.right) {
+    return remaining === 0
+  }
+  return hasPathSum(node.left, remaining) || hasPathSum(node.right, remaining)
+}
+
+const root = {
+  val: 5,
+  left: {
+    val: 4,
+    left: { val: 11, left: { val: 7, left: null, right: null }, right: { val: 2, left: null, right: null } },
+    right: null,
+  },
+  right: { val: 8, left: { val: 13, left: null, right: null }, right: { val: 4, left: { val: 5, left: null, right: null }, right: { val: 1, left: null, right: null } } },
+}
+
+console.log(hasPathSum(root, 22)) // true`,
+    approach: 'Subtract each node value while descending, and check target at leaf nodes.',
+    timeComplexity: 'O(n) where n is node count',
+    spaceComplexity: 'O(h) where h is tree height',
+    patternName: 'Root-to-Leaf DFS',
+    whyItWorks: 'A valid path is exactly a recursive reduction of remaining target by each visited value.',
+  },
+  {
+    id: 'path-sum-iii',
+    name: 'Path Sum III',
+    category: 'trees',
+    difficulty: 'medium',
+    categories: ['trees', 'recursion'],
+    description: 'Count paths with target sum (not necessarily root-to-leaf)',
+    code: `function pathSum(root, targetSum) {
+  if (!root) return 0
+
+  function countFrom(node, remaining) {
+    if (!node) return 0
+    const nextRemaining = remaining - node.val
+    let count = nextRemaining === 0 ? 1 : 0
+    count += countFrom(node.left, nextRemaining)
+    count += countFrom(node.right, nextRemaining)
+    return count
+  }
+
+  return countFrom(root, targetSum) + pathSum(root.left, targetSum) + pathSum(root.right, targetSum)
+}
+
+const root = {
+  val: 10,
+  left: { val: 5, left: { val: 3, left: { val: 3, left: null, right: null }, right: { val: -2, left: null, right: null } }, right: { val: 2, left: null, right: { val: 1, left: null, right: null } } },
+  right: { val: -3, left: null, right: { val: 11, left: null, right: null } },
+}
+
+console.log(pathSum(root, 8)) // 3`,
+    approach: 'For each node, count paths starting there plus recurse into all descendants as new starts.',
+    timeComplexity: 'O(n^2) worst-case (simple DFS variant)',
+    spaceComplexity: 'O(h) recursion depth',
+    patternName: 'Root-Any-to-Any Path Sums',
+    whyItWorks: 'Every node can be a path start, and each call checks all downward continuations.',
+  },
+  {
+    id: 'diameter-of-binary-tree',
+    name: 'Diameter of Binary Tree',
+    category: 'trees',
+    difficulty: 'medium',
+    categories: ['trees', 'dynamic-programming'],
+    description: 'Longest path between any two nodes',
+    code: `function diameterOfBinaryTree(root) {
+  let diameter = 0
+
+  function depth(node) {
+    if (!node) return 0
+    const left = depth(node.left)
+    const right = depth(node.right)
+    diameter = Math.max(diameter, left + right)
+    return 1 + Math.max(left, right)
+  }
+
+  depth(root)
+  return diameter
+}
+
+const root = {
+  val: 1,
+  left: { val: 2, left: { val: 4, left: null, right: null }, right: { val: 5, left: null, right: null } },
+  right: { val: 3, left: { val: 6, left: null, right: null }, right: { val: 7, left: { val: 8, left: null, right: null }, right: null } },
+}
+
+console.log(diameterOfBinaryTree(root)) // 5`,
+    approach: 'During depth-first traversal, update diameter as leftHeight + rightHeight at each node and return max subtree height.',
+    timeComplexity: 'O(n) where n is node count',
+    spaceComplexity: 'O(h) where h is tree height',
+    patternName: 'Tree DP via DFS',
+    whyItWorks: 'Each node contributes a candidate diameter through its left and right heights.',
+  },
+  {
+    id: 'validate-bst',
+    name: 'Validate Binary Search Tree',
+    category: 'trees',
+    difficulty: 'medium',
+    categories: ['trees', 'binary-search'],
+    description: 'Verify BST ordering constraints across all nodes',
+    code: `function isValidBST(root) {
+  function validate(node, min, max) {
+    if (!node) return true
+    if (node.val <= min || node.val >= max) return false
+    return validate(node.left, min, node.val) && validate(node.right, node.val, max)
+  }
+
+  return validate(root, -Infinity, Infinity)
+}
+
+const root = {
+  val: 2,
+  left: { val: 1, left: null, right: null },
+  right: { val: 3, left: null, right: null },
+}
+
+console.log(isValidBST(root)) // true`,
+    approach: 'Track valid (min, max) range while recursing. Left subtree must stay below node value; right above.',
+    timeComplexity: 'O(n) where n is node count',
+    spaceComplexity: 'O(h) where h is tree height',
+    patternName: 'BST Constraint Validation',
+    whyItWorks: 'Each node narrows the allowed range for descendants; violating range means BST rule is broken.',
+  },
+  {
+    id: 'lowest-common-ancestor-bst',
+    name: 'Lowest Common Ancestor in BST',
+    category: 'trees',
+    difficulty: 'medium',
+    categories: ['trees', 'binary-search'],
+    description: 'Find LCA using BST ordering',
+    code: `function lowestCommonAncestor(root, p, q) {
+  if (!root) return null
+
+  if (p < root.val && q < root.val) {
+    return lowestCommonAncestor(root.left, p, q)
+  }
+  if (p > root.val && q > root.val) {
+    return lowestCommonAncestor(root.right, p, q)
+  }
+  return root
+}
+
+const root = {
+  val: 6,
+  left: { val: 2, left: { val: 0, left: null, right: null }, right: { val: 4, left: { val: 3, left: null, right: null }, right: { val: 5, left: null, right: null } } },
+  right: { val: 8, left: { val: 7, left: null, right: null }, right: { val: 9, left: null, right: null } },
+}
+
+const node = lowestCommonAncestor(root, 2, 8)
+console.log(node.val) // 6`,
+    approach: 'For BST, both keys below go left, both above go right; otherwise current node is LCA.',
+    timeComplexity: 'O(h) where h is tree height',
+    spaceComplexity: 'O(h) recursion depth',
+    patternName: 'BST Guided Search',
+    whyItWorks: 'BST ordering guarantees the split of target nodes into left or right partitions.',
+  },
+  {
+    id: 'kth-smallest-in-bst',
+    name: 'Kth Smallest in BST',
+    category: 'trees',
+    difficulty: 'medium',
+    categories: ['trees', 'binary-search'],
+    description: 'Use inorder order to get sorted BST values',
+    code: `function kthSmallest(root, k) {
+  const values = []
+
+  function inorder(node) {
+    if (!node || values.length >= k) return
+    inorder(node.left)
+    if (values.length < k) values.push(node.val)
+    inorder(node.right)
+  }
+
+  inorder(root)
+  return values[k - 1]
+}
+
+const root = {
+  val: 5,
+  left: { val: 3, left: { val: 2, left: { val: 1, left: null, right: null }, right: null }, right: { val: 4, left: null, right: null } },
+  right: { val: 6, left: null, right: { val: 7, left: null, right: null } },
+}
+
+console.log(kthSmallest(root, 3)) // 3`,
+    approach: 'Inorder traversal of BST is sorted; return the k-th visited value.',
+    timeComplexity: 'O(h + k) average, O(n) worst',
+    spaceComplexity: 'O(h)',
+    patternName: 'Inorder Ranking',
+    whyItWorks: 'BST inorder order preserves ascending value sequence by definition.',
+  },
+  {
+    id: 'construct-bst-from-sorted-array',
+    name: 'Convert Sorted Array to BST',
+    category: 'trees',
+    difficulty: 'medium',
+    categories: ['trees', 'binary-search'],
+    description: 'Build a balanced BST from sorted values',
+    code: `function sortedArrayToBST(nums) {
+  function build(left, right) {
+    if (left > right) return null
+    const mid = Math.floor((left + right) / 2)
+    const node = {
+      val: nums[mid],
+      left: build(left, mid - 1),
+      right: build(mid + 1, right),
+    }
+    return node
+  }
+  return build(0, nums.length - 1)
+}
+
+console.log(JSON.stringify(sortedArrayToBST([1,2,3,4,5,6,7]), null, 2))
+// Balanced root => 4`,
+    approach: 'Recursively choose midpoint as root and build left/right recursively from subranges.',
+    timeComplexity: 'O(n) where n is array length',
+    spaceComplexity: 'O(log n) for balanced tree recursion stack',
+    patternName: 'BST Divide and Conquer',
+    whyItWorks: 'Sorted order ensures each midpoint partitions left smaller and right larger values.',
   },
 
   // ==================== OBJECT UTILITIES ====================
@@ -3824,6 +4390,7 @@ console.log("Is power of 2?", isPowerOfTwo(1));
     id: 'sum-of-two-integers',
     name: 'Sum of Two Integers',
     category: 'bit-manipulation',
+    categories: ['bit-manipulation', 'backtracking'],
     difficulty: 'medium',
     description: 'Add two integers without using + or - operators',
     code: `// Sum Without + or -
@@ -4227,6 +4794,7 @@ console.log(grayCode(n))
     id: 'subsets',
     name: 'Subsets',
     category: 'bit-manipulation',
+    categories: ['bit-manipulation', 'backtracking'],
     difficulty: 'medium',
     description: 'Generate all subsets using a bitmask from 0..(2^n - 1)',
     code: `// Subsets using bitmask enumeration
@@ -4524,7 +5092,7 @@ reverseString(chars);
     id: 'reverse-vowels-of-a-string',
     name: 'Reverse Vowels of a String',
     category: 'two-pointers',
-    categories: ['two-pointers', 'strings'],
+    categories: ['two-pointers', 'strings', 'backtracking'],
     difficulty: 'easy',
     description: 'Reverse only vowels in a string while keeping other characters in place',
     code: `// Reverse Vowels of a String
@@ -5304,7 +5872,7 @@ threeSumClosest(nums, target);
     id: 'valid-palindrome-ii',
     name: 'Valid Palindrome II',
     category: 'two-pointers',
-    categories: ['two-pointers', 'strings'],
+    categories: ['two-pointers', 'strings', 'backtracking'],
     difficulty: 'easy',
     description: 'Check if string can be a palindrome by removing at most one character',
     code: `// Valid Palindrome II
@@ -7669,6 +8237,596 @@ console.log(calculate(" 3/2 "));
     whyItWorks: 'Deferring only addition and subtraction while executing multiplication and division immediately preserves precedence without requiring a full expression tree.',
   },
 
+  {
+    id: 'number-of-islands',
+    name: 'Number of Islands',
+    category: 'graphs',
+    categories: ['graphs', 'arrays-hashing'],
+    difficulty: 'easy',
+    description: 'Count connected components of land cells in a 2D grid',
+    code: `// Number of Islands
+// Count connected regions of '1' using DFS
+
+function numIslands(grid) {
+  if (grid.length === 0 || grid[0].length === 0) return 0
+
+  let count = 0
+  const rows = grid.length
+  const cols = grid[0].length
+
+  function dfs(r, c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols) return
+    if (grid[r][c] === '0') return
+
+    grid[r][c] = '0'
+    dfs(r - 1, c)
+    dfs(r + 1, c)
+    dfs(r, c - 1)
+    dfs(r, c + 1)
+  }
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === '1') {
+        count++
+        dfs(r, c)
+      }
+    }
+  }
+
+  return count
+}
+
+console.log(numIslands([
+  ['1', '1', '0', '0'],
+  ['1', '0', '0', '1'],
+  ['0', '0', '1', '1'],
+]))
+`,
+    approach: 'Visit every cell. When land is found, run DFS to mark every connected land cell as water. Increment a counter only for a new starting land component.',
+    timeComplexity: 'O(m * n)',
+    spaceComplexity: 'O(m * n)',
+    patternName: 'Graph as Grid Components',
+    whyItWorks: 'Every island is a connected region. Once DFS marks all cells in one island as visited, remaining unvisited land must belong to a new island.',
+  },
+  {
+    id: 'flood-fill',
+    name: 'Flood Fill',
+    category: 'graphs',
+    categories: ['graphs', 'recursion', 'arrays-hashing'],
+    difficulty: 'easy',
+    description: 'Fill connected pixels in an image with a replacement color',
+    code: `// Flood Fill
+// Start from one pixel and color the full connected region
+
+function floodFill(image, sr, sc, newColor) {
+  const rows = image.length
+  const cols = image[0].length
+  const oldColor = image[sr][sc]
+
+  if (oldColor === newColor) return image
+
+  function paint(r, c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols) return
+    if (image[r][c] !== oldColor) return
+
+    image[r][c] = newColor
+    paint(r - 1, c)
+    paint(r + 1, c)
+    paint(r, c - 1)
+    paint(r, c + 1)
+  }
+
+  paint(sr, sc)
+  return image
+}
+
+console.log(floodFill([
+  [1, 1, 1],
+  [1, 1, 0],
+  [1, 0, 1],
+], 1, 1, 2))
+`,
+    approach: 'Use DFS from the start cell. If a neighbor has the same original color, recolor it and continue. Guard against bounds and same-color checks to stop recursion.',
+    timeComplexity: 'O(m * n)',
+    spaceComplexity: 'O(m * n)',
+    patternName: 'Grid DFS',
+    whyItWorks: 'All reachable cells with the original color are part of the same connected component, so recursive paint marks exactly that component once.',
+  },
+  {
+    id: 'max-area-of-island',
+    name: 'Max Area of Island',
+    category: 'graphs',
+    categories: ['graphs', 'arrays-hashing'],
+    difficulty: 'medium',
+    description: 'Find the largest connected land area in a binary grid',
+    code: `// Max Area of Island
+// Compute area for each component and keep the maximum
+
+function maxAreaOfIsland(grid) {
+  const rows = grid.length
+  const cols = grid[0].length
+
+  function dfs(r, c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols) return 0
+    if (grid[r][c] !== 1) return 0
+
+    grid[r][c] = 0
+    return (
+      1 +
+      dfs(r - 1, c) +
+      dfs(r + 1, c) +
+      dfs(r, c - 1) +
+      dfs(r, c + 1)
+    )
+  }
+
+  let maxArea = 0
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === 1) {
+        const area = dfs(r, c)
+        if (area > maxArea) maxArea = area
+      }
+    }
+  }
+
+  return maxArea
+}
+
+console.log(maxAreaOfIsland([
+  [0, 0, 1, 0, 0],
+  [1, 1, 1, 0, 0],
+  [0, 1, 0, 0, 1],
+  [0, 0, 0, 1, 1],
+]))
+`,
+    approach: 'For each land cell, DFS returns the area of its full island by summing all reachable land neighbors. Keep global max across all starts.',
+    timeComplexity: 'O(m * n)',
+    spaceComplexity: 'O(m * n)',
+    patternName: 'Grid DFS + Component Size',
+    whyItWorks: 'Every cell is visited at most once and contributes to exactly one component count. Returning 1 + recursive contributions gives the component area.',
+  },
+  {
+    id: 'clone-graph',
+    name: 'Clone Graph',
+    category: 'graphs',
+    categories: ['graphs', 'recursion'],
+    difficulty: 'medium',
+    description: 'Deep clone an undirected graph given a start node',
+    code: `// Clone Graph
+// Use DFS + map to clone each node once
+
+class Node {
+  constructor(val, neighbors = []) {
+    this.val = val
+    this.neighbors = neighbors
+  }
+}
+
+function cloneGraph(node) {
+  if (!node) return null
+
+  const cloned = new Map()
+
+  function dfs(current) {
+    if (cloned.has(current.val)) {
+      return cloned.get(current.val)
+    }
+
+    const copy = new Node(current.val)
+    cloned.set(current.val, copy)
+
+    for (const neighbor of current.neighbors) {
+      copy.neighbors.push(dfs(neighbor))
+    }
+
+    return copy
+  }
+
+  return dfs(node)
+}
+
+const n1 = new Node(1)
+const n2 = new Node(2)
+const n3 = new Node(3)
+n1.neighbors = [n2, n3]
+n2.neighbors = [n1, n3]
+n3.neighbors = [n1, n2]
+console.log(cloneGraph(n1).val)
+`,
+    approach: 'Clone each node once and store it in a map keyed by node value. DFS edges, creating clone + wiring neighbors recursively.',
+    timeComplexity: 'O(V + E)',
+    spaceComplexity: 'O(V)',
+    patternName: 'Graph Copy with Memoization',
+    whyItWorks: 'The map guarantees one clone per original node and prevents infinite recursion in cycles while still reconstructing the full edge structure.',
+  },
+  {
+    id: 'find-if-path-exists',
+    name: 'Find if Path Exists in Graph',
+    category: 'graphs',
+    categories: ['graphs', 'recursion'],
+    difficulty: 'easy',
+    description: 'Determine whether a path exists between two vertices',
+    code: `// Find if Path Exists in Graph
+// Use BFS from start and check if end is reachable
+
+function validPath(n, edges, source, destination) {
+  const graph = Array.from({ length: n }, () => [])
+
+  for (const [from, to] of edges) {
+    graph[from].push(to)
+    graph[to].push(from)
+  }
+
+  const queue = [source]
+  const seen = new Set([source])
+
+  while (queue.length > 0) {
+    const node = queue.shift()
+    if (node === destination) return true
+
+    for (const next of graph[node]) {
+      if (!seen.has(next)) {
+        seen.add(next)
+        queue.push(next)
+      }
+    }
+  }
+
+  return false
+}
+
+console.log(validPath(5, [[0, 1], [0, 2], [3, 4], [1, 2]], 0, 4))
+console.log(validPath(3, [[0, 1], [1, 2]], 0, 2))
+`,
+    approach: 'Build undirected adjacency lists, then BFS until destination is reached or queue exhausts.',
+    timeComplexity: 'O(V + E)',
+    spaceComplexity: 'O(V + E)',
+    patternName: 'Reachability by BFS',
+    whyItWorks: 'BFS explores every vertex reachable from source. If destination is visited, a path exists; if traversal ends otherwise, no path exists.',
+  },
+  {
+    id: 'keys-and-rooms',
+    name: 'Keys and Rooms',
+    category: 'graphs',
+    categories: ['graphs'],
+    difficulty: 'medium',
+    description: 'Check whether all rooms are reachable starting from room 0',
+    code: `// Keys and Rooms
+// Start at room 0, use each found key to visit more rooms
+
+function canVisitAllRooms(rooms) {
+  const seen = new Set([0])
+  const stack = [0]
+
+  while (stack.length > 0) {
+    const room = stack.pop()
+    for (const key of rooms[room]) {
+      if (!seen.has(key)) {
+        seen.add(key)
+        stack.push(key)
+      }
+    }
+  }
+
+  return seen.size === rooms.length
+}
+
+console.log(canVisitAllRooms([[1], [2], [3], []]))
+console.log(canVisitAllRooms([[1, 3], [3, 0, 1], [2], [0]]))
+`,
+    approach: 'Treat each room as a node and each key as a directed edge. DFS/BFS through keys and count visited nodes.',
+    timeComplexity: 'O(N + K)',
+    spaceComplexity: 'O(N)',
+    patternName: 'Graph Reachability',
+    whyItWorks: 'All possible moves are key edges. If every room is eventually visited, then keys connect the graph from node 0 to all nodes.',
+  },
+  {
+    id: 'number-of-provinces',
+    name: 'Number of Provinces',
+    category: 'graphs',
+    categories: ['graphs', 'recursion'],
+    difficulty: 'medium',
+    description: 'Count connected components in an adjacency matrix',
+    code: `// Number of Provinces
+// Count connected components in undirected city graph
+
+function findCircleNum(isConnected) {
+  const n = isConnected.length
+  const seen = new Array(n).fill(false)
+  let provinces = 0
+
+  function visit(city) {
+    seen[city] = true
+    for (let neighbor = 0; neighbor < n; neighbor++) {
+      if (isConnected[city][neighbor] === 1 && !seen[neighbor]) {
+        visit(neighbor)
+      }
+    }
+  }
+
+  for (let i = 0; i < n; i++) {
+    if (!seen[i]) {
+      provinces++
+      visit(i)
+    }
+  }
+
+  return provinces
+}
+
+console.log(findCircleNum([
+  [1, 1, 0],
+  [1, 1, 0],
+  [0, 0, 1],
+]))
+`,
+    approach: 'Every unvisited city starts a new DFS and one province. DFS marks all cities in that connected component.',
+    timeComplexity: 'O(n²)',
+    spaceComplexity: 'O(n)',
+    patternName: 'Connected Components in Matrix',
+    whyItWorks: 'A province is exactly one connected component in the undirected city graph, and each node is visited once from its component root.',
+  },
+  {
+    id: 'course-schedule',
+    name: 'Course Schedule',
+    category: 'graphs',
+    difficulty: 'medium',
+    description: 'Determine if all courses can be finished with prerequisites',
+    code: `// Course Schedule
+// Detect cycles using indegrees (Kahn's algorithm)
+
+function canFinish(numCourses, prerequisites) {
+  const graph = Array.from({ length: numCourses }, () => [])
+  const indegree = new Array(numCourses).fill(0)
+
+  for (const [course, pre] of prerequisites) {
+    graph[pre].push(course)
+    indegree[course]++
+  }
+
+  const queue = []
+  for (let i = 0; i < numCourses; i++) {
+    if (indegree[i] === 0) queue.push(i)
+  }
+
+  let taken = 0
+  while (queue.length > 0) {
+    const course = queue.shift()
+    taken++
+
+    for (const next of graph[course]) {
+      indegree[next]--
+      if (indegree[next] === 0) queue.push(next)
+    }
+  }
+
+  return taken === numCourses
+}
+
+console.log(canFinish(2, [[1, 0]]))
+console.log(canFinish(2, [[1, 0], [0, 1]]))
+`,
+    approach: 'Build directed edges pre -> course and indegree counts. Remove zero-indegree nodes repeatedly; if all nodes are processed, there is no cycle.',
+    timeComplexity: 'O(V + E)',
+    spaceComplexity: 'O(V + E)',
+    patternName: 'Topological Sort (Kahn)',
+    whyItWorks: 'A valid course order exists only if no cycle prevents completing prerequisites. Kahn’s process consumes all reachable zero-indegree courses only when graph is acyclic.',
+  },
+  {
+    id: 'course-schedule-ii',
+    name: 'Course Schedule II',
+    category: 'graphs',
+    difficulty: 'medium',
+    description: 'Return a valid course order when possible',
+    code: `// Course Schedule II
+// Return one valid topological order
+
+function findOrder(numCourses, prerequisites) {
+  const graph = Array.from({ length: numCourses }, () => [])
+  const indegree = new Array(numCourses).fill(0)
+
+  for (const [course, pre] of prerequisites) {
+    graph[pre].push(course)
+    indegree[course]++
+  }
+
+  const queue = []
+  for (let i = 0; i < numCourses; i++) {
+    if (indegree[i] === 0) queue.push(i)
+  }
+
+  const order = []
+  while (queue.length > 0) {
+    const course = queue.shift()
+    order.push(course)
+
+    for (const next of graph[course]) {
+      indegree[next]--
+      if (indegree[next] === 0) queue.push(next)
+    }
+  }
+
+  return order.length === numCourses ? order : []
+}
+
+console.log(findOrder(2, [[1, 0]]))
+console.log(findOrder(2, [[1, 0], [0, 1]]))
+`,
+    approach: 'Same indegree processing as feasibility check, but store each popped node as part of the output order.',
+    timeComplexity: 'O(V + E)',
+    spaceComplexity: 'O(V + E)',
+    patternName: 'Topological Order Construction',
+    whyItWorks: 'When a node has zero indegree, all its prerequisites are already in the order. Processing in this sequence ensures constraints are respected.',
+  },
+  {
+    id: 'rotting-oranges',
+    name: 'Rotting Oranges',
+    category: 'graphs',
+    categories: ['graphs'],
+    difficulty: 'medium',
+    description: 'Find minutes until all fresh oranges rot',
+    code: `// Rotting Oranges
+// Multi-source BFS from all initially rotten oranges
+
+function orangesRotting(grid) {
+  const rows = grid.length
+  const cols = grid[0].length
+  const queue = []
+  let fresh = 0
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === 1) fresh++
+      if (grid[r][c] === 2) queue.push([r, c, 0])
+    }
+  }
+
+  let minutes = 0
+  const dirs = [[1,0],[ -1,0],[0,1],[0,-1]]
+
+  while (queue.length > 0) {
+    const [r, c, time] = queue.shift()
+    minutes = Math.max(minutes, time)
+
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr
+      const nc = c + dc
+      if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr][nc] === 1) {
+        grid[nr][nc] = 2
+        fresh--
+        queue.push([nr, nc, time + 1])
+      }
+    }
+  }
+
+  return fresh === 0 ? minutes : -1
+}
+
+console.log(orangesRotting([
+  [2,1,1],
+  [1,1,0],
+  [0,1,1],
+]))
+`,
+    approach: 'All rotten oranges act as Level 0 and spread rot outward together each minute. Use BFS with time per cell.',
+    timeComplexity: 'O(m * n)',
+    spaceComplexity: 'O(m * n)',
+    patternName: 'Multi-Source BFS',
+    whyItWorks: 'BFS frontier guarantees all oranges at the same distance from initial rotten oranges rot at the same minute; the final time is the maximum infection layer.',
+  },
+  {
+    id: 'network-delay-time',
+    name: 'Network Delay Time',
+    category: 'graphs',
+    categories: ['graphs', 'heap'],
+    difficulty: 'medium',
+    description: 'Find time for all nodes to receive signal from source',
+    code: `// Network Delay Time
+// O(V^2) shortest paths from source
+
+function networkDelayTime(times, n, k) {
+  const graph = Array.from({ length: n + 1 }, () => [])
+  for (const [u, v, w] of times) {
+    graph[u].push([v, w])
+  }
+
+  const dist = new Array(n + 1).fill(Infinity)
+  const used = new Array(n + 1).fill(false)
+  dist[k] = 0
+
+  for (let i = 1; i <= n; i++) {
+    let u = -1
+    let bestDist = Infinity
+
+    for (let node = 1; node <= n; node++) {
+      if (!used[node] && dist[node] < bestDist) {
+        bestDist = dist[node]
+        u = node
+      }
+    }
+
+    if (u === -1) break
+    used[u] = true
+
+    for (const [next, weight] of graph[u]) {
+      const nextDist = dist[u] + weight
+      if (nextDist < dist[next]) {
+        dist[next] = nextDist
+      }
+    }
+  }
+
+  let answer = 0
+  for (let node = 1; node <= n; node++) {
+    if (dist[node] === Infinity) return -1
+    if (dist[node] > answer) answer = dist[node]
+  }
+
+  return answer
+}
+
+console.log(networkDelayTime([[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2))
+`,
+    approach: 'Run Dijkstra-like relaxation with visited set and smallest-unreached node in O(V²). Initialize source distance to 0 and repeatedly relax outgoing edges.',
+    timeComplexity: 'O(V² + E)',
+    spaceComplexity: 'O(V + E)',
+    patternName: 'Shortest Path (Dijkstra without Heap)',
+    whyItWorks: 'Each step finalizes the node with smallest tentative distance, then relaxes edges. This guarantees shortest distances in non-negative weighted graphs.',
+  },
+  {
+    id: 'cheapest-flights-within-k-stops',
+    name: 'Cheapest Flights Within K Stops',
+    category: 'graphs',
+    categories: ['graphs', 'dynamic-programming'],
+    difficulty: 'hard',
+    description: 'Find cheapest cost with at most K stops',
+    code: `// Cheapest Flights Within K Stops
+// Bellman-Ford relaxation repeated K + 1 times
+
+function findCheapestPrice(n, flights, src, dst, k) {
+  let dist = new Array(n).fill(Infinity)
+  dist[src] = 0
+
+  for (let i = 0; i <= k; i++) {
+    const nextDist = [...dist]
+
+    for (const [from, to, price] of flights) {
+      if (dist[from] !== Infinity) {
+        const candidate = dist[from] + price
+        if (candidate < nextDist[to]) {
+          nextDist[to] = candidate
+        }
+      }
+    }
+
+    dist = nextDist
+  }
+
+  return dist[dst] === Infinity ? -1 : dist[dst]
+}
+
+console.log(findCheapestPrice(4, [
+  [0, 1, 100],
+  [1, 2, 100],
+  [2, 3, 100],
+  [0, 2, 500],
+], 0, 3, 1))
+console.log(findCheapestPrice(4, [
+  [0, 1, 100],
+  [1, 2, 100],
+  [2, 3, 100],
+  [0, 2, 500],
+], 0, 3, 2))
+`,
+    approach: 'Relax all edges exactly k+1 times, representing paths with up to k intermediate stops. Copy previous distances each round to avoid using newly updated values in same round.',
+    timeComplexity: 'O(K * E)',
+    spaceComplexity: 'O(V)',
+    patternName: 'DP by Edge Count (Bellman-Ford)',
+    whyItWorks: 'Any path with at most K stops has at most K+1 edges. Each iteration allows one extra edge, and relaxation accumulates best costs constrained by edge count.',
+  },
+
   // ==================== STRINGS ====================
   {
     id: 'find-index-first-occurrence',
@@ -8454,6 +9612,54 @@ console.log("Result:", findPeakElement([1, 2, 1, 3, 5, 6, 4]));
     whyItWorks: 'If the right neighbor is larger, climbing right guarantees a peak exists there (array drops to -infinity at boundaries). Same logic applies for left. Always move toward the uphill direction.',
   },
   {
+    id: 'first-bad-version',
+    name: 'First Bad Version',
+    category: 'binary-search',
+    difficulty: 'easy',
+    description: 'Given a version control system where all versions after a bad version are bad, find the first bad version',
+    code: `// First Bad Version
+// Find the earliest version that is bad using binary search
+
+function createIsBadVersion(badVersion) {
+  return function(version) {
+    return version >= badVersion
+  }
+}
+
+function firstBadVersion(n, badVersion) {
+  const isBadVersion = createIsBadVersion(badVersion)
+
+  let left = 1
+  let right = n
+
+  console.log("Versions:", n, "bad starts at", badVersion)
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2)
+    console.log("left:", left, "right:", right, "mid:", mid)
+
+    if (isBadVersion(mid)) {
+      console.log("Version", mid, "is bad -> check earlier");
+      right = mid
+    } else {
+      console.log("Version", mid, "is good -> check later");
+      left = mid + 1
+    }
+  }
+
+  console.log("First bad version:", left)
+  return left
+}
+
+console.log("Result:", firstBadVersion(5, 4))
+`,
+    approach: 'Check the middle version. If it is bad, the first bad version is at mid or earlier, so move right bound left. If good, move left bound right. Continue until pointers meet.',
+    timeComplexity: 'O(log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Boundary Finding)',
+    whyItWorks: 'The answer space is monotonic: bad is false then true and never reverts. Binary search finds the first true by keeping a shrinking interval where the first bad still exists.',
+  },
+  {
     id: 'koko-eating-bananas',
     name: 'Koko Eating Bananas',
     category: 'binary-search',
@@ -8631,6 +9837,103 @@ console.log("Result:", splitArray([7, 2, 5, 10, 8], 2));
     whyItWorks: 'If we can split with max sum = X, then X+1 also works (monotonic). Binary search on the maximum subarray sum from max(nums) to sum(nums), checking if k or fewer splits suffice.',
   },
   {
+    id: 'search-rotated-array-ii',
+    name: 'Search in Rotated Sorted Array II',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Search a target in a rotated sorted array that may include duplicates',
+    code: `// Search in Rotated Sorted Array II
+// Handle duplicates by moving bounds inward when endpoints match
+
+function search(nums, target) {
+  let left = 0
+  let right = nums.length - 1
+
+  console.log("Array:", nums, "Target:", target)
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2)
+    console.log("left:", left, "right:", right, "mid:", mid, "value:", nums[mid])
+
+    if (nums[mid] === target) {
+      console.log("Found target at index", mid)
+      return true
+    }
+
+    if (nums[left] === nums[mid] && nums[mid] === nums[right]) {
+      console.log("Duplicate boundary values, shrink both ends")
+      left++
+      right--
+    } else if (nums[left] <= nums[mid]) {
+      console.log("Left half is sorted", nums[left], "to", nums[mid])
+      if (target >= nums[left] && target < nums[mid]) {
+        right = mid - 1
+      } else {
+        left = mid + 1
+      }
+    } else {
+      console.log("Right half is sorted", nums[mid], "to", nums[right])
+      if (target > nums[mid] && target <= nums[right]) {
+        left = mid + 1
+      } else {
+        right = mid - 1
+      }
+    }
+  }
+
+  console.log("Target not found")
+  return false
+}
+
+console.log("Result:", search([2, 5, 6, 0, 0, 1, 2], 0))
+`,
+    approach: 'Use the same rotated-search logic as LeetCode 33, but when left, mid, and right are equal, drop both boundaries by one because duplicates remove the sorted-half decision.',
+    timeComplexity: 'O(log n) average, O(n) worst with all duplicates',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Rotated Array)',
+    whyItWorks: 'When all three values are equal, duplicates hide ordering information so we shrink the range. Otherwise one half is sortable and can decide if target is inside it.',
+  },
+  {
+    id: 'peak-index-in-mountain-array',
+    name: 'Peak Index in Mountain Array',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Find the index of the peak element in a mountain array (strictly increasing then decreasing)',
+    code: `// Peak Index in Mountain Array
+// Compare with the next element to move toward the peak side
+
+function peakIndexInMountainArray(arr) {
+  let left = 0
+  let right = arr.length - 1
+
+  console.log("Mountain array:", arr)
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2)
+    console.log("left:", left, "right:", right, "mid:", mid, "next:", arr[mid + 1])
+
+    if (arr[mid] < arr[mid + 1]) {
+      console.log("Climbing up, move right")
+      left = mid + 1
+    } else {
+      console.log("Climbing down, move left")
+      right = mid
+    }
+  }
+
+  console.log("Peak index:", left)
+  return left
+}
+
+console.log("Result:", peakIndexInMountainArray([0, 2, 3, 5, 4, 1]))
+`,
+    approach: 'Because the array increases then decreases, compare mid with mid+1. If rising, peak is to the right; if falling, peak is at mid or to the left.',
+    timeComplexity: 'O(log n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Boundary Finding)',
+    whyItWorks: 'The mountain shape guarantees a directional slope. Each step moves toward the slope change, so left/right bounds narrow until only the peak index remains.',
+  },
+  {
     id: 'search-2d-matrix',
     name: 'Search a 2D Matrix',
     category: 'binary-search',
@@ -8748,6 +10051,217 @@ console.log("Result:", findMedianSortedArrays([1, 3], [2]));
     spaceComplexity: 'O(1)',
     patternName: 'Binary Search (Boundary Finding)',
     whyItWorks: 'Binary search on where to partition the smaller array. The combined partition must have exactly half the total elements, and max of left side must be less than or equal to min of right side.',
+  },
+  {
+    id: 'search-2d-matrix-ii',
+    name: 'Search a 2D Matrix II',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Search for a target in a sorted matrix where each row and each column is sorted ascending',
+    code: `// Search a 2D Matrix II
+// Move from top-right and eliminate one row or one column each step
+
+function searchMatrix(matrix, target) {
+  let row = 0
+  let col = matrix[0].length - 1
+
+  console.log("Matrix:", matrix)
+  console.log("Target:", target)
+
+  while (row < matrix.length && col >= 0) {
+    let value = matrix[row][col]
+    console.log("row:", row, "col:", col, "value:", value)
+
+    if (value === target) {
+      console.log("Found target at", row, col)
+      return true
+    } else if (value > target) {
+      console.log("Value too high, move left")
+      col--
+    } else {
+      console.log("Value too low, move down")
+      row++
+    }
+  }
+
+  console.log("Target not found")
+  return false
+}
+
+console.log("Result:", searchMatrix([
+  [1, 4, 7, 11, 15],
+  [2, 5, 8, 12, 19],
+  [3, 6, 9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30],
+], 5))
+`,
+    approach: 'Start from top-right. If current is greater than target, move left; if smaller, move down. Each move drops a whole row/column that cannot contain the target.',
+    timeComplexity: 'O(m + n)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search (Classic)',
+    whyItWorks: 'In each step, sorted order guarantees one full row or one full column is eliminated, so the search region shrinks in linear combined steps.',
+  },
+  {
+    id: 'find-smallest-divisor',
+    name: 'Find the Smallest Divisor Given a Threshold',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Find the smallest divisor such that sum of ceil(nums[i]/divisor) is within threshold',
+    code: `// Find the Smallest Divisor Given a Threshold
+// Binary search on divisor and check total quotient sum
+
+function computeSum(nums, divisor) {
+  let total = 0
+  for (let i = 0; i < nums.length; i++) {
+    total += Math.ceil(nums[i] / divisor)
+  }
+  return total
+}
+
+function smallestDivisor(nums, threshold) {
+  let left = 1
+  let right = 0
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] > right) right = nums[i]
+  }
+
+  console.log("nums:", nums, "threshold:", threshold)
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2)
+    let sum = computeSum(nums, mid)
+    console.log("divisor:", mid, "sum:", sum)
+
+    if (sum <= threshold) {
+      right = mid
+    } else {
+      left = mid + 1
+    }
+  }
+
+  console.log("Smallest divisor:", left)
+  return left
+}
+
+console.log("Result:", smallestDivisor([1, 2, 5, 9], 6))
+`,
+    approach: 'For each candidate divisor, compute required sum of hours (ceil division). If the sum fits threshold, search smaller divisors; otherwise search larger.',
+    timeComplexity: 'O(n log m) where m is max(nums)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search on Answer',
+    whyItWorks: 'If a divisor d is valid (sum <= threshold), every larger divisor is also valid. Monotonic feasibility allows binary search for the minimum valid d.',
+  },
+  {
+    id: 'minimum-number-of-days',
+    name: 'Minimum Number of Days to Make m Bouquets',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Pick m bouquets of k adjacent blooms, minimizing flowering day',
+    code: `// Minimum Number of Days to Make m Bouquets
+// Check if we can form m bouquets by day
+
+function canMakeBouquets(days, bloomDay, m, k) {
+  let bouquets = 0
+  let streak = 0
+
+  for (let i = 0; i < bloomDay.length; i++) {
+    if (bloomDay[i] <= days) {
+      streak++
+      if (streak === k) {
+        bouquets++
+        streak = 0
+      }
+    } else {
+      streak = 0
+    }
+  }
+
+  return bouquets >= m
+}
+
+function minDays(bloomDay, m, k) {
+  let left = Math.min(...bloomDay)
+  let right = Math.max(...bloomDay)
+
+  console.log("Bloom days:", bloomDay, "m:", m, "k:", k)
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2)
+    console.log("day:", mid)
+
+    if (canMakeBouquets(mid, bloomDay, m, k)) {
+      right = mid
+    } else {
+      left = mid + 1
+    }
+  }
+
+  console.log("Minimum days:", left)
+  return left
+}
+
+console.log("Result:", minDays([1, 10, 3, 10, 2], 3, 1))
+`,
+    approach: 'Binary search the number of days. For each day, count adjacent bloomed flowers in streaks and whether they form at least m bouquets of size k.',
+    timeComplexity: 'O(n log W) where W is bloom day range',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search on Answer',
+    whyItWorks: 'As days increase, feasibility is monotonic. If we can make bouquets by day d, we can also do so at any d+1.',
+  },
+  {
+    id: 'magnetic-force-between-balls',
+    name: 'Magnetic Force Between Two Balls',
+    category: 'binary-search',
+    difficulty: 'medium',
+    description: 'Place m balls in baskets to maximize minimum distance',
+    code: `// Magnetic Force Between Two Balls
+// Binary search minimum distance and greedily place balls
+
+function canPlace(baskets, m, force) {
+  let count = 1
+  let lastPos = baskets[0]
+
+  for (let i = 1; i < baskets.length; i++) {
+    if (baskets[i] - lastPos >= force) {
+      count++
+      lastPos = baskets[i]
+      if (count >= m) return true
+    }
+  }
+  return false
+}
+
+function maxDistance(position, m) {
+  position.sort((a, b) => a - b)
+  let left = 1
+  let right = position[position.length - 1] - position[0]
+
+  console.log("Positions:", position, "m:", m)
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2)
+    console.log("force:", mid)
+
+    if (canPlace(position, m, mid)) {
+      left = mid + 1
+    } else {
+      right = mid - 1
+    }
+  }
+
+  console.log("Maximum minimum force:", right)
+  return right
+}
+
+console.log("Result:", maxDistance([1, 2, 3, 4, 7], 3))
+`,
+    approach: 'Sort basket positions, then binary search the minimal spacing candidate. A greedy pass checks whether we can place m balls with at least that spacing.',
+    timeComplexity: 'O(n log R)',
+    spaceComplexity: 'O(1)',
+    patternName: 'Binary Search on Answer',
+    whyItWorks: 'If a spacing d is feasible, any smaller spacing is also feasible. So the optimum is found by binary searching the highest feasible spacing.',
   },
   {
     id: 'time-based-key-value',
@@ -9906,6 +11420,7 @@ insertionSort(nums);
     id: 'merge-sort',
     name: 'Merge Sort',
     category: 'sorting',
+    categories: ['sorting', 'recursion'],
     difficulty: 'easy',
     description: 'Implement merge sort using divide-and-conquer',
     code: `// Merge Sort
@@ -9971,6 +11486,7 @@ console.log("Result:", mergeSort(arr));
     id: 'quick-sort',
     name: 'Quick Sort',
     category: 'sorting',
+    categories: ['sorting', 'recursion'],
     difficulty: 'medium',
     description: 'Implement quicksort with partition \u2014 the most important sort for interviews',
     code: `// Quick Sort
@@ -10410,7 +11926,7 @@ sortArrayByParity([0, 1, 2, 3, 4]);
     id: 'kth-largest-element',
     name: 'Kth Largest Element',
     category: 'sorting',
-    categories: ['sorting', 'arrays-hashing'],
+    categories: ['sorting', 'arrays-hashing', 'recursion'],
     difficulty: 'medium',
     description: 'Find the kth largest element using QuickSelect (partition)',
     code: `// Kth Largest Element - QuickSelect
