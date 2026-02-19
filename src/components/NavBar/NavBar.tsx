@@ -66,6 +66,12 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
         {/* Right: Nav links + search */}
         <div className="flex items-center gap-4 shrink-0">
           <Link
+            href="/interview"
+            className="hidden md:flex py-1 px-3 text-base font-medium text-text-secondary no-underline rounded-md transition-all duration-150 hover:text-text-bright hover:bg-white-5"
+          >
+            Interview
+          </Link>
+          <Link
             href="/playground/event-loop"
             className="hidden md:flex py-1 px-3 text-base font-medium text-text-secondary no-underline rounded-md transition-all duration-150 hover:text-text-bright hover:bg-white-5"
           >
@@ -114,6 +120,12 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
               className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
             >
               DSA Patterns
+            </Link>
+            <Link
+              href="/interview"
+              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
+            >
+              Interview Prep
             </Link>
             <Link
               href="/playground/event-loop"

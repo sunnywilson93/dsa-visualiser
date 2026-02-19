@@ -9,6 +9,7 @@ import { exampleCategories, dsaSubcategories, getExamplesByCategory, getAllJsExa
 import { concepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
 import { dsaPatterns } from '@/data/dsaPatterns'
+import { cssInterviewQuestions, cssTopics } from '@/data/cssInterviewQuestions'
 
 
 // JS implementation categories (exclude DSA - it gets its own section)
@@ -284,6 +285,52 @@ export default function HomePage() {
               >
                 Explore All DSA Topics →
               </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 4: ANSWER - Interview Prep */}
+        <section className="mb-10 animate-[fadeIn_0.4s_ease-out_500ms_both]">
+          <div className="flex justify-between items-start mb-6">
+            <div>
+              <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
+                <span className="inline-flex items-center justify-center w-7 h-7 bg-brand-primary rounded-lg text-base font-bold text-white">4</span>
+                Answer
+              </h2>
+              <p className="text-base text-text-secondary mt-1 mb-0">
+                What interviewers ask you to <strong>explain verbally</strong>
+              </p>
+            </div>
+            <Link href="/interview" className="text-base text-brand-primary no-underline py-2 px-0 hover:text-brand-secondary transition-colors duration-250 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none focus-visible:rounded">
+              View All →
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1 max-md:gap-4 items-stretch">
+            <Link href="/interview/css" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
+              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl leading-none">🎨</span>
+                  <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{cssInterviewQuestions.length} questions</span>
+                </div>
+                <h3 className="text-xl font-bold text-text-bright m-0">CSS Interview Questions</h3>
+                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
+                  {cssTopics.map(t => t.label).join(', ')}
+                </p>
+              </div>
+            </Link>
+
+            <div className="relative block rounded-2xl p-0.5 text-inherit border border-white-10 opacity-50 h-full">
+              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl leading-none">⚡</span>
+                  <span className="text-sm font-semibold py-0.5 px-3 bg-white-8 rounded-3xl text-text-muted italic">Coming soon</span>
+                </div>
+                <h3 className="text-xl font-bold text-text-bright m-0">JavaScript Interview Questions</h3>
+                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
+                  Closures, prototypes, async/await, event loop, this keyword, and ES6+ features
+                </p>
+              </div>
             </div>
           </div>
         </section>
