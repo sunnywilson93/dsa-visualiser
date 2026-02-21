@@ -11,6 +11,7 @@ import { dsaConcepts } from '@/data/dsaConcepts'
 import { dsaPatterns } from '@/data/dsaPatterns'
 import { cssInterviewQuestions, cssTopics } from '@/data/cssInterviewQuestions'
 import { htmlInterviewQuestions, htmlTopics } from '@/data/htmlInterviewQuestions'
+import { jsInterviewQuestions, jsTopics } from '@/data/jsInterviewQuestions'
 
 
 // JS implementation categories (exclude DSA - it gets its own section)
@@ -19,7 +20,7 @@ const dsaProblems = getExamplesByCategory('dsa')
 const allJsProblems = getAllJsExamples()
 const totalProblems = allJsProblems.length + dsaProblems.length
 const totalConcepts = concepts.length + dsaConcepts.length + dsaPatterns.length
-const totalInterviewQuestions = htmlInterviewQuestions.length + cssInterviewQuestions.length
+const totalInterviewQuestions = htmlInterviewQuestions.length + cssInterviewQuestions.length + jsInterviewQuestions.length
 
 const homeFAQSchema = {
   '@context': 'https://schema.org' as const,
@@ -38,15 +39,15 @@ const homeFAQSchema = {
       name: 'What topics are covered on JS Interview Prep?',
       acceptedAnswer: {
         '@type': 'Answer' as const,
-        text: `The platform covers ${concepts.length} JavaScript concepts (closures, event loop, prototypes, async patterns), ${dsaConcepts.length + dsaPatterns.length} DSA topics (arrays, trees, graphs, dynamic programming), ${totalProblems} coding problems across ${jsCategories.length + dsaSubcategories.length} categories, and ${totalInterviewQuestions} interview questions for HTML and CSS. Every problem includes an interactive step-through debugger that visualizes execution.`,
+        text: `The platform covers ${concepts.length} JavaScript concepts (closures, event loop, prototypes, async patterns), ${dsaConcepts.length + dsaPatterns.length} DSA topics (arrays, trees, graphs, dynamic programming), ${totalProblems} coding problems across ${jsCategories.length + dsaSubcategories.length} categories, and ${totalInterviewQuestions} interview questions for HTML, CSS, and JavaScript. Every problem includes an interactive step-through debugger that visualizes execution.`,
       },
     },
     {
       '@type': 'Question' as const,
-      name: 'Does JS Interview Prep have HTML and CSS interview questions?',
+      name: 'Does JS Interview Prep have HTML, CSS, and JavaScript interview questions?',
       acceptedAnswer: {
         '@type': 'Answer' as const,
-        text: `Yes, JS Interview Prep includes ${totalInterviewQuestions} curated interview questions: ${htmlInterviewQuestions.length} HTML questions covering semantics, accessibility, forms, and modern APIs, plus ${cssInterviewQuestions.length} CSS questions covering box model, flexbox, grid, specificity, and architecture. Each question includes an answer, code example, follow-up question, and key takeaway.`,
+        text: `Yes, JS Interview Prep includes ${totalInterviewQuestions} curated interview questions: ${htmlInterviewQuestions.length} HTML questions covering semantics, accessibility, forms, and modern APIs, ${cssInterviewQuestions.length} CSS questions covering box model, flexbox, grid, specificity, and architecture, plus ${jsInterviewQuestions.length} JavaScript questions covering closures, async patterns, prototypes, and modern ES6+ features. Each question includes an answer, code example, follow-up question, and key takeaway.`,
       },
     },
     {
@@ -316,7 +317,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1 max-md:gap-4 items-stretch">
+          <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-2 max-md:grid-cols-1 max-md:gap-4 items-stretch">
             <Link href="/interview/html" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
               <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
                 <div className="flex items-center justify-between">
@@ -343,6 +344,21 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-text-bright m-0">CSS Interview Questions</h3>
                 <p className="text-base text-text-secondary m-0 leading-normal flex-1">
                   {cssTopics.map(t => t.label).join(', ')}
+                </p>
+              </div>
+            </Link>
+
+            <Link href="/interview/js" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
+              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center justify-center text-brand-primary">
+                    <ConceptIcon conceptId="js-core" size={28} />
+                  </span>
+                  <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{jsInterviewQuestions.length} questions</span>
+                </div>
+                <h3 className="text-xl font-bold text-text-bright m-0">JavaScript Interview Questions</h3>
+                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
+                  {jsTopics.map(t => t.label).join(', ')}
                 </p>
               </div>
             </Link>

@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { cn } from '@/utils/cn'
 import { NavBar } from '@/components/NavBar'
 import { cssInterviewQuestions } from '@/data/cssInterviewQuestions'
 import { htmlInterviewQuestions } from '@/data/htmlInterviewQuestions'
+import { jsInterviewQuestions } from '@/data/jsInterviewQuestions'
 import styles from './InterviewLanding.module.css'
 
 export default function InterviewLanding() {
@@ -41,13 +41,15 @@ export default function InterviewLanding() {
             </div>
           </Link>
 
-          <div className={cn(styles.topicCard, styles.comingSoon)}>
+          <Link href="/interview/js" className={styles.topicCard}>
             <div className={styles.topicName}>JavaScript</div>
             <div className={styles.topicDescription}>
               Closures, prototypes, async/await, event loop, this keyword, and ES6+ features
             </div>
-            <div className={styles.comingSoonBadge}>Coming soon</div>
-          </div>
+            <div className={styles.topicCount}>
+              {jsInterviewQuestions.length} questions
+            </div>
+          </Link>
         </div>
       </main>
     </div>

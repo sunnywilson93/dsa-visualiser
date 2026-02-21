@@ -75,14 +75,22 @@ function highlightSyntax(code: string): ReactNode[] {
 
 export function InterviewQuestionCard({ question, topicMap }: InterviewQuestionCardProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [showAnswer, setShowAnswer] = useState(false)
   const topicLabel = topicMap[question.topic]?.label ?? question.topic
+
+  function handleToggle(): void {
+    setIsOpen((prev) => {
+      if (prev) setShowAnswer(false)
+      return !prev
+    })
+  }
 
   return (
     <div className={styles.card}>
       <button
         type="button"
         className={styles.cardHeader}
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={handleToggle}
         aria-expanded={isOpen}
       >
         <span className={styles.questionNumber}>
@@ -112,28 +120,40 @@ export function InterviewQuestionCard({ question, topicMap }: InterviewQuestionC
 
       {isOpen && (
         <div className={styles.cardBody}>
-          <div>
-            <div className={styles.sectionLabel}>Answer</div>
-            <div className={styles.answerText}>
-              {renderWithCode(question.answer)}
-            </div>
-          </div>
+          {!showAnswer ? (
+            <button
+              type="button"
+              className={styles.revealBtn}
+              onClick={() => setShowAnswer(true)}
+            >
+              Reveal Answer
+            </button>
+          ) : (
+            <>
+              <div>
+                <div className={styles.sectionLabel}>Answer</div>
+                <div className={styles.answerText}>
+                  {renderWithCode(question.answer)}
+                </div>
+              </div>
 
-          {question.codeExample && (
-            <div>
-              <div className={styles.sectionLabel}>Example</div>
-              <pre className={styles.codeBlock}>
-                {highlightSyntax(question.codeExample)}
-              </pre>
-            </div>
+              {question.codeExample && (
+                <div>
+                  <div className={styles.sectionLabel}>Example</div>
+                  <pre className={styles.codeBlock}>
+                    {highlightSyntax(question.codeExample)}
+                  </pre>
+                </div>
+              )}
+
+              <div className={styles.followUpBox}>
+                <div className={styles.followUpLabel}>Interviewer might ask...</div>
+                <div className={styles.followUpText}>{question.followUp}</div>
+              </div>
+
+              <div className={styles.takeaway}>{question.keyTakeaway}</div>
+            </>
           )}
-
-          <div className={styles.followUpBox}>
-            <div className={styles.followUpLabel}>Interviewer might ask...</div>
-            <div className={styles.followUpText}>{question.followUp}</div>
-          </div>
-
-          <div className={styles.takeaway}>{question.keyTakeaway}</div>
         </div>
       )}
     </div>
