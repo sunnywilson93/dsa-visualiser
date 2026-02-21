@@ -5,19 +5,19 @@ import { NavBar } from '@/components/NavBar'
 import { InterviewFilterBar } from '@/components/InterviewFilterBar'
 import { InterviewQuestionCard } from '@/components/InterviewQuestionCard'
 import {
-  cssInterviewQuestions,
-  cssTopics,
-  cssTopicMap,
-  filterCSSQuestions,
-} from '@/data/cssInterviewQuestions'
-import styles from './CSSInterviewClient.module.css'
+  htmlInterviewQuestions,
+  htmlTopics,
+  htmlTopicMap,
+  filterHTMLQuestions,
+} from '@/data/htmlInterviewQuestions'
+import styles from './HTMLInterviewClient.module.css'
 
-export default function CSSInterviewClient() {
+export default function HTMLInterviewClient() {
   const [difficulty, setDifficulty] = useState<'all' | 'easy' | 'medium' | 'hard'>('all')
   const [topic, setTopic] = useState<string>('all')
 
   const filtered = useMemo(
-    () => filterCSSQuestions(cssInterviewQuestions, difficulty, topic),
+    () => filterHTMLQuestions(htmlInterviewQuestions, difficulty, topic),
     [difficulty, topic],
   )
 
@@ -26,15 +26,15 @@ export default function CSSInterviewClient() {
       <NavBar
         breadcrumbs={[
           { label: 'Interview', path: '/interview' },
-          { label: 'CSS' },
+          { label: 'HTML' },
         ]}
       />
 
       <main className="flex-1 p-8 container-default mx-auto w-full max-md:p-6">
         <div className={styles.header}>
-          <h1 className={styles.title}>CSS Interview Prep</h1>
+          <h1 className={styles.title}>HTML Interview Prep</h1>
           <p className={styles.subtitle}>
-            {cssInterviewQuestions.length} questions across fundamentals, layout, modern CSS, and architecture
+            {htmlInterviewQuestions.length} questions across fundamentals, semantics, accessibility, forms, and modern APIs
           </p>
         </div>
 
@@ -43,15 +43,15 @@ export default function CSSInterviewClient() {
           topic={topic}
           onDifficultyChange={setDifficulty}
           onTopicChange={setTopic}
-          topics={cssTopics}
-          totalCount={cssInterviewQuestions.length}
+          topics={htmlTopics}
+          totalCount={htmlInterviewQuestions.length}
           filteredCount={filtered.length}
         />
 
         {filtered.length > 0 ? (
           <div className={styles.questionsGrid}>
             {filtered.map((q) => (
-              <InterviewQuestionCard key={q.id} question={q} topicMap={cssTopicMap} />
+              <InterviewQuestionCard key={q.id} question={q} topicMap={htmlTopicMap} />
             ))}
           </div>
         ) : (

@@ -79,7 +79,7 @@
 .badgeHard {
   background: var(--color-red-500-5);
   color: var(--color-red-500);
-  border-color: rgba(244, 63, 94, 0.2);
+  border-color: var(--color-red-20);
 }
 
 .badgeTopic {
@@ -139,15 +139,45 @@
 
 .codeBlock {
   background: var(--color-bg-code);
-  border: var(--border-width-1) solid var(--color-border-primary);
+  border: var(--border-width-1) solid var(--color-white-10);
   border-radius: var(--radius-md);
   padding: var(--spacing-lg);
   overflow-x: auto;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
-  color: var(--color-text-primary);
-  white-space: pre;
+  color: var(--code-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.syntaxComment {
+  color: var(--code-comment);
+  font-style: italic;
+}
+
+.syntaxString {
+  color: var(--code-string);
+}
+
+.syntaxTag {
+  color: var(--code-tag);
+}
+
+.syntaxKeyword {
+  color: var(--code-keyword);
+}
+
+.syntaxNumber {
+  color: var(--code-number);
+}
+
+.syntaxAttr {
+  color: var(--code-attr);
+}
+
+.syntaxProperty {
+  color: var(--code-property);
 }
 
 .followUpBox {

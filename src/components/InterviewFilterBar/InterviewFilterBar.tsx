@@ -1,18 +1,17 @@
 'use client'
 
 import { cn } from '@/utils/cn'
-import type { CSSInterviewTopic } from '@/data/cssInterviewQuestions'
-import { cssTopics } from '@/data/cssInterviewQuestions'
+import type { InterviewTopicConfig } from '@/types'
 import styles from './InterviewFilterBar.module.css'
 
 type DifficultyFilter = 'all' | 'easy' | 'medium' | 'hard'
-type TopicFilter = 'all' | CSSInterviewTopic
 
 export interface InterviewFilterBarProps {
   difficulty: DifficultyFilter
-  topic: TopicFilter
+  topic: string
   onDifficultyChange: (value: DifficultyFilter) => void
-  onTopicChange: (value: TopicFilter) => void
+  onTopicChange: (value: string) => void
+  topics: InterviewTopicConfig[]
   totalCount: number
   filteredCount: number
 }
@@ -29,6 +28,7 @@ export function InterviewFilterBar({
   topic,
   onDifficultyChange,
   onTopicChange,
+  topics,
   totalCount,
   filteredCount,
 }: InterviewFilterBarProps) {
@@ -61,7 +61,7 @@ export function InterviewFilterBar({
         >
           All Topics
         </button>
-        {cssTopics.map((t) => (
+        {topics.map((t) => (
           <button
             key={t.id}
             type="button"

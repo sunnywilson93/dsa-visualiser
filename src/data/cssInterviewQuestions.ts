@@ -1196,7 +1196,7 @@ export const cssInterviewQuestions: CSSInterviewQuestion[] = [
 export function filterCSSQuestions(
   questions: CSSInterviewQuestion[],
   difficulty: 'all' | 'easy' | 'medium' | 'hard',
-  topic: 'all' | CSSInterviewTopic,
+  topic: string,
 ): CSSInterviewQuestion[] {
   return questions.filter((q) => {
     if (difficulty !== 'all' && q.difficulty !== difficulty) return false

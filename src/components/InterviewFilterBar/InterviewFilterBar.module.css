@@ -37,6 +37,12 @@
   font-weight: var(--font-weight-semibold);
 }
 
+.filterBtnActive:hover {
+  background: var(--color-brand-light);
+  border-color: var(--color-brand-light);
+  color: var(--color-bg-primary);
+}
+
 .stats {
   margin-left: auto;
   font-size: var(--text-sm);

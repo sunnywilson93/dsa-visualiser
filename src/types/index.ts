@@ -347,3 +347,25 @@ export interface ProblemInsight {
   pattern: ConceptType         // Which visualization pattern
   customSteps?: ConceptStep[]  // Override category steps if needed
 }
+
+// ============================================================================
+// Interview Question Types
+// ============================================================================
+
+export interface InterviewQuestion {
+  id: number
+  title: string
+  difficulty: 'easy' | 'medium' | 'hard'
+  topic: string
+  subtopic: string
+  answer: string
+  codeExample?: string
+  followUp: string
+  keyTakeaway: string
+}
+
+export interface InterviewTopicConfig {
+  id: string
+  label: string
+  description: string
+}

@@ -290,6 +290,10 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'implicit-coercion-rules': Shuffle,
   'coercion-edge-cases': Bomb,
 
+  // Interview categories
+  'html': Code2,
+  'css': Palette,
+
   // ===== ADDITIONAL MISSING ICONS =====
   // Array methods (granular)
   'array-searching': Search,

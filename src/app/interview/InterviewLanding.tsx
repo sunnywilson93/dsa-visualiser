@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { cn } from '@/utils/cn'
 import { NavBar } from '@/components/NavBar'
 import { cssInterviewQuestions } from '@/data/cssInterviewQuestions'
+import { htmlInterviewQuestions } from '@/data/htmlInterviewQuestions'
 import styles from './InterviewLanding.module.css'
 
 export default function InterviewLanding() {
@@ -20,6 +21,16 @@ export default function InterviewLanding() {
         </div>
 
         <div className={styles.grid}>
+          <Link href="/interview/html" className={styles.topicCard}>
+            <div className={styles.topicName}>HTML</div>
+            <div className={styles.topicDescription}>
+              Document structure, semantic elements, accessibility, ARIA, forms, media, Web Components, and modern APIs
+            </div>
+            <div className={styles.topicCount}>
+              {htmlInterviewQuestions.length} questions
+            </div>
+          </Link>
+
           <Link href="/interview/css" className={styles.topicCard}>
             <div className={styles.topicName}>CSS</div>
             <div className={styles.topicDescription}>

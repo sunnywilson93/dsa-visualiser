@@ -451,9 +451,17 @@
   --og-bg-end: #1a1a2e;
   --og-text-secondary: #888;
 
-  /* === Code Syntax Colors === */
-  --code-text: #e0e0e0;
+  /* === Code Syntax Colors (Dracula-inspired) === */
+  --color-bg-code: #282a36;
+  --code-text: #f8f8f2;
   --code-text-error: #f8a0a0;
+  --code-comment: #6272a4;
+  --code-keyword: #ff79c6;
+  --code-string: #f1fa8c;
+  --code-number: #bd93f9;
+  --code-tag: #ff79c6;
+  --code-attr: #50fa7b;
+  --code-property: #8be9fd;
 
   @keyframes fadeIn {
     from { opacity: 0; }
