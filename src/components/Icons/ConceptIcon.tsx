@@ -106,7 +106,7 @@ import {
   BadgeAlert,
   Bomb,
   LayoutGrid,
-  Component,
+  Atom,
   // Fallback
   HelpCircle,
   type LucideIcon,
@@ -294,7 +294,7 @@ const conceptIconMap: Record<string, LucideIcon> = {
   // Interview categories
   'html': Code2,
   'css': Palette,
-  'react': Component,
+  'react': Atom,
   'bundlers': Package,
 
   // ===== ADDITIONAL MISSING ICONS =====
