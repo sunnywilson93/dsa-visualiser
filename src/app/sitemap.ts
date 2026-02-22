@@ -76,6 +76,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${BASE_URL}/interview/react`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: `${BASE_URL}/playground/event-loop`,
       lastModified: CONTENT_LAST_UPDATED,
       changeFrequency: 'monthly',

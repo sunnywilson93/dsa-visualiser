@@ -106,6 +106,7 @@ import {
   BadgeAlert,
   Bomb,
   LayoutGrid,
+  Component,
   // Fallback
   HelpCircle,
   type LucideIcon,
@@ -293,6 +294,7 @@ const conceptIconMap: Record<string, LucideIcon> = {
   // Interview categories
   'html': Code2,
   'css': Palette,
+  'react': Component,
 
   // ===== ADDITIONAL MISSING ICONS =====
   // Array methods (granular)

@@ -5,6 +5,7 @@ import { NavBar } from '@/components/NavBar'
 import { cssInterviewQuestions } from '@/data/cssInterviewQuestions'
 import { htmlInterviewQuestions } from '@/data/htmlInterviewQuestions'
 import { jsInterviewQuestions } from '@/data/jsInterviewQuestions'
+import { reactInterviewQuestions } from '@/data/reactInterviewQuestions'
 import styles from './InterviewLanding.module.css'
 
 export default function InterviewLanding() {
@@ -48,6 +49,16 @@ export default function InterviewLanding() {
             </div>
             <div className={styles.topicCount}>
               {jsInterviewQuestions.length} questions
+            </div>
+          </Link>
+
+          <Link href="/interview/react" className={styles.topicCard}>
+            <div className={styles.topicName}>React</div>
+            <div className={styles.topicDescription}>
+              Hooks, state management, component patterns, Server Components, and React 19 features
+            </div>
+            <div className={styles.topicCount}>
+              {reactInterviewQuestions.length} questions
             </div>
           </Link>
         </div>

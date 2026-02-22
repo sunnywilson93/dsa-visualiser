@@ -1,0 +1,29 @@
+.header {
+  margin-bottom: var(--spacing-sm);
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+  margin-top: var(--spacing-xs);
+  font-size: var(--text-sm);
+}
+
+.questionsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.emptyState {
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
