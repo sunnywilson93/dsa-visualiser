@@ -6,6 +6,7 @@ import { cssInterviewQuestions } from '@/data/cssInterviewQuestions'
 import { htmlInterviewQuestions } from '@/data/htmlInterviewQuestions'
 import { jsInterviewQuestions } from '@/data/jsInterviewQuestions'
 import { reactInterviewQuestions } from '@/data/reactInterviewQuestions'
+import { bundlerInterviewQuestions } from '@/data/bundlerInterviewQuestions'
 import styles from './InterviewLanding.module.css'
 
 export default function InterviewLanding() {
@@ -59,6 +60,16 @@ export default function InterviewLanding() {
             </div>
             <div className={styles.topicCount}>
               {reactInterviewQuestions.length} questions
+            </div>
+          </Link>
+
+          <Link href="/interview/bundlers" className={styles.topicCard}>
+            <div className={styles.topicName}>Bundlers</div>
+            <div className={styles.topicDescription}>
+              Webpack, Vite, Rollup, esbuild, Parcel, Turbopack, Rspack, Rolldown, and common bundling concepts
+            </div>
+            <div className={styles.topicCount}>
+              {bundlerInterviewQuestions.length} questions
             </div>
           </Link>
         </div>

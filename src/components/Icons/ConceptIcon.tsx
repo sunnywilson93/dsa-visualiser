@@ -295,6 +295,7 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'html': Code2,
   'css': Palette,
   'react': Component,
+  'bundlers': Package,
 
   // ===== ADDITIONAL MISSING ICONS =====
   // Array methods (granular)
