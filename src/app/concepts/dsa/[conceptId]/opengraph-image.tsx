@@ -1,16 +1,20 @@
 import { ImageResponse } from 'next/og'
-import { getDSAConceptById } from '@/data/dsaConcepts'
+import { dsaConcepts, getDSAConceptById } from '@/data/dsaConcepts'
 
 export const alt = 'DSA Concept'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
+export async function generateStaticParams(): Promise<Array<{ conceptId: string }>> {
+  return dsaConcepts.map((concept) => ({ conceptId: concept.id }))
+}
+
 export default async function Image({
   params,
 }: {
-  params: Promise<{ conceptId: string }>
+  params: { conceptId: string }
 }) {
-  const { conceptId } = await params
+  const { conceptId } = params
   const concept = getDSAConceptById(conceptId)
 
   return new ImageResponse(

@@ -5,12 +5,21 @@ export const alt = 'JavaScript Practice Problems'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
+const allCategories = [
+  ...exampleCategories,
+  ...dsaSubcategories,
+]
+
+export async function generateStaticParams(): Promise<Array<{ categoryId: string }>> {
+  return allCategories.map((c) => ({ categoryId: c.id }))
+}
+
 export default async function Image({
   params,
 }: {
-  params: Promise<{ categoryId: string }>
+  params: { categoryId: string }
 }) {
-  const { categoryId } = await params
+  const { categoryId } = params
   const category = exampleCategories.find((c) => c.id === categoryId)
     || dsaSubcategories.find((s) => s.id === categoryId)
   const problemCount = getExamplesByCategory(categoryId).length
@@ -37,7 +46,7 @@ export default async function Image({
             marginBottom: 16,
           }}
         >
-          {problemCount} Coding Problems
+          {`${problemCount} Coding Problems`}
         </div>
         <div
           style={{

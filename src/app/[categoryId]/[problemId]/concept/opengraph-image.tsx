@@ -1,17 +1,29 @@
 import { ImageResponse } from 'next/og'
-import { codeExamples } from '@/data/examples'
+import { codeExamples, exampleCategories, dsaSubcategories, getProblemRouteCategoryIds } from '@/data/examples'
 import { problemConcepts } from '@/data/algorithmConcepts'
 
 export const alt = 'Algorithm Concept Visualization'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
+export async function generateStaticParams(): Promise<Array<{ categoryId: string; problemId: string }>> {
+  const routeParams: Array<{ categoryId: string; problemId: string }> = []
+  codeExamples
+    .filter((problem) => problemConcepts[problem.id])
+    .forEach((problem) => {
+      getProblemRouteCategoryIds(problem).forEach((categoryId) => {
+        routeParams.push({ categoryId, problemId: problem.id })
+      })
+    })
+  return routeParams
+}
+
 export default async function Image({
   params,
 }: {
-  params: Promise<{ categoryId: string; problemId: string }>
+  params: { categoryId: string; problemId: string }
 }) {
-  const { problemId } = await params
+  const { problemId } = params
   const problem = codeExamples.find((p) => p.id === problemId)
   const concept = problemConcepts[problemId]
 

@@ -1,16 +1,20 @@
 import { ImageResponse } from 'next/og'
-import { getConceptById } from '@/data/concepts'
+import { concepts, getConceptById } from '@/data/concepts'
 
 export const alt = 'JavaScript Concept'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
+export async function generateStaticParams(): Promise<Array<{ conceptId: string }>> {
+  return concepts.map((concept) => ({ conceptId: concept.id }))
+}
+
 export default async function Image({
   params,
 }: {
-  params: Promise<{ conceptId: string }>
+  params: { conceptId: string }
 }) {
-  const { conceptId } = await params
+  const { conceptId } = params
   const concept = getConceptById(conceptId)
 
   return new ImageResponse(

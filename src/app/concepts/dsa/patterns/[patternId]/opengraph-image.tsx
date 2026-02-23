@@ -1,16 +1,20 @@
 import { ImageResponse } from 'next/og'
-import { getPatternBySlug } from '@/data/dsaPatterns'
+import { dsaPatterns, getPatternBySlug } from '@/data/dsaPatterns'
 
 export const alt = 'DSA Pattern Visualization'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
+export async function generateStaticParams(): Promise<Array<{ patternId: string }>> {
+  return dsaPatterns.map((pattern) => ({ patternId: pattern.slug }))
+}
+
 export default async function Image({
   params,
 }: {
-  params: Promise<{ patternId: string }>
+  params: { patternId: string }
 }) {
-  const { patternId } = await params
+  const { patternId } = params
   const pattern = getPatternBySlug(patternId)
 
   return new ImageResponse(

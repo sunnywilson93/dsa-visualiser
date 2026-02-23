@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og'
-import { codeExamples, exampleCategories, isDsaSubcategory } from '@/data/examples'
+import { codeExamples, exampleCategories, dsaSubcategories, isDsaSubcategory, getProblemRouteCategoryIds } from '@/data/examples'
 
 export const alt = 'JavaScript Coding Problem'
 export const size = { width: 1200, height: 630 }
@@ -11,12 +11,22 @@ const difficultyColors: Record<string, string> = {
   hard: '#ef4444',
 }
 
+export async function generateStaticParams(): Promise<Array<{ categoryId: string; problemId: string }>> {
+  const routeParams: Array<{ categoryId: string; problemId: string }> = []
+  codeExamples.forEach((problem) => {
+    getProblemRouteCategoryIds(problem).forEach((categoryId) => {
+      routeParams.push({ categoryId, problemId: problem.id })
+    })
+  })
+  return routeParams
+}
+
 export default async function Image({
   params,
 }: {
-  params: Promise<{ categoryId: string; problemId: string }>
+  params: { categoryId: string; problemId: string }
 }) {
-  const { categoryId, problemId } = await params
+  const { categoryId, problemId } = params
   const problem = codeExamples.find((p) => p.id === problemId)
   const category = exampleCategories.find(
     (c) => c.id === categoryId ||
