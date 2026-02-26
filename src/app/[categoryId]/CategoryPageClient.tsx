@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Clock, BookOpen } from 'lucide-react'
-import { NavBar } from '@/components/NavBar'
+import { PageLayout } from '@/components/ui'
 import { ConceptIcon } from '@/components/Icons'
 import {
   ProblemListingLayout,
@@ -120,15 +120,14 @@ export default function CategoryPageClient() {
 
   if (!category) {
     return (
-      <div className="min-h-screen flex flex-col bg-gradient-to-br from-bg-page from-0% to-bg-page-secondary to-100%">
-        <NavBar />
-        <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 text-gray-500">
-          <h2>Category not found</h2>
+      <PageLayout variant="wide">
+        <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 text-text-muted">
+          <h2 className="text-text-bright">Category not found</h2>
           <Link href="/" className="text-brand-primary no-underline text-base">
             Back to Home
           </Link>
         </div>
-      </div>
+      </PageLayout>
     )
   }
 
@@ -137,7 +136,7 @@ export default function CategoryPageClient() {
     <>
       <div className="py-4 px-8 flex gap-2 flex-wrap container-default mx-auto w-full max-lg:py-3 max-lg:px-6 max-md:py-3 max-md:px-4">
         <button
-          className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-white-10 bg-transparent text-gray-500 text-sm cursor-pointer transition-all duration-150 hover:border-white-20 hover:text-gray-300 ${!selectedSubcategory ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
+          className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-white-10 bg-transparent text-text-muted text-sm cursor-pointer transition-all duration-150 hover:border-white-20 hover:text-text-secondary ${!selectedSubcategory ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
           onClick={() => setSelectedSubcategory(null)}
         >
           All Topics
@@ -145,7 +144,7 @@ export default function CategoryPageClient() {
         {dsaSubcategories.map((sub) => (
           <button
             key={sub.id}
-            className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-white-10 bg-transparent text-gray-500 text-sm cursor-pointer transition-all duration-150 hover:border-white-20 hover:text-gray-300 ${selectedSubcategory === sub.id ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
+            className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-white-10 bg-transparent text-text-muted text-sm cursor-pointer transition-all duration-150 hover:border-white-20 hover:text-text-secondary ${selectedSubcategory === sub.id ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
             onClick={() => setSelectedSubcategory(sub.id)}
           >
             <ConceptIcon conceptId={sub.id} size={16} />
@@ -189,7 +188,7 @@ export default function CategoryPageClient() {
         <Clock size={48} strokeWidth={1.5} />
       </div>
       <h3 className="text-xl font-semibold text-brand-light m-0 mb-2">Coming Soon</h3>
-      <p className="text-base text-gray-400 m-0 leading-relaxed">
+      <p className="text-base text-text-muted m-0 leading-relaxed">
         We&apos;re working on adding{' '}
         {dsaSubcategories.find((s) => s.id === selectedSubcategory)?.name || 'these'}{' '}
         problems.

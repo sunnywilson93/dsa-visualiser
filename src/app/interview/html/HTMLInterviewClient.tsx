@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { NavBar } from '@/components/NavBar'
+import { motion } from 'framer-motion'
+import { PageLayout, PageHeader } from '@/components/ui'
 import { InterviewFilterBar } from '@/components/InterviewFilterBar'
 import { InterviewQuestionCard } from '@/components/InterviewQuestionCard'
 import {
@@ -10,7 +11,7 @@ import {
   htmlTopicMap,
   filterHTMLQuestions,
 } from '@/data/htmlInterviewQuestions'
-import styles from './HTMLInterviewClient.module.css'
+import { staggerContainer, staggerItem } from '@/lib/motion'
 
 export default function HTMLInterviewClient() {
   const [difficulty, setDifficulty] = useState<'all' | 'easy' | 'medium' | 'hard'>('all')
@@ -22,44 +23,47 @@ export default function HTMLInterviewClient() {
   )
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-bg-page from-0% to-bg-page-secondary to-100%">
-      <NavBar
-        breadcrumbs={[
-          { label: 'Interview', path: '/interview' },
-          { label: 'HTML' },
-        ]}
+    <PageLayout
+      variant="wide"
+      breadcrumbs={[
+        { label: 'Interview', path: '/interview' },
+        { label: 'HTML' },
+      ]}
+    >
+      <PageHeader
+        variant="section"
+        title="HTML Interview Prep"
+        subtitle={`${htmlInterviewQuestions.length} questions across fundamentals, semantics, accessibility, forms, and modern APIs`}
       />
 
-      <main className="flex-1 p-8 container-default mx-auto w-full max-md:p-6">
-        <div className={styles.header}>
-          <h1 className={styles.title}>HTML Interview Prep</h1>
-          <p className={styles.subtitle}>
-            {htmlInterviewQuestions.length} questions across fundamentals, semantics, accessibility, forms, and modern APIs
-          </p>
+      <InterviewFilterBar
+        difficulty={difficulty}
+        topic={topic}
+        onDifficultyChange={setDifficulty}
+        onTopicChange={setTopic}
+        topics={htmlTopics}
+        totalCount={htmlInterviewQuestions.length}
+        filteredCount={filtered.length}
+      />
+
+      {filtered.length > 0 ? (
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col gap-4"
+        >
+          {filtered.map((q) => (
+            <motion.div key={q.id} variants={staggerItem}>
+              <InterviewQuestionCard question={q} topicMap={htmlTopicMap} />
+            </motion.div>
+          ))}
+        </motion.div>
+      ) : (
+        <div className="text-center py-6 text-text-muted">
+          No questions match the selected filters.
         </div>
-
-        <InterviewFilterBar
-          difficulty={difficulty}
-          topic={topic}
-          onDifficultyChange={setDifficulty}
-          onTopicChange={setTopic}
-          topics={htmlTopics}
-          totalCount={htmlInterviewQuestions.length}
-          filteredCount={filtered.length}
-        />
-
-        {filtered.length > 0 ? (
-          <div className={styles.questionsGrid}>
-            {filtered.map((q) => (
-              <InterviewQuestionCard key={q.id} question={q} topicMap={htmlTopicMap} />
-            ))}
-          </div>
-        ) : (
-          <div className={styles.emptyState}>
-            No questions match the selected filters.
-          </div>
-        )}
-      </main>
-    </div>
+      )}
+    </PageLayout>
   )
 }
