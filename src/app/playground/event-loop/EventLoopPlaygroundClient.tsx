@@ -2,7 +2,9 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { AlertTriangle, Zap } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { analyzeEventLoop, EventLoopStep, AnalyzerWarning } from '@/engine/eventLoopAnalyzer'
+import { fadeUp, entranceTransition } from '@/lib/motion'
 import { NavBar } from '@/components/NavBar'
 import { PlaygroundEditor } from '@/components/EventLoopPlayground/PlaygroundEditor'
 import { EventLoopDisplay } from '@/components/EventLoopPlayground/EventLoopDisplay'
@@ -220,7 +222,13 @@ export default function EventLoopPlaygroundClient() {
         { label: 'Playground' },
         { label: 'Event Loop' }
       ]} />
-      <div className="flex flex-col gap-5 container-wide mx-auto p-6 text-text-primary max-[600px]:p-4">
+      <motion.div
+        className="flex flex-col gap-5 container-wide mx-auto p-6 text-text-primary max-[600px]:p-4"
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        transition={entranceTransition}
+      >
         <header className="text-center mb-2">
         <h1 className="text-2xl font-bold m-0 mb-2 bg-gradient-to-br from-brand-primary from-0% to-brand-secondary to-100% bg-clip-text text-transparent">Event Loop Playground</h1>
         <p className="text-base text-text-secondary m-0">
@@ -291,7 +299,7 @@ export default function EventLoopPlaygroundClient() {
           {/* Step description */}
           {steps.length > 0 && currentStep && (
             <div className="flex items-center gap-3 p-3 px-4 bg-brand-primary-8 border border-brand-primary-20 rounded-lg">
-              <span className="py-0.5 px-2.5 rounded-full text-2xs font-semibold text-white flex-shrink-0 [&[data-phase='sync']]:bg-brand-primary [&[data-phase='micro']]:bg-brand-primary [&[data-phase='macro']]:bg-amber-500 [&[data-phase='idle']]:bg-gray-800" data-phase={currentStep.phase}>
+              <span className="py-0.5 px-2.5 rounded-full text-2xs font-semibold text-white flex-shrink-0 [&[data-phase='sync']]:bg-brand-primary [&[data-phase='micro']]:bg-brand-primary [&[data-phase='macro']]:bg-amber-500 [&[data-phase='idle']]:bg-bg-tertiary" data-phase={currentStep.phase}>
                 {currentStep.phase === 'sync' ? 'Sync' :
                  currentStep.phase === 'micro' ? 'Microtask' :
                  currentStep.phase === 'macro' ? 'Macrotask' : 'Idle'}
@@ -321,7 +329,7 @@ export default function EventLoopPlaygroundClient() {
           )}
         </div>
       </div>
-      </div>
+      </motion.div>
     </>
   )
 }

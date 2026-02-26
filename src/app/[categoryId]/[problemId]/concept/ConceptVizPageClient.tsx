@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Code } from 'lucide-react'
-import { NavBar } from '@/components/NavBar'
+import { PageLayout } from '@/components/ui'
 import { ConceptPanel } from '@/components/ConceptPanel'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { RelatedPatterns } from '@/components/CrossLinks'
@@ -62,29 +62,26 @@ export default function ConceptVizPageClient() {
   ]
 
   const difficultyBgColors: Record<string, string> = {
-    easy: 'bg-emerald-500/15 text-emerald-400',
-    medium: 'bg-amber-500/15 text-amber-400',
-    hard: 'bg-red-500/15 text-red-400',
+    easy: 'bg-[var(--difficulty-easy-bg)] text-[color:var(--difficulty-easy)]',
+    medium: 'bg-[var(--difficulty-medium-bg)] text-[color:var(--difficulty-medium)]',
+    hard: 'bg-[var(--difficulty-hard-bg)] text-[color:var(--difficulty-hard)]',
   }
 
   if (!problem || !hasConcept) {
     return (
-      <div className="flex min-h-screen flex-col bg-bg-primary">
-        <NavBar />
+      <PageLayout variant="content">
         <div className="flex flex-1 flex-col items-center justify-center gap-4 text-text-muted">
           <h2>Concept not found</h2>
           <Link href="/" className="text-accent-blue">
             Back to Home
           </Link>
         </div>
-      </div>
+      </PageLayout>
     )
   }
 
   return (
-    <div className="flex min-h-screen flex-col gap-[var(--spacing-lg)] bg-[var(--color-bg-primary)] p-[var(--spacing-lg)] max-md:gap-[var(--spacing-sm)] max-md:p-[var(--spacing-sm)]">
-      <NavBar breadcrumbs={breadcrumbs} />
-
+    <PageLayout variant="content" breadcrumbs={breadcrumbs}>
       {/* Problem info bar */}
       <header className="flex items-center gap-4 px-4 py-2 border-b border-border-primary bg-bg-secondary/50 rounded-lg mb-4">
         <div className="flex items-center gap-3 min-w-0">
@@ -97,7 +94,7 @@ export default function ConceptVizPageClient() {
         <p className="m-0 text-xs text-text-muted max-md:hidden">{problem.description}</p>
       </header>
 
-      <main className="mx-auto flex w-full max-w-[600px] flex-1 flex-col items-center gap-[var(--spacing-lg)] max-md:gap-[var(--spacing-sm)]">
+      <div className="mx-auto flex w-full max-w-[600px] flex-1 flex-col items-center gap-[var(--spacing-lg)] max-md:gap-[var(--spacing-sm)]">
         <div className="w-full">
           <ErrorBoundary>
             <ConceptPanel
@@ -118,7 +115,7 @@ export default function ConceptVizPageClient() {
           <Code size={16} />
           <span>Practice the Code</span>
         </Link>
-      </main>
-    </div>
+      </div>
+    </PageLayout>
   )
 }
