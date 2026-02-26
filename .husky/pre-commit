@@ -6,7 +6,7 @@ if [ "$SKIP_VISUAL" = "1" ]; then
 fi
 
 # Check if any visual-impacting files are staged
-VISUAL_FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(css|tsx)$' | grep -v '\.test\.' | grep -v '\.spec\.')
+VISUAL_FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(css|tsx)$' | grep -v '\.test\.' | grep -v '\.spec\.' || true)
 
 if [ -z "$VISUAL_FILES" ]; then
   exit 0
