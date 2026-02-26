@@ -212,7 +212,7 @@ export default function HomePage() {
           title="Solve"
           subtitle={<>For <strong>algorithm-focused</strong> interview rounds</>}
         >
-          <div className="rounded-2xl border border-white-10 bg-bg-page-secondary p-6">
+          <div className="rounded-2xl border border-border-card bg-bg-page-secondary p-6">
             <div className="flex justify-between items-center mb-6 max-lg:flex-col max-lg:items-start max-lg:gap-4">
               <div className="flex items-center gap-4">
                 <span className="flex items-center justify-center text-brand-primary">
@@ -351,7 +351,7 @@ export default function HomePage() {
       <footer className="text-center py-4 px-8 text-text-muted text-sm border-t border-border-card max-md:py-3 max-md:px-4">
         <div className="flex items-center justify-center gap-4 max-sm:flex-col max-sm:gap-2">
           <span className="inline-flex items-center gap-1.5">
-            <kbd className="inline-block px-1.5 py-0.5 rounded bg-white-8 text-text-secondary text-xs font-mono border border-white-10">⌘K</kbd>
+            <kbd className="inline-block px-1.5 py-0.5 rounded bg-white-8 text-text-secondary text-xs font-mono border border-border-card">⌘K</kbd>
             <span>to search</span>
           </span>
           <span className="text-white-20 max-sm:hidden">·</span>

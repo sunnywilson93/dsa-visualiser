@@ -55,7 +55,7 @@ export function LevelSelector({
               'disabled:cursor-not-allowed disabled:opacity-40',
               isActive
                 ? 'text-white'
-                : 'border-transparent bg-white/5 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+                : 'border-transparent bg-white/5 text-text-muted hover:bg-white/8 hover:text-text-secondary'
             )}
             style={
               isActive

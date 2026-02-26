@@ -45,7 +45,7 @@ function ErrorFallbackWithRouter({
         </div>
 
         <h2 className="m-0 text-xl font-semibold text-text-bright">Something went wrong</h2>
-        <p className="m-0 text-base text-gray-500 max-w-[300px]">
+        <p className="m-0 text-base text-text-muted max-w-[300px]">
           This visualization encountered an unexpected error.
         </p>
 
@@ -71,7 +71,7 @@ function ErrorFallbackWithRouter({
         </div>
 
         <button 
-          className="flex items-center gap-[3px] py-1 px-3 text-xs bg-transparent border-none text-gray-700 cursor-pointer transition-colors duration-150 hover:text-gray-500" 
+          className="flex items-center gap-[3px] py-1 px-3 text-xs bg-transparent border-none text-text-muted cursor-pointer transition-colors duration-150 hover:text-text-secondary"
           onClick={onToggleDetails}
         >
           {showDetails ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -82,7 +82,7 @@ function ErrorFallbackWithRouter({
           <div className="w-full max-w-[400px] mt-2 p-3 bg-black-40 border border-accent-red-30 rounded-lg text-left">
             <div className="text-sm font-semibold text-accent-red mb-2 break-words">{error?.name}: {error?.message}</div>
             {errorInfo?.componentStack && (
-              <pre className="m-0 p-2 bg-black-30 rounded-sm font-mono text-2xs text-gray-700 max-h-[150px] overflow-y-auto whitespace-pre-wrap break-words [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-black-30 [&::-webkit-scrollbar-thumb]:bg-accent-red-30 [&::-webkit-scrollbar-thumb]:rounded-sm [&::-webkit-scrollbar-thumb:hover]:bg-accent-red">
+              <pre className="m-0 p-2 bg-black-30 rounded-sm font-mono text-2xs text-text-muted max-h-[150px] overflow-y-auto whitespace-pre-wrap break-words [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-black-30 [&::-webkit-scrollbar-thumb]:bg-accent-red-30 [&::-webkit-scrollbar-thumb]:rounded-sm [&::-webkit-scrollbar-thumb:hover]:bg-accent-red">
                 {errorInfo.componentStack}
               </pre>
             )}

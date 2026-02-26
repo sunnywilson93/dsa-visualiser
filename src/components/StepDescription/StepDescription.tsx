@@ -65,9 +65,9 @@ export function StepDescription() {
 
   if (status === 'idle') {
     return (
-      <div className="p-[var(--spacing-md)] bg-[var(--color-black-30)] rounded-[var(--radius-lg)] border border-[var(--color-white-8)]">
-        <div className="text-center text-[color:var(--color-gray-700)] text-[length:var(--text-base)]">
-          Press <kbd className="inline-block px-[var(--spacing-xs)] py-[2px] bg-[var(--color-white-10)] border border-[var(--color-white-20)] rounded-[var(--radius-sm)] font-mono text-[length:var(--text-xs)] text-[color:var(--color-gray-500)]">Space</kbd> to run code
+      <div className="p-[var(--spacing-md)] bg-[var(--color-black-30)] rounded-[var(--radius-lg)] border border-[var(--border-card)]">
+        <div className="text-center text-text-muted text-[length:var(--text-base)]">
+          Press <kbd className="inline-block px-[var(--spacing-xs)] py-[2px] bg-[var(--color-white-10)] border border-[var(--color-white-20)] rounded-[var(--radius-sm)] font-mono text-[length:var(--text-xs)] text-text-muted">Space</kbd> to run code
         </div>
       </div>
     )
@@ -78,7 +78,7 @@ export function StepDescription() {
   }
 
   return (
-    <div className="p-[var(--spacing-md)] bg-[var(--color-black-30)] rounded-[var(--radius-lg)] border border-[var(--color-white-8)]">
+    <div className="p-[var(--spacing-md)] bg-[var(--color-black-30)] rounded-[var(--radius-lg)] border border-[var(--border-card)]">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentStep.id}
@@ -98,11 +98,11 @@ export function StepDescription() {
             >
               {getStepTypeLabel(currentStep.type, currentStep.description)}
             </span>
-            <span className="px-[var(--spacing-sm)] py-[2px] bg-[var(--color-white-5)] border border-[var(--color-white-10)] rounded-[var(--radius-sm)] text-[length:var(--text-2xs)] font-medium text-[color:var(--color-gray-700)] font-mono">
+            <span className="px-[var(--spacing-sm)] py-[2px] bg-[var(--color-white-5)] border border-[var(--border-card)] rounded-[var(--radius-sm)] text-[length:var(--text-2xs)] font-medium text-text-muted font-mono">
               Line {currentStep.location.line}
             </span>
           </div>
-          <div className="text-[length:var(--text-base)] text-[color:var(--color-gray-300)] leading-[var(--leading-snug)] [&_code]:font-mono [&_code]:bg-[var(--color-brand-primary-15)] [&_code]:px-[3px] [&_code]:py-[2px] [&_code]:rounded-[var(--radius-sm)] [&_code]:text-[color:var(--color-brand-light)]">
+          <div className="text-[length:var(--text-base)] text-text-secondary leading-[var(--leading-snug)] [&_code]:font-mono [&_code]:bg-[var(--color-brand-primary-15)] [&_code]:px-[3px] [&_code]:py-[2px] [&_code]:rounded-[var(--radius-sm)] [&_code]:text-[color:var(--color-brand-light)]">
             {currentStep.description}
           </div>
         </motion.div>

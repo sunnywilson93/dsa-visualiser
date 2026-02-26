@@ -136,7 +136,7 @@ export default function CategoryPageClient() {
     <>
       <div className="py-4 px-8 flex gap-2 flex-wrap container-default mx-auto w-full max-lg:py-3 max-lg:px-6 max-md:py-3 max-md:px-4">
         <button
-          className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-white-10 bg-transparent text-text-muted text-sm cursor-pointer transition-all duration-150 hover:border-white-20 hover:text-text-secondary ${!selectedSubcategory ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
+          className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-border-card bg-transparent text-text-muted text-sm cursor-pointer transition-all duration-150 hover:border-white-20 hover:text-text-secondary ${!selectedSubcategory ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
           onClick={() => setSelectedSubcategory(null)}
         >
           All Topics
@@ -144,7 +144,7 @@ export default function CategoryPageClient() {
         {dsaSubcategories.map((sub) => (
           <button
             key={sub.id}
-            className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-white-10 bg-transparent text-text-muted text-sm cursor-pointer transition-all duration-150 hover:border-white-20 hover:text-text-secondary ${selectedSubcategory === sub.id ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
+            className={`inline-flex items-center gap-1.5 py-1.5 px-3 rounded-3xl border border-border-card bg-transparent text-text-muted text-sm cursor-pointer transition-all duration-150 hover:border-white-20 hover:text-text-secondary ${selectedSubcategory === sub.id ? 'bg-brand-primary-15 border-brand-primary-40 text-brand-primary' : ''}`}
             onClick={() => setSelectedSubcategory(sub.id)}
           >
             <ConceptIcon conceptId={sub.id} size={16} />

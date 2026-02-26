@@ -87,9 +87,9 @@ export function StepControls({
 
   const secondaryButtonClass = cn(
     'flex items-center justify-center gap-1 px-3 py-2 text-sm min-h-[44px]',
-    'bg-white/5 border border-white/10 rounded-md text-gray-400',
+    'bg-white/5 border border-white/10 rounded-md text-text-muted',
     'cursor-pointer touch-manipulation transition-colors',
-    'hover:not-disabled:bg-white/10 hover:not-disabled:text-white',
+    'hover:not-disabled:bg-white/10 hover:not-disabled:text-text-bright',
     'disabled:opacity-40 disabled:cursor-not-allowed'
   )
 
@@ -112,7 +112,7 @@ export function StepControls({
       </button>
 
       {stepInfo && (
-        <span className="text-sm text-gray-500 tabular-nums min-w-[48px] text-center">
+        <span className="text-sm text-text-muted tabular-nums min-w-[48px] text-center">
           {stepInfo.current} / {stepInfo.total}
         </span>
       )}

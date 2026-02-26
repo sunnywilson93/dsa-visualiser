@@ -95,7 +95,7 @@ export default function ConceptVisualizationPage({ params }: Props) {
       {howToSchema && <StructuredData data={howToSchema} />}
       <ConceptVizPageClient />
       {concept && (
-        <section className="bg-bg-secondary border-t border-white-8 px-lg py-xl">
+        <section className="bg-bg-secondary border-t border-border-card px-lg py-xl">
           <div className="mx-auto flex max-w-[800px] flex-col gap-xl">
             <h2 className="text-xl font-bold tracking-tight text-text-primary">
               Step-by-Step Walkthrough: {concept.title}

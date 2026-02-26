@@ -86,7 +86,7 @@ export function GlobalSearch() {
       >
         <Search
           size={16}
-          className={`text-gray-400 shrink-0 transition-colors ${inputFocused ? 'text-brand-primary' : ''}`}
+          className={`text-text-muted shrink-0 transition-colors ${inputFocused ? 'text-brand-primary' : ''}`}
         />
         <input
           ref={inputRef}
@@ -96,20 +96,20 @@ export function GlobalSearch() {
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           placeholder="Search concepts..."
-          className="flex-1 bg-transparent border-none outline-none text-base text-text-bright min-w-0 placeholder:text-gray-600 max-sm:placeholder:overflow-hidden max-sm:placeholder:text-ellipsis"
+          className="flex-1 bg-transparent border-none outline-none text-base text-text-bright min-w-0 placeholder:text-text-muted max-sm:placeholder:overflow-hidden max-sm:placeholder:text-ellipsis"
           aria-label="Search concepts"
         />
         {query && (
           <button
             type="button"
             onClick={handleClear}
-            className="flex items-center justify-center bg-transparent border-none text-gray-600 cursor-pointer p-0.5 rounded-sm transition-all duration-150 hover:text-text-bright hover:bg-white-10"
+            className="flex items-center justify-center bg-transparent border-none text-text-muted cursor-pointer p-0.5 rounded-sm transition-all duration-150 hover:text-text-bright hover:bg-white-10"
             aria-label="Clear search"
           >
             <X size={14} />
           </button>
         )}
-        <kbd className="text-2xs py-0.5 px-[3px] rounded-sm bg-white-10 text-gray-600 font-inherit border border-white-8 shrink-0 max-md:hidden">
+        <kbd className="text-2xs py-0.5 px-[3px] rounded-sm bg-white-10 text-text-muted font-inherit border border-border-card shrink-0 max-md:hidden">
           ⌘K
         </kbd>
       </div>

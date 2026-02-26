@@ -42,7 +42,7 @@ export function ProblemCard({
   const cardContent = (
     <div className="relative h-full">
       <div className="flex justify-between items-start gap-3 mb-2">
-        <span className="font-medium text-white text-base">{problem.name}</span>
+        <span className="font-medium text-text-bright text-base">{problem.name}</span>
         <DifficultyIndicator level={problem.difficulty} size="sm" />
       </div>
       {showCategory && category && (
@@ -68,7 +68,7 @@ export function ProblemCard({
           )}
         </div>
       )}
-      <p className="text-gray-500 text-base m-0 leading-snug max-md:text-sm">
+      <p className="text-text-muted text-base m-0 leading-snug max-md:text-sm">
         {problem.description}
       </p>
     </div>
@@ -76,7 +76,7 @@ export function ProblemCard({
 
   if (href) {
     return (
-      <div className="relative bg-white-3 border border-white-8 rounded-xl p-4 text-left cursor-pointer transition-all duration-150 w-full font-inherit text-inherit hover:bg-white-8 hover:border-brand-primary-30 focus-visible:outline-2 focus-visible:outline-brand-primary-50 focus-visible:outline-offset-2 max-md:p-3">
+      <div className="relative bg-surface-card border border-border-card rounded-xl p-4 text-left cursor-pointer transition-all duration-150 w-full font-inherit text-inherit hover:bg-white-8 hover:border-brand-primary-30 focus-visible:outline-2 focus-visible:outline-brand-primary-50 focus-visible:outline-offset-2 max-md:p-3">
         <Link
           href={href}
           className="absolute inset-0 rounded-xl no-underline text-inherit z-[1] focus-visible:outline-2 focus-visible:outline-brand-primary-50 focus-visible:outline-offset-2"
@@ -90,7 +90,7 @@ export function ProblemCard({
   return (
     <button
       type="button"
-      className="relative bg-white-3 border border-white-8 rounded-xl p-4 text-left cursor-pointer transition-all duration-150 w-full font-inherit text-inherit hover:bg-white-8 hover:border-brand-primary-30 focus-visible:outline-2 focus-visible:outline-brand-primary-50 focus-visible:outline-offset-2 max-md:p-3"
+      className="relative bg-surface-card border border-border-card rounded-xl p-4 text-left cursor-pointer transition-all duration-150 w-full font-inherit text-inherit hover:bg-white-8 hover:border-brand-primary-30 focus-visible:outline-2 focus-visible:outline-brand-primary-50 focus-visible:outline-offset-2 max-md:p-3"
       onClick={onClick}
       aria-label={`Open ${problem.name}`}
     >

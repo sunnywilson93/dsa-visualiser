@@ -116,7 +116,7 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
           >
             <Link
               href={`${basePath}/${concept.id}`}
-              className="relative block h-full rounded-2xl p-0.5 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 transition-all duration-300"
+              className="relative block h-full rounded-2xl p-0.5 border border-border-card hover:bg-white-5 hover:border-brand-primary-40 transition-all duration-300"
             >
               <div className="bg-bg-page-secondary rounded-[14px] p-6 flex flex-col gap-3 h-full min-h-[200px] max-sm:p-5 max-sm:min-h-[180px]">
                 <div className="flex items-center justify-between">

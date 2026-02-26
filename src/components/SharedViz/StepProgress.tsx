@@ -26,7 +26,7 @@ export function StepProgress({
 
   if (!animated) {
     return (
-      <div className="px-3 py-3 bg-black-50 border border-white-10 rounded-lg text-base text-gray-500 text-center">
+      <div className="px-3 py-3 bg-black-50 border border-border-card rounded-lg text-base text-text-muted text-center">
         {content}
       </div>
     )
@@ -36,7 +36,7 @@ export function StepProgress({
     <AnimatePresence mode="wait">
       <motion.div
         key={current}
-        className="px-3 py-3 bg-black-50 border border-white-10 rounded-lg text-base text-gray-500 text-center"
+        className="px-3 py-3 bg-black-50 border border-border-card rounded-lg text-base text-text-muted text-center"
         initial={{ opacity: 0, y: 5 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -5 }}

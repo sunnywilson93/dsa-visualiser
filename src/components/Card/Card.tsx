@@ -42,7 +42,7 @@ export function Card({
     >
       <Link
         href={href}
-        className="group relative block h-full p-[2px] rounded-2xl no-underline text-inherit transition-all duration-300 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40"
+        className="group relative block h-full p-[2px] rounded-2xl no-underline text-inherit transition-all duration-300 border border-border-card hover:bg-white-5 hover:border-brand-primary-40"
       >
         <div
           className="h-full p-6 flex flex-col gap-3 rounded-xl max-[480px]:min-h-[180px]"
@@ -62,7 +62,7 @@ export function Card({
           <h3 className="text-lg font-semibold text-text-bright mt-1">{title}</h3>
           <p className="text-base text-text-secondary leading-normal flex-1 m-0">{description}</p>
           {(stats || meta) && (
-            <div className="flex gap-4 mt-auto pt-3 border-t border-white-8">
+            <div className="flex gap-4 mt-auto pt-3 border-t border-border-card">
               {stats?.map((stat, i) => (
                 <span key={i} className="text-sm font-medium text-brand-primary">
                   {stat.value} {stat.label}

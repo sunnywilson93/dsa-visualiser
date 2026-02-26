@@ -89,7 +89,7 @@ export function NeonBox({
       >
         {title && (
           <div
-            className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-bg-tertiary rounded-b-lg text-sm font-semibold text-white whitespace-nowrap z-10"
+            className="absolute -top-px left-1/2 -translate-x-1/2 px-4 py-1 bg-bg-tertiary rounded-b-lg text-sm font-semibold text-text-bright whitespace-nowrap z-10"
           >
             {title}
           </div>

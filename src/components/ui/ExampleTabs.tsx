@@ -42,7 +42,7 @@ export function ExampleTabs({
               variant === 'mono' && 'font-mono',
               isActive
                 ? 'bg-[var(--color-neon-viz-18)] border-[var(--color-neon-viz-70)] text-white shadow-[0_0_20px_var(--color-neon-viz-25)]'
-                : 'border-white/8 bg-white/5 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+                : 'border-white/8 bg-white/5 text-text-muted hover:bg-white/8 hover:text-text-secondary'
             )}
           >
             {tab.title}

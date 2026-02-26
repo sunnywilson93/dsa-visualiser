@@ -35,11 +35,11 @@ export function CodePanel({
   }, [highlightedLine])
 
   return (
-    <div className="bg-bg-page-secondary border border-white-10 rounded-lg shadow-lg overflow-hidden">
+    <div className="bg-bg-page-secondary border border-border-card rounded-lg shadow-lg overflow-hidden">
       {(title || rightElement) && (
         <div className="flex justify-between items-center px-3 py-2 bg-surface-card">
           {title ? (
-            <span className="inline-flex items-center gap-[3px] px-1.5 py-[3px] text-2xs font-semibold uppercase tracking-[0.08em] text-gray-200 bg-brand-primary-10 border border-brand-primary-30 rounded-full">
+            <span className="inline-flex items-center gap-[3px] px-1.5 py-[3px] text-2xs font-semibold uppercase tracking-[0.08em] text-text-primary bg-brand-primary-10 border border-brand-primary-30 rounded-full">
               {title}
             </span>
           ) : <span />}
@@ -58,13 +58,13 @@ export function CodePanel({
             }`}
           >
             {showLineNumbers && (
-              <span className="w-6 text-gray-800 font-mono text-2xs text-right select-none mr-2">
+              <span className="w-6 text-text-muted font-mono text-2xs text-right select-none mr-2">
                 {i + 1}
               </span>
             )}
             <span
               className={`font-mono text-2xs ${
-                highlightedLine === i ? 'text-brand-light' : 'text-gray-300'
+                highlightedLine === i ? 'text-brand-light' : 'text-text-secondary'
               }`}
             >
               {line || ' '}

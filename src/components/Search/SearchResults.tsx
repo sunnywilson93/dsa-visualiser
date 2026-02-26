@@ -68,7 +68,7 @@ export function SearchResultItem({ result, onClick, compact = false }: SearchRes
           <span className="text-base font-medium text-text-bright">{item.title}</span>
           {badges}
         </div>
-        <p className="text-base text-gray-400 mt-1 m-0 leading-snug">{item.shortDescription}</p>
+        <p className="text-base text-text-muted mt-1 m-0 leading-snug">{item.shortDescription}</p>
       </div>
     </Link>
   )
@@ -93,7 +93,7 @@ export function SearchResultsList({
 
   if (results.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-8 px-4 text-center text-gray-600">
+      <div className="flex flex-col items-center justify-center py-8 px-4 text-center text-text-muted">
         <span className="text-3xl mb-2 opacity-50">
           <Search size={24} />
         </span>
@@ -113,7 +113,7 @@ export function SearchResultsList({
         />
       ))}
       {maxItems && results.length > maxItems && (
-        <div className="py-2 px-3 text-sm text-gray-400 text-center border-t border-white-8 mt-1">
+        <div className="py-2 px-3 text-sm text-text-muted text-center border-t border-border-card mt-1">
           +{results.length - maxItems} more results
         </div>
       )}

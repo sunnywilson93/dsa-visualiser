@@ -21,7 +21,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
   const isSpinning = step.phase === 'micro' || step.phase === 'macro'
 
   const getEventLoopClass = () => {
-    if (step.phase === 'idle') return 'text-gray-800'
+    if (step.phase === 'idle') return 'text-text-muted'
     if (isSpinning)
       return 'text-sky-400 animate-spin drop-shadow-[0_0_6px_var(--color-sky-400-60)]'
     return 'text-sky-400'
@@ -60,7 +60,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
           <div className="bg-page-secondary rounded-lg min-h-[100px] pt-5 px-2.5 pb-2.5 flex flex-col gap-1 min-h-[140px]">
             <AnimatePresence mode="popLayout">
               {step.callStack.length === 0 ? (
-                <div className="flex items-center justify-center flex-1 text-gray-800 text-xs">
+                <div className="flex items-center justify-center flex-1 text-text-muted text-xs">
                   (empty)
                 </div>
               ) : (
@@ -102,7 +102,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
                   className={`px-2.5 py-1.5 rounded font-mono text-xs transition-colors ${
                     step.activeWebApi === api.name
                       ? 'bg-brand-primary/20 border border-brand-primary/50 text-brand-light'
-                      : 'text-gray-800 bg-white-3'
+                      : 'text-text-muted bg-surface-card'
                   }`}
                 >
                   {api.name}
@@ -129,7 +129,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
             <div className={getEventLoopClass()}>
               <RefreshCw size={24} />
             </div>
-            <span className={`text-2xs font-medium ${step.phase !== 'idle' ? 'text-sky-400' : 'text-gray-800'}`}>
+            <span className={`text-2xs font-medium ${step.phase !== 'idle' ? 'text-sky-400' : 'text-text-muted'}`}>
               {getPhaseLabel()}
             </span>
           </div>
@@ -152,7 +152,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
             <div className="flex flex-col gap-1">
               <AnimatePresence mode="popLayout">
                 {step.macroQueue.length === 0 ? (
-                  <div className="text-gray-800 text-xs text-center py-4">
+                  <div className="text-text-muted text-xs text-center py-4">
                     (empty)
                   </div>
                 ) : (
@@ -191,7 +191,7 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
             <div className="flex flex-col gap-1">
               <AnimatePresence mode="popLayout">
                 {step.microQueue.length === 0 ? (
-                  <div className="text-gray-800 text-xs text-center py-4">
+                  <div className="text-text-muted text-xs text-center py-4">
                     (empty)
                   </div>
                 ) : (
@@ -217,17 +217,17 @@ export function EventLoopDisplay({ step }: EventLoopDisplayProps) {
       {/* Output Section */}
       <motion.div
         key={step.output.length}
-        className="bg-bg-page-secondary border border-white-10 border-l-2 border-l-emerald-40 rounded-lg p-2.5 flex-shrink-0"
+        className="bg-bg-page-secondary border border-border-card border-l-2 border-l-emerald-40 rounded-lg p-2.5 flex-shrink-0"
         initial={step.output.length > 0 ? { backgroundColor: 'rgba(16, 185, 129, 0.08)' } : false}
         animate={{ backgroundColor: 'rgba(16, 185, 129, 0)' }}
         transition={{ duration: 0.6 }}
       >
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 mb-1 text-xs font-semibold uppercase tracking-wider text-gray-200 bg-brand-primary-10 border border-brand-primary-30 rounded-full">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 mb-1 text-xs font-semibold uppercase tracking-wider text-text-primary bg-brand-primary-10 border border-brand-primary-30 rounded-full">
           Output
         </div>
         <div className="font-mono text-xs text-difficulty-1 min-h-[1.2rem]">
           {step.output.length === 0 ? (
-            <span className="text-gray-800">—</span>
+            <span className="text-text-muted">—</span>
           ) : (
             step.output.map((item, i) => (
               <motion.div

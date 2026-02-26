@@ -237,7 +237,7 @@ export default function EventLoopPlaygroundClient() {
       </header>
 
       {/* Example selector */}
-      <div className="flex items-center gap-2 flex-wrap justify-center bg-white-3 border border-white-8 rounded-full p-[0.35rem] shadow-[inset_0_0_0_1px_var(--color-white-2)]">
+      <div className="flex items-center gap-2 flex-wrap justify-center bg-surface-card border border-border-card rounded-full p-[0.35rem] shadow-[inset_0_0_0_1px_var(--color-white-2)]">
         <span className="text-xs font-semibold text-text-muted uppercase tracking-wider pl-2">Examples:</span>
         <div className="flex gap-2 flex-wrap max-[600px]:justify-center">
           {examples.map(ex => (
@@ -245,7 +245,7 @@ export default function EventLoopPlaygroundClient() {
               key={ex.id}
               className={`py-1.5 px-3 font-sans text-xs rounded-full cursor-pointer transition-all duration-150 ${selectedExample === ex.id
                 ? 'bg-neon-viz-18 border border-neon-viz-70 text-text-bright shadow-[0_0_12px_var(--color-neon-viz-25)]'
-                : 'bg-white-4 border border-white-8 text-text-muted hover:bg-white-8 hover:text-text-primary'}`}
+                : 'bg-white-4 border border-border-card text-text-muted hover:bg-white-8 hover:text-text-primary'}`}
               onClick={() => handleExampleChange(ex.id)}
             >
               {ex.title}

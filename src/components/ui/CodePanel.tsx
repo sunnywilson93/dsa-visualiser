@@ -27,7 +27,7 @@ export function CodePanel({
         className
       )}
     >
-      <div className="flex justify-between items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white/5">
+      <div className="flex justify-between items-center px-3 py-2 text-sm font-medium text-text-muted bg-white/5">
         <span>{title}</span>
         {badge && (
           <span
@@ -66,12 +66,12 @@ export const CodeLine = forwardRef<HTMLDivElement, CodeLineProps>(
           className
         )}
       >
-        <span className="w-6 shrink-0 text-gray-800 font-mono text-2xs select-none">
+        <span className="w-6 shrink-0 text-text-muted font-mono text-2xs select-none">
           {lineNumber}
         </span>
         <span
           className={cn(
-            'font-mono text-xs text-gray-300',
+            'font-mono text-xs text-text-secondary',
             isActive && 'text-brand-light'
           )}
         >

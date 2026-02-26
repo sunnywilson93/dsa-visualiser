@@ -45,7 +45,7 @@ export function VariantSelector<T extends string>({
               'min-h-[44px] px-4 py-2 font-mono text-sm font-medium rounded-full transition-all border-2 touch-manipulation',
               isActive
                 ? 'text-white'
-                : 'border-transparent bg-white/5 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+                : 'border-transparent bg-white/5 text-text-muted hover:bg-white/8 hover:text-text-secondary'
             )}
             style={
               isActive

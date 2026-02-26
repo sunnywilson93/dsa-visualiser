@@ -16,7 +16,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const variants = {
       primary: 'bg-brand-primary text-white border-none hover:brightness-110',
       secondary: 'bg-white-5 border border-white-15 text-text-secondary hover:bg-white-10 hover:text-text-primary hover:border-white-30',
-      ghost: 'bg-transparent border border-white-10 text-text-secondary hover:bg-white-5 hover:border-brand-primary-40 hover:text-text-primary',
+      ghost: 'bg-transparent border border-border-card text-text-secondary hover:bg-white-5 hover:border-brand-primary-40 hover:text-text-primary',
     }
 
     const sizes = {

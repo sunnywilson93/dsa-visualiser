@@ -38,7 +38,7 @@ export default function DSAConceptPageClient(): JSX.Element {
   if (!concept) {
     return (
       <PageLayout variant="content">
-        <div className="flex flex-1 flex-col items-center justify-center gap-[var(--spacing-lg)] text-[color:var(--color-gray-500)]">
+        <div className="flex flex-1 flex-col items-center justify-center gap-[var(--spacing-lg)] text-text-muted">
           <h1>Concept not found</h1>
           <Link href="/concepts/dsa" className="text-[color:var(--color-brand-primary)]">Back to DSA Concepts</Link>
         </div>
@@ -67,7 +67,7 @@ export default function DSAConceptPageClient(): JSX.Element {
             <DifficultyIndicator level={concept.difficulty} size="md" />
           </div>
 
-          <p className="mb-[var(--spacing-lg)] text-[length:var(--text-md)] leading-[1.7] text-[color:var(--color-gray-400)] max-md:text-base">
+          <p className="mb-[var(--spacing-lg)] text-[length:var(--text-md)] leading-[1.7] text-text-muted max-md:text-base">
             {concept.description}
           </p>
         </header>
@@ -123,7 +123,7 @@ export default function DSAConceptPageClient(): JSX.Element {
                 <tbody>
                   {Object.keys(concept.complexity.average || concept.complexity.worst || {}).map((op) => (
                     <tr key={op} className="hover:bg-[var(--color-white-2)]">
-                      <td className="border-b border-white/[0.06] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-base text-[color:var(--color-gray-300)] max-md:px-[var(--spacing-md)] max-md:py-[var(--spacing-sm)]">
+                      <td className="border-b border-white/[0.06] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-base text-text-secondary max-md:px-[var(--spacing-md)] max-md:py-[var(--spacing-sm)]">
                         {op}
                       </td>
                       {concept.complexity?.average && (
@@ -159,7 +159,7 @@ export default function DSAConceptPageClient(): JSX.Element {
             {concept.keyPoints.map((point, i) => (
               <motion.li
                 key={i}
-                className="relative pl-6 leading-[var(--leading-normal)] text-[color:var(--color-gray-300)] before:absolute before:left-0 before:font-bold before:text-[color:var(--color-brand-primary)] before:content-['→']"
+                className="relative pl-6 leading-[var(--leading-normal)] text-text-secondary before:absolute before:left-0 before:font-bold before:text-[color:var(--color-brand-primary)] before:content-['→']"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
@@ -180,18 +180,18 @@ export default function DSAConceptPageClient(): JSX.Element {
             {concept.examples.map((example, i) => (
               <motion.div
                 key={i}
-                className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-white-8)] bg-[var(--color-white-3)]"
+                className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border-card)] bg-[var(--surface-card)]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
               >
-                <h3 className="m-0 border-b border-[var(--color-white-8)] bg-[var(--color-brand-primary-15)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-[0.95rem] font-semibold text-white">
+                <h3 className="m-0 border-b border-[var(--border-card)] bg-[var(--color-brand-primary-15)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-[0.95rem] font-semibold text-white">
                   {example.title}
                 </h3>
-                <pre className="m-0 overflow-x-auto bg-[var(--color-black-40)] p-[var(--spacing-lg)] font-mono text-base leading-[var(--leading-relaxed)] text-gray-300 max-md:p-[var(--spacing-md)] max-md:text-[length:var(--text-sm)]">
+                <pre className="m-0 overflow-x-auto bg-[var(--color-black-40)] p-[var(--spacing-lg)] font-mono text-base leading-[var(--leading-relaxed)] text-text-secondary max-md:p-[var(--spacing-md)] max-md:text-[length:var(--text-sm)]">
                   <code className="whitespace-pre">{example.code}</code>
                 </pre>
-                <p className="m-0 border-t border-[var(--color-white-5)] bg-[var(--color-brand-primary-5)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-base leading-[var(--leading-relaxed)] text-[color:var(--color-gray-400)]">
+                <p className="m-0 border-t border-[var(--color-white-5)] bg-[var(--color-brand-primary-5)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-base leading-[var(--leading-relaxed)] text-text-muted">
                   {example.explanation}
                 </p>
               </motion.div>
@@ -277,14 +277,14 @@ export default function DSAConceptPageClient(): JSX.Element {
                   <Link
                     key={related.id}
                     href={`/concepts/dsa/${related.id}`}
-                    className="flex items-center gap-[var(--spacing-md)] rounded-[var(--radius-lg)] border border-[var(--border-card)] bg-[var(--color-white-3)] p-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-white-5)] hover:border-[var(--color-brand-primary-40)]"
+                    className="flex items-center gap-[var(--spacing-md)] rounded-[var(--radius-lg)] border border-[var(--border-card)] bg-[var(--surface-card)] p-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-white-5)] hover:border-[var(--color-brand-primary-40)]"
                   >
                     <span className="text-[1.75rem] leading-none">
                       <ConceptIcon conceptId={related.id} size={24} />
                     </span>
                     <div className="min-w-0 flex-1">
                       <h3 className="mb-1 text-[0.95rem] font-semibold text-text-bright">{related.title}</h3>
-                      <p className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-[length:var(--text-base)] text-[color:var(--color-gray-500)]">
+                      <p className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-[length:var(--text-base)] text-text-muted">
                         {related.shortDescription}
                       </p>
                     </div>

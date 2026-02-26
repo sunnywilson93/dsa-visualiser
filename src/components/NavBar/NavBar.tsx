@@ -20,7 +20,7 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
   const menuId = 'mobile-menu-toggle'
 
   return (
-    <nav className="sticky top-0 z-[100] bg-[rgba(15,15,26,0.85)] backdrop-blur-[12px] border-b border-white-8">
+    <nav className="sticky top-0 z-[100] bg-[rgba(15,15,26,0.85)] backdrop-blur-[12px] border-b border-border-card">
       <div className="flex items-center gap-4 py-3 px-8 mx-auto max-w-screen-2xl max-md:py-2.5 max-md:px-4 max-md:gap-3 max-sm:gap-2">
         {/* Left: Brand */}
         <Link href="/" className="flex items-center gap-2.5 no-underline text-inherit shrink-0">
@@ -99,37 +99,37 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
 
         {/* Mobile navigation panel */}
         <nav
-          className="fixed top-0 -right-full w-[280px] h-screen bg-bg-secondary border-l border-white-8 pt-[70px] transition-[right] duration-300 z-[200] hidden max-md:block max-md:peer-checked:right-0"
+          className="fixed top-0 -right-full w-[280px] h-screen bg-bg-secondary border-l border-border-card pt-[70px] transition-[right] duration-300 z-[200] hidden max-md:block max-md:peer-checked:right-0"
           aria-label="Mobile navigation"
         >
           <div className="flex flex-col p-4">
             <Link
               href="/"
-              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
+              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-border-card no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
             >
               Home
             </Link>
             <Link
               href="/concepts"
-              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
+              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-border-card no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
             >
               JS Concepts
             </Link>
             <Link
               href="/concepts/dsa/patterns/two-pointers"
-              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
+              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-border-card no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
             >
               DSA Patterns
             </Link>
             <Link
               href="/interview"
-              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
+              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-border-card no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
             >
               Interview Prep
             </Link>
             <Link
               href="/playground/event-loop"
-              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-white-8 no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
+              className="flex items-center py-3 px-4 min-h-[44px] text-base text-text-secondary border-b border-border-card no-underline transition-colors duration-150 hover:text-text-bright hover:bg-white-5"
             >
               Playground
             </Link>

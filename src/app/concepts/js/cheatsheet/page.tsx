@@ -139,7 +139,7 @@ export default function CheatsheetPage() {
         <div className="flex flex-col gap-10">
           {groups.map((group) => (
             <section key={group.label}>
-              <h2 className="text-xl font-bold text-text-bright mb-4 pb-2 border-b border-white-10">
+              <h2 className="text-xl font-bold text-text-bright mb-4 pb-2 border-b border-border-card">
                 {group.label}
               </h2>
 
@@ -147,7 +147,7 @@ export default function CheatsheetPage() {
                 {group.concepts.map((concept) => (
                   <div
                     key={concept.id}
-                    className="rounded-xl p-4 border border-white-10 bg-white-3"
+                    className="rounded-xl p-4 border border-border-card bg-surface-card"
                   >
                     <div className="flex items-start justify-between gap-4 mb-2 max-sm:flex-col max-sm:gap-1">
                       <Link

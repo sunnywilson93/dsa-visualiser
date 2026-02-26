@@ -94,9 +94,9 @@ export function PlaygroundEditor({
   }, [currentLine])
 
   return (
-    <div className="flex flex-col bg-bg-page-secondary border border-white-10 rounded-lg shadow-lg overflow-hidden h-full">
-      <div className="flex justify-between items-center px-4 py-2 bg-white-3">
-        <span className="inline-flex items-center gap-1.5 px-3 py-0.5 text-2xs font-semibold uppercase tracking-wider text-gray-200 bg-brand-primary-10 border border-brand-primary-30 rounded-full">
+    <div className="flex flex-col bg-bg-page-secondary border border-border-card rounded-lg shadow-lg overflow-hidden h-full">
+      <div className="flex justify-between items-center px-4 py-2 bg-surface-card">
+        <span className="inline-flex items-center gap-1.5 px-3 py-0.5 text-2xs font-semibold uppercase tracking-wider text-text-primary bg-brand-primary-10 border border-brand-primary-30 rounded-full">
           Code
         </span>
         <button

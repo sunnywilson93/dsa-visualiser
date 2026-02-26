@@ -24,9 +24,9 @@ export function RelatedProblems({ patternId }: Props) {
               <span className="absolute w-px h-px p-0 -m-px overflow-hidden clip-[rect(0,0,0,0)] whitespace-nowrap border-0">Go to {problem.name}</span>
             </Link>
             <div className="relative">
-              <h3 className="font-medium text-white text-[length:var(--text-base)] mb-[var(--spacing-sm)] max-[768px]:text-[length:var(--text-base)]">{problem.name}</h3>
+              <h3 className="font-medium text-text-bright text-[length:var(--text-base)] mb-[var(--spacing-sm)] max-[768px]:text-[length:var(--text-base)]">{problem.name}</h3>
               {problem.description && (
-                <p className="text-[color:var(--color-gray-500)] text-[length:var(--text-base)] m-0 leading-[var(--leading-snug)] max-[768px]:text-[length:var(--text-sm)]">{problem.description}</p>
+                <p className="text-text-muted text-[length:var(--text-base)] m-0 leading-[var(--leading-snug)] max-[768px]:text-[length:var(--text-sm)]">{problem.description}</p>
               )}
             </div>
           </div>
