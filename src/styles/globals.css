@@ -399,10 +399,10 @@
   --glow-brand-text: 0 0 20px var(--color-brand-primary-30);
 
   /* === Card / Surface Styles === */
-  --surface-card: rgba(255, 255, 255, 0.03);
+  --surface-card: rgba(255, 255, 255, 0.05);
   --surface-card-hover: var(--color-brand-primary-10);
-  --border-card: rgba(255, 255, 255, 0.08);
-  --border-card-hover: var(--color-brand-primary-40);
+  --border-card: transparent;
+  --border-card-hover: var(--color-brand-primary-30);
 
   /* === Card Theme Tokens === */
   --card-gradient-bg: linear-gradient(135deg, var(--color-brand-primary-15), var(--color-brand-secondary-15));

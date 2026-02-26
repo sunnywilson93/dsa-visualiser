@@ -20,6 +20,7 @@
 
 .feature {
   border-radius: var(--radius-xl);
+  background: transparent;
 }
 
 .featureInner {
