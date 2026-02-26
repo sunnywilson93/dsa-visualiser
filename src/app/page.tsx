@@ -5,6 +5,7 @@ import { ConceptIcon } from '@/components/Icons'
 import { DifficultyMiniBar } from '@/components/DifficultyIndicator'
 import { HeroStats } from '@/components/HeroStats'
 import { StructuredData } from '@/components/StructuredData'
+import { SectionContainer, ContentCard } from '@/components/ui'
 import { exampleCategories, dsaSubcategories, getExamplesByCategory, getAllJsExamples, getProblemCountByCategory } from '@/data/examples'
 import { concepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
@@ -79,7 +80,7 @@ export default function HomePage() {
       <NavBar />
 
       {/* Hero */}
-      <header className="text-center py-10 px-8 animate-[fadeIn_0.4s_ease-out]">
+      <header className="text-center py-10 px-8">
         <h1 className="text-3xl font-bold text-brand-light m-0 mb-3 max-md:text-2xl">
           Master JavaScript with Interactive Visualizations
         </h1>
@@ -109,91 +110,67 @@ export default function HomePage() {
 
       <main className="flex-1 py-6 px-8 pb-8 container-default mx-auto w-full">
         {/* Popular Starting Points */}
-        <section className="mb-10 animate-[fadeIn_0.4s_ease-out_100ms_both]">
-          <h2 className="text-lg font-semibold text-text-bright m-0 mb-4">Popular Starting Points</h2>
+        <SectionContainer title="Popular Starting Points">
           <div className="grid grid-cols-4 gap-4 max-lg:grid-cols-2 max-sm:grid-cols-1">
             {featuredConcepts.map(concept => (
-              <Link
+              <ContentCard
                 key={concept.id}
                 href={`/concepts/js/${concept.id}`}
-                className="block rounded-xl p-4 no-underline text-inherit border border-brand-primary-20 bg-brand-primary-5 transition-all duration-200 hover:border-brand-primary-40 hover:bg-brand-primary-10 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(99,102,241,0.15)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+                variant="interactive"
               >
                 <h3 className="text-base font-semibold text-text-bright m-0 mb-1">{concept.title}</h3>
                 <p className="text-sm text-text-secondary m-0 leading-normal">{concept.shortDescription}</p>
                 <span className="text-xs text-text-muted mt-2 block">{concept.estimatedReadTime} min read</span>
-              </Link>
+              </ContentCard>
             ))}
           </div>
-        </section>
+        </SectionContainer>
 
         {/* Section 1: UNDERSTAND - Concepts */}
-        <section className="mb-10 animate-[fadeIn_0.4s_ease-out_200ms_both]">
-          <div className="flex justify-between items-start mb-6">
-            <div>
-              <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
-                <span className="inline-flex items-center justify-center w-7 h-7 bg-brand-primary rounded-lg text-base font-bold text-white">1</span>
-                Understand
-              </h2>
-              <p className="text-base text-text-secondary mt-1 mb-0">
-                What interviewers ask you to <strong>explain</strong>
-              </p>
-            </div>
-            <Link href="/concepts" className="text-base text-brand-primary no-underline py-2 px-0 hover:text-brand-secondary transition-colors duration-250 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none focus-visible:rounded">
-              View All →
-            </Link>
-          </div>
-
-          {/* Two concept category cards */}
+        <SectionContainer
+          number={1}
+          title="Understand"
+          subtitle={<>What interviewers ask you to <strong>explain</strong></>}
+          viewAllHref="/concepts"
+          viewAllLabel="View All →"
+        >
           <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1 max-md:gap-4 items-stretch">
-            <Link href="/concepts/js" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
-              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center justify-center text-brand-primary">
-                    <ConceptIcon conceptId="js-core" size={28} />
-                  </span>
-                  <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{concepts.length} topics</span>
-                </div>
-                <h3 className="text-xl font-bold text-text-bright m-0">JavaScript Deep Dive</h3>
-                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
-                  Closures, Event Loop, Prototypes, This, V8 Engine
-                </p>
+            <ContentCard href="/concepts/js" variant="feature" className="h-full">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center justify-center text-brand-primary">
+                  <ConceptIcon conceptId="js-core" size={28} />
+                </span>
+                <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{concepts.length} topics</span>
               </div>
-            </Link>
+              <h3 className="text-xl font-bold text-text-bright m-0">JavaScript Deep Dive</h3>
+              <p className="text-base text-text-secondary m-0 leading-normal flex-1">
+                Closures, Event Loop, Prototypes, This, V8 Engine
+              </p>
+            </ContentCard>
 
-            <Link href="/concepts/dsa" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
-              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center justify-center text-brand-primary">
-                    <ConceptIcon conceptId="data-structures" size={28} />
-                  </span>
-                  <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{dsaConcepts.length + dsaPatterns.length} topics</span>
-                </div>
-                <h3 className="text-xl font-bold text-text-bright m-0">DSA Fundamentals</h3>
-                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
-                  Big O, Arrays, Hash Tables, Stacks, Queues, Linked Lists
-                </p>
+            <ContentCard href="/concepts/dsa" variant="feature" className="h-full">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center justify-center text-brand-primary">
+                  <ConceptIcon conceptId="data-structures" size={28} />
+                </span>
+                <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{dsaConcepts.length + dsaPatterns.length} topics</span>
               </div>
-            </Link>
+              <h3 className="text-xl font-bold text-text-bright m-0">DSA Fundamentals</h3>
+              <p className="text-base text-text-secondary m-0 leading-normal flex-1">
+                Big O, Arrays, Hash Tables, Stacks, Queues, Linked Lists
+              </p>
+            </ContentCard>
           </div>
-        </section>
+        </SectionContainer>
 
         {/* Section 2: BUILD - JavaScript Implementations */}
-        <section className="mb-10 animate-[fadeIn_0.4s_ease-out_300ms_both]">
-          <div className="flex justify-between items-start mb-6">
-            <div>
-              <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
-                <span className="inline-flex items-center justify-center w-7 h-7 bg-brand-primary rounded-lg text-base font-bold text-white">2</span>
-                Build
-              </h2>
-              <p className="text-base text-text-secondary mt-1 mb-0">
-                What interviewers ask you to <strong>implement</strong>
-              </p>
-            </div>
-            <Link href="/js-problems" className="text-base text-brand-primary no-underline py-2 px-0 hover:text-brand-secondary transition-colors duration-250 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none focus-visible:rounded">
-              All {allJsProblems.length} Problems →
-            </Link>
-          </div>
-
+        <SectionContainer
+          number={2}
+          title="Build"
+          subtitle={<>What interviewers ask you to <strong>implement</strong></>}
+          viewAllHref="/js-problems"
+          viewAllLabel={`All ${allJsProblems.length} Problems →`}
+        >
           <CategoryCarousel>
             {jsCategories.map((category) => {
               const problems = getExamplesByCategory(category.id)
@@ -201,49 +178,40 @@ export default function HomePage() {
               const mediumCount = problems.filter(p => p.difficulty === 'medium').length
               const hardCount = problems.filter(p => p.difficulty === 'hard').length
               return (
-                <Link
+                <ContentCard
                   key={category.id}
                   href={`/${category.id}`}
-                  className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-0.5 hover:shadow-[0_6px_16px_rgba(99,102,241,0.1)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+                  variant="feature"
+                  className="h-full min-h-[200px] max-md:min-h-[180px]"
                 >
-                  <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full min-h-[200px] max-md:min-h-[180px]">
-                    <div className="flex items-center justify-between">
-                      <span className="text-3xl leading-none">
-                        <ConceptIcon conceptId={category.id} size={32} />
-                      </span>
-                      <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">
-                        {problems.length} problems
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-semibold text-text-bright mt-1 mb-0">{category.name}</h3>
-                    <p className="text-base text-text-secondary m-0 leading-normal flex-1">{category.description}</p>
-                    <div className="flex items-center gap-3 mt-auto pt-3 border-t border-border-card">
-                      <span className="text-sm text-text-secondary font-medium">
-                        {easyCount}E · {mediumCount}M · {hardCount}H
-                      </span>
-                      <DifficultyMiniBar easy={easyCount} medium={mediumCount} hard={hardCount} />
-                    </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-3xl leading-none">
+                      <ConceptIcon conceptId={category.id} size={32} />
+                    </span>
+                    <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">
+                      {problems.length} problems
+                    </span>
                   </div>
-                </Link>
+                  <h3 className="text-lg font-semibold text-text-bright mt-1 mb-0">{category.name}</h3>
+                  <p className="text-base text-text-secondary m-0 leading-normal flex-1">{category.description}</p>
+                  <div className="flex items-center gap-3 mt-auto pt-3 border-t border-border-card">
+                    <span className="text-sm text-text-secondary font-medium">
+                      {easyCount}E · {mediumCount}M · {hardCount}H
+                    </span>
+                    <DifficultyMiniBar easy={easyCount} medium={mediumCount} hard={hardCount} />
+                  </div>
+                </ContentCard>
               )
             })}
           </CategoryCarousel>
-        </section>
+        </SectionContainer>
 
         {/* Section 3: SOLVE - Data Structures & Algorithms */}
-        <section className="mb-10 animate-[fadeIn_0.4s_ease-out_400ms_both]">
-          <div className="flex justify-between items-start mb-6">
-            <div>
-              <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
-                <span className="inline-flex items-center justify-center w-7 h-7 bg-brand-primary rounded-lg text-base font-bold text-white">3</span>
-                Solve
-              </h2>
-              <p className="text-base text-text-secondary mt-1 mb-0">
-                For <strong>algorithm-focused</strong> interview rounds
-              </p>
-            </div>
-          </div>
-
+        <SectionContainer
+          number={3}
+          title="Solve"
+          subtitle={<>For <strong>algorithm-focused</strong> interview rounds</>}
+        >
           <div className="rounded-2xl border border-white-10 bg-bg-page-secondary p-6">
             <div className="flex justify-between items-center mb-6 max-lg:flex-col max-lg:items-start max-lg:gap-4">
               <div className="flex items-center gap-4">
@@ -274,10 +242,10 @@ export default function HomePage() {
               {dsaPreviewSubcategories.map(sub => {
                 const count = getProblemCountByCategory(sub.id)
                 return (
-                  <Link
+                  <ContentCard
                     key={sub.id}
                     href={`/${sub.id}`}
-                    className="flex items-center gap-3 rounded-lg p-3 no-underline text-inherit border border-white-6 bg-white-3 transition-all duration-200 hover:border-brand-primary-30 hover:bg-brand-primary-5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+                    variant="compact"
                   >
                     <span className="flex-shrink-0 text-brand-primary">
                       <ConceptIcon conceptId={sub.id} size={20} />
@@ -286,7 +254,7 @@ export default function HomePage() {
                       <span className="text-sm font-medium text-text-bright block truncate">{sub.name}</span>
                       <span className="text-xs text-text-muted">{count} problems</span>
                     </div>
-                  </Link>
+                  </ContentCard>
                 )
               })}
             </div>
@@ -300,102 +268,83 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-        </section>
+        </SectionContainer>
 
         {/* Section 4: ANSWER - Interview Prep */}
-        <section className="mb-10 animate-[fadeIn_0.4s_ease-out_500ms_both]">
-          <div className="flex justify-between items-start mb-6">
-            <div>
-              <h2 className="flex items-center gap-3 text-2xl font-bold text-text-bright m-0">
-                <span className="inline-flex items-center justify-center w-7 h-7 bg-brand-primary rounded-lg text-base font-bold text-white">4</span>
-                Answer
-              </h2>
-              <p className="text-base text-text-secondary mt-1 mb-0">
-                What interviewers ask you to <strong>explain verbally</strong>
-              </p>
-            </div>
-            <Link href="/interview" className="text-base text-brand-primary no-underline py-2 px-0 hover:text-brand-secondary transition-colors duration-250 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none focus-visible:rounded">
-              View All →
-            </Link>
-          </div>
-
+        <SectionContainer
+          number={4}
+          title="Answer"
+          subtitle={<>What interviewers ask you to <strong>explain verbally</strong></>}
+          viewAllHref="/interview"
+          viewAllLabel="View All →"
+        >
           <div className="grid grid-cols-5 gap-4 max-lg:grid-cols-2 max-md:grid-cols-1 max-md:gap-4 items-stretch">
-            <Link href="/interview/html" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
-              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center justify-center text-brand-primary">
-                    <ConceptIcon conceptId="html" size={28} />
-                  </span>
-                  <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{htmlInterviewQuestions.length} questions</span>
-                </div>
-                <h3 className="text-xl font-bold text-text-bright m-0">HTML Interview Questions</h3>
-                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
-                  {htmlTopics.map(t => t.label).join(', ')}
-                </p>
+            <ContentCard href="/interview/html" variant="feature" className="h-full">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center justify-center text-brand-primary">
+                  <ConceptIcon conceptId="html" size={28} />
+                </span>
+                <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{htmlInterviewQuestions.length} questions</span>
               </div>
-            </Link>
+              <h3 className="text-xl font-bold text-text-bright m-0">HTML Interview Questions</h3>
+              <p className="text-base text-text-secondary m-0 leading-normal flex-1">
+                {htmlTopics.map(t => t.label).join(', ')}
+              </p>
+            </ContentCard>
 
-            <Link href="/interview/css" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
-              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center justify-center text-brand-primary">
-                    <ConceptIcon conceptId="css" size={28} />
-                  </span>
-                  <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{cssInterviewQuestions.length} questions</span>
-                </div>
-                <h3 className="text-xl font-bold text-text-bright m-0">CSS Interview Questions</h3>
-                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
-                  {cssTopics.map(t => t.label).join(', ')}
-                </p>
+            <ContentCard href="/interview/css" variant="feature" className="h-full">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center justify-center text-brand-primary">
+                  <ConceptIcon conceptId="css" size={28} />
+                </span>
+                <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{cssInterviewQuestions.length} questions</span>
               </div>
-            </Link>
+              <h3 className="text-xl font-bold text-text-bright m-0">CSS Interview Questions</h3>
+              <p className="text-base text-text-secondary m-0 leading-normal flex-1">
+                {cssTopics.map(t => t.label).join(', ')}
+              </p>
+            </ContentCard>
 
-            <Link href="/interview/js" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
-              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center justify-center text-brand-primary">
-                    <ConceptIcon conceptId="js-core" size={28} />
-                  </span>
-                  <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{jsInterviewQuestions.length} questions</span>
-                </div>
-                <h3 className="text-xl font-bold text-text-bright m-0">JavaScript Interview Questions</h3>
-                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
-                  {jsTopics.map(t => t.label).join(', ')}
-                </p>
+            <ContentCard href="/interview/js" variant="feature" className="h-full">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center justify-center text-brand-primary">
+                  <ConceptIcon conceptId="js-core" size={28} />
+                </span>
+                <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{jsInterviewQuestions.length} questions</span>
               </div>
-            </Link>
+              <h3 className="text-xl font-bold text-text-bright m-0">JavaScript Interview Questions</h3>
+              <p className="text-base text-text-secondary m-0 leading-normal flex-1">
+                {jsTopics.map(t => t.label).join(', ')}
+              </p>
+            </ContentCard>
 
-            <Link href="/interview/react" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
-              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center justify-center text-brand-primary">
-                    <ConceptIcon conceptId="react" size={28} />
-                  </span>
-                  <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{reactInterviewQuestions.length} questions</span>
-                </div>
-                <h3 className="text-xl font-bold text-text-bright m-0">React Interview Questions</h3>
-                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
-                  {reactTopics.map(t => t.label).join(', ')}
-                </p>
+            <ContentCard href="/interview/react" variant="feature" className="h-full">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center justify-center text-brand-primary">
+                  <ConceptIcon conceptId="react" size={28} />
+                </span>
+                <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{reactInterviewQuestions.length} questions</span>
               </div>
-            </Link>
+              <h3 className="text-xl font-bold text-text-bright m-0">React Interview Questions</h3>
+              <p className="text-base text-text-secondary m-0 leading-normal flex-1">
+                {reactTopics.map(t => t.label).join(', ')}
+              </p>
+            </ContentCard>
 
-            <Link href="/interview/bundlers" className="relative block rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-white-10 hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] h-full focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none">
-              <div className="bg-bg-page-secondary rounded-xl p-6 flex flex-col gap-3 h-full">
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center justify-center text-brand-primary">
-                    <ConceptIcon conceptId="bundlers" size={28} />
-                  </span>
-                  <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{bundlerInterviewQuestions.length} questions</span>
-                </div>
-                <h3 className="text-xl font-bold text-text-bright m-0">Bundler Interview Questions</h3>
-                <p className="text-base text-text-secondary m-0 leading-normal flex-1">
-                  {bundlerTopics.map(t => t.label).join(', ')}
-                </p>
+            <ContentCard href="/interview/bundlers" variant="feature" className="h-full">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center justify-center text-brand-primary">
+                  <ConceptIcon conceptId="bundlers" size={28} />
+                </span>
+                <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">{bundlerInterviewQuestions.length} questions</span>
               </div>
-            </Link>
+              <h3 className="text-xl font-bold text-text-bright m-0">Bundler Interview Questions</h3>
+              <p className="text-base text-text-secondary m-0 leading-normal flex-1">
+                {bundlerTopics.map(t => t.label).join(', ')}
+              </p>
+            </ContentCard>
           </div>
-        </section>
+        </SectionContainer>
       </main>
 
       {/* Utility footer */}

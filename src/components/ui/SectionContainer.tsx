@@ -7,7 +7,7 @@ import { fadeUp, staggerContainer, entranceTransition } from '@/lib/motion'
 
 interface SectionContainerProps {
   title: string
-  subtitle?: string
+  subtitle?: ReactNode
   number?: number
   viewAllHref?: string
   viewAllLabel?: string
