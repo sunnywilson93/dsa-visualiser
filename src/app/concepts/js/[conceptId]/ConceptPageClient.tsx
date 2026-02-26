@@ -1,11 +1,11 @@
 'use client'
 
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2, Hammer, BookOpen } from 'lucide-react'
-import { NavBar } from '@/components/NavBar'
+import { Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2, Hammer, BookOpen } from 'lucide-react'
+import { PageLayout } from '@/components/ui'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ConceptIcon } from '@/components/Icons'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
@@ -152,20 +152,18 @@ function getConceptParentSection(conceptId: string): { label: string; path: stri
 
 export default function ConceptPageClient(): JSX.Element {
   const params = useParams()
-  const router = useRouter()
   const conceptId = params.conceptId as string
 
   const concept = conceptId ? getConceptById(conceptId) : undefined
 
   if (!concept) {
     return (
-      <div className="flex min-h-screen flex-col bg-[var(--gradient-page)]">
-        <NavBar />
+      <PageLayout variant="content">
         <div className="flex flex-1 flex-col items-center justify-center gap-[var(--spacing-lg)] text-[color:var(--color-gray-500)]">
           <h1>Concept not found</h1>
           <Link href="/concepts" className="text-[color:var(--color-brand-primary)]">Back to Concepts</Link>
         </div>
-      </div>
+      </PageLayout>
     )
   }
 
@@ -173,31 +171,21 @@ export default function ConceptPageClient(): JSX.Element {
   const parentSection = getConceptParentSection(concept.id)
 
   return (
-    <div className="flex min-h-screen flex-col bg-[var(--gradient-page)]">
-      <NavBar
-        breadcrumbs={[
-          { label: 'Concepts', path: '/concepts' },
-          { label: parentSection.label, path: parentSection.path },
-          { label: concept.title },
-        ]}
-      />
-
-      <main className="mx-auto w-full container-content flex-1 px-8 pb-12 pt-6 max-md:px-[var(--spacing-lg)]">
+    <PageLayout
+      variant="content"
+      breadcrumbs={[
+        { label: 'Concepts', path: '/concepts' },
+        { label: parentSection.label, path: parentSection.path },
+        { label: concept.title },
+      ]}
+    >
         {/* Header */}
         <header className="mb-8">
-          <button 
-            className="mb-[var(--spacing-lg)] inline-flex items-center gap-[var(--spacing-sm)] border-0 bg-transparent p-0 py-[var(--spacing-sm)] text-base text-[color:var(--color-gray-500)] transition-colors duration-200 hover:text-[color:var(--color-brand-primary)]" 
-            onClick={() => router.push(parentSection.path)}
-          >
-            <ArrowLeft size={18} />
-            <span>{parentSection.label}</span>
-          </button>
-
           <div className="mb-[var(--spacing-lg)] flex items-center gap-[var(--spacing-md)] max-md:flex-wrap">
             <span className="text-4xl leading-none">
               <ConceptIcon conceptId={concept.id} size={32} />
             </span>
-            <h1 className="m-0 text-[length:var(--text-3xl)] font-bold text-white max-md:text-[length:var(--text-2xl)]">
+            <h1 className="m-0 text-3xl font-bold text-text-bright max-md:text-2xl">
               {concept.title}
             </h1>
             <DifficultyIndicator level={concept.difficulty} size="md" />
@@ -210,11 +198,11 @@ export default function ConceptPageClient(): JSX.Element {
 
         {/* Interactive Visualization */}
         <section className="mb-10">
-          <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+          <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--border-card)] pb-2.5 text-lg font-semibold text-text-bright">
             <Gamepad2 size={20} className="text-[color:var(--color-brand-primary)]" />
             Interactive Visualization
           </h2>
-          <div className="min-h-[300px] rounded-[var(--radius-xl)] border border-[var(--color-white-10)] bg-[var(--color-black-30)] p-[var(--spacing-xl)] max-md:min-h-[200px] max-md:p-[var(--spacing-lg)]">
+          <div className="min-h-[300px] rounded-[var(--radius-xl)] border border-[var(--border-card)] bg-[var(--color-black-30)] p-[var(--spacing-xl)] max-md:min-h-[200px] max-md:p-[var(--spacing-lg)]">
             {Visualization ? (
               <ErrorBoundary>
                 <Visualization />
@@ -230,7 +218,7 @@ export default function ConceptPageClient(): JSX.Element {
         {/* Understanding Section — SEO prose content */}
         {concept.explanation && (
           <section className="mb-10">
-            <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+            <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--border-card)] pb-2.5 text-lg font-semibold text-text-bright">
               <BookOpen size={20} className="text-[color:var(--color-brand-primary)]" />
               Understanding {concept.title}
             </h2>
@@ -246,7 +234,7 @@ export default function ConceptPageClient(): JSX.Element {
 
         {/* Key Points */}
         <section className="mb-10">
-          <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+          <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--border-card)] pb-2.5 text-lg font-semibold text-text-bright">
             <Lightbulb size={20} className="text-[color:var(--color-brand-primary)]" />
             Key Points
           </h2>
@@ -267,7 +255,7 @@ export default function ConceptPageClient(): JSX.Element {
 
         {/* Code Examples */}
         <section className="mb-10">
-          <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+          <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--border-card)] pb-2.5 text-lg font-semibold text-text-bright">
             <Code2 size={20} className="text-[color:var(--color-brand-primary)]" />
             Code Examples
           </h2>
@@ -297,7 +285,7 @@ export default function ConceptPageClient(): JSX.Element {
         {/* Common Mistakes */}
         {concept.commonMistakes && concept.commonMistakes.length > 0 && (
           <section className="mb-10">
-            <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+            <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--border-card)] pb-2.5 text-lg font-semibold text-text-bright">
               <AlertTriangle size={20} className="text-[color:var(--color-brand-primary)]" />
               Common Mistakes
             </h2>
@@ -317,7 +305,7 @@ export default function ConceptPageClient(): JSX.Element {
         {/* Interview Tips */}
         {concept.interviewTips && concept.interviewTips.length > 0 && (
           <section className="mb-10">
-            <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+            <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--border-card)] pb-2.5 text-lg font-semibold text-text-bright">
               <Award size={20} className="text-[color:var(--color-brand-primary)]" />
               Interview Tips
             </h2>
@@ -343,7 +331,7 @@ export default function ConceptPageClient(): JSX.Element {
           if (problems.length === 0) return null
           return (
             <section className="mb-10">
-              <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+              <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--border-card)] pb-2.5 text-lg font-semibold text-text-bright">
                 <Hammer size={20} className="text-[color:var(--color-brand-primary)]" />
                 Practice Problems
               </h2>
@@ -355,10 +343,10 @@ export default function ConceptPageClient(): JSX.Element {
                   <Link
                     key={problem.id}
                     href={`/${problem.category}/${problem.id}`}
-                    className="flex flex-col gap-[var(--spacing-sm)] rounded-[var(--radius-lg)] border border-[var(--color-white-10)] bg-[var(--color-white-3)] p-[var(--spacing-md)] px-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-white-5)] hover:border-[var(--color-brand-primary-40)]"
+                    className="flex flex-col gap-[var(--spacing-sm)] rounded-[var(--radius-lg)] border border-[var(--border-card)] bg-[var(--color-white-3)] p-[var(--spacing-md)] px-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-white-5)] hover:border-[var(--color-brand-primary-40)]"
                   >
                     <div className="flex items-center justify-between gap-[var(--spacing-sm)]">
-                      <h3 className="m-0 text-[0.95rem] font-semibold text-white">{problem.name}</h3>
+                      <h3 className="m-0 text-[0.95rem] font-semibold text-text-bright">{problem.name}</h3>
                       <DifficultyIndicator level={problem.difficulty} size="sm" />
                     </div>
                     <p className="m-0 text-[length:var(--text-sm)] leading-[var(--leading-snug)] text-[color:var(--color-gray-500)]">
@@ -377,7 +365,7 @@ export default function ConceptPageClient(): JSX.Element {
           if (relatedConcepts.length === 0) return null
           return (
             <section className="mb-10">
-              <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--color-white-10)] pb-2.5 text-[1.15rem] font-semibold text-white">
+              <h2 className="mb-4 flex items-center gap-2.5 border-b border-[var(--border-card)] pb-2.5 text-lg font-semibold text-text-bright">
                 <Link2 size={20} className="text-[color:var(--color-brand-primary)]" />
                 Related Concepts
               </h2>
@@ -386,13 +374,13 @@ export default function ConceptPageClient(): JSX.Element {
                   <Link
                     key={related.id}
                     href={`/concepts/js/${related.id}`}
-                    className="flex items-center gap-[var(--spacing-md)] rounded-[var(--radius-lg)] border border-[var(--color-white-10)] bg-[var(--color-white-3)] p-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-white-5)] hover:border-[var(--color-brand-primary-40)]"
+                    className="flex items-center gap-[var(--spacing-md)] rounded-[var(--radius-lg)] border border-[var(--border-card)] bg-[var(--color-white-3)] p-[var(--spacing-lg)] no-underline transition-all duration-[var(--transition-fast)] hover:bg-[var(--color-white-5)] hover:border-[var(--color-brand-primary-40)]"
                   >
                     <span className="text-[1.75rem] leading-none">
                       <ConceptIcon conceptId={related.id} size={24} />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <h3 className="mb-1 text-[0.95rem] font-semibold text-white">{related.title}</h3>
+                      <h3 className="mb-1 text-[0.95rem] font-semibold text-text-bright">{related.title}</h3>
                       <p className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-[length:var(--text-base)] text-[color:var(--color-gray-500)]">
                         {related.shortDescription}
                       </p>
@@ -403,7 +391,6 @@ export default function ConceptPageClient(): JSX.Element {
             </section>
           )
         })()}
-      </main>
-    </div>
+    </PageLayout>
   )
 }
