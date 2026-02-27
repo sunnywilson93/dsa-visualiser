@@ -49,6 +49,7 @@ export default function DSAConceptPageClient(): JSX.Element {
   return (
     <PageLayout
       variant="content"
+      article
       breadcrumbs={[
         { label: 'Concepts', path: '/concepts' },
         { label: 'DSA', path: '/concepts/dsa' },

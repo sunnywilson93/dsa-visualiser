@@ -18,6 +18,7 @@ interface PageLayoutProps {
   breadcrumbs?: Breadcrumb[]
   children: ReactNode
   className?: string
+  article?: boolean
 }
 
 const containerClass: Record<PageLayoutVariant, string> = {
@@ -26,7 +27,8 @@ const containerClass: Record<PageLayoutVariant, string> = {
   narrow: 'container-narrow',
 }
 
-export function PageLayout({ variant, breadcrumbs, children, className }: PageLayoutProps) {
+export function PageLayout({ variant, breadcrumbs, children, className, article }: PageLayoutProps) {
+  const content = article ? <article>{children}</article> : children
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-bg-page from-0% to-bg-page-secondary to-100%">
       <NavBar breadcrumbs={breadcrumbs} />
@@ -41,7 +43,7 @@ export function PageLayout({ variant, breadcrumbs, children, className }: PageLa
         animate="visible"
         transition={entranceTransition}
       >
-        {children}
+        {content}
       </motion.main>
     </div>
   )

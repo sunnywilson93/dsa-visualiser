@@ -173,6 +173,7 @@ export default function ConceptPageClient(): JSX.Element {
   return (
     <PageLayout
       variant="content"
+      article
       breadcrumbs={[
         { label: 'Concepts', path: '/concepts' },
         { label: parentSection.label, path: parentSection.path },
