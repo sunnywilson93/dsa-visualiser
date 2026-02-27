@@ -20,7 +20,7 @@ export function NavBar({ breadcrumbs }: NavBarProps) {
   const menuId = 'mobile-menu-toggle'
 
   return (
-    <nav className="sticky top-0 z-[100] bg-[rgba(15,15,26,0.85)] backdrop-blur-[12px] border-b border-border-card">
+    <nav className="sticky top-0 z-[100] bg-[rgba(15,15,26,0.85)] backdrop-blur-[12px]">
       <div className="flex items-center gap-4 py-3 px-8 mx-auto max-w-screen-2xl max-md:py-2.5 max-md:px-4 max-md:gap-3 max-sm:gap-2">
         {/* Left: Brand */}
         <Link href="/" className="flex items-center gap-2.5 no-underline text-inherit shrink-0">

@@ -348,7 +348,7 @@ export default function HomePage() {
       </main>
 
       {/* Utility footer */}
-      <footer className="text-center py-4 px-8 text-text-muted text-sm border-t border-border-card max-md:py-3 max-md:px-4">
+      <footer className="text-center py-4 px-8 text-text-muted text-sm max-md:py-3 max-md:px-4">
         <div className="flex items-center justify-center gap-4 max-sm:flex-col max-sm:gap-2">
           <span className="inline-flex items-center gap-1.5">
             <kbd className="inline-block px-1.5 py-0.5 rounded bg-white-8 text-text-secondary text-xs font-mono border border-border-card">⌘K</kbd>

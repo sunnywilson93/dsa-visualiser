@@ -30,7 +30,7 @@ const footerLinks = {
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border-card bg-black-30 py-8 px-0 mt-auto">
+    <footer className="bg-black-30 py-8 px-0 mt-auto">
       <div className="max-w-[1400px] mx-auto py-0 px-8">
         <nav className="grid grid-cols-3 gap-8 max-md:grid-cols-1 max-md:gap-6 max-md:px-0">
           {Object.entries(footerLinks).map(([key, category]) => (
@@ -53,7 +53,7 @@ export function SiteFooter() {
             </div>
           ))}
         </nav>
-        <div className="mt-8 pt-4 border-t border-border-card text-center">
+        <div className="mt-8 pt-4 text-center">
           <p className="text-xs text-text-muted">
             JS Interview Prep - Master JavaScript with Interactive Visualization
           </p>
