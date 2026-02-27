@@ -41,16 +41,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const difficultyLabel = problem.difficulty.charAt(0).toUpperCase() + problem.difficulty.slice(1)
+  const patternInfo = problem.patternName ? ` using ${problem.patternName} pattern` : ''
+  const complexityInfo = problem.timeComplexity ? ` Time: ${problem.timeComplexity}.` : ''
+
   const description = problem.approach
-    ? `${problem.approach} ${problem.patternName ? `Uses ${problem.patternName} pattern.` : ''} Practice with visualization.`
+    ? `Solve ${problem.name} (${difficultyLabel})${patternInfo}. ${problem.approach.slice(0, 120)}${complexityInfo}`
     : `${problem.description}. Practice with interactive code visualization, step-by-step execution, and call stack analysis.`
 
   return {
-    title: `${problem.name} - ${difficultyLabel} | JS Interview Prep`,
+    title: `${problem.name} — ${difficultyLabel} JavaScript Solution (Step-by-Step) | JS Interview Prep`,
     description,
-    keywords: `${problem.name.toLowerCase()}, javascript coding problem, ${category?.name.toLowerCase() || ''}, coding interview, ${problem.difficulty} difficulty`,
+    keywords: `${problem.name.toLowerCase()}, ${problem.name.toLowerCase()} javascript solution, ${category?.name.toLowerCase() || ''}, coding interview, ${problem.difficulty} difficulty${problem.patternName ? `, ${problem.patternName.toLowerCase()}` : ''}`,
     openGraph: {
-      title: `${problem.name} - JavaScript Coding Challenge`,
+      title: `${problem.name} — ${difficultyLabel} JavaScript Solution`,
       description: problem.approach || problem.description,
       url: `https://jsinterview.dev/${params.categoryId}/${params.problemId}`,
     },
