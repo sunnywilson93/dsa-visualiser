@@ -8,6 +8,7 @@ import { Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2, Hammer, BookOp
 import { PageLayout } from '@/components/ui'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ConceptIcon } from '@/components/Icons'
+import { ConceptFooterLinks } from '@/components/ConceptFooterLinks'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import { getConceptById, getRelatedConcepts, getRelatedProblems, concepts as jsConcepts } from '@/data/concepts'
 import { dsaConcepts } from '@/data/dsaConcepts'
@@ -392,6 +393,13 @@ export default function ConceptPageClient(): JSX.Element {
             </section>
           )
         })()}
+
+        <ConceptFooterLinks
+          prerequisites={concept.prerequisites}
+          nextConcepts={concept.nextConcepts}
+          relatedProblems={concept.relatedProblems}
+          conceptType="js"
+        />
     </PageLayout>
   )
 }

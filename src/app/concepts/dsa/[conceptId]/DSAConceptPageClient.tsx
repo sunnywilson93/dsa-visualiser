@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { Lightbulb, AlertTriangle, Award, Clock, Gamepad2, Code2, Target, Link2 } from 'lucide-react'
 import { PageLayout } from '@/components/ui'
 import { ConceptIcon } from '@/components/Icons'
+import { ConceptFooterLinks } from '@/components/ConceptFooterLinks'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 import { getDSAConceptById, getRelatedDSAConcepts } from '@/data/dsaConcepts'
 import {
@@ -295,6 +296,11 @@ export default function DSAConceptPageClient(): JSX.Element {
             </section>
           )
         })()}
+
+        <ConceptFooterLinks
+          relatedProblems={concept.relatedProblems}
+          conceptType="dsa"
+        />
     </PageLayout>
   )
 }
