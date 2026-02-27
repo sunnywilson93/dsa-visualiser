@@ -159,8 +159,8 @@ export default function ConceptPage({ params }: Props) {
       <StructuredData data={articleSchema} />
       <StructuredData data={learningResourceSchema} />
       <ConceptPageClient />
-      <div className="sr-only">
-        <time dateTime={CONTENT_LAST_UPDATED.toISOString()}>Updated {formattedDate}</time>
+      <div className="text-center py-[var(--spacing-lg)] text-[length:var(--text-sm)] text-[color:var(--color-text-muted)]">
+        <time dateTime={CONTENT_LAST_UPDATED.toISOString()}>Last updated {formattedDate}</time>
       </div>
     </>
   )
