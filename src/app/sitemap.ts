@@ -9,6 +9,7 @@ import {
 import { dsaPatterns } from '@/data/dsaPatterns'
 import { dsaConcepts } from '@/data/dsaConcepts'
 import { problemConcepts } from '@/data/algorithmConcepts'
+import { topicHubs } from '@/data/topicHubs'
 
 /**
  * Build-time timestamp so the sitemap always reflects the latest deploy.
@@ -170,8 +171,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
       }))
     })
 
+  // Topic hub pages (/topics/[topicId])
+  const topicHubPages: MetadataRoute.Sitemap = topicHubs.map((hub) => ({
+    url: `${BASE_URL}/topics/${hub.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }))
+
+  // Updates/changelog page
+  const updatesPage: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/updates`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'weekly' as const,
+      priority: 0.5,
+    },
+  ]
+
   return [
     ...staticPages,
+    ...topicHubPages,
     ...jsConceptPages,
     ...dsaConceptPages,
     ...dsaPatternPages,
@@ -179,5 +199,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...dsaSubcategoryPages,
     ...problemPages,
     ...conceptVizPages,
+    ...updatesPage,
   ]
 }
