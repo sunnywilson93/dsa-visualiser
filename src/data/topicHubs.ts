@@ -1,0 +1,186 @@
+export interface TopicHub {
+  id: string
+  name: string
+  type: 'js' | 'dsa'
+  primaryConceptId: string
+  relatedConceptIds: string[]
+  relatedProblemIds: string[]
+  targetKeywords: string[]
+  h1Template: string
+  metaDescriptionTemplate: string
+}
+
+export const topicHubs: TopicHub[] = [
+  // === JS Topics ===
+  {
+    id: 'closures',
+    name: 'JavaScript Closures',
+    type: 'js',
+    primaryConceptId: 'closures',
+    relatedConceptIds: ['scope-basics', 'lexical-scope', 'closure-definition', 'closure-practical-uses', 'closure-loops-classic', 'closure-memory-leaks', 'closure-module-pattern', 'closure-partial-application'],
+    relatedProblemIds: ['closure-counter', 'implement-once', 'implement-memoize', 'implement-curry'],
+    targetKeywords: ['javascript closures', 'closures explained', 'how closures work', 'closure interview question'],
+    h1Template: 'JavaScript Closures — Complete Guide with Interactive Visualizations',
+    metaDescriptionTemplate: 'Master JavaScript closures with {conceptCount} concepts, {problemCount} practice problems, and step-by-step visual explanations. From beginner to advanced.',
+  },
+  {
+    id: 'event-loop',
+    name: 'JavaScript Event Loop',
+    type: 'js',
+    primaryConceptId: 'event-loop',
+    relatedConceptIds: ['call-stack-basics', 'javascript-runtime-model', 'task-queue-macrotasks', 'microtask-queue', 'event-loop-tick', 'event-loop-starvation', 'nodejs-event-loop'],
+    relatedProblemIds: ['promise-chain', 'async-await-basics', 'sequential-vs-parallel'],
+    targetKeywords: ['javascript event loop', 'event loop explained', 'how event loop works', 'microtask vs macrotask'],
+    h1Template: 'JavaScript Event Loop — How It Works (Visual Step-by-Step)',
+    metaDescriptionTemplate: 'Understand the JavaScript event loop with {conceptCount} concepts, interactive visualizations, and {problemCount} practice problems.',
+  },
+  {
+    id: 'promises',
+    name: 'JavaScript Promises',
+    type: 'js',
+    primaryConceptId: 'promises-deep-dive',
+    relatedConceptIds: ['promises-creation', 'promises-then-catch', 'promises-chaining', 'promises-static-methods', 'async-await-syntax', 'async-await-error-handling', 'async-await-parallel'],
+    relatedProblemIds: ['create-promise', 'promise-all', 'promise-race', 'promise-any', 'promise-allsettled', 'promise-retry'],
+    targetKeywords: ['javascript promises', 'promises explained', 'async await', 'promise interview questions'],
+    h1Template: 'JavaScript Promises & Async/Await — Complete Visual Guide',
+    metaDescriptionTemplate: 'Master JavaScript promises and async/await with {conceptCount} concepts, {problemCount} practice problems, and real-time execution visualization.',
+  },
+  {
+    id: 'prototypes',
+    name: 'JavaScript Prototypes',
+    type: 'js',
+    primaryConceptId: 'prototypes',
+    relatedConceptIds: ['prototype-chain-basics', 'property-lookup', 'class-syntax-prototypes', 'instanceof-operator', 'prototype-inheritance', 'prototype-pollution'],
+    relatedProblemIds: ['prototype-chain', 'implement-instanceof', 'implement-new', 'implement-object-create'],
+    targetKeywords: ['javascript prototypes', 'prototype chain', 'prototypal inheritance', 'class vs prototype'],
+    h1Template: 'JavaScript Prototypes — Prototype Chain & Inheritance Explained',
+    metaDescriptionTemplate: 'Understand JavaScript prototypes with {conceptCount} visual concepts, {problemCount} coding challenges, and interview tips.',
+  },
+  {
+    id: 'hoisting',
+    name: 'JavaScript Hoisting',
+    type: 'js',
+    primaryConceptId: 'hoisting',
+    relatedConceptIds: ['hoisting-variables', 'hoisting-functions', 'temporal-dead-zone', 'scope-basics', 'lexical-scope'],
+    relatedProblemIds: ['hoisting-demo', 'scope-chain'],
+    targetKeywords: ['javascript hoisting', 'hoisting explained', 'var let const hoisting', 'temporal dead zone'],
+    h1Template: 'JavaScript Hoisting — var, let, const & Function Hoisting Explained',
+    metaDescriptionTemplate: 'Learn JavaScript hoisting with {conceptCount} visual concepts covering var, let, const, function declarations, and the temporal dead zone.',
+  },
+  {
+    id: 'this-keyword',
+    name: 'JavaScript this Keyword',
+    type: 'js',
+    primaryConceptId: 'this-keyword',
+    relatedConceptIds: ['closures', 'scope-basics'],
+    relatedProblemIds: ['this-binding', 'implement-bind', 'implement-call', 'implement-apply'],
+    targetKeywords: ['javascript this keyword', 'this explained', 'bind call apply', 'this in arrow functions'],
+    h1Template: 'JavaScript this Keyword — How this Works in Every Context',
+    metaDescriptionTemplate: 'Master the JavaScript this keyword with visual explanations, {problemCount} coding challenges including bind/call/apply, and interview tips.',
+  },
+  {
+    id: 'async-await',
+    name: 'JavaScript Async/Await',
+    type: 'js',
+    primaryConceptId: 'async-await-syntax',
+    relatedConceptIds: ['async-await-error-handling', 'async-await-parallel', 'promises-deep-dive', 'promises-chaining', 'event-loop'],
+    relatedProblemIds: ['async-await-basics', 'sequential-vs-parallel', 'promise-all', 'implement-sleep', 'implement-throttle', 'implement-debounce'],
+    targetKeywords: ['javascript async await', 'async await explained', 'async await error handling', 'async patterns'],
+    h1Template: 'JavaScript Async/Await — From Basics to Advanced Patterns',
+    metaDescriptionTemplate: 'Master async/await with {conceptCount} concepts, {problemCount} practice problems, and visual explanations of parallel execution and error handling.',
+  },
+  {
+    id: 'scope-chain',
+    name: 'JavaScript Scope',
+    type: 'js',
+    primaryConceptId: 'scope-basics',
+    relatedConceptIds: ['lexical-scope', 'closures', 'hoisting', 'hoisting-variables', 'temporal-dead-zone'],
+    relatedProblemIds: ['scope-chain', 'closure-counter'],
+    targetKeywords: ['javascript scope', 'scope chain', 'lexical scope', 'block scope vs function scope'],
+    h1Template: 'JavaScript Scope — Scope Chain, Lexical Scope & Block Scope',
+    metaDescriptionTemplate: 'Understand JavaScript scope with {conceptCount} visual concepts covering scope chain, lexical scope, block scope, and closures.',
+  },
+  {
+    id: 'type-coercion',
+    name: 'JavaScript Type Coercion',
+    type: 'js',
+    primaryConceptId: 'type-coercion',
+    relatedConceptIds: ['implicit-coercion-rules', 'coercion-edge-cases', 'data-types'],
+    relatedProblemIds: [],
+    targetKeywords: ['javascript type coercion', 'implicit coercion', '== vs ===', 'type conversion'],
+    h1Template: 'JavaScript Type Coercion — Implicit vs Explicit Conversion Explained',
+    metaDescriptionTemplate: 'Master JavaScript type coercion with {conceptCount} visual concepts, edge cases, and interview questions about == vs ===.',
+  },
+  {
+    id: 'memory-model',
+    name: 'JavaScript Memory Model',
+    type: 'js',
+    primaryConceptId: 'memory-model',
+    relatedConceptIds: ['v8-engine', 'closure-memory-leaks', 'values-and-memory'],
+    relatedProblemIds: [],
+    targetKeywords: ['javascript memory', 'memory management', 'garbage collection', 'memory leaks'],
+    h1Template: 'JavaScript Memory Model — How Memory Works & Common Leaks',
+    metaDescriptionTemplate: 'Understand JavaScript memory management with {conceptCount} visual concepts covering heap, stack, garbage collection, and memory leak prevention.',
+  },
+
+  // === DSA Topics ===
+  {
+    id: 'two-pointers',
+    name: 'Two Pointers Pattern',
+    type: 'dsa',
+    primaryConceptId: 'arrays',
+    relatedConceptIds: [],
+    relatedProblemIds: ['two-sum-ii', 'three-sum', 'container-with-most-water', 'valid-palindrome', 'remove-duplicates-sorted', 'trapping-rain-water'],
+    targetKeywords: ['two pointers algorithm', 'two pointer technique', 'two pointers leetcode', 'two pointers pattern'],
+    h1Template: 'Two Pointers Pattern — Algorithm Technique with Visual Examples',
+    metaDescriptionTemplate: 'Master the Two Pointers pattern with {problemCount} JavaScript practice problems, visual step-by-step walkthroughs, and complexity analysis.',
+  },
+  {
+    id: 'binary-search',
+    name: 'Binary Search',
+    type: 'dsa',
+    primaryConceptId: 'arrays',
+    relatedConceptIds: [],
+    relatedProblemIds: ['binary-search-basic', 'search-insert-position', 'find-min-rotated', 'search-rotated-array', 'first-bad-version', 'koko-eating-bananas'],
+    targetKeywords: ['binary search algorithm', 'binary search javascript', 'binary search explained', 'binary search leetcode'],
+    h1Template: 'Binary Search — Algorithm Explained with JavaScript Visualizations',
+    metaDescriptionTemplate: 'Learn binary search with {problemCount} JavaScript problems, visual walkthroughs, and complexity analysis. From basic to rotated array variants.',
+  },
+  {
+    id: 'sliding-window',
+    name: 'Sliding Window Pattern',
+    type: 'dsa',
+    primaryConceptId: 'arrays',
+    relatedConceptIds: [],
+    relatedProblemIds: ['max-sum-subarray-k', 'max-average-subarray', 'longest-substring-no-repeat', 'min-size-subarray-sum', 'max-consecutive-ones-iii', 'min-window-substring'],
+    targetKeywords: ['sliding window algorithm', 'sliding window technique', 'sliding window leetcode', 'sliding window pattern'],
+    h1Template: 'Sliding Window Pattern — Algorithm with Visual Step-by-Step',
+    metaDescriptionTemplate: 'Master the Sliding Window pattern with {problemCount} JavaScript problems, visual animations, and time complexity analysis.',
+  },
+  {
+    id: 'linked-lists',
+    name: 'Linked Lists',
+    type: 'dsa',
+    primaryConceptId: 'linked-lists',
+    relatedConceptIds: [],
+    relatedProblemIds: ['reverse-linked-list', 'merge-two-sorted-lists', 'linked-list-cycle', 'remove-nth-from-end', 'add-two-numbers', 'reorder-list'],
+    targetKeywords: ['linked list javascript', 'linked list data structure', 'linked list interview questions', 'singly linked list'],
+    h1Template: 'Linked Lists — Data Structure Guide with JavaScript Visualizations',
+    metaDescriptionTemplate: 'Master linked lists with {problemCount} JavaScript practice problems, visual node traversal, and complexity analysis.',
+  },
+  {
+    id: 'arrays-dsa',
+    name: 'Arrays & Hashing',
+    type: 'dsa',
+    primaryConceptId: 'arrays',
+    relatedConceptIds: ['hash-tables'],
+    relatedProblemIds: ['two-sum', 'contains-duplicate', 'valid-anagram', 'group-anagrams', 'top-k-frequent', 'product-except-self'],
+    targetKeywords: ['array algorithms', 'hash map problems', 'arrays hashing leetcode', 'array interview questions'],
+    h1Template: 'Arrays & Hashing — Data Structures with JavaScript Visualizations',
+    metaDescriptionTemplate: 'Master arrays and hash maps with {problemCount} JavaScript problems, visual hash table walkthroughs, and complexity analysis.',
+  },
+]
+
+export function getTopicHub(topicId: string): TopicHub | undefined {
+  return topicHubs.find(t => t.id === topicId)
+}
