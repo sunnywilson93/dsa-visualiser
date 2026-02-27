@@ -18,12 +18,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
+  const difficultyLabel = concept.difficulty.charAt(0).toUpperCase() + concept.difficulty.slice(1)
+  const keyPointCount = concept.keyPoints.length
+  const exampleCount = concept.examples.length
+
   return {
-    title: `${concept.title} - JavaScript Concept Explained | JS Interview Prep`,
-    description: `${concept.description} Learn with interactive visualizations, code examples, and interview tips.`,
-    keywords: `${concept.title.toLowerCase()}, javascript ${concept.title.toLowerCase()}, ${concept.title.toLowerCase()} explained, javascript interview, frontend interview`,
+    title: `JavaScript ${concept.title} Explained — How ${concept.title} Works (Visual Guide)`,
+    description: `Learn ${concept.title} with ${keyPointCount} key concepts, ${exampleCount} interactive examples, and interview tips. ${difficultyLabel} level.`,
+    keywords: `javascript ${concept.title.toLowerCase()}, ${concept.title.toLowerCase()} explained, how ${concept.title.toLowerCase()} works, ${concept.title.toLowerCase()} interview question, javascript interview, frontend interview`,
     openGraph: {
-      title: `${concept.title} - JavaScript Concept Explained`,
+      title: `JavaScript ${concept.title} — Visual Guide`,
       description: concept.shortDescription,
       url: `https://jsinterview.dev/concepts/js/${concept.id}`,
     },
@@ -107,6 +111,25 @@ function generateArticleSchema(concept: NonNullable<ReturnType<typeof getConcept
   }
 }
 
+function generateLearningResourceSchema(concept: NonNullable<ReturnType<typeof getConceptById>>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LearningResource',
+    name: `JavaScript ${concept.title}`,
+    description: concept.description,
+    educationalLevel: concept.difficulty,
+    teaches: `${concept.title} in JavaScript`,
+    timeRequired: concept.estimatedReadTime ? `PT${concept.estimatedReadTime}M` : 'PT10M',
+    learningResourceType: 'interactive visualization',
+    inLanguage: 'en',
+    provider: {
+      '@type': 'Organization',
+      name: 'JS Interview Prep',
+      url: 'https://jsinterview.dev',
+    },
+  }
+}
+
 export default function ConceptPage({ params }: Props) {
   const concept = getConceptById(params.conceptId)
 
@@ -122,6 +145,7 @@ export default function ConceptPage({ params }: Props) {
     { name: concept.title },
   ])
   const articleSchema = generateArticleSchema(concept)
+  const learningResourceSchema = generateLearningResourceSchema(concept)
 
   const formattedDate = CONTENT_LAST_UPDATED.toLocaleDateString('en-US', {
     month: 'short',
@@ -133,6 +157,7 @@ export default function ConceptPage({ params }: Props) {
       <StructuredData data={faqSchema} />
       <StructuredData data={breadcrumbSchema} />
       <StructuredData data={articleSchema} />
+      <StructuredData data={learningResourceSchema} />
       <ConceptPageClient />
       <div className="sr-only">
         <time dateTime={CONTENT_LAST_UPDATED.toISOString()}>Updated {formattedDate}</time>
