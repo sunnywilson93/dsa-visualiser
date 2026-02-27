@@ -1,6 +1,7 @@
 export { Button } from './Button'
 export { CodeEditor } from './CodeEditor'
 export { CallStack } from './CallStack'
+export { ConceptFooterLinks } from './ConceptFooterLinks'
 export { Variables } from './Variables'
 export { Console } from './Console'
 export { VisualizationPanel } from './Visualization'
