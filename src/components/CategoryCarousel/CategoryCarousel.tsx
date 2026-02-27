@@ -123,18 +123,20 @@ export function CategoryCarousel({ children }: CategoryCarouselProps) {
 
       {/* Progress dots */}
       {children.length > 4 && (
-        <div className="flex justify-center gap-2 mt-3">
+        <div className="flex justify-center gap-0.5 mt-3">
           {children.map((_, index) => (
             <button
               key={index}
-              className={`w-1.5 h-1.5 rounded-full border-none cursor-pointer transition-all duration-200 p-0 ${
-                index === activeIndex
-                  ? 'bg-brand-primary w-[18px] rounded-sm'
-                  : 'bg-brand-primary-30 hover:bg-brand-primary-50'
-              }`}
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center border-none cursor-pointer bg-transparent p-0 touch-manipulation"
               onClick={() => scrollToIndex(index)}
               aria-label={`Go to category ${index + 1}`}
-            />
+            >
+              <span className={`block h-1.5 rounded-full transition-all duration-150 ${
+                index === activeIndex
+                  ? 'bg-brand-primary w-[18px] rounded-sm'
+                  : 'bg-brand-primary-30 hover:bg-brand-primary-50 w-1.5'
+              }`} />
+            </button>
           ))}
         </div>
       )}

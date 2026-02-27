@@ -98,7 +98,7 @@ function NodeChain({
                     flex items-center justify-center min-w-8 h-8 px-1.5 rounded-md
                     ${isHighlighted
                       ? 'bg-emerald-400/25 border-2 border-emerald-400'
-                      : 'bg-[var(--color-bg-elevated)] border-2 border-white/15'
+                      : 'bg-[var(--color-bg-elevated)] border-2 border-white-15'
                     }
                   `}
                   animate={{
@@ -134,7 +134,7 @@ function NodeChain({
               {/* Null terminator */}
               {node.next === null && !isCycleSource && (
                 <div className="flex items-center mx-0.5 mt-5">
-                  <div className="h-0.5 w-3 bg-white/15" />
+                  <div className="h-0.5 w-3 bg-white-15" />
                   <span className="text-[9px] font-mono text-gray-600 ml-0.5">null</span>
                 </div>
               )}
@@ -226,7 +226,7 @@ export function LinkedListConcept({ step }: LinkedListConceptProps) {
                     flex items-center justify-center min-w-8 h-8 px-1.5 rounded-md
                     ${isHl
                       ? 'bg-amber-400/20 border-2 border-amber-400/60'
-                      : 'bg-[var(--color-bg-elevated)] border-2 border-dashed border-white/15'
+                      : 'bg-[var(--color-bg-elevated)] border-2 border-dashed border-white-15'
                     }
                   `}
                   initial={{ scale: 0, opacity: 0 }}

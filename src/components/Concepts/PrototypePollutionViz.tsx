@@ -566,12 +566,12 @@ export function PrototypePollutionViz() {
   return (
     <div className="flex flex-col gap-5">
       {/* Level selector - intermediate and advanced only */}
-      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5 flex-wrap">
+      <div className="flex gap-2 justify-center bg-black-30 border border-white-10 rounded-full p-1.5 flex-wrap">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
             className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
-              level === lvl ? 'text-white' : 'bg-white/5 border border-transparent text-gray-500 hover:bg-white/10 hover:text-gray-300'
+              level === lvl ? 'text-white' : 'bg-white-5 border border-transparent text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
@@ -586,14 +586,14 @@ export function PrototypePollutionViz() {
       </div>
 
       {/* Example selector */}
-      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 flex-wrap justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
             className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all ${
               exampleIndex === i
                 ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+                : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleExampleChange(i)}
           >
@@ -656,7 +656,7 @@ export function PrototypePollutionViz() {
           }`}>
             Code
           </div>
-          <div className="bg-black/40 rounded-lg p-3 font-mono text-sm overflow-x-auto">
+          <div className="bg-black-40 rounded-lg p-3 font-mono text-sm overflow-x-auto">
             {currentStep.code.map((line, i) => (
               <div
                 key={i}
@@ -693,12 +693,12 @@ export function PrototypePollutionViz() {
               {getObjectsToDisplay().map((obj) => (
                 <motion.div
                   key={obj.id}
-                  className={`w-full max-w-[250px] bg-black/30 border-2 rounded-lg overflow-hidden ${
+                  className={`w-full max-w-[250px] bg-black-30 border-2 rounded-lg overflow-hidden ${
                     currentStep.affectedObjects.includes(obj.id)
                       ? 'border-red-500/70'
                       : obj.id === 'Object.prototype' && currentStep.pollutedProperty
                         ? 'border-amber-500/70'
-                        : 'border-white/20'
+                        : 'border-white-20'
                   }`}
                   animate={
                     currentStep.showAffectedRipple && currentStep.affectedObjects.includes(obj.id)
@@ -739,7 +739,7 @@ export function PrototypePollutionViz() {
                             className={`flex justify-between px-1 py-0.5 rounded font-mono text-2xs ${
                               p.polluted
                                 ? 'bg-red-500/20 border border-red-500/50'
-                                : 'bg-black/30'
+                                : 'bg-black-30'
                             }`}
                           >
                             <span className={p.polluted ? 'text-red-400' : 'text-gray-500'}>
@@ -758,12 +758,12 @@ export function PrototypePollutionViz() {
                       </div>
                     )}
                     {obj.protoRef && (
-                      <div className="font-mono text-2xs text-purple-400 pt-1 mt-1 border-t border-white/5">
+                      <div className="font-mono text-2xs text-purple-400 pt-1 mt-1 border-t border-white-5">
                         __proto__: → {obj.protoRef}
                       </div>
                     )}
                     {obj.protoRef === null && obj.id !== 'Object.prototype' && (
-                      <div className="font-mono text-2xs text-emerald-400 pt-1 mt-1 border-t border-white/5">
+                      <div className="font-mono text-2xs text-emerald-400 pt-1 mt-1 border-t border-white-5">
                         __proto__: null (no prototype!)
                       </div>
                     )}
@@ -784,7 +784,7 @@ export function PrototypePollutionViz() {
               ? 'bg-red-500/10 border-red-500/30 text-red-300'
               : currentStep.prevention
                 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-                : 'bg-black/30 border-white/10 text-gray-300'
+                : 'bg-black-30 border-white-10 text-gray-300'
           }`}
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
@@ -799,7 +799,7 @@ export function PrototypePollutionViz() {
         <div className={`px-4 py-2 border rounded-lg ${
           currentStep.showWarning
             ? 'bg-red-500/5 border-red-500/20'
-            : 'bg-black/40 border-white/10'
+            : 'bg-black-40 border-white-10'
         }`}>
           <div className="text-xs text-gray-500 mb-1">Output:</div>
           <div className={`font-mono text-sm ${

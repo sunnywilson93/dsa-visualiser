@@ -146,7 +146,7 @@ export default function DSARoadmapPage() {
                   <Link
                     key={concept.id}
                     href={`${stage.basePath}/${concept.id}`}
-                    className="flex flex-col gap-1 rounded-xl p-4 no-underline text-inherit border border-border-card bg-surface-card transition-all duration-200 hover:border-brand-primary-40 hover:bg-brand-primary-5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+                    className="flex flex-col gap-1 rounded-xl p-4 no-underline text-inherit border border-border-card bg-surface-card transition-all duration-150 hover:border-brand-primary-40 hover:bg-brand-primary-5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
                   >
                     <span className="text-base font-semibold text-text-bright">
                       {concept.title}
@@ -166,7 +166,7 @@ export default function DSARoadmapPage() {
                   <Link
                     key={pattern.id}
                     href={`${stage.basePath}/${pattern.slug}`}
-                    className="flex flex-col gap-1 rounded-xl p-4 no-underline text-inherit border border-border-card bg-surface-card transition-all duration-200 hover:border-brand-primary-40 hover:bg-brand-primary-5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+                    className="flex flex-col gap-1 rounded-xl p-4 no-underline text-inherit border border-border-card bg-surface-card transition-all duration-150 hover:border-brand-primary-40 hover:bg-brand-primary-5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
                   >
                     <span className="text-base font-semibold text-text-bright">
                       {pattern.name}
@@ -195,7 +195,7 @@ export default function DSARoadmapPage() {
                   <Link
                     key={rec.categoryId}
                     href={`/${rec.categoryId}`}
-                    className="flex flex-col gap-1 rounded-xl p-4 no-underline text-inherit border border-brand-primary-20 bg-brand-primary-5 transition-all duration-200 hover:border-brand-primary-40 hover:bg-brand-primary-10 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+                    className="flex flex-col gap-1 rounded-xl p-4 no-underline text-inherit border border-brand-primary-20 bg-brand-primary-5 transition-all duration-150 hover:border-brand-primary-40 hover:bg-brand-primary-10 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
                   >
                     <span className="text-xs font-medium text-brand-primary uppercase tracking-wide">
                       {rec.stage}

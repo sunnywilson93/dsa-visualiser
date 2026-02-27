@@ -82,7 +82,7 @@ export function DataTypesViz() {
   return (
     <div className="flex flex-col gap-6">
       {/* Tab selector */}
-      <div className="flex gap-2 justify-center p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
+      <div className="flex gap-2 justify-center p-1.5 bg-black-30 border border-white/[0.08] rounded-full">
         <button
           className={`px-6 py-2 text-sm font-medium rounded-full cursor-pointer transition-all duration-200 ${
             activeTab === 'primitives'
@@ -128,7 +128,7 @@ export function DataTypesViz() {
               {primitives.map(type => (
                 <motion.button
                   key={type.id}
-                  className={`flex flex-col items-center gap-1.5 p-4 bg-black/30 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:bg-white/5 ${
+                  className={`flex flex-col items-center gap-1.5 p-4 bg-black-30 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:bg-white-5 ${
                     selectedType?.id === type.id ? 'bg-white/[0.08]' : ''
                   }`}
                   style={{ borderColor: selectedType?.id === type.id ? type.color : 'var(--color-white-10)' }}
@@ -146,7 +146,7 @@ export function DataTypesViz() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-6 bg-black/40 border-2 rounded-xl"
+                className="p-6 bg-black-40 border-2 rounded-xl"
                 style={{ borderColor: selectedType.color }}
               >
                 <h3 className="text-base font-semibold m-0 mb-3" style={{ color: selectedType.color }}>{selectedType.name}</h3>
@@ -184,7 +184,7 @@ export function DataTypesViz() {
               {referenceTypes.map(type => (
                 <motion.button
                   key={type.id}
-                  className={`flex flex-col items-center gap-1.5 p-4 bg-black/30 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:bg-white/5 ${
+                  className={`flex flex-col items-center gap-1.5 p-4 bg-black-30 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:bg-white-5 ${
                     selectedType?.id === type.id ? 'bg-white/[0.08]' : ''
                   }`}
                   style={{ borderColor: selectedType?.id === type.id ? type.color : 'var(--color-white-10)' }}
@@ -202,7 +202,7 @@ export function DataTypesViz() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-6 bg-black/40 border-2 rounded-xl"
+                className="p-6 bg-black-40 border-2 rounded-xl"
                 style={{ borderColor: selectedType.color }}
               >
                 <h3 className="text-base font-semibold m-0 mb-3" style={{ color: selectedType.color }}>{selectedType.name}</h3>
@@ -240,11 +240,11 @@ export function DataTypesViz() {
             exit={{ opacity: 0, y: -10 }}
             className="flex flex-col gap-6"
           >
-            <div className="p-6 bg-black/40 border border-white/10 rounded-xl">
+            <div className="p-6 bg-black-40 border border-white-10 rounded-xl">
               <h3 className="text-base font-semibold text-white m-0 mb-3 text-center">
                 {compareSteps[compareStep].title}
               </h3>
-              <pre className="bg-black/40 rounded-lg p-4 m-0 mb-3 overflow-x-auto">
+              <pre className="bg-black-40 rounded-lg p-4 m-0 mb-3 overflow-x-auto">
                 <code className="font-mono text-xs text-gray-300 whitespace-pre">{compareSteps[compareStep].code}</code>
               </pre>
               <p className="text-base text-gray-400 text-center m-0 mb-4">
@@ -253,18 +253,18 @@ export function DataTypesViz() {
               <div className="flex justify-center">
                 {compareSteps[compareStep].highlight === 'value' ? (
                   <div className="flex gap-2 items-center">
-                    <div className="flex flex-col items-center gap-1 px-6 py-2 bg-black/30 border-2 border-emerald-500 rounded-lg">
+                    <div className="flex flex-col items-center gap-1 px-6 py-2 bg-black-30 border-2 border-emerald-500 rounded-lg">
                       <span className="text-[10px] text-gray-500">Variable A</span>
                       <span className="font-mono text-sm text-emerald-500">Value</span>
                     </div>
-                    <div className="flex flex-col items-center gap-1 px-6 py-2 bg-black/30 border-2 border-blue-500 rounded-lg">
+                    <div className="flex flex-col items-center gap-1 px-6 py-2 bg-black-30 border-2 border-blue-500 rounded-lg">
                       <span className="text-[10px] text-gray-500">Variable B</span>
                       <span className="font-mono text-sm text-blue-500">Copy</span>
                     </div>
                   </div>
                 ) : (
                   <div className="flex gap-2 items-center">
-                    <div className="flex flex-col items-center gap-1 px-6 py-2 bg-black/30 border-2 border-amber-500 rounded-lg">
+                    <div className="flex flex-col items-center gap-1 px-6 py-2 bg-black-30 border-2 border-amber-500 rounded-lg">
                       <span className="text-[10px] text-gray-500">obj1</span>
                       <span className="text-base text-gray-500">→</span>
                     </div>
@@ -272,7 +272,7 @@ export function DataTypesViz() {
                       <span className="text-[10px] text-gray-500">Object</span>
                       <span className="font-mono text-sm text-purple-400">&#123; x: ... &#125;</span>
                     </div>
-                    <div className="flex flex-col items-center gap-1 px-6 py-2 bg-black/30 border-2 border-amber-500 rounded-lg">
+                    <div className="flex flex-col items-center gap-1 px-6 py-2 bg-black-30 border-2 border-amber-500 rounded-lg">
                       <span className="text-[10px] text-gray-500">obj2</span>
                       <span className="text-base text-gray-500">→</span>
                     </div>
@@ -283,7 +283,7 @@ export function DataTypesViz() {
 
             <div className="flex gap-2 justify-center items-center">
               <button
-                className="px-4 py-2 text-xs bg-white/5 border border-white/10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
+                className="px-4 py-2 text-xs bg-white-5 border border-white-10 rounded-md text-gray-400 cursor-pointer transition-all duration-200 hover:bg-white-10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
                 onClick={() => setCompareStep(s => Math.max(0, s - 1))}
                 disabled={compareStep === 0}
               >

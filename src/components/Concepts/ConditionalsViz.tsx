@@ -49,12 +49,12 @@ export function ConditionalsViz() {
   return (
     <div className="flex flex-col gap-5">
       {/* Tab selector */}
-      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         <button
           className={`px-5 py-2 text-sm font-medium rounded-full transition-all ${
             activeTab === 'ifelse'
               ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-              : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+              : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
           }`}
           onClick={() => setActiveTab('ifelse')}
         >
@@ -64,7 +64,7 @@ export function ConditionalsViz() {
           className={`px-5 py-2 text-sm font-medium rounded-full transition-all ${
             activeTab === 'ternary'
               ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-              : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+              : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
           }`}
           onClick={() => setActiveTab('ternary')}
         >
@@ -74,7 +74,7 @@ export function ConditionalsViz() {
           className={`px-5 py-2 text-sm font-medium rounded-full transition-all ${
             activeTab === 'truthy'
               ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-              : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+              : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
           }`}
           onClick={() => setActiveTab('truthy')}
         >
@@ -91,7 +91,7 @@ export function ConditionalsViz() {
             exit={{ opacity: 0, y: -10 }}
             className="flex flex-col gap-5"
           >
-            <div className="flex items-center gap-5 px-4 py-3 bg-black/30 rounded-lg">
+            <div className="flex items-center gap-5 px-4 py-3 bg-black-30 rounded-lg">
               <label className="font-mono text-base text-white min-w-20">age = {age}</label>
               <input
                 type="range"
@@ -99,11 +99,11 @@ export function ConditionalsViz() {
                 max="30"
                 value={age}
                 onChange={e => setAge(Number(e.target.value))}
-                className="flex-1 h-1.5 bg-white/10 rounded outline-none appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500 [&::-webkit-slider-thumb]:cursor-pointer"
+                className="flex-1 h-1.5 bg-white-10 rounded outline-none appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500 [&::-webkit-slider-thumb]:cursor-pointer"
               />
             </div>
 
-            <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
+            <div className="bg-black-40 border border-white-10 rounded-xl overflow-hidden">
               <pre className="m-0 p-4 font-mono text-xs">
                 <div className={`px-2 py-0.5 transition-colors ${result.highlighted === 'if' ? 'bg-emerald-500/20 text-emerald-400' : 'text-gray-500'}`}>
                   {`if (age >= 21) {`}
@@ -149,7 +149,7 @@ export function ConditionalsViz() {
             exit={{ opacity: 0, y: -10 }}
             className="flex flex-col gap-5"
           >
-            <div className="flex items-center gap-5 px-4 py-3 bg-black/30 rounded-lg">
+            <div className="flex items-center gap-5 px-4 py-3 bg-black-30 rounded-lg">
               <label className="font-mono text-base text-white min-w-20">age = {ternaryValue}</label>
               <input
                 type="range"
@@ -157,11 +157,11 @@ export function ConditionalsViz() {
                 max="30"
                 value={ternaryValue}
                 onChange={e => setTernaryValue(Number(e.target.value))}
-                className="flex-1 h-1.5 bg-white/10 rounded outline-none appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500 [&::-webkit-slider-thumb]:cursor-pointer"
+                className="flex-1 h-1.5 bg-white-10 rounded outline-none appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500 [&::-webkit-slider-thumb]:cursor-pointer"
               />
             </div>
 
-            <div className="flex items-center justify-center flex-wrap gap-2 px-5 py-6 bg-black/30 rounded-xl">
+            <div className="flex items-center justify-center flex-wrap gap-2 px-5 py-6 bg-black-30 rounded-xl">
               <div className="flex flex-col items-center gap-1">
                 <span className="text-2xs text-gray-500 uppercase">condition</span>
                 <code className={`px-2.5 py-1 rounded-md font-mono text-base transition-all ${
@@ -174,7 +174,7 @@ export function ConditionalsViz() {
               <div className="flex flex-col items-center gap-1">
                 <span className="text-2xs text-gray-500 uppercase">if true</span>
                 <code className={`px-2.5 py-1 rounded-md font-mono text-base transition-all ${
-                  ternaryValue >= 18 ? 'text-white bg-purple-500/20 shadow-[0_0_8px_rgba(168,85,247,0.3)]' : 'text-gray-500 bg-black/30'
+                  ternaryValue >= 18 ? 'text-white bg-purple-500/20 shadow-[0_0_8px_rgba(168,85,247,0.3)]' : 'text-gray-500 bg-black-30'
                 }`}>
                   &quot;adult&quot;
                 </code>
@@ -183,7 +183,7 @@ export function ConditionalsViz() {
               <div className="flex flex-col items-center gap-1">
                 <span className="text-2xs text-gray-500 uppercase">if false</span>
                 <code className={`px-2.5 py-1 rounded-md font-mono text-base transition-all ${
-                  ternaryValue < 18 ? 'text-white bg-purple-500/20 shadow-[0_0_8px_rgba(168,85,247,0.3)]' : 'text-gray-500 bg-black/30'
+                  ternaryValue < 18 ? 'text-white bg-purple-500/20 shadow-[0_0_8px_rgba(168,85,247,0.3)]' : 'text-gray-500 bg-black-30'
                 }`}>
                   &quot;minor&quot;
                 </code>
@@ -220,8 +220,8 @@ export function ConditionalsViz() {
               {falsyValues.map(item => (
                 <motion.button
                   key={item.value}
-                  className={`flex items-center justify-center p-2.5 bg-black/30 border-2 rounded-lg cursor-pointer transition-all hover:bg-white/5 ${
-                    selectedFalsy === item.value ? 'bg-white/10' : ''
+                  className={`flex items-center justify-center p-2.5 bg-black-30 border-2 rounded-lg cursor-pointer transition-all hover:bg-white-5 ${
+                    selectedFalsy === item.value ? 'bg-white-10' : ''
                   }`}
                   style={{
                     borderColor: selectedFalsy === item.value
@@ -241,7 +241,7 @@ export function ConditionalsViz() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center justify-center gap-4 px-4 py-3 bg-black/30 rounded-lg"
+                className="flex items-center justify-center gap-4 px-4 py-3 bg-black-30 rounded-lg"
               >
                 <code className="font-mono text-base text-white">if ({selectedFalsy})</code>
                 <span className="text-gray-600">→</span>

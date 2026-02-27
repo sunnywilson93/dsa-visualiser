@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useMemo } from 'react'
-import { Play, Pause, SkipForward, SkipBack, RotateCcw, FastForward, Sparkles } from 'lucide-react'
+import { Play, Pause, SkipForward, SkipBack, RotateCcw, FastForward } from 'lucide-react'
 import { useExecutionStore, useExecutionProgress, useCurrentStep } from '@/store'
 import { useKeyboardShortcuts } from '@/hooks'
 import type { ShortcutMap } from '@/hooks'
@@ -157,47 +157,52 @@ export function ExecutionBar() {
       {/* Playback controls */}
       <div className="flex items-center gap-1">
         <button
-          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-accent-red hover:bg-red-8 transition-all duration-150"
+          className="flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg text-text-secondary hover:text-accent-red hover:bg-red-8 transition-all duration-150 touch-manipulation"
           onClick={reset}
           title="Reset (Esc)"
+          aria-label="Reset"
         >
           <RotateCcw size={16} />
         </button>
 
         <button
-          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-brand-primary hover:bg-brand-primary-10 transition-all duration-150 disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent"
+          className="flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg text-text-secondary hover:text-brand-primary hover:bg-brand-primary-10 transition-all duration-150 disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent touch-manipulation"
           onClick={stepBackward}
           disabled={!canStepBackward}
           title="Step Back (←)"
+          aria-label="Step back"
         >
           <SkipBack size={16} />
         </button>
 
         <button
-          className="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-brand-primary to-brand-secondary text-white hover:brightness-110 transition-all duration-150 disabled:opacity-50 shadow-lg shadow-brand-primary/25 hover:shadow-brand-primary/40 hover:scale-105 active:scale-95"
+          className="flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl bg-gradient-to-br from-brand-primary to-brand-secondary text-white hover:brightness-110 transition-all duration-150 disabled:opacity-50 shadow-lg shadow-brand-primary/25 hover:shadow-brand-primary/40 hover:scale-105 active:scale-95 touch-manipulation"
           onClick={togglePlayback}
           disabled={isCompleted}
           title={isPlaying ? 'Pause (Space)' : 'Play (Space)'}
+          aria-label={isPlaying ? 'Pause' : 'Play'}
         >
           {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" className="ml-0.5" />}
         </button>
 
         <button
-          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-brand-primary hover:bg-brand-primary-10 transition-all duration-150 disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent"
+          className="flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg text-text-secondary hover:text-brand-primary hover:bg-brand-primary-10 transition-all duration-150 disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent touch-manipulation"
           onClick={stepForward}
           disabled={!canStepForward}
           title="Step Forward (→)"
+          aria-label="Step forward"
         >
           <SkipForward size={16} />
         </button>
 
         <button
-          className="flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:text-emerald-400 hover:bg-emerald-8 transition-all duration-150 disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent"
+          className="flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg text-text-secondary hover:text-brand-primary hover:bg-brand-primary-10 transition-all duration-150 disabled:opacity-30 disabled:hover:text-text-secondary disabled:hover:bg-transparent touch-manipulation"
           onClick={runToCompletion}
           disabled={isCompleted}
           title="Run to End"
+          aria-label="Run to end"
         >
-          <Sparkles size={16} />
+          <FastForward size={16} />
         </button>
       </div>
 

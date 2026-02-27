@@ -121,7 +121,7 @@ export function StackViz() {
         {examples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white ${exampleIndex === i ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
+            className={`px-4 py-2 text-sm font-medium bg-white-5 border border-white-10 rounded-md text-gray-500 cursor-pointer transition-all duration-150 hover:bg-white-10 hover:text-white ${exampleIndex === i ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -131,13 +131,13 @@ export function StackViz() {
 
       {/* Input display (for parentheses examples) */}
       {currentExample.input && (
-        <div className="bg-black/30 rounded-lg p-4">
+        <div className="bg-black-30 rounded-lg p-4">
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Input String</div>
           <div className="flex gap-2 justify-center">
             {currentExample.input.split('').map((char, i) => (
               <motion.span
                 key={i}
-                className={`font-mono text-2xl font-semibold w-12 h-12 flex items-center justify-center bg-black/30 rounded-md transition-all duration-200 ${currentStep.inputIndex === i ? 'bg-brand-primary/20 shadow-[0_0_15px_rgba(var(--color-brand-primary-rgb),0.4)]' : ''} ${currentStep.inputIndex !== undefined && i < currentStep.inputIndex ? 'opacity-40' : ''}`}
+                className={`font-mono text-2xl font-semibold w-12 h-12 flex items-center justify-center bg-black-30 rounded-md transition-all duration-200 ${currentStep.inputIndex === i ? 'bg-brand-primary/20 shadow-[0_0_15px_rgba(var(--color-brand-primary-rgb),0.4)]' : ''} ${currentStep.inputIndex !== undefined && i < currentStep.inputIndex ? 'opacity-40' : ''}`}
                 animate={{
                   scale: currentStep.inputIndex === i ? 1.2 : 1,
                   color: currentStep.inputIndex === i
@@ -156,11 +156,11 @@ export function StackViz() {
 
       {/* Stack visualization */}
       <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-start">
-        <div className="bg-black/20 rounded-lg p-4">
+        <div className="bg-black-20 rounded-lg p-4">
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Stack</div>
           <div className="flex flex-col gap-2">
             <div className="text-xs text-gray-800 py-1">← Top</div>
-            <div className="flex flex-col gap-1.5 min-h-[180px] p-3 bg-black/30 border-2 border-white/10 rounded-lg">
+            <div className="flex flex-col gap-1.5 min-h-[180px] p-3 bg-black-30 border-2 border-white-10 rounded-lg">
               <AnimatePresence mode="popLayout">
                 {currentStep.stackState.length === 0 ? (
                   <motion.div
@@ -176,7 +176,7 @@ export function StackViz() {
                   [...currentStep.stackState].reverse().map((item, i) => (
                     <motion.div
                       key={item.id}
-                      className={`flex items-center justify-center gap-2 px-4 py-3 bg-black/30 border-2 border-white/10 rounded-md transition-all duration-200 ${i === 0 ? 'shadow-[0_0_15px_rgba(var(--color-brand-primary-rgb),0.2)]' : ''}`}
+                      className={`flex items-center justify-center gap-2 px-4 py-3 bg-black-30 border-2 border-white-10 rounded-md transition-all duration-200 ${i === 0 ? 'shadow-[0_0_15px_rgba(var(--color-brand-primary-rgb),0.2)]' : ''}`}
                       initial={{ opacity: 0, x: -30, scale: 0.8 }}
                       animate={{ opacity: 1, x: 0, scale: 1 }}
                       exit={{ opacity: 0, x: 30, scale: 0.8 }}
@@ -198,7 +198,7 @@ export function StackViz() {
         </div>
 
         {/* Output */}
-        <div className="bg-black/30 rounded-lg p-4 min-w-[100px]">
+        <div className="bg-black-30 rounded-lg p-4 min-w-[100px]">
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Output</div>
           <div className="flex items-center justify-center min-h-[50px]">
             {currentStep.output ? (
@@ -221,7 +221,7 @@ export function StackViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${exampleIndex}-${stepIndex}`}
-          className="flex items-start gap-3 p-3 px-4 bg-black/30 rounded-lg border-l-[3px] border-brand-primary"
+          className="flex items-start gap-3 p-3 px-4 bg-black-30 rounded-lg border-l-[3px] border-brand-primary"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}

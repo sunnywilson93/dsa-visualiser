@@ -72,7 +72,7 @@ export function BitManipulationConcept({ step }: BitManipulationConceptProps) {
                   flex items-center justify-center w-5 h-[22px] text-sm font-semibold rounded-sm transition-all duration-150
                   ${isOne 
                     ? 'bg-blue-400/25 text-blue-400 border border-blue-400/50 shadow-[0_0_4px_rgba(96,165,250,0.2)]' 
-                    : 'bg-[var(--color-bg-elevated)] text-gray-500 border border-white/10'
+                    : 'bg-[var(--color-bg-elevated)] text-gray-500 border border-white-10'
                   }
                   ${isActive ? 'scale-[1.08] shadow-[0_0_12px_rgba(96,165,250,0.5)]' : ''}
                   ${isHighlighted ? 'bg-amber-400/25 text-amber-400 border-amber-400/50 shadow-[0_0_8px_rgba(251,191,36,0.3)]' : ''}
@@ -104,7 +104,7 @@ export function BitManipulationConcept({ step }: BitManipulationConceptProps) {
         </div>
       )}
 
-      <div className="flex flex-col gap-1 p-2 bg-black/30 border border-dashed border-white/10 rounded-lg">
+      <div className="flex flex-col gap-1 p-2 bg-black-30 border border-dashed border-white-10 rounded-lg">
         {/* Input numbers */}
         {numbers.map((num, i) => (
           <div key={i}>

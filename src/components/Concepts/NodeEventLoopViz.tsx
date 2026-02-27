@@ -664,14 +664,14 @@ export function NodeEventLoopViz() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full">
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-[var(--color-black-30)] border border-white-8 rounded-full">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
             className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full cursor-pointer transition-all duration-200 ${
               level === lvl 
                 ? 'text-[var(--color-text-bright)]' 
-                : 'bg-white/4 border border-white/8 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+                : 'bg-white-4 border border-white-8 text-gray-500 hover:bg-white-8 hover:text-gray-300'
             }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
@@ -685,14 +685,14 @@ export function NodeEventLoopViz() {
         ))}
       </div>
 
-      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full">
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-[var(--color-black-30)] border border-white-8 rounded-full">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
             className={`px-4 py-1.5 font-mono text-sm rounded-full cursor-pointer transition-all duration-200 ${
               exampleIndex === i 
                 ? 'bg-[var(--color-neon-viz-18)] border border-[var(--color-neon-viz-70)] text-[var(--color-text-bright)] shadow-[0_0_20px_var(--color-neon-viz-25)]' 
-                : 'bg-white/4 border border-white/8 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+                : 'bg-white-4 border border-white-8 text-gray-500 hover:bg-white-8 hover:text-gray-300'
             }`}
             onClick={() => handleExampleChange(i)}
           >
@@ -701,8 +701,8 @@ export function NodeEventLoopViz() {
         ))}
       </div>
 
-      <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
-        <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
+      <div className="bg-[var(--color-black-40)] border border-white-8 rounded-xl overflow-hidden">
+        <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5">
           <span>Code</span>
           <span className="px-2 py-0.5 rounded-full text-2xs font-semibold text-[var(--difficulty-1)] bg-[var(--color-emerald-20)]">
             {currentStep.currentPhase}
@@ -819,7 +819,7 @@ export function NodeEventLoopViz() {
                 className={`flex-1 min-w-[70px] rounded-md overflow-hidden border transition-all duration-300 max-sm:min-w-auto max-sm:w-full ${
                   phase.active 
                     ? 'border-[var(--color-emerald-60)] bg-[var(--color-emerald-10)] shadow-[0_0_10px_var(--color-emerald-20)]' 
-                    : 'border-white/10 bg-white/5'
+                    : 'border-white-10 bg-white-5'
                 }`}
                 animate={{
                   scale: phase.active ? 1.02 : 1,
@@ -829,7 +829,7 @@ export function NodeEventLoopViz() {
                 <div className={`px-1 py-0.5 text-xs font-semibold text-center ${
                   phase.active 
                     ? 'text-[var(--difficulty-1)] bg-[var(--color-emerald-15)]' 
-                    : 'text-gray-700 bg-white/5'
+                    : 'text-gray-700 bg-white-5'
                 }`}>
                   {phase.name}
                 </div>
@@ -898,7 +898,7 @@ export function NodeEventLoopViz() {
       </AnimatePresence>
 
       <div className="flex items-center gap-4">
-        <div className="flex-1 h-1 bg-white/10 rounded-sm overflow-hidden">
+        <div className="flex-1 h-1 bg-white-10 rounded-sm overflow-hidden">
           <motion.div
             className="h-full bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] rounded-sm"
             initial={{ width: 0 }}
@@ -918,7 +918,7 @@ export function NodeEventLoopViz() {
       />
 
       <div className="text-center text-2xs text-gray-800">
-        <span className="px-2 py-0.5 bg-white/3 rounded">Use ← → keys to navigate, R to reset</span>
+        <span className="px-2 py-0.5 bg-white-3 rounded">Use ← → keys to navigate, R to reset</span>
       </div>
 
       <div className="px-4 py-2 bg-[var(--color-brand-primary-8)] border border-[var(--color-brand-primary-20)] rounded-lg text-xs text-gray-500 text-center">

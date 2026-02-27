@@ -319,7 +319,7 @@ export function AsyncEvolutionViz() {
                   ? 'scale-130'
                   : i < activeEra
                   ? ''
-                  : 'bg-[var(--color-bg-elevated)] border-2 border-white/20 hover:border-[var(--era-color)] hover:shadow-[0_0_8px_var(--era-color)]'
+                  : 'bg-[var(--color-bg-elevated)] border-2 border-white-20 hover:border-[var(--era-color)] hover:shadow-[0_0_8px_var(--era-color)]'
               }`}
               style={{
                 background: i <= activeEra ? e.color : undefined,
@@ -334,7 +334,7 @@ export function AsyncEvolutionViz() {
             </span>
           </button>
         ))}
-        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/10 -translate-y-1/2 z-0" />
+        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white-10 -translate-y-1/2 z-0" />
         <motion.div
           className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-primary)] -translate-y-1/2 z-[1]"
           initial={false}
@@ -346,7 +346,7 @@ export function AsyncEvolutionViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={era.id}
-          className="p-6 rounded-xl text-center border border-white/10"
+          className="p-6 rounded-xl text-center border border-white-10"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
@@ -363,7 +363,7 @@ export function AsyncEvolutionViz() {
               {activeEra + 1}
             </span>
             <h3 className="text-lg font-semibold text-gray-100 m-0">{era.name}</h3>
-            <span className="text-xs font-medium text-[var(--era-color)] px-2 py-0.5 rounded-full bg-white/5">
+            <span className="text-xs font-medium text-[var(--era-color)] px-2 py-0.5 rounded-full bg-white-5">
               {era.years}
             </span>
           </div>
@@ -372,7 +372,7 @@ export function AsyncEvolutionViz() {
             {era.technologies.map(tech => (
               <span 
                 key={tech} 
-                className="px-2 py-0.5 bg-white/[0.08] border border-white/10 rounded text-[10px] font-mono text-blue-300"
+                className="px-2 py-0.5 bg-white/[0.08] border border-white-10 rounded text-[10px] font-mono text-blue-300"
               >
                 {tech}
               </span>
@@ -384,12 +384,12 @@ export function AsyncEvolutionViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`code-${era.id}`}
-          className="rounded-xl overflow-hidden border border-white/[0.08] bg-black/40"
+          className="rounded-xl overflow-hidden border border-white/[0.08] bg-black-40"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
+          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5">
             <span>Example Code</span>
           </div>
           <pre className="m-0 p-4 max-h-[200px] overflow-y-auto font-mono text-[10px] leading-normal text-gray-300 whitespace-pre-wrap">

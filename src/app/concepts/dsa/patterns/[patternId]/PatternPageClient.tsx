@@ -60,11 +60,11 @@ export default function PatternPageClient({ patternId }: Props) {
           </p>
 
           <div className="flex gap-[var(--spacing-xl)] max-md:flex-wrap max-md:gap-3">
-            <span className="inline-flex items-center gap-1.5 rounded-md border border-[var(--border-card)] bg-[var(--color-white-5)] px-3 py-1.5 text-sm text-[color:var(--color-text-muted)]">
+            <span className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border-card)] bg-[var(--color-white-5)] px-3 py-1.5 text-sm text-[color:var(--color-text-muted)]">
               <Clock size={14} />
               Time: {pattern.complexity.time}
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-md border border-[var(--border-card)] bg-[var(--color-white-5)] px-3 py-1.5 text-sm text-[color:var(--color-text-muted)]">
+            <span className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border-card)] bg-[var(--color-white-5)] px-3 py-1.5 text-sm text-[color:var(--color-text-muted)]">
               <HardDrive size={14} />
               Space: {pattern.complexity.space}
             </span>
@@ -93,7 +93,7 @@ export default function PatternPageClient({ patternId }: Props) {
             {pattern.variants.map((variant) => (
               <div 
                 key={variant.id} 
-                className="rounded-lg border border-[var(--border-card)] bg-[var(--surface-card)] p-5"
+                className="rounded-lg border border-[var(--color-border-card)] bg-[var(--color-surface-card)] p-5"
               >
                 <h3 className="mb-[var(--spacing-sm)] text-[length:var(--text-md)] font-semibold text-[color:var(--color-text-primary)]">
                   {variant.name}

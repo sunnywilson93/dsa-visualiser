@@ -487,7 +487,7 @@ export function StreamsBuffersViz() {
   return (
     <div className="flex flex-col gap-6">
       {/* Level selector */}
-      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black-30 border border-white/[0.08] rounded-full">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
@@ -509,7 +509,7 @@ export function StreamsBuffersViz() {
       </div>
 
       {/* Example selector */}
-      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black-30 border border-white/[0.08] rounded-full">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
@@ -531,8 +531,8 @@ export function StreamsBuffersViz() {
       </div>
 
       {/* Code panel */}
-      <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black/40">
-        <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
+      <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black-40">
+        <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5">
           <span>Code</span>
           {currentStep.backpressure && (
             <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold text-white bg-red-500 animate-pulse">
@@ -577,7 +577,7 @@ export function StreamsBuffersViz() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  <div className="flex justify-between px-2 py-1 text-[10px] font-semibold text-gray-300 bg-white/5">
+                  <div className="flex justify-between px-2 py-1 text-[10px] font-semibold text-gray-300 bg-white-5">
                     {stream.name}
                     <span className="text-[10px] text-gray-500 font-normal">{stream.type}</span>
                   </div>
@@ -615,7 +615,7 @@ export function StreamsBuffersViz() {
             <div className="text-[10px] text-gray-500 mb-1 text-center">
               ({currentStep.buffer.length}/{currentStep.bufferMax}KB)
             </div>
-            <div className="h-4 bg-white/10 rounded overflow-hidden mb-1">
+            <div className="h-4 bg-white-10 rounded overflow-hidden mb-1">
               <div
                 className={`h-full transition-all duration-300 ${
                   currentStep.backpressure 

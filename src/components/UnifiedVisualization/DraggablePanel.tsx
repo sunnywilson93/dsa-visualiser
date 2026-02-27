@@ -109,9 +109,10 @@ export function PanelSettings({ onClose }: PanelSettingsProps) {
     >
       <div className="flex items-center justify-between px-4 py-3 bg-bg-tertiary border-b border-border-primary">
         <span className="text-sm font-semibold text-text-bright">Panel Settings</span>
-        <button 
+        <button
           onClick={onClose}
           className="text-text-muted hover:text-text-bright"
+          aria-label="Close settings"
         >
           ×
         </button>

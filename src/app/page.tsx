@@ -185,7 +185,7 @@ export default function HomePage() {
                   className="h-full min-h-[200px] max-md:min-h-[180px]"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-3xl leading-none">
+                    <span className="text-3xl leading-none text-brand-primary">
                       <ConceptIcon conceptId={category.id} size={32} />
                     </span>
                     <span className="text-sm font-semibold py-0.5 px-3 bg-brand-primary-15 rounded-3xl text-brand-primary">

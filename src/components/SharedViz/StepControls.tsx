@@ -87,9 +87,9 @@ export function StepControls({
 
   const secondaryButtonClass = cn(
     'flex items-center justify-center gap-1 px-3 py-2 text-sm min-h-[44px]',
-    'bg-white/5 border border-white/10 rounded-md text-text-muted',
+    'bg-white-5 border border-white-10 rounded-md text-text-muted',
     'cursor-pointer touch-manipulation transition-colors',
-    'hover:not-disabled:bg-white/10 hover:not-disabled:text-text-bright',
+    'hover:not-disabled:bg-white-10 hover:not-disabled:text-text-bright',
     'disabled:opacity-40 disabled:cursor-not-allowed'
   )
 

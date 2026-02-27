@@ -23,11 +23,11 @@ export function CodePanel({
   return (
     <div
       className={cn(
-        'bg-black/40 border border-white/8 rounded-xl overflow-hidden',
+        'bg-black-40 border border-white/8 rounded-xl overflow-hidden',
         className
       )}
     >
-      <div className="flex justify-between items-center px-3 py-2 text-sm font-medium text-text-muted bg-white/5">
+      <div className="flex justify-between items-center px-3 py-2 text-sm font-medium text-text-muted bg-white-5">
         <span>{title}</span>
         {badge && (
           <span

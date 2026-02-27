@@ -490,7 +490,7 @@ export function BitManipulationViz() {
                   getBitSizeClasses(bitWidth),
                   isOne
                     ? 'border border-emerald-500/50 bg-emerald-500/20 text-emerald-500'
-                    : 'border border-white/[0.08] bg-white/5 text-gray-600',
+                    : 'border border-white/[0.08] bg-white-5 text-gray-600',
                   isActive && 'scale-110 border-emerald-500/70 shadow-[0_0_20px_rgba(16,185,129,0.5)]'
                 )}
                 initial={isResult ? { scale: 0.8, opacity: 0 } : false}
@@ -569,7 +569,7 @@ export function BitManipulationViz() {
       )}
 
       {!hasExamples ? (
-        <div className="rounded-xl border border-white/[0.08] bg-black/30 p-8 text-center">
+        <div className="rounded-xl border border-white/[0.08] bg-black-30 p-8 text-center">
           <p className="text-sm text-gray-500">
             Examples coming soon for {variantConfig[variant].label} - {defaultLevelConfig[level].label}.
           </p>
@@ -590,7 +590,7 @@ export function BitManipulationViz() {
                 {currentStep.decision && (
                   <motion.div
                     key={`decision-${currentStep.id}`}
-                    className="flex flex-col gap-1 rounded-lg border border-white/[0.08] bg-black/40 p-4"
+                    className="flex flex-col gap-1 rounded-lg border border-white/[0.08] bg-black-40 p-4"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
@@ -623,7 +623,7 @@ export function BitManipulationViz() {
               )}
 
               {/* Bit Grid */}
-              <div className="relative overflow-x-auto rounded-xl border border-white/[0.08] bg-black/40 p-4 md:p-6">
+              <div className="relative overflow-x-auto rounded-xl border border-white/[0.08] bg-black-40 p-4 md:p-6">
                 {/* Bit Width Badge */}
                 <div className="absolute -top-0 right-2 -translate-y-1/2 rounded-full border border-white/[0.08] bg-white/[0.08] px-2 py-0.5 font-mono text-xs text-gray-500">
                   {currentStep.bitWidth}-bit
@@ -681,8 +681,8 @@ export function BitManipulationViz() {
 
               {/* Output Box */}
               {currentStep.output && currentStep.output.length > 0 && (
-                <div className="overflow-hidden rounded-lg border border-white/[0.08] bg-black/40">
-                  <div className="bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                <div className="overflow-hidden rounded-lg border border-white/[0.08] bg-black-40">
+                  <div className="bg-white-5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Output
                   </div>
                   <div className="p-2">

@@ -551,7 +551,7 @@ export function CriticalRenderPathViz() {
   return (
     <div className="flex flex-col gap-6">
       {/* Level selector */}
-      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black-30 border border-white/[0.08] rounded-full">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
@@ -573,7 +573,7 @@ export function CriticalRenderPathViz() {
       </div>
 
       {/* Example selector */}
-      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black-30 border border-white/[0.08] rounded-full">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
@@ -590,8 +590,8 @@ export function CriticalRenderPathViz() {
       </div>
 
       {/* Code panel */}
-      <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black/40">
-        <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">Code</div>
+      <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black-40">
+        <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5">Code</div>
         <pre className="m-0 py-2 px-0 max-h-[150px] overflow-y-auto font-mono">
           {currentExample.code.map((line, i) => (
             <div
@@ -622,7 +622,7 @@ export function CriticalRenderPathViz() {
                 key={stage.name}
                 className={`flex-1 min-w-[70px] p-2 rounded-md text-center relative border-2 ${
                   stage.status === 'pending'
-                    ? 'opacity-50 bg-white/5 border-white/10'
+                    ? 'opacity-50 bg-white-5 border-white-10'
                     : stage.status === 'active'
                     ? 'border-blue-500/60 bg-blue-500/10 shadow-[0_0_10px_rgba(59,130,246,0.3)]'
                     : stage.blocking
@@ -657,7 +657,7 @@ export function CriticalRenderPathViz() {
           <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[60px] p-4 pt-6">
             <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-2">
               {currentStep.domTree.length > 0 && (
-                <div className="bg-white/5 rounded-md overflow-hidden border border-white/10">
+                <div className="bg-white-5 rounded-md overflow-hidden border border-white-10">
                   <div className="px-2 py-1 text-[10px] font-semibold text-amber-400 bg-amber-500/10 text-center">DOM Tree</div>
                   <div className="p-1.5 min-h-[50px]">
                     {currentStep.domTree.map((node, i) => (
@@ -668,7 +668,7 @@ export function CriticalRenderPathViz() {
               )}
 
               {currentStep.cssomTree.length > 0 && (
-                <div className="bg-white/5 rounded-md overflow-hidden border border-white/10">
+                <div className="bg-white-5 rounded-md overflow-hidden border border-white-10">
                   <div className="px-2 py-1 text-[10px] font-semibold text-amber-400 bg-amber-500/10 text-center">CSSOM</div>
                   <div className="p-1.5 min-h-[50px]">
                     {currentStep.cssomTree.map((rule, i) => (
@@ -679,7 +679,7 @@ export function CriticalRenderPathViz() {
               )}
 
               {currentStep.renderTree.length > 0 && (
-                <div className="bg-white/5 rounded-md overflow-hidden border border-white/10">
+                <div className="bg-white-5 rounded-md overflow-hidden border border-white-10">
                   <div className="px-2 py-1 text-[10px] font-semibold text-amber-400 bg-amber-500/10 text-center">Render Tree</div>
                   <div className="p-1.5 min-h-[50px]">
                     {currentStep.renderTree.map((node, i) => (

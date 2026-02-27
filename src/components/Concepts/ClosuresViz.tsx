@@ -651,14 +651,14 @@ export function ClosuresViz() {
   return (
     <div className="flex flex-col gap-6">
       {/* Level selector */}
-      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
             className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
               level === lvl
                 ? 'text-white'
-                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+                : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
@@ -673,14 +673,14 @@ export function ClosuresViz() {
       </div>
 
       {/* Example selector */}
-      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 flex-wrap justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
             className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all ${
               exampleIndex === i
                 ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+                : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleExampleChange(i)}
           >
@@ -690,8 +690,8 @@ export function ClosuresViz() {
       </div>
 
       {/* Code panel */}
-      <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
-        <div className="flex justify-between items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white/5">
+      <div className="bg-black-40 border border-white-10 rounded-xl overflow-hidden">
+        <div className="flex justify-between items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white-5">
           <span>Code</span>
           <span className="px-2 py-0.5 rounded-full text-2xs font-semibold text-black" style={{ background: getPhaseColor(currentStep.phase) }}>
             {currentStep.phase} Phase
@@ -738,7 +738,7 @@ export function ClosuresViz() {
                         <span className="text-xs text-gray-400 uppercase tracking-wider">Variables:</span>
                         {ec.variables.length > 0 ? (
                           ec.variables.map(v => (
-                            <div key={v.name} className="flex justify-between items-center px-1 py-0.5 bg-black/20 rounded mt-1">
+                            <div key={v.name} className="flex justify-between items-center px-1 py-0.5 bg-black-20 rounded mt-1">
                               <span className="font-mono text-2xs text-gray-500">{v.name}</span>
                               <span className="font-mono text-2xs text-emerald-500 font-medium">{v.value}</span>
                             </div>
@@ -839,7 +839,7 @@ export function ClosuresViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className="px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-base text-gray-300 text-center"
+          className="px-4 py-2.5 bg-black-30 border border-white-10 rounded-lg text-base text-gray-300 text-center"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}

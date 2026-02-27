@@ -70,7 +70,7 @@ export function ModernJSViz({ mode = 'destructuring' }: ModernJSVizProps) {
       
       <div className="grid grid-cols-2 gap-4">
         {/* Before */}
-        <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+        <div className="rounded-xl border border-white-10 bg-black-30 p-4">
           <div className="text-xs text-gray-500 mb-2 uppercase tracking-wide">Old Way</div>
           <pre className="font-mono text-sm text-gray-400 whitespace-pre-wrap">{current.before}</pre>
         </div>

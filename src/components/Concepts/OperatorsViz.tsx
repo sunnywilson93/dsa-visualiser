@@ -102,7 +102,7 @@ export function OperatorsViz() {
                 className={`p-2.5 bg-[var(--color-black-30)] border-2 rounded-lg cursor-pointer transition-all duration-150
                   ${selectedOp === i 
                     ? 'bg-[var(--color-neon-viz-18)] border-[rgba(130,100,255,0.5)]' 
-                    : 'border-[var(--color-white-8)] hover:bg-[var(--color-white-5)] hover:border-white/15'
+                    : 'border-[var(--color-white-8)] hover:bg-[var(--color-white-5)] hover:border-white-15'
                   }`}
                 onClick={() => setSelectedOp(i)}
                 whileHover={{ scale: 1.02 }}

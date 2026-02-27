@@ -109,13 +109,13 @@ export function ProblemListingLayout({
     
     // Active states
     if (diff === 'easy') {
-      return `${baseClasses} bg-[rgba(34,197,94,0.15)] text-[#22c55e]`
+      return `${baseClasses} bg-[var(--difficulty-easy-bg)] text-[color:var(--difficulty-easy)]`
     }
     if (diff === 'medium') {
-      return `${baseClasses} bg-[rgba(234,179,8,0.15)] text-[#eab308]`
+      return `${baseClasses} bg-[var(--difficulty-medium-bg)] text-[color:var(--difficulty-medium)]`
     }
     if (diff === 'hard') {
-      return `${baseClasses} bg-[rgba(239,68,68,0.15)] text-[#ef4444]`
+      return `${baseClasses} bg-[var(--difficulty-hard-bg)] text-[color:var(--difficulty-hard)]`
     }
     return `${baseClasses} bg-brand-primary-20 text-brand-light`
   }
@@ -219,7 +219,7 @@ export function ProblemListingLayout({
 
       <section>
         <h2 className="flex items-center gap-4 text-xl font-semibold text-text-bright m-0 mb-4 max-md:flex-wrap">
-          <span className="text-xl drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]">
+          <span className="text-xl drop-shadow-glow-white-sm">
             <ConceptIcon conceptId={config.iconId} size={20} />
           </span>
           Problems

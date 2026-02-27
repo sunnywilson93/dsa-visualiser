@@ -74,11 +74,11 @@ export default function DSAConceptsClient() {
               return (
                 <section key={category.id} className="mb-12">
                   <h2 className="flex items-center gap-4 text-xl font-semibold text-text-bright m-0 mb-4 max-md:flex-wrap">
-                    <span className="text-xl drop-shadow-glow-white-sm">
+                    <span className="text-xl text-brand-primary drop-shadow-glow-white-sm">
                       <ConceptIcon conceptId={category.id} size={20} />
                     </span>
                     {category.name}
-                    <span className="text-xs font-medium text-text-muted bg-white/5 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-medium text-text-muted bg-white-5 px-2 py-0.5 rounded-full">
                       {categoryConcepts.length}
                     </span>
                     <span className="text-base font-normal text-text-muted ml-auto max-md:w-full max-md:ml-0 max-md:mt-1">
@@ -114,7 +114,7 @@ export default function DSAConceptsClient() {
                   <Layers size={20} />
                 </span>
                 Algorithm Patterns
-                <span className="text-xs font-medium text-text-muted bg-white/5 px-2 py-0.5 rounded-full">
+                <span className="text-xs font-medium text-text-muted bg-white-5 px-2 py-0.5 rounded-full">
                   {dsaPatterns.length}
                 </span>
                 <span className="text-base font-normal text-text-muted ml-auto max-md:w-full max-md:ml-0 max-md:mt-1">

@@ -529,7 +529,7 @@ export function TwoPointersViz() {
       )}
 
       {!hasExamples ? (
-        <div className="rounded-xl border border-white/[0.08] bg-black/30 p-8 text-center">
+        <div className="rounded-xl border border-white/[0.08] bg-black-30 p-8 text-center">
           <p className="text-sm text-gray-500">
             Examples coming soon for {variantConfig[variant].label} - {defaultLevelConfig[level].label}.
           </p>
@@ -550,7 +550,7 @@ export function TwoPointersViz() {
                 {currentStep.decision && (
                   <motion.div
                     key={`decision-${currentStep.id}`}
-                    className="flex flex-col gap-1 rounded-lg border border-white/[0.08] bg-black/40 p-4"
+                    className="flex flex-col gap-1 rounded-lg border border-white/[0.08] bg-black-40 p-4"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
@@ -574,7 +574,7 @@ export function TwoPointersViz() {
               </AnimatePresence>
 
               {/* Array Container */}
-              <div className="flex flex-nowrap justify-center gap-2 overflow-x-auto rounded-xl border border-white/[0.08] bg-black/40 p-4 md:p-6">
+              <div className="flex flex-nowrap justify-center gap-2 overflow-x-auto rounded-xl border border-white/[0.08] bg-black-40 p-4 md:p-6">
                 {currentStep.array.map((val, idx) => {
                   const isHighlighted = currentStep.highlightedCells?.includes(idx)
                   const isProcessed = currentStep.highlightedCells !== undefined &&
@@ -604,7 +604,7 @@ export function TwoPointersViz() {
                           'flex h-12 w-12 flex-col items-center justify-center rounded-lg border transition-all md:h-12 md:w-12',
                           isHighlighted
                             ? 'border-emerald-500/60 bg-emerald-500/20 shadow-[0_0_16px_rgba(16,185,129,0.3)]'
-                            : 'border-white/[0.08] bg-white/5',
+                            : 'border-white/[0.08] bg-white-5',
                           isProcessed && 'opacity-40'
                         )}
                       >
@@ -618,8 +618,8 @@ export function TwoPointersViz() {
 
               {/* Output Box */}
               {currentStep.output && currentStep.output.length > 0 && (
-                <div className="overflow-hidden rounded-lg border border-white/[0.08] bg-black/40">
-                  <div className="bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                <div className="overflow-hidden rounded-lg border border-white/[0.08] bg-black-40">
+                  <div className="bg-white-5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Output
                   </div>
                   <div className="p-2">

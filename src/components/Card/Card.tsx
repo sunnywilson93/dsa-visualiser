@@ -42,7 +42,7 @@ export function Card({
     >
       <Link
         href={href}
-        className="group relative block h-full p-[2px] rounded-2xl no-underline text-inherit transition-all duration-300 border border-border-card hover:bg-white-5 hover:border-brand-primary-40"
+        className="group relative block h-full p-[2px] rounded-2xl no-underline text-inherit transition-all duration-150 border border-border-card hover:bg-white-5 hover:border-brand-primary-30"
       >
         <div
           className="h-full p-6 flex flex-col gap-3 rounded-xl max-[480px]:min-h-[180px]"

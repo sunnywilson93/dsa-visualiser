@@ -169,7 +169,7 @@ export function ConceptPanel({
                   <span className="text-base font-semibold text-white">{step.title}</span>
                 </div>
 
-                <div className="flex-1 flex items-center justify-center p-2 bg-black/30 border border-dashed border-white/10 rounded-lg min-h-[100px]">
+                <div className="flex-1 flex items-center justify-center p-2 bg-black-30 border border-dashed border-white-10 rounded-lg min-h-[100px]">
                   {renderVisualization()}
                 </div>
 
@@ -179,10 +179,10 @@ export function ConceptPanel({
           </div>
         </div>
 
-        <div className="flex items-center justify-between gap-4 pt-2 border-t border-white/10">
+        <div className="flex items-center justify-between gap-4 pt-2 border-t border-white-10">
           <div className="flex items-center gap-1">
             <button
-              className="flex items-center justify-center w-7 h-7 bg-white/5 border border-white/15 rounded-md text-gray-400 hover:not-disabled:bg-[var(--color-brand-primary-15)] hover:not-disabled:border-[var(--color-brand-primary-40)] hover:not-disabled:text-white hover:not-disabled:shadow-[var(--glow-md)_var(--color-brand-primary-20)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
+              className="flex items-center justify-center w-7 h-7 bg-white-5 border border-white-15 rounded-md text-gray-400 hover:not-disabled:bg-[var(--color-brand-primary-15)] hover:not-disabled:border-[var(--color-brand-primary-40)] hover:not-disabled:text-white hover:not-disabled:shadow-[var(--glow-md)_var(--color-brand-primary-20)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
               onClick={handleReset}
               title="Reset"
             >
@@ -190,7 +190,7 @@ export function ConceptPanel({
             </button>
 
             <button
-              className="flex items-center justify-center w-7 h-7 bg-white/5 border border-white/15 rounded-md text-gray-400 hover:not-disabled:bg-[var(--color-brand-primary-15)] hover:not-disabled:border-[var(--color-brand-primary-40)] hover:not-disabled:text-white hover:not-disabled:shadow-[var(--glow-md)_var(--color-brand-primary-20)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
+              className="flex items-center justify-center w-7 h-7 bg-white-5 border border-white-15 rounded-md text-gray-400 hover:not-disabled:bg-[var(--color-brand-primary-15)] hover:not-disabled:border-[var(--color-brand-primary-40)] hover:not-disabled:text-white hover:not-disabled:shadow-[var(--glow-md)_var(--color-brand-primary-20)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
               onClick={handlePrev}
               disabled={stepIndex === 0}
               title="Previous (←)"
@@ -207,7 +207,7 @@ export function ConceptPanel({
             </button>
 
             <button
-              className="flex items-center justify-center w-7 h-7 bg-white/5 border border-white/15 rounded-md text-gray-400 hover:not-disabled:bg-[var(--color-brand-primary-15)] hover:not-disabled:border-[var(--color-brand-primary-40)] hover:not-disabled:text-white hover:not-disabled:shadow-[var(--glow-md)_var(--color-brand-primary-20)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
+              className="flex items-center justify-center w-7 h-7 bg-white-5 border border-white-15 rounded-md text-gray-400 hover:not-disabled:bg-[var(--color-brand-primary-15)] hover:not-disabled:border-[var(--color-brand-primary-40)] hover:not-disabled:text-white hover:not-disabled:shadow-[var(--glow-md)_var(--color-brand-primary-20)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
               onClick={handleNext}
               disabled={stepIndex >= totalSteps - 1}
               title="Next (→)"
@@ -217,7 +217,7 @@ export function ConceptPanel({
           </div>
 
           <div className="flex items-center gap-2 flex-1">
-            <div className="flex-1 h-1 bg-white/10 rounded-xs overflow-hidden">
+            <div className="flex-1 h-1 bg-white-10 rounded-xs overflow-hidden">
               <div
                 className="h-full bg-[var(--gradient-brand)] rounded-xs shadow-[var(--glow-md)_var(--color-brand-primary-50)] transition-all duration-150"
                 style={{ width: `${((stepIndex + 1) / totalSteps) * 100}%` }}
@@ -230,7 +230,7 @@ export function ConceptPanel({
 
           <div className="flex items-center gap-1">
             <span className="text-2xs font-semibold uppercase text-gray-600 hidden sm:inline">Speed:</span>
-            <div className="flex gap-0.5 bg-white/5 border border-white/10 rounded-full p-[3px]">
+            <div className="flex gap-0.5 bg-white-5 border border-white-10 rounded-full p-[3px]">
               {[
                 { label: '0.5x', value: 2500 },
                 { label: '1x', value: 1500 },

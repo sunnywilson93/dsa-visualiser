@@ -6,8 +6,11 @@
 .title {
   font-size: var(--text-4xl);
   font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
   letter-spacing: var(--letter-spacing-tight);
+  background: linear-gradient(to bottom right, var(--color-brand-primary), var(--color-brand-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
@@ -38,7 +41,8 @@
 }
 
 .topicCard:hover {
-  border-color: var(--color-brand-primary);
+  background-color: var(--color-white-5);
+  border-color: var(--color-brand-primary-30);
   transform: translateY(-2px);
 }
 

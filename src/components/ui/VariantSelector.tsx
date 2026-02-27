@@ -27,7 +27,7 @@ export function VariantSelector<T extends string>({
   return (
     <div
       className={cn(
-        'flex gap-2 flex-wrap justify-center bg-black/30 border border-white/8 rounded-full p-[var(--spacing-pill)]',
+        'flex gap-2 flex-wrap justify-center bg-black-30 border border-white/8 rounded-full p-[var(--spacing-pill)]',
         className
       )}
     >
@@ -45,7 +45,7 @@ export function VariantSelector<T extends string>({
               'min-h-[44px] px-4 py-2 font-mono text-sm font-medium rounded-full transition-all border-2 touch-manipulation',
               isActive
                 ? 'text-white'
-                : 'border-transparent bg-white/5 text-text-muted hover:bg-white/8 hover:text-text-secondary'
+                : 'border-transparent bg-white-5 text-text-muted hover:bg-white-8 hover:text-text-secondary'
             )}
             style={
               isActive

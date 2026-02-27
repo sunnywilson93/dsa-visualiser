@@ -67,7 +67,7 @@ export function HashMapConcept({ step }: HashMapConceptProps) {
                     <motion.div
                       className={`
                         flex items-center justify-center min-w-9 h-9 px-2 bg-[var(--color-bg-elevated)] border-2 rounded-md
-                        ${isCurrent ? 'border-blue-400 bg-blue-400/20 shadow-[var(--glow-md)_var(--color-accent-blue-30)]' : 'border-white/15'}
+                        ${isCurrent ? 'border-blue-400 bg-blue-400/20 shadow-[var(--glow-md)_var(--color-accent-blue-30)]' : 'border-white-15'}
                         ${isCheckPhase ? 'opacity-40' : ''}
                       `}
                     >
@@ -107,7 +107,7 @@ export function HashMapConcept({ step }: HashMapConceptProps) {
                     <motion.div
                       className={`
                         flex items-center justify-center min-w-9 h-9 px-2 bg-[var(--color-bg-elevated)] border-2 rounded-md
-                        ${isCurrent ? 'border-[var(--color-brand-primary)] bg-[var(--color-brand-primary-15)] shadow-[var(--glow-md)_var(--color-brand-primary-30)]' : 'border-white/15'}
+                        ${isCurrent ? 'border-[var(--color-brand-primary)] bg-[var(--color-brand-primary-15)] shadow-[var(--glow-md)_var(--color-brand-primary-30)]' : 'border-white-15'}
                         ${!isCheckPhase ? 'opacity-40' : ''}
                         ${isHighlighted ? 'bg-emerald-500/20 border-emerald-400 shadow-[var(--glow-md)_var(--color-emerald-30)]' : ''}
                       `}
@@ -152,7 +152,7 @@ export function HashMapConcept({ step }: HashMapConceptProps) {
                   <motion.div
                     className={`
                       flex items-center justify-center min-w-9 h-9 px-2 bg-[var(--color-bg-elevated)] border-2 rounded-md transition-all duration-150
-                      ${isHighlighted ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_16px_rgba(16,185,129,0.6)]' : 'border-white/15'}
+                      ${isHighlighted ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_16px_rgba(16,185,129,0.6)]' : 'border-white-15'}
                       ${isCurrent ? 'border-blue-400 bg-blue-400/20 shadow-[var(--glow-md)_var(--color-accent-blue-30)]' : ''}
                     `}
                     animate={{
@@ -179,7 +179,7 @@ export function HashMapConcept({ step }: HashMapConceptProps) {
         <span className="text-2xs font-semibold uppercase tracking-wide text-gray-500">HashMap</span>
         <div className="flex justify-center w-full min-h-[50px]">
           {hashMap.entries.length === 0 ? (
-            <div className="flex items-center justify-center px-4 py-2 bg-black/20 border border-dashed border-white/15 rounded-lg">
+            <div className="flex items-center justify-center px-4 py-2 bg-black-20 border border-dashed border-white-15 rounded-lg">
               <span className="text-xs text-gray-500 italic">Empty</span>
             </div>
           ) : (
@@ -190,7 +190,7 @@ export function HashMapConcept({ step }: HashMapConceptProps) {
                     key={`${entry.key}-${entry.value}`}
                     className={`
                       flex items-center gap-1 px-4 py-[5px] bg-[var(--color-bg-elevated)] border rounded-md transition-all duration-150
-                      ${entry.isNew ? 'bg-[var(--color-brand-primary-20)] border-[var(--color-brand-primary-50)] shadow-[var(--glow-md)_var(--color-brand-primary-30)]' : 'border-white/10'}
+                      ${entry.isNew ? 'bg-[var(--color-brand-primary-20)] border-[var(--color-brand-primary-50)] shadow-[var(--glow-md)_var(--color-brand-primary-30)]' : 'border-white-10'}
                       ${entry.isLookup ? 'bg-amber-500/20 border-amber-400/40 shadow-[var(--glow-md)_var(--color-amber-30)]' : ''}
                       ${entry.isDecrement ? 'bg-orange-500/30 border-orange-400/40 shadow-[var(--glow-md)_var(--color-accent-orange-30)]' : ''}
                     `}
@@ -221,7 +221,7 @@ export function HashMapConcept({ step }: HashMapConceptProps) {
       {/* Lookup status */}
       {hashMap.lookupKey !== undefined && (
         <motion.div
-          className="flex items-center gap-2 px-4 py-1 bg-black/20 border border-white/10 rounded-lg"
+          className="flex items-center gap-2 px-4 py-1 bg-black-20 border border-white-10 rounded-lg"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
         >

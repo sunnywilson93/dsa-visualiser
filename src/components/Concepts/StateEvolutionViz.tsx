@@ -388,7 +388,7 @@ export function StateEvolutionViz() {
             style={{ '--era-color': e.color } as React.CSSProperties}
           >
             <span className={`text-xs font-medium transition-colors ${i === activeEra ? 'text-white' : 'text-[var(--color-gray-700)] hover:text-[var(--color-gray-300)]'}`}>{e.years.split('-')[0]}</span>
-            <span className={`w-[var(--spacing-md)] h-[var(--spacing-md)] rounded-full bg-[var(--color-bg-elevated)] border-2 border-white/20 transition-all ${i === activeEra ? 'scale-130 shadow-[0_0_12px_var(--era-color)]' : ''} ${i < activeEra ? 'bg-[var(--era-color)] border-[var(--era-color)]' : ''} ${i === activeEra ? 'bg-[var(--era-color)] border-[var(--era-color)]' : ''} hover:border-[var(--era-color)] hover:shadow-[0_0_8px_var(--era-color)]`} />
+            <span className={`w-[var(--spacing-md)] h-[var(--spacing-md)] rounded-full bg-[var(--color-bg-elevated)] border-2 border-white-20 transition-all ${i === activeEra ? 'scale-130 shadow-[0_0_12px_var(--era-color)]' : ''} ${i < activeEra ? 'bg-[var(--era-color)] border-[var(--era-color)]' : ''} ${i === activeEra ? 'bg-[var(--era-color)] border-[var(--era-color)]' : ''} hover:border-[var(--era-color)] hover:shadow-[0_0_8px_var(--era-color)]`} />
             <span className={`text-xs whitespace-nowrap transition-colors max-w-[60px] overflow-hidden text-ellipsis max-md:max-w-[50px] max-md:text-2xs max-sm:hidden ${i === activeEra ? 'text-white font-semibold' : 'text-[var(--color-gray-700)] hover:text-[var(--color-gray-300)]'}`}>{e.name}</span>
           </button>
         ))}

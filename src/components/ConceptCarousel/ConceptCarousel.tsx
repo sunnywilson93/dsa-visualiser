@@ -83,7 +83,7 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
     <div className="relative group">
       {/* Navigation arrows */}
       <button
-        className="absolute top-1/2 -translate-y-[60%] z-10 w-10 h-10 rounded-full border-none bg-[rgba(15,15,26,0.9)] text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-200 backdrop-blur-[8px] opacity-0 group-hover:opacity-100 left-2 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-9 max-md:h-9 max-sm:hidden"
+        className="absolute top-1/2 -translate-y-[60%] z-10 w-10 h-10 rounded-full border-none bg-[rgba(15,15,26,0.9)] text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-150 backdrop-blur-[8px] opacity-0 group-hover:opacity-100 left-2 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-9 max-md:h-9 max-sm:hidden"
         onClick={() => scroll('left')}
         disabled={!canScrollLeft}
         aria-label="Previous concept"
@@ -92,7 +92,7 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
       </button>
 
       <button
-        className="absolute top-1/2 -translate-y-[60%] z-10 w-10 h-10 rounded-full border-none bg-[rgba(15,15,26,0.9)] text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-200 backdrop-blur-[8px] opacity-0 group-hover:opacity-100 right-2 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-9 max-md:h-9 max-sm:hidden"
+        className="absolute top-1/2 -translate-y-[60%] z-10 w-10 h-10 rounded-full border-none bg-[rgba(15,15,26,0.9)] text-brand-primary cursor-pointer flex items-center justify-center transition-all duration-150 backdrop-blur-[8px] opacity-0 group-hover:opacity-100 right-2 hover:not(:disabled):bg-brand-primary-50 hover:not(:disabled):text-text-bright hover:not(:disabled):scale-110 disabled:opacity-0 disabled:cursor-not-allowed max-md:w-9 max-md:h-9 max-sm:hidden"
         onClick={() => scroll('right')}
         disabled={!canScrollRight}
         aria-label="Next concept"
@@ -116,7 +116,7 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
           >
             <Link
               href={`${basePath}/${concept.id}`}
-              className="relative block h-full rounded-2xl p-0.5 border border-border-card hover:bg-white-5 hover:border-brand-primary-40 transition-all duration-300"
+              className="relative block h-full rounded-2xl p-0.5 border border-border-card hover:bg-white-5 hover:border-brand-primary-30 transition-all duration-150"
             >
               <div className="bg-bg-page-secondary rounded-[14px] p-6 flex flex-col gap-3 h-full min-h-[200px] max-sm:p-5 max-sm:min-h-[180px]">
                 <div className="flex items-center justify-between">
@@ -142,14 +142,16 @@ export function ConceptCarousel({ concepts, basePath = '/concepts' }: ConceptCar
       </div>
 
       {/* Progress dots */}
-      <div className="flex justify-center gap-2 mt-4 max-sm:mt-3">
+      <div className="flex justify-center gap-0.5 mt-4 max-sm:mt-3">
         {concepts.map((_, index) => (
           <button
             key={index}
-            className={`w-2 h-2 rounded-full border-none cursor-pointer transition-all duration-200 p-0 hover:bg-brand-primary-50 ${index === activeIndex ? 'bg-brand-primary w-6 rounded-sm' : 'bg-brand-primary-30'}`}
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center border-none cursor-pointer bg-transparent p-0 touch-manipulation"
             onClick={() => scrollToIndex(index)}
             aria-label={`Go to concept ${index + 1}`}
-          />
+          >
+            <span className={`block h-2 rounded-full transition-all duration-150 ${index === activeIndex ? 'bg-brand-primary w-6 rounded-sm' : 'bg-brand-primary-30 w-2 hover:bg-brand-primary-50'}`} />
+          </button>
         ))}
       </div>
     </div>

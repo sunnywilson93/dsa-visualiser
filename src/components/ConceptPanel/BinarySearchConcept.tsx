@@ -113,10 +113,10 @@ export function BinarySearchConcept({ step }: BinarySearchConceptProps) {
                       : isMid
                         ? 'bg-[var(--color-accent-green)]/20 border-2 border-[var(--color-accent-green)]/70'
                         : eliminated
-                          ? 'bg-white/3 border-2 border-white/8'
+                          ? 'bg-white-3 border-2 border-white-8'
                           : inSpace
                             ? 'bg-[var(--color-brand-primary-15)] border-2 border-[var(--color-brand-primary-50)]'
-                            : 'bg-[var(--color-bg-elevated)] border-2 border-white/15'
+                            : 'bg-[var(--color-bg-elevated)] border-2 border-white-15'
                     }
                   `}
                   animate={{

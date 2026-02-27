@@ -571,12 +571,12 @@ export function PrototypeInheritanceViz() {
   return (
     <div className="flex flex-col gap-5">
       {/* Level selector */}
-      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5 flex-wrap">
+      <div className="flex gap-2 justify-center bg-black-30 border border-white-10 rounded-full p-1.5 flex-wrap">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
             className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
-              level === lvl ? 'text-white' : 'bg-white/5 border border-transparent text-gray-500 hover:bg-white/10 hover:text-gray-300'
+              level === lvl ? 'text-white' : 'bg-white-5 border border-transparent text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
@@ -591,14 +591,14 @@ export function PrototypeInheritanceViz() {
       </div>
 
       {/* Example selector */}
-      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 flex-wrap justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
             className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all ${
               exampleIndex === i
                 ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+                : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleExampleChange(i)}
           >
@@ -614,7 +614,7 @@ export function PrototypeInheritanceViz() {
           <div className="mb-3 text-center text-sm font-semibold text-purple-400">
             Code
           </div>
-          <div className="bg-black/40 rounded-lg p-3 font-mono text-sm overflow-x-auto">
+          <div className="bg-black-40 rounded-lg p-3 font-mono text-sm overflow-x-auto">
             {currentStep.code.map((line, i) => (
               <div
                 key={i}
@@ -646,7 +646,7 @@ export function PrototypeInheritanceViz() {
                 {currentStep.chain.map((obj, index) => (
                   <div key={obj.id} className="w-full max-w-[220px]">
                     <motion.div
-                      className="w-full bg-black/30 border-2 rounded-lg overflow-hidden"
+                      className="w-full bg-black-30 border-2 rounded-lg overflow-hidden"
                       style={{ borderColor: obj.color }}
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -666,7 +666,7 @@ export function PrototypeInheritanceViz() {
                             {obj.props.length > 0 && (
                               <div className="flex flex-col gap-0.5 mb-1">
                                 {obj.props.map(p => (
-                                  <div key={p.name} className="flex justify-between px-1 py-0.5 bg-black/30 rounded font-mono text-2xs">
+                                  <div key={p.name} className="flex justify-between px-1 py-0.5 bg-black-30 rounded font-mono text-2xs">
                                     <span className="text-gray-500">{p.name}:</span>
                                     <span className="text-emerald-500">{p.value}</span>
                                   </div>
@@ -674,7 +674,7 @@ export function PrototypeInheritanceViz() {
                               </div>
                             )}
                             {obj.protoRef && (
-                              <div className="font-mono text-2xs text-purple-400 pt-1 border-t border-white/5">
+                              <div className="font-mono text-2xs text-purple-400 pt-1 border-t border-white-5">
                                 __proto__: → {obj.protoRef}
                               </div>
                             )}
@@ -770,7 +770,7 @@ export function PrototypeInheritanceViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className="px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-base text-center text-gray-300"
+          className="px-4 py-2.5 bg-black-30 border border-white-10 rounded-lg text-base text-center text-gray-300"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
@@ -781,7 +781,7 @@ export function PrototypeInheritanceViz() {
 
       {/* Output */}
       {currentStep.output.length > 0 && (
-        <div className="px-4 py-2 bg-black/40 border border-white/10 rounded-lg">
+        <div className="px-4 py-2 bg-black-40 border border-white-10 rounded-lg">
           <div className="text-xs text-gray-500 mb-1">Output:</div>
           <div className="font-mono text-sm text-emerald-400">
             {currentStep.output.map((line, i) => (

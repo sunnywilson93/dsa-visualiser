@@ -595,14 +595,14 @@ export function CompositionViz() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full">
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-[var(--color-black-30)] border border-white-8 rounded-full">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
             className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full cursor-pointer transition-all duration-200 ${
               level === lvl 
                 ? 'text-[var(--color-text-bright)] shadow-[0_0_20px_var(--color-neon-viz-25)]' 
-                : 'bg-white/4 border border-white/8 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+                : 'bg-white-4 border border-white-8 text-gray-500 hover:bg-white-8 hover:text-gray-300'
             }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
@@ -619,14 +619,14 @@ export function CompositionViz() {
         ))}
       </div>
 
-      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full">
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-[var(--color-black-30)] border border-white-8 rounded-full">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
             className={`px-4 py-1.5 font-mono text-sm rounded-full cursor-pointer transition-all duration-200 ${
               exampleIndex === i 
                 ? 'text-[var(--color-text-bright)] shadow-[0_0_20px_var(--color-neon-viz-25)]' 
-                : 'bg-white/4 border border-white/8 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+                : 'bg-white-4 border border-white-8 text-gray-500 hover:bg-white-8 hover:text-gray-300'
             }`}
             onClick={() => handleExampleChange(i)}
             style={{
@@ -639,8 +639,8 @@ export function CompositionViz() {
         ))}
       </div>
 
-      <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
-        <div className="flex justify-between items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white/5">
+      <div className="bg-[var(--color-black-40)] border border-white-8 rounded-xl overflow-hidden">
+        <div className="flex justify-between items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white-5">
           <span>Code</span>
           <span 
             className="px-2 py-0.5 rounded-full text-2xs font-semibold text-black"
@@ -667,7 +667,7 @@ export function CompositionViz() {
         </pre>
       </div>
 
-      <div className="bg-[var(--color-black-30)] border border-white/8 rounded-xl p-4 relative">
+      <div className="bg-[var(--color-black-30)] border border-white-8 rounded-xl p-4 relative">
         <div className="text-sm font-medium text-gray-400 mb-4 text-center">Function Pipeline</div>
         <div className="flex flex-wrap gap-3 justify-center items-center relative min-h-[100px] p-4">
           <AnimatePresence mode="popLayout">
@@ -721,8 +721,8 @@ export function CompositionViz() {
         </div>
       </div>
 
-      <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
-        <div className="px-4 py-2 text-sm font-medium text-gray-500 bg-white/5">Output</div>
+      <div className="bg-[var(--color-black-40)] border border-white-8 rounded-xl overflow-hidden">
+        <div className="px-4 py-2 text-sm font-medium text-gray-500 bg-white-5">Output</div>
         <div className="p-4 min-h-[50px]">
           {currentStep.output.length === 0 ? (
             <span className="text-gray-700">—</span>

@@ -227,6 +227,9 @@
   --color-brand-secondary-30: rgba(20, 184, 166, 0.3);
   --color-brand-secondary-50: rgba(20, 184, 166, 0.5);
 
+  /* === Focus === */
+  --color-focus-ring: var(--color-brand-primary);
+
   /* === Neon viz (Indigo-based for consistency) === */
   --color-neon-viz: #6366f1;
   --color-neon-viz-18: rgba(99, 102, 241, 0.18);
@@ -399,10 +402,10 @@
   --glow-brand-text: 0 0 20px var(--color-brand-primary-30);
 
   /* === Card / Surface Styles === */
-  --surface-card: rgba(255, 255, 255, 0.05);
-  --surface-card-hover: var(--color-brand-primary-10);
-  --border-card: transparent;
-  --border-card-hover: var(--color-brand-primary-30);
+  --color-surface-card: rgba(255, 255, 255, 0.05);
+  --color-surface-card-hover: var(--color-brand-primary-10);
+  --color-border-card: transparent;
+  --color-border-card-hover: var(--color-brand-primary-30);
 
   /* === Card Theme Tokens === */
   --card-gradient-bg: linear-gradient(135deg, var(--color-brand-primary-15), var(--color-brand-secondary-15));
@@ -655,7 +658,7 @@ button:disabled {
 
 /* Focus styles */
 :focus-visible {
-  outline: 2px solid var(--color-accent-blue);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 

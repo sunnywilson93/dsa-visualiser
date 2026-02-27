@@ -25,7 +25,7 @@ export function ExampleTabs({
   return (
     <div
       className={cn(
-        'flex gap-2 flex-wrap justify-center bg-black/30 border border-white/8 rounded-full p-[var(--spacing-pill)]',
+        'flex gap-2 flex-wrap justify-center bg-black-30 border border-white/8 rounded-full p-[var(--spacing-pill)]',
         className
       )}
     >
@@ -42,7 +42,7 @@ export function ExampleTabs({
               variant === 'mono' && 'font-mono',
               isActive
                 ? 'bg-[var(--color-neon-viz-18)] border-[var(--color-neon-viz-70)] text-white shadow-[0_0_20px_var(--color-neon-viz-25)]'
-                : 'border-white/8 bg-white/5 text-text-muted hover:bg-white/8 hover:text-text-secondary'
+                : 'border-white/8 bg-white-5 text-text-muted hover:bg-white-8 hover:text-text-secondary'
             )}
           >
             {tab.title}

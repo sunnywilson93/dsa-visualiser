@@ -292,7 +292,7 @@ export function BuildToolsEvolutionViz() {
               {e.years.split('-')[0]}
             </span>
             <span 
-              className={`w-4 h-4 rounded-full bg-[var(--color-bg-elevated)] border-2 border-white/20 transition-all duration-200 ${
+              className={`w-4 h-4 rounded-full bg-[var(--color-bg-elevated)] border-2 border-white-20 transition-all duration-200 ${
                 i === activeEra 
                   ? 'scale-[1.3] shadow-[0_0_12px_var(--era-color)]' 
                   : i < activeEra 
@@ -311,7 +311,7 @@ export function BuildToolsEvolutionViz() {
             </span>
           </button>
         ))}
-        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/10 -translate-y-1/2 -z-0" />
+        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white-10 -translate-y-1/2 -z-0" />
         <motion.div
           className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-primary)] -translate-y-1/2 z-[1]"
           initial={false}
@@ -323,7 +323,7 @@ export function BuildToolsEvolutionViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={era.id}
-          className="p-6 bg-gradient-to-br from-[var(--color-brand-primary-8)] to-[var(--color-brand-primary-8)] border border-white/10 rounded-xl text-center"
+          className="p-6 bg-gradient-to-br from-[var(--color-brand-primary-8)] to-[var(--color-brand-primary-8)] border border-white-10 rounded-xl text-center"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
@@ -338,7 +338,7 @@ export function BuildToolsEvolutionViz() {
             </span>
             <h3 className="m-0 text-lg font-semibold text-[var(--color-text-bright)]">{era.name}</h3>
             <span 
-              className="text-xs font-medium px-2 py-0.5 rounded-full bg-white/5"
+              className="text-xs font-medium px-2 py-0.5 rounded-full bg-white-5"
               style={{ color: era.color }}
             >
               {era.years}
@@ -349,7 +349,7 @@ export function BuildToolsEvolutionViz() {
             {era.technologies.map(tech => (
               <span 
                 key={tech} 
-                className="px-2 py-0.5 bg-white/8 border border-white/10 rounded text-2xs font-mono text-[var(--color-brand-light)]"
+                className="px-2 py-0.5 bg-white-8 border border-white-10 rounded text-2xs font-mono text-[var(--color-brand-light)]"
               >
                 {tech}
               </span>
@@ -366,7 +366,7 @@ export function BuildToolsEvolutionViz() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
+          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5">
             <span>Example Code</span>
           </div>
           <pre className="m-0 p-4 max-h-[200px] overflow-y-auto font-mono text-2xs leading-normal text-gray-300 whitespace-pre-wrap">

@@ -84,7 +84,7 @@ export default function JSConceptsClient() {
                         <ConceptIcon conceptId={category.id} size={20} />
                       </span>
                       {category.name}
-                      <span className="text-xs font-medium text-text-muted bg-white/5 px-2 py-0.5 rounded-full">
+                      <span className="text-xs font-medium text-text-muted bg-white-5 px-2 py-0.5 rounded-full">
                         {categoryConcepts.length}
                       </span>
                       <span className="text-base font-normal text-text-muted ml-auto max-md:w-full max-md:ml-0 max-md:mt-1">
@@ -103,7 +103,7 @@ export default function JSConceptsClient() {
                           <h3 className="flex items-center gap-3 text-base font-semibold text-text-bright m-0 mb-3">
                             <ConceptIcon conceptId={subcategoryConcepts[0]?.id || subcategoryId} size={18} />
                             {subcategory.name}
-                            <span className="text-xs font-medium text-text-muted bg-white/5 px-2 py-0.5 rounded-full">
+                            <span className="text-xs font-medium text-text-muted bg-white-5 px-2 py-0.5 rounded-full">
                               {subcategoryConcepts.length}
                             </span>
                             <span className="text-sm font-normal text-text-muted ml-auto">
@@ -143,7 +143,7 @@ export default function JSConceptsClient() {
                       <ConceptIcon conceptId={category.id} size={20} />
                     </span>
                     {category.name}
-                    <span className="text-xs font-medium text-text-muted bg-white/5 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-medium text-text-muted bg-white-5 px-2 py-0.5 rounded-full">
                       {categoryConcepts.length}
                     </span>
                     <span className="text-base font-normal text-text-muted ml-auto max-md:w-full max-md:ml-0 max-md:mt-1">

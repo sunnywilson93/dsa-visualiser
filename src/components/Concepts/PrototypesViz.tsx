@@ -621,12 +621,12 @@ export function PrototypesViz() {
   return (
     <div className="flex flex-col gap-5">
       {/* Level selector */}
-      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
             className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
-              level === lvl ? 'text-white' : 'bg-white/5 border border-transparent text-gray-500 hover:bg-white/10 hover:text-gray-300'
+              level === lvl ? 'text-white' : 'bg-white-5 border border-transparent text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
@@ -641,14 +641,14 @@ export function PrototypesViz() {
       </div>
 
       {/* Example selector */}
-      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 flex-wrap justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
             className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all ${
               exampleIndex === i
                 ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+                : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleExampleChange(i)}
           >
@@ -666,7 +666,7 @@ export function PrototypesViz() {
             className={`px-3 py-1 font-mono text-sm rounded-full transition-all ${
               selectedLookup === i
                 ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+                : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleLookupSelect(i)}
           >
@@ -675,7 +675,7 @@ export function PrototypesViz() {
         ))}
         {selectedLookup !== null && (
           <button
-            className="px-2.5 py-1 text-xs bg-white/5 border border-white/10 rounded-full text-gray-500 hover:bg-white/10 hover:text-gray-400 transition-colors"
+            className="px-2.5 py-1 text-xs bg-white-5 border border-white-10 rounded-full text-gray-500 hover:bg-white-10 hover:text-gray-400 transition-colors"
             onClick={handleReset}
           >
             ↻ Reset
@@ -693,8 +693,8 @@ export function PrototypesViz() {
             {currentExample.heap.map((obj, index) => (
               <div key={obj.id} className="w-full max-w-[280px]">
                 <motion.div
-                  className={`w-full bg-black/30 border-2 rounded-lg overflow-hidden transition-all relative ${
-                    currentStep?.checkedObjects.includes(obj.id) ? 'bg-white/5' : 'border-white/10'
+                  className={`w-full bg-black-30 border-2 rounded-lg overflow-hidden transition-all relative ${
+                    currentStep?.checkedObjects.includes(obj.id) ? 'bg-white-5' : 'border-white-10'
                   } ${currentStep?.foundAt === obj.id ? 'shadow-[0_0_15px_rgba(16,185,129,0.3)]' : ''}`}
                   style={{ borderColor: currentStep?.checkedObjects.includes(obj.id) ? obj.color : 'var(--color-white-10)' }}
                   animate={{ scale: currentStep?.foundAt === obj.id ? 1.02 : 1 }}
@@ -711,7 +711,7 @@ export function PrototypesViz() {
                           {obj.props.map(p => (
                             <div
                               key={p.name}
-                              className={`flex justify-between px-1 py-0.5 bg-black/30 rounded font-mono text-2xs ${
+                              className={`flex justify-between px-1 py-0.5 bg-black-30 rounded font-mono text-2xs ${
                                 currentLookup?.prop === p.name && currentStep?.foundAt === obj.id ? 'bg-emerald-500/20 outline outline-1 outline-emerald-500' : ''
                               }`}
                             >
@@ -721,7 +721,7 @@ export function PrototypesViz() {
                           ))}
                         </div>
                         {obj.protoRef && (
-                          <div className="font-mono text-xs text-purple-400 pt-1 border-t border-white/5">
+                          <div className="font-mono text-xs text-purple-400 pt-1 border-t border-white-5">
                             __proto__: → {obj.protoRef}
                           </div>
                         )}
@@ -765,7 +765,7 @@ export function PrototypesViz() {
             className={`px-4 py-2.5 border rounded-lg text-base text-center ${
               currentStep.foundAt === 'NOT_FOUND'
                 ? 'bg-red-500/10 border-red-400/20 text-red-400'
-                : 'bg-black/30 border-white/10 text-gray-300'
+                : 'bg-black-30 border-white-10 text-gray-300'
             }`}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}

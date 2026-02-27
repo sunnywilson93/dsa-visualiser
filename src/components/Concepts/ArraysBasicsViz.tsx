@@ -1046,14 +1046,14 @@ export function ArraysBasicsViz() {
   if (!currentStep) {
     return (
       <div className="flex flex-col gap-6">
-        <div className="flex gap-2 justify-center flex-wrap p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full">
+        <div className="flex gap-2 justify-center flex-wrap p-1.5 bg-[var(--color-black-30)] border border-white-8 rounded-full">
           {(Object.keys(levelInfo) as Level[]).map(lvl => (
             <button
               key={lvl}
               className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full cursor-pointer transition-all duration-200 ${
                 level === lvl 
                   ? 'text-white' 
-                  : 'bg-white/4 border border-transparent text-gray-500 hover:bg-white/8 hover:text-gray-300'
+                  : 'bg-white-4 border border-transparent text-gray-500 hover:bg-white-8 hover:text-gray-300'
               }`}
               onClick={() => handleLevelChange(lvl)}
               disabled={examples[lvl].length === 0}
@@ -1074,14 +1074,14 @@ export function ArraysBasicsViz() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex gap-2 justify-center flex-wrap p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full max-md:rounded-lg">
+      <div className="flex gap-2 justify-center flex-wrap p-1.5 bg-[var(--color-black-30)] border border-white-8 rounded-full max-md:rounded-lg">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
             className={`flex items-center gap-1.5 px-4 py-1.5 font-mono text-sm font-medium rounded-full cursor-pointer transition-all duration-200 min-h-11 max-md:px-2.5 max-md:py-1 max-md:text-xs ${
               level === lvl 
                 ? 'text-white' 
-                : 'bg-white/4 border border-transparent text-gray-500 hover:bg-white/8 hover:text-gray-300'
+                : 'bg-white-4 border border-transparent text-gray-500 hover:bg-white-8 hover:text-gray-300'
             }`}
             onClick={() => handleLevelChange(lvl)}
             disabled={examples[lvl].length === 0}
@@ -1096,14 +1096,14 @@ export function ArraysBasicsViz() {
         ))}
       </div>
 
-      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-[var(--color-black-30)] border border-white/8 rounded-full max-md:rounded-lg">
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-[var(--color-black-30)] border border-white-8 rounded-full max-md:rounded-lg">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
             className={`px-4 py-1.5 font-mono text-sm rounded-full cursor-pointer transition-all duration-200 min-h-11 max-md:px-2.5 max-md:py-1 max-md:text-xs ${
               exampleIndex === i 
                 ? 'text-white shadow-[0_0_12px_rgba(249,115,22,0.25)]' 
-                : 'bg-white/4 border border-white/8 text-gray-500 hover:bg-white/8 hover:text-gray-300'
+                : 'bg-white-4 border border-white-8 text-gray-500 hover:bg-white-8 hover:text-gray-300'
             }`}
             onClick={() => handleExampleChange(i)}
             style={{
@@ -1124,8 +1124,8 @@ export function ArraysBasicsViz() {
         />
 
         <div className="flex flex-col gap-4">
-          <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
-            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">Stack</div>
+          <div className="bg-[var(--color-black-40)] border border-white-8 rounded-xl overflow-hidden">
+            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5 uppercase tracking-wider">Stack</div>
             <div className="p-4 flex flex-col gap-2 min-h-[100px]">
               <AnimatePresence mode="popLayout">
                 {currentStep.stack.length === 0 ? (
@@ -1139,7 +1139,7 @@ export function ArraysBasicsViz() {
                           ? 'border-orange-500/40 bg-orange-500/8' 
                           : item.highlight === 'new'
                             ? 'border-emerald-500/70 bg-emerald-500/12'
-                            : 'border-white/8'
+                            : 'border-white-8'
                       }`}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -1157,8 +1157,8 @@ export function ArraysBasicsViz() {
             </div>
           </div>
 
-          <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
-            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">Heap</div>
+          <div className="bg-[var(--color-black-40)] border border-white-8 rounded-xl overflow-hidden">
+            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5 uppercase tracking-wider">Heap</div>
             <div className="p-4 flex flex-col gap-2 min-h-[100px]">
               <AnimatePresence>
                 {sharedRefVars && (
@@ -1232,7 +1232,7 @@ export function ArraysBasicsViz() {
                             ? 'border-red-500/50 bg-red-500/8 opacity-60' 
                             : isPast 
                               ? 'border-emerald-500/50 bg-emerald-500/8' 
-                              : 'border-white/8'
+                              : 'border-white-8'
                       }`}
                       animate={isCurrent ? { scale: [1, 1.1, 1] } : { scale: 1 }}
                       transition={{ duration: 0.3 }}
@@ -1296,8 +1296,8 @@ export function ArraysBasicsViz() {
         </div>
       )}
 
-      <div className="bg-[var(--color-black-40)] border border-white/8 rounded-xl overflow-hidden">
-        <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">Console Output</div>
+      <div className="bg-[var(--color-black-40)] border border-white-8 rounded-xl overflow-hidden">
+        <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5 uppercase tracking-wider">Console Output</div>
         <div className="p-4 min-h-[60px]">
           <AnimatePresence>
             {currentStep.output.length === 0 ? (

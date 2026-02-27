@@ -918,12 +918,12 @@ export function ClassSyntaxViz() {
       </div>
 
       {/* Level selector */}
-      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
             className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full transition-all cursor-pointer ${
-              level === lvl ? 'text-white' : 'bg-white/5 border border-transparent text-gray-500 hover:bg-white/10 hover:text-gray-300'
+              level === lvl ? 'text-white' : 'bg-white-5 border border-transparent text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
@@ -938,14 +938,14 @@ export function ClassSyntaxViz() {
       </div>
 
       {/* Example selector */}
-      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 flex-wrap justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
             className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all cursor-pointer ${
               exampleIndex === i
                 ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+                : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleExampleChange(i)}
           >
@@ -1026,7 +1026,7 @@ export function ClassSyntaxViz() {
               {currentStep.chain.map((obj, index) => (
                 <div key={obj.id} className="w-full max-w-[320px]">
                   <motion.div
-                    className="w-full bg-black/30 border-2 rounded-lg overflow-hidden transition-all"
+                    className="w-full bg-black-30 border-2 rounded-lg overflow-hidden transition-all"
                     style={{ borderColor: obj.color }}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -1044,7 +1044,7 @@ export function ClassSyntaxViz() {
                             {obj.props.map(p => (
                               <div
                                 key={p.name}
-                                className="flex justify-between px-1 py-0.5 bg-black/30 rounded font-mono text-xs"
+                                className="flex justify-between px-1 py-0.5 bg-black-30 rounded font-mono text-xs"
                               >
                                 <span className="text-gray-500">{p.name}:</span>
                                 <span className={p.location === 'instance' ? 'text-purple-400' : 'text-amber-400'}>
@@ -1054,7 +1054,7 @@ export function ClassSyntaxViz() {
                             ))}
                           </div>
                           {obj.protoRef && (
-                            <div className="font-mono text-xs text-purple-400 pt-1 border-t border-white/5">
+                            <div className="font-mono text-xs text-purple-400 pt-1 border-t border-white-5">
                               __proto__: {obj.protoRef}
                             </div>
                           )}
@@ -1076,7 +1076,7 @@ export function ClassSyntaxViz() {
 
       {/* Output Section */}
       {currentStep.output.length > 0 && (
-        <div className="bg-black/30 border border-white/10 rounded-lg p-3">
+        <div className="bg-black-30 border border-white-10 rounded-lg p-3">
           <div className="inline-flex items-center gap-1 px-2 py-0.5 mb-2 text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
             Console Output
           </div>
@@ -1101,7 +1101,7 @@ export function ClassSyntaxViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className="px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-base text-gray-300 text-center"
+          className="px-4 py-2.5 bg-black-30 border border-white-10 rounded-lg text-base text-gray-300 text-center"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}

@@ -70,7 +70,7 @@ export default function ConceptsPage() {
           <div>
             <Link
               href="/concepts/js"
-              className="relative flex-1 rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-border-card hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+              className="relative flex-1 rounded-2xl p-0.5 no-underline text-inherit transition-all duration-150 border border-border-card hover:bg-white-5 hover:border-brand-primary-30 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
             >
               <div className="bg-bg-page-secondary rounded-xl p-5 flex flex-col gap-2 flex-1">
                 <div className="flex items-center justify-between">
@@ -98,7 +98,7 @@ export default function ConceptsPage() {
           <div>
             <Link
               href="/concepts/dsa"
-              className="relative flex-1 rounded-2xl p-0.5 no-underline text-inherit transition-all duration-200 border border-border-card hover:bg-white-5 hover:border-brand-primary-40 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+              className="relative flex-1 rounded-2xl p-0.5 no-underline text-inherit transition-all duration-150 border border-border-card hover:bg-white-5 hover:border-brand-primary-30 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
             >
               <div className="bg-bg-page-secondary rounded-xl p-5 flex flex-col gap-2 flex-1">
                 <div className="flex items-center justify-between">
@@ -134,7 +134,7 @@ export default function ConceptsPage() {
               <Link
                 key={concept.id}
                 href={`/concepts/js/${concept.id}`}
-                className="block rounded-xl p-4 no-underline text-inherit border border-border-card bg-surface-card transition-all duration-200 hover:border-brand-primary-30 hover:bg-brand-primary-5 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(99,102,241,0.15)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+                className="block rounded-xl p-4 no-underline text-inherit border border-border-card bg-surface-card transition-all duration-150 hover:border-brand-primary-30 hover:bg-brand-primary-5 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(99,102,241,0.15)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
               >
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <span className="text-brand-primary">
@@ -161,7 +161,7 @@ export default function ConceptsPage() {
         <section className="mt-10 grid grid-cols-2 gap-4 max-md:grid-cols-1 animate-[fadeIn_0.4s_ease-out_300ms_both]">
           <Link
             href="/concepts/js/cheatsheet"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border-card bg-surface-card no-underline transition-all duration-200 hover:border-brand-primary-30 hover:bg-brand-primary-5 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border-card bg-surface-card no-underline transition-all duration-150 hover:border-brand-primary-30 hover:bg-brand-primary-5 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
           >
             <FileText size={18} className="text-brand-primary shrink-0" />
             <div className="min-w-0">
@@ -172,7 +172,7 @@ export default function ConceptsPage() {
           </Link>
           <Link
             href="/concepts/dsa/roadmap"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border-card bg-surface-card no-underline transition-all duration-200 hover:border-brand-primary-30 hover:bg-brand-primary-5 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border-card bg-surface-card no-underline transition-all duration-150 hover:border-brand-primary-30 hover:bg-brand-primary-5 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
           >
             <Map size={18} className="text-brand-primary shrink-0" />
             <div className="min-w-0">

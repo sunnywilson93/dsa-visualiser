@@ -920,7 +920,7 @@ export function EventLoopTickViz() {
             className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full transition-all cursor-pointer
               ${level === lvl
                 ? 'border-2 text-white'
-                : 'bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-white'
+                : 'bg-white-5 border border-white-10 text-gray-400 hover:bg-white-10 hover:text-white'
               }`}
             style={{
               borderColor: level === lvl ? levelInfo[lvl].color : undefined,
@@ -937,7 +937,7 @@ export function EventLoopTickViz() {
         ))}
       </div>
 
-      <div className="text-center text-sm text-gray-400 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
+      <div className="text-center text-sm text-gray-400 px-4 py-2 bg-white-5 rounded-lg border border-white-10">
         {levelInfo[level].message}
       </div>
 
@@ -948,7 +948,7 @@ export function EventLoopTickViz() {
             className={`px-3 py-1.5 text-xs font-mono rounded-lg transition-all cursor-pointer
               ${exampleIndex === i
                 ? 'bg-[var(--color-brand-primary-20)] border border-[var(--color-brand-primary-50)] text-[var(--color-brand-light)]'
-                : 'bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10'
+                : 'bg-white-5 border border-white-10 text-gray-400 hover:bg-white-10'
               }`}
             onClick={() => handleExampleChange(i)}
           >
@@ -958,7 +958,7 @@ export function EventLoopTickViz() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="flex flex-col items-center justify-center p-4 bg-[var(--color-bg-page-secondary)] rounded-xl border border-white/10">
+        <div className="flex flex-col items-center justify-center p-4 bg-[var(--color-bg-page-secondary)] rounded-xl border border-white-10">
           <CircularDiagram
             currentPhase={currentStep.currentPhase}
             level={level}
@@ -989,7 +989,7 @@ export function EventLoopTickViz() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <div className="p-3 bg-[var(--color-bg-page-secondary)] rounded-lg border border-white/10">
+          <div className="p-3 bg-[var(--color-bg-page-secondary)] rounded-lg border border-white-10">
             <div className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Call Stack</div>
             <div className="min-h-[80px] flex flex-col-reverse gap-1">
               <AnimatePresence mode="popLayout">
@@ -1014,7 +1014,7 @@ export function EventLoopTickViz() {
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            <div className="p-3 bg-[var(--color-bg-page-secondary)] rounded-lg border border-white/10">
+            <div className="p-3 bg-[var(--color-bg-page-secondary)] rounded-lg border border-white-10">
               <div className="text-xs font-semibold text-purple-400 mb-2 uppercase tracking-wider">Microtasks</div>
               <div className="min-h-[60px] flex flex-col gap-1">
                 <AnimatePresence mode="popLayout">
@@ -1038,7 +1038,7 @@ export function EventLoopTickViz() {
               </div>
             </div>
 
-            <div className="p-3 bg-[var(--color-bg-page-secondary)] rounded-lg border border-white/10">
+            <div className="p-3 bg-[var(--color-bg-page-secondary)] rounded-lg border border-white-10">
               <div className="text-xs font-semibold text-amber-400 mb-2 uppercase tracking-wider">Task Queue</div>
               <div className="min-h-[60px] flex flex-col gap-1">
                 <AnimatePresence mode="popLayout">
@@ -1065,8 +1065,8 @@ export function EventLoopTickViz() {
         </div>
       </div>
 
-      <div className="bg-[var(--color-bg-page-secondary)] border border-white/10 rounded-lg overflow-hidden">
-        <div className="flex justify-between items-center px-3 py-2 bg-white/5">
+      <div className="bg-[var(--color-bg-page-secondary)] border border-white-10 rounded-lg overflow-hidden">
+        <div className="flex justify-between items-center px-3 py-2 bg-white-5">
           <span className="text-xs font-semibold text-gray-300 uppercase tracking-wider">Code</span>
           <span className="text-xs text-gray-500">Line {currentStep.codeLine >= 0 ? currentStep.codeLine + 1 : '-'}</span>
         </div>
@@ -1090,7 +1090,7 @@ export function EventLoopTickViz() {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
-        <div className="flex-1 p-3 bg-[var(--color-bg-page-secondary)] rounded-lg border border-white/10">
+        <div className="flex-1 p-3 bg-[var(--color-bg-page-secondary)] rounded-lg border border-white-10">
           <div className="text-xs font-semibold text-green-400 mb-1 uppercase tracking-wider">Output</div>
           <div className="font-mono text-sm text-green-300 min-h-[24px]">
             {currentStep.output.length === 0 ? (
@@ -1101,7 +1101,7 @@ export function EventLoopTickViz() {
           </div>
         </div>
 
-        <div className="flex-1 p-3 bg-white/5 rounded-lg border border-white/10">
+        <div className="flex-1 p-3 bg-white-5 rounded-lg border border-white-10">
           <div className="text-sm text-gray-300">{currentStep.description}</div>
         </div>
       </div>

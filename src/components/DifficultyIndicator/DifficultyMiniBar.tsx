@@ -12,7 +12,7 @@ export function DifficultyMiniBar({ easy, medium, hard }: DifficultyMiniBarProps
 
   return (
     <div
-      className="flex h-1.5 flex-1 rounded-full overflow-hidden bg-white/10"
+      className="flex h-1.5 flex-1 rounded-full overflow-hidden bg-white-10"
       role="img"
       aria-label={`${easy} easy, ${medium} medium, ${hard} hard problems`}
     >

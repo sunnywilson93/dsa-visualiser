@@ -121,7 +121,7 @@ export function TwoPointersConcept({ step, type }: TwoPointersConceptProps) {
                   flex items-center justify-center min-w-7 h-7 px-1 rounded-md transition-all duration-150
                   ${isHighlighted 
                     ? 'bg-blue-400/20 border-2 border-blue-400' 
-                    : 'bg-[var(--color-bg-elevated)] border-2 border-white/15'
+                    : 'bg-[var(--color-bg-elevated)] border-2 border-white-15'
                   }
                   ${hasPointer ? 'border-blue-400 shadow-[0_0_6px_rgba(96,165,250,0.25)]' : ''}
                 `}

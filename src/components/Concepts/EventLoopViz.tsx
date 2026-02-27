@@ -1067,7 +1067,7 @@ export function EventLoopViz() {
             Web APIs
           </div>
           <div className="bg-[var(--color-bg-page-secondary)] rounded-lg min-h-[200px] p-[var(--spacing-md)] pt-6">
-            <div className="grid grid-cols-3 gap-[var(--spacing-sm)] p-[var(--spacing-sm)] bg-[var(--color-black-30)] border border-dashed border-white/15 rounded-lg max-md:grid-cols-2">
+            <div className="grid grid-cols-3 gap-[var(--spacing-sm)] p-[var(--spacing-sm)] bg-[var(--color-black-30)] border border-dashed border-white-15 rounded-lg max-md:grid-cols-2">
               {webApis.map((api) => (
                 <div
                   key={api.name}

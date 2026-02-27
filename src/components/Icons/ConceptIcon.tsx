@@ -74,7 +74,7 @@ import {
   Coins,
   Undo2,
   Ruler,
-  PanelTop,
+  ScanLine,
   Mountain,
   // Phase 1-8 New Icons
   ArrowUpCircle,
@@ -82,11 +82,11 @@ import {
   Parentheses,
   MessageSquare,
   AlertTriangle,
-  GitCommitVertical,
+  IndentIncrease,
   GitFork,
   Shield,
   Pencil,
-  Minus,
+  FoldVertical,
   Copy,
   Key,
   RotateCcw,
@@ -107,6 +107,11 @@ import {
   Bomb,
   LayoutGrid,
   Atom,
+  // Intent-fix replacements
+  Monitor,
+  Workflow,
+  Server,
+  Frame,
   // Fallback
   HelpCircle,
   type LucideIcon,
@@ -146,8 +151,8 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'v8-engine': Gauge,               // Engine performance
   'garbage-collection': Trash2,     // Memory cleanup
   'streams-buffers': Waves,         // Data flow/streaming
-  'dom-rendering': Code2,           // Code rendering
-  'web-workers': Share2,            // Parallel threads/sharing
+  'dom-rendering': Monitor,         // Browser/screen rendering
+  'web-workers': Workflow,          // Parallel execution threads
 
   // JS Concepts - Phase 1 Deep Dive
   'promises-deep-dive': Clock,      // Async/promises - future values
@@ -182,7 +187,7 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'core': Settings,
   'advanced': Zap,
   'runtime': Cpu,
-  'backend': Settings,
+  'backend': Server,
   'browser': Globe,
 
   // Categories - DSA
@@ -204,7 +209,7 @@ const conceptIconMap: Record<string, LucideIcon> = {
   // DSA subcategories (dsaSubcategories from examples.ts)
   'arrays-hashing': BarChart3,      // Arrays & Hashing - data visualization
   'two-pointers': ArrowLeftRight,   // Two Pointers - bidirectional movement
-  'sliding-window': PanelTop,       // Sliding Window - panel/frame concept
+  'sliding-window': ScanLine,       // Sliding Window - scanning across data
   'stack': Layers,                  // Stack - stacked layers
   'binary-search': Search,          // Binary Search - search algorithm
   'linked-list': GitBranch,         // Linked List - connected nodes
@@ -225,7 +230,7 @@ const conceptIconMap: Record<string, LucideIcon> = {
   // ===== PHASE 1-8: NEW CONCEPT ICONS =====
 
   // Phase 1: Scope & Hoisting
-  'scope-basics': Layers,
+  'scope-basics': Frame,
   'hoisting-variables': ArrowUp,
   'hoisting-functions': ArrowUpCircle,
   'temporal-dead-zone': ShieldAlert,
@@ -234,7 +239,7 @@ const conceptIconMap: Record<string, LucideIcon> = {
   // Phase 2: Async Foundation
   'callbacks-fundamentals': MessageSquare,
   'error-first-callbacks': AlertTriangle,
-  'callback-hell': GitCommitVertical,
+  'callback-hell': IndentIncrease,
   'promises-creation': Clock,
   'promise-chaining': GitBranch,
   'promises-then-catch': Link2,
@@ -248,7 +253,7 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'array-iteration-methods': Repeat,
   'array-transformation': Shuffle,
   'array-searching-sorting': Search,
-  'array-reduce-patterns': Minus,
+  'array-reduce-patterns': FoldVertical,
   'array-immutable-patterns': Copy,
 
   // Phase 4: Closure & Prototypes

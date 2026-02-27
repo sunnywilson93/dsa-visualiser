@@ -107,7 +107,7 @@ export function SlidingWindowConcept({ step }: SlidingWindowConceptProps) {
                       ? 'bg-emerald-400/25 border-2 border-emerald-400'
                       : inWindow
                         ? 'bg-cyan-400/15 border-2 border-cyan-400/60'
-                        : 'bg-[var(--color-bg-elevated)] border-2 border-white/15'
+                        : 'bg-[var(--color-bg-elevated)] border-2 border-white-15'
                     }
                   `}
                   animate={{

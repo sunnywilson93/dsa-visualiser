@@ -341,12 +341,12 @@ export function RecursionViz() {
   return (
     <div className="flex flex-col gap-5">
       {/* Level selector */}
-      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
             className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
-              level === lvl ? 'text-white' : 'bg-white/5 border border-transparent text-gray-500 hover:bg-white/10 hover:text-gray-300'
+              level === lvl ? 'text-white' : 'bg-white-5 border border-transparent text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
@@ -361,14 +361,14 @@ export function RecursionViz() {
       </div>
 
       {/* Example selector */}
-      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 flex-wrap justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
             className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all ${
               exampleIndex === i
                 ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+                : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleExampleChange(i)}
           >
@@ -380,8 +380,8 @@ export function RecursionViz() {
       {/* Main grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Code panel */}
-        <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
-          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">
+        <div className="bg-black-40 border border-white-10 rounded-xl overflow-hidden">
+          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5 uppercase tracking-wider">
             <span>Code</span>
             <span className="px-2 py-0.5 rounded-full text-2xs font-semibold text-black" style={{ background: getPhaseColor(currentStep.phase) }}>
               {currentStep.phase === 'calling' ? 'Calling ↓' :
@@ -415,7 +415,7 @@ export function RecursionViz() {
                   currentStep.stack.slice().reverse().map((frame, i) => (
                     <motion.div
                       key={`${frame.fn}-${frame.args}-${i}`}
-                      className="px-3 py-2 bg-black/30 border-l-3 rounded flex flex-col gap-0.5"
+                      className="px-3 py-2 bg-black-30 border-l-3 rounded flex flex-col gap-0.5"
                       style={{ borderLeftColor: getStatusColor(frame.status) }}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -460,7 +460,7 @@ export function RecursionViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className="px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-base text-gray-300 text-center"
+          className="px-4 py-2.5 bg-black-30 border border-white-10 rounded-lg text-base text-gray-300 text-center"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}

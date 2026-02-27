@@ -536,7 +536,7 @@ export function WebWorkersViz() {
   return (
     <div className="flex flex-col gap-6">
       {/* Level Selector */}
-      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black-30 border border-white/[0.08] rounded-full">
         {(['beginner', 'intermediate', 'advanced'] as Level[]).map((l) => (
           <button
             key={l}
@@ -559,7 +559,7 @@ export function WebWorkersViz() {
       </div>
 
       {/* Example Selector */}
-      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black-30 border border-white/[0.08] rounded-full">
         {data.examples.map((ex, idx) => (
           <button
             key={ex.id}
@@ -576,8 +576,8 @@ export function WebWorkersViz() {
       </div>
 
       {/* Code Panel */}
-      <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black/40">
-        <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
+      <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black-40">
+        <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5">
           <span>Code</span>
         </div>
         <pre className="m-0 py-2 px-0 max-h-[180px] overflow-y-auto font-mono">
@@ -605,8 +605,8 @@ export function WebWorkersViz() {
         <div className="bg-[var(--color-bg-page-secondary,#0f172a)] rounded-lg min-h-[60px] p-4 pt-6">
           <div className="flex gap-2 items-stretch justify-center">
             {/* Main Thread */}
-            <div className="flex-1 min-w-[120px] max-w-[200px] bg-white/5 rounded-lg overflow-hidden border-2 border-white/10">
-              <div className="flex justify-between items-center px-2.5 py-1.5 text-[10px] font-semibold text-gray-300 bg-white/5">
+            <div className="flex-1 min-w-[120px] max-w-[200px] bg-white-5 rounded-lg overflow-hidden border-2 border-white-10">
+              <div className="flex justify-between items-center px-2.5 py-1.5 text-[10px] font-semibold text-gray-300 bg-white-5">
                 <span>{currentStep.mainThread.name}</span>
                 <span
                   className="px-1.5 py-0.5 rounded text-[10px] font-semibold text-white"
@@ -627,7 +627,7 @@ export function WebWorkersViz() {
                     >
                       {currentStep.mainThread.currentTask}
                       {currentStep.mainThread.progress !== undefined && (
-                        <div className="h-2 bg-white/10 rounded-sm mt-1.5 overflow-hidden">
+                        <div className="h-2 bg-white-10 rounded-sm mt-1.5 overflow-hidden">
                           <motion.div
                             className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-sm"
                             initial={{ width: 0 }}
@@ -666,8 +666,8 @@ export function WebWorkersViz() {
 
             {/* Worker Thread */}
             {currentStep.workerThread && (
-              <div className="flex-1 min-w-[120px] max-w-[200px] bg-white/5 rounded-lg overflow-hidden border-2 border-white/10">
-                <div className="flex justify-between items-center px-2.5 py-1.5 text-[10px] font-semibold text-gray-300 bg-white/5">
+              <div className="flex-1 min-w-[120px] max-w-[200px] bg-white-5 rounded-lg overflow-hidden border-2 border-white-10">
+                <div className="flex justify-between items-center px-2.5 py-1.5 text-[10px] font-semibold text-gray-300 bg-white-5">
                   <span>{currentStep.workerThread.name}</span>
                   <span
                     className="px-1.5 py-0.5 rounded text-[10px] font-semibold text-white"
@@ -688,7 +688,7 @@ export function WebWorkersViz() {
                       >
                         {currentStep.workerThread.currentTask}
                         {currentStep.workerThread.progress !== undefined && (
-                          <div className="h-2 bg-white/10 rounded-sm mt-1.5 overflow-hidden">
+                          <div className="h-2 bg-white-10 rounded-sm mt-1.5 overflow-hidden">
                             <motion.div
                               className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-sm"
                               initial={{ width: 0 }}

@@ -35,7 +35,7 @@ export function LevelSelector({
   return (
     <div
       className={cn(
-        'flex gap-2 flex-wrap justify-center bg-black/30 border border-white/8 rounded-full p-[var(--spacing-pill)]',
+        'flex gap-2 flex-wrap justify-center bg-black-30 border border-white/8 rounded-full p-[var(--spacing-pill)]',
         className
       )}
     >
@@ -55,7 +55,7 @@ export function LevelSelector({
               'disabled:cursor-not-allowed disabled:opacity-40',
               isActive
                 ? 'text-white'
-                : 'border-transparent bg-white/5 text-text-muted hover:bg-white/8 hover:text-text-secondary'
+                : 'border-transparent bg-white-5 text-text-muted hover:bg-white-8 hover:text-text-secondary'
             )}
             style={
               isActive

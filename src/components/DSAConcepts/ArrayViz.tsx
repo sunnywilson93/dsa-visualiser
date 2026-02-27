@@ -276,7 +276,7 @@ export function ArrayViz() {
         {examples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white ${exampleIndex === i ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
+            className={`px-4 py-2 text-sm font-medium bg-white-5 border border-white-10 rounded-md text-gray-500 cursor-pointer transition-all duration-150 hover:bg-white-10 hover:text-white ${exampleIndex === i ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -285,7 +285,7 @@ export function ArrayViz() {
       </div>
 
       {/* Memory visualization */}
-      <div className="bg-black/30 rounded-lg p-4">
+      <div className="bg-black-30 rounded-lg p-4">
         <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Memory Layout (Contiguous)</span>
           {currentStep.formula && (
@@ -297,7 +297,7 @@ export function ArrayViz() {
             {currentStep.array.map((item, i) => (
               <motion.div
                 key={`${item.id}-${i}`}
-                className={`flex-shrink-0 w-[70px] max-sm:w-[60px] bg-black/30 border-2 border-white/10 rounded-lg overflow-hidden transition-all duration-200 ${isHighlighted(i) ? 'shadow-[0_0_20px_rgba(var(--color-brand-primary-rgb),0.4)]' : ''}`}
+                className={`flex-shrink-0 w-[70px] max-sm:w-[60px] bg-black-30 border-2 border-white-10 rounded-lg overflow-hidden transition-all duration-200 ${isHighlighted(i) ? 'shadow-[0_0_20px_rgba(var(--color-brand-primary-rgb),0.4)]' : ''}`}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{
                   opacity: 1,
@@ -312,7 +312,7 @@ export function ArrayViz() {
                 exit={{ opacity: 0, scale: 0.8 }}
                 layout
               >
-                <div className="px-1.5 py-1 font-mono text-[10px] text-gray-500 text-center bg-white/5 border-b border-white/5">{item.address}</div>
+                <div className="px-1.5 py-1 font-mono text-[10px] text-gray-500 text-center bg-white-5 border-b border-white-5">{item.address}</div>
                 <div className="px-2 py-3 font-mono text-xl max-sm:text-base max-sm:p-2 font-bold text-white text-center">
                   {item.value === -1 ? (
                     <span className="text-xs text-red-400 font-semibold">GAP</span>
@@ -341,7 +341,7 @@ export function ArrayViz() {
       {/* Output */}
       {currentStep.output && (
         <motion.div
-          className="flex items-center gap-3 p-3 px-4 bg-black/30 border-2 border-emerald-500 rounded-lg"
+          className="flex items-center gap-3 p-3 px-4 bg-black-30 border-2 border-emerald-500 rounded-lg"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           style={{ borderColor: getActionColor(currentStep.action) }}
@@ -355,7 +355,7 @@ export function ArrayViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${exampleIndex}-${stepIndex}`}
-          className="flex items-start gap-3 p-3 px-4 bg-black/30 rounded-lg border-l-[3px] border-brand-primary"
+          className="flex items-start gap-3 p-3 px-4 bg-black-30 rounded-lg border-l-[3px] border-brand-primary"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}

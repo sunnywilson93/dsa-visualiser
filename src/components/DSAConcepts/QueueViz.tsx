@@ -145,7 +145,7 @@ export function QueueViz(): JSX.Element {
         {examples.map((ex: Example, i: number) => (
           <button
             key={ex.id}
-            className={`px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white ${exampleIndex === i ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
+            className={`px-4 py-2 text-sm font-medium bg-white-5 border border-white-10 rounded-md text-gray-500 cursor-pointer transition-all duration-150 hover:bg-white-10 hover:text-white ${exampleIndex === i ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -155,12 +155,12 @@ export function QueueViz(): JSX.Element {
 
       {/* Queue visualization */}
       <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-start">
-        <div className="bg-black/20 rounded-lg p-4">
+        <div className="bg-black-20 rounded-lg p-4">
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Queue</div>
           <div className="flex flex-col gap-2">
             <div className="grid grid-cols-[auto_1fr_auto] md:grid-cols-[auto_1fr_auto] items-center gap-3 py-1 max-md:grid-cols-1 max-md:gap-2">
               <div
-                className={`flex flex-col gap-0.5 px-2.5 py-1 border border-white/5 rounded-md text-gray-500 text-center min-w-[120px] max-md:min-w-0 transition-all ${isFrontAction ? 'shadow-[0_0_12px_currentColor]' : ''}`}
+                className={`flex flex-col gap-0.5 px-2.5 py-1 border border-white-5 rounded-md text-gray-500 text-center min-w-[120px] max-md:min-w-0 transition-all ${isFrontAction ? 'shadow-[0_0_12px_currentColor]' : ''}`}
                 style={frontIndicatorStyle}
               >
                 <span className="text-xs font-bold uppercase tracking-wide">Front</span>
@@ -168,14 +168,14 @@ export function QueueViz(): JSX.Element {
               </div>
               <div className="text-center text-[10px] text-gray-600 uppercase tracking-wide">Oldest -&gt; Newest</div>
               <div
-                className={`flex flex-col gap-0.5 px-2.5 py-1 border border-white/5 rounded-md text-gray-500 text-center min-w-[120px] max-md:min-w-0 transition-all ${isBackAction ? 'shadow-[0_0_12px_currentColor]' : ''}`}
+                className={`flex flex-col gap-0.5 px-2.5 py-1 border border-white-5 rounded-md text-gray-500 text-center min-w-[120px] max-md:min-w-0 transition-all ${isBackAction ? 'shadow-[0_0_12px_currentColor]' : ''}`}
                 style={backIndicatorStyle}
               >
                 <span className="text-xs font-bold uppercase tracking-wide">Back</span>
                 <span className={`text-[10px] uppercase tracking-wide ${isBackAction ? 'opacity-85' : 'text-gray-600'}`}>enqueue</span>
               </div>
             </div>
-            <div className="flex gap-2 items-center min-h-[120px] p-3 bg-black/30 border-2 border-white/10 rounded-lg overflow-x-auto">
+            <div className="flex gap-2 items-center min-h-[120px] p-3 bg-black-30 border-2 border-white-10 rounded-lg overflow-x-auto">
               <AnimatePresence mode="popLayout">
                 {currentStep.queueState.length === 0 ? (
                   <motion.div
@@ -194,7 +194,7 @@ export function QueueViz(): JSX.Element {
                     return (
                       <motion.div
                         key={item.id}
-                        className={`flex flex-col items-center justify-center gap-1 min-w-[70px] px-4 py-3 bg-black/30 border-2 border-white/10 rounded-md transition-all duration-200 ${isActive ? 'shadow-[0_0_15px_rgba(var(--color-brand-primary-rgb),0.2)]' : ''}`}
+                        className={`flex flex-col items-center justify-center gap-1 min-w-[70px] px-4 py-3 bg-black-30 border-2 border-white-10 rounded-md transition-all duration-200 ${isActive ? 'shadow-[0_0_15px_rgba(var(--color-brand-primary-rgb),0.2)]' : ''}`}
                         initial={{ opacity: 0, x: 20, scale: 0.9 }}
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: -20, scale: 0.9 }}
@@ -217,7 +217,7 @@ export function QueueViz(): JSX.Element {
         </div>
 
         {/* Output */}
-        <div className="bg-black/30 rounded-lg p-4 min-w-[120px]">
+        <div className="bg-black-30 rounded-lg p-4 min-w-[120px]">
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Output</div>
           <div className="flex items-center justify-center min-h-[50px]">
             {currentStep.output ? (
@@ -240,7 +240,7 @@ export function QueueViz(): JSX.Element {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${exampleIndex}-${stepIndex}`}
-          className="flex items-start gap-3 p-3 px-4 bg-black/30 rounded-lg border-l-[3px] border-brand-primary"
+          className="flex items-start gap-3 p-3 px-4 bg-black-30 rounded-lg border-l-[3px] border-brand-primary"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}

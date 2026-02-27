@@ -87,7 +87,7 @@ export function ScopeHoistingViz({ mode = 'scope' }: ScopeHoistingVizProps) {
       <h3 className="text-center text-lg font-semibold text-white">{current.title}</h3>
       
       {/* Step Visualizer */}
-      <div className="relative min-h-[200px] rounded-xl border border-white/10 bg-black/30 p-4">
+      <div className="relative min-h-[200px] rounded-xl border border-white-10 bg-black-30 p-4">
         <div className="flex justify-between mb-4">
           {current.steps.map((s, i) => (
             <button
@@ -96,7 +96,7 @@ export function ScopeHoistingViz({ mode = 'scope' }: ScopeHoistingVizProps) {
               className={`flex-1 mx-1 py-2 rounded-lg text-sm font-medium transition-all ${
                 i === activeStep 
                   ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' 
-                  : 'bg-white/5 text-gray-500 hover:bg-white/10'
+                  : 'bg-white-5 text-gray-500 hover:bg-white-10'
               }`}
             >
               {s.title}
@@ -153,7 +153,7 @@ export function ScopeHoistingViz({ mode = 'scope' }: ScopeHoistingVizProps) {
         <button
           onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
           disabled={activeStep === 0}
-          className="px-4 py-2 rounded-lg bg-white/5 text-gray-400 disabled:opacity-30 hover:bg-white/10 transition-colors"
+          className="px-4 py-2 rounded-lg bg-white-5 text-gray-400 disabled:opacity-30 hover:bg-white-10 transition-colors"
         >
           Previous
         </button>

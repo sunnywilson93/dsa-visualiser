@@ -228,7 +228,7 @@ export function BinarySystemViz(): JSX.Element {
           <button
             key={example.id}
             className={cn(
-              'px-4 py-2 text-base font-medium bg-white/5 border border-white/10 rounded-md text-gray-500 transition-all duration-200 hover:bg-white/10 hover:text-white',
+              'px-4 py-2 text-base font-medium bg-white-5 border border-white-10 rounded-md text-gray-500 transition-all duration-150 hover:bg-white-10 hover:text-white',
               exampleIndex === index && 'bg-[var(--color-brand-primary-15)] border-[var(--color-brand-primary-40)] text-cyan-200'
             )}
             onClick={() => handleExampleChange(index)}
@@ -245,14 +245,14 @@ export function BinarySystemViz(): JSX.Element {
         <span className="text-base font-semibold text-white">{currentStep.title}</span>
       </div>
 
-      <div className="bg-black/30 border border-white/8 rounded-lg p-4">
+      <div className="bg-black-30 border border-white-8 rounded-lg p-4">
         <BitManipulationConcept step={currentStep} />
       </div>
 
       <AnimatePresence mode="wait">
         <motion.div
           key={`${exampleIndex}-${stepIndex}`}
-          className="p-4 bg-black/30 rounded-lg border-l-[3px] border-l-[var(--color-brand-primary)]"
+          className="p-4 bg-black-30 rounded-lg border-l-[3px] border-l-[var(--color-brand-primary)]"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}

@@ -790,12 +790,12 @@ export function PropertyLookupViz() {
   return (
     <div className="flex flex-col gap-5">
       {/* Level selector */}
-      <div className="flex gap-2 justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
             className={`flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
-              level === lvl ? 'text-white' : 'bg-white/5 border border-transparent text-gray-500 hover:bg-white/10 hover:text-gray-300'
+              level === lvl ? 'text-white' : 'bg-white-5 border border-transparent text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
@@ -810,14 +810,14 @@ export function PropertyLookupViz() {
       </div>
 
       {/* Example selector */}
-      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 flex-wrap justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
             className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all ${
               exampleIndex === i
                 ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+                : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleExampleChange(i)}
           >
@@ -835,7 +835,7 @@ export function PropertyLookupViz() {
             className={`px-3 py-1 font-mono text-sm rounded-full transition-all ${
               selectedLookup === i
                 ? 'bg-purple-500/20 border border-purple-500/70 text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]'
-                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+                : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleLookupSelect(i)}
           >
@@ -844,7 +844,7 @@ export function PropertyLookupViz() {
         ))}
         {selectedLookup !== null && (
           <button
-            className="px-2.5 py-1 text-xs bg-white/5 border border-white/10 rounded-full text-gray-500 hover:bg-white/10 hover:text-gray-400 transition-colors"
+            className="px-2.5 py-1 text-xs bg-white-5 border border-white-10 rounded-full text-gray-500 hover:bg-white-10 hover:text-gray-400 transition-colors"
             onClick={handleReset}
           >
             ↻ Reset
@@ -869,8 +869,8 @@ export function PropertyLookupViz() {
               return (
                 <div key={node.id} className="w-full max-w-[280px]">
                   <motion.div
-                    className={`w-full bg-black/30 border-2 rounded-lg overflow-hidden transition-all relative ${
-                      isChecked ? 'bg-white/5' : 'border-white/10'
+                    className={`w-full bg-black-30 border-2 rounded-lg overflow-hidden transition-all relative ${
+                      isChecked ? 'bg-white-5' : 'border-white-10'
                     } ${isFoundAt ? 'shadow-[0_0_15px_rgba(16,185,129,0.3)]' : ''} ${
                       isNotFoundTarget ? 'shadow-[0_0_15px_rgba(239,68,68,0.3)]' : ''
                     }`}
@@ -914,7 +914,7 @@ export function PropertyLookupViz() {
                                       ? 'bg-gray-500/10 line-through'
                                       : isFoundProp
                                       ? 'bg-emerald-500/20 outline outline-1 outline-emerald-500'
-                                      : 'bg-black/30'
+                                      : 'bg-black-30'
                                   }`}
                                 >
                                   <span className={isShadowed ? 'text-gray-600' : 'text-gray-500'}>
@@ -931,7 +931,7 @@ export function PropertyLookupViz() {
                             })}
                           </div>
                           {node.protoRef && (
-                            <div className="font-mono text-xs text-purple-400 pt-1 border-t border-white/5">
+                            <div className="font-mono text-xs text-purple-400 pt-1 border-t border-white-5">
                               __proto__: → {node.protoRef}
                             </div>
                           )}
@@ -1005,7 +1005,7 @@ export function PropertyLookupViz() {
                 ? 'bg-red-500/10 border-red-400/20 text-red-400'
                 : currentStep.phase === 'found'
                 ? 'bg-emerald-500/10 border-emerald-400/20 text-emerald-400'
-                : 'bg-black/30 border-white/10 text-gray-300'
+                : 'bg-black-30 border-white-10 text-gray-300'
             }`}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1021,7 +1021,7 @@ export function PropertyLookupViz() {
         <div className={`px-3 py-2 border rounded-lg font-mono text-xs ${
           currentStep.foundAt === 'NOT_FOUND'
             ? 'bg-red-500/5 border-red-500/20 text-red-400'
-            : 'bg-black/40 border-white/5 text-emerald-400'
+            : 'bg-black-40 border-white-5 text-emerald-400'
         }`}>
           {currentStep.output.map((line, i) => (
             <div key={i}>{line}</div>

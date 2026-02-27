@@ -82,7 +82,7 @@ export function AsyncPatternsViz({ mode = 'callbacks' }: AsyncPatternsVizProps) 
             className={`flex-1 mx-1 p-3 rounded-lg text-left transition-all ${
               i === step 
                 ? 'bg-blue-500/20 border border-blue-500/30' 
-                : 'bg-black/30 border border-white/10 opacity-50'
+                : 'bg-black-30 border border-white-10 opacity-50'
             }`}
           >
             <div className="text-xs text-gray-500 mb-1">Step {i + 1}</div>
@@ -98,10 +98,10 @@ export function AsyncPatternsViz({ mode = 'callbacks' }: AsyncPatternsVizProps) 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="p-4 rounded-lg bg-black/30 border border-white/10"
+          className="p-4 rounded-lg bg-black-30 border border-white-10"
         >
           <div className="text-gray-300 mb-3">{current.steps[step].desc}</div>
-          <pre className="font-mono text-sm text-blue-300 bg-black/50 p-3 rounded">
+          <pre className="font-mono text-sm text-blue-300 bg-black-50 p-3 rounded">
             {current.steps[step].code}
           </pre>
         </motion.div>
@@ -112,7 +112,7 @@ export function AsyncPatternsViz({ mode = 'callbacks' }: AsyncPatternsVizProps) 
         <button
           onClick={() => setStep(Math.max(0, step - 1))}
           disabled={step === 0}
-          className="px-4 py-2 rounded-lg bg-white/5 text-gray-400 disabled:opacity-30 hover:bg-white/10 transition-colors"
+          className="px-4 py-2 rounded-lg bg-white-5 text-gray-400 disabled:opacity-30 hover:bg-white-10 transition-colors"
         >
           Previous
         </button>

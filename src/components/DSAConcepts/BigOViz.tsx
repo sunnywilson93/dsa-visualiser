@@ -142,7 +142,7 @@ export function BigOViz() {
         <span className="text-xs text-gray-500 uppercase tracking-wider">Y-Axis Scale:</span>
         <button
           className={cn(
-            'px-3 py-1.5 text-sm font-semibold bg-white/5 border border-white/10 rounded-md text-gray-500 transition-all duration-200 hover:bg-white/10 hover:text-gray-300',
+            'px-3 py-1.5 text-sm font-semibold bg-white-5 border border-white-10 rounded-md text-gray-500 transition-all duration-150 hover:bg-white-10 hover:text-gray-300',
             useLogScale && 'bg-[var(--color-brand-primary-20)] border-[var(--color-brand-primary-50)] text-cyan-200 shadow-[0_0_8px_var(--color-brand-primary-20)]'
           )}
           onClick={() => setUseLogScale(true)}
@@ -151,7 +151,7 @@ export function BigOViz() {
         </button>
         <button
           className={cn(
-            'px-3 py-1.5 text-sm font-semibold bg-white/5 border border-white/10 rounded-md text-gray-500 transition-all duration-200 hover:bg-white/10 hover:text-gray-300',
+            'px-3 py-1.5 text-sm font-semibold bg-white-5 border border-white-10 rounded-md text-gray-500 transition-all duration-150 hover:bg-white-10 hover:text-gray-300',
             !useLogScale && 'bg-[var(--color-brand-primary-20)] border-[var(--color-brand-primary-50)] text-cyan-200 shadow-[0_0_8px_var(--color-brand-primary-20)]'
           )}
           onClick={() => setUseLogScale(false)}
@@ -166,7 +166,7 @@ export function BigOViz() {
           <button
             key={c.id}
             className={cn(
-              'flex items-center gap-2 px-4 py-2 bg-white/5 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:bg-white/8',
+              'flex items-center gap-2 px-4 py-2 bg-white-5 border-2 rounded-lg cursor-pointer transition-all duration-150 hover:bg-white-8',
               activeComplexities.has(c.id) ? '' : 'border-transparent'
             )}
             onClick={() => toggleComplexity(c.id)}
@@ -183,11 +183,11 @@ export function BigOViz() {
       </div>
 
       {/* Chart */}
-      <div className="relative bg-black/30 rounded-lg p-4">
+      <div className="relative bg-black-30 rounded-lg p-4">
         <div className="absolute left-2 top-1/2 -translate-y-1/2 -rotate-90 origin-left text-xs text-gray-700 uppercase tracking-wider">
           <span>Operations {useLogScale && '(log scale)'}</span>
         </div>
-        <svg className="w-full h-[200px] bg-black/20 rounded-lg" viewBox={`0 0 ${CHART_WIDTH} ${MAX_HEIGHT}`}>
+        <svg className="w-full h-[200px] bg-black-20 rounded-lg" viewBox={`0 0 ${CHART_WIDTH} ${MAX_HEIGHT}`}>
           {/* Grid lines */}
           <defs>
             <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -218,7 +218,7 @@ export function BigOViz() {
       </div>
 
       {/* Input size slider */}
-      <div className="flex flex-col items-center gap-4 p-4 bg-black/20 rounded-lg">
+      <div className="flex flex-col items-center gap-4 p-4 bg-black-20 rounded-lg">
         <div className="flex items-center gap-1">
           <span className="text-base text-gray-500">Input Size: n = </span>
           <motion.span
@@ -236,11 +236,11 @@ export function BigOViz() {
           max="50"
           value={inputSize}
           onChange={(e) => setInputSize(Number(e.target.value))}
-          className="w-full max-w-[400px] h-1.5 appearance-none bg-white/10 rounded outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[18px] [&::-webkit-slider-thumb]:h-[18px] [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-[var(--color-brand-primary)] [&::-webkit-slider-thumb]:to-[var(--color-brand-secondary)] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-[0_2px_10px_var(--color-brand-primary-40)]"
+          className="w-full max-w-[400px] h-1.5 appearance-none bg-white-10 rounded outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[18px] [&::-webkit-slider-thumb]:h-[18px] [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-[var(--color-brand-primary)] [&::-webkit-slider-thumb]:to-[var(--color-brand-secondary)] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-[0_2px_10px_var(--color-brand-primary-40)]"
           disabled={isAnimating}
         />
         <button
-          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-all duration-200 hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed"
+          className="px-6 py-2.5 text-base font-medium bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-secondary)] border-none rounded-md text-white cursor-pointer transition-all duration-150 hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed"
           onClick={handleAnimate}
           disabled={isAnimating}
         >
@@ -249,20 +249,20 @@ export function BigOViz() {
       </div>
 
       {/* Operations table */}
-      <div className="bg-black/30 rounded-lg overflow-hidden">
+      <div className="bg-black-30 rounded-lg overflow-hidden">
         <table className="w-full border-collapse">
           <thead>
             <tr>
-              <th className="p-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider bg-[var(--color-brand-primary-10)] border-b border-white/5">Complexity</th>
-              <th className="p-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider bg-[var(--color-brand-primary-10)] border-b border-white/5">Operations (n={inputSize})</th>
-              <th className="p-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider bg-[var(--color-brand-primary-10)] border-b border-white/5">Example</th>
+              <th className="p-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider bg-[var(--color-brand-primary-10)] border-b border-white-5">Complexity</th>
+              <th className="p-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider bg-[var(--color-brand-primary-10)] border-b border-white-5">Operations (n={inputSize})</th>
+              <th className="p-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider bg-[var(--color-brand-primary-10)] border-b border-white-5">Example</th>
             </tr>
           </thead>
           <tbody>
             {complexities.filter(c => activeComplexities.has(c.id)).map(c => {
               const ops = Math.round(c.calculate(inputSize))
               return (
-                <tr key={c.id} className="border-b border-white/5 last:border-b-0 hover:bg-white/5">
+                <tr key={c.id} className="border-b border-white-5 last:border-b-0 hover:bg-white-5">
                   <td className="p-4">
                     <span className="font-mono text-base font-semibold" style={{ color: c.color }}>
                       {c.name}

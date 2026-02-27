@@ -464,7 +464,7 @@ export function HoistingViz() {
   return (
     <div className="flex flex-col gap-6">
       {/* Level selector */}
-      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
+      <div className="flex gap-2 justify-center mb-1 p-1.5 bg-black-30 border border-white/[0.08] rounded-full">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
@@ -486,7 +486,7 @@ export function HoistingViz() {
       </div>
 
       {/* Example selector */}
-      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black/30 border border-white/[0.08] rounded-full">
+      <div className="flex gap-2 flex-wrap justify-center p-1.5 bg-black-30 border border-white/[0.08] rounded-full">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
@@ -505,8 +505,8 @@ export function HoistingViz() {
       {/* Main visualization */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ gridTemplateAreas: '"code variables" "output output"' }}>
         {/* Code panel */}
-        <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black/40" style={{ gridArea: 'code' }}>
-          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5">
+        <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-black-40" style={{ gridArea: 'code' }}>
+          <div className="flex justify-between items-center px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5">
             <span>Code</span>
             <span
               className="px-2 py-0.5 rounded-full text-[10px] font-semibold text-black"
@@ -544,7 +544,7 @@ export function HoistingViz() {
                 {currentStep.variables.map(v => (
                   <motion.div
                     key={v.name}
-                    className="flex items-center gap-3 px-2.5 py-2 bg-black/30 border-l-[3px] rounded-md"
+                    className="flex items-center gap-3 px-2.5 py-2 bg-black-30 border-l-[3px] rounded-md"
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     style={{ borderColor: getStatusColor(v.status) }}
@@ -609,7 +609,7 @@ export function HoistingViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${level}-${exampleIndex}-${stepIndex}`}
-          className="px-4 py-2.5 bg-black/30 border border-white/[0.08] rounded-lg text-base text-gray-300 text-center"
+          className="px-4 py-2.5 bg-black-30 border border-white/[0.08] rounded-lg text-base text-gray-300 text-center"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}

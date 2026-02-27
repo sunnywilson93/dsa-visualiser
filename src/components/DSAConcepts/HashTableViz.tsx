@@ -152,7 +152,7 @@ export function HashTableViz() {
         {examples.map((ex, i) => (
           <button
             key={ex.id}
-            className={`px-4 py-2 text-sm font-medium bg-white/5 border border-white/10 rounded-md text-gray-500 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:text-white ${exampleIndex === i ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
+            className={`px-4 py-2 text-sm font-medium bg-white-5 border border-white-10 rounded-md text-gray-500 cursor-pointer transition-all duration-150 hover:bg-white-10 hover:text-white ${exampleIndex === i ? 'bg-brand-primary/15 border-brand-primary/40 text-brand-light' : ''}`}
             onClick={() => handleExampleChange(i)}
           >
             {ex.title}
@@ -161,7 +161,7 @@ export function HashTableViz() {
       </div>
 
       {/* Hash function visualization */}
-      <div className="bg-black/30 rounded-lg p-4">
+      <div className="bg-black-30 rounded-lg p-4">
         <div className="flex flex-col gap-2">
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Hash Function</div>
           <div className="flex items-center gap-3 flex-wrap">
@@ -189,13 +189,13 @@ export function HashTableViz() {
       </div>
 
       {/* Buckets visualization */}
-      <div className="bg-black/20 rounded-lg p-4">
+      <div className="bg-black-20 rounded-lg p-4">
         <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Buckets (Array)</div>
         <div className="grid grid-cols-7 max-sm:grid-cols-4 max-[400px]:grid-cols-3 gap-2">
           {buckets.map((bucket, i) => (
             <motion.div
               key={i}
-              className={`bg-black/30 border-2 border-white/10 rounded-lg min-h-[80px] max-sm:min-h-[70px] flex flex-col transition-all duration-200 ${currentStep.bucketIndex === i ? 'shadow-[0_0_20px_rgba(var(--color-brand-primary-rgb),0.3)]' : ''}`}
+              className={`bg-black-30 border-2 border-white-10 rounded-lg min-h-[80px] max-sm:min-h-[70px] flex flex-col transition-all duration-200 ${currentStep.bucketIndex === i ? 'shadow-[0_0_20px_rgba(var(--color-brand-primary-rgb),0.3)]' : ''}`}
               animate={{
                 borderColor: currentStep.bucketIndex === i
                   ? getActionColor(currentStep.action)
@@ -205,7 +205,7 @@ export function HashTableViz() {
                   : 'rgba(0,0,0,0.3)'
               }}
             >
-              <div className="px-1.5 py-1 text-xs font-semibold text-brand-primary text-center bg-brand-primary/10 border-b border-white/5">{i}</div>
+              <div className="px-1.5 py-1 text-xs font-semibold text-brand-primary text-center bg-brand-primary/10 border-b border-white-5">{i}</div>
               <div className="flex-1 p-1 flex flex-col items-center gap-1">
                 <AnimatePresence mode="popLayout">
                   {bucket.items.length === 0 ? (
@@ -241,7 +241,7 @@ export function HashTableViz() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${exampleIndex}-${stepIndex}`}
-          className="flex items-start gap-3 p-3 px-4 bg-black/30 rounded-lg border-l-[3px] border-brand-primary"
+          className="flex items-start gap-3 p-3 px-4 bg-black-30 rounded-lg border-l-[3px] border-brand-primary"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}

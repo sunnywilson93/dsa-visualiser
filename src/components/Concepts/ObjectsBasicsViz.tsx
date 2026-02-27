@@ -1143,12 +1143,12 @@ export function ObjectsBasicsViz() {
   return (
     <div className="flex flex-col gap-5" style={{ '--js-viz-accent': 'var(--color-brand-secondary)' } as React.CSSProperties}>
       {/* Level selector */}
-      <div className="flex gap-2 justify-center flex-wrap bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 justify-center flex-wrap bg-black-30 border border-white-10 rounded-full p-1.5">
         {(Object.keys(levelInfo) as Level[]).map(lvl => (
           <button
             key={lvl}
             className={`flex items-center gap-1.5 px-4 py-1.5 font-mono text-sm font-medium rounded-full transition-all min-h-11 ${
-              level === lvl ? 'text-white' : 'bg-white/5 border border-transparent text-gray-500 hover:bg-white/10 hover:text-gray-300'
+              level === lvl ? 'text-white' : 'bg-white-5 border border-transparent text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleLevelChange(lvl)}
             style={{
@@ -1163,14 +1163,14 @@ export function ObjectsBasicsViz() {
       </div>
 
       {/* Example tabs */}
-      <div className="flex gap-2 flex-wrap justify-center bg-black/30 border border-white/10 rounded-full p-1.5">
+      <div className="flex gap-2 flex-wrap justify-center bg-black-30 border border-white-10 rounded-full p-1.5">
         {currentExamples.map((ex, i) => (
           <button
             key={ex.id}
             className={`px-4 py-1.5 font-mono text-sm rounded-full transition-all min-h-11 ${
               exampleIndex === i
                 ? 'bg-teal-500/20 border border-teal-500/70 text-white shadow-[0_0_12px_rgba(20,184,166,0.25)]'
-                : 'bg-white/5 border border-white/10 text-gray-500 hover:bg-white/10 hover:text-gray-300'
+                : 'bg-white-5 border border-white-10 text-gray-500 hover:bg-white-10 hover:text-gray-300'
             }`}
             onClick={() => handleExampleChange(i)}
           >
@@ -1190,8 +1190,8 @@ export function ObjectsBasicsViz() {
         {/* Memory Panel */}
         <div className="flex flex-col gap-4">
           {/* Stack */}
-          <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
-            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">
+          <div className="bg-black-40 border border-white-10 rounded-xl overflow-hidden">
+            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5 uppercase tracking-wider">
               Stack
             </div>
             <div className="p-4 flex flex-col gap-2 min-h-[100px]">
@@ -1201,8 +1201,8 @@ export function ObjectsBasicsViz() {
                 currentStep.stack.map((item, i) => (
                   <motion.div
                     key={`${item.name}-${i}`}
-                    className={`flex justify-between items-center px-4 py-2 bg-black/30 border rounded-md font-mono text-sm transition-all ${
-                      item.isReference ? 'border-teal-400/40 bg-teal-500/10' : 'border-white/10'
+                    className={`flex justify-between items-center px-4 py-2 bg-black-30 border rounded-md font-mono text-sm transition-all ${
+                      item.isReference ? 'border-teal-400/40 bg-teal-500/10' : 'border-white-10'
                     } ${item.highlight === 'new' ? 'border-emerald-500/70 bg-emerald-500/15' : ''}`}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -1218,8 +1218,8 @@ export function ObjectsBasicsViz() {
           </div>
 
           {/* Heap */}
-          <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
-            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">
+          <div className="bg-black-40 border border-white-10 rounded-xl overflow-hidden">
+            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5 uppercase tracking-wider">
               Heap
             </div>
             <div className="p-4 flex flex-col gap-3 min-h-[100px]">
@@ -1261,8 +1261,8 @@ export function ObjectsBasicsViz() {
       </div>
 
       {/* Output */}
-      <div className="bg-black/40 border border-white/10 rounded-xl overflow-hidden">
-        <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white/5 uppercase tracking-wider">
+      <div className="bg-black-40 border border-white-10 rounded-xl overflow-hidden">
+        <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-white-5 uppercase tracking-wider">
           Output
         </div>
         <div className="p-4 min-h-[60px]">
@@ -1285,7 +1285,7 @@ export function ObjectsBasicsViz() {
 
       {/* Destructure panel (if applicable) */}
       {currentStep.destructureState && (
-        <div className="bg-black/40 border-2 border-teal-400/50 rounded-xl overflow-hidden">
+        <div className="bg-black-40 border-2 border-teal-400/50 rounded-xl overflow-hidden">
           <div className="flex items-center gap-4 px-4 py-2 bg-teal-500/15 border-b border-teal-400/30">
             <span className="font-mono text-sm font-bold text-white bg-teal-500 px-2.5 py-1 rounded-md">
               Destructuring
@@ -1298,8 +1298,8 @@ export function ObjectsBasicsViz() {
             {currentStep.destructureState.extractedProps.map((prop, i) => (
               <div
                 key={i}
-                className={`flex items-center gap-4 px-4 py-2 bg-black/30 border rounded-md font-mono text-sm ${
-                  prop.status === 'pending' ? 'opacity-50 border-white/10' : ''
+                className={`flex items-center gap-4 px-4 py-2 bg-black-30 border rounded-md font-mono text-sm ${
+                  prop.status === 'pending' ? 'opacity-50 border-white-10' : ''
                 } ${prop.status === 'extracting' ? 'border-teal-400 bg-teal-500/10' : ''}
                 ${prop.status === 'complete' ? 'border-emerald-500/50 bg-emerald-500/10' : ''}`}
               >
