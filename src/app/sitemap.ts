@@ -9,12 +9,12 @@ import {
 import { dsaPatterns } from '@/data/dsaPatterns'
 import { dsaConcepts } from '@/data/dsaConcepts'
 import { problemConcepts } from '@/data/algorithmConcepts'
+import { topicHubs } from '@/data/topicHubs'
 
 /**
- * Last content update timestamp.
- * Update this when making significant content changes.
+ * Build-time timestamp so the sitemap always reflects the latest deploy.
  */
-export const CONTENT_LAST_UPDATED = new Date('2026-02-22')
+export const CONTENT_LAST_UPDATED = new Date()
 
 const BASE_URL = 'https://jsinterview.dev'
 
@@ -136,7 +136,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${BASE_URL}/${category.id}`,
     lastModified: CONTENT_LAST_UPDATED,
     changeFrequency: 'weekly' as const,
-    priority: 0.8,
+    priority: 0.7,
   }))
 
   // DSA subcategory pages (/{subcategoryId}) — e.g. /sorting, /two-pointers
@@ -154,7 +154,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE_URL}/${categoryUrls.get(categoryId) || problem.category}/${problem.id}`,
       lastModified: CONTENT_LAST_UPDATED,
       changeFrequency: 'monthly' as const,
-      priority: 0.7,
+      priority: 0.6,
     })),
   )
 
@@ -167,12 +167,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: `${BASE_URL}/${categoryUrls.get(categoryId) || problem.category}/${problem.id}/concept`,
         lastModified: CONTENT_LAST_UPDATED,
         changeFrequency: 'monthly' as const,
-        priority: 0.7,
+        priority: 0.5,
       }))
     })
 
+  // Topic hub pages (/topics/[topicId])
+  const topicHubPages: MetadataRoute.Sitemap = topicHubs.map((hub) => ({
+    url: `${BASE_URL}/topics/${hub.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }))
+
+  // Updates/changelog page
+  const updatesPage: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/updates`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'weekly' as const,
+      priority: 0.5,
+    },
+  ]
+
   return [
     ...staticPages,
+    ...topicHubPages,
     ...jsConceptPages,
     ...dsaConceptPages,
     ...dsaPatternPages,
@@ -180,5 +199,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...dsaSubcategoryPages,
     ...problemPages,
     ...conceptVizPages,
+    ...updatesPage,
   ]
 }

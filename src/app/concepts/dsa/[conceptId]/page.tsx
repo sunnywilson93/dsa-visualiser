@@ -18,12 +18,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
+  const difficultyLabel = concept.difficulty.charAt(0).toUpperCase() + concept.difficulty.slice(1)
+  const keyPointCount = concept.keyPoints.length
+  const exampleCount = concept.examples.length
+
   return {
-    title: `${concept.title} - DSA Concept Explained | JS Interview Prep`,
-    description: `${concept.description} Learn with code examples, complexity analysis, and interview tips.`,
-    keywords: `${concept.title.toLowerCase()}, data structures, algorithms, ${concept.title.toLowerCase()} explained, coding interview, dsa`,
+    title: `${concept.title} in JavaScript — Data Structure Guide with Visualizations`,
+    description: `Learn ${concept.title} with ${keyPointCount} key concepts, ${exampleCount} code examples, and complexity analysis. ${difficultyLabel} level.`,
+    keywords: `${concept.title.toLowerCase()}, ${concept.title.toLowerCase()} javascript, data structures ${concept.title.toLowerCase()}, ${concept.title.toLowerCase()} explained, coding interview, dsa`,
     openGraph: {
-      title: `${concept.title} - DSA Concept Explained`,
+      title: `${concept.title} — DSA Visual Guide`,
       description: concept.shortDescription,
       url: `https://jsinterview.dev/concepts/dsa/${concept.id}`,
     },
@@ -106,6 +110,25 @@ function generateArticleSchema(concept: NonNullable<ReturnType<typeof getDSAConc
   }
 }
 
+function generateLearningResourceSchema(concept: NonNullable<ReturnType<typeof getDSAConceptById>>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LearningResource',
+    name: concept.title,
+    description: concept.description,
+    educationalLevel: concept.difficulty,
+    teaches: concept.title,
+    timeRequired: 'PT15M',
+    learningResourceType: 'interactive visualization',
+    inLanguage: 'en',
+    provider: {
+      '@type': 'Organization',
+      name: 'JS Interview Prep',
+      url: 'https://jsinterview.dev',
+    },
+  }
+}
+
 export default function DSAConceptPage({ params }: Props) {
   const concept = getDSAConceptById(params.conceptId)
 
@@ -121,6 +144,7 @@ export default function DSAConceptPage({ params }: Props) {
     { name: concept.title },
   ])
   const articleSchema = generateArticleSchema(concept)
+  const learningResourceSchema = generateLearningResourceSchema(concept)
 
   const formattedDate = CONTENT_LAST_UPDATED.toLocaleDateString('en-US', {
     month: 'short',
@@ -132,9 +156,10 @@ export default function DSAConceptPage({ params }: Props) {
       <StructuredData data={faqSchema} />
       <StructuredData data={breadcrumbSchema} />
       <StructuredData data={articleSchema} />
+      <StructuredData data={learningResourceSchema} />
       <DSAConceptPageClient />
-      <div className="sr-only">
-        <time dateTime={CONTENT_LAST_UPDATED.toISOString()}>Updated {formattedDate}</time>
+      <div className="text-center py-[var(--spacing-lg)] text-[length:var(--text-sm)] text-[color:var(--color-text-muted)]">
+        <time dateTime={CONTENT_LAST_UPDATED.toISOString()}>Last updated {formattedDate}</time>
       </div>
     </>
   )

@@ -82,7 +82,7 @@ export default function HomePage() {
       {/* Hero */}
       <header className="text-center py-10 px-8">
         <h1 className="text-3xl font-bold text-brand-light m-0 mb-3 max-md:text-2xl">
-          Master JavaScript with Interactive Visualizations
+          JavaScript Interview Prep — Interactive Visualizations & {totalProblems}+ Practice Problems
         </h1>
         <p className="text-text-secondary text-md m-0 max-w-[36rem] mx-auto">
           Step through code execution, explore {concepts.length} concepts, and solve {allJsProblems.length + dsaProblems.length} problems with visual explanations
