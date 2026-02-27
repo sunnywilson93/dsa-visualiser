@@ -30,18 +30,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const problemCount = getExamplesByCategory(params.categoryId).length
+  const problems = getExamplesByCategory(params.categoryId)
+  const problemCount = problems.length
+  const easyCount = problems.filter(p => p.difficulty === 'easy').length
+  const medCount = problems.filter(p => p.difficulty === 'medium').length
+  const hardCount = problems.filter(p => p.difficulty === 'hard').length
 
   const isDsa = params.categoryId === 'dsa'
   const isSubcategory = isDsaSubcategory(params.categoryId)
   const titlePrefix = isDsa ? 'DSA Problems' : category.name
 
   return {
-    title: `${titlePrefix} - ${problemCount} Coding Challenges | JS Interview Prep`,
-    description: `${category.longDescription || category.description}. Practice ${problemCount} interactive coding problems with step-by-step execution visualization.`,
-    keywords: `${category.name.toLowerCase()}, javascript ${category.name.toLowerCase()}, coding interview, ${isDsa || isSubcategory ? 'data structures algorithms leetcode' : 'javascript practice'}`,
+    title: `${titlePrefix} — ${problemCount} JavaScript Practice Problems with Visual Explanations`,
+    description: `${problemCount} ${titlePrefix} problems (${easyCount} easy, ${medCount} medium, ${hardCount} hard). Practice with step-by-step execution visualization.`,
+    keywords: `${category.name.toLowerCase()}, javascript ${category.name.toLowerCase()} practice, ${category.name.toLowerCase()} interview questions, coding interview, ${isDsa || isSubcategory ? 'data structures algorithms leetcode' : 'javascript practice'}`,
     openGraph: {
-      title: `${titlePrefix} - JavaScript Coding Challenges`,
+      title: `${titlePrefix} — JavaScript Practice Problems`,
       description: `${category.longDescription || category.description}. ${problemCount} problems with visualization.`,
       url: `https://jsinterview.dev/${category.id}`,
     },
