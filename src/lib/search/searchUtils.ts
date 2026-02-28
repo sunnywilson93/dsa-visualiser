@@ -3,6 +3,7 @@
 import { concepts, conceptCategories } from '@/data/concepts'
 import { dsaConcepts, dsaConceptCategories } from '@/data/dsaConcepts'
 import { dsaPatterns } from '@/data/dsaPatterns'
+import { reactConcepts, reactConceptCategories } from '@/data/reactConcepts'
 import type { SearchableItem, SearchFilters, SearchResult, CategoryOption, ConceptSource } from './types'
 
 // Convert JS concepts to searchable items
@@ -50,16 +51,31 @@ function normalizeDSAPatterns(): SearchableItem[] {
   }))
 }
 
+// Convert React concepts to searchable items
+function normalizeReactConcepts(): SearchableItem[] {
+  return reactConcepts.map(c => ({
+    id: c.id,
+    title: c.title,
+    category: c.category,
+    difficulty: c.difficulty,
+    description: c.description,
+    shortDescription: c.shortDescription,
+    keyPoints: c.keyPoints,
+    source: 'react' as ConceptSource,
+    href: `/concepts/react/${c.id}`,
+  }))
+}
+
 // Get all searchable items
 export function getAllSearchableItems(): SearchableItem[] {
-  return [...normalizeJSConcepts(), ...normalizeDSAConcepts(), ...normalizeDSAPatterns()]
+  return [...normalizeJSConcepts(), ...normalizeDSAConcepts(), ...normalizeDSAPatterns(), ...normalizeReactConcepts()]
 }
 
 // Get items by source
 export function getSearchableItemsBySource(source: ConceptSource): SearchableItem[] {
-  return source === 'js'
-    ? normalizeJSConcepts()
-    : [...normalizeDSAConcepts(), ...normalizeDSAPatterns()]
+  if (source === 'js') return normalizeJSConcepts()
+  if (source === 'react') return normalizeReactConcepts()
+  return [...normalizeDSAConcepts(), ...normalizeDSAPatterns()]
 }
 
 // Get all category options for filters
@@ -76,7 +92,13 @@ export function getAllCategories(): CategoryOption[] {
     source: 'dsa' as ConceptSource,
   }))
 
-  return [...jsCategories, ...dsaCategories]
+  const reactCategories = reactConceptCategories.map(c => ({
+    id: c.id,
+    name: c.label,
+    source: 'react' as ConceptSource,
+  }))
+
+  return [...jsCategories, ...dsaCategories, ...reactCategories]
 }
 
 // Score a text match

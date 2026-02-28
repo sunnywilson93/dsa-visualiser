@@ -8,6 +8,7 @@ import {
 } from '@/data/examples'
 import { dsaPatterns } from '@/data/dsaPatterns'
 import { dsaConcepts } from '@/data/dsaConcepts'
+import { reactConcepts } from '@/data/reactConcepts'
 import { problemConcepts } from '@/data/algorithmConcepts'
 import { topicHubs } from '@/data/topicHubs'
 
@@ -41,6 +42,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/concepts/dsa`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/concepts/react`,
       lastModified: CONTENT_LAST_UPDATED,
       changeFrequency: 'weekly',
       priority: 0.9,
@@ -123,6 +130,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
+  // React Concept pages (/concepts/react/[conceptId])
+  const reactConceptPages: MetadataRoute.Sitemap = reactConcepts.map((concept) => ({
+    url: `${BASE_URL}/concepts/react/${concept.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+
   // DSA Pattern pages (/concepts/dsa/patterns/[patternId])
   const dsaPatternPages: MetadataRoute.Sitemap = dsaPatterns.map((pattern) => ({
     url: `${BASE_URL}/concepts/dsa/patterns/${pattern.slug}`,
@@ -194,6 +209,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...topicHubPages,
     ...jsConceptPages,
     ...dsaConceptPages,
+    ...reactConceptPages,
     ...dsaPatternPages,
     ...categoryPages,
     ...dsaSubcategoryPages,

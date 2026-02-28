@@ -1,7 +1,7 @@
 'use client'
 
 import { Search, X } from 'lucide-react'
-import type { Difficulty } from '@/lib/search'
+import type { Difficulty, ConceptSource } from '@/lib/search'
 
 const difficulties: { value: Difficulty | 'all'; label: string }[] = [
   { value: 'all', label: 'All' },
@@ -16,13 +16,13 @@ interface SearchState {
     query: string
     difficulty?: Difficulty | 'all'
     category?: string | 'all'
-    source?: 'js' | 'dsa' | 'all'
+    source?: ConceptSource | 'all'
   }
   results: { item: unknown; score: number; matchedFields: string[] }[]
   isSearching: boolean
   setQuery: (query: string) => void
   setDifficulty: (difficulty: Difficulty | 'all') => void
-  setSource: (source: 'js' | 'dsa' | 'all') => void
+  setSource: (source: ConceptSource | 'all') => void
   clearFilters: () => void
 }
 

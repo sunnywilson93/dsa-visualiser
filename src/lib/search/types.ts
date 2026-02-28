@@ -1,6 +1,6 @@
 // Search Types for Concepts
 
-export type ConceptSource = 'js' | 'dsa'
+export type ConceptSource = 'js' | 'dsa' | 'react'
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced'
 
 // Unified searchable item combining JS and DSA concepts

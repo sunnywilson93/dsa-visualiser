@@ -9,6 +9,7 @@ import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 const sourceLabels = {
   js: 'JS',
   dsa: 'DSA',
+  react: 'React',
 }
 
 interface SearchResultItemProps {
