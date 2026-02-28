@@ -5,7 +5,7 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2, Hammer, BookOpen } from 'lucide-react'
-import { PageLayout } from '@/components/ui'
+import { PageLayout, CodeBlock } from '@/components/ui'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ConceptIcon } from '@/components/Icons'
 import { ConceptFooterLinks } from '@/components/ConceptFooterLinks'
@@ -136,6 +136,42 @@ const visualizations: Record<string, React.ComponentType> = {
   // Phase 8: Type Coercion
   'implicit-coercion-rules': dynamic(() => import('@/components/Concepts/TypeCoercionViz').then(m => m.TypeCoercionViz)),
   'coercion-edge-cases': dynamic(() => import('@/components/Concepts/TypeCoercionViz').then(m => m.TypeCoercionViz)),
+
+  // Basics Extended
+  'strings-methods': dynamic(() => import('@/components/Concepts/BasicsExtViz').then(m => m.BasicsExtViz)),
+  'equality-comparisons': dynamic(() => import('@/components/Concepts/BasicsExtViz').then(m => m.BasicsExtViz)),
+  'json': dynamic(() => import('@/components/Concepts/BasicsExtViz').then(m => m.BasicsExtViz)),
+  'typeof-type-checking': dynamic(() => import('@/components/Concepts/BasicsExtViz').then(m => m.BasicsExtViz)),
+  'short-circuit-evaluation': dynamic(() => import('@/components/Concepts/BasicsExtViz').then(m => m.BasicsExtViz)),
+
+  // Iteration Patterns
+  'for-in-vs-for-of': dynamic(() => import('@/components/Concepts/IterationViz').then(m => m.IterationViz)),
+  'iterators-generators': dynamic(() => import('@/components/Concepts/IterationViz').then(m => m.IterationViz)),
+  'async-iterators': dynamic(() => import('@/components/Concepts/IterationViz').then(m => m.IterationViz)),
+  'higher-order-functions': dynamic(() => import('@/components/Concepts/IterationViz').then(m => m.IterationViz)),
+
+  // Data Structures
+  'map-set': dynamic(() => import('@/components/Concepts/DataStructuresViz').then(m => m.DataStructuresViz)),
+  'weakmap-weakset': dynamic(() => import('@/components/Concepts/DataStructuresViz').then(m => m.DataStructuresViz)),
+  'symbols': dynamic(() => import('@/components/Concepts/DataStructuresViz').then(m => m.DataStructuresViz)),
+
+  // Object Patterns
+  'getters-setters': dynamic(() => import('@/components/Concepts/ObjectPatternsViz').then(m => m.ObjectPatternsViz)),
+  'object-static-methods': dynamic(() => import('@/components/Concepts/ObjectPatternsViz').then(m => m.ObjectPatternsViz)),
+  'strict-mode': dynamic(() => import('@/components/Concepts/ObjectPatternsViz').then(m => m.ObjectPatternsViz)),
+  'structured-clone': dynamic(() => import('@/components/Concepts/ObjectPatternsViz').then(m => m.ObjectPatternsViz)),
+
+  // Advanced Patterns
+  'tagged-template-literals': dynamic(() => import('@/components/Concepts/AdvancedPatternsViz').then(m => m.AdvancedPatternsViz)),
+  'class-advanced': dynamic(() => import('@/components/Concepts/AdvancedPatternsViz').then(m => m.AdvancedPatternsViz)),
+  'proxy-reflect': dynamic(() => import('@/components/Concepts/AdvancedPatternsViz').then(m => m.AdvancedPatternsViz)),
+  'regular-expressions': dynamic(() => import('@/components/Concepts/AdvancedPatternsViz').then(m => m.AdvancedPatternsViz)),
+
+  // Browser APIs
+  'dom-events': dynamic(() => import('@/components/Concepts/BrowserApisViz').then(m => m.BrowserApisViz)),
+  'fetch-api': dynamic(() => import('@/components/Concepts/BrowserApisViz').then(m => m.BrowserApisViz)),
+  'web-storage': dynamic(() => import('@/components/Concepts/BrowserApisViz').then(m => m.BrowserApisViz)),
+  'abort-controller': dynamic(() => import('@/components/Concepts/BrowserApisViz').then(m => m.BrowserApisViz)),
 }
 
 // Helper to determine if a concept is a JS concept or DSA concept
@@ -273,9 +309,7 @@ export default function ConceptPageClient(): JSX.Element {
                 <h3 className="m-0 border-b border-[var(--color-border-card)] bg-[var(--color-brand-primary-15)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-[0.95rem] font-semibold text-white">
                   {example.title}
                 </h3>
-                <pre className="m-0 overflow-x-auto bg-[var(--color-black-40)] p-[var(--spacing-lg)] font-mono text-base leading-[var(--leading-relaxed)] text-text-secondary max-md:p-[var(--spacing-md)] max-md:text-[length:var(--text-sm)]">
-                  <code className="whitespace-pre">{example.code}</code>
-                </pre>
+                <CodeBlock code={example.code} />
                 <p className="m-0 border-t border-[var(--color-white-5)] bg-[var(--color-brand-primary-5)] px-[var(--spacing-lg)] py-[var(--spacing-md)] text-base leading-[var(--leading-relaxed)] text-text-muted">
                   {example.explanation}
                 </p>

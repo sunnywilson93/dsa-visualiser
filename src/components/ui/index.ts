@@ -30,3 +30,6 @@ export type { PageLayoutProps, PageLayoutVariant } from './PageLayout'
 
 export { FilterBar } from './FilterBar'
 export type { FilterBarProps, FilterBarVariant, FilterOption } from './FilterBar'
+
+export { CodeBlock } from './CodeBlock'
+export type { CodeBlockProps } from './CodeBlock'

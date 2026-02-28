@@ -16,7 +16,7 @@ export interface Concept {
   id: string
   title: string
   category: 'philosophy' | 'foundations' | 'basics' | 'fundamentals' | 'core' | 'advanced' | 'runtime' | 'backend' | 'browser'
-  subcategory?: 'scope-hoisting' | 'async-patterns' | 'array-methods' | 'prototypes-oop' | 'modern-js' | 'event-loop'
+  subcategory?: 'scope-hoisting' | 'async-patterns' | 'array-methods' | 'prototypes-oop' | 'modern-js' | 'event-loop' | 'data-structures' | 'metaprogramming' | 'iteration'
   difficulty: 'beginner' | 'intermediate' | 'advanced'
   description: string
   shortDescription: string
@@ -9456,6 +9456,2633 @@ const fib = memoize((n) => {
       },
     ],
   },
+
+  // ===== BASICS: Language Primitives & Comparisons =====
+
+  {
+    id: 'strings-methods',
+    title: 'Strings & String Methods',
+    category: 'basics',
+    difficulty: 'beginner',
+    estimatedReadTime: 10,
+    interviewFrequency: 'high',
+    prerequisites: ['data-types'],
+    nextConcepts: ['regular-expressions', 'template-literals'],
+    description: 'Strings in JavaScript are immutable sequences of characters. They are primitives, but JS auto-boxes them to String objects so you can call methods. Every string method returns a new string — the original is never modified. Mastering string methods is essential for parsing, formatting, and manipulating text in real-world applications.',
+    shortDescription: 'String primitives, immutability, and built-in methods',
+    keyPoints: [
+      'Strings are immutable — methods always return new strings',
+      'JS auto-boxes string primitives to String objects for method access',
+      'charAt(i) and bracket notation str[i] access individual characters',
+      'slice(start, end) extracts substrings (supports negative indices)',
+      'indexOf/includes/startsWith/endsWith for searching within strings',
+      'split(separator) converts string to array, join(separator) does the reverse',
+    ],
+    examples: [
+      {
+        title: 'Immutability of Strings',
+        code: `const greeting = "Hello, World!";
+
+// String methods return NEW strings
+const upper = greeting.toUpperCase();
+console.log(upper);     // "HELLO, WORLD!"
+console.log(greeting);  // "Hello, World!" (unchanged!)
+
+// You cannot mutate a string in place
+greeting[0] = "h";      // Silently fails (no error!)
+console.log(greeting);  // "Hello, World!" (still unchanged)`,
+        explanation: 'Strings are immutable. Every method returns a new string — the original is never modified.',
+      },
+      {
+        title: 'Searching: indexOf, includes, startsWith, endsWith',
+        code: `const str = "JavaScript is awesome";
+
+// indexOf - returns position or -1
+console.log(str.indexOf("Script")); // 4
+console.log(str.indexOf("python")); // -1
+
+// includes - returns boolean
+console.log(str.includes("awesome")); // true
+
+// startsWith / endsWith
+console.log(str.startsWith("Java"));    // true
+console.log(str.endsWith("awesome"));   // true
+console.log(str.startsWith("Script", 4)); // true (from index 4)`,
+        explanation: 'Use includes for presence checks, indexOf when you need the position, startsWith/endsWith for prefix/suffix checks.',
+      },
+      {
+        title: 'Extracting and Transforming',
+        code: `const path = "  /users/alice/profile  ";
+
+// trim - remove whitespace from both ends
+console.log(path.trim()); // "/users/alice/profile"
+
+// slice(start, end) - extract substring
+console.log(path.trim().slice(1));       // "users/alice/profile"
+console.log(path.trim().slice(7, 12));   // "alice"
+
+// replace / replaceAll
+const msg = "foo-bar-baz";
+console.log(msg.replace("-", " "));     // "foo bar-baz" (first only!)
+console.log(msg.replaceAll("-", " "));  // "foo bar baz" (all!)
+
+// padStart / padEnd
+console.log("5".padStart(3, "0"));  // "005"
+console.log("hi".padEnd(5, "."));   // "hi..."`,
+        explanation: 'slice extracts substrings, replace/replaceAll for substitution, trim removes whitespace, padStart/padEnd for formatting.',
+      },
+      {
+        title: 'split and repeat',
+        code: `// split - string to array
+const csv = "apple,banana,cherry";
+const fruits = csv.split(",");
+console.log(fruits); // ["apple", "banana", "cherry"]
+
+// Split into characters
+const chars = "hello".split("");
+console.log(chars); // ["h", "e", "l", "l", "o"]
+
+// Split with limit
+console.log("a-b-c-d".split("-", 2)); // ["a", "b"]
+
+// repeat
+console.log("ha".repeat(3));  // "hahaha"
+
+// Round-trip: split then join
+const words = "Hello World".split(" ");
+console.log(words.join("-")); // "Hello-World"`,
+        explanation: 'split converts strings to arrays. Combine with join for transformations like changing delimiters.',
+      },
+    ],
+    commonMistakes: [
+      'Expecting string methods to mutate the original (they never do)',
+      'Using replace() and expecting all occurrences to be replaced (use replaceAll)',
+      'Confusing slice() with splice() (splice is for arrays and mutates)',
+      'Forgetting that string comparison is case-sensitive ("Hello" !== "hello")',
+    ],
+    interviewTips: [
+      'Emphasize immutability — every method returns a new string',
+      'Know the difference between slice, substring, and substr (substr is deprecated)',
+      'Be ready to reverse a string: str.split("").reverse().join("")',
+      'Understand that string primitives are auto-boxed to String objects',
+    ],
+  },
+  {
+    id: 'equality-comparisons',
+    title: 'Equality Comparisons',
+    category: 'basics',
+    difficulty: 'beginner',
+    estimatedReadTime: 8,
+    interviewFrequency: 'very-high',
+    prerequisites: ['data-types', 'type-coercion'],
+    nextConcepts: ['implicit-coercion-rules'],
+    description: 'JavaScript has three ways to compare equality: == (loose), === (strict), and Object.is(). Each behaves differently with type coercion, NaN, and signed zeros. Understanding these differences is one of the most frequently tested JavaScript interview topics.',
+    shortDescription: '== vs === vs Object.is and their edge cases',
+    keyPoints: [
+      '=== (strict) compares without type coercion — prefer this by default',
+      '== (loose) performs type coercion before comparing, following complex rules',
+      'Object.is() is like === but handles NaN and +0/-0 correctly',
+      'NaN === NaN is false — use Object.is(NaN, NaN) or Number.isNaN()',
+      '+0 === -0 is true — but Object.is(+0, -0) is false',
+      'Objects are compared by reference, not by value (even with ===)',
+    ],
+    examples: [
+      {
+        title: 'Strict Equality (===)',
+        code: `// === compares value AND type — no coercion
+console.log(5 === 5);        // true
+console.log(5 === "5");      // false (different types!)
+console.log(true === 1);     // false (different types!)
+console.log(null === undefined); // false (different types!)
+
+// Reference comparison for objects
+const a = [1, 2, 3];
+const b = [1, 2, 3];
+const c = a;
+console.log(a === b);  // false (different objects!)
+console.log(a === c);  // true (same reference)`,
+        explanation: 'Strict equality checks both value and type. Objects are compared by reference, not structure.',
+      },
+      {
+        title: 'Loose Equality (==) and Coercion',
+        code: `// == converts types before comparing
+console.log(5 == "5");         // true (string → number)
+console.log(0 == false);       // true (boolean → number)
+console.log("" == false);      // true (both → 0)
+console.log(null == undefined); // true (special rule!)
+console.log(null == 0);        // false (null only == undefined)
+
+// Surprising results
+console.log([] == false);      // true ([] → "" → 0)
+console.log("" == 0);          // true (both → 0)
+console.log(" " == 0);         // true (" " → 0)`,
+        explanation: 'Loose equality follows complex coercion rules. The null == undefined special case is the only useful ==.',
+      },
+      {
+        title: 'Object.is() — The Most Precise',
+        code: `// Object.is() is like === with two fixes:
+
+// Fix 1: NaN is equal to itself
+console.log(NaN === NaN);           // false (!)
+console.log(Object.is(NaN, NaN));   // true
+
+// Fix 2: +0 and -0 are different
+console.log(+0 === -0);             // true (!)
+console.log(Object.is(+0, -0));     // false
+
+// Everything else matches ===
+console.log(Object.is(5, 5));       // true
+console.log(Object.is(5, "5"));     // false
+
+// Practical: checking for NaN
+const value = 0 / 0; // NaN
+console.log(Number.isNaN(value)); // true (preferred)
+console.log(Object.is(value, NaN)); // true`,
+        explanation: 'Object.is() fixes the two quirks of ===: NaN equality and signed zero comparison.',
+      },
+      {
+        title: 'Reference vs Value Equality',
+        code: `// Primitives: compared by value
+console.log("hello" === "hello"); // true
+console.log(42 === 42);           // true
+
+// Objects: compared by reference
+const obj1 = { name: "Alice" };
+const obj2 = { name: "Alice" };
+console.log(obj1 === obj2);  // false (different objects!)
+
+// Checking structural equality requires manual comparison
+function deepEqual(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+console.log(deepEqual(obj1, obj2)); // true`,
+        explanation: 'Primitives compare by value, objects by reference. Deep equality requires manual comparison.',
+      },
+    ],
+    commonMistakes: [
+      'Using == when === is appropriate (coercion causes subtle bugs)',
+      'Checking NaN with === (NaN !== NaN — use Number.isNaN() instead)',
+      'Expecting {} === {} to be true (objects compare by reference)',
+      'Not knowing the null == undefined special case (it is sometimes useful)',
+    ],
+    interviewTips: [
+      'Always default to === and explain why (no type coercion)',
+      'Know the NaN and +0/-0 edge cases — these are classic interview questions',
+      'Explain when == is actually useful: null == undefined to check for both',
+      'Be ready to whiteboard the coercion steps for tricky == comparisons',
+    ],
+  },
+  {
+    id: 'json',
+    title: 'JSON',
+    category: 'basics',
+    difficulty: 'beginner',
+    estimatedReadTime: 9,
+    interviewFrequency: 'high',
+    prerequisites: ['objects-basics', 'arrays-basics'],
+    nextConcepts: ['structured-clone'],
+    description: 'JSON (JavaScript Object Notation) is the universal data interchange format for the web. JSON.parse() converts JSON strings to JavaScript values, and JSON.stringify() does the reverse. Understanding the limitations, reviver/replacer functions, and edge cases (circular references, Date handling, undefined) is critical for working with APIs and data storage.',
+    shortDescription: 'Parsing, stringifying, and JSON limitations',
+    keyPoints: [
+      'JSON.parse(string) converts a JSON string into a JavaScript value',
+      'JSON.stringify(value) converts a JavaScript value into a JSON string',
+      'JSON cannot represent: functions, undefined, Symbol, circular references',
+      'replacer parameter in stringify controls which properties are included',
+      'reviver parameter in parse transforms values during parsing',
+      'JSON.parse(JSON.stringify(obj)) is a quick deep clone (with limitations)',
+    ],
+    examples: [
+      {
+        title: 'parse and stringify Basics',
+        code: `// JSON string → JavaScript object
+const jsonStr = '{"name":"Alice","age":30,"active":true}';
+const user = JSON.parse(jsonStr);
+console.log(user.name); // "Alice"
+
+// JavaScript object → JSON string
+const data = { x: 1, y: [2, 3], nested: { z: 4 } };
+const str = JSON.stringify(data);
+console.log(str); // '{"x":1,"y":[2,3],"nested":{"z":4}}'
+
+// Pretty-print with indentation
+console.log(JSON.stringify(data, null, 2));`,
+        explanation: 'parse converts JSON text to JS values. stringify converts JS values to JSON text.',
+      },
+      {
+        title: 'What JSON Drops',
+        code: `const obj = {
+  name: "Alice",
+  greet: function() { return "hi"; },
+  age: undefined,
+  id: Symbol("id"),
+  count: NaN,
+  big: Infinity,
+};
+
+const result = JSON.parse(JSON.stringify(obj));
+console.log(result);
+// { name: "Alice", count: null, big: null }
+// function → dropped, undefined → dropped
+// Symbol → dropped, NaN → null, Infinity → null`,
+        explanation: 'JSON silently drops functions, undefined, and Symbols. NaN and Infinity become null. Dates become strings.',
+      },
+      {
+        title: 'replacer and reviver Functions',
+        code: `// replacer — control what gets stringified
+const user = { name: "Alice", password: "secret", role: "admin" };
+const safe = JSON.stringify(user, (key, value) => {
+  if (key === "password") return undefined;
+  return value;
+});
+console.log(safe); // '{"name":"Alice","role":"admin"}'
+
+// replacer as array — whitelist keys
+console.log(JSON.stringify(user, ["name", "role"]));
+
+// reviver — transform during parsing
+const json = '{"name":"Alice","joined":"2024-01-15T00:00:00.000Z"}';
+const parsed = JSON.parse(json, (key, value) => {
+  if (key === "joined") return new Date(value);
+  return value;
+});
+console.log(parsed.joined instanceof Date); // true`,
+        explanation: 'replacer filters/transforms during stringify. reviver transforms during parse. Both receive (key, value).',
+      },
+      {
+        title: 'Deep Clone and toJSON',
+        code: `// Quick deep clone (with limitations)
+const original = { a: 1, b: { c: 2 }, d: [3, 4] };
+const clone = JSON.parse(JSON.stringify(original));
+clone.b.c = 99;
+console.log(original.b.c); // 2 (not affected!)
+
+// Circular references throw
+const obj = { name: "self" };
+obj.self = obj;
+try {
+  JSON.stringify(obj);
+} catch (e) {
+  console.log(e.message); // "Converting circular structure to JSON"
+}
+
+// toJSON — custom serialization
+const account = {
+  id: 1,
+  balance: 1000,
+  toJSON() {
+    return { id: this.id };
+  },
+};
+console.log(JSON.stringify(account)); // '{"id":1}'`,
+        explanation: 'JSON clone works for plain data but fails on circular refs, Dates, functions. Use toJSON for custom output.',
+      },
+    ],
+    commonMistakes: [
+      'Assuming JSON preserves Date objects (they become strings)',
+      'Forgetting that JSON.stringify silently drops undefined and functions',
+      'Using JSON clone on objects with circular references (throws error)',
+      'Not validating JSON.parse input (wrap in try/catch for untrusted data)',
+    ],
+    interviewTips: [
+      'List what JSON cannot represent: functions, undefined, Symbol, circular refs, Date objects',
+      'Know the JSON deep clone trick and its limitations vs structuredClone',
+      'Explain replacer and reviver with practical use cases',
+      'Mention toJSON as a way for objects to control their own serialization',
+    ],
+  },
+  {
+    id: 'for-in-vs-for-of',
+    title: 'for...in vs for...of',
+    category: 'basics',
+    difficulty: 'beginner',
+    estimatedReadTime: 7,
+    interviewFrequency: 'high',
+    prerequisites: ['loops', 'objects-basics', 'arrays-basics'],
+    nextConcepts: ['iterators-generators', 'prototype-chain-basics'],
+    description: 'JavaScript has two iteration statements that look similar but serve different purposes: for...in iterates over enumerable property keys (including inherited ones), while for...of iterates over iterable values (arrays, strings, maps, sets). Confusing them is a common source of bugs, especially when using for...in on arrays.',
+    shortDescription: 'Iterating keys vs values and when to use each',
+    keyPoints: [
+      'for...in iterates over enumerable property keys (strings), including inherited ones',
+      'for...of iterates over iterable values (arrays, strings, maps, sets)',
+      'for...in on arrays gives string indices, not values — avoid this',
+      'for...in includes inherited properties — use hasOwnProperty to guard',
+      'Plain objects are NOT iterable — for...of throws on them',
+      'Use Object.keys/values/entries to iterate objects with for...of',
+    ],
+    examples: [
+      {
+        title: 'for...in — Iterates Keys',
+        code: `const user = { name: "Alice", age: 30, role: "admin" };
+
+for (const key in user) {
+  console.log(key, user[key]);
+}
+// "name" "Alice"
+// "age" 30
+// "role" "admin"`,
+        explanation: 'for...in iterates over all enumerable property names (keys) of an object.',
+      },
+      {
+        title: 'for...of — Iterates Values',
+        code: `const fruits = ["apple", "banana", "cherry"];
+
+for (const fruit of fruits) {
+  console.log(fruit);
+}
+// "apple", "banana", "cherry"
+
+// Works with strings too
+for (const char of "hello") {
+  console.log(char); // "h", "e", "l", "l", "o"
+}
+
+// Works with Map
+const map = new Map([["a", 1], ["b", 2]]);
+for (const [key, value] of map) {
+  console.log(key, value);
+}`,
+        explanation: 'for...of iterates over values of any iterable: arrays, strings, Maps, Sets.',
+      },
+      {
+        title: 'Why NOT to Use for...in on Arrays',
+        code: `const arr = ["a", "b", "c"];
+
+// for...in on arrays — BAD!
+for (const key in arr) {
+  console.log(key);        // "0", "1", "2" (strings!)
+  console.log(typeof key); // "string" (not number!)
+}
+
+// Worse: inherited properties leak in
+Array.prototype.customMethod = function() {};
+for (const key in arr) {
+  console.log(key); // "0", "1", "2", "customMethod" (!)
+}
+delete Array.prototype.customMethod;
+
+// for...of on arrays — GOOD!
+for (const value of arr) {
+  console.log(value); // "a", "b", "c"
+}`,
+        explanation: 'for...in gives string indices and includes inherited properties. Always use for...of for arrays.',
+      },
+      {
+        title: 'Object Iteration with Object.entries',
+        code: `function Animal(name) { this.name = name; }
+Animal.prototype.type = "animal";
+
+const dog = new Animal("Rex");
+dog.breed = "Lab";
+
+// for...in includes inherited
+for (const key in dog) {
+  console.log(key); // "name", "breed", "type" (inherited!)
+}
+
+// Modern alternative: Object.entries + for...of
+for (const [key, value] of Object.entries(dog)) {
+  console.log(key, value); // "name" "Rex", "breed" "Lab"
+}`,
+        explanation: 'Use Object.keys/values/entries for a clean approach that skips inherited properties.',
+      },
+    ],
+    commonMistakes: [
+      'Using for...in on arrays (gives string indices and includes inherited properties)',
+      'Using for...of on plain objects (throws TypeError — objects are not iterable)',
+      'Forgetting that for...in keys are always strings, even for arrays',
+      'Not guarding for...in with hasOwnProperty when inheritance is possible',
+    ],
+    interviewTips: [
+      'Clearly explain: for...in = keys, for...of = values',
+      'Know why for...in is dangerous on arrays (string keys, inherited props)',
+      'Show how Object.entries() + for...of replaces for...in for objects',
+      'Mention that for...of requires the Symbol.iterator protocol',
+    ],
+  },
+  {
+    id: 'typeof-type-checking',
+    title: 'typeof & Type Checking',
+    category: 'basics',
+    difficulty: 'beginner',
+    estimatedReadTime: 8,
+    interviewFrequency: 'high',
+    prerequisites: ['data-types'],
+    nextConcepts: ['instanceof-operator', 'equality-comparisons'],
+    description: 'Type checking in JavaScript requires understanding multiple tools because no single operator covers all cases. typeof works for primitives but has quirks (typeof null === "object"). Array.isArray() is needed for arrays, instanceof checks prototype chains, and custom type guards handle complex cases.',
+    shortDescription: 'typeof quirks, Array.isArray, and type checking strategies',
+    keyPoints: [
+      'typeof returns a string: "string", "number", "boolean", "undefined", "object", "function", "symbol", "bigint"',
+      'typeof null === "object" is a famous bug that can never be fixed',
+      'typeof for undeclared variables returns "undefined" (does not throw)',
+      'Array.isArray() is the only reliable way to check for arrays',
+      'instanceof checks the prototype chain (works for custom classes)',
+      'Combine multiple checks for robust type validation',
+    ],
+    examples: [
+      {
+        title: 'typeof Results Table',
+        code: `console.log(typeof "hello");     // "string"
+console.log(typeof 42);          // "number"
+console.log(typeof true);        // "boolean"
+console.log(typeof undefined);   // "undefined"
+console.log(typeof Symbol());    // "symbol"
+
+console.log(typeof {});           // "object"
+console.log(typeof []);           // "object" (not "array"!)
+console.log(typeof function(){}); // "function"
+console.log(typeof null);        // "object" (!)`,
+        explanation: 'typeof is useful for primitives but returns "object" for null, arrays, and most objects.',
+      },
+      {
+        title: 'Array.isArray — The Only Reliable Array Check',
+        code: `const arr = [1, 2, 3];
+const obj = { 0: "a", 1: "b", length: 2 };
+
+console.log(typeof arr);  // "object"
+console.log(typeof obj);  // "object"
+
+console.log(Array.isArray(arr));  // true
+console.log(Array.isArray(obj));  // false
+
+// instanceof fails across iframes
+console.log(arr instanceof Array); // true
+// But: iframe.contentWindow.Array !== window.Array`,
+        explanation: 'Array.isArray() is the only reliable check. instanceof Array fails across different realms (iframes).',
+      },
+      {
+        title: 'typeof for Safe Property Access',
+        code: `// typeof does NOT throw for undeclared variables
+console.log(typeof undeclaredVar); // "undefined" (no error!)
+
+// Practical: feature detection
+if (typeof window !== "undefined") {
+  console.log("Running in browser");
+} else {
+  console.log("Running in Node.js");
+}
+
+// Checking for null/undefined
+function isNullish(value) {
+  return value == null; // loose equality trick
+}
+console.log(isNullish(null));      // true
+console.log(isNullish(undefined)); // true
+console.log(isNullish(0));         // false`,
+        explanation: 'typeof is safe for undeclared variables. Use it for feature detection and environment checks.',
+      },
+      {
+        title: 'Comprehensive Type Checking',
+        code: `function getType(value) {
+  if (value === null) return "null";
+  if (Array.isArray(value)) return "array";
+  return typeof value;
+}
+
+console.log(getType(null));     // "null"
+console.log(getType([1, 2]));   // "array"
+console.log(getType({ a: 1 })); // "object"
+console.log(getType("hello"));  // "string"
+
+// Object.prototype.toString — most precise
+function preciseType(value) {
+  return Object.prototype.toString.call(value);
+}
+console.log(preciseType([]));        // "[object Array]"
+console.log(preciseType(null));      // "[object Null]"
+console.log(preciseType(new Date())); // "[object Date]"`,
+        explanation: 'Combine typeof, Array.isArray, and null checks for coverage. Object.prototype.toString is the most precise.',
+      },
+    ],
+    commonMistakes: [
+      'Relying on typeof to detect null (typeof null === "object")',
+      'Using typeof to check for arrays (returns "object", not "array")',
+      'Using instanceof Array instead of Array.isArray (fails across iframes)',
+      'Forgetting that typeof returns "function" for functions, not "object"',
+    ],
+    interviewTips: [
+      'Know the typeof null bug — it is a legacy issue from JS v1',
+      'Always recommend Array.isArray over instanceof for arrays',
+      'Show the complete typeof results table from memory',
+      'Demonstrate Object.prototype.toString.call() as the ultimate type checker',
+    ],
+  },
+  {
+    id: 'short-circuit-evaluation',
+    title: 'Short-Circuit Evaluation',
+    category: 'basics',
+    difficulty: 'beginner',
+    estimatedReadTime: 7,
+    interviewFrequency: 'medium',
+    prerequisites: ['operators', 'conditionals'],
+    nextConcepts: ['nullish-coalescing', 'logical-assignment'],
+    description: 'Short-circuit evaluation means logical operators stop evaluating as soon as the result is determined. && returns the first falsy value (or the last value if all are truthy), and || returns the first truthy value (or the last value if all are falsy). This behavior enables powerful patterns like default values, conditional execution, and guard clauses.',
+    shortDescription: '&& and || return values, not just booleans',
+    keyPoints: [
+      '&& returns the first falsy value, or the last value if all are truthy',
+      '|| returns the first truthy value, or the last value if all are falsy',
+      'Both operators return actual values, not necessarily booleans',
+      'Falsy values: false, 0, "", null, undefined, NaN (6 total)',
+      '|| treats 0 and "" as falsy — use ?? when you need only null/undefined',
+      'Short-circuit means the right side may never execute',
+    ],
+    examples: [
+      {
+        title: '&& Returns First Falsy or Last Value',
+        code: `console.log("hello" && 42);        // 42 (both truthy → last)
+console.log("hello" && 0 && 42);   // 0 (first falsy)
+console.log(null && "hello");      // null (first falsy)
+console.log(1 && 2 && 3);          // 3 (all truthy → last)
+
+// Conditional execution
+const user = { name: "Alice", isAdmin: true };
+user.isAdmin && console.log("Welcome, admin!");`,
+        explanation: '&& evaluates left-to-right and returns the first falsy value. If all truthy, returns the last one.',
+      },
+      {
+        title: '|| Returns First Truthy or Last Value',
+        code: `console.log("hello" || "world");   // "hello" (first truthy)
+console.log("" || "default");      // "default" (empty string is falsy)
+console.log(null || undefined || "found"); // "found"
+
+// Default values pattern
+function greet(name) {
+  const displayName = name || "Guest";
+  console.log("Hello, " + displayName);
+}
+greet("Alice"); // "Hello, Alice"
+greet("");      // "Hello, Guest" (empty string is falsy!)`,
+        explanation: '|| evaluates left-to-right and returns the first truthy value. If all falsy, returns the last one.',
+      },
+      {
+        title: 'The || Trap: 0 and Empty String',
+        code: `function getPort(port) {
+  return port || 3000;
+}
+console.log(getPort(8080));  // 8080 ✓
+console.log(getPort(0));     // 3000 ✗ (0 is a valid port!)
+
+// Fix: use ?? (nullish coalescing)
+function getPortSafe(port) {
+  return port ?? 3000;
+}
+console.log(getPortSafe(0));     // 0 ✓
+console.log(getPortSafe(null));  // 3000 ✓`,
+        explanation: '|| replaces all falsy values including 0 and "". Use ?? when only null/undefined should trigger the default.',
+      },
+      {
+        title: 'Short-Circuit Side Effects',
+        code: `let counter = 0;
+function increment() { counter++; return counter; }
+
+false && increment();  // increment() never called!
+console.log(counter);  // 0
+
+true && increment();   // increment() runs
+console.log(counter);  // 1
+
+"hello" || increment(); // increment() never called!
+console.log(counter);   // 1
+
+// Safe property access chain (before ?.)
+const user = null;
+const name = user && user.profile && user.profile.name;
+console.log(name); // null (safe — no TypeError)`,
+        explanation: 'Short-circuiting means the right operand may never execute. This is used for guard clauses and safe access chains.',
+      },
+    ],
+    commonMistakes: [
+      'Using || for defaults when 0 or "" are valid values (use ?? instead)',
+      'Forgetting that && and || return actual values, not booleans',
+      'Not knowing all 6 falsy values: false, 0, "", null, undefined, NaN',
+      'Assuming the right side of && or || always executes',
+    ],
+    interviewTips: [
+      'Explain that && and || return values, not just true/false',
+      'Know when to use || vs ?? — the classic 0 and "" trap',
+      'Demonstrate how && can replace simple if statements',
+      'List all 6 falsy values without hesitation',
+    ],
+  },
+
+  // ===== FUNDAMENTALS: Data Structures & Metaprogramming =====
+
+  {
+    id: 'map-set',
+    title: 'Map & Set',
+    category: 'fundamentals',
+    subcategory: 'data-structures',
+    difficulty: 'intermediate',
+    estimatedReadTime: 10,
+    interviewFrequency: 'high',
+    prerequisites: ['objects-basics', 'arrays-basics'],
+    nextConcepts: ['weakmap-weakset'],
+    description: 'Map and Set are ES6 collections that solve limitations of plain objects and arrays. Map allows any value as a key (not just strings), maintains insertion order, and has a size property. Set stores only unique values with O(1) lookup.',
+    shortDescription: 'Keyed collections and unique value sets',
+    keyPoints: [
+      'Map keys can be any type (objects, functions, primitives) unlike object keys which are always strings/symbols',
+      'Map preserves insertion order and has a .size property',
+      'Set stores only unique values with O(1) add/has/delete',
+      'Both Map and Set are iterable with for...of, forEach, and spread',
+      'Use Map when you need non-string keys or frequent additions/deletions',
+      'Convert between arrays and Map/Set with spread and constructors',
+    ],
+    examples: [
+      {
+        title: 'Map vs Plain Object',
+        code: `const map = new Map()
+
+const objKey = { id: 1 }
+map.set(objKey, 'user data')
+map.set(42, 'numeric key')
+
+console.log(map.get(objKey))  // 'user data'
+console.log(map.size)         // 2
+console.log(map.has(42))      // true
+
+// Plain object coerces keys to strings
+const obj = {}
+obj[objKey] = 'user data'
+console.log(Object.keys(obj)) // ['[object Object]'] — key is lost!`,
+        explanation: 'Map preserves the actual key identity. Objects stringify all keys, losing the original reference.',
+      },
+      {
+        title: 'Set for Unique Values',
+        code: `const nums = [1, 2, 3, 2, 1, 4, 5, 4]
+const unique = new Set(nums)
+console.log(unique)      // Set {1, 2, 3, 4, 5}
+console.log(unique.size) // 5
+
+console.log(unique.has(3))  // true
+
+const arr = [...unique]     // [1, 2, 3, 4, 5]
+
+// Set operations
+const a = new Set([1, 2, 3])
+const b = new Set([2, 3, 4])
+const union = new Set([...a, ...b])
+const intersection = new Set([...a].filter(x => b.has(x)))`,
+        explanation: 'Set automatically removes duplicates and provides fast lookups. Spread and filter enable set algebra.',
+      },
+      {
+        title: 'Map Methods and Iteration',
+        code: `const userRoles = new Map([
+  ['alice', 'admin'],
+  ['bob', 'editor'],
+  ['charlie', 'viewer'],
+])
+
+for (const [name, role] of userRoles) {
+  console.log(\`\${name}: \${role}\`)
+}
+
+console.log([...userRoles.keys()])   // ['alice', 'bob', 'charlie']
+console.log([...userRoles.values()]) // ['admin', 'editor', 'viewer']
+
+userRoles.delete('bob')
+userRoles.clear()`,
+        explanation: 'Map provides keys(), values(), entries() iterators. Iteration always follows insertion order.',
+      },
+      {
+        title: 'When to Use Map vs Object',
+        code: `// Use Map when: non-string keys, frequent add/delete, need size
+const wordFreq = new Map()
+for (const word of ['hi', 'bye', 'hi']) {
+  wordFreq.set(word, (wordFreq.get(word) || 0) + 1)
+}
+console.log(wordFreq.size) // 2
+
+// Use Object when: fixed-shape, JSON, destructuring
+const config = { theme: 'dark', lang: 'en' }
+JSON.stringify(config)  // works
+const { theme } = config // works`,
+        explanation: 'Map excels with dynamic keys and frequent mutations. Objects are better for fixed-shape records and JSON.',
+      },
+    ],
+    commonMistakes: [
+      'Using map[key] instead of map.get(key) — bracket notation does not use the Map API',
+      'Expecting Map to be JSON-serializable — use Object.fromEntries(map) to convert first',
+      'Comparing objects by value in Set — Set uses reference equality',
+      'Forgetting that Map.forEach callback order is (value, key) not (key, value)',
+    ],
+    interviewTips: [
+      'Map/Set get/set/has/delete are all O(1) average case',
+      'Array deduplication with Set: [...new Set(arr)]',
+      'Explain when Map is better than Object: non-string keys, frequent add/delete, size tracking',
+      'Map preserves insertion order — guaranteed by the spec',
+    ],
+  },
+  {
+    id: 'weakmap-weakset',
+    title: 'WeakMap & WeakSet',
+    category: 'fundamentals',
+    subcategory: 'data-structures',
+    difficulty: 'advanced',
+    estimatedReadTime: 9,
+    interviewFrequency: 'medium',
+    prerequisites: ['map-set', 'closure-memory-leaks'],
+    nextConcepts: ['proxy-reflect'],
+    description: 'WeakMap and WeakSet hold weak references to their keys (WeakMap) or values (WeakSet). A weak reference does not prevent garbage collection — when nothing else references the key object, both the key and its associated value are automatically cleaned up.',
+    shortDescription: 'Weak references for GC-friendly object metadata',
+    keyPoints: [
+      'WeakMap keys and WeakSet values must be objects — no primitives',
+      'Entries are automatically garbage-collected when the key object has no other references',
+      'Not iterable — no for...of, no .keys(), no .values(), no .entries()',
+      'No .size property — the runtime cannot know the count since entries may be GC\'d at any time',
+      'WeakMap supports only get, set, has, delete — the minimal API',
+      'Primary use cases: private data, DOM metadata, caching without memory leaks',
+    ],
+    examples: [
+      {
+        title: 'Private Data with WeakMap',
+        code: `const privateData = new WeakMap()
+
+class User {
+  constructor(name, password) {
+    privateData.set(this, { password })
+    this.name = name
+  }
+
+  checkPassword(attempt) {
+    const { password } = privateData.get(this)
+    return attempt === password
+  }
+}
+
+const user = new User('Alice', 'secret123')
+console.log(user.name)                 // 'Alice'
+console.log(user.password)             // undefined
+console.log(user.checkPassword('secret123')) // true`,
+        explanation: 'WeakMap stores private data keyed by instance. When the instance is GC\'d, the private data goes with it.',
+      },
+      {
+        title: 'DOM Metadata Without Memory Leaks',
+        code: `const elementData = new WeakMap()
+
+function trackElement(element) {
+  elementData.set(element, {
+    clickCount: 0,
+    createdAt: Date.now(),
+  })
+}
+
+function recordClick(element) {
+  const data = elementData.get(element)
+  if (data) data.clickCount++
+}
+
+// If element is removed from DOM and no references remain,
+// the WeakMap entry is automatically garbage collected`,
+        explanation: 'When DOM elements are removed, WeakMap entries are cleaned up automatically. A regular Map would cause a memory leak.',
+      },
+      {
+        title: 'Memoization Cache with WeakMap',
+        code: `const cache = new WeakMap()
+
+function expensiveComputation(obj) {
+  if (cache.has(obj)) return cache.get(obj)
+
+  const result = Object.keys(obj).length * 100
+  cache.set(obj, result)
+  return result
+}
+
+let data = { a: 1, b: 2, c: 3 }
+expensiveComputation(data) // computes
+expensiveComputation(data) // cached
+
+data = null // cache entry eligible for GC`,
+        explanation: 'WeakMap-based caches self-clean when cached objects are no longer used.',
+      },
+      {
+        title: 'WeakSet for Object Tagging',
+        code: `const visited = new WeakSet()
+
+function processNode(node) {
+  if (visited.has(node)) return
+  visited.add(node)
+  console.log('Processing:', node.id)
+}
+
+const nodeA = { id: 'A' }
+processNode(nodeA) // 'Processing: A'
+processNode(nodeA) // skipped`,
+        explanation: 'WeakSet is ideal for tagging objects without preventing their garbage collection.',
+      },
+    ],
+    commonMistakes: [
+      'Trying to use primitive values as WeakMap keys — only objects are allowed',
+      'Attempting to iterate over a WeakMap/WeakSet — they have no iteration methods',
+      'Using WeakMap when you need to enumerate entries — use a regular Map',
+      'Expecting .size to exist — the runtime cannot report size',
+    ],
+    interviewTips: [
+      'Explain the GC benefit: WeakMap/WeakSet prevent memory leaks',
+      'Know the API limitations: not iterable, no size, keys must be objects',
+      'Give concrete use cases: private class data, DOM metadata, caching',
+      'Compare with Map/Set: weak variants trade enumeration for automatic memory management',
+    ],
+  },
+  {
+    id: 'symbols',
+    title: 'Symbols',
+    category: 'fundamentals',
+    subcategory: 'modern-js',
+    difficulty: 'intermediate',
+    estimatedReadTime: 9,
+    interviewFrequency: 'medium',
+    prerequisites: ['data-types', 'objects-basics'],
+    nextConcepts: ['iterators-generators', 'prototype-chain-basics'],
+    description: 'Symbol is JavaScript\'s 7th primitive type, introduced in ES6. Every Symbol() call creates a completely unique value — even two symbols with the same description are different. Symbols serve as collision-free property keys and enable metaprogramming through well-known symbols like Symbol.iterator and Symbol.toPrimitive.',
+    shortDescription: 'Unique identifiers and well-known symbols',
+    keyPoints: [
+      'Symbol() creates a guaranteed-unique value every time — no two symbols are ever equal',
+      'Symbol.for(key) uses a global registry — same key returns the same symbol across realms',
+      'Well-known symbols (Symbol.iterator, Symbol.toPrimitive, Symbol.hasInstance) customize language behavior',
+      'Symbols as property keys are not enumerable by for...in or Object.keys()',
+      'Symbol.description provides a read-only description string for debugging',
+      'Symbols cannot be implicitly converted to strings — must use .toString() or .description',
+    ],
+    examples: [
+      {
+        title: 'Creating and Using Symbols',
+        code: `const sym1 = Symbol('id')
+const sym2 = Symbol('id')
+console.log(sym1 === sym2) // false — always unique!
+
+const user = {
+  name: 'Alice',
+  [sym1]: 'hidden-id-001',
+}
+
+console.log(user[sym1])        // 'hidden-id-001'
+console.log(Object.keys(user)) // ['name']
+console.log(Object.getOwnPropertySymbols(user)) // [Symbol(id)]`,
+        explanation: 'Symbols are unique identifiers perfect for property keys that should not collide with string keys.',
+      },
+      {
+        title: 'Symbol.for() Global Registry',
+        code: `const s1 = Symbol.for('app.id')
+const s2 = Symbol.for('app.id')
+console.log(s1 === s2) // true — same key, same symbol!
+
+console.log(Symbol.keyFor(s1)) // 'app.id'
+
+const s3 = Symbol('app.id')
+console.log(s1 === s3) // false — not in registry`,
+        explanation: 'Symbol.for() enables sharing symbols across files and realms. Regular Symbol() always creates a new unique value.',
+      },
+      {
+        title: 'Well-Known Symbol: Symbol.toPrimitive',
+        code: `class Temperature {
+  constructor(celsius) { this.celsius = celsius }
+
+  [Symbol.toPrimitive](hint) {
+    switch (hint) {
+      case 'number': return this.celsius
+      case 'string': return \`\${this.celsius}°C\`
+      case 'default': return this.celsius
+    }
+  }
+}
+
+const temp = new Temperature(36.6)
+console.log(+temp)            // 36.6 (number)
+console.log(\`Body: \${temp}\`) // 'Body: 36.6°C' (string)
+console.log(temp > 37)        // false (number)`,
+        explanation: 'Symbol.toPrimitive lets you control how an object converts to primitive values in different contexts.',
+      },
+      {
+        title: 'Symbol.hasInstance',
+        code: `class EvenNumber {
+  static [Symbol.hasInstance](num) {
+    return typeof num === 'number' && num % 2 === 0
+  }
+}
+
+console.log(2 instanceof EvenNumber)   // true
+console.log(3 instanceof EvenNumber)   // false
+console.log(100 instanceof EvenNumber) // true`,
+        explanation: 'Symbol.hasInstance customizes instanceof, enabling duck-type checking.',
+      },
+    ],
+    commonMistakes: [
+      'Using Symbol() with new — Symbol is not a constructor, new Symbol() throws',
+      'Expecting symbols to appear in for...in or Object.keys()',
+      'Confusing Symbol() with Symbol.for() — former is always unique, latter uses shared registry',
+      'Trying to concatenate symbols with strings implicitly — throws TypeError',
+    ],
+    interviewTips: [
+      'Symbols solve the name collision problem for object properties',
+      'Know at least 3 well-known symbols: Symbol.iterator, Symbol.toPrimitive, Symbol.hasInstance',
+      'Understand Symbol() (always unique) vs Symbol.for() (shared registry)',
+      'JSON.stringify ignores symbol-keyed properties',
+    ],
+  },
+  {
+    id: 'getters-setters',
+    title: 'Getters, Setters & Property Descriptors',
+    category: 'fundamentals',
+    subcategory: 'metaprogramming',
+    difficulty: 'intermediate',
+    estimatedReadTime: 10,
+    interviewFrequency: 'medium',
+    prerequisites: ['objects-basics', 'class-syntax-prototypes'],
+    nextConcepts: ['proxy-reflect', 'prototype-chain-basics'],
+    description: 'JavaScript properties are more than simple key-value pairs. Behind every property is a descriptor that controls whether it can be written, enumerated, or deleted. Getters and setters let you intercept property access and assignment, enabling computed properties, validation, and lazy evaluation.',
+    shortDescription: 'Property access control and computed properties',
+    keyPoints: [
+      'get/set syntax creates accessor properties that run code on read/write',
+      'Object.defineProperty controls writable, enumerable, and configurable flags',
+      'Data descriptors have value/writable; accessor descriptors have get/set — mutually exclusive',
+      'Object.getOwnPropertyDescriptor reveals the full descriptor of any property',
+      'Setters enable validation — reject invalid assignments before they happen',
+      'Getters enable lazy evaluation — compute values only when accessed',
+    ],
+    examples: [
+      {
+        title: 'Getters and Setters in Objects',
+        code: `const user = {
+  firstName: 'Alice',
+  lastName: 'Smith',
+
+  get fullName() {
+    return \`\${this.firstName} \${this.lastName}\`
+  },
+  set fullName(value) {
+    const parts = value.split(' ')
+    this.firstName = parts[0]
+    this.lastName = parts[1]
+  },
+}
+
+console.log(user.fullName) // 'Alice Smith'
+user.fullName = 'Bob Jones'
+console.log(user.firstName) // 'Bob'`,
+        explanation: 'Getters and setters look like regular property access but execute functions behind the scenes.',
+      },
+      {
+        title: 'Validation with Setters',
+        code: `class Temperature {
+  #celsius = 0
+
+  get celsius() { return this.#celsius }
+  set celsius(value) {
+    if (typeof value !== 'number') throw new TypeError('Must be a number')
+    if (value < -273.15) throw new RangeError('Below absolute zero!')
+    this.#celsius = value
+  }
+
+  get fahrenheit() { return this.#celsius * 9 / 5 + 32 }
+  set fahrenheit(value) { this.celsius = (value - 32) * 5 / 9 }
+}
+
+const temp = new Temperature()
+temp.celsius = 100
+console.log(temp.fahrenheit) // 212`,
+        explanation: 'Setters enforce constraints at the boundary. Invalid data never enters the object.',
+      },
+      {
+        title: 'Object.defineProperty',
+        code: `const config = {}
+
+Object.defineProperty(config, 'apiUrl', {
+  value: 'https://api.example.com',
+  writable: false,
+  enumerable: true,
+  configurable: false,
+})
+
+config.apiUrl = 'hacked' // silently fails
+console.log(config.apiUrl) // 'https://api.example.com'
+
+const desc = Object.getOwnPropertyDescriptor(config, 'apiUrl')
+console.log(desc.writable) // false`,
+        explanation: 'Object.defineProperty gives fine-grained control over property behavior.',
+      },
+      {
+        title: 'Lazy Evaluation with Getters',
+        code: `const analytics = {
+  rawData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+
+  get average() {
+    console.log('Computing average...')
+    const sum = this.rawData.reduce((a, b) => a + b, 0)
+    Object.defineProperty(this, 'average', { value: sum / this.rawData.length })
+    return sum / this.rawData.length
+  },
+}
+
+console.log(analytics.average) // 'Computing...' → 5.5
+console.log(analytics.average) // 5.5 (cached!)`,
+        explanation: 'A getter can replace itself with a cached data property on first access — lazy evaluation pattern.',
+      },
+    ],
+    commonMistakes: [
+      'Creating infinite loops by accessing this.prop inside its own getter — use a backing field',
+      'Forgetting that Object.defineProperty defaults are all false',
+      'Mixing data descriptors (value/writable) with accessor descriptors (get/set) — throws',
+      'Not using strict mode — silent failures on read-only writes',
+    ],
+    interviewTips: [
+      'Know the 6 descriptor flags: value, writable, enumerable, configurable, get, set',
+      'Explain the lazy getter pattern for expensive computations',
+      'Vue 2 reactivity used Object.defineProperty getters/setters',
+      'Object.freeze uses defineProperty under the hood to set writable: false',
+    ],
+  },
+  {
+    id: 'object-static-methods',
+    title: 'Object Static Methods',
+    category: 'fundamentals',
+    difficulty: 'beginner',
+    estimatedReadTime: 10,
+    interviewFrequency: 'high',
+    prerequisites: ['objects-basics'],
+    nextConcepts: ['getters-setters', 'prototype-chain-basics'],
+    description: 'The Object constructor provides a rich set of static methods for working with objects. From inspecting properties (keys, values, entries) to controlling mutability (freeze, seal) to creating objects with specific prototypes (Object.create).',
+    shortDescription: 'Essential Object.keys, freeze, assign, and more',
+    keyPoints: [
+      'Object.keys/values/entries return arrays of own enumerable string-keyed properties',
+      'Object.assign performs shallow copy — nested objects are still shared by reference',
+      'Object.freeze makes an object immutable (shallow) — nested objects are NOT frozen',
+      'Object.seal prevents adding/deleting properties but allows modifying existing values',
+      'Object.create sets the prototype directly — the basis of prototypal inheritance',
+      'Object.hasOwn (ES2022) is the modern replacement for obj.hasOwnProperty(key)',
+    ],
+    examples: [
+      {
+        title: 'Object.keys, values, entries',
+        code: `const user = { name: 'Alice', age: 30, role: 'admin' }
+
+console.log(Object.keys(user))    // ['name', 'age', 'role']
+console.log(Object.values(user))  // ['Alice', 30, 'admin']
+console.log(Object.entries(user)) // [['name','Alice'], ['age',30], ['role','admin']]
+
+// Transform object values
+const doubled = Object.fromEntries(
+  Object.entries({ a: 1, b: 2 }).map(([k, v]) => [k, v * 2])
+)
+console.log(doubled) // { a: 2, b: 4 }`,
+        explanation: 'entries/fromEntries let you transform objects through the array pipeline pattern.',
+      },
+      {
+        title: 'Object.assign and Shallow Copy',
+        code: `const defaults = { theme: 'light', lang: 'en' }
+const userPrefs = { theme: 'dark', fontSize: 14 }
+
+const config = Object.assign({}, defaults, userPrefs)
+console.log(config) // { theme: 'dark', lang: 'en', fontSize: 14 }
+
+// WARNING: shallow copy
+const original = { name: 'Alice', address: { city: 'NYC' } }
+const copy = Object.assign({}, original)
+copy.address.city = 'LA'
+console.log(original.address.city) // 'LA' — shared!`,
+        explanation: 'Object.assign copies own enumerable properties. It is shallow: nested objects are copied by reference.',
+      },
+      {
+        title: 'Object.freeze and Object.seal',
+        code: `const frozen = Object.freeze({ x: 1, nested: { z: 3 } })
+frozen.x = 99        // silently fails
+frozen.nested.z = 999 // works — freeze is shallow!
+
+const sealed = Object.seal({ a: 1, b: 2 })
+sealed.a = 100       // ✅ allowed
+sealed.c = 3         // ❌ silently fails`,
+        explanation: 'freeze = no writes, no add, no delete. seal = writes OK, no add, no delete. Both are shallow.',
+      },
+      {
+        title: 'Object.create and Object.hasOwn',
+        code: `const animal = { speak() { return \`\${this.name} makes a sound\` } }
+const dog = Object.create(animal)
+dog.name = 'Rex'
+console.log(dog.speak()) // 'Rex makes a sound'
+
+// Object with NO prototype
+const dict = Object.create(null)
+dict.key = 'value'
+console.log(dict.toString) // undefined
+
+// Object.hasOwn (ES2022)
+console.log(Object.hasOwn(dog, 'name'))   // true
+console.log(Object.hasOwn(dog, 'speak'))  // false (inherited)
+console.log(Object.hasOwn(dict, 'key'))   // true (works on null prototype!)`,
+        explanation: 'Object.create establishes the prototype chain. Object.hasOwn is the safe, modern own-property check.',
+      },
+    ],
+    commonMistakes: [
+      'Assuming Object.freeze is deep — nested objects remain mutable',
+      'Using Object.assign for deep cloning — use structuredClone()',
+      'Calling obj.hasOwnProperty on Object.create(null) objects — use Object.hasOwn',
+      'Object.keys only returns own enumerable string keys — inherited and symbol keys excluded',
+    ],
+    interviewTips: [
+      'freeze vs seal: freeze = fully immutable, seal = can modify values only',
+      'Object.create(null) for safe dictionaries without prototype pollution',
+      'entries → map → fromEntries pipeline for object transformation',
+      'Object.is differs from === for NaN (true) and -0 vs +0 (false)',
+    ],
+  },
+  {
+    id: 'strict-mode',
+    title: 'Strict Mode',
+    category: 'fundamentals',
+    difficulty: 'beginner',
+    estimatedReadTime: 7,
+    interviewFrequency: 'medium',
+    prerequisites: ['functions', 'this-keyword'],
+    nextConcepts: ['module-evolution'],
+    description: 'Strict mode is an opt-in restricted variant of JavaScript that eliminates silent errors, prevents unsafe features, and paves the way for future language improvements. Activated by "use strict" at the top of a script or function, it changes several default behaviors.',
+    shortDescription: 'Opt-in safer JavaScript with stricter rules',
+    keyPoints: [
+      '"use strict" at the top of a script or function body enables strict mode',
+      'ES modules and class bodies are always in strict mode — no directive needed',
+      'Standalone function this is undefined instead of the global object',
+      'Assigning to undeclared variables throws ReferenceError instead of creating globals',
+      'Duplicate function parameters and octal literals are syntax errors',
+      'Assigning to read-only properties throws TypeError',
+    ],
+    examples: [
+      {
+        title: 'Enabling Strict Mode',
+        code: `'use strict'
+
+x = 10 // ReferenceError: x is not defined
+
+// ES modules are ALWAYS strict
+// Classes are ALWAYS strict
+class MyClass {
+  method() {
+    // strict mode automatically
+  }
+}`,
+        explanation: 'Strict mode applies per-script or per-function. Modules and classes are implicitly strict.',
+      },
+      {
+        title: 'this Behavior Changes',
+        code: `function sloppyThis() { return this }
+// sloppyThis() → window (browser) or global (Node)
+
+function strictThis() {
+  'use strict'
+  return this
+}
+console.log(strictThis()) // undefined
+
+// Catches accidental constructor calls
+'use strict'
+function User(name) {
+  this.name = name // TypeError if called without new!
+}`,
+        explanation: 'In strict mode, standalone function calls have this as undefined. This catches constructor mistakes.',
+      },
+      {
+        title: 'Preventing Silent Errors',
+        code: `'use strict'
+
+const obj = {}
+Object.defineProperty(obj, 'readOnly', { value: 42, writable: false })
+// obj.readOnly = 99 // TypeError!
+
+const frozen = Object.freeze({ a: 1 })
+// frozen.b = 2 // TypeError!
+
+// In sloppy mode, ALL of these silently fail`,
+        explanation: 'Strict mode turns silent failures into thrown errors, making bugs visible immediately.',
+      },
+      {
+        title: 'Syntax Restrictions',
+        code: `'use strict'
+
+// No duplicate parameter names
+// function sum(a, a) {} // SyntaxError!
+
+// No octal literals
+// const octal = 010  // SyntaxError!
+const octal = 0o10    // ✅ Use 0o prefix (ES6)
+
+// eval has its own scope
+eval('var evalVar = 42')
+// console.log(evalVar) // ReferenceError!`,
+        explanation: 'Strict mode forbids confusing syntax: duplicate params, old-style octals, eval variable leakage.',
+      },
+    ],
+    commonMistakes: [
+      'Placing "use strict" after other statements — must be the first expression',
+      'Not realizing ES modules are already strict',
+      'Expecting strict mode to propagate into called functions',
+      'Forgetting that class bodies are always strict',
+    ],
+    interviewTips: [
+      'Key this difference: undefined vs globalThis in standalone functions',
+      'Modules and classes are implicitly strict',
+      'List 3+ things strict mode catches: accidental globals, read-only writes, duplicate params',
+      'Strict mode enables future optimizations by engines',
+    ],
+  },
+
+  // ===== MODERN PATTERNS & CORE MECHANICS =====
+
+  {
+    id: 'structured-clone',
+    title: 'Structured Clone & Deep Copy',
+    category: 'fundamentals',
+    subcategory: 'modern-js',
+    difficulty: 'intermediate',
+    estimatedReadTime: 9,
+    interviewFrequency: 'high',
+    prerequisites: ['objects-basics'],
+    nextConcepts: ['map-set'],
+    description: 'Copying objects in JavaScript is deceptively tricky. The spread operator and Object.assign only create shallow copies. JSON.parse(JSON.stringify()) works for simple data but breaks on Date, Map, Set, RegExp, undefined, and circular references. ES2022 introduced structuredClone() which handles all of these correctly.',
+    shortDescription: 'Shallow vs deep copy and structuredClone()',
+    keyPoints: [
+      'Spread (...) and Object.assign create shallow copies — only top-level properties are duplicated',
+      'Nested objects in shallow copies still share references with the original',
+      'JSON.parse(JSON.stringify()) loses undefined, functions, Date objects, Map, Set, and RegExp',
+      'structuredClone() (ES2022) handles nested objects, Date, Map, Set, RegExp, and circular references',
+      'structuredClone() cannot clone functions, DOM nodes, Symbols, or property descriptors',
+      'For custom deep clone logic, recursion with type checking handles edge cases JSON cannot',
+    ],
+    examples: [
+      {
+        title: 'Shallow Copy Pitfall',
+        code: `const original = {
+  name: 'Alice',
+  scores: [90, 85, 92],
+  address: { city: 'NYC' },
+}
+
+const shallow = { ...original }
+shallow.name = 'Bob'
+shallow.scores.push(100)
+shallow.address.city = 'LA'
+
+console.log(original.name)         // 'Alice' (copied)
+console.log(original.scores)       // [90, 85, 92, 100] (shared!)
+console.log(original.address.city) // 'LA' (shared!)`,
+        explanation: 'Spread only copies top-level properties. Nested arrays and objects are still shared references.',
+      },
+      {
+        title: 'JSON Round-Trip Limitations',
+        code: `const data = {
+  date: new Date('2024-01-01'),
+  items: new Set([1, 2, 3]),
+  pattern: /hello/gi,
+  callback: () => 'hi',
+  value: undefined,
+}
+
+const clone = JSON.parse(JSON.stringify(data))
+console.log(typeof clone.date) // 'string' (not Date!)
+console.log(clone.items)       // {} (not Set!)
+console.log(clone.callback)   // undefined (dropped!)`,
+        explanation: 'JSON serialization converts Date to string, destroys Set/Map/RegExp, silently drops functions and undefined.',
+      },
+      {
+        title: 'structuredClone Handles Complex Types',
+        code: `const original = {
+  date: new Date('2024-01-01'),
+  items: new Set([1, 2, 3]),
+  nested: new Map([['key', { deep: true }]]),
+}
+
+const clone = structuredClone(original)
+clone.items.add(4)
+clone.nested.get('key').deep = false
+
+console.log(original.items.size)            // 3 (unchanged)
+console.log(original.nested.get('key').deep) // true (unchanged)
+console.log(clone.date instanceof Date)      // true`,
+        explanation: 'structuredClone creates a true deep copy preserving Date, Set, Map, RegExp, and circular references.',
+      },
+      {
+        title: 'Recursive Deep Clone',
+        code: `function deepClone(value) {
+  if (value === null || typeof value !== 'object') return value
+  if (value instanceof Date) return new Date(value)
+  if (value instanceof RegExp) return new RegExp(value.source, value.flags)
+  if (value instanceof Map) {
+    return new Map(Array.from(value, ([k, v]) => [deepClone(k), deepClone(v)]))
+  }
+  if (value instanceof Set) {
+    return new Set(Array.from(value, deepClone))
+  }
+
+  const clone = Array.isArray(value) ? [] : {}
+  for (const key of Object.keys(value)) {
+    clone[key] = deepClone(value[key])
+  }
+  return clone
+}`,
+        explanation: 'A manual recursive approach handles each type individually. structuredClone is preferred when available.',
+      },
+    ],
+    commonMistakes: [
+      'Assuming spread or Object.assign creates a deep copy',
+      'Using JSON round-trip on data containing Date, Map, Set, or undefined',
+      'Forgetting that structuredClone throws on functions, DOM nodes, and Symbols',
+      'Not handling circular references when writing custom deep clone logic',
+    ],
+    interviewTips: [
+      'Explain shallow vs deep copy with a concrete nested object example',
+      'Know limitations of each approach: spread (shallow), JSON (loses types), structuredClone (no functions)',
+      'structuredClone handles circular references — a common follow-up question',
+      'Be ready to implement a recursive deepClone',
+    ],
+  },
+  {
+    id: 'tagged-template-literals',
+    title: 'Tagged Template Literals',
+    category: 'fundamentals',
+    subcategory: 'modern-js',
+    difficulty: 'intermediate',
+    estimatedReadTime: 8,
+    interviewFrequency: 'low',
+    prerequisites: ['template-literals', 'functions'],
+    nextConcepts: ['regular-expressions'],
+    description: 'Tagged template literals let you process template strings with a function. The tag function receives an array of string segments and the interpolated values as separate arguments, giving you full control over how the template is assembled. This pattern powers styled-components, GraphQL queries (gql), and HTML sanitization.',
+    shortDescription: 'Process template strings with custom functions',
+    keyPoints: [
+      'A tag function receives (strings[], ...values) — strings are the static parts, values are the expressions',
+      'The strings array always has one more element than the values array',
+      'strings.raw gives unprocessed escape sequences (backslashes preserved)',
+      'String.raw is the built-in tag that returns raw strings without processing escapes',
+      'Tags enable DSLs like html`<p>${text}</p>`, css`color: ${c}`, sql`SELECT * FROM ${table}`',
+      'The tag function can return anything — not just strings',
+    ],
+    examples: [
+      {
+        title: 'Tag Function Basics',
+        code: `function tag(strings, ...values) {
+  console.log(strings) // ['Hello ', '! You are ', '.']
+  console.log(values)  // ['Alice', 30]
+  return strings.reduce((result, str, i) => {
+    return result + str + (values[i] !== undefined ? values[i] : '')
+  }, '')
+}
+
+const name = 'Alice'
+const age = 30
+const result = tag\`Hello \${name}! You are \${age}.\`
+console.log(result) // 'Hello Alice! You are 30.'`,
+        explanation: 'The tag function receives static string segments and dynamic values separately.',
+      },
+      {
+        title: 'HTML Sanitization Tag',
+        code: `function safeHtml(strings, ...values) {
+  const escape = (str) =>
+    String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+
+  return strings.reduce((result, str, i) => {
+    const val = i < values.length ? escape(values[i]) : ''
+    return result + str + val
+  }, '')
+}
+
+const userInput = '<script>alert("xss")</script>'
+const html = safeHtml\`<div>\${userInput}</div>\`
+// '<div>&lt;script&gt;alert("xss")&lt;/script&gt;</div>'`,
+        explanation: 'The tag function escapes interpolated values to prevent XSS attacks. Static string parts are trusted.',
+      },
+      {
+        title: 'String.raw',
+        code: `const normal = \`Line1\\nLine2\`
+console.log(normal) // Line1 (newline) Line2
+
+const raw = String.raw\`Line1\\nLine2\`
+console.log(raw) // 'Line1\\nLine2' (literal)
+
+// Useful for regex and file paths
+const path = String.raw\`C:\\Users\\alice\\docs\`
+console.log(path) // 'C:\\Users\\alice\\docs'`,
+        explanation: 'String.raw returns the raw string without processing escape sequences.',
+      },
+      {
+        title: 'SQL Tag for Parameterized Queries',
+        code: `function sql(strings, ...values) {
+  const params = []
+  const query = strings.reduce((result, str, i) => {
+    if (i < values.length) {
+      params.push(values[i])
+      return result + str + '$' + params.length
+    }
+    return result + str
+  }, '')
+  return { query, params }
+}
+
+const table = 'users'
+const minAge = 18
+const result = sql\`SELECT * FROM \${table} WHERE age >= \${minAge}\`
+console.log(result.query)  // 'SELECT * FROM $1 WHERE age >= $2'
+console.log(result.params) // ['users', 18]`,
+        explanation: 'Tags can return any value. This SQL tag creates parameterized queries, preventing SQL injection.',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting that strings always has one more element than values',
+      'Assuming the tag function must return a string — it can return anything',
+      'Confusing template literal expressions with tag function arguments',
+    ],
+    interviewTips: [
+      'Explain the signature: tag(strings, ...values) where strings.length === values.length + 1',
+      'Mention real-world uses: styled-components, GraphQL gql, Lit html',
+      'Demonstrate the sanitization pattern for security awareness',
+      'String.raw is the only built-in tag function in the language',
+    ],
+  },
+  {
+    id: 'abort-controller',
+    title: 'AbortController',
+    category: 'fundamentals',
+    subcategory: 'async-patterns',
+    difficulty: 'intermediate',
+    estimatedReadTime: 10,
+    interviewFrequency: 'medium',
+    prerequisites: ['promises-creation', 'async-await-syntax'],
+    nextConcepts: ['async-iterators'],
+    description: 'AbortController provides a standard mechanism to cancel asynchronous operations. It creates an AbortSignal that can be passed to fetch, event listeners, and custom async functions. This pattern is essential for preventing memory leaks in React useEffect, implementing request timeouts, and cancelling stale API calls.',
+    shortDescription: 'Cancel async operations and prevent memory leaks',
+    keyPoints: [
+      'AbortController creates a signal; calling controller.abort() triggers cancellation',
+      'Fetch accepts a signal option — aborting throws an AbortError that must be caught',
+      'AbortSignal.timeout(ms) creates a signal that auto-aborts after a duration',
+      'AbortSignal.any([signal1, signal2]) combines multiple signals — first abort wins',
+      'Event listeners accept a signal option for automatic removal on abort',
+      'Essential in React useEffect cleanup to prevent state updates on unmounted components',
+    ],
+    examples: [
+      {
+        title: 'Aborting a Fetch Request',
+        code: `const controller = new AbortController()
+
+fetch('https://api.example.com/data', {
+  signal: controller.signal,
+})
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(err => {
+    if (err.name === 'AbortError') {
+      console.log('Request was cancelled')
+    } else {
+      console.error('Fetch failed:', err)
+    }
+  })
+
+setTimeout(() => controller.abort(), 100)`,
+        explanation: 'The signal is passed to fetch. When abort() is called, fetch rejects with an AbortError.',
+      },
+      {
+        title: 'Timeout with AbortSignal.timeout',
+        code: `async function fetchWithTimeout(url, timeoutMs) {
+  try {
+    const response = await fetch(url, {
+      signal: AbortSignal.timeout(timeoutMs),
+    })
+    return await response.json()
+  } catch (err) {
+    if (err.name === 'TimeoutError') {
+      console.log('Request timed out')
+    } else if (err.name === 'AbortError') {
+      console.log('Request was aborted')
+    } else {
+      throw err
+    }
+  }
+}
+
+fetchWithTimeout('https://api.example.com/slow', 5000)`,
+        explanation: 'AbortSignal.timeout() auto-aborts after the specified duration. The error is a TimeoutError.',
+      },
+      {
+        title: 'React useEffect Cleanup Pattern',
+        code: `function UserProfile({ userId }) {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    async function loadUser() {
+      try {
+        const res = await fetch('/api/users/' + userId, {
+          signal: controller.signal,
+        })
+        const data = await res.json()
+        setUser(data)
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Failed to load user:', err)
+        }
+      }
+    }
+
+    loadUser()
+    return () => controller.abort()
+  }, [userId])
+}`,
+        explanation: 'The cleanup function aborts in-flight requests, preventing state updates on unmounted components.',
+      },
+      {
+        title: 'Event Listener Removal with Signal',
+        code: `const controller = new AbortController()
+
+window.addEventListener('resize', handleResize, {
+  signal: controller.signal,
+})
+window.addEventListener('scroll', handleScroll, {
+  signal: controller.signal,
+})
+
+// One call removes ALL listeners
+controller.abort()`,
+        explanation: 'Passing a signal to addEventListener lets you remove multiple listeners with a single abort() call.',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting to catch AbortError — unhandled promise rejection crashes the app',
+      'Creating the AbortController outside useEffect — must be created fresh each time',
+      'Reusing an already-aborted controller — once aborted, it stays aborted',
+      'Not distinguishing AbortError from TimeoutError when using AbortSignal.timeout()',
+    ],
+    interviewTips: [
+      'Controller owns the trigger, signal is the read-only token passed to consumers',
+      'Demonstrate the React useEffect cleanup pattern — practical memory leak prevention',
+      'AbortSignal.any() for combining user cancellation with timeout signals',
+      'addEventListener with signal is the modern replacement for removeEventListener',
+    ],
+  },
+  {
+    id: 'class-advanced',
+    title: 'Class Advanced Features',
+    category: 'fundamentals',
+    subcategory: 'prototypes-oop',
+    difficulty: 'intermediate',
+    estimatedReadTime: 11,
+    interviewFrequency: 'medium',
+    prerequisites: ['class-syntax-prototypes', 'prototype-inheritance'],
+    nextConcepts: ['proxy-reflect'],
+    description: 'Beyond basic class syntax, JavaScript classes support private fields (#), static members, static initialization blocks, computed property names, and patterns like mixins and method chaining. Private fields provide true encapsulation enforced by the engine.',
+    shortDescription: 'Private fields, statics, mixins, and advanced patterns',
+    keyPoints: [
+      'Private fields (#) are truly private — accessing them outside the class throws a SyntaxError',
+      'Static methods and properties belong to the class itself, not instances',
+      'Static initialization blocks (static { }) run once when the class is defined',
+      'Public class fields are declared at the top of the class body without let/const',
+      'Mixins compose behavior from multiple sources since JS only supports single inheritance',
+      'Method chaining works by returning this from each method',
+    ],
+    examples: [
+      {
+        title: 'Private Fields and Methods',
+        code: `class BankAccount {
+  #balance = 0
+  #owner
+
+  constructor(owner, initialBalance) {
+    this.#owner = owner
+    this.#balance = initialBalance
+  }
+
+  #validate(amount) {
+    if (amount <= 0) throw new Error('Amount must be positive')
+    if (amount > this.#balance) throw new Error('Insufficient funds')
+  }
+
+  withdraw(amount) {
+    this.#validate(amount)
+    this.#balance -= amount
+    return this.#balance
+  }
+
+  get balance() { return this.#balance }
+}
+
+const account = new BankAccount('Alice', 1000)
+console.log(account.balance) // 1000
+// account.#balance           // SyntaxError!`,
+        explanation: 'The # prefix creates truly private fields and methods enforced by the engine, not by convention.',
+      },
+      {
+        title: 'Static Members and Init Blocks',
+        code: `class Config {
+  static #instance = null
+  static DEFAULT_TIMEOUT = 5000
+
+  #settings
+
+  constructor(settings) { this.#settings = settings }
+
+  static {
+    Config.#instance = new Config({
+      timeout: Config.DEFAULT_TIMEOUT,
+    })
+  }
+
+  static getInstance() { return Config.#instance }
+  get(key) { return this.#settings[key] }
+}
+
+const config = Config.getInstance()
+console.log(config.get('timeout')) // 5000`,
+        explanation: 'Static init blocks run when the class is first evaluated — useful for singletons and configuration.',
+      },
+      {
+        title: 'Mixin Pattern',
+        code: `const Serializable = (Base) =>
+  class extends Base {
+    toJSON() {
+      const obj = {}
+      for (const key of Object.keys(this)) obj[key] = this[key]
+      return JSON.stringify(obj)
+    }
+  }
+
+const Validatable = (Base) =>
+  class extends Base {
+    validate() {
+      for (const [key, value] of Object.entries(this)) {
+        if (value == null) throw new Error(key + ' is required')
+      }
+      return true
+    }
+  }
+
+class BaseUser {
+  constructor(name, email) { this.name = name; this.email = email }
+}
+
+class User extends Serializable(Validatable(BaseUser)) {}
+
+const user = new User('Alice', 'alice@example.com')
+user.validate() // true
+console.log(user.toJSON())`,
+        explanation: 'Mixins use higher-order class expressions to compose behavior since JS only supports single inheritance.',
+      },
+      {
+        title: 'Method Chaining',
+        code: `class QueryBuilder {
+  #table = ''
+  #conditions = []
+  #limit = null
+
+  from(table) { this.#table = table; return this }
+  where(cond) { this.#conditions.push(cond); return this }
+  take(n) { this.#limit = n; return this }
+
+  build() {
+    let q = 'SELECT * FROM ' + this.#table
+    if (this.#conditions.length) q += ' WHERE ' + this.#conditions.join(' AND ')
+    if (this.#limit) q += ' LIMIT ' + this.#limit
+    return q
+  }
+}
+
+const query = new QueryBuilder()
+  .from('users')
+  .where('age > 18')
+  .where('active = true')
+  .take(10)
+  .build()`,
+        explanation: 'Each method returns this, enabling fluent chaining. The builder pattern constructs complex objects step-by-step.',
+      },
+    ],
+    commonMistakes: [
+      'Trying to access private fields with bracket notation — obj["#field"] does not work',
+      'Calling static methods on instances instead of the class',
+      'Arrow function class fields create a new function per instance — performance concern',
+      'Using mixins without understanding the prototype chain order',
+    ],
+    interviewTips: [
+      'Contrast private fields (#) with underscore convention — # is engine-enforced',
+      'Static init blocks allow complex setup with access to private static fields',
+      'Show how mixins solve the lack of multiple inheritance',
+      'Method chaining key insight: returning this from each method',
+    ],
+  },
+  {
+    id: 'higher-order-functions',
+    title: 'Higher-Order Functions',
+    category: 'core',
+    difficulty: 'intermediate',
+    estimatedReadTime: 10,
+    interviewFrequency: 'high',
+    prerequisites: ['functions', 'closures'],
+    nextConcepts: ['function-composition', 'closure-partial-application'],
+    description: 'A higher-order function (HOF) is a function that takes a function as an argument, returns a function, or both. HOFs are the backbone of functional programming in JavaScript — they enable abstraction, code reuse, and declarative patterns. Beyond array methods, HOFs power middleware, decorators, function factories, and compose/pipe utilities.',
+    shortDescription: 'Functions that take or return functions',
+    keyPoints: [
+      'A HOF takes a function as an argument or returns a function (or both)',
+      'Function factories create specialized functions from general ones using closures',
+      'The middleware pattern chains HOFs where each can modify input, output, or control flow',
+      'Decorators wrap a function to add behavior without modifying the original',
+      'compose(f, g)(x) applies right-to-left: f(g(x)); pipe applies left-to-right',
+      'HOFs enable separation of "what to do" from "how to iterate"',
+    ],
+    examples: [
+      {
+        title: 'Function Factory',
+        code: `function createMultiplier(factor) {
+  return function (number) {
+    return number * factor
+  }
+}
+
+const double = createMultiplier(2)
+const triple = createMultiplier(3)
+
+console.log(double(5))  // 10
+console.log(triple(5))  // 15
+
+const prices = [9.99, 24.50, 3.75]
+console.log(prices.map(double)) // [19.98, 49, 7.5]`,
+        explanation: 'createMultiplier returns a new function. Each returned function closes over its own factor value.',
+      },
+      {
+        title: 'Decorator Pattern',
+        code: `function withLogging(fn) {
+  return function (...args) {
+    console.log('Calling ' + fn.name + ' with', args)
+    const result = fn(...args)
+    console.log('Result:', result)
+    return result
+  }
+}
+
+function add(a, b) { return a + b }
+const loggedAdd = withLogging(add)
+loggedAdd(2, 3) // logs call + result, returns 5`,
+        explanation: 'Decorators wrap a function to add cross-cutting concerns. The original function is unchanged.',
+      },
+      {
+        title: 'Compose and Pipe',
+        code: `const compose = (...fns) =>
+  (x) => fns.reduceRight((acc, fn) => fn(acc), x)
+
+const pipe = (...fns) =>
+  (x) => fns.reduce((acc, fn) => fn(acc), x)
+
+const trim = (s) => s.trim()
+const toLower = (s) => s.toLowerCase()
+const split = (s) => s.split(' ')
+const unique = (arr) => [...new Set(arr)]
+
+const process = pipe(trim, toLower, split, unique)
+console.log(process('  Banana Apple banana  '))
+// ['banana', 'apple']`,
+        explanation: 'compose reads right-to-left, pipe reads left-to-right. Both combine small functions into a pipeline.',
+      },
+      {
+        title: 'Custom Retry HOF',
+        code: `function withRetry(fn, maxAttempts, delayMs) {
+  return async function (...args) {
+    let lastError
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        return await fn(...args)
+      } catch (err) {
+        lastError = err
+        if (attempt < maxAttempts) {
+          await new Promise(r => setTimeout(r, delayMs * attempt))
+        }
+      }
+    }
+    throw lastError
+  }
+}
+
+const resilientFetch = withRetry(fetchUser, 3, 1000)`,
+        explanation: 'withRetry adds retry logic to any async function without modifying the original.',
+      },
+    ],
+    commonMistakes: [
+      'Creating overly abstract HOFs that are harder to understand than the code they replace',
+      'Forgetting to preserve function name and length when wrapping',
+      'Not handling both sync and async return values in decorators',
+      'Confusing a HOF with a method that happens to accept a callback',
+    ],
+    interviewTips: [
+      'Give examples beyond map/filter: function factories, decorators, middleware',
+      'Implement compose or pipe from scratch — interviewers love seeing reduce used elegantly',
+      'Show a practical decorator like withRetry or withCaching',
+      'HOFs enable the open-closed principle: extend behavior without modifying existing code',
+    ],
+  },
+  {
+    id: 'iterators-generators',
+    title: 'Iterators & Generators',
+    category: 'core',
+    subcategory: 'iteration',
+    difficulty: 'intermediate',
+    estimatedReadTime: 12,
+    interviewFrequency: 'medium',
+    prerequisites: ['functions', 'for-in-vs-for-of'],
+    nextConcepts: ['async-iterators'],
+    description: 'The iteration protocol defines how JavaScript objects become iterable — usable with for...of, spread, destructuring, and Array.from. Any object with a Symbol.iterator method that returns a next() function is iterable. Generator functions (function*) provide a concise way to create iterators using yield, enabling lazy evaluation and infinite sequences.',
+    shortDescription: 'Iteration protocol, generators, and lazy evaluation',
+    keyPoints: [
+      'An iterator is an object with a next() method that returns { value, done }',
+      'An iterable is an object with a [Symbol.iterator]() method returning an iterator',
+      'Generator functions (function*) pause at each yield and resume when next() is called',
+      'Generators are lazy — they compute values on demand, not all at once',
+      'yield* delegates to another iterable or generator',
+      'for...of, spread, destructuring, and Array.from all consume iterables',
+    ],
+    examples: [
+      {
+        title: 'Custom Iterable Object',
+        code: `const range = {
+  from: 1,
+  to: 5,
+
+  [Symbol.iterator]() {
+    let current = this.from
+    const last = this.to
+    return {
+      next() {
+        if (current <= last) return { value: current++, done: false }
+        return { value: undefined, done: true }
+      },
+    }
+  },
+}
+
+for (const num of range) console.log(num) // 1, 2, 3, 4, 5
+const arr = [...range] // [1, 2, 3, 4, 5]`,
+        explanation: 'The range object implements Symbol.iterator, making it work with for...of, spread, and destructuring.',
+      },
+      {
+        title: 'Generator Function Basics',
+        code: `function* countdown(n) {
+  while (n > 0) {
+    yield n
+    n--
+  }
+  yield 'Go!'
+}
+
+const counter = countdown(3)
+console.log(counter.next()) // { value: 3, done: false }
+console.log(counter.next()) // { value: 2, done: false }
+console.log(counter.next()) // { value: 1, done: false }
+console.log(counter.next()) // { value: 'Go!', done: false }
+console.log(counter.next()) // { value: undefined, done: true }`,
+        explanation: 'function* creates a generator. Each yield pauses execution. Calling next() resumes from where it paused.',
+      },
+      {
+        title: 'Infinite Sequences with Lazy Evaluation',
+        code: `function* fibonacci() {
+  let a = 0, b = 1
+  while (true) {
+    yield a
+    ;[a, b] = [b, a + b]
+  }
+}
+
+function take(n, iterable) {
+  const result = []
+  for (const value of iterable) {
+    result.push(value)
+    if (result.length >= n) break
+  }
+  return result
+}
+
+console.log(take(8, fibonacci()))
+// [0, 1, 1, 2, 3, 5, 8, 13]`,
+        explanation: 'The fibonacci generator produces an infinite sequence but only computes values when requested.',
+      },
+      {
+        title: 'yield* Delegation',
+        code: `function* inner() { yield 'a'; yield 'b' }
+
+function* outer() {
+  yield 1
+  yield* inner()     // delegates to inner
+  yield 2
+  yield* [10, 20]    // delegates to any iterable
+  yield 3
+}
+
+console.log([...outer()]) // [1, 'a', 'b', 2, 10, 20, 3]
+
+// Tree traversal
+function* traverse(node) {
+  yield node.value
+  if (node.left) yield* traverse(node.left)
+  if (node.right) yield* traverse(node.right)
+}`,
+        explanation: 'yield* delegates to another iterable, flattening its values. Powerful for recursive data structures.',
+      },
+    ],
+    commonMistakes: [
+      'Generators are single-use — once exhausted, next() always returns { done: true }',
+      'Using return inside a generator — the value is skipped by for...of',
+      'Not breaking out of infinite generator loops',
+      'Confusing Symbol.iterator (makes iterable) with the iterator itself (has next())',
+    ],
+    interviewTips: [
+      'Implement a custom iterable from scratch — Symbol.iterator and next() pattern',
+      'Demonstrate lazy evaluation with infinite sequences and explain the memory advantage',
+      'Generators conform to both iterator and iterable protocols',
+      'Practical uses: paginated API consumption, tree traversal, streaming data',
+    ],
+  },
+
+  // ===== ADVANCED & BROWSER CONCEPTS =====
+
+  {
+    id: 'regular-expressions',
+    title: 'Regular Expressions',
+    category: 'core',
+    difficulty: 'intermediate',
+    estimatedReadTime: 10,
+    interviewFrequency: 'medium',
+    prerequisites: ['strings-methods'],
+    nextConcepts: ['tagged-template-literals'],
+    description: 'Regular expressions (regex) are patterns used to match character combinations in strings. JavaScript supports regex both as literals (/pattern/flags) and via the RegExp constructor. They power powerful string operations like validation, extraction, and replacement.',
+    shortDescription: 'Pattern matching for strings',
+    keyPoints: [
+      'Two creation forms: /pattern/flags literal and new RegExp("pattern", "flags")',
+      'Flags: g (global), i (case-insensitive), m (multiline), s (dotAll), u (unicode)',
+      'Character classes: \\d (digit), \\w (word), \\s (whitespace), . (any char)',
+      'Quantifiers: + (1+), * (0+), ? (0-1), {n,m} (range)',
+      'Capturing groups () and named groups (?<name>...) extract matched substrings',
+      'Lookahead (?=...) and lookbehind (?<=...) match without consuming characters',
+    ],
+    examples: [
+      {
+        title: 'Creating Regex and Basic Matching',
+        code: `const pattern = /hello/i;
+console.log(pattern.test('Hello World')); // true
+
+// Constructor syntax for dynamic patterns
+const search = 'world';
+const dynamic = new RegExp(search, 'gi');
+
+// match() returns array of matches
+const str = 'cat bat hat';
+console.log(str.match(/[cbh]at/g)); // ['cat', 'bat', 'hat']`,
+        explanation: 'Literal /.../ for static patterns, RegExp constructor for dynamic patterns. test() returns boolean.',
+      },
+      {
+        title: 'Character Classes and Quantifiers',
+        code: `const phone = '555-123-4567';
+console.log(/\\d{3}-\\d{3}-\\d{4}/.test(phone)); // true
+
+// Lazy vs greedy
+const html = '<b>bold</b> and <i>italic</i>';
+console.log(html.match(/<.+>/));   // ['<b>bold</b> and <i>italic</i>'] greedy
+console.log(html.match(/<.+?>/));  // ['<b>'] lazy`,
+        explanation: 'Character classes match categories. Add ? after a quantifier for lazy (non-greedy) matching.',
+      },
+      {
+        title: 'Capturing Groups and Named Groups',
+        code: `const date = '2024-03-15';
+const match = date.match(/(\\d{4})-(\\d{2})-(\\d{2})/);
+console.log(match[1]); // '2024'
+
+// Named groups
+const named = date.match(/(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})/);
+console.log(named.groups.year);  // '2024'
+
+// matchAll for multiple matches
+const text = 'John: 30, Jane: 25';
+const entries = [...text.matchAll(/(?<name>\\w+): (?<age>\\d+)/g)];
+entries.forEach(m => console.log(m.groups.name, m.groups.age));`,
+        explanation: 'Groups capture substrings. Named groups make code readable. matchAll() returns all matches.',
+      },
+      {
+        title: 'Lookahead, Lookbehind, and Replace',
+        code: `// Positive lookahead (?=...)
+console.log('100px 200em'.match(/\\d+(?=px)/g)); // ['100']
+
+// Positive lookbehind (?<=...)
+console.log('$100 €200'.match(/(?<=\\$)\\d+/g)); // ['100']
+
+// replace() with capture group references
+const name = 'Smith, John';
+console.log(name.replace(/(\\w+), (\\w+)/, '$2 $1')); // 'John Smith'
+
+// split() with regex
+console.log('one1two2three'.split(/\\d/)); // ['one', 'two', 'three']`,
+        explanation: 'Lookahead/lookbehind assert conditions without consuming characters. replace() supports backreferences.',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting to escape special chars in RegExp constructor: new RegExp("\\\\d+") needs double backslash',
+      'Using greedy quantifiers when lazy is needed',
+      'Forgetting the g flag and only getting the first match',
+      'Not anchoring patterns with ^ and $ when validating entire strings',
+    ],
+    interviewTips: [
+      'Know common patterns: email, digits, URL validation',
+      'Explain the difference between test() (boolean) and match() (array)',
+      'Be able to write regex for basic string parsing on the spot',
+      'matchAll() is the modern way to iterate all matches with groups',
+    ],
+  },
+  {
+    id: 'proxy-reflect',
+    title: 'Proxy & Reflect',
+    category: 'advanced',
+    difficulty: 'advanced',
+    estimatedReadTime: 11,
+    interviewFrequency: 'medium',
+    prerequisites: ['objects-basics', 'getters-setters'],
+    nextConcepts: ['symbols'],
+    description: 'Proxy lets you create a wrapper around an object that intercepts and redefines fundamental operations like property access, assignment, enumeration, and function invocation. Reflect provides the default behavior for each trap. Together they enable validation, observation, data binding (Vue 3 reactivity), negative indexing, and revocable access patterns.',
+    shortDescription: 'Intercept and customize object operations',
+    keyPoints: [
+      'Proxy wraps a target object with a handler containing traps for operations',
+      'Common traps: get, set, has, deleteProperty, apply, construct',
+      'Reflect mirrors every Proxy trap and provides the default operation behavior',
+      'Always use Reflect inside traps to forward to the default behavior',
+      'Proxy.revocable() creates proxies that can be permanently disabled',
+      'Vue 3 reactivity is built entirely on Proxy for change detection',
+    ],
+    examples: [
+      {
+        title: 'Validation Proxy',
+        code: `const validator = {
+  set(target, prop, value) {
+    if (prop === 'age') {
+      if (typeof value !== 'number') throw new TypeError('Age must be a number');
+      if (value < 0 || value > 150) throw new RangeError('Age must be 0-150');
+    }
+    return Reflect.set(target, prop, value);
+  },
+};
+
+const person = new Proxy({}, validator);
+person.name = 'Alice'; // works
+person.age = 30;        // works
+// person.age = -5;     // RangeError!`,
+        explanation: 'The set trap validates values before they reach the target. Reflect.set forwards valid assignments.',
+      },
+      {
+        title: 'Logging Proxy',
+        code: `function createLogged(target) {
+  return new Proxy(target, {
+    get(target, prop, receiver) {
+      console.log(\`GET \${String(prop)}\`);
+      return Reflect.get(target, prop, receiver);
+    },
+    set(target, prop, value, receiver) {
+      console.log(\`SET \${String(prop)} = \${JSON.stringify(value)}\`);
+      return Reflect.set(target, prop, value, receiver);
+    },
+  });
+}
+
+const obj = createLogged({ x: 1 });
+obj.x;     // logs: GET x
+obj.z = 3; // logs: SET z = 3`,
+        explanation: 'Every fundamental operation is intercepted and logged. Reflect methods forward each operation.',
+      },
+      {
+        title: 'Negative Array Indices',
+        code: `function negativeArray(arr) {
+  return new Proxy(arr, {
+    get(target, prop, receiver) {
+      const index = Number(prop);
+      if (Number.isInteger(index) && index < 0) {
+        prop = String(target.length + index);
+      }
+      return Reflect.get(target, prop, receiver);
+    },
+  });
+}
+
+const arr = negativeArray([10, 20, 30, 40, 50]);
+console.log(arr[-1]); // 50
+console.log(arr[-2]); // 40`,
+        explanation: 'Python-style negative indexing. The get trap converts negative indices to positive ones.',
+      },
+      {
+        title: 'Revocable Proxy',
+        code: `const { proxy, revoke } = Proxy.revocable(
+  { secret: 'data' },
+  {
+    get(target, prop, receiver) {
+      return Reflect.get(target, prop, receiver);
+    },
+  }
+);
+
+console.log(proxy.secret); // 'data'
+revoke();
+// proxy.secret; // TypeError: Cannot perform 'get' on revoked proxy`,
+        explanation: 'Revocable proxies grant temporary access that can be permanently disabled.',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting to return Reflect.set() result (must return true for success)',
+      'Not forwarding the receiver argument to Reflect.get/set',
+      'Creating proxies in hot loops without considering performance overhead',
+      'Assuming Proxy traps fire for internal slots (Map, Set, Date need special handling)',
+    ],
+    interviewTips: [
+      'Proxy intercepts, Reflect provides the default behavior',
+      'Vue 3 replaced Object.defineProperty with Proxy for reactivity',
+      'Proxy.revocable() for access control and temporary permissions',
+      'Be ready to implement a validation proxy or negative indexing',
+    ],
+  },
+  {
+    id: 'async-iterators',
+    title: 'Async Iterators',
+    category: 'advanced',
+    difficulty: 'advanced',
+    estimatedReadTime: 10,
+    interviewFrequency: 'low',
+    prerequisites: ['iterators-generators', 'async-await-syntax'],
+    nextConcepts: ['streams-buffers'],
+    description: 'Async iterators extend the iterator protocol to handle asynchronous data sources. Using Symbol.asyncIterator and async generator functions (async function*), you can consume paginated APIs, streaming data, and event sources with the for-await-of loop.',
+    shortDescription: 'Iterate over asynchronous data sources',
+    keyPoints: [
+      'Symbol.asyncIterator defines the async iteration protocol on objects',
+      'Async generators (async function*) combine generators with async/await',
+      'for-await-of loop consumes async iterables, awaiting each yielded promise',
+      'Each next() call returns a Promise<{ value, done }>',
+      'Ideal for paginated APIs, streaming responses, and server-sent events',
+      'Can be combined with AbortController for cancellable async iteration',
+    ],
+    examples: [
+      {
+        title: 'Basic Async Generator',
+        code: `async function* asyncRange(start, end) {
+  for (let i = start; i <= end; i++) {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    yield i;
+  }
+}
+
+async function main() {
+  for await (const num of asyncRange(1, 5)) {
+    console.log(num); // 1, 2, 3, 4, 5 (each after 100ms)
+  }
+}`,
+        explanation: 'Async generators yield values asynchronously. for-await-of automatically awaits each value.',
+      },
+      {
+        title: 'Paginated API Iteration',
+        code: `async function* fetchPages(baseUrl) {
+  let nextUrl = baseUrl;
+
+  while (nextUrl) {
+    const response = await fetch(nextUrl);
+    const data = await response.json();
+
+    for (const item of data.results) {
+      yield item;
+    }
+    nextUrl = data.next;
+  }
+}
+
+async function getAllUsers() {
+  const users = [];
+  for await (const user of fetchPages('/api/users?page=1')) {
+    users.push(user);
+    if (users.length >= 100) break;
+  }
+  return users;
+}`,
+        explanation: 'The async generator handles pagination internally. The consumer can break early without unnecessary fetches.',
+      },
+      {
+        title: 'Custom Async Iterable',
+        code: `class Timer {
+  constructor(intervalMs, count) {
+    this.intervalMs = intervalMs
+    this.count = count
+  }
+
+  async *[Symbol.asyncIterator]() {
+    for (let i = 0; i < this.count; i++) {
+      await new Promise(r => setTimeout(r, this.intervalMs))
+      yield { tick: i + 1, time: Date.now() }
+    }
+  }
+}
+
+for await (const event of new Timer(1000, 5)) {
+  console.log(\`Tick \${event.tick}\`)
+}`,
+        explanation: 'Objects with Symbol.asyncIterator become async iterables, consumable with for-await-of.',
+      },
+      {
+        title: 'Cancellable Async Iteration',
+        code: `async function* fetchWithAbort(urls, signal) {
+  for (const url of urls) {
+    if (signal.aborted) return;
+    const response = await fetch(url, { signal });
+    yield await response.json();
+  }
+}
+
+const controller = new AbortController();
+setTimeout(() => controller.abort(), 5000);
+
+try {
+  for await (const data of fetchWithAbort(urls, controller.signal)) {
+    console.log('Got:', data);
+  }
+} catch (err) {
+  if (err.name === 'AbortError') console.log('Cancelled');
+}`,
+        explanation: 'AbortController integrates with async iteration for clean cancellation.',
+      },
+    ],
+    commonMistakes: [
+      'Using for-of instead of for-await-of with async iterables',
+      'Forgetting to implement return() for cleanup when consumers break early',
+      'Not handling errors inside async generators',
+      'Creating unbounded queues without backpressure',
+    ],
+    interviewTips: [
+      'next() returns Promise<IteratorResult> (vs plain IteratorResult for sync)',
+      'Paginated API pattern is the most practical real-world use case',
+      'for-await-of calls return() on break, enabling resource cleanup',
+      'Node.js readable streams implement Symbol.asyncIterator natively',
+    ],
+  },
+  {
+    id: 'dom-events',
+    title: 'DOM Events & Event Delegation',
+    category: 'browser',
+    difficulty: 'intermediate',
+    estimatedReadTime: 9,
+    interviewFrequency: 'very-high',
+    prerequisites: ['functions', 'objects-basics'],
+    nextConcepts: ['critical-render-path', 'web-workers'],
+    description: 'DOM events are signals fired by the browser when something happens. Events propagate through the DOM tree in three phases: capture (top-down), target, and bubble (bottom-up). Event delegation exploits bubbling to handle events efficiently by placing a single listener on a parent element.',
+    shortDescription: 'How the browser handles user interactions',
+    keyPoints: [
+      'addEventListener(type, handler, options) attaches event listeners to DOM nodes',
+      'Events propagate in 3 phases: capture (down), target, bubble (up)',
+      'event.target is the element that fired; event.currentTarget is the listener element',
+      'Event delegation: one parent listener handles events for all children via event.target',
+      'stopPropagation() stops bubbling; preventDefault() cancels the default browser action',
+      'Options: { once: true } auto-removes, { passive: true } improves scroll performance',
+    ],
+    examples: [
+      {
+        title: 'addEventListener and Event Object',
+        code: `const button = document.querySelector('#myBtn');
+
+button.addEventListener('click', function(event) {
+  console.log('Target:', event.target);
+  console.log('CurrentTarget:', event.currentTarget);
+  console.log('Type:', event.type);
+});
+
+// With options
+button.addEventListener('click', handler, {
+  once: true,     // auto-removes after first call
+  passive: false, // allows preventDefault()
+});`,
+        explanation: 'addEventListener is the standard way to attach events. The event object contains interaction metadata.',
+      },
+      {
+        title: 'Bubbling vs Capturing',
+        code: `// <div id="outer"><div id="inner"><button id="btn">Click</button></div></div>
+
+outer.addEventListener('click', () => console.log('outer capture'), true);
+inner.addEventListener('click', () => console.log('inner capture'), true);
+btn.addEventListener('click', () => console.log('btn target'));
+inner.addEventListener('click', () => console.log('inner bubble'));
+outer.addEventListener('click', () => console.log('outer bubble'));
+
+// Click btn → outer capture, inner capture, btn target, inner bubble, outer bubble`,
+        explanation: 'Events travel down during capture, hit the target, then bubble back up.',
+      },
+      {
+        title: 'Event Delegation Pattern',
+        code: `const list = document.getElementById('todo-list');
+
+// One listener handles ALL children
+list.addEventListener('click', function(event) {
+  const target = event.target;
+
+  if (target.matches('.delete-btn')) {
+    target.closest('li').remove();
+    return;
+  }
+
+  if (target.matches('input[type="checkbox"]')) {
+    target.closest('li').classList.toggle('completed');
+  }
+});
+
+// Works even for dynamically added items!`,
+        explanation: 'Event delegation places one listener on a parent. Use matches() and closest() to identify the child.',
+      },
+      {
+        title: 'preventDefault and Custom Events',
+        code: `// Prevent default browser behavior
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  console.log('Form submitted via JS');
+});
+
+// stopPropagation vs stopImmediatePropagation
+btn.addEventListener('click', (e) => {
+  e.stopPropagation(); // stops bubbling
+});
+
+// Custom Events
+const event = new CustomEvent('userLogin', {
+  bubbles: true,
+  detail: { username: 'alice', role: 'admin' },
+});
+document.querySelector('#app').dispatchEvent(event);`,
+        explanation: 'preventDefault stops the browser action. stopPropagation stops bubbling. CustomEvent enables app-level events.',
+      },
+    ],
+    commonMistakes: [
+      'Using anonymous functions then trying to removeEventListener',
+      'Calling stopPropagation when you only need preventDefault, breaking delegation',
+      'Attaching individual listeners to hundreds of children instead of delegating',
+      'passive: true listeners cannot call preventDefault',
+    ],
+    interviewTips: [
+      'Draw the 3-phase propagation: capture down, target, bubble up',
+      'Event delegation with dynamic list — one listener handles all items',
+      'event.target (origin) vs event.currentTarget (listener)',
+      'Passive listeners for scroll/touch performance on mobile',
+    ],
+  },
+  {
+    id: 'fetch-api',
+    title: 'Fetch API',
+    category: 'browser',
+    difficulty: 'intermediate',
+    estimatedReadTime: 9,
+    interviewFrequency: 'high',
+    prerequisites: ['promises-creation', 'async-await-syntax', 'json'],
+    nextConcepts: ['abort-controller', 'streams-buffers'],
+    description: 'The Fetch API provides a modern, Promise-based interface for making HTTP requests. A critical gotcha: fetch only rejects on network failures, NOT on HTTP error status codes like 404 or 500 — you must check response.ok yourself.',
+    shortDescription: 'Modern HTTP requests with Promises',
+    keyPoints: [
+      'fetch() returns a Promise<Response> — does NOT reject on HTTP errors (404, 500)',
+      'Always check response.ok or response.status before parsing the body',
+      'Body parsing methods: json(), text(), blob(), arrayBuffer(), formData()',
+      'Request options: method, headers, body, mode, credentials, signal',
+      'AbortController.signal cancels in-flight requests via the signal option',
+      'CORS: cross-origin requests require server-side Access-Control-Allow-Origin headers',
+    ],
+    examples: [
+      {
+        title: 'Basic GET with Error Handling',
+        code: `async function fetchData(url) {
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(\`HTTP \${response.status}: \${response.statusText}\`);
+  }
+
+  return response.json();
+}
+
+try {
+  const data = await fetchData('/api/users');
+  console.log(data);
+} catch (err) {
+  console.error('Request failed:', err.message);
+}`,
+        explanation: 'The biggest fetch gotcha: it only rejects on network failure. Always check response.ok.',
+      },
+      {
+        title: 'POST, PUT, and DELETE',
+        code: `// POST with JSON body
+const response = await fetch('/api/users', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name: 'Alice' }),
+});
+
+// DELETE
+await fetch('/api/users/123', { method: 'DELETE' });
+
+// POST with FormData (file uploads)
+const form = document.querySelector('form');
+await fetch('/api/upload', {
+  method: 'POST',
+  body: new FormData(form), // Content-Type set automatically
+});`,
+        explanation: 'Set method, headers, and body for non-GET requests. FormData handles file uploads automatically.',
+      },
+      {
+        title: 'AbortController Integration',
+        code: `async function fetchWithTimeout(url, options = {}, timeoutMs = 5000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error(\`HTTP \${response.status}\`);
+    return response;
+  } finally {
+    clearTimeout(timeout);
+  }
+}`,
+        explanation: 'AbortController cancels in-flight requests. Pass controller.signal to fetch, call abort() to cancel.',
+      },
+      {
+        title: 'Parallel Requests',
+        code: `async function fetchMultiple(urls) {
+  const responses = await Promise.all(
+    urls.map(url => fetch(url))
+  );
+
+  for (const res of responses) {
+    if (!res.ok) throw new Error(\`Failed: \${res.url}\`);
+  }
+
+  return Promise.all(responses.map(r => r.json()));
+}
+
+const [users, posts] = await fetchMultiple([
+  '/api/users',
+  '/api/posts',
+]);`,
+        explanation: 'Promise.all fires multiple requests in parallel for better performance.',
+      },
+    ],
+    commonMistakes: [
+      'Assuming fetch rejects on HTTP errors like 404 or 500',
+      'Forgetting Content-Type: application/json header when sending JSON',
+      'Reading the response body twice (body is a stream, consumed once)',
+      'Not handling AbortError separately from other errors',
+    ],
+    interviewTips: [
+      'Lead with the biggest gotcha: fetch resolves on 404, only rejects on network failure',
+      'Compare fetch to XMLHttpRequest: cleaner API, Promise-based',
+      'AbortController provides request cancellation',
+      'CORS basics: same-origin default, cross-origin needs server headers',
+    ],
+  },
+  {
+    id: 'web-storage',
+    title: 'Web Storage',
+    category: 'browser',
+    difficulty: 'beginner',
+    estimatedReadTime: 7,
+    interviewFrequency: 'medium',
+    prerequisites: ['json', 'objects-basics'],
+    nextConcepts: ['dom-events'],
+    description: 'Web Storage provides two mechanisms for storing key-value data in the browser: localStorage (persists until cleared) and sessionStorage (cleared when the tab closes). Both store strings only, so objects must be serialized with JSON.stringify. The storage event enables cross-tab communication.',
+    shortDescription: 'Client-side key-value storage in the browser',
+    keyPoints: [
+      'localStorage persists across sessions; sessionStorage clears when the tab closes',
+      'Both store strings only: use JSON.stringify/JSON.parse for objects and arrays',
+      'API: setItem(key, value), getItem(key), removeItem(key), clear(), key(index)',
+      'Storage limit is roughly 5MB per origin (varies by browser)',
+      'The storage event fires on OTHER tabs when localStorage changes (cross-tab sync)',
+      'Never store sensitive data (tokens, passwords) in Web Storage: vulnerable to XSS',
+    ],
+    examples: [
+      {
+        title: 'localStorage Basics',
+        code: `localStorage.setItem('username', 'alice');
+console.log(localStorage.getItem('username')); // 'alice'
+console.log(localStorage.getItem('missing'));   // null
+
+// Store objects (must stringify)
+const settings = { fontSize: 16, lang: 'en' };
+localStorage.setItem('settings', JSON.stringify(settings));
+const saved = JSON.parse(localStorage.getItem('settings'));
+
+localStorage.removeItem('username');
+localStorage.clear();`,
+        explanation: 'localStorage persists until explicitly cleared. All values are strings, objects need JSON.',
+      },
+      {
+        title: 'sessionStorage vs localStorage',
+        code: `// sessionStorage: lives only for the tab session
+sessionStorage.setItem('formDraft', 'Hello world...');
+
+// Survives page refreshes, disappears on tab close
+
+// Use case: multi-step form wizard
+function saveFormStep(step, data) {
+  const state = JSON.parse(sessionStorage.getItem('wizard') || '{}');
+  state[\`step\${step}\`] = data;
+  sessionStorage.setItem('wizard', JSON.stringify(state));
+}`,
+        explanation: 'sessionStorage is tab-scoped and temporary. localStorage is origin-scoped and permanent.',
+      },
+      {
+        title: 'Cross-Tab Communication',
+        code: `// The 'storage' event fires in OTHER tabs
+window.addEventListener('storage', (event) => {
+  console.log('Key changed:', event.key);
+  console.log('New value:', event.newValue);
+
+  if (event.key === 'logout') {
+    window.location.href = '/login';
+  }
+  if (event.key === 'theme') {
+    document.body.className = event.newValue;
+  }
+});
+
+// Tab A triggers event in Tab B
+localStorage.setItem('theme', 'dark');`,
+        explanation: 'The storage event fires only in OTHER tabs of the same origin when localStorage changes.',
+      },
+      {
+        title: 'Storage Wrapper with TTL',
+        code: `function storageAvailable(type) {
+  try {
+    const storage = window[type];
+    storage.setItem('__test__', 'test');
+    storage.removeItem('__test__');
+    return true;
+  } catch { return false }
+}
+
+const storage = {
+  set(key, value, ttlMs) {
+    const item = { value, expiry: ttlMs ? Date.now() + ttlMs : null };
+    localStorage.setItem(key, JSON.stringify(item));
+  },
+  get(key) {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const item = JSON.parse(raw);
+    if (item.expiry && Date.now() > item.expiry) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    return item.value;
+  },
+};
+
+storage.set('token', 'abc', 60 * 60 * 1000); // 1 hour TTL`,
+        explanation: 'Check availability for private browsing. A wrapper adds expiry support since Web Storage has no TTL.',
+      },
+    ],
+    commonMistakes: [
+      'Storing objects without JSON.stringify (you get "[object Object]")',
+      'Not wrapping in try-catch (throws in private browsing mode)',
+      'Storing sensitive data like auth tokens (vulnerable to XSS)',
+      'Expecting the storage event to fire in the same tab',
+    ],
+    interviewTips: [
+      'Compare: cookies (4KB, sent with requests), localStorage (5MB, persistent), sessionStorage (5MB, tab-scoped)',
+      'Storage event for cross-tab sync is a real-time communication pattern',
+      'XSS can read all Web Storage — prefer httpOnly cookies for tokens',
+      'Web Storage is synchronous and can block the main thread for large data',
+    ],
+  },
 ]
 
 export const conceptCategories = [
@@ -9501,6 +12128,21 @@ export const subcategories: Record<string, { name: string; description: string; 
     name: 'Event Loop & Runtime',
     description: 'How JavaScript executes: call stack, tasks, microtasks',
     order: 6
+  },
+  'data-structures': {
+    name: 'Data Structures',
+    description: 'Map, Set, WeakMap, WeakSet and other built-in data structures',
+    order: 7
+  },
+  'metaprogramming': {
+    name: 'Metaprogramming',
+    description: 'Proxy, Reflect, property descriptors and language internals',
+    order: 8
+  },
+  'iteration': {
+    name: 'Iteration & Generators',
+    description: 'Iterators, generators, and the iteration protocol',
+    order: 9
   }
 }
 
@@ -9540,6 +12182,31 @@ const relatedConceptsMap: Record<string, string[]> = {
   'function-composition': ['closures', 'functions', 'memoization'],
   'timing-control': ['closures', 'event-loop', 'memoization'],
   'memoization': ['closures', 'function-composition', 'recursion'],
+  // New concepts
+  'strings-methods': ['data-types', 'regular-expressions', 'template-literals'],
+  'equality-comparisons': ['type-coercion', 'implicit-coercion-rules', 'typeof-type-checking'],
+  'json': ['objects-basics', 'structured-clone', 'fetch-api'],
+  'for-in-vs-for-of': ['loops', 'iterators-generators', 'prototype-chain-basics'],
+  'typeof-type-checking': ['data-types', 'instanceof-operator', 'equality-comparisons'],
+  'short-circuit-evaluation': ['operators', 'nullish-coalescing', 'logical-assignment'],
+  'map-set': ['objects-basics', 'weakmap-weakset', 'for-in-vs-for-of'],
+  'weakmap-weakset': ['map-set', 'closure-memory-leaks', 'proxy-reflect'],
+  'symbols': ['data-types', 'iterators-generators', 'prototype-chain-basics'],
+  'getters-setters': ['objects-basics', 'proxy-reflect', 'class-syntax-prototypes'],
+  'object-static-methods': ['objects-basics', 'getters-setters', 'prototype-chain-basics'],
+  'strict-mode': ['functions', 'this-keyword', 'module-evolution'],
+  'structured-clone': ['objects-basics', 'json', 'map-set'],
+  'tagged-template-literals': ['template-literals', 'regular-expressions', 'functions'],
+  'abort-controller': ['promises-creation', 'async-await-syntax', 'fetch-api'],
+  'class-advanced': ['class-syntax-prototypes', 'prototype-inheritance', 'proxy-reflect'],
+  'higher-order-functions': ['functions', 'closures', 'function-composition'],
+  'iterators-generators': ['for-in-vs-for-of', 'symbols', 'async-iterators'],
+  'regular-expressions': ['strings-methods', 'tagged-template-literals'],
+  'proxy-reflect': ['getters-setters', 'symbols', 'weakmap-weakset'],
+  'async-iterators': ['iterators-generators', 'async-await-syntax', 'streams-buffers'],
+  'dom-events': ['functions', 'critical-render-path', 'web-workers'],
+  'fetch-api': ['promises-creation', 'json', 'abort-controller'],
+  'web-storage': ['json', 'dom-events'],
 }
 
 export function getConceptById(id: string): Concept | undefined {
