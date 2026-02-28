@@ -2,6 +2,7 @@
 
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { Lightbulb, AlertTriangle, Award, Gamepad2, Code2, Link2 } from 'lucide-react'
 import { PageLayout, CodeBlock } from '@/components/ui'
@@ -12,7 +13,42 @@ import { getReactConceptById, reactConcepts } from '@/data/reactConcepts'
 
 // Lazy load visualizations - each loads only when its concept page is visited
 const visualizations: Record<string, React.ComponentType> = {
-  // Will be populated with dynamic imports in Task 5
+  // Foundations
+  'jsx-rendering': dynamic(() => import('@/components/Concepts/React/JsxRenderingViz').then(m => ({ default: m.JsxRenderingViz })), { ssr: false }),
+  'components-props': dynamic(() => import('@/components/Concepts/React/ComponentsPropsViz').then(m => ({ default: m.ComponentsPropsViz })), { ssr: false }),
+  'children-composition': dynamic(() => import('@/components/Concepts/React/ChildrenCompositionViz').then(m => ({ default: m.ChildrenCompositionViz })), { ssr: false }),
+  'conditional-rendering': dynamic(() => import('@/components/Concepts/React/ConditionalRenderingViz').then(m => ({ default: m.ConditionalRenderingViz })), { ssr: false }),
+  'lists-keys': dynamic(() => import('@/components/Concepts/React/ListsKeysViz').then(m => ({ default: m.ListsKeysViz })), { ssr: false }),
+  // Basic Hooks
+  'use-state': dynamic(() => import('@/components/Concepts/React/UseStateViz').then(m => ({ default: m.UseStateViz })), { ssr: false }),
+  'use-effect': dynamic(() => import('@/components/Concepts/React/UseEffectViz').then(m => ({ default: m.UseEffectViz })), { ssr: false }),
+  'use-ref': dynamic(() => import('@/components/Concepts/React/UseRefViz').then(m => ({ default: m.UseRefViz })), { ssr: false }),
+  'use-context': dynamic(() => import('@/components/Concepts/React/UseContextViz').then(m => ({ default: m.UseContextViz })), { ssr: false }),
+  // Advanced Hooks
+  'use-reducer': dynamic(() => import('@/components/Concepts/React/UseReducerViz').then(m => ({ default: m.UseReducerViz })), { ssr: false }),
+  'use-memo': dynamic(() => import('@/components/Concepts/React/UseMemoViz').then(m => ({ default: m.UseMemoViz })), { ssr: false }),
+  'use-callback': dynamic(() => import('@/components/Concepts/React/UseCallbackViz').then(m => ({ default: m.UseCallbackViz })), { ssr: false }),
+  'use-layout-effect': dynamic(() => import('@/components/Concepts/React/UseLayoutEffectViz').then(m => ({ default: m.UseLayoutEffectViz })), { ssr: false }),
+  'custom-hooks': dynamic(() => import('@/components/Concepts/React/CustomHooksViz').then(m => ({ default: m.CustomHooksViz })), { ssr: false }),
+  // Rendering
+  'virtual-dom': dynamic(() => import('@/components/Concepts/React/VirtualDomViz').then(m => ({ default: m.VirtualDomViz })), { ssr: false }),
+  'component-lifecycle': dynamic(() => import('@/components/Concepts/React/ComponentLifecycleViz').then(m => ({ default: m.ComponentLifecycleViz })), { ssr: false }),
+  'rerender-triggers': dynamic(() => import('@/components/Concepts/React/RerenderTriggersViz').then(m => ({ default: m.RerenderTriggersViz })), { ssr: false }),
+  'controlled-uncontrolled': dynamic(() => import('@/components/Concepts/React/ControlledUncontrolledViz').then(m => ({ default: m.ControlledUncontrolledViz })), { ssr: false }),
+  'refs-dom-access': dynamic(() => import('@/components/Concepts/React/RefsDomAccessViz').then(m => ({ default: m.RefsDomAccessViz })), { ssr: false }),
+  // Patterns
+  'compound-components': dynamic(() => import('@/components/Concepts/React/CompoundComponentsViz').then(m => ({ default: m.CompoundComponentsViz })), { ssr: false }),
+  'render-props': dynamic(() => import('@/components/Concepts/React/RenderPropsViz').then(m => ({ default: m.RenderPropsViz })), { ssr: false }),
+  'higher-order-components': dynamic(() => import('@/components/Concepts/React/HigherOrderComponentsViz').then(m => ({ default: m.HigherOrderComponentsViz })), { ssr: false }),
+  'error-boundaries': dynamic(() => import('@/components/Concepts/React/ErrorBoundariesViz').then(m => ({ default: m.ErrorBoundariesViz })), { ssr: false }),
+  'context-patterns': dynamic(() => import('@/components/Concepts/React/ContextPatternsViz').then(m => ({ default: m.ContextPatternsViz })), { ssr: false }),
+  'portals': dynamic(() => import('@/components/Concepts/React/PortalsViz').then(m => ({ default: m.PortalsViz })), { ssr: false }),
+  // Performance
+  'react-memo': dynamic(() => import('@/components/Concepts/React/ReactMemoViz').then(m => ({ default: m.ReactMemoViz })), { ssr: false }),
+  'code-splitting': dynamic(() => import('@/components/Concepts/React/CodeSplittingViz').then(m => ({ default: m.CodeSplittingViz })), { ssr: false }),
+  'suspense': dynamic(() => import('@/components/Concepts/React/SuspenseViz').then(m => ({ default: m.SuspenseViz })), { ssr: false }),
+  'concurrent-features': dynamic(() => import('@/components/Concepts/React/ConcurrentFeaturesViz').then(m => ({ default: m.ConcurrentFeaturesViz })), { ssr: false }),
+  'server-components': dynamic(() => import('@/components/Concepts/React/ServerComponentsViz').then(m => ({ default: m.ServerComponentsViz })), { ssr: false }),
 }
 
 export default function ReactConceptPageClient(): JSX.Element {
