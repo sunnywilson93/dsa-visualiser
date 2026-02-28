@@ -21,7 +21,7 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/concepts/:conceptId((?!js|dsa)[a-z0-9-]+)',
+        source: '/concepts/:conceptId((?!js|dsa|react)[a-z0-9-]+)',
         destination: '/concepts/js/:conceptId',
         permanent: true,
       },
