@@ -8,7 +8,6 @@ import {
   Hash,
   Layers,
   ArrowLeftRight,
-  GitBranch,
   // JS Concepts - Beginner Basics
   Lightbulb,
   Sigma,
@@ -26,7 +25,6 @@ import {
   Crosshair,
   RotateCw,
   Link2,
-  Clock,
   Cpu,
   Gauge,
   Trash2,
@@ -40,12 +38,10 @@ import {
   // JS Concepts - Evolution/History
   History,
   PackageOpen,
-  Layers3,
   Container,
   Hammer,
   // JS Concepts - Additional
   ServerCog,
-  Palette,
   Link,
   // Categories
   CircleDot,
@@ -65,7 +61,6 @@ import {
   GitMerge,
   BrainCircuit,
   // DSA subcategories
-  BarChart3,
   Search,
   Type,
   ArrowUpDown,
@@ -91,7 +86,6 @@ import {
   Key,
   RotateCcw,
   Database,
-  PieChart,
   FileCode,
   CheckCircle2,
   Skull,
@@ -106,85 +100,132 @@ import {
   BadgeAlert,
   Bomb,
   LayoutGrid,
-  Atom,
   // Intent-fix replacements
   Monitor,
   Workflow,
   Server,
   Frame,
+  // Icon overhaul — GitBranch replacements
+  TreePine,
+  Network,
+  PlusSquare,
+  ArrowDownFromLine,
+  // Icon overhaul — wrong metaphor fixes
+  Route,
+  Plug,
+  Hourglass,
+  CircuitBoard,
+  GitCompareArrows,
+  Scissors,
+  // Icon overhaul — missing JS concept icons
+  Map,
+  Play,
+  Gem,
+  Regex,
+  ZapOff,
+  CopyPlus,
+  MapPinOff,
+  HardDrive,
+  ScanSearch,
+  Equal,
+  Download,
+  GraduationCap,
+  CircleStop,
+  ListRestart,
+  Tag,
+  // Icon overhaul — React concept icons
+  ToggleLeft,
+  Anchor,
+  Wrench,
+  LayoutDashboard,
+  Share,
+  Target,
+  Loader,
+  DoorOpen,
+  Orbit,
   // Fallback
   HelpCircle,
   type LucideIcon,
 } from 'lucide-react'
+import {
+  ReactLogo,
+  Html5Logo,
+  Css3Logo,
+  JavaScriptLogo,
+  WebpackLogo,
+} from './BrandIcons'
+import { type ComponentType } from 'react'
 
-// Map concept IDs to Lucide icons
-const conceptIconMap: Record<string, LucideIcon> = {
+// Supports both Lucide stroke icons and custom brand fill icons
+type IconEntry = ComponentType<{ size?: number | string; className?: string; strokeWidth?: number | string }>
+
+const conceptIconMap: Record<string, IconEntry> = {
   // DSA Concepts
-  'big-o-notation': TrendingUp,     // Growth curves, complexity graphs
-  'binary-system': Binary,          // Binary/bits
-  'arrays': TableProperties,        // Grid/Table structure
-  'hash-tables': Hash,              // Hash symbol
-  'stacks': Layers,                 // Stacked layers (LIFO)
-  'queues': ArrowLeftRight,         // Flow in/out (FIFO)
-  'linked-lists': GitBranch,        // Connected nodes
+  'big-o-notation': TrendingUp,
+  'binary-system': Binary,
+  'arrays': TableProperties,
+  'hash-tables': Hash,
+  'stacks': Layers,
+  'queues': ArrowLeftRight,
+  'linked-lists': Workflow,
 
   // JS Concepts - Philosophy & Basics
-  'js-philosophy': Lightbulb,       // Philosophy/ideas
-  'variables': Sigma,               // Mathematical variable symbol
-  'data-types': Box,                // Box/container for types
-  'operators': Plus,                // Math/operators
-  'functions': FunctionSquare,      // Function block
-  'conditionals': Split,            // Branching/decisions
-  'loops': Repeat,                  // Repeat/iteration
-  'arrays-basics': ListOrdered,     // Ordered list
-  'objects-basics': Package,        // Package/object container
+  'js-philosophy': Lightbulb,
+  'variables': Sigma,
+  'data-types': Box,
+  'operators': Plus,
+  'functions': FunctionSquare,
+  'conditionals': Split,
+  'loops': Repeat,
+  'arrays-basics': ListOrdered,
+  'objects-basics': Package,
 
   // JS Concepts - Fundamentals
-  'hoisting': ArrowUp,              // Variables "hoisted" up
-  'type-coercion': Shuffle,         // Type conversion/shuffling
-  'closures': Lock,                 // Enclosed/captured scope
-  'this-keyword': Crosshair,        // Context target
-  'event-loop': RotateCw,           // Circular loop
-  'scope-chain': Link2,             // Chained scopes
-  'promises': Clock,                // Async/future values
-  'memory-model': Cpu,              // Memory/processor
-  'v8-engine': Gauge,               // Engine performance
-  'garbage-collection': Trash2,     // Memory cleanup
-  'streams-buffers': Waves,         // Data flow/streaming
-  'dom-rendering': Monitor,         // Browser/screen rendering
-  'web-workers': Workflow,          // Parallel execution threads
+  'hoisting': ArrowUp,
+  'type-coercion': Shuffle,
+  'closures': Lock,
+  'this-keyword': Crosshair,
+  'event-loop': RotateCw,
+  'scope-chain': Link2,
+  'promises': Hourglass,
+  'memory-model': Cpu,
+  'v8-engine': Gauge,
+  'garbage-collection': Trash2,
+  'streams-buffers': Waves,
+  'dom-rendering': Monitor,
+  'web-workers': Workflow,
 
   // JS Concepts - Phase 1 Deep Dive
-  'promises-deep-dive': Clock,      // Async/promises - future values
-  'function-composition': Combine,  // Function pipelines/composition
-  'timing-control': TimerReset,     // Debounce/throttle timing
-  'memoization': DatabaseZap,       // Caching/storing results
+  'promises-deep-dive': Hourglass,
+  'function-composition': Combine,
+  'timing-control': TimerReset,
+  'memoization': DatabaseZap,
 
   // JS Concepts - Evolution/History
-  'web-evolution': History,         // Web history/evolution
-  'module-evolution': PackageOpen,  // Module systems evolution
-  'async-evolution': Layers3,       // Async patterns evolution
-  'state-evolution': Container,     // State management evolution
-  'build-tools-evolution': Hammer,  // Build tools evolution
+  'web-evolution': History,
+  'module-evolution': PackageOpen,
+  'async-evolution': GitCompareArrows,
+  'state-evolution': Container,
+  'build-tools-evolution': Hammer,
 
   // JS Concepts - Additional
-  'nodejs-event-loop': ServerCog,   // Node.js server event loop
-  'critical-render-path': Palette,  // Browser rendering/painting
-  'prototypes': Link,               // Prototype chain links
+  'nodejs-event-loop': ServerCog,
+  'critical-render-path': Route,
+  'prototypes': Link,
 
   // Engineering Foundations
-  'mental-execution-model': BrainCircuit,  // Mental model / thinking process
-  'values-and-memory': Database,           // Memory/storage
-  'expressions-vs-statements': Split,      // Two types of code
-  'reading-code': BookOpen,                // Reading/learning
-  'debugging-mindset': Search,             // Searching for bugs
+  'mental-execution-model': BrainCircuit,
+  'values-and-memory': Database,
+  'expressions-vs-statements': Split,
+  'reading-code': BookOpen,
+  'debugging-mindset': Search,
 
   // Categories - JS
   'philosophy': Sparkles,
-  'foundations': Compass,                  // Engineering foundations
+  'foundations': Compass,
   'basics': BookOpen,
   'fundamentals': CircleDot,
-  'core': Settings,
+  'core': CircuitBoard,
   'advanced': Zap,
   'runtime': Cpu,
   'backend': Server,
@@ -196,38 +237,38 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'patterns': Puzzle,
 
   // Build categories (exampleCategories from examples.ts)
-  'js-core': Braces,                // JavaScript Core - code syntax { }
-  'async-js': Timer,                // Async JavaScript - async timing
-  'array-polyfills': List,          // Array Polyfills - list/array structure
-  'utility-functions': FunctionSquare, // Utility Functions - function blocks
-  'functional-js': FunctionSquare,  // Functional JS - lambda/functions
-  'dom-events': MousePointer2,      // DOM & Events - pointer/click events
-  'object-utils': FileJson,         // Object Utilities - JSON/object structure
-  'promise-polyfills': GitMerge,    // Promise Polyfills - merging async flows
-  'dsa': BrainCircuit,              // DSA - algorithmic/circuit thinking
+  'js-core': JavaScriptLogo,
+  'async-js': Timer,
+  'array-polyfills': List,
+  'utility-functions': FunctionSquare,
+  'functional-js': FunctionSquare,
+  'dom-events': MousePointer2,
+  'object-utils': FileJson,
+  'promise-polyfills': GitMerge,
+  'dsa': BrainCircuit,
 
   // DSA subcategories (dsaSubcategories from examples.ts)
-  'arrays-hashing': BarChart3,      // Arrays & Hashing - data visualization
-  'two-pointers': ArrowLeftRight,   // Two Pointers - bidirectional movement
-  'sliding-window': ScanLine,       // Sliding Window - scanning across data
-  'stack': Layers,                  // Stack - stacked layers
-  'binary-search': Search,          // Binary Search - search algorithm
-  'linked-list': GitBranch,         // Linked List - connected nodes
-  'strings': Type,                  // Strings - text/typography
-  'sorting': ArrowUpDown,           // Sorting - ordering data
-  'recursion': RefreshCw,           // Recursion - circular/repeat
-  'dynamic-programming': Calculator,// DP - computation/memoization
-  'greedy': Coins,                  // Greedy - optimal local choices
-  'backtracking': Undo2,            // Backtracking - going back
-  'graphs': Share2,                 // Graphs - network/connections
-  'trees': GitBranch,               // Trees - branching structure
-  'trie': GitBranch,                // Trie - prefix tree
-  'heap': Mountain,                 // Heap - peak/priority
-  'intervals': Ruler,               // Intervals - measurement/ranges
-  'bit-manipulation': Binary,       // Bit Manipulation - binary operations
-  'math': Calculator,               // Math & Geometry - calculations
+  'arrays-hashing': Hash,
+  'two-pointers': ArrowLeftRight,
+  'sliding-window': ScanLine,
+  'stack': Layers,
+  'binary-search': Search,
+  'linked-list': Workflow,
+  'strings': Type,
+  'sorting': ArrowUpDown,
+  'recursion': RefreshCw,
+  'dynamic-programming': Calculator,
+  'greedy': Coins,
+  'backtracking': Undo2,
+  'graphs': Share2,
+  'trees': TreePine,
+  'trie': Network,
+  'heap': Mountain,
+  'intervals': Ruler,
+  'bit-manipulation': Binary,
+  'math': Calculator,
 
-  // ===== PHASE 1-8: NEW CONCEPT ICONS =====
+  // ===== PHASE 1-8: CONCEPT ICONS =====
 
   // Phase 1: Scope & Hoisting
   'scope-basics': Frame,
@@ -240,8 +281,8 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'callbacks-fundamentals': MessageSquare,
   'error-first-callbacks': AlertTriangle,
   'callback-hell': IndentIncrease,
-  'promises-creation': Clock,
-  'promise-chaining': GitBranch,
+  'promises-creation': Hourglass,
+  'promise-chaining': Link2,
   'promises-then-catch': Link2,
   'promise-static-methods': LayoutGrid,
   'async-await-basics': Timer,
@@ -261,18 +302,18 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'closure-practical-uses': Key,
   'closure-in-loops': RotateCcw,
   'closure-memory': Database,
-  'closure-patterns': PieChart,
+  'closure-patterns': Braces,
   'module-pattern': Package,
   'prototype-chain-basics': Link,
   'property-lookup': Search,
   'class-syntax-sugar': FileCode,
   'instanceof-operator': CheckCircle2,
-  'object-create': GitBranch,
+  'object-create': PlusSquare,
   'prototype-pollution': Skull,
 
   // Phase 5: Event Loop
   'call-stack-basics': Layers,
-  'web-apis-overview': Cpu,
+  'web-apis-overview': Plug,
   'task-queue-macrotasks': List,
   'microtask-queue': ListOrdered,
   'event-loop-tick': RotateCw,
@@ -296,38 +337,102 @@ const conceptIconMap: Record<string, LucideIcon> = {
   'implicit-coercion-rules': Shuffle,
   'coercion-edge-cases': Bomb,
 
-  // Interview categories
-  'html': Code2,
-  'css': Palette,
-  'react': Atom,
-  'bundlers': Package,
+  // Interview categories (brand icons)
+  'html': Html5Logo,
+  'css': Css3Logo,
+  'react': ReactLogo,
+  'bundlers': WebpackLogo,
 
   // ===== ADDITIONAL MISSING ICONS =====
+
   // Array methods (granular)
   'array-searching': Search,
   'array-sorting': ArrowUpDown,
-  
+
   // Async (additional)
   'async-await-syntax': Timer,
   'callbacks-basics': MessageSquare,
-  'promises-chaining': GitBranch,
+  'promises-chaining': Link2,
   'promises-static-methods': LayoutGrid,
-  
+
   // Closure (additional)
   'closure-loops-classic': RotateCcw,
   'closure-memory-leaks': Database,
   'closure-module-pattern': Package,
-  'closure-partial-application': PieChart,
-  
+  'closure-partial-application': Scissors,
+
   // Class/Prototype (additional)
   'class-syntax-prototypes': FileCode,
-  'prototype-inheritance': GitBranch,
-  
+  'prototype-inheritance': ArrowDownFromLine,
+
   // Event Loop (additional)
   'event-loop-starvation': AlertOctagon,
-  
+
   // Runtime
   'javascript-runtime-model': Cpu,
+
+  // ===== MISSING JS CONCEPT ICONS =====
+  'map-set': Map,
+  'iterators-generators': Play,
+  'proxy-reflect': Shield,
+  'symbols': Gem,
+  'regular-expressions': Regex,
+  'short-circuit-evaluation': ZapOff,
+  'strict-mode': ShieldCheck,
+  'strings-methods': Type,
+  'structured-clone': CopyPlus,
+  'weakmap-weakset': MapPinOff,
+  'web-storage': HardDrive,
+  'typeof-type-checking': ScanSearch,
+  'json': FileJson,
+  'higher-order-functions': Layers,
+  'getters-setters': ArrowUpDown,
+  'equality-comparisons': Equal,
+  'fetch-api': Download,
+  'for-in-vs-for-of': Repeat,
+  'class-advanced': GraduationCap,
+  'abort-controller': CircleStop,
+  'async-iterators': ListRestart,
+  'tagged-template-literals': Tag,
+
+  // ===== REACT CONCEPT ICONS =====
+  'jsx-rendering': Code2,
+  'components-props': LayoutGrid,
+  'component-lifecycle': RefreshCw,
+  'conditional-rendering': Split,
+  'lists-keys': List,
+  'controlled-uncontrolled': ToggleLeft,
+  'use-state': Box,
+  'use-effect': Sparkles,
+  'use-reducer': Settings,
+  'use-callback': FunctionSquare,
+  'use-memo': Zap,
+  'use-context': Orbit,
+  'use-ref': Anchor,
+  'custom-hooks': Wrench,
+  'use-layout-effect': LayoutDashboard,
+  'higher-order-components': Layers,
+  'render-props': Share,
+  'children-composition': LayoutGrid,
+  'compound-components': Puzzle,
+  'context-patterns': Target,
+  'error-boundaries': ShieldAlert,
+  'suspense': Loader,
+  'concurrent-features': Cpu,
+  'server-components': Server,
+  'react-memo': DatabaseZap,
+  'refs-dom-access': Crosshair,
+  'portals': DoorOpen,
+  'code-splitting': Scissors,
+  'rerender-triggers': RotateCw,
+  'virtual-dom': TreePine,
+
+  // React category icons
+  'react-foundations': BookOpen,
+  'hooks-basic': Anchor,
+  'hooks-advanced': Wrench,
+  'rendering': Monitor,
+  'react-performance': Gauge,
 }
 
 interface ConceptIconProps {
@@ -349,7 +454,6 @@ export function ConceptIcon({ conceptId, size = 20, className, strokeWidth = 2 }
   )
 }
 
-// For use in search results where we need to look up by concept ID
-export function getConceptIcon(conceptId: string): LucideIcon {
+export function getConceptIcon(conceptId: string): IconEntry {
   return conceptIconMap[conceptId] || HelpCircle
 }

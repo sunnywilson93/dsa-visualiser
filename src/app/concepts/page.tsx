@@ -82,7 +82,7 @@ export default function ConceptsPage() {
               <div className="bg-bg-page-secondary rounded-xl p-5 flex flex-col gap-2 flex-1">
                 <div className="flex items-center justify-between">
                   <span className="text-[1.75rem] leading-none text-brand-primary">
-                    <ConceptIcon conceptId="advanced" size={28} />
+                    <ConceptIcon conceptId="js-core" size={28} />
                   </span>
                   <span className="text-xs font-semibold py-0.5 px-2.5 rounded-full bg-brand-primary-30 text-brand-light">{concepts.length} topics</span>
                 </div>
@@ -138,7 +138,7 @@ export default function ConceptsPage() {
               <div className="bg-bg-page-secondary rounded-xl p-5 flex flex-col gap-2 flex-1">
                 <div className="flex items-center justify-between">
                   <span className="text-[1.75rem] leading-none text-brand-primary">
-                    <ConceptIcon conceptId="advanced" size={28} />
+                    <ConceptIcon conceptId="react" size={28} />
                   </span>
                   <span className="text-xs font-semibold py-0.5 px-2.5 rounded-full bg-brand-primary-30 text-brand-light">{reactConcepts.length} topics</span>
                 </div>

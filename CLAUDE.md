@@ -120,6 +120,16 @@ These MUST be used instead of recreating:
 - `VariantSelector` — variant picker
 - `StepBadge` — step indicator badge
 
+### Icons (`src/components/Icons/`)
+
+NEVER recreate icon resolution logic — use these instead:
+- `ConceptIcon` — renders any concept/category icon by string ID (DSA, JS phases 1–8, React, interview categories); falls back to `HelpCircle`
+- `getConceptIcon(conceptId)` — returns the `IconEntry` component (typed as `IconEntry`, not `LucideIcon`) for use outside JSX
+- `BrandIcons` (`ReactLogo`, `Html5Logo`, `Css3Logo`, `JavaScriptLogo`, `WebpackLogo`) — custom SVG brand icons using `fill="currentColor"` and `forwardRef`; these are NOT Lucide icons and do NOT use `stroke`
+- `IconEntry` type — unified prop interface `ComponentType<{ size?, className?, strokeWidth? }>` that covers both Lucide and brand icons
+
+**Adding new concept icons**: extend `conceptIconMap` in `ConceptIcon.tsx` only — do NOT create a parallel icon mapping anywhere else.
+
 ### State Management
 
 - Global state: Zustand store (`src/store/executionStore.ts`)
@@ -150,6 +160,7 @@ These MUST be used instead of recreating:
 - `/` — Home
 - `/concepts/js/[conceptId]` — JS concept page
 - `/concepts/dsa/[conceptId]` — DSA concept page
+- `/concepts/react/[conceptId]` — React concept page
 - `/[categoryId]` — Problem category listing
 - `/[categoryId]/[problemId]` — Practice page
 - `/[categoryId]/[problemId]/concept` — Algorithm visualization
