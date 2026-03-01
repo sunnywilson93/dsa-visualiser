@@ -19,6 +19,8 @@ npm run lint             # ESLint (MUST pass before committing)
 npm test -- <file>       # Run specific test
 npm run test:run         # All tests (CI mode)
 npm run tokens:audit     # Audit CSS token usage
+npm run test:visual:react         # Playwright visual regression — React concepts (requires running app)
+npm run test:visual:react:update  # Update React concept snapshots
 ```
 
 ---
@@ -158,6 +160,7 @@ NEVER recreate icon resolution logic — use these instead:
 ### Routing
 
 - `/` — Home
+- `/concepts` — Hub page: JS, DSA, React concept cards + quick-start links
 - `/concepts/js/[conceptId]` — JS concept page
 - `/concepts/dsa/[conceptId]` — DSA concept page
 - `/concepts/react/[conceptId]` — React concept page
@@ -178,6 +181,14 @@ NEVER recreate icon resolution logic — use these instead:
 - MUST test: interpreter logic, parser, execution store, shared utilities
 - Use `describe` / `it` blocks with clear descriptions
 - Setup: `src/__tests__/setup.ts`
+
+### Visual Regression (Playwright)
+
+- Specs live in `e2e/` — one spec per concept domain
+- React concepts: `e2e/visual-react-concepts.spec.ts` — 30 routes, config `playwright.react-concepts.config.ts`
+- All visual configs: single `desktop-1440` project (1440×900), `reducedMotion: reduce`, `maxDiffPixels: 0`
+- Requires a running app — set `PLAYWRIGHT_BASE_URL` or start `npm run start` first
+- `PLAYWRIGHT_SKIP_SERVER=1` prevents the config from auto-starting a server
 
 ## 7. Pre-Commit Enforcement
 
