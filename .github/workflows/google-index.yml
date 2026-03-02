@@ -1,0 +1,44 @@
+name: Google Indexing API
+
+on:
+  push:
+    branches: [master]
+    paths:
+      # Only run when actual content or routes change
+      - 'src/data/**'
+      - 'src/app/**/page.tsx'
+      - 'src/app/sitemap.ts'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (preview URLs without submitting)'
+        type: boolean
+        default: false
+
+jobs:
+  index:
+    name: Submit URLs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Write service account key
+        env:
+          GOOGLE_INDEXING_KEY: ${{ secrets.GOOGLE_INDEXING_KEY }}
+        run: echo "$GOOGLE_INDEXING_KEY" > google-indexing-key.json
+
+      - name: Submit URLs (dry run)
+        if: ${{ inputs.dry_run == true }}
+        run: npm run index:dry-run
+
+      - name: Submit URLs
+        if: ${{ inputs.dry_run != true }}
+        run: npm run index:submit

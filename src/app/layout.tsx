@@ -61,11 +61,6 @@ const jsonLd = {
       "alternateName": ["JavaScript Interview Preparation", "JS Interview"],
       "url": "https://jsinterview.dev",
       "description": "Master JavaScript through interactive visualization and real-time code execution",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://jsinterview.dev/?q={search_term_string}",
-        "query-input": "required name=search_term_string",
-      },
     },
     {
       "@type": "EducationalOrganization",

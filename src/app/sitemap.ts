@@ -12,10 +12,12 @@ import { reactConcepts } from '@/data/reactConcepts'
 import { problemConcepts } from '@/data/algorithmConcepts'
 import { topicHubs } from '@/data/topicHubs'
 
-/**
- * Build-time timestamp so the sitemap always reflects the latest deploy.
- */
-export const CONTENT_LAST_UPDATED = new Date()
+// Content milestone dates — update when meaningful content is added or revised
+const JS_DSA_LAST_UPDATED = new Date('2026-02-28')
+const REACT_LAST_UPDATED = new Date('2026-03-01')
+
+// Exported for concept page schemas; points to the most recent content update
+export const CONTENT_LAST_UPDATED = REACT_LAST_UPDATED
 
 const BASE_URL = 'https://jsinterview.dev'
 
@@ -117,7 +119,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // JS Concept pages (/concepts/js/[conceptId])
   const jsConceptPages: MetadataRoute.Sitemap = concepts.map((concept) => ({
     url: `${BASE_URL}/concepts/js/${concept.id}`,
-    lastModified: CONTENT_LAST_UPDATED,
+    lastModified: JS_DSA_LAST_UPDATED,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))
@@ -125,7 +127,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // DSA Concept pages (/concepts/dsa/[conceptId])
   const dsaConceptPages: MetadataRoute.Sitemap = dsaConcepts.map((concept) => ({
     url: `${BASE_URL}/concepts/dsa/${concept.id}`,
-    lastModified: CONTENT_LAST_UPDATED,
+    lastModified: JS_DSA_LAST_UPDATED,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))
@@ -133,7 +135,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // React Concept pages (/concepts/react/[conceptId])
   const reactConceptPages: MetadataRoute.Sitemap = reactConcepts.map((concept) => ({
     url: `${BASE_URL}/concepts/react/${concept.id}`,
-    lastModified: CONTENT_LAST_UPDATED,
+    lastModified: REACT_LAST_UPDATED,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))
@@ -141,7 +143,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // DSA Pattern pages (/concepts/dsa/patterns/[patternId])
   const dsaPatternPages: MetadataRoute.Sitemap = dsaPatterns.map((pattern) => ({
     url: `${BASE_URL}/concepts/dsa/patterns/${pattern.slug}`,
-    lastModified: CONTENT_LAST_UPDATED,
+    lastModified: JS_DSA_LAST_UPDATED,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))
@@ -149,7 +151,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Problem category pages (/{categoryId}) — main categories + DSA subcategories
   const categoryPages: MetadataRoute.Sitemap = exampleCategories.map((category) => ({
     url: `${BASE_URL}/${category.id}`,
-    lastModified: CONTENT_LAST_UPDATED,
+    lastModified: JS_DSA_LAST_UPDATED,
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }))
@@ -157,7 +159,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // DSA subcategory pages (/{subcategoryId}) — e.g. /sorting, /two-pointers
   const dsaSubcategoryPages: MetadataRoute.Sitemap = dsaSubcategories.map((sub) => ({
     url: `${BASE_URL}/${sub.id}`,
-    lastModified: CONTENT_LAST_UPDATED,
+    lastModified: JS_DSA_LAST_UPDATED,
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }))
@@ -167,7 +169,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const problemPages: MetadataRoute.Sitemap = codeExamples.flatMap((problem) =>
     getProblemRouteCategoryIds(problem).map((categoryId) => ({
       url: `${BASE_URL}/${categoryUrls.get(categoryId) || problem.category}/${problem.id}`,
-      lastModified: CONTENT_LAST_UPDATED,
+      lastModified: JS_DSA_LAST_UPDATED,
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
@@ -180,7 +182,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       if (!problem) return []
       return getProblemRouteCategoryIds(problem).map((categoryId) => ({
         url: `${BASE_URL}/${categoryUrls.get(categoryId) || problem.category}/${problem.id}/concept`,
-        lastModified: CONTENT_LAST_UPDATED,
+        lastModified: JS_DSA_LAST_UPDATED,
         changeFrequency: 'monthly' as const,
         priority: 0.5,
       }))
@@ -189,7 +191,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Topic hub pages (/topics/[topicId])
   const topicHubPages: MetadataRoute.Sitemap = topicHubs.map((hub) => ({
     url: `${BASE_URL}/topics/${hub.id}`,
-    lastModified: CONTENT_LAST_UPDATED,
+    lastModified: JS_DSA_LAST_UPDATED,
     changeFrequency: 'weekly' as const,
     priority: 0.9,
   }))
@@ -198,7 +200,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const updatesPage: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/updates`,
-      lastModified: CONTENT_LAST_UPDATED,
+      lastModified: REACT_LAST_UPDATED,
       changeFrequency: 'weekly' as const,
       priority: 0.5,
     },
