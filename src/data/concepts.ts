@@ -16,7 +16,7 @@ export interface Concept {
   id: string
   title: string
   category: 'philosophy' | 'foundations' | 'basics' | 'fundamentals' | 'core' | 'advanced' | 'runtime' | 'backend' | 'browser'
-  subcategory?: 'scope-hoisting' | 'async-patterns' | 'array-methods' | 'prototypes-oop' | 'modern-js' | 'event-loop' | 'data-structures' | 'metaprogramming' | 'iteration'
+  subcategory?: 'scope-hoisting' | 'async-patterns' | 'array-methods' | 'prototypes-oop' | 'modern-js' | 'event-loop' | 'data-structures' | 'metaprogramming' | 'iteration' | 'advanced-patterns' | 'error-handling'
   difficulty: 'beginner' | 'intermediate' | 'advanced'
   description: string
   shortDescription: string
@@ -12083,6 +12083,350 @@ storage.set('token', 'abc', 60 * 60 * 1000); // 1 hour TTL`,
       'Web Storage is synchronous and can block the main thread for large data',
     ],
   },
+
+  // Advanced Async Patterns
+  {
+    id: 'async-patterns-advanced',
+    title: 'Advanced Async Patterns',
+    category: 'advanced',
+    subcategory: 'advanced-patterns',
+    difficulty: 'advanced',
+    estimatedReadTime: 12,
+    interviewFrequency: 'medium',
+    prerequisites: ['async-await-syntax', 'async-await-parallel', 'async-await-error-handling'],
+    nextConcepts: ['async-error-boundaries'],
+    description: 'Beyond basic async/await lies a set of powerful orchestration patterns for managing complex asynchronous workflows. These include async iterators for streaming data, retry strategies with exponential backoff, concurrent task pools with configurable limits, rate limiters, and mutex/semaphore patterns for coordinating shared resources. Mastering these patterns is the difference between code that works in demos and code that survives production traffic.',
+    shortDescription: 'Advanced async orchestration beyond basic async/await',
+    keyPoints: [
+      'Async generators (async function*) produce values on demand from asynchronous sources',
+      'AbortController integrates with fetch, streams, and custom async workflows for clean cancellation',
+      'Retry with exponential backoff prevents thundering-herd problems on transient failures',
+      'Rate limiting (token bucket, sliding window) prevents API quota exhaustion',
+      'Concurrent task pools cap parallelism to avoid overwhelming servers or memory',
+      'Async mutex/semaphore patterns coordinate access to shared resources without race conditions',
+      'Combining these patterns produces resilient data pipelines for production systems',
+    ],
+    examples: [
+      {
+        title: 'Async Generator for Paginated API',
+        code: `async function* fetchAllPages(baseUrl, signal) {
+  let page = 1;
+  let hasMore = true;
+
+  while (hasMore) {
+    const res = await fetch(
+      \`\${baseUrl}?page=\${page}\`,
+      { signal }
+    );
+    if (!res.ok) throw new Error(\`HTTP \${res.status}\`);
+
+    const data = await res.json();
+    yield* data.items; // Yield each item individually
+
+    hasMore = data.hasNextPage;
+    page++;
+  }
+}
+
+// Consumer controls iteration
+for await (const item of fetchAllPages('/api/users', signal)) {
+  process(item);
+  if (shouldStop()) break; // Generator cleans up
+}`,
+        explanation: 'Async generators lazily fetch pages on demand. The consumer pulls items one at a time and can break early without wasting network requests.',
+      },
+      {
+        title: 'Retry with Exponential Backoff',
+        code: `async function withRetry(fn, options = {}) {
+  const {
+    maxAttempts = 3,
+    baseDelayMs = 1000,
+    maxDelayMs = 30000,
+    shouldRetry = () => true,
+  } = options;
+
+  let attempt = 0;
+
+  while (true) {
+    try {
+      return await fn();
+    } catch (error) {
+      attempt++;
+      if (attempt >= maxAttempts || !shouldRetry(error)) {
+        throw error;
+      }
+
+      const delay = Math.min(
+        baseDelayMs * 2 ** (attempt - 1) + Math.random() * 1000,
+        maxDelayMs
+      );
+      await new Promise(r => setTimeout(r, delay));
+    }
+  }
+}
+
+// Usage
+const data = await withRetry(
+  () => fetch('/api/flaky-endpoint').then(r => r.json()),
+  {
+    maxAttempts: 5,
+    shouldRetry: (err) => err.status !== 401,
+  }
+);`,
+        explanation: 'Exponential backoff doubles the wait time after each failure with jitter to prevent synchronized retries across clients.',
+      },
+      {
+        title: 'Concurrent Task Pool with Limit',
+        code: `async function pooledMap(items, fn, concurrency = 5) {
+  const results = new Array(items.length);
+  let nextIndex = 0;
+
+  async function worker() {
+    while (nextIndex < items.length) {
+      const index = nextIndex++;
+      results[index] = await fn(items[index], index);
+    }
+  }
+
+  const workers = Array.from(
+    { length: Math.min(concurrency, items.length) },
+    () => worker()
+  );
+
+  await Promise.all(workers);
+  return results;
+}
+
+// Process 100 URLs with max 5 concurrent fetches
+const urls = Array.from({ length: 100 }, (_, i) => \`/api/item/\${i}\`);
+const responses = await pooledMap(
+  urls,
+  async (url) => {
+    const res = await fetch(url);
+    return res.json();
+  },
+  5 // concurrency limit
+);`,
+        explanation: 'A pool of worker functions pulls from a shared queue. This caps parallelism to avoid overwhelming servers while staying faster than sequential execution.',
+      },
+    ],
+    commonMistakes: [
+      'Firing hundreds of parallel requests without concurrency limits, crashing the server or hitting rate limits',
+      'Not passing AbortController signals through async pipelines, leaving dangling requests on cancellation',
+      'Retrying non-idempotent operations (POST/DELETE) without understanding side-effect safety',
+      'Leaking memory by holding references to resolved Promises in long-running loops',
+      'Using fixed delay instead of exponential backoff, causing thundering-herd retries',
+    ],
+    interviewTips: [
+      'Explain the difference between unbounded Promise.all and a concurrency-limited pool',
+      'Walk through exponential backoff math: delay = baseDelay * 2^attempt + jitter',
+      'Know when async generators are better than collecting everything into an array',
+      'Mention real-world use cases: API rate limits, database connection pools, file processing pipelines',
+    ],
+    explanation: `Advanced async patterns go beyond the basics of async/await to solve the real-world challenges of orchestrating many concurrent operations. While Promise.all is sufficient for a handful of parallel tasks, production systems often need to process hundreds or thousands of items without overwhelming downstream services. Concurrent task pools let you cap parallelism at a configurable limit, processing items as fast as possible without exceeding resource constraints.
+
+Retry logic with exponential backoff is essential for any system that communicates over a network. Transient failures — server overloads, DNS hiccups, brief outages — are inevitable. A well-designed retry strategy waits progressively longer between attempts and adds random jitter so that thousands of clients don't retry in lockstep. Combined with AbortController for cancellation and async generators for lazy data streaming, these patterns form the building blocks of resilient JavaScript applications.
+
+Understanding these patterns is a strong differentiator in senior-level interviews. Interviewers look for candidates who can discuss trade-offs: when to use a task pool vs. unbounded parallelism, how to choose backoff parameters, and how to integrate cancellation cleanly through an async pipeline. Being able to implement these from scratch demonstrates deep fluency with Promises and async control flow.`,
+    commonQuestions: [
+      {
+        question: 'How do you limit concurrency when processing many async tasks?',
+        answer: 'Use a concurrent task pool: create N worker functions that pull from a shared queue. Each worker awaits its task, then grabs the next one. Promise.all on the workers ensures all items are processed with at most N in-flight at once.',
+        difficulty: 'hard',
+      },
+      {
+        question: 'What is exponential backoff and why add jitter?',
+        answer: 'Exponential backoff doubles the delay between retries (e.g., 1s, 2s, 4s, 8s). Jitter adds a random offset to each delay so that many clients retrying simultaneously do not all hit the server at the same instant, which would cause a thundering-herd problem.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'When would you use an async generator instead of collecting all results into an array?',
+        answer: 'When the dataset is large or unbounded — paginated APIs, streaming logs, real-time events. Async generators yield items lazily, so memory stays constant and the consumer can break early without fetching unnecessary data.',
+        difficulty: 'medium',
+      },
+    ],
+  },
+
+  // Async Error Boundaries
+  {
+    id: 'async-error-boundaries',
+    title: 'Async Error Boundaries',
+    category: 'advanced',
+    subcategory: 'error-handling',
+    difficulty: 'advanced',
+    estimatedReadTime: 11,
+    interviewFrequency: 'medium',
+    prerequisites: ['async-await-error-handling'],
+    nextConcepts: ['async-patterns-advanced'],
+    description: 'Structured error handling for asynchronous code goes far beyond wrapping everything in try/catch. It includes distinguishing operational errors from programmer errors, aggregating results from Promise.allSettled, implementing circuit breakers to avoid cascading failures, handling global unhandled rejections, and designing graceful degradation strategies. These patterns ensure your application fails predictably and recovers gracefully.',
+    shortDescription: 'Structured error handling patterns for async workflows',
+    keyPoints: [
+      'Operational errors (network timeouts, 404s) are expected and recoverable; programmer errors (TypeError, null access) are bugs',
+      'The unhandledrejection event catches Promises that reject without a handler — essential for logging and crash prevention',
+      'Promise.allSettled returns every result regardless of individual failures, enabling partial-success workflows',
+      'Circuit breakers stop calling a failing service after a threshold, preventing cascading failures',
+      'Error aggregation collects multiple async failures into a single AggregateError for unified handling',
+      'Graceful degradation returns cached or default data when a service is unavailable',
+      'Error boundaries in async workflows isolate failures so one bad task does not abort the entire pipeline',
+    ],
+    examples: [
+      {
+        title: 'Circuit Breaker',
+        code: `class CircuitBreaker {
+  constructor(fn, options = {}) {
+    this.fn = fn;
+    this.failureCount = 0;
+    this.threshold = options.threshold ?? 5;
+    this.resetTimeMs = options.resetTimeMs ?? 30000;
+    this.state = 'CLOSED'; // CLOSED | OPEN | HALF_OPEN
+    this.nextAttempt = 0;
+  }
+
+  async call(...args) {
+    if (this.state === 'OPEN') {
+      if (Date.now() < this.nextAttempt) {
+        throw new Error('Circuit is OPEN — request blocked');
+      }
+      this.state = 'HALF_OPEN';
+    }
+
+    try {
+      const result = await this.fn(...args);
+      this.onSuccess();
+      return result;
+    } catch (error) {
+      this.onFailure();
+      throw error;
+    }
+  }
+
+  onSuccess() {
+    this.failureCount = 0;
+    this.state = 'CLOSED';
+  }
+
+  onFailure() {
+    this.failureCount++;
+    if (this.failureCount >= this.threshold) {
+      this.state = 'OPEN';
+      this.nextAttempt = Date.now() + this.resetTimeMs;
+    }
+  }
+}
+
+const fetchUser = new CircuitBreaker(
+  (id) => fetch(\`/api/users/\${id}\`).then(r => r.json()),
+  { threshold: 3, resetTimeMs: 10000 }
+);`,
+        explanation: 'A circuit breaker tracks consecutive failures. After crossing the threshold it blocks requests for a cooldown period, then allows one test request (HALF_OPEN) to see if the service recovered.',
+      },
+      {
+        title: 'Error-Safe Promise.all Wrapper',
+        code: `async function safeAll(promises, options = {}) {
+  const { fallback = null, onError } = options;
+  const results = await Promise.allSettled(promises);
+
+  return results.map((result, index) => {
+    if (result.status === 'fulfilled') {
+      return result.value;
+    }
+
+    if (onError) onError(result.reason, index);
+    return fallback;
+  });
+}
+
+// Usage: fetch multiple resources, never fail entirely
+const [user, posts, notifications] = await safeAll(
+  [
+    fetchUser(userId),
+    fetchPosts(userId),
+    fetchNotifications(userId),
+  ],
+  {
+    fallback: null,
+    onError: (err, i) => console.warn(\`Task \${i} failed:\`, err),
+  }
+);
+
+// Render what succeeded, show fallback for what failed
+if (user) renderProfile(user);
+if (posts) renderFeed(posts);
+if (!notifications) renderNotificationsFallback();`,
+        explanation: 'Wrapping Promise.allSettled with a fallback value and error callback gives you partial-success semantics without losing visibility into failures.',
+      },
+      {
+        title: 'Global Unhandled Rejection Handler',
+        code: `// Browser
+window.addEventListener('unhandledrejection', (event) => {
+  event.preventDefault(); // Prevent default console error
+
+  const error = event.reason;
+
+  // Distinguish error types
+  if (error instanceof TypeError || error instanceof ReferenceError) {
+    // Programmer error — report to error tracking
+    reportToSentry(error);
+  } else {
+    // Operational error — log and recover
+    console.warn('Unhandled async error:', error.message);
+  }
+});
+
+// Node.js
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled rejection at:', promise, 'reason:', reason);
+
+  // In production, log and continue
+  // In development, crash fast to surface bugs
+  if (process.env.NODE_ENV === 'development') {
+    process.exit(1);
+  }
+});
+
+// Common cause: forgetting to await or .catch()
+async function leakyFunction() {
+  fetchData(); // No await, no .catch() — rejection is unhandled!
+}`,
+        explanation: 'Global handlers catch Promises that slip through without error handling. Separating operational from programmer errors lets you log the former and crash on the latter during development.',
+      },
+    ],
+    commonMistakes: [
+      'Swallowing errors silently with empty catch blocks, hiding bugs that surface later as mysterious state corruption',
+      'Treating all errors the same — operational errors (timeout, 503) need retry logic, programmer errors (TypeError) need bug fixes',
+      'Not attaching an unhandledrejection handler, missing errors from forgotten awaits',
+      'Using Promise.all when partial success is acceptable — Promise.allSettled is the right tool',
+      'Implementing a circuit breaker without a HALF_OPEN state, permanently blocking a recovered service',
+    ],
+    interviewTips: [
+      'Distinguish operational errors (expected, recoverable) from programmer errors (bugs) — this is a key senior-level concept',
+      'Know the three circuit breaker states: CLOSED (normal), OPEN (blocking), HALF_OPEN (testing recovery)',
+      'Explain how Promise.allSettled differs from Promise.all and when each is appropriate',
+      'Mention that unhandledrejection is the async equivalent of window.onerror for Promises',
+    ],
+    explanation: `Error handling in asynchronous JavaScript requires a fundamentally different mindset from synchronous try/catch. In synchronous code, an unhandled exception immediately crashes the program with a clear stack trace. In async code, a forgotten await or missing .catch() creates a silently rejected Promise that may go unnoticed until it corrupts application state or loses user data. The unhandledrejection event exists specifically to catch these cases, and every production application should register a handler.
+
+The most important conceptual distinction in async error handling is between operational errors and programmer errors. Operational errors — network timeouts, HTTP 503 responses, rate limit hits — are expected conditions that your code should handle gracefully through retries, fallbacks, or circuit breakers. Programmer errors — TypeErrors, null dereferences, invalid arguments — are bugs that should crash loudly in development and be reported to error tracking in production. Conflating the two leads to either fragile code that crashes on transient network blips or silent code that hides real bugs.
+
+Circuit breakers, error aggregation with Promise.allSettled, and graceful degradation form a toolkit for building resilient async systems. A circuit breaker stops calling a failing service after consecutive errors, preventing cascading failures across your infrastructure. Promise.allSettled lets you fire multiple requests in parallel and handle each result individually, so one failure does not abort the entire operation. These patterns are frequently discussed in system design and senior frontend interviews, where candidates are expected to reason about failure modes and recovery strategies.`,
+    commonQuestions: [
+      {
+        question: 'What is the difference between operational errors and programmer errors?',
+        answer: 'Operational errors are expected runtime conditions like network failures, timeouts, or invalid user input — they should be handled gracefully with retries or fallbacks. Programmer errors are bugs like TypeErrors or null dereferences — they indicate code that needs to be fixed, not caught and suppressed.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'How does a circuit breaker work in JavaScript?',
+        answer: 'A circuit breaker tracks consecutive failures to a service. When failures exceed a threshold, it moves to OPEN state and blocks requests for a cooldown period. After the cooldown, it enters HALF_OPEN state and allows one test request. If that succeeds, it returns to CLOSED (normal). If it fails, it goes back to OPEN.',
+        difficulty: 'hard',
+      },
+      {
+        question: 'When should you use Promise.allSettled instead of Promise.all?',
+        answer: 'Use Promise.allSettled when partial success is acceptable — for example, loading a dashboard where some widgets can fail independently. Use Promise.all when all results are required and any single failure should abort the operation.',
+        difficulty: 'easy',
+      },
+    ],
+  },
 ]
 
 export const conceptCategories = [
@@ -12143,6 +12487,16 @@ export const subcategories: Record<string, { name: string; description: string; 
     name: 'Iteration & Generators',
     description: 'Iterators, generators, and the iteration protocol',
     order: 9
+  },
+  'advanced-patterns': {
+    name: 'Advanced Async Patterns',
+    description: 'Retry strategies, task pools, rate limiting, and async orchestration',
+    order: 10
+  },
+  'error-handling': {
+    name: 'Error Handling',
+    description: 'Circuit breakers, error boundaries, and graceful degradation for async code',
+    order: 11
   }
 }
 
@@ -12207,6 +12561,8 @@ const relatedConceptsMap: Record<string, string[]> = {
   'dom-events': ['functions', 'critical-render-path', 'web-workers'],
   'fetch-api': ['promises-creation', 'json', 'abort-controller'],
   'web-storage': ['json', 'dom-events'],
+  'async-patterns-advanced': ['async-await-parallel', 'async-await-error-handling', 'async-iterators', 'abort-controller'],
+  'async-error-boundaries': ['async-await-error-handling', 'async-patterns-advanced', 'promises-deep-dive'],
 }
 
 export function getConceptById(id: string): Concept | undefined {

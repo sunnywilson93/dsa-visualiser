@@ -172,6 +172,10 @@ const visualizations: Record<string, React.ComponentType> = {
   'fetch-api': dynamic(() => import('@/components/Concepts/BrowserApisViz').then(m => m.BrowserApisViz)),
   'web-storage': dynamic(() => import('@/components/Concepts/BrowserApisViz').then(m => m.BrowserApisViz)),
   'abort-controller': dynamic(() => import('@/components/Concepts/BrowserApisViz').then(m => m.BrowserApisViz)),
+
+  // Async Advanced Patterns
+  'async-patterns-advanced': dynamic(() => import('@/components/Concepts/AsyncPatternsAdvancedViz').then(m => m.AsyncPatternsAdvancedViz)),
+  'async-error-boundaries': dynamic(() => import('@/components/Concepts/AsyncErrorBoundariesViz').then(m => m.AsyncErrorBoundariesViz)),
 }
 
 // Helper to determine if a concept is a JS concept or DSA concept

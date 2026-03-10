@@ -2419,6 +2419,362 @@ countingSort([4, 2, 2, 8, 3, 3, 1])
       },
     ],
   },
+  {
+    id: 'dynamic-programming',
+    title: 'Dynamic Programming',
+    category: 'algorithms',
+    difficulty: 'advanced',
+    description:
+      'Dynamic programming (DP) solves complex problems by breaking them into overlapping subproblems and storing their results to avoid redundant computation. The two key properties are optimal substructure (the optimal solution contains optimal solutions to subproblems) and overlapping subproblems (the same subproblem is solved multiple times). Mastering DP unlocks efficient solutions to optimization, counting, and decision problems that appear frequently in interviews.',
+    shortDescription: 'Breaking problems into overlapping subproblems',
+    keyPoints: [
+      'Two approaches: memoization (top-down, recursive + cache) and tabulation (bottom-up, iterative table)',
+      'Overlapping subproblems: the same computation recurs many times in the recursive tree',
+      'Optimal substructure: an optimal solution is built from optimal solutions to its subproblems',
+      'Top-down starts from the original problem and caches results; bottom-up fills a table from base cases',
+      'Space optimization: many DP solutions only need the previous row or last few values, not the full table',
+      'Common DP families: knapsack, sequence alignment, interval scheduling, grid traversal, string matching',
+      'State definition is the hardest part: clearly define what dp[i] (or dp[i][j]) represents before coding',
+      'Time complexity is typically O(number of states * work per state)',
+    ],
+    examples: [
+      {
+        title: 'Fibonacci with Memoization (Top-Down)',
+        code: `function fib(n, memo = {}) {
+  if (n <= 1) return n
+  if (memo[n] !== undefined) return memo[n]
+
+  memo[n] = fib(n - 1, memo) + fib(n - 2, memo)
+  return memo[n]
+}
+
+// Without memo: O(2^n) - exponential!
+// fib(5) calls fib(3) twice, fib(2) three times...
+
+// With memo: O(n) - each subproblem solved once
+fib(50) // 12586269025 (instant)
+
+// Bottom-up equivalent:
+function fibTab(n) {
+  if (n <= 1) return n
+  let prev2 = 0, prev1 = 1
+  for (let i = 2; i <= n; i++) {
+    const curr = prev1 + prev2
+    prev2 = prev1
+    prev1 = curr
+  }
+  return prev1
+}`,
+        explanation: 'Memoization caches recursive results. The bottom-up version uses O(1) space by keeping only the last two values instead of a full array.',
+      },
+      {
+        title: 'Coin Change (Minimum Coins)',
+        code: `function coinChange(coins, amount) {
+  // dp[i] = minimum coins needed to make amount i
+  const dp = new Array(amount + 1).fill(Infinity)
+  dp[0] = 0  // base case: 0 coins for amount 0
+
+  for (let i = 1; i <= amount; i++) {
+    for (const coin of coins) {
+      if (coin <= i && dp[i - coin] + 1 < dp[i]) {
+        dp[i] = dp[i - coin] + 1
+      }
+    }
+  }
+
+  return dp[amount] === Infinity ? -1 : dp[amount]
+}
+
+coinChange([1, 5, 10, 25], 30) // 2 (25 + 5)
+coinChange([2], 3)              // -1 (impossible)
+
+// State: dp[amount] = min coins for that amount
+// Transition: dp[i] = min(dp[i - coin] + 1) for each coin
+// Time: O(amount * coins.length)
+// Space: O(amount)`,
+        explanation: 'Classic unbounded knapsack variant. For each amount, try every coin and take the option that uses the fewest coins. The key insight is that the optimal solution for amount i includes an optimal solution for amount i-coin.',
+      },
+      {
+        title: 'Longest Common Subsequence',
+        code: `function longestCommonSubsequence(text1, text2) {
+  const m = text1.length
+  const n = text2.length
+  // dp[i][j] = LCS length of text1[0..i-1] and text2[0..j-1]
+  const dp = Array.from({ length: m + 1 }, () =>
+    new Array(n + 1).fill(0)
+  )
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (text1[i - 1] === text2[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1] + 1
+      } else {
+        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1])
+      }
+    }
+  }
+
+  return dp[m][n]
+}
+
+longestCommonSubsequence('abcde', 'ace')   // 3 ('ace')
+longestCommonSubsequence('abc', 'def')     // 0
+
+// Time: O(m * n), Space: O(m * n)
+// Can optimize space to O(min(m, n)) using two rows`,
+        explanation: 'Two-dimensional DP where each cell depends on the diagonal, top, and left neighbors. When characters match, extend the diagonal; otherwise, take the best of skipping either character.',
+      },
+    ],
+    complexity: {
+      average: {
+        'Fibonacci (memoized)': 'O(n)',
+        'Coin Change': 'O(amount * coins)',
+        'LCS': 'O(m * n)',
+        'Knapsack': 'O(n * W)',
+      },
+      worst: {
+        'Fibonacci (memoized)': 'O(n)',
+        'Coin Change': 'O(amount * coins)',
+        'LCS': 'O(m * n)',
+        'Knapsack': 'O(n * W)',
+      },
+    },
+    commonMistakes: [
+      'Not identifying the correct base cases, leading to wrong initial values in the DP table',
+      'Using plain recursion without memoization, resulting in exponential time from redundant computation',
+      'Writing the wrong state transition formula (e.g., forgetting to consider all choices at each step)',
+      'Off-by-one errors in table dimensions or loop bounds when converting between 0-indexed and 1-indexed',
+      'Returning the wrong cell from the DP table (e.g., dp[n] vs dp[n-1])',
+    ],
+    interviewTips: [
+      'Start by identifying the subproblem: what decision is being made at each step?',
+      'Write the brute-force recursive solution first, then add memoization, then convert to tabulation if needed',
+      'Clearly define what dp[i] (or dp[i][j]) represents before writing any transitions',
+      'Look for keywords: "minimum", "maximum", "count ways", "is it possible" often signal DP',
+      'After solving, discuss space optimization: can you reduce from O(n*m) to O(n) using rolling arrays?',
+    ],
+    relatedProblems: [
+      'climbing-stairs',
+      'coin-change',
+      'longest-common-subsequence',
+    ],
+    learningPath: [
+      {
+        stage: 'Foundation',
+        problemIds: ['climbing-stairs', 'fibonacci'],
+      },
+      {
+        stage: 'Classic Problems',
+        problemIds: ['coin-change', 'longest-common-subsequence'],
+      },
+      {
+        stage: 'Advanced',
+        problemIds: ['edit-distance', 'longest-increasing-subsequence'],
+      },
+    ],
+    commonQuestions: [
+      {
+        question: 'What is the difference between memoization (top-down) and tabulation (bottom-up), and when should you use each?',
+        answer: 'Memoization starts from the original problem, recursively breaks it down, and caches results in a hash map or array. Tabulation builds the solution iteratively from the smallest subproblems up to the final answer using a table. Memoization is easier to write (just add a cache to your recursive solution) and only solves subproblems that are actually needed. Tabulation avoids recursion overhead, has no risk of stack overflow, and often allows space optimization since you can discard old rows. Use memoization when the subproblem space is sparse; use tabulation when you need all subproblems or want to optimize space.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How do you identify that a problem can be solved with dynamic programming?',
+        answer: 'Look for two properties: (1) Optimal substructure — the optimal solution to the problem contains optimal solutions to subproblems (e.g., the shortest path through a node includes the shortest paths to and from that node). (2) Overlapping subproblems — the recursive solution solves the same subproblems repeatedly (e.g., Fibonacci recomputes fib(3) many times). Common signals include optimization keywords (min, max, shortest, longest), counting problems (how many ways), and decision problems (is it possible). If a problem has optimal substructure but no overlapping subproblems, greedy or divide-and-conquer may be more appropriate.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'How do you optimize the space complexity of a 2D DP solution from O(m*n) to O(min(m,n))?',
+        answer: 'When each row of the DP table only depends on the previous row (not rows further back), you only need to keep two rows in memory at a time: the current row and the previous row. After computing the current row, the previous row can be discarded. For example, in LCS, dp[i][j] depends only on dp[i-1][j-1], dp[i-1][j], and dp[i][j-1], so two rows suffice. In some cases (like Fibonacci or coin change), you can reduce to a single row updated in-place. Always iterate over the longer dimension in the outer loop so the rolling array has length min(m,n).',
+        difficulty: 'hard',
+      },
+    ],
+  },
+
+  // ============================================================================
+  // PATTERNS
+  // ============================================================================
+  {
+    id: 'sliding-window',
+    title: 'Sliding Window',
+    category: 'patterns',
+    difficulty: 'intermediate',
+    description:
+      'The sliding window technique efficiently processes contiguous subarrays or substrings by maintaining a window that expands and contracts as it moves through the data. Instead of recalculating from scratch for every position, the window incrementally adds one element and removes another, turning O(n*k) brute force into O(n). It appears in a wide range of interview problems involving sequences, from maximum sums to substring searches.',
+    shortDescription: 'Efficiently processing contiguous subarrays and substrings',
+    keyPoints: [
+      'Fixed-size window: window size is given (e.g., max sum of k consecutive elements); slide by adding the new element and removing the oldest',
+      'Variable-size window: window grows until a condition breaks, then shrinks from the left until the condition is restored',
+      'Shrinking condition: clearly define when the window becomes invalid (e.g., sum exceeds target, duplicate found, too many distinct chars)',
+      'Closely related to two pointers: the left and right boundaries of the window act as two pointers moving in the same direction',
+      'Achieves O(n) time because each element is added and removed from the window at most once',
+      'Common data structures inside the window: hash map for character counts, variable for running sum, set for uniqueness',
+      'Applicable to strings (substrings) and arrays (subarrays) — any problem asking about contiguous sequences',
+    ],
+    examples: [
+      {
+        title: 'Max Sum Subarray of Size K (Fixed Window)',
+        code: `function maxSumSubarray(arr, k) {
+  if (arr.length < k) return null
+
+  // Build the first window
+  let windowSum = 0
+  for (let i = 0; i < k; i++) {
+    windowSum += arr[i]
+  }
+
+  let maxSum = windowSum
+
+  // Slide the window: add right, remove left
+  for (let i = k; i < arr.length; i++) {
+    windowSum += arr[i] - arr[i - k]
+    maxSum = Math.max(maxSum, windowSum)
+  }
+
+  return maxSum
+}
+
+maxSumSubarray([2, 1, 5, 1, 3, 2], 3) // 9 (5+1+3)
+
+// Brute force: O(n*k) — recalculate sum for each position
+// Sliding window: O(n) — just add one, remove one`,
+        explanation: 'The fixed-size window slides one step at a time. Each slide adds the new right element and subtracts the element that just left the window, keeping a running sum in O(1) per step.',
+      },
+      {
+        title: 'Longest Substring Without Repeating Characters (Variable Window)',
+        code: `function lengthOfLongestSubstring(s) {
+  const charIndex = new Map()
+  let maxLen = 0
+  let left = 0
+
+  for (let right = 0; right < s.length; right++) {
+    const char = s[right]
+
+    // If char was seen and is inside current window, shrink
+    if (charIndex.has(char) && charIndex.get(char) >= left) {
+      left = charIndex.get(char) + 1
+    }
+
+    charIndex.set(char, right)
+    maxLen = Math.max(maxLen, right - left + 1)
+  }
+
+  return maxLen
+}
+
+lengthOfLongestSubstring('abcabcbb') // 3 ('abc')
+lengthOfLongestSubstring('bbbbb')    // 1 ('b')
+lengthOfLongestSubstring('pwwkew')   // 3 ('wke')
+
+// Time: O(n), Space: O(min(n, alphabet size))`,
+        explanation: 'The window expands right on every step. When a duplicate enters the window, the left boundary jumps past the previous occurrence. The hash map tracks the last index of each character.',
+      },
+      {
+        title: 'Minimum Window Substring',
+        code: `function minWindow(s, t) {
+  const need = new Map()
+  for (const c of t) need.set(c, (need.get(c) || 0) + 1)
+
+  let have = 0
+  const required = need.size
+  let left = 0
+  let minLen = Infinity
+  let minStart = 0
+  const windowCounts = new Map()
+
+  for (let right = 0; right < s.length; right++) {
+    const c = s[right]
+    windowCounts.set(c, (windowCounts.get(c) || 0) + 1)
+
+    if (need.has(c) && windowCounts.get(c) === need.get(c)) {
+      have++
+    }
+
+    // Shrink window while all characters are satisfied
+    while (have === required) {
+      if (right - left + 1 < minLen) {
+        minLen = right - left + 1
+        minStart = left
+      }
+
+      const leftChar = s[left]
+      windowCounts.set(leftChar, windowCounts.get(leftChar) - 1)
+      if (need.has(leftChar) &&
+          windowCounts.get(leftChar) < need.get(leftChar)) {
+        have--
+      }
+      left++
+    }
+  }
+
+  return minLen === Infinity ? '' : s.slice(minStart, minStart + minLen)
+}
+
+minWindow('ADOBECODEBANC', 'ABC') // 'BANC'
+
+// Time: O(n + m), Space: O(n + m)`,
+        explanation: 'Expand right to include characters until the window contains all required characters from t, then shrink from the left to find the minimum valid window. The have/required counters track how many distinct characters are fully satisfied.',
+      },
+    ],
+    complexity: {
+      average: {
+        'Fixed window': 'O(n)',
+        'Variable window': 'O(n)',
+        'Min window substring': 'O(n + m)',
+      },
+      worst: {
+        'Fixed window': 'O(n)',
+        'Variable window': 'O(n)',
+        'Min window substring': 'O(n + m)',
+      },
+    },
+    commonMistakes: [
+      'Forgetting to shrink the window when the constraint is violated, leading to incorrect or oversized results',
+      'Off-by-one errors when calculating window size (right - left + 1, not right - left)',
+      'Not handling edge cases: empty input, k larger than array length, or no valid window existing',
+      'Resetting the window sum or count map from scratch instead of incrementally updating, which defeats the O(n) purpose',
+      'Confusing fixed-size and variable-size window approaches — using the wrong template for the problem type',
+    ],
+    interviewTips: [
+      'When you see "contiguous subarray" or "substring" with an optimization goal, think sliding window',
+      'Ask yourself: is the window size fixed or variable? This determines your template',
+      'For variable-size windows, clearly state your expand condition and your shrink condition',
+      'Sliding window problems often pair with a hash map for tracking element frequency inside the window',
+      'Practice translating the brute-force O(n*k) or O(n^2) approach into the O(n) window approach step by step',
+    ],
+    relatedProblems: [
+      'maximum-subarray',
+      'longest-substring-without-repeating',
+      'minimum-window-substring',
+    ],
+    learningPath: [
+      {
+        stage: 'Fixed Window',
+        problemIds: ['maximum-subarray', 'max-sum-subarray-k'],
+      },
+      {
+        stage: 'Variable Window',
+        problemIds: ['longest-substring-without-repeating', 'minimum-window-substring'],
+      },
+    ],
+    commonQuestions: [
+      {
+        question: 'How do you decide between a fixed-size and variable-size sliding window?',
+        answer: 'Use a fixed-size window when the problem specifies the exact window length (e.g., "subarray of size k", "every k consecutive elements"). The window always has exactly k elements, and you slide it one position at a time. Use a variable-size window when the problem asks for the longest, shortest, or optimal subarray/substring that satisfies a condition (e.g., "longest substring without repeats", "smallest subarray with sum >= target"). The right pointer always expands, and the left pointer shrinks when the constraint is broken.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Why is the time complexity of the variable-size sliding window O(n) even though there is a while loop inside the for loop?',
+        answer: 'Although the inner while loop can execute multiple times for a single right pointer position, the left pointer only moves forward and never resets backward. Over the entire execution, the left pointer moves at most n times total across all iterations of the outer loop. Since both pointers traverse the array at most once each, the total work is O(n) + O(n) = O(n). This is an amortized analysis — the inner loop is not O(n) per outer iteration, but O(n) total.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Given a string and an integer k, find the length of the longest substring that contains at most k distinct characters. What approach and data structure would you use?',
+        answer: 'Use a variable-size sliding window with a hash map tracking character frequencies. Expand the right pointer, adding each character to the map. When the map size exceeds k (more than k distinct characters), shrink from the left: decrement the left character count and remove it from the map when its count hits zero. Track the maximum window size (right - left + 1) whenever the window is valid. Time complexity is O(n) since each character is added and removed at most once. Space is O(k) for the hash map.',
+        difficulty: 'hard',
+      },
+    ],
+  },
 ]
 
 export const dsaConceptCategories = [
@@ -2432,18 +2788,20 @@ export const dsaConceptCategories = [
 const relatedDSAConceptsMap: Record<string, string[]> = {
   'big-o-notation': ['binary-system', 'arrays', 'hash-tables', 'linked-lists'],
   'binary-system': ['big-o-notation', 'arrays', 'hash-tables'],
-  'arrays': ['big-o-notation', 'hash-tables', 'stacks', 'queues', 'heap', 'sorting-algorithms'],
-  'hash-tables': ['big-o-notation', 'arrays', 'trie'],
+  'arrays': ['big-o-notation', 'hash-tables', 'stacks', 'queues', 'heap', 'sorting-algorithms', 'sliding-window'],
+  'hash-tables': ['big-o-notation', 'arrays', 'trie', 'sliding-window'],
   'stacks': ['arrays', 'queues', 'linked-lists', 'graphs', 'heap'],
   'queues': ['arrays', 'stacks', 'linked-lists', 'graphs', 'heap'],
   'heap': ['arrays', 'hash-tables', 'linked-lists', 'graphs', 'sorting-algorithms'],
   'linked-lists': ['arrays', 'stacks', 'queues', 'heap'],
-  'recursion': ['sorting-algorithms', 'graphs', 'trie'],
+  'recursion': ['sorting-algorithms', 'graphs', 'trie', 'dynamic-programming'],
   'graphs': ['stacks', 'queues', 'recursion', 'heap'],
   'trees': ['recursion', 'queues', 'binary-system', 'trie'],
   'trie': ['hash-tables', 'trees', 'recursion'],
   'sorting-algorithms': ['arrays', 'big-o-notation', 'linked-lists', 'heap'],
-  'backtracking': ['recursion'],
+  'backtracking': ['recursion', 'dynamic-programming'],
+  'dynamic-programming': ['recursion', 'arrays', 'backtracking'],
+  'sliding-window': ['arrays', 'hash-tables'],
 }
 
 export function getDSAConceptById(id: string): DSAConcept | undefined {

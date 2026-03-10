@@ -17,6 +17,13 @@ import {
   QueueViz,
   LinkedListViz,
   BinarySystemViz,
+  TreeViz,
+  GraphViz,
+  SortingViz,
+  HeapViz,
+  RecursionViz,
+  DynamicProgrammingViz,
+  SlidingWindowViz,
 } from '@/components/DSAConcepts'
 
 // Map concept IDs to their visualization components
@@ -28,6 +35,13 @@ const visualizations: Record<string, React.ComponentType> = {
   'stacks': StackViz,
   'queues': QueueViz,
   'linked-lists': LinkedListViz,
+  'trees': TreeViz,
+  'graphs': GraphViz,
+  'sorting-algorithms': SortingViz,
+  'heap': HeapViz,
+  'recursion': RecursionViz,
+  'dynamic-programming': DynamicProgrammingViz,
+  'sliding-window': SlidingWindowViz,
 }
 
 export default function DSAConceptPageClient(): JSX.Element {

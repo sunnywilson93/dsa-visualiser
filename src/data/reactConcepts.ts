@@ -3296,7 +3296,7 @@ export { AddToCartButton }`,
     interviewFrequency: 'medium',
     estimatedReadTime: 10,
     prerequisites: ['components-props', 'use-state'],
-    nextConcepts: [],
+    nextConcepts: ['server-actions'],
     commonQuestions: [
       {
         question: 'What is the difference between Server Components and Client Components, and how do you decide which to use?',
@@ -3312,6 +3312,473 @@ export { AddToCartButton }`,
         question: 'How do Server Components affect bundle size and what is the serialization boundary?',
         answer: 'Server Components contribute zero bytes to the client JavaScript bundle because their code never reaches the browser. The serialization boundary is where Server Component output is converted to a special format (RSC payload) that the client can render. Props crossing this boundary from Server to Client Components must be serializable — plain objects, arrays, strings, numbers, and JSX elements are allowed, but functions, classes, and Dates are not.',
         difficulty: 'medium',
+      },
+    ],
+  },
+
+  // ==========================================================================
+  // REACT 19 — NEW HOOKS & PATTERNS
+  // ==========================================================================
+  {
+    id: 'react-19-hooks',
+    title: 'React 19 New Hooks',
+    category: 'hooks-advanced',
+    difficulty: 'advanced',
+    description: 'React 19 introduces four new hooks that dramatically simplify form handling and async data loading. useActionState manages form submission state and pending status. useFormStatus reads the parent form\'s submission status without prop drilling. useOptimistic enables instant UI updates that revert on failure. The use() hook reads promises and context conditionally during render.',
+    shortDescription: 'useActionState, useFormStatus, useOptimistic, and use()',
+    keyPoints: [
+      'useActionState replaces manual useState + isPending + try/catch for form submissions',
+      'useFormStatus reads parent form submission status without prop drilling — the component must be a child of a <form>',
+      'useOptimistic provides instant UI feedback that auto-reverts when the async action settles',
+      'use() reads promises (suspending until resolved) and context values conditionally — not bound by Rules of Hooks',
+      'All four hooks integrate with Server Actions for progressive enhancement that works before JavaScript loads',
+    ],
+    examples: [
+      {
+        title: 'useActionState for Form Handling',
+        code: `import { useActionState } from 'react'
+
+interface FormState {
+  error: string | null
+  success: boolean
+}
+
+async function submitForm(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const email = formData.get('email') as string
+  try {
+    await subscribe(email)
+    return { error: null, success: true }
+  } catch (e) {
+    return { error: (e as Error).message, success: false }
+  }
+}
+
+function NewsletterForm() {
+  const [state, action, isPending] = useActionState(
+    submitForm,
+    { error: null, success: false }
+  )
+
+  return (
+    <form action={action}>
+      <input name="email" type="email" required />
+      {state.error && <p className="error">{state.error}</p>}
+      <button disabled={isPending}>
+        {isPending ? 'Subscribing...' : 'Subscribe'}
+      </button>
+    </form>
+  )
+}`,
+        explanation: 'useActionState takes an async action and initial state, returning [state, boundAction, isPending]. The action receives previous state and FormData, returns next state. React manages the pending flag automatically.',
+      },
+      {
+        title: 'useOptimistic for Instant Feedback',
+        code: `import { useOptimistic, useActionState } from 'react'
+
+interface Todo {
+  id: string
+  text: string
+  done: boolean
+  pending?: boolean
+}
+
+function TodoList({ todos }: { todos: Todo[] }) {
+  const [optimisticTodos, addOptimistic] = useOptimistic(
+    todos,
+    (state: Todo[], newTodo: string) => [
+      ...state,
+      { id: 'temp', text: newTodo, done: false, pending: true },
+    ]
+  )
+
+  async function addAction(
+    prev: { error: string | null },
+    formData: FormData
+  ): Promise<{ error: string | null }> {
+    const text = formData.get('text') as string
+    addOptimistic(text)
+    await createTodo(text)
+    return { error: null }
+  }
+
+  const [, action] = useActionState(addAction, { error: null })
+
+  return (
+    <div>
+      {optimisticTodos.map(todo => (
+        <div key={todo.id} style={{ opacity: todo.pending ? 0.5 : 1 }}>
+          {todo.text}
+        </div>
+      ))}
+      <form action={action}>
+        <input name="text" />
+        <button>Add</button>
+      </form>
+    </div>
+  )
+}`,
+        explanation: 'useOptimistic shows the new todo immediately with a pending visual indicator. When the server confirms, the real todo replaces the optimistic one. If the action fails, the optimistic entry disappears automatically.',
+      },
+      {
+        title: 'use() for Conditional Context and Promises',
+        code: `import { use, Suspense, createContext } from 'react'
+
+const ThemeContext = createContext<'light' | 'dark'>('dark')
+
+// use() can be called conditionally (unlike useContext)
+function Greeting({ showTheme }: { showTheme: boolean }) {
+  if (showTheme) {
+    const theme = use(ThemeContext)
+    return <h1 className={theme}>Themed greeting!</h1>
+  }
+  return <h1>Plain greeting</h1>
+}
+
+// use() can read promises (suspends until resolved)
+function UserProfile({
+  userPromise,
+}: {
+  userPromise: Promise<{ name: string }>
+}) {
+  const user = use(userPromise)
+  return <h2>{user.name}</h2>
+}
+
+function Page() {
+  const userPromise = fetchUser('1')
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <UserProfile userPromise={userPromise} />
+    </Suspense>
+  )
+}`,
+        explanation: 'use() is unique: it reads promises (integrating with Suspense) and context values, but unlike other hooks, it can be called conditionally. When reading a promise, the component suspends until the value resolves.',
+      },
+    ],
+    commonMistakes: [
+      'Calling useFormStatus outside a <form> element — it only reads status from the nearest parent form',
+      'Creating a new Promise on every render when using use() — the promise must be stable (created outside the component or memoized)',
+      'Forgetting that useOptimistic reverts based on the source prop, not the action result — the source of truth must update for the optimistic value to settle',
+    ],
+    interviewTips: [
+      'Explain how useActionState eliminates the useState + isPending + try/catch boilerplate pattern',
+      'Know that use() breaks the Rules of Hooks intentionally — it can be conditional because it uses a different internal mechanism',
+      'Discuss progressive enhancement: Server Actions + useActionState make forms work before JavaScript loads',
+    ],
+    interviewFrequency: 'high',
+    estimatedReadTime: 12,
+    prerequisites: ['use-state', 'use-effect', 'custom-hooks'],
+    nextConcepts: ['server-actions', 'react-compiler'],
+    commonQuestions: [
+      {
+        question: 'How does useActionState differ from manually managing form state with useState?',
+        answer: 'useActionState replaces the common pattern of combining useState for error/success state, useState for isPending, and try/catch blocks in async handlers. It takes an async action function (prevState, formData) -> nextState and returns [currentState, boundAction, isPending]. The key advantages are: automatic pending state management, integration with form action prop for progressive enhancement, and a clean state machine pattern where the action returns the next state instead of imperatively calling multiple setters.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Why can use() be called conditionally while useContext cannot?',
+        answer: 'Traditional hooks like useContext rely on call order to match hook state between renders — React tracks hooks by their position in the call sequence, so conditional calls would shift positions and corrupt state. use() uses a different internal mechanism: when reading context, it traverses the fiber tree to find the provider (no positional tracking needed). When reading promises, it throws a thenable that Suspense catches. Neither mechanism depends on call order, so use() is safe to call conditionally, in loops, or after early returns.',
+        difficulty: 'hard',
+      },
+      {
+        question: 'How does useOptimistic handle reversion when a server action fails?',
+        answer: 'useOptimistic tracks the source state prop (the first argument). The optimistic value is a temporary overlay computed by the update function. When the async action completes and React re-renders with the updated source state (success) or the same source state (failure), the optimistic overlay is discarded. On success, the source state reflects the change so the UI stays the same. On failure, the source state is unchanged so the UI reverts to the pre-action state. Reversion is automatic — no try/catch or error handling needed in the component.',
+        difficulty: 'hard',
+      },
+    ],
+  },
+  {
+    id: 'react-compiler',
+    title: 'React Compiler',
+    category: 'react-performance',
+    difficulty: 'advanced',
+    description: 'The React Compiler (formerly React Forget) is a build-time tool that automatically memoizes React components and hooks. It analyzes your code\'s data flow using static analysis and inserts optimal caching, eliminating the need for manual useMemo, useCallback, and React.memo. The compiler understands the Rules of React and optimizes only code that follows them.',
+    shortDescription: 'Automatic memoization that replaces useMemo and useCallback',
+    keyPoints: [
+      'Runs at build time — analyzes data dependencies via static analysis and inserts fine-grained caching',
+      'Replaces manual useMemo, useCallback, and React.memo with automatic equivalents',
+      'Requires components to follow the Rules of React: pure render, immutable props/state, unconditional hooks',
+      'Uses an internal useMemoCache hook with per-expression cache slots, more granular than manual useMemo blocks',
+      'The "use no memo" directive opts individual components out when manual control is needed',
+    ],
+    examples: [
+      {
+        title: 'Before: Manual Memoization',
+        code: `import { useMemo, useCallback, memo, useState } from 'react'
+
+interface Item { id: string; name: string; price: number }
+
+const ItemCard = memo(function ItemCard({
+  item, onSelect,
+}: {
+  item: Item
+  onSelect: (id: string) => void
+}) {
+  return (
+    <div onClick={() => onSelect(item.id)}>
+      <h3>{item.name}</h3>
+      <p>\${item.price}</p>
+    </div>
+  )
+})
+
+function ItemList({ items }: { items: Item[] }) {
+  const [query, setQuery] = useState('')
+
+  const filtered = useMemo(
+    () => items.filter(i => i.name.includes(query)),
+    [items, query]
+  )
+
+  const handleSelect = useCallback((id: string) => {
+    console.log('Selected:', id)
+  }, [])
+
+  return (
+    <div>
+      <input value={query} onChange={e => setQuery(e.target.value)} />
+      {filtered.map(item => (
+        <ItemCard key={item.id} item={item} onSelect={handleSelect} />
+      ))}
+    </div>
+  )
+}`,
+        explanation: 'Without the compiler, you must manually wrap derived data in useMemo, callbacks in useCallback, and child components in memo. Missing any part of this chain defeats the optimization. Dependency arrays must be manually maintained and are a common source of bugs.',
+      },
+      {
+        title: 'After: React Compiler Handles It',
+        code: `import { useState } from 'react'
+
+interface Item { id: string; name: string; price: number }
+
+function ItemCard({
+  item, onSelect,
+}: {
+  item: Item
+  onSelect: (id: string) => void
+}) {
+  return (
+    <div onClick={() => onSelect(item.id)}>
+      <h3>{item.name}</h3>
+      <p>\${item.price}</p>
+    </div>
+  )
+}
+
+function ItemList({ items }: { items: Item[] }) {
+  const [query, setQuery] = useState('')
+
+  const filtered = items.filter(i => i.name.includes(query))
+
+  const handleSelect = (id: string) => {
+    console.log('Selected:', id)
+  }
+
+  return (
+    <div>
+      <input value={query} onChange={e => setQuery(e.target.value)} />
+      {filtered.map(item => (
+        <ItemCard key={item.id} item={item} onSelect={handleSelect} />
+      ))}
+    </div>
+  )
+}
+
+// The compiler automatically:
+// 1. Memoizes the filtered array (like useMemo)
+// 2. Memoizes handleSelect (like useCallback)
+// 3. Memoizes ItemCard renders (like React.memo)
+// No manual optimization code needed!`,
+        explanation: 'With the React Compiler, you write plain idiomatic React. The compiler analyzes data flow at build time and inserts caching with per-expression granularity. It produces the same optimized output as perfect manual memoization, but with zero developer effort and zero risk of stale dependency bugs.',
+      },
+    ],
+    commonMistakes: [
+      'Expecting the compiler to optimize code that mutates variables during render — mutations break the purity assumption',
+      'Reading from mutable refs during render (not in effects) which makes the output unpredictable to the compiler',
+      'Assuming the compiler replaces all performance optimization — it handles memoization but not algorithmic improvements or virtualization',
+    ],
+    interviewTips: [
+      'Explain that the compiler is a build-time static analysis tool, not a runtime library',
+      'Know what the compiler replaces (useMemo, useCallback, memo) and what it does not (useEffect, algorithmic optimization)',
+      'Discuss the Rules of React that enable compilation: purity, immutability, unconditional hooks',
+    ],
+    interviewFrequency: 'medium',
+    estimatedReadTime: 10,
+    prerequisites: ['react-memo', 'use-memo', 'use-callback'],
+    nextConcepts: [],
+    commonQuestions: [
+      {
+        question: 'What does the React Compiler replace and what are its requirements?',
+        answer: 'The React Compiler replaces manual useMemo, useCallback, and React.memo by automatically inserting fine-grained memoization at build time. It analyzes data flow using static analysis and caches values at the expression level, which is more precise than manual useMemo blocks. It requires components to follow the Rules of React: render must be pure (same inputs produce same output), props and state must be treated as immutable, and hooks must be called unconditionally at the top level. Code that mutates during render or reads mutable refs in render will not be optimized.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'How does the React Compiler differ from manual memoization in terms of granularity and correctness?',
+        answer: 'Manual useMemo memoizes entire blocks of code as a unit — if any dependency changes, the whole block recomputes. The compiler operates at the individual expression level, using an internal useMemoCache with separate slots per expression. This means if a function has two computations where only one depends on a changed value, the compiler can cache one and recompute the other. For correctness, the compiler never has stale dependency bugs because it tracks actual data flow through the code, unlike manual dependency arrays which developers must maintain by hand.',
+        difficulty: 'hard',
+      },
+    ],
+  },
+  {
+    id: 'server-actions',
+    title: 'Server Actions',
+    category: 'patterns',
+    difficulty: 'advanced',
+    description: 'Server Actions are async functions that execute on the server, triggered from client-side forms and event handlers. Marked with the "use server" directive, they eliminate API route boilerplate for data mutations. They integrate with the form action prop for progressive enhancement, meaning forms work before JavaScript loads and upgrade to rich async experiences after hydration.',
+    shortDescription: 'Server-side form handling without API routes',
+    keyPoints: [
+      'Marked with "use server" directive — can be in a dedicated file or inline in Server Components',
+      'Passed to form action prop for automatic FormData collection and server execution',
+      'Enable progressive enhancement: forms work as standard HTML submissions before JavaScript loads',
+      'Pair with useActionState for managed pending/error state and useOptimistic for instant UI feedback',
+      'Replace API routes for internal data mutations — no fetch(), no JSON serialization, no route handlers',
+    ],
+    examples: [
+      {
+        title: 'Basic Server Action',
+        code: `// actions.ts
+'use server'
+
+import { revalidatePath } from 'next/cache'
+
+export async function createTodo(formData: FormData): Promise<void> {
+  const text = formData.get('text') as string
+
+  await db.todos.create({
+    data: { text, completed: false },
+  })
+
+  revalidatePath('/todos')
+}
+
+// TodoForm.tsx
+import { createTodo } from './actions'
+
+function TodoForm() {
+  return (
+    <form action={createTodo}>
+      <input name="text" placeholder="New todo..." required />
+      <button type="submit">Add</button>
+    </form>
+  )
+}`,
+        explanation: 'The "use server" directive marks createTodo as a Server Action. When the form submits, the framework serializes FormData, sends it to the server, executes the function, and revalidates the cached page data. No API route, no fetch call, no JSON parsing.',
+      },
+      {
+        title: 'Server Action with useActionState',
+        code: `'use server'
+
+interface TodoState {
+  error: string | null
+  success: boolean
+}
+
+export async function createTodo(
+  prevState: TodoState,
+  formData: FormData
+): Promise<TodoState> {
+  const text = formData.get('text') as string
+
+  if (text.length < 2) {
+    return { error: 'Todo must be at least 2 characters', success: false }
+  }
+
+  try {
+    await db.todos.create({ data: { text, completed: false } })
+    revalidatePath('/todos')
+    return { error: null, success: true }
+  } catch {
+    return { error: 'Failed to create todo', success: false }
+  }
+}
+
+// Client component with managed state
+'use client'
+import { useActionState } from 'react'
+import { createTodo } from './actions'
+
+function TodoForm() {
+  const [state, action, isPending] = useActionState(
+    createTodo,
+    { error: null, success: false }
+  )
+
+  return (
+    <form action={action}>
+      <input name="text" required />
+      {state.error && <p>{state.error}</p>}
+      {state.success && <p>Todo added!</p>}
+      <button disabled={isPending}>
+        {isPending ? 'Adding...' : 'Add Todo'}
+      </button>
+    </form>
+  )
+}`,
+        explanation: 'useActionState wraps the Server Action to provide managed state (error/success) and automatic pending tracking. The action signature (prevState, formData) -> nextState creates a clean state machine where each submission produces a new state.',
+      },
+      {
+        title: 'Server Actions vs API Routes',
+        code: `// API ROUTE approach (before Server Actions):
+// 1. Create app/api/todos/route.ts
+// 2. Parse request body
+// 3. Validate data
+// 4. Insert into DB
+// 5. Return JSON response
+// 6. Client: fetch('/api/todos', { method: 'POST', body: ... })
+// 7. Client: handle response, update state
+// Files: 2 | Boilerplate: ~50 lines
+
+// SERVER ACTION approach:
+// 1. Create actions.ts with 'use server'
+// 2. Write the action function
+// 3. Pass to <form action={}>
+// Files: 1 action file | Boilerplate: ~15 lines
+
+// When to use Server Actions:
+// - Form submissions and data mutations
+// - CRUD operations from UI
+// - Any mutation triggered by user interaction
+
+// When to keep API Routes:
+// - External API consumers (mobile apps)
+// - Webhooks from third-party services
+// - Streaming responses (SSE)
+// - OAuth callback endpoints`,
+        explanation: 'Server Actions are the preferred pattern for internal mutations in Next.js applications. They reduce boilerplate by 60-70% compared to API routes while adding progressive enhancement. API Routes remain necessary for external consumers and specialized response types.',
+      },
+    ],
+    commonMistakes: [
+      'Using Server Actions for data fetching instead of mutations — Server Components with async/await handle reads, Server Actions handle writes',
+      'Forgetting to revalidatePath or revalidateTag after a mutation, causing stale cached data',
+      'Passing non-serializable arguments to Server Actions — all arguments must cross the server boundary as serializable values',
+    ],
+    interviewTips: [
+      'Explain progressive enhancement: Server Action forms work as HTML forms before JS loads, then enhance to async',
+      'Know the difference between Server Components (data fetching at render) and Server Actions (mutations from interactions)',
+      'Discuss the security model: Server Actions use encrypted action IDs and bound arguments to prevent tampering',
+    ],
+    interviewFrequency: 'high',
+    estimatedReadTime: 10,
+    prerequisites: ['server-components', 'react-19-hooks'],
+    nextConcepts: [],
+    commonQuestions: [
+      {
+        question: 'How do Server Actions enable progressive enhancement in forms?',
+        answer: 'When a Server Action is passed to the form action prop, the form works as a standard HTML form submission before JavaScript loads — the browser sends a POST request with FormData, the server executes the action, and responds with a redirect or new page. After JavaScript hydrates, the same form upgrades to use fetch for asynchronous submission, enabling pending states via useFormStatus, inline error messages via useActionState, and optimistic updates via useOptimistic. The markup is identical for both paths, making the enhancement truly progressive.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'What is the security model for Server Actions and how are they protected against unauthorized calls?',
+        answer: 'Server Actions are assigned encrypted, non-deterministic action IDs at build time. When a form submits, the framework sends this ID to identify which server function to execute. Bound arguments (captured from closures in Server Components) are also encrypted and included in the form payload. The server verifies the action ID and decrypts bound arguments before execution. This prevents attackers from calling arbitrary server functions or tampering with bound data. Additionally, Server Actions run in the same security context as your server code, so standard authentication and authorization checks should be added inside the action function.',
+        difficulty: 'hard',
+      },
+      {
+        question: 'When should you use Server Actions versus API Routes in a Next.js application?',
+        answer: 'Use Server Actions for all internal data mutations triggered by user interactions — form submissions, button clicks, toggles, and CRUD operations. They eliminate API route boilerplate, provide type safety end-to-end, and enable progressive enhancement. Use API Routes when external clients need the endpoint (mobile apps, third-party integrations), for webhook receivers, for streaming responses like Server-Sent Events, or for OAuth callback URLs. The rule of thumb is: if only your own UI calls it, use a Server Action; if external systems need it, use an API Route.',
+        difficulty: 'easy',
       },
     ],
   },

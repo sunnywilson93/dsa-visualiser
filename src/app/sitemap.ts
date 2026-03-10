@@ -14,8 +14,8 @@ import { topicHubs } from '@/data/topicHubs'
 import { comparisons } from '@/data/comparisons'
 
 // Content milestone dates — update when meaningful content is added or revised
-const JS_DSA_LAST_UPDATED = new Date('2026-02-28')
-const REACT_LAST_UPDATED = new Date('2026-03-01')
+const JS_DSA_LAST_UPDATED = new Date('2026-03-10')
+const REACT_LAST_UPDATED = new Date('2026-03-10')
 
 // Exported for concept page schemas; points to the most recent content update
 export const CONTENT_LAST_UPDATED = REACT_LAST_UPDATED

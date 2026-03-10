@@ -49,6 +49,10 @@ const visualizations: Record<string, React.ComponentType> = {
   'suspense': dynamic(() => import('@/components/Concepts/React/SuspenseViz').then(m => ({ default: m.SuspenseViz })), { ssr: false }),
   'concurrent-features': dynamic(() => import('@/components/Concepts/React/ConcurrentFeaturesViz').then(m => ({ default: m.ConcurrentFeaturesViz })), { ssr: false }),
   'server-components': dynamic(() => import('@/components/Concepts/React/ServerComponentsViz').then(m => ({ default: m.ServerComponentsViz })), { ssr: false }),
+  // React 19
+  'react-19-hooks': dynamic(() => import('@/components/Concepts/React/React19HooksViz').then(m => ({ default: m.React19HooksViz })), { ssr: false }),
+  'react-compiler': dynamic(() => import('@/components/Concepts/React/ReactCompilerViz').then(m => ({ default: m.ReactCompilerViz })), { ssr: false }),
+  'server-actions': dynamic(() => import('@/components/Concepts/React/ServerActionsViz').then(m => ({ default: m.ServerActionsViz })), { ssr: false }),
 }
 
 export default function ReactConceptPageClient(): JSX.Element {
