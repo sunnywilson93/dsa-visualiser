@@ -1,5 +1,7 @@
 // DSA Concepts - Foundational Data Structures & Algorithms
 
+import type { ConceptQuestion } from '@/data/concepts'
+
 export interface DSAExample {
   title: string
   code: string
@@ -30,6 +32,7 @@ export interface DSAConcept {
   interviewTips?: string[]
   relatedProblems?: string[]  // Links to problem IDs
   learningPath?: { stage: string; problemIds: string[] }[]
+  commonQuestions?: ConceptQuestion[]
 }
 
 export const dsaConcepts: DSAConcept[] = [
@@ -404,6 +407,23 @@ arr.includes(x)  // O(n) - search`,
       'Two-pointer techniques often work well on sorted arrays',
     ],
     relatedProblems: ['two-sum', 'contains-duplicate', 'valid-anagram'],
+    commonQuestions: [
+      {
+        question: 'Why is inserting at the beginning of an array O(n) while inserting at the end is O(1)?',
+        answer: 'Inserting at the beginning requires shifting every existing element one position to the right to make room at index 0, which takes O(n) time. Inserting at the end (push) simply places the element in the next available slot with no shifting required, making it amortized O(1).',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Given an array of n-1 integers in the range 1 to n with no duplicates, how do you find the missing number in O(n) time and O(1) space?',
+        answer: 'Use the math formula: missing = n*(n+1)/2 - sum(array). The expected sum of 1..n minus the actual sum gives the missing number. Alternatively, XOR all numbers 1..n with all array elements; the result is the missing number since x XOR x = 0.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'How would you rotate an array of n elements to the right by k positions in O(n) time and O(1) space?',
+        answer: 'Use the three-reversal trick: (1) reverse the entire array, (2) reverse the first k elements, (3) reverse the remaining n-k elements. For example, rotating [1,2,3,4,5] by k=2: reverse all gives [5,4,3,2,1], reverse first 2 gives [4,5,3,2,1], reverse last 3 gives [4,5,1,2,3]. Remember to handle k = k % n for cases where k > n.',
+        difficulty: 'medium',
+      },
+    ],
   },
 
   {
@@ -581,6 +601,23 @@ obj[1] = 'becomes string "1"'
       'Trading space for time is a common interview pattern',
     ],
     relatedProblems: ['two-sum', 'valid-anagram', 'contains-duplicate', 'group-anagrams'],
+    commonQuestions: [
+      {
+        question: 'What happens when two different keys hash to the same index, and how do you handle it?',
+        answer: 'This is called a collision. The two main strategies are chaining (each bucket holds a linked list of entries that hashed to that index) and open addressing (probe for the next empty slot using linear probing, quadratic probing, or double hashing). Chaining is simpler and degrades gracefully; open addressing has better cache performance but is more sensitive to load factor.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How would you design a hash map that supports O(1) insert, O(1) delete, and O(1) getRandom (return a random element with equal probability)?',
+        answer: 'Use a hash map paired with a dynamic array. The map stores value-to-index mappings. Insert appends to the array and records the index. Delete swaps the target with the last element, updates the swapped element\'s index in the map, then pops the array and removes the key. getRandom picks a random index from the array. All three operations are O(1).',
+        difficulty: 'hard',
+      },
+      {
+        question: 'Why is hash map lookup O(1) on average but O(n) in the worst case? When does the worst case happen in practice?',
+        answer: 'Average O(1) assumes a good hash function distributes keys uniformly across buckets. Worst case O(n) occurs when all keys hash to the same bucket, degenerating into a linked list search. This happens with a poor hash function, adversarial input, or a very high load factor. Real implementations mitigate this by resizing when load factor exceeds a threshold (typically 0.75) and using high-quality hash functions.',
+        difficulty: 'medium',
+      },
+    ],
   },
 
   {
@@ -792,6 +829,23 @@ evalRPN(['2', '3', '+', '4', '*'])  // (2+3)*4 = 20`,
       'remove-k-digits',
       'decode-string',
       'basic-calculator-ii',
+    ],
+    commonQuestions: [
+      {
+        question: 'How would you implement a queue using two stacks?',
+        answer: 'Use an "input" stack for enqueue and an "output" stack for dequeue. To enqueue, push onto the input stack. To dequeue, if the output stack is empty, pop all elements from input and push them onto output (reversing the order), then pop from output. This gives amortized O(1) per operation because each element is moved between stacks at most once.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Given a string containing just the characters (, ), {, }, [ and ], determine if the input string is valid. How does a stack help?',
+        answer: 'Push every opening bracket onto the stack. When you encounter a closing bracket, check if the stack top is its matching opener; if so, pop it. If not, the string is invalid. At the end, the stack must be empty for the string to be valid. The stack ensures that brackets are closed in the correct nested order.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'What is a monotonic stack and when would you use one?',
+        answer: 'A monotonic stack maintains elements in strictly increasing or decreasing order from bottom to top. When pushing a new element, you pop all elements that violate the ordering. It solves "next greater element", "next smaller element", and "largest rectangle in histogram" problems in O(n) time because each element is pushed and popped at most once.',
+        difficulty: 'hard',
+      },
     ],
   },
 
@@ -1012,6 +1066,23 @@ queue.shift()  // 1 (first added)
       'For large queues, implement O(1) dequeue',
     ],
     relatedProblems: ['number-of-islands', 'binary-tree-level-order'],
+    commonQuestions: [
+      {
+        question: 'Why is array.shift() a poor choice for implementing a queue in performance-critical code?',
+        answer: 'array.shift() removes the first element and shifts all remaining elements one position to the left, making it O(n) per call. In a loop processing n elements, this results in O(n^2) total time. A proper queue implementation uses an object with head/tail pointers or a linked list, achieving O(1) dequeue without shifting.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How does BFS guarantee finding the shortest path in an unweighted graph?',
+        answer: 'BFS explores all nodes at distance d before any node at distance d+1 because the queue processes nodes in FIFO order. When BFS first reaches a target node, it has taken the minimum number of edges to get there. This property breaks down for weighted graphs, where Dijkstra\'s algorithm (using a priority queue) is needed instead.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Design a sliding window maximum: given an array and window size k, find the maximum in each window position. Can you do it in O(n)?',
+        answer: 'Use a monotonic deque (double-ended queue). Maintain indices in decreasing order of their values. For each new element: (1) remove indices outside the window from the front, (2) remove indices from the back whose values are less than the current element, (3) push the current index. The front of the deque always holds the index of the current window maximum. Each element enters and leaves the deque at most once, so total time is O(n).',
+        difficulty: 'hard',
+      },
+    ],
   },
 
   {
@@ -1188,6 +1259,23 @@ explainMergeKSortedLists()`,
         problemIds: ['network-delay-time'],
       },
     ],
+    commonQuestions: [
+      {
+        question: 'What is the difference between a min-heap and a max-heap, and when would you choose one over the other?',
+        answer: 'In a min-heap, every parent is smaller than its children, so the root is the global minimum. In a max-heap, every parent is larger, so the root is the global maximum. Use a min-heap when you need to repeatedly extract the smallest element (e.g., Dijkstra\'s algorithm, merging k sorted lists). Use a max-heap when you need the largest (e.g., finding the kth largest element with a max-heap of all elements, or a min-heap of size k).',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How do you find the kth largest element in an unsorted array using a heap, and what is the time complexity?',
+        answer: 'Maintain a min-heap of size k. Iterate through the array: if the heap has fewer than k elements, insert the current element. Otherwise, if the current element is larger than the heap root, extract the root and insert the current element. After processing all elements, the heap root is the kth largest. Time complexity is O(n log k), which is better than O(n log n) sorting when k is much smaller than n.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Why is building a heap from an array O(n) instead of O(n log n) when individual inserts are O(log n)?',
+        answer: 'The heapify-from-bottom approach (Floyd\'s algorithm) starts from the last non-leaf node and sifts down. Most nodes are near the bottom of the tree and sift down very few levels. Specifically, n/2 nodes sift 0 levels, n/4 sift 1 level, n/8 sift 2 levels, etc. The sum of this geometric series converges to O(n). In contrast, inserting n elements one by one into an empty heap is O(n log n) because each insert can sift up to the full height.',
+        difficulty: 'hard',
+      },
+    ],
   },
 
   {
@@ -1331,6 +1419,23 @@ dfs([[1, 2], [2], [3], []], 0)  // [0, 1, 2, 3]`,
         problemIds: ['rotting-oranges', 'network-delay-time', 'cheapest-flights-within-k-stops'],
       },
     ],
+    commonQuestions: [
+      {
+        question: 'What is the difference between an adjacency list and an adjacency matrix, and when would you prefer one over the other?',
+        answer: 'An adjacency list stores a list of neighbors for each node, using O(V + E) space. An adjacency matrix is a V x V boolean grid, using O(V^2) space. Lists are better for sparse graphs (few edges relative to V^2) and faster to iterate neighbors. Matrices are better for dense graphs and when you need O(1) edge existence checks. Most interview problems use adjacency lists because real-world graphs are typically sparse.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How do you detect a cycle in a directed graph?',
+        answer: 'Use DFS with three states for each node: unvisited, in-progress (on the current DFS path), and completed. If DFS visits a node that is in-progress, a cycle exists because you have found a back edge to an ancestor on the current path. Alternatively, use Kahn\'s algorithm (topological sort via BFS): if the final sorted order contains fewer than V nodes, a cycle exists. The DFS approach is O(V + E) time and O(V) space.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Given a list of course prerequisites, determine if it is possible to finish all courses. What algorithm would you use?',
+        answer: 'This is a topological sort / cycle detection problem. Model courses as nodes and prerequisites as directed edges. Use either DFS cycle detection (if any back edge exists, courses cannot be completed) or Kahn\'s algorithm (compute indegrees, process zero-indegree nodes via a queue, and check if all nodes are processed). If a cycle exists in the prerequisite graph, it is impossible to finish all courses.',
+        difficulty: 'medium',
+      },
+    ],
   },
 
   {
@@ -1466,6 +1571,23 @@ dfs([[1, 2], [2], [3], []], 0)  // [0, 1, 2, 3]`,
           'kth-smallest-in-bst',
           'construct-bst-from-sorted-array',
         ],
+      },
+    ],
+    commonQuestions: [
+      {
+        question: 'How do you validate whether a binary tree is a valid binary search tree (BST)?',
+        answer: 'Use DFS with min/max bounds. Start with (-Infinity, Infinity). For each node, check that its value falls within the valid range. When going left, update the upper bound to the current node\'s value. When going right, update the lower bound. Alternatively, perform an inorder traversal and verify the values are strictly increasing. Both approaches are O(n) time and O(h) space where h is the tree height.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'What is the diameter of a binary tree and how do you compute it efficiently?',
+        answer: 'The diameter is the length of the longest path between any two nodes (measured in edges). It may or may not pass through the root. Use a single DFS that returns the height of each subtree. At each node, the longest path through that node is leftHeight + rightHeight. Track the global maximum across all nodes. This runs in O(n) time with one pass, avoiding the O(n^2) approach of computing height separately for every node.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'How do you find the lowest common ancestor (LCA) of two nodes in a binary tree?',
+        answer: 'Use recursive DFS: if the current node is null, return null. If the current node equals either target, return it. Recurse on left and right children. If both return non-null, the current node is the LCA (one target is in each subtree). If only one returns non-null, propagate that result up. For a BST specifically, you can use the ordering property: if both targets are smaller, go left; if both are larger, go right; otherwise the current node is the LCA.',
+        difficulty: 'hard',
       },
     ],
   },
@@ -1849,6 +1971,23 @@ while (current !== null) {
         problemIds: ['copy-list-random-pointer', 'reverse-nodes-k-group', 'merge-k-sorted-lists', 'lru-cache'],
       },
     ],
+    commonQuestions: [
+      {
+        question: 'How do you reverse a singly linked list in-place?',
+        answer: 'Use three pointers: prev (starts null), current (starts at head), and next (temporary). In each iteration: save current.next in next, point current.next to prev, advance prev to current, advance current to next. When current is null, prev is the new head. This runs in O(n) time and O(1) space.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How do you detect if a linked list has a cycle, and find the node where the cycle begins?',
+        answer: 'Use Floyd\'s tortoise and hare algorithm: move slow pointer by 1 step and fast pointer by 2 steps. If they meet, a cycle exists. To find the cycle start, reset one pointer to the head and advance both by 1 step; they will meet at the cycle entry point. This works because the distance from head to cycle start equals the distance from the meeting point to cycle start (going around the cycle).',
+        difficulty: 'medium',
+      },
+      {
+        question: 'How would you design an LRU cache with O(1) get and put operations?',
+        answer: 'Combine a hash map with a doubly linked list. The map stores key to node mappings for O(1) lookup. The doubly linked list maintains access order: most recently used at the head, least recently used at the tail. On get: move the node to the head. On put: add a new node at the head and if capacity is exceeded, remove the tail node and its map entry. The doubly linked list enables O(1) removal and insertion at both ends.',
+        difficulty: 'hard',
+      },
+    ],
   },
   // ============================================================================
   // ALGORITHMS
@@ -1959,6 +2098,23 @@ binarySearch([1, 3, 5, 7, 9], 7) // 3`,
       {
         stage: 'Divide & Conquer',
         problemIds: ['kth-largest-element'],
+      },
+    ],
+    commonQuestions: [
+      {
+        question: 'What is the difference between recursion and iteration, and when should you prefer one over the other?',
+        answer: 'Recursion uses the call stack to break a problem into self-similar subproblems; iteration uses explicit loops. Recursion is more natural for tree/graph traversal and divide-and-conquer problems. Iteration is preferred when recursion depth could cause stack overflow (e.g., processing a list of 1 million elements) or when a simple loop is clearer. Any recursive solution can be converted to iterative using an explicit stack.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How do you convert a recursive Fibonacci function from O(2^n) to O(n)?',
+        answer: 'The naive recursive approach recomputes the same subproblems exponentially. Two fixes: (1) Memoization (top-down DP) - cache results in a map so each fib(k) is computed only once, giving O(n) time and O(n) space. (2) Iterative bottom-up - use two variables to track fib(n-1) and fib(n-2), computing forward in a loop, giving O(n) time and O(1) space.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Given a binary tree, how do you collect all root-to-leaf paths using recursion?',
+        answer: 'Use DFS with path accumulation: pass the current path as a parameter. At each node, add the node\'s value to the path. If the node is a leaf (no children), add a copy of the path to the result. After recursing on both children, backtrack by removing the last element. The key insight is that the path parameter acts as shared mutable state, so you must either backtrack or pass copies to avoid corruption across branches.',
+        difficulty: 'medium',
       },
     ],
   },
@@ -2243,6 +2399,23 @@ countingSort([4, 2, 2, 8, 3, 3, 1])
       {
         stage: 'Advanced',
         problemIds: ['kth-largest-element', 'meeting-rooms-ii', 'non-overlapping-intervals'],
+      },
+    ],
+    commonQuestions: [
+      {
+        question: 'Why can\'t comparison-based sorting algorithms do better than O(n log n) in the average case?',
+        answer: 'A comparison-based sort makes yes/no decisions at each comparison, forming a binary decision tree. With n! possible permutations of the input, the tree needs at least n! leaves. A binary tree with n! leaves has height at least log2(n!), which by Stirling\'s approximation is O(n log n). Therefore, any comparison-based sort must make at least O(n log n) comparisons in the worst and average case.',
+        difficulty: 'hard',
+      },
+      {
+        question: 'What is the difference between a stable and an unstable sort, and why does it matter?',
+        answer: 'A stable sort preserves the relative order of elements with equal keys. For example, if you sort students by grade and two students both have a B, a stable sort keeps them in their original order. This matters when sorting by multiple criteria: sort by secondary key first, then stable-sort by primary key. Merge sort and TimSort are stable; QuickSort and HeapSort are not.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Given an array of 0s, 1s, and 2s, sort it in-place in a single pass. What algorithm applies here?',
+        answer: 'This is the Dutch National Flag problem, solved using three-way partitioning (a variant of QuickSort\'s partition). Maintain three pointers: low (boundary for 0s), mid (current element), and high (boundary for 2s). If arr[mid] is 0, swap with arr[low] and advance both. If 1, advance mid. If 2, swap with arr[high] and decrement high (don\'t advance mid since the swapped element needs checking). This runs in O(n) time and O(1) space.',
+        difficulty: 'medium',
       },
     ],
   },

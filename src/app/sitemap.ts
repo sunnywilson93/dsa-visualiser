@@ -11,6 +11,7 @@ import { dsaConcepts } from '@/data/dsaConcepts'
 import { reactConcepts } from '@/data/reactConcepts'
 import { problemConcepts } from '@/data/algorithmConcepts'
 import { topicHubs } from '@/data/topicHubs'
+import { comparisons } from '@/data/comparisons'
 
 // Content milestone dates — update when meaningful content is added or revised
 const JS_DSA_LAST_UPDATED = new Date('2026-02-28')
@@ -114,6 +115,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `${BASE_URL}/top-questions/javascript`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/top-questions/react`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/top-questions/dsa`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/concepts/dsa/cheatsheet`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/concepts/react/cheatsheet`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
   ]
 
   // JS Concept pages (/concepts/js/[conceptId])
@@ -196,6 +227,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }))
 
+  // Comparison pages (/compare/[comparisonId])
+  const comparisonPages: MetadataRoute.Sitemap = comparisons.map((c) => ({
+    url: `${BASE_URL}/compare/${c.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+
   // Updates/changelog page
   const updatesPage: MetadataRoute.Sitemap = [
     {
@@ -217,6 +256,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...dsaSubcategoryPages,
     ...problemPages,
     ...conceptVizPages,
+    ...comparisonPages,
     ...updatesPage,
   ]
 }

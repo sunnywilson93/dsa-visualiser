@@ -35,6 +35,7 @@ export interface ReactConcept {
   estimatedReadTime: number
   prerequisites: string[]
   nextConcepts: string[]
+  commonQuestions?: ReactConceptQuestion[]
 }
 
 export interface ReactConceptCategoryInfo {
@@ -643,6 +644,23 @@ function ExpensiveComponent() {
     estimatedReadTime: 9,
     prerequisites: ['components-props'],
     nextConcepts: ['use-effect', 'use-reducer'],
+    commonQuestions: [
+      {
+        question: 'What happens when you call the state setter multiple times in the same event handler without using the updater function?',
+        answer: 'React batches state updates within the same event handler. If you call setCount(count + 1) three times, count is the same stale value in each call, so the final result increments by 1 instead of 3. Using the updater form setCount(prev => prev + 1) fixes this because each call receives the latest pending state.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Why does React use Object.is() for state comparison and what does this mean for objects and arrays?',
+        answer: 'Object.is() checks referential equality. Primitives with the same value are equal, so setting the same number or string skips a re-render. But objects and arrays are compared by reference, so mutating an existing object and passing it to the setter will not trigger a re-render because the reference is unchanged. You must create a new object or array via spread syntax or other immutable patterns.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'When should you use lazy initialization with useState and how does it work?',
+        answer: 'Pass a function to useState — useState(() => expensiveComputation()) — when the initial value is costly to compute (e.g., reading from localStorage or parsing large data). React only calls this function on the first render and ignores it on subsequent renders. Without lazy initialization, the expensive computation runs on every render even though the result is discarded.',
+        difficulty: 'easy',
+      },
+    ],
   },
   {
     id: 'use-effect',
@@ -739,6 +757,23 @@ function WindowSize() {
     estimatedReadTime: 10,
     prerequisites: ['use-state'],
     nextConcepts: ['use-ref', 'use-layout-effect', 'custom-hooks'],
+    commonQuestions: [
+      {
+        question: 'How do you prevent a race condition in useEffect when fetching data?',
+        answer: 'Use an AbortController to cancel in-flight requests when the effect re-runs or the component unmounts. Create the controller in the effect body, pass its signal to fetch, and call controller.abort() in the cleanup function. Alternatively, use a boolean ignore flag that the cleanup sets to true so the response handler skips stale results.',
+        difficulty: 'hard',
+      },
+      {
+        question: 'What is the difference between passing no dependency array, an empty array, and a populated array to useEffect?',
+        answer: 'No array: the effect runs after every render. Empty array []: the effect runs only once after the initial mount and cleanup runs on unmount. Populated array [a, b]: the effect runs on mount and again whenever any dependency changes, with cleanup running before each re-execution and on unmount.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Why does React run effects after paint rather than before, and when would you need synchronous timing?',
+        answer: 'Running effects after paint avoids blocking the browser from showing updated UI, keeping the interface responsive. Most effects like data fetching and subscriptions do not need synchronous timing. When you need to read layout and synchronously re-render before the user sees a flicker — such as measuring DOM dimensions or adjusting scroll position — use useLayoutEffect, which fires after DOM mutations but before the browser paints.',
+        difficulty: 'medium',
+      },
+    ],
   },
   {
     id: 'use-ref',
@@ -849,6 +884,23 @@ function PriceDisplay({ price }: { price: number }) {
     estimatedReadTime: 7,
     prerequisites: ['use-state', 'use-effect'],
     nextConcepts: ['refs-dom-access', 'use-layout-effect'],
+    commonQuestions: [
+      {
+        question: 'What is the difference between useRef and useState for storing a value that persists across renders?',
+        answer: 'Both persist values across renders, but updating a ref via ref.current = newValue does not trigger a re-render, while calling a state setter does. Use useRef for values the UI does not depend on — such as timer IDs, previous values, or DOM element references — and useState when changes should cause the component to re-render.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Why is reading or writing ref.current during render considered an anti-pattern?',
+        answer: 'Rendering should be a pure function of props and state. Reading ref.current during render makes the output depend on a mutable value that React does not track, leading to inconsistent behavior especially with concurrent features like Suspense and transitions. Writing to ref.current during render can cause side effects that run multiple times if React replays the render. Refs should only be read or written in effects and event handlers.',
+        difficulty: 'hard',
+      },
+      {
+        question: 'How does forwardRef work and why is it needed?',
+        answer: 'React does not pass the ref prop through like regular props. forwardRef wraps a component to receive a ref as its second argument, allowing parent components to attach a ref to a DOM element inside the child. This is necessary when building reusable primitives like custom input or button components where the consumer needs direct DOM access for focus management, measurement, or imperative APIs.',
+        difficulty: 'medium',
+      },
+    ],
   },
   {
     id: 'use-context',
@@ -1176,6 +1228,18 @@ function Dashboard({ revenue, months }: DashboardProps) {
     estimatedReadTime: 8,
     prerequisites: ['use-state', 'use-effect'],
     nextConcepts: ['use-callback', 'react-memo'],
+    commonQuestions: [
+      {
+        question: 'When is useMemo actually worth using and when does it add unnecessary overhead?',
+        answer: 'useMemo is worth it when the computation is genuinely expensive (e.g., filtering or sorting large arrays, complex calculations) or when you need referential stability for objects passed to memoized children or dependency arrays. It adds unnecessary overhead for cheap computations like basic arithmetic, string concatenation, or creating small objects that rarely trigger downstream re-renders. Profile first to confirm the optimization is needed.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Can React discard memoized values, and what does that mean for how you use useMemo?',
+        answer: 'Yes, React treats useMemo as a performance optimization, not a semantic guarantee. It may drop cached values to free memory — for example during offscreen rendering. This means your code must work correctly even if useMemo recomputes on every render. Never rely on useMemo to prevent side effects or ensure a function only runs once; use useEffect or useRef for those needs.',
+        difficulty: 'hard',
+      },
+    ],
   },
   {
     id: 'use-callback',
@@ -1281,6 +1345,23 @@ function SearchResults({ query }: { query: string }) {
     estimatedReadTime: 8,
     prerequisites: ['use-memo', 'use-effect'],
     nextConcepts: ['react-memo', 'react-performance'],
+    commonQuestions: [
+      {
+        question: 'Why is useCallback pointless without React.memo on the child component?',
+        answer: 'useCallback preserves function identity between renders, but if the child receiving that function is not wrapped in React.memo, it re-renders whenever its parent re-renders regardless of prop changes. The stable reference provides no benefit because the child never compares old vs new props. useCallback only pays off when the child is memoized or the function is used in a dependency array.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'How is useCallback related to useMemo and could you implement one in terms of the other?',
+        answer: 'useCallback(fn, deps) is equivalent to useMemo(() => fn, deps). Both cache a value between renders and recompute when dependencies change. useCallback caches the function itself, while useMemo caches the return value of the factory function. useCallback is simply a convenience shorthand for the common pattern of memoizing a function reference.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How will the React Compiler change the way we use useCallback?',
+        answer: 'The React Compiler (previously React Forget) automatically analyzes component code and inserts memoization where needed at build time. This means developers will no longer need to manually wrap functions in useCallback or values in useMemo. The compiler determines which values change between renders and only recomputes what is necessary, eliminating the overhead and complexity of manual memoization while achieving the same or better optimization.',
+        difficulty: 'hard',
+      },
+    ],
   },
   {
     id: 'use-layout-effect',
@@ -1517,6 +1598,23 @@ function ResponsiveNav() {
     estimatedReadTime: 10,
     prerequisites: ['use-state', 'use-effect', 'use-ref'],
     nextConcepts: ['render-props', 'higher-order-components'],
+    commonQuestions: [
+      {
+        question: 'What are the rules for building a custom hook and how does state isolation work?',
+        answer: 'Custom hooks must start with "use" so React can enforce the rules of hooks (no conditional calls, only called from components or other hooks). Each component that calls a custom hook gets its own independent copy of any state or effects inside it — the hook shares logic, not state. Two components calling useCounter() each have their own separate count value.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How do custom hooks compare to higher-order components and render props as code reuse patterns?',
+        answer: 'Custom hooks share stateful logic without adding wrapper components to the tree, avoiding the "wrapper hell" of HOCs and render props. HOCs wrap a component and inject props, which can cause prop name collisions and make the component tree harder to debug. Render props use a function-as-child pattern that causes nesting. Custom hooks compose naturally — you call multiple hooks sequentially with no nesting — and TypeScript can infer return types directly.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Design a custom useFetch hook. What edge cases must it handle?',
+        answer: 'A robust useFetch hook must handle: (1) race conditions when the URL changes before a response arrives — use AbortController or an ignore flag in the cleanup; (2) error states — catch network errors and expose an error value; (3) loading states — track in-flight requests; (4) avoiding state updates after unmount — the cleanup sets a flag or aborts; (5) dependency management — the URL and options should be in the dependency array; (6) optional caching or deduplication for repeated requests.',
+        difficulty: 'hard',
+      },
+    ],
   },
 
   // ==========================================================================
@@ -1602,6 +1700,23 @@ function ReorderableList({ items }: { items: Item[] }) {
     estimatedReadTime: 10,
     prerequisites: ['jsx-rendering', 'lists-keys'],
     nextConcepts: ['rerender-triggers', 'component-lifecycle'],
+    commonQuestions: [
+      {
+        question: 'Why does React use an O(n) heuristic diffing algorithm instead of an optimal O(n^3) tree diff?',
+        answer: 'A generic tree diff that finds the minimum edit operations is O(n^3), which is too slow for UI trees with thousands of nodes. React makes two assumptions that enable O(n) diffing: (1) elements of different types produce entirely different subtrees, so React rebuilds them from scratch; (2) keys identify which children in a list are the same across renders, so React matches them by key rather than comparing all possible pairings.',
+        difficulty: 'hard',
+      },
+      {
+        question: 'What happens to component state when the element type changes at the same position in the tree?',
+        answer: 'React destroys the entire old subtree including all child state and DOM nodes, then mounts a completely new subtree. For example, switching a wrapper from <div> to <section> causes all children to unmount and remount, losing any local state. This is the first heuristic of reconciliation — different types mean different trees.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Why are keys important in lists and what problems arise from using array index as a key?',
+        answer: 'Keys tell React which items are the same across renders by identity rather than position. Using array index as a key is problematic when items are reordered, inserted, or removed because React will match items by position — updating existing components with wrong props and state instead of moving them. This causes bugs like form inputs showing values from the wrong item. Stable unique IDs from the data should be used instead.',
+        difficulty: 'easy',
+      },
+    ],
   },
   {
     id: 'component-lifecycle',
@@ -2528,6 +2643,23 @@ function App() {
     estimatedReadTime: 10,
     prerequisites: ['use-context', 'use-reducer'],
     nextConcepts: ['compound-components'],
+    commonQuestions: [
+      {
+        question: 'Why should you split state and dispatch into separate contexts?',
+        answer: 'When state and dispatch live in the same context, every component that only needs dispatch (e.g., a button that fires an action) still re-renders whenever the state changes. Splitting into a StateContext and a DispatchContext means dispatch-only consumers subscribe to a context value that never changes (the dispatch function is stable from useReducer), completely avoiding unnecessary re-renders.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'When should you use React Context versus a state management library like Zustand or Redux?',
+        answer: 'Context is ideal for low-frequency, app-wide state like theme, authentication, and locale — values that change rarely and affect many components. For high-frequency state (e.g., form inputs, drag positions), Context causes all consumers to re-render on every change since it lacks selectors. Libraries like Zustand provide selectors that let components subscribe to specific slices of state, plus middleware for persistence, devtools, and computed values.',
+        difficulty: 'hard',
+      },
+      {
+        question: 'How do you create a type-safe context hook that eliminates null checks at every call site?',
+        answer: 'Create the context with createContext<T | null>(null), then build a custom hook that reads the context and throws if the value is null. For example: function useAuth() { const ctx = useContext(AuthContext); if (!ctx) throw new Error("useAuth must be within AuthProvider"); return ctx }. The return type is narrowed to T (not T | null), so consumers never need null checks. The thrown error surfaces missing providers immediately during development.',
+        difficulty: 'easy',
+      },
+    ],
   },
   {
     id: 'portals',
@@ -2730,6 +2862,23 @@ const Chart = memo(
     estimatedReadTime: 8,
     prerequisites: ['rerender-triggers', 'use-callback'],
     nextConcepts: ['code-splitting', 'react-performance'],
+    commonQuestions: [
+      {
+        question: 'What does shallow comparison mean in React.memo and when does it fail?',
+        answer: 'Shallow comparison checks if each prop is the same reference using Object.is(). It works for primitives (same value = equal) but fails for objects, arrays, and functions that are recreated on every render — they have new references even if their contents are identical. This is why React.memo must be paired with useMemo for object props and useCallback for function props to maintain referential stability.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How does the full memoization chain of React.memo, useMemo, and useCallback work together?',
+        answer: 'React.memo wraps the child component to skip re-renders when props are shallowly equal. useMemo stabilizes object and array props so their references do not change between renders. useCallback stabilizes function props like event handlers. All three must be used together: if the parent passes an unstabilized function or object, React.memo sees a new reference and re-renders anyway, making the memoization pointless.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'When would you use a custom comparator with React.memo instead of the default shallow comparison?',
+        answer: 'Use a custom comparator when you want to ignore certain props that change frequently but do not affect the rendered output, or when you need deep comparison for specific props. For example, a chart component might accept a label prop that changes often but does not affect the visual output — a custom comparator can skip re-renders by only comparing the data and dimension props. Be cautious: custom comparators that are too lenient can cause stale renders.',
+        difficulty: 'hard',
+      },
+    ],
   },
   {
     id: 'code-splitting',
@@ -3148,6 +3297,23 @@ export { AddToCartButton }`,
     estimatedReadTime: 10,
     prerequisites: ['components-props', 'use-state'],
     nextConcepts: [],
+    commonQuestions: [
+      {
+        question: 'What is the difference between Server Components and Client Components, and how do you decide which to use?',
+        answer: 'Server Components run only on the server, ship zero JavaScript to the client, and can directly access databases and file systems. Client Components run on the client (and are pre-rendered on the server), ship their JavaScript to the bundle, and can use hooks, state, effects, and browser APIs. Use Server Components by default for static content, data fetching, and non-interactive UI. Switch to Client Components only when you need interactivity, hooks, or browser APIs.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Why can Client Components not import Server Components directly, and what is the children pattern workaround?',
+        answer: 'Client Components include JavaScript that runs in the browser where server-only code (database queries, file system access) cannot execute. Importing a Server Component into a Client Component would pull server code into the client bundle. The workaround is to pass the Server Component as children or a prop to the Client Component — the Server Component is rendered on the server and its output is serialized and sent to the client as a completed React tree, not as importable code.',
+        difficulty: 'hard',
+      },
+      {
+        question: 'How do Server Components affect bundle size and what is the serialization boundary?',
+        answer: 'Server Components contribute zero bytes to the client JavaScript bundle because their code never reaches the browser. The serialization boundary is where Server Component output is converted to a special format (RSC payload) that the client can render. Props crossing this boundary from Server to Client Components must be serializable — plain objects, arrays, strings, numbers, and JSX elements are allowed, but functions, classes, and Dates are not.',
+        difficulty: 'medium',
+      },
+    ],
   },
 ]
 

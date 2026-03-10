@@ -1,0 +1,289 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-2xl);
+}
+
+.header {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--text-sm);
+}
+
+.breadcrumbLink {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.breadcrumbLink:hover {
+  color: var(--color-brand-primary);
+}
+
+.breadcrumbSep {
+  color: var(--color-text-muted);
+}
+
+.breadcrumbCurrent {
+  color: var(--color-text-secondary);
+}
+
+.title {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-bright);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--spacing-md);
+}
+
+.description {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+}
+
+/* ── Sections ─────────────────────────────────── */
+
+.section {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.sectionTitle {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-bright);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ── Comparison Table ─────────────────────────── */
+
+.tableWrapper {
+  overflow-x: auto;
+  border: var(--border-width-1) solid var(--color-border-primary);
+  border-radius: var(--radius-lg);
+}
+
+.comparisonTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comparisonTable th,
+.comparisonTable td {
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-align: left;
+  border-bottom: var(--border-width-1) solid var(--color-border-primary);
+}
+
+.comparisonTable tr:last-child td {
+  border-bottom: none;
+}
+
+.dimensionHeader {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  background: var(--color-bg-secondary);
+  white-space: nowrap;
+}
+
+.itemHeader {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-primary);
+  background: var(--color-bg-secondary);
+}
+
+.dimensionCell {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.aspectCell {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ── Code Examples ────────────────────────────── */
+
+.codeGrid {
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.codeCard {
+  border: var(--border-width-1) solid var(--color-border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  background: var(--color-bg-secondary);
+}
+
+.codeCardTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.keyPoints {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.keyPoints li {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  padding-left: var(--spacing-md);
+  position: relative;
+}
+
+.keyPoints li::before {
+  content: '\2022';
+  color: var(--color-brand-primary);
+  position: absolute;
+  left: 0;
+}
+
+.codeBlock {
+  background: var(--color-bg-code);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  overflow-x: auto;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+/* ── When to Use ──────────────────────────────── */
+
+.guidanceList {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.guidanceCard {
+  border: var(--border-width-1) solid var(--color-border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  background: var(--color-surface-card);
+}
+
+.guidanceTitle {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.guidanceText {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+}
+
+/* ── Common Mistakes ──────────────────────────── */
+
+.mistakesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.mistakeItem {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+  padding-left: var(--spacing-lg);
+  position: relative;
+}
+
+.mistakeItem::before {
+  content: '\00d7';
+  color: var(--color-difficulty-hard);
+  position: absolute;
+  left: 0;
+  font-weight: var(--font-weight-bold);
+}
+
+/* ── Interview Questions ──────────────────────── */
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.faqItem {
+  border: var(--border-width-1) solid var(--color-border-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.faqQuestion {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-bright);
+  padding: var(--spacing-md) var(--spacing-lg);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.faqQuestion:hover {
+  background: var(--color-white-5);
+}
+
+.faqAnswer {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+  padding: 0 var(--spacing-lg) var(--spacing-md);
+}
+
+/* ── Related Links ────────────────────────────── */
+
+.relatedLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.relatedLink {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: var(--border-width-1) solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  text-transform: capitalize;
+}
+
+.relatedLink:hover {
+  color: var(--color-brand-primary);
+  border-color: var(--color-brand-primary-30);
+  background: var(--color-white-5);
+}
+
+/* ── Footer ───────────────────────────────────── */
+
+.footer {
+  text-align: center;
+  padding-top: var(--spacing-lg);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
