@@ -8,6 +8,8 @@ import { concepts, conceptCategories } from '@/data/concepts'
 import { dsaConcepts, dsaConceptCategories } from '@/data/dsaConcepts'
 import { dsaPatterns } from '@/data/dsaPatterns'
 import { reactConcepts, reactConceptCategories } from '@/data/reactConcepts'
+import { tsConcepts, tsConceptCategories } from '@/data/tsConcepts'
+import { systemDesignConcepts, systemDesignCategories } from '@/data/systemDesignConcepts'
 
 // Top 5 JS categories by concept count
 const topJsCategories = conceptCategories
@@ -30,6 +32,18 @@ const reactCatsWithCounts = reactConceptCategories.map(cat => ({
   count: reactConcepts.filter(c => c.category === cat.id).length,
 }))
 
+// All TypeScript categories with counts
+const tsCatsWithCounts = tsConceptCategories.map(cat => ({
+  ...cat,
+  count: tsConcepts.filter(c => c.category === cat.id).length,
+}))
+
+// All System Design categories with counts
+const sdCatsWithCounts = systemDesignCategories.map(cat => ({
+  ...cat,
+  count: systemDesignConcepts.filter(c => c.category === cat.id).length,
+}))
+
 // Pick 3 diverse very-high interview concepts (different subcategories)
 const quickStartConcepts = (() => {
   const veryHigh = concepts.filter(c => c.interviewFrequency === 'very-high')
@@ -49,8 +63,8 @@ const quickStartConcepts = (() => {
 const totalMinutes = concepts.reduce((sum, c) => sum + (c.estimatedReadTime ?? 0), 0)
 const totalHours = Math.round(totalMinutes / 60)
 
-const totalTopics = concepts.length + dsaConcepts.length + dsaPatterns.length + reactConcepts.length
-const totalCategories = conceptCategories.length + dsaConceptCategories.length + reactConceptCategories.length
+const totalTopics = concepts.length + dsaConcepts.length + dsaPatterns.length + reactConcepts.length + tsConcepts.length + systemDesignConcepts.length
+const totalCategories = conceptCategories.length + dsaConceptCategories.length + reactConceptCategories.length + tsConceptCategories.length + systemDesignCategories.length
 
 export default function ConceptsPage() {
   return (
@@ -72,7 +86,7 @@ export default function ConceptsPage() {
         </header>
 
         {/* Main cards */}
-        <div className="grid grid-cols-3 gap-5 [&>*]:flex max-md:grid-cols-1 max-md:gap-4 animate-[fadeIn_0.4s_ease-out_100ms_both]">
+        <div className="grid grid-cols-5 gap-5 [&>*]:flex max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 max-md:gap-4 animate-[fadeIn_0.4s_ease-out_100ms_both]">
           {/* JS Concepts Card */}
           <div>
             <Link
@@ -148,6 +162,62 @@ export default function ConceptsPage() {
                 </p>
                 <div className="flex flex-wrap gap-1.5 mt-2 pt-2 border-t border-border-card">
                   {reactCatsWithCounts.map(cat => (
+                    <span key={cat.id} className="text-xs text-text-muted bg-white-5 rounded-full py-0.5 px-2">
+                      {cat.label} ({cat.count})
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          {/* TypeScript Concepts Card */}
+          <div>
+            <Link
+              href="/concepts/ts"
+              className="relative flex-1 rounded-2xl p-0.5 no-underline text-inherit transition-all duration-150 border border-border-card hover:bg-white-5 hover:border-brand-primary-30 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+            >
+              <div className="bg-bg-page-secondary rounded-xl p-5 flex flex-col gap-2 flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[1.75rem] leading-none text-brand-primary">
+                    <ConceptIcon conceptId="ts-basics" size={28} />
+                  </span>
+                  <span className="text-xs font-semibold py-0.5 px-2.5 rounded-full bg-brand-primary-30 text-brand-light">{tsConcepts.length} topics</span>
+                </div>
+                <h3 className="text-lg font-semibold text-text-bright mt-1 mb-0 max-md:text-base">TypeScript Concepts</h3>
+                <p className="text-base text-text-secondary m-0 leading-snug flex-1">
+                  Type system mastery: Generics, Utility Types, Conditional Types, React + TS patterns, and interview prep.
+                </p>
+                <div className="flex flex-wrap gap-1.5 mt-2 pt-2 border-t border-border-card">
+                  {tsCatsWithCounts.map(cat => (
+                    <span key={cat.id} className="text-xs text-text-muted bg-white-5 rounded-full py-0.5 px-2">
+                      {cat.label} ({cat.count})
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          {/* System Design Concepts Card */}
+          <div>
+            <Link
+              href="/concepts/system-design"
+              className="relative flex-1 rounded-2xl p-0.5 no-underline text-inherit transition-all duration-150 border border-border-card hover:bg-white-5 hover:border-brand-primary-30 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(99,102,241,0.12)] focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none"
+            >
+              <div className="bg-bg-page-secondary rounded-xl p-5 flex flex-col gap-2 flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[1.75rem] leading-none text-brand-primary">
+                    <ConceptIcon conceptId="sd-framework" size={28} />
+                  </span>
+                  <span className="text-xs font-semibold py-0.5 px-2.5 rounded-full bg-brand-primary-30 text-brand-light">{systemDesignConcepts.length} topics</span>
+                </div>
+                <h3 className="text-lg font-semibold text-text-bright mt-1 mb-0 max-md:text-base">System Design</h3>
+                <p className="text-base text-text-secondary m-0 leading-snug flex-1">
+                  Frontend system design: RADIO framework, component architecture, data fetching, and case studies.
+                </p>
+                <div className="flex flex-wrap gap-1.5 mt-2 pt-2 border-t border-border-card">
+                  {sdCatsWithCounts.map(cat => (
                     <span key={cat.id} className="text-xs text-text-muted bg-white-5 rounded-full py-0.5 px-2">
                       {cat.label} ({cat.count})
                     </span>

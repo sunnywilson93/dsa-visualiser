@@ -433,6 +433,47 @@ const conceptIconMap: Record<string, IconEntry> = {
   'hooks-advanced': Wrench,
   'rendering': Monitor,
   'react-performance': Gauge,
+
+  // ===== TYPESCRIPT CONCEPT ICONS =====
+  'ts-basics': Code2,
+  'ts-type-narrowing': Filter,
+  'ts-generics': Box,
+  'ts-utility-types': Wrench,
+  'ts-mapped-types': Map,
+  'ts-conditional-types': Split,
+  'ts-advanced-generics': BrainCircuit,
+  'ts-type-assertions': ShieldCheck,
+  'ts-declaration-files': FileCode,
+  'ts-react-components': LayoutGrid,
+  'ts-react-hooks': Anchor,
+  'ts-react-patterns': Puzzle,
+  'ts-tricky-questions': Skull,
+  'ts-strict-mode': Shield,
+  'ts-migration': ArrowUpCircle,
+
+  // TypeScript category icons (concept IDs that overlap use the concept icon above)
+  'ts-foundations': Compass,
+  'ts-advanced': Zap,
+  'ts-react': ReactLogo,
+  'ts-interview': GraduationCap,
+
+  // System Design concept icons
+  'sd-radio-framework': Compass,
+  'sd-component-architecture': LayoutGrid,
+  'sd-data-fetching': Download,
+  'sd-state-management': Database,
+  'sd-real-time': Zap,
+  'sd-rendering-strategies': Server,
+  'sd-performance-budget': Gauge,
+  'sd-accessibility': Globe,
+  'sd-design-feed': List,
+  'sd-design-autocomplete': Search,
+
+  // System Design category icons
+  'sd-framework': Compass,
+  'sd-core-patterns': Puzzle,
+  'sd-performance': Gauge,
+  'sd-case-studies': BrainCircuit,
 }
 
 interface ConceptIconProps {

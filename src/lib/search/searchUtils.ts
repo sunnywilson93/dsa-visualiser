@@ -4,6 +4,8 @@ import { concepts, conceptCategories } from '@/data/concepts'
 import { dsaConcepts, dsaConceptCategories } from '@/data/dsaConcepts'
 import { dsaPatterns } from '@/data/dsaPatterns'
 import { reactConcepts, reactConceptCategories } from '@/data/reactConcepts'
+import { tsConcepts, tsConceptCategories } from '@/data/tsConcepts'
+import { systemDesignConcepts, systemDesignCategories } from '@/data/systemDesignConcepts'
 import type { SearchableItem, SearchFilters, SearchResult, CategoryOption, ConceptSource } from './types'
 
 // Convert JS concepts to searchable items
@@ -66,15 +68,47 @@ function normalizeReactConcepts(): SearchableItem[] {
   }))
 }
 
+// Convert TypeScript concepts to searchable items
+function normalizeTSConcepts(): SearchableItem[] {
+  return tsConcepts.map(c => ({
+    id: c.id,
+    title: c.title,
+    category: c.category,
+    difficulty: c.difficulty,
+    description: c.description,
+    shortDescription: c.shortDescription,
+    keyPoints: c.keyPoints,
+    source: 'ts' as ConceptSource,
+    href: `/concepts/ts/${c.id}`,
+  }))
+}
+
+// Convert System Design concepts to searchable items
+function normalizeSystemDesignConcepts(): SearchableItem[] {
+  return systemDesignConcepts.map(c => ({
+    id: c.id,
+    title: c.title,
+    category: c.category,
+    difficulty: c.difficulty,
+    description: c.description,
+    shortDescription: c.shortDescription,
+    keyPoints: c.keyPoints,
+    source: 'system-design' as ConceptSource,
+    href: `/concepts/system-design/${c.id}`,
+  }))
+}
+
 // Get all searchable items
 export function getAllSearchableItems(): SearchableItem[] {
-  return [...normalizeJSConcepts(), ...normalizeDSAConcepts(), ...normalizeDSAPatterns(), ...normalizeReactConcepts()]
+  return [...normalizeJSConcepts(), ...normalizeDSAConcepts(), ...normalizeDSAPatterns(), ...normalizeReactConcepts(), ...normalizeTSConcepts(), ...normalizeSystemDesignConcepts()]
 }
 
 // Get items by source
 export function getSearchableItemsBySource(source: ConceptSource): SearchableItem[] {
   if (source === 'js') return normalizeJSConcepts()
   if (source === 'react') return normalizeReactConcepts()
+  if (source === 'ts') return normalizeTSConcepts()
+  if (source === 'system-design') return normalizeSystemDesignConcepts()
   return [...normalizeDSAConcepts(), ...normalizeDSAPatterns()]
 }
 
@@ -98,7 +132,19 @@ export function getAllCategories(): CategoryOption[] {
     source: 'react' as ConceptSource,
   }))
 
-  return [...jsCategories, ...dsaCategories, ...reactCategories]
+  const tsCategories = tsConceptCategories.map(c => ({
+    id: c.id,
+    name: c.label,
+    source: 'ts' as ConceptSource,
+  }))
+
+  const sdCategories = systemDesignCategories.map(c => ({
+    id: c.id,
+    name: c.label,
+    source: 'system-design' as ConceptSource,
+  }))
+
+  return [...jsCategories, ...dsaCategories, ...reactCategories, ...tsCategories, ...sdCategories]
 }
 
 // Score a text match

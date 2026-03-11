@@ -176,6 +176,16 @@ const visualizations: Record<string, React.ComponentType> = {
   // Async Advanced Patterns
   'async-patterns-advanced': dynamic(() => import('@/components/Concepts/AsyncPatternsAdvancedViz').then(m => m.AsyncPatternsAdvancedViz)),
   'async-error-boundaries': dynamic(() => import('@/components/Concepts/AsyncErrorBoundariesViz').then(m => m.AsyncErrorBoundariesViz)),
+
+  // Design Patterns
+  'design-pattern-module': dynamic(() => import('@/components/Concepts/DesignPatternsViz').then(m => m.DesignPatternsViz)),
+  'design-pattern-singleton': dynamic(() => import('@/components/Concepts/DesignPatternsViz').then(m => m.DesignPatternsViz)),
+  'design-pattern-factory': dynamic(() => import('@/components/Concepts/DesignPatternsViz').then(m => m.DesignPatternsViz)),
+  'design-pattern-observer': dynamic(() => import('@/components/Concepts/DesignPatternsViz').then(m => m.DesignPatternsViz)),
+  'design-pattern-strategy': dynamic(() => import('@/components/Concepts/DesignPatternsViz').then(m => m.DesignPatternsViz)),
+  'design-pattern-decorator': dynamic(() => import('@/components/Concepts/DesignPatternsViz').then(m => m.DesignPatternsViz)),
+  'design-pattern-proxy': dynamic(() => import('@/components/Concepts/DesignPatternsViz').then(m => m.DesignPatternsViz)),
+  'design-pattern-mediator': dynamic(() => import('@/components/Concepts/DesignPatternsViz').then(m => m.DesignPatternsViz)),
 }
 
 // Helper to determine if a concept is a JS concept or DSA concept

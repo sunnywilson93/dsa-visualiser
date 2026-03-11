@@ -9,6 +9,8 @@ import {
 import { dsaPatterns } from '@/data/dsaPatterns'
 import { dsaConcepts } from '@/data/dsaConcepts'
 import { reactConcepts } from '@/data/reactConcepts'
+import { tsConcepts } from '@/data/tsConcepts'
+import { systemDesignConcepts } from '@/data/systemDesignConcepts'
 import { problemConcepts } from '@/data/algorithmConcepts'
 import { topicHubs } from '@/data/topicHubs'
 import { comparisons } from '@/data/comparisons'
@@ -51,6 +53,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/concepts/react`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/concepts/ts`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/concepts/system-design`,
       lastModified: CONTENT_LAST_UPDATED,
       changeFrequency: 'weekly',
       priority: 0.9,
@@ -171,6 +185,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
+  // TypeScript Concept pages (/concepts/ts/[conceptId])
+  const tsConceptPages: MetadataRoute.Sitemap = tsConcepts.map((concept) => ({
+    url: `${BASE_URL}/concepts/ts/${concept.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+
+  // System Design Concept pages (/concepts/system-design/[conceptId])
+  const systemDesignConceptPages: MetadataRoute.Sitemap = systemDesignConcepts.map((concept) => ({
+    url: `${BASE_URL}/concepts/system-design/${concept.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+
   // DSA Pattern pages (/concepts/dsa/patterns/[patternId])
   const dsaPatternPages: MetadataRoute.Sitemap = dsaPatterns.map((pattern) => ({
     url: `${BASE_URL}/concepts/dsa/patterns/${pattern.slug}`,
@@ -251,6 +281,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...jsConceptPages,
     ...dsaConceptPages,
     ...reactConceptPages,
+    ...tsConceptPages,
+    ...systemDesignConceptPages,
     ...dsaPatternPages,
     ...categoryPages,
     ...dsaSubcategoryPages,

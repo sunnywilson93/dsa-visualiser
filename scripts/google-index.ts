@@ -17,6 +17,8 @@ import { google } from 'googleapis'
 import { concepts } from '../src/data/concepts'
 import { dsaConcepts } from '../src/data/dsaConcepts'
 import { reactConcepts } from '../src/data/reactConcepts'
+import { tsConcepts } from '../src/data/tsConcepts'
+import { systemDesignConcepts } from '../src/data/systemDesignConcepts'
 import { dsaPatterns } from '../src/data/dsaPatterns'
 import {
   exampleCategories,
@@ -48,6 +50,8 @@ function buildUrlList(): string[] {
     '/concepts/js',
     '/concepts/dsa',
     '/concepts/react',
+    '/concepts/ts',
+    '/concepts/system-design',
     '/js-problems',
     '/interview',
     '/interview/html',
@@ -75,6 +79,12 @@ function buildUrlList(): string[] {
 
   // React Concept pages
   reactConcepts.forEach((c) => urls.push(`${BASE_URL}/concepts/react/${c.id}`))
+
+  // TypeScript Concept pages
+  tsConcepts.forEach((c) => urls.push(`${BASE_URL}/concepts/ts/${c.id}`))
+
+  // System Design Concept pages
+  systemDesignConcepts.forEach((c) => urls.push(`${BASE_URL}/concepts/system-design/${c.id}`))
 
   // DSA Pattern pages
   dsaPatterns.forEach((p) => urls.push(`${BASE_URL}/concepts/dsa/patterns/${p.slug}`))

@@ -6,10 +6,12 @@ import type { SearchResult } from '@/lib/search'
 import { ConceptIcon } from '@/components/Icons'
 import { DifficultyIndicator } from '@/components/DifficultyIndicator'
 
-const sourceLabels = {
+const sourceLabels: Record<string, string> = {
   js: 'JS',
   dsa: 'DSA',
   react: 'React',
+  ts: 'TS',
+  'system-design': 'SD',
 }
 
 interface SearchResultItemProps {

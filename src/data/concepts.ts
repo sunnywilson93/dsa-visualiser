@@ -16,7 +16,7 @@ export interface Concept {
   id: string
   title: string
   category: 'philosophy' | 'foundations' | 'basics' | 'fundamentals' | 'core' | 'advanced' | 'runtime' | 'backend' | 'browser'
-  subcategory?: 'scope-hoisting' | 'async-patterns' | 'array-methods' | 'prototypes-oop' | 'modern-js' | 'event-loop' | 'data-structures' | 'metaprogramming' | 'iteration' | 'advanced-patterns' | 'error-handling'
+  subcategory?: 'scope-hoisting' | 'async-patterns' | 'array-methods' | 'prototypes-oop' | 'modern-js' | 'event-loop' | 'data-structures' | 'metaprogramming' | 'iteration' | 'advanced-patterns' | 'error-handling' | 'design-patterns'
   difficulty: 'beginner' | 'intermediate' | 'advanced'
   description: string
   shortDescription: string
@@ -12427,6 +12427,1118 @@ Circuit breakers, error aggregation with Promise.allSettled, and graceful degrad
       },
     ],
   },
+
+  // ===== DESIGN PATTERNS =====
+
+  {
+    id: 'design-pattern-module',
+    title: 'Module Pattern',
+    category: 'advanced',
+    subcategory: 'design-patterns',
+    difficulty: 'beginner',
+    estimatedReadTime: 8,
+    interviewFrequency: 'very-high',
+    prerequisites: ['closures', 'closure-module-pattern'],
+    nextConcepts: ['design-pattern-singleton', 'design-pattern-factory'],
+    description: 'The Module Pattern uses closures and IIFEs to create private scope, exposing only a public API. It is the foundation of JavaScript encapsulation and was the primary code-organization tool before ES modules became standard.',
+    shortDescription: 'Encapsulation via closures and IIFEs',
+    keyPoints: [
+      'Uses an IIFE (Immediately Invoked Function Expression) to create a private scope',
+      'Variables inside the IIFE are inaccessible from outside — true privacy',
+      'Returns an object literal exposing only the public API',
+      'The Revealing Module Pattern names all methods privately, then maps them in the return object',
+      'Closures keep private state alive across invocations',
+      'Predecessor to ES modules — still useful for library encapsulation and config objects',
+      'Can be extended with augmentation patterns for large codebases',
+    ],
+    examples: [
+      {
+        title: 'Basic Module Pattern',
+        code: `const Counter = (function () {
+  let count = 0; // private
+
+  return {
+    increment() { count++; },
+    decrement() { count--; },
+    getCount() { return count; },
+  };
+})();
+
+Counter.increment();
+Counter.increment();
+console.log(Counter.getCount()); // 2
+console.log(Counter.count);      // undefined — private!`,
+        explanation: 'The IIFE creates a closure. count is private; only the returned methods can access it.',
+      },
+      {
+        title: 'Revealing Module Pattern',
+        code: `const AuthModule = (function () {
+  let token = null;
+
+  function login(user, pass) {
+    // authenticate...
+    token = 'jwt-' + btoa(user);
+    return true;
+  }
+
+  function logout() { token = null; }
+
+  function isAuthenticated() { return token !== null; }
+
+  // Reveal public API
+  return { login, logout, isAuthenticated };
+})();
+
+AuthModule.login('alice', 'secret');
+console.log(AuthModule.isAuthenticated()); // true
+console.log(AuthModule.token);             // undefined`,
+        explanation: 'All functions are defined privately, then selectively exposed in the return object for a clean API.',
+      },
+      {
+        title: 'Module Augmentation',
+        code: `const App = (function (app) {
+  app.utils = {
+    formatDate(d) { return d.toISOString().slice(0, 10); },
+    capitalize(s) { return s[0].toUpperCase() + s.slice(1); },
+  };
+  return app;
+})(App || {});
+
+// Another file can extend:
+const App2 = (function (app) {
+  app.logger = {
+    log(msg) { console.log('[LOG]', msg); },
+  };
+  return app;
+})(App || {});`,
+        explanation: 'Passing the module into a new IIFE lets multiple files contribute to the same namespace without conflicts.',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting the wrapping parentheses around the IIFE — causes a syntax error',
+      'Returning references to mutable private objects, accidentally leaking state',
+      'Over-using the pattern when ES modules (import/export) are available',
+      'Not realizing that private methods cannot be tested directly',
+    ],
+    interviewTips: [
+      'Connect the pattern to closures — explain how the IIFE creates the closed-over scope',
+      'Mention that ES modules replaced this pattern for file-level encapsulation but it is still used for runtime privacy',
+      'Compare with class private fields (#) — both achieve encapsulation, different mechanisms',
+    ],
+    explanation: `The Module Pattern is arguably the most influential design pattern in JavaScript history. Before ES2015 introduced native modules, it was the only reliable way to create truly private variables. The pattern leverages two fundamental JS features: closures and IIFEs. The IIFE executes immediately and returns an object, while the closure keeps the private variables alive in memory.
+
+The Revealing Module Pattern is a refinement where all functions are written as private, and only the desired ones are mapped to the returned object. This makes it easy to see the public API at a glance, and switching a method from public to private requires only removing it from the return statement.
+
+Even in modern codebases with ES modules, the Module Pattern remains relevant. It is used inside library entry points to expose a controlled API, in configuration objects that need runtime privacy, and in any situation where you want to guarantee that internal state cannot be accessed or mutated externally. Understanding this pattern is essential because it demonstrates mastery of closures, scope, and JavaScript's approach to encapsulation.`,
+    commonQuestions: [
+      {
+        question: 'How does the Module Pattern achieve privacy in JavaScript?',
+        answer: 'It uses an IIFE to create a function scope. Variables declared inside the IIFE are not accessible from outside. The IIFE returns an object with methods that close over those variables, providing controlled access through a public API.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'What is the difference between the Module Pattern and the Revealing Module Pattern?',
+        answer: 'In the basic Module Pattern, public methods may be defined inline in the return object. In the Revealing Module Pattern, all methods are defined as private functions first, then explicitly mapped in the return object, making the public API easier to read and modify.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'When would you still use the Module Pattern over ES modules?',
+        answer: 'When you need runtime encapsulation within a single file (ES modules provide file-level scope but not sub-file privacy), when building libraries that must expose a controlled API, or when working in environments that do not support ES module syntax.',
+        difficulty: 'medium',
+      },
+    ],
+  },
+
+  {
+    id: 'design-pattern-singleton',
+    title: 'Singleton Pattern',
+    category: 'advanced',
+    subcategory: 'design-patterns',
+    difficulty: 'intermediate',
+    estimatedReadTime: 9,
+    interviewFrequency: 'high',
+    prerequisites: ['design-pattern-module', 'closures'],
+    nextConcepts: ['design-pattern-factory', 'design-pattern-mediator'],
+    description: 'The Singleton Pattern ensures a class or module produces exactly one instance throughout the application lifetime. It provides a global access point to that instance, commonly used for configuration stores, connection pools, and logging services.',
+    shortDescription: 'One instance, global access point',
+    keyPoints: [
+      'Guarantees only one instance of a class or object exists at runtime',
+      'Provides a global access point via a static method or module export',
+      'Lazy initialization — the instance is created on first access, not at import time',
+      'In JavaScript, ES modules are inherently singletons because modules are cached after first evaluation',
+      'Useful for shared resources: config, logger, database connection pool, caches',
+      'Can complicate testing because global state leaks between tests',
+      'The Proxy-based singleton can intercept construction to enforce the single-instance rule',
+    ],
+    examples: [
+      {
+        title: 'Closure-Based Singleton',
+        code: `const Database = (function () {
+  let instance = null;
+
+  function createConnection() {
+    return {
+      host: 'localhost',
+      query(sql) { console.log('Executing:', sql); },
+    };
+  }
+
+  return {
+    getInstance() {
+      if (!instance) {
+        instance = createConnection();
+      }
+      return instance;
+    },
+  };
+})();
+
+const db1 = Database.getInstance();
+const db2 = Database.getInstance();
+console.log(db1 === db2); // true — same instance`,
+        explanation: 'The closure holds the single instance. getInstance returns the existing one or creates it on first call.',
+      },
+      {
+        title: 'Class-Based Singleton',
+        code: `class Logger {
+  static #instance = null;
+
+  #logs = [];
+
+  constructor() {
+    if (Logger.#instance) {
+      return Logger.#instance;
+    }
+    Logger.#instance = this;
+  }
+
+  log(message) {
+    this.#logs.push({ message, timestamp: Date.now() });
+    console.log('[LOG]', message);
+  }
+
+  getHistory() { return [...this.#logs]; }
+}
+
+const a = new Logger();
+const b = new Logger();
+console.log(a === b); // true`,
+        explanation: 'The constructor checks for an existing instance and returns it, preventing multiple instantiations.',
+      },
+      {
+        title: 'ES Module Singleton (Idiomatic JS)',
+        code: `// config.js — module-level singleton
+let settings = null;
+
+function loadSettings() {
+  return {
+    apiUrl: 'https://api.example.com',
+    timeout: 5000,
+    retries: 3,
+  };
+}
+
+export function getConfig() {
+  if (!settings) {
+    settings = loadSettings();
+  }
+  return settings;
+}
+
+// Any file that imports getConfig() shares the same settings`,
+        explanation: 'ES modules are evaluated once and cached. Module-scoped variables naturally behave as singletons.',
+      },
+    ],
+    commonMistakes: [
+      'Using singletons for everything — they introduce hidden global state and tight coupling',
+      'Forgetting that singletons make unit testing harder because shared state leaks between tests',
+      'Not providing a reset method for testing purposes',
+      'Assuming ES module caching works across different bundler entry points — it depends on the build tool',
+      'Creating race conditions when lazy initialization involves async operations',
+    ],
+    interviewTips: [
+      'Explain when singletons are appropriate (shared resources, config) vs harmful (application state)',
+      'Know that ES modules are inherently singletons — no extra pattern needed',
+      'Discuss the testing trade-off: convenience vs global state coupling',
+      'Mention dependency injection as the testable alternative to hard singletons',
+    ],
+    explanation: `The Singleton Pattern restricts instantiation of a class or module to a single object and provides a global point of access. In JavaScript, this pattern appears everywhere: the window object, the module cache in Node.js, and any configuration object shared across an application.
+
+The classic closure-based implementation stores the instance in a private variable and exposes a getInstance() method. The class-based approach overrides the constructor to return the existing instance. However, the most idiomatic JavaScript singleton is simply a module — because ES modules are evaluated exactly once and the result is cached, any variable at module scope is inherently a singleton.
+
+The pattern is powerful but comes with trade-offs. Global state makes code harder to test because one test can inadvertently affect another. It also creates hidden dependencies — instead of receiving a dependency explicitly, code reaches out to a global. For this reason, many teams prefer dependency injection over hard singletons. In interviews, demonstrating awareness of both the benefits (simplicity for shared resources) and the costs (testability, coupling) shows senior-level judgment.`,
+    commonQuestions: [
+      {
+        question: 'Why are ES modules considered natural singletons?',
+        answer: 'ES modules are evaluated once on first import. Subsequent imports return the cached module object. This means any variable declared at module scope exists as a single instance shared by all importers.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'What are the downsides of the Singleton Pattern?',
+        answer: 'Singletons introduce hidden global state, making code harder to test and reason about. Tests can leak state between each other, and components become tightly coupled to the singleton instead of receiving dependencies explicitly.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'How would you make a singleton testable?',
+        answer: 'Add a reset() method that clears the internal instance, allowing each test to start fresh. Better yet, use dependency injection: pass the shared resource as a parameter rather than importing a singleton directly, so tests can substitute a mock.',
+        difficulty: 'hard',
+      },
+    ],
+  },
+
+  {
+    id: 'design-pattern-factory',
+    title: 'Factory Pattern',
+    category: 'advanced',
+    subcategory: 'design-patterns',
+    difficulty: 'intermediate',
+    estimatedReadTime: 10,
+    interviewFrequency: 'high',
+    prerequisites: ['design-pattern-module', 'functions'],
+    nextConcepts: ['design-pattern-strategy', 'design-pattern-decorator'],
+    description: 'The Factory Pattern delegates object creation to a dedicated function or method, decoupling the calling code from concrete constructors. It is one of the most commonly used patterns in JavaScript for creating objects that share an interface but differ in implementation.',
+    shortDescription: 'Delegate object creation to a factory function',
+    keyPoints: [
+      'A factory function returns new objects without using the new keyword or exposing constructors',
+      'Decouples object creation from usage — callers depend on an interface, not a class',
+      'The Simple Factory centralizes creation logic in a single function with a type parameter',
+      'The Factory Method pattern lets subclasses override the creation method to produce different objects',
+      'The Abstract Factory creates families of related objects without specifying concrete classes',
+      'JavaScript favors factory functions over classes because they avoid prototype complexity',
+    ],
+    examples: [
+      {
+        title: 'Simple Factory Function',
+        code: `function createUser(type, name) {
+  const base = { name, createdAt: Date.now() };
+
+  switch (type) {
+    case 'admin':
+      return { ...base, role: 'admin', permissions: ['read', 'write', 'delete'] };
+    case 'editor':
+      return { ...base, role: 'editor', permissions: ['read', 'write'] };
+    case 'viewer':
+      return { ...base, role: 'viewer', permissions: ['read'] };
+    default:
+      throw new Error('Unknown user type: ' + type);
+  }
+}
+
+const admin = createUser('admin', 'Alice');
+const viewer = createUser('viewer', 'Bob');`,
+        explanation: 'One function, multiple object shapes. Callers never need to know the internal structure.',
+      },
+      {
+        title: 'Factory with Registration',
+        code: `const transportFactory = (() => {
+  const registry = new Map();
+
+  return {
+    register(type, creator) {
+      registry.set(type, creator);
+    },
+    create(type, config) {
+      const creator = registry.get(type);
+      if (!creator) throw new Error('Unknown: ' + type);
+      return creator(config);
+    },
+  };
+})();
+
+transportFactory.register('http', (cfg) => ({
+  send(data) { console.log('HTTP POST', cfg.url, data); },
+}));
+
+transportFactory.register('websocket', (cfg) => ({
+  send(data) { console.log('WS send', cfg.url, data); },
+}));
+
+const t = transportFactory.create('http', { url: '/api' });
+t.send({ msg: 'hello' });`,
+        explanation: 'A registry lets third-party code add new types without modifying the factory.',
+      },
+      {
+        title: 'Abstract Factory',
+        code: `function createUIKit(theme) {
+  if (theme === 'dark') {
+    return {
+      createButton: (label) => ({ label, bg: '#333', color: '#fff' }),
+      createInput: (placeholder) => ({ placeholder, bg: '#222', border: '#555' }),
+    };
+  }
+  return {
+    createButton: (label) => ({ label, bg: '#fff', color: '#333' }),
+    createInput: (placeholder) => ({ placeholder, bg: '#fafafa', border: '#ccc' }),
+  };
+}
+
+const kit = createUIKit('dark');
+const btn = kit.createButton('Submit');
+const input = kit.createInput('Email...');`,
+        explanation: 'The abstract factory returns a family of related creators, ensuring consistent theming across all components.',
+      },
+    ],
+    commonMistakes: [
+      'Overcomplicating simple object creation — use a plain object literal when no polymorphism is needed',
+      'Returning inconsistent shapes from different factory branches, breaking the shared interface contract',
+      'Not validating the type parameter, leading to silent undefined returns',
+      'Confusing factory functions with constructor functions — factories do not use new',
+      'Growing the switch statement endlessly instead of using a registry for extensibility',
+    ],
+    interviewTips: [
+      'Emphasize that factories decouple creation from usage — the caller depends on an interface, not a class',
+      'Know the three levels: Simple Factory, Factory Method, Abstract Factory',
+      'Mention real-world uses: React.createElement, document.createElement, Express middleware factories',
+      'Explain when NOT to use it — YAGNI applies if you only ever create one type',
+    ],
+    explanation: `The Factory Pattern is one of the most practical design patterns in JavaScript. At its core, it replaces direct object construction (new ClassName()) with a function call that returns the correct object based on parameters. This seemingly simple change has profound consequences: callers no longer need to know which class to instantiate, new types can be added without modifying consumer code, and complex construction logic is centralized.
+
+In JavaScript, factory functions are especially idiomatic because they avoid the confusion of prototypes and the new keyword. A factory function is just a regular function that returns an object. There is no prototype chain, no this binding ambiguity, and no need for instanceof checks. This simplicity is why many JavaScript experts prefer factory functions over classes for object creation.
+
+The pattern scales from simple switch-based factories to extensible registry-based systems. A registry-based factory allows plugins to register new types at runtime, making it ideal for plugin architectures, transport layers, and UI component systems. Abstract factories take this further by creating families of related objects, ensuring that all objects in a set are compatible with each other.`,
+    commonQuestions: [
+      {
+        question: 'What is the main benefit of the Factory Pattern?',
+        answer: 'It decouples object creation from usage. The calling code works with a shared interface and does not need to know which concrete class or constructor is used, making the system easier to extend and maintain.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How does a factory function differ from a constructor?',
+        answer: 'A factory function is a regular function that returns a new object — no new keyword, no prototype chain, no this binding. A constructor is called with new, sets up this, and implicitly returns the new object with a prototype link.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'When would you use an Abstract Factory over a Simple Factory?',
+        answer: 'When you need to create families of related objects that must be used together consistently — for example, a UI theme system where buttons, inputs, and cards all need to match. The abstract factory ensures all pieces come from the same family.',
+        difficulty: 'hard',
+      },
+    ],
+  },
+
+  {
+    id: 'design-pattern-observer',
+    title: 'Observer Pattern',
+    category: 'advanced',
+    subcategory: 'design-patterns',
+    difficulty: 'intermediate',
+    estimatedReadTime: 10,
+    interviewFrequency: 'very-high',
+    prerequisites: ['functions', 'closures'],
+    nextConcepts: ['design-pattern-mediator', 'design-pattern-strategy'],
+    description: 'The Observer Pattern defines a one-to-many dependency between objects so that when one object (the subject) changes state, all its dependents (observers) are notified and updated automatically. It is the backbone of event-driven programming in JavaScript.',
+    shortDescription: 'Subscribe to state changes with one-to-many notifications',
+    keyPoints: [
+      'The Subject (or EventEmitter) maintains a list of observers and notifies them of state changes',
+      'Observers subscribe with a callback and can unsubscribe at any time',
+      'Promotes loose coupling — the subject does not know the observer implementations',
+      'Foundation of DOM events (addEventListener), Node.js EventEmitter, and reactive libraries',
+      'Can lead to memory leaks if observers are not properly unsubscribed',
+      'Synchronous by default in JS — all observers run before execution returns to the caller',
+      'TypeScript generics can type-safe the event names and payload shapes',
+    ],
+    examples: [
+      {
+        title: 'Basic EventEmitter',
+        code: `class EventEmitter {
+  #listeners = new Map();
+
+  on(event, callback) {
+    if (!this.#listeners.has(event)) {
+      this.#listeners.set(event, []);
+    }
+    this.#listeners.get(event).push(callback);
+    return () => this.off(event, callback); // unsubscribe fn
+  }
+
+  off(event, callback) {
+    const cbs = this.#listeners.get(event);
+    if (cbs) {
+      this.#listeners.set(event, cbs.filter(cb => cb !== callback));
+    }
+  }
+
+  emit(event, ...args) {
+    const cbs = this.#listeners.get(event) || [];
+    cbs.forEach(cb => cb(...args));
+  }
+}
+
+const bus = new EventEmitter();
+const unsub = bus.on('save', (data) => console.log('Saved:', data));
+bus.emit('save', { id: 1 }); // "Saved: { id: 1 }"
+unsub(); // cleanup`,
+        explanation: 'The on() method returns an unsubscribe function — a common pattern that prevents memory leaks.',
+      },
+      {
+        title: 'Observable Store',
+        code: `function createStore(initialState) {
+  let state = initialState;
+  const listeners = new Set();
+
+  return {
+    getState: () => state,
+    setState(updater) {
+      state = typeof updater === 'function' ? updater(state) : updater;
+      listeners.forEach(fn => fn(state));
+    },
+    subscribe(fn) {
+      listeners.add(fn);
+      return () => listeners.delete(fn);
+    },
+  };
+}
+
+const store = createStore({ count: 0 });
+const unsub = store.subscribe(s => console.log('Count:', s.count));
+store.setState(s => ({ count: s.count + 1 })); // "Count: 1"
+unsub();`,
+        explanation: 'This is the core of Redux, Zustand, and similar state managers — a subject with subscribe/notify.',
+      },
+      {
+        title: 'DOM Observer Pattern',
+        code: `const button = document.querySelector('#save-btn');
+
+function logClick(e) {
+  console.log('Button clicked at', e.clientX, e.clientY);
+}
+
+function trackAnalytics(e) {
+  analytics.track('save_click', { x: e.clientX });
+}
+
+// Multiple observers on the same subject (button)
+button.addEventListener('click', logClick);
+button.addEventListener('click', trackAnalytics);
+
+// Cleanup — remove specific observer
+button.removeEventListener('click', logClick);`,
+        explanation: 'addEventListener is the Observer Pattern built into the browser. The button is the subject, handlers are observers.',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting to unsubscribe — the most common cause of memory leaks in SPAs',
+      'Modifying the listeners array while iterating during emit, causing skipped or double-fired callbacks',
+      'Assuming observers fire asynchronously — in JS they are synchronous unless explicitly deferred',
+      'Creating circular notification loops where observer A triggers observer B which triggers A',
+      'Not handling errors in one observer, crashing the entire notification chain',
+    ],
+    interviewTips: [
+      'Implement a basic EventEmitter from scratch — this is a top-10 interview question',
+      'Explain how React state, Redux, and the DOM event system all use the Observer Pattern',
+      'Discuss the memory leak risk and how returning an unsubscribe function solves it',
+      'Compare Observer (subjects push to observers) with Pub/Sub (messages pass through a mediator)',
+    ],
+    explanation: `The Observer Pattern is the most ubiquitous design pattern in JavaScript. Every addEventListener call, every Redux subscription, every React state update, and every Node.js EventEmitter uses this pattern. Understanding it deeply is essential for both interviews and real-world development.
+
+The pattern has two roles: the Subject (the thing being observed) and Observers (the callbacks that react to changes). The subject maintains a list of observers and calls them when its state changes. The key insight is loose coupling — the subject does not know or care what the observers do, and observers can be added or removed at any time without modifying the subject.
+
+Memory management is the main practical concern. In single-page applications, components mount and unmount frequently. If a component subscribes to a global store or event bus but forgets to unsubscribe when it unmounts, the callback stays in memory and continues to fire. This is why modern implementations return an unsubscribe function from the subscribe call, and why React's useEffect cleanup is designed around this exact pattern.`,
+    commonQuestions: [
+      {
+        question: 'How does the Observer Pattern relate to addEventListener?',
+        answer: 'addEventListener is the browser\'s implementation of the Observer Pattern. The DOM element is the subject, and each event handler is an observer. When the event fires, all registered handlers are notified synchronously.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How do you prevent memory leaks with the Observer Pattern?',
+        answer: 'Return an unsubscribe function from the subscribe call and invoke it during cleanup (e.g., in React useEffect return, or component unmount). Use WeakRef or WeakMap for observers when possible, and always remove listeners when the consumer is destroyed.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'What is the difference between Observer and Pub/Sub?',
+        answer: 'In the Observer Pattern, the subject directly notifies its observers — they have a direct reference. In Pub/Sub, publishers and subscribers communicate through a mediator (event bus) and have no direct knowledge of each other, providing even looser coupling.',
+        difficulty: 'hard',
+      },
+    ],
+  },
+
+  {
+    id: 'design-pattern-strategy',
+    title: 'Strategy Pattern',
+    category: 'advanced',
+    subcategory: 'design-patterns',
+    difficulty: 'intermediate',
+    estimatedReadTime: 9,
+    interviewFrequency: 'medium',
+    prerequisites: ['functions', 'design-pattern-factory'],
+    nextConcepts: ['design-pattern-decorator', 'design-pattern-proxy'],
+    description: 'The Strategy Pattern defines a family of interchangeable algorithms, encapsulates each one, and makes them swappable at runtime. In JavaScript, first-class functions make this pattern natural — a strategy is simply a function passed as an argument.',
+    shortDescription: 'Swap algorithms at runtime via interchangeable functions',
+    keyPoints: [
+      'Encapsulates a family of algorithms behind a common interface',
+      'The context object delegates behavior to a strategy instead of implementing it directly',
+      'Strategies can be swapped at runtime without changing the context',
+      'In JavaScript, functions are first-class — a strategy is often just a callback parameter',
+      'Eliminates large if/else or switch chains by mapping types to strategy functions',
+      'Commonly used for validation, sorting, formatting, pricing, and authentication',
+    ],
+    examples: [
+      {
+        title: 'Validation Strategies',
+        code: `const validators = {
+  email: (value) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
+  phone: (value) => /^\\d{10,}$/.test(value),
+  required: (value) => value !== null && value !== '' && value !== undefined,
+  minLength: (min) => (value) => value.length >= min,
+};
+
+function validate(value, strategies) {
+  return strategies.every(strategy => {
+    if (typeof strategy === 'function') return strategy(value);
+    return validators[strategy]?.(value) ?? true;
+  });
+}
+
+validate('alice@test.com', ['required', 'email']);       // true
+validate('short', ['required', validators.minLength(10)]); // false`,
+        explanation: 'Each validation rule is a strategy. The validate function does not know or care how each rule works.',
+      },
+      {
+        title: 'Pricing Strategy',
+        code: `const pricingStrategies = {
+  regular: (price) => price,
+  premium: (price) => price * 0.9,    // 10% discount
+  vip: (price) => price * 0.75,       // 25% discount
+  coupon: (discount) => (price) => price * (1 - discount),
+};
+
+class ShoppingCart {
+  #items = [];
+  #strategy = pricingStrategies.regular;
+
+  setStrategy(strategy) { this.#strategy = strategy; }
+
+  addItem(name, price) { this.#items.push({ name, price }); }
+
+  getTotal() {
+    const subtotal = this.#items.reduce((sum, i) => sum + i.price, 0);
+    return this.#strategy(subtotal);
+  }
+}
+
+const cart = new ShoppingCart();
+cart.addItem('Laptop', 1000);
+cart.setStrategy(pricingStrategies.vip);
+console.log(cart.getTotal()); // 750`,
+        explanation: 'The cart delegates pricing to an external strategy. Changing strategy changes behavior without modifying the cart.',
+      },
+      {
+        title: 'Sorting Strategies',
+        code: `const sortStrategies = {
+  byName: (a, b) => a.name.localeCompare(b.name),
+  byPrice: (a, b) => a.price - b.price,
+  byPriceDesc: (a, b) => b.price - a.price,
+  byRating: (a, b) => b.rating - a.rating,
+};
+
+function sortProducts(products, strategy) {
+  return [...products].sort(strategy);
+}
+
+const products = [
+  { name: 'Widget', price: 25, rating: 4.5 },
+  { name: 'Gadget', price: 15, rating: 4.8 },
+  { name: 'Doohickey', price: 35, rating: 4.2 },
+];
+
+sortProducts(products, sortStrategies.byPrice);
+// [Gadget, Widget, Doohickey]`,
+        explanation: 'Array.sort already accepts a strategy (comparator). This pattern formalizes naming and reuse.',
+      },
+    ],
+    commonMistakes: [
+      'Overengineering — if you only ever have one algorithm, a strategy is overkill',
+      'Not defining a consistent interface for strategies, making them non-interchangeable',
+      'Putting strategy selection logic inside the context instead of the caller',
+      'Forgetting that in JavaScript, first-class functions already provide strategy-like behavior naturally',
+    ],
+    interviewTips: [
+      'Explain that Array.sort, Array.filter, and Promise.then all accept strategies (callbacks)',
+      'Show how the pattern replaces if/else chains with a strategy map',
+      'Discuss how strategies compose — a strategy can wrap another strategy (decorator + strategy)',
+      'Mention real-world uses: payment processors, auth providers, log formatters',
+    ],
+    explanation: `The Strategy Pattern is one of the most natural patterns in JavaScript because functions are first-class citizens. Every time you pass a callback to Array.sort, Array.filter, or a middleware function, you are using the Strategy Pattern. The pattern formalizes this by defining a family of interchangeable algorithms and letting the caller choose which one to use at runtime.
+
+The classic implementation involves a Context (the object that uses the strategy), a Strategy interface (the expected function signature), and Concrete Strategies (the specific implementations). In JavaScript, the "interface" is informal — strategies just need to accept the same parameters and return compatible values. A common approach is to store strategies in an object map, eliminating switch statements and making the system extensible.
+
+The pattern shines when behavior varies based on configuration, user type, environment, or runtime conditions. Instead of littering code with conditionals, you select a strategy once and the context delegates all behavior to it. This makes the code more maintainable, testable (each strategy can be unit tested independently), and extensible (new strategies are added without modifying existing code).`,
+    commonQuestions: [
+      {
+        question: 'How does the Strategy Pattern differ from simple if/else branching?',
+        answer: 'Strategy encapsulates each algorithm as a separate function or object, making them independently testable and swappable. If/else branches hardcode behavior inside the function, making it harder to extend and test individual paths.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Give an example of the Strategy Pattern in native JavaScript APIs.',
+        answer: 'Array.sort accepts a comparator function — that comparator IS the strategy. Array.filter, Array.map, and Promise.then all accept strategy callbacks that define the behavior while the host handles the iteration or async flow.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'How would you combine Strategy with Factory?',
+        answer: 'A factory can select and return the appropriate strategy based on a type parameter. For example, a getValidator(type) factory returns the correct validation strategy function, decoupling both the creation and the usage of strategies.',
+        difficulty: 'hard',
+      },
+    ],
+  },
+
+  {
+    id: 'design-pattern-decorator',
+    title: 'Decorator Pattern',
+    category: 'advanced',
+    subcategory: 'design-patterns',
+    difficulty: 'advanced',
+    estimatedReadTime: 10,
+    interviewFrequency: 'medium',
+    prerequisites: ['design-pattern-strategy', 'higher-order-functions'],
+    nextConcepts: ['design-pattern-proxy'],
+    description: 'The Decorator Pattern dynamically adds responsibilities to an object without modifying its original code. In JavaScript, higher-order functions naturally implement this pattern — a decorator wraps a function to extend its behavior while preserving the original interface.',
+    shortDescription: 'Wrap objects or functions to extend behavior dynamically',
+    keyPoints: [
+      'Adds behavior to individual objects without modifying the class or prototype',
+      'Decorators wrap the original and delegate to it, preserving the interface',
+      'In JavaScript, higher-order functions are the idiomatic decorator mechanism',
+      'Can be composed — multiple decorators stack on top of each other',
+      'TC39 decorators proposal (@decorator syntax) brings first-class support to classes',
+      'Common uses: logging, timing, caching, authentication, retry logic',
+    ],
+    examples: [
+      {
+        title: 'Function Decorator (HOF)',
+        code: `function withLogging(fn) {
+  return function (...args) {
+    console.log('Calling', fn.name, 'with', args);
+    const result = fn(...args);
+    console.log('Result:', result);
+    return result;
+  };
+}
+
+function withTiming(fn) {
+  return function (...args) {
+    const start = performance.now();
+    const result = fn(...args);
+    console.log(fn.name, 'took', (performance.now() - start).toFixed(2), 'ms');
+    return result;
+  };
+}
+
+function add(a, b) { return a + b; }
+
+const enhanced = withLogging(withTiming(add));
+enhanced(2, 3);
+// "Calling add with [2, 3]"
+// "add took 0.01 ms"
+// "Result: 5"`,
+        explanation: 'Each decorator wraps the function, adding behavior before or after. They compose from inside out.',
+      },
+      {
+        title: 'Composable Decorators with pipe',
+        code: `const pipe = (...fns) => (fn) => fns.reduce((acc, decorator) => decorator(acc), fn);
+
+function withRetry(attempts) {
+  return (fn) => async function (...args) {
+    for (let i = 0; i < attempts; i++) {
+      try { return await fn(...args); }
+      catch (err) {
+        if (i === attempts - 1) throw err;
+        console.log('Retry', i + 1);
+      }
+    }
+  };
+}
+
+function withCache(fn) {
+  const cache = new Map();
+  return function (...args) {
+    const key = JSON.stringify(args);
+    if (cache.has(key)) return cache.get(key);
+    const result = fn(...args);
+    cache.set(key, result);
+    return result;
+  };
+}
+
+const enhance = pipe(withLogging, withCache, withRetry(3));
+const fetchUser = enhance(async (id) => {
+  const res = await fetch('/api/users/' + id);
+  return res.json();
+});`,
+        explanation: 'pipe composes decorators left-to-right. Each decorator is independent and reusable.',
+      },
+      {
+        title: 'Object Property Decorator',
+        code: `function readonly(target, key, descriptor) {
+  descriptor.writable = false;
+  return descriptor;
+}
+
+function memoize(target, key, descriptor) {
+  const original = descriptor.value;
+  const cache = new Map();
+  descriptor.value = function (...args) {
+    const cacheKey = JSON.stringify(args);
+    if (cache.has(cacheKey)) return cache.get(cacheKey);
+    const result = original.apply(this, args);
+    cache.set(cacheKey, result);
+    return result;
+  };
+  return descriptor;
+}
+
+class MathUtils {
+  // @readonly — future TC39 syntax
+  static PI = 3.14159;
+
+  // @memoize — future TC39 syntax
+  fibonacci(n) {
+    if (n <= 1) return n;
+    return this.fibonacci(n - 1) + this.fibonacci(n - 2);
+  }
+}`,
+        explanation: 'Property descriptors enable method-level decoration. The TC39 proposal formalizes the @decorator syntax.',
+      },
+    ],
+    commonMistakes: [
+      'Breaking the original interface — a decorator must accept and return the same shape',
+      'Losing function metadata (name, length) when wrapping — use Object.defineProperty to preserve it',
+      'Applying too many decorators, creating a deeply nested call stack that is hard to debug',
+      'Not handling async correctly in decorators that wrap Promise-returning functions',
+      'Confusing the Decorator Pattern with inheritance — decorators compose, inheritance extends',
+    ],
+    interviewTips: [
+      'Show that higher-order functions ARE decorators — withAuth(handler), withLogging(fn)',
+      'Explain composition: decorators can stack, and order matters',
+      'Mention real examples: Express/Koa middleware, React HOCs, TypeScript experimentalDecorators',
+      'Discuss the TC39 decorators proposal and its current stage',
+    ],
+    explanation: `The Decorator Pattern adds behavior to an object or function dynamically, without modifying its source code. In JavaScript, this pattern is implemented most naturally through higher-order functions — functions that take a function and return a new function with enhanced behavior.
+
+Every middleware in Express, every Higher-Order Component in React, and every function wrapper that adds logging, caching, or authentication is a decorator. The pattern is so natural in JavaScript that developers often use it without realizing they are applying a formal design pattern. A decorator wraps the original, adds behavior before or after the call, and delegates to the original to preserve its core functionality.
+
+The power of decorators comes from composition. Multiple decorators can be stacked, and each one is independent and reusable. A pipe() or compose() utility makes the stacking explicit and readable. The TC39 decorators proposal brings first-class @decorator syntax to JavaScript classes, but the higher-order function approach works everywhere and does not require any new syntax.`,
+    commonQuestions: [
+      {
+        question: 'How do higher-order functions relate to the Decorator Pattern?',
+        answer: 'A higher-order function that takes a function and returns a new function with added behavior IS a decorator. The wrapping function preserves the original interface while adding responsibilities like logging, caching, or validation.',
+        difficulty: 'easy',
+      },
+      {
+        question: 'How does the Decorator Pattern differ from inheritance?',
+        answer: 'Inheritance adds behavior at the class level and is static — you cannot add or remove it at runtime. Decorators add behavior to individual instances or functions dynamically, and multiple decorators can be composed without creating a deep class hierarchy.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'What is the order of execution when multiple decorators are composed?',
+        answer: 'With pipe (left-to-right), the leftmost decorator wraps first and executes last (outermost layer). With compose (right-to-left), the rightmost wraps first. Decorators execute from outside in: the outermost wrapper runs its pre-logic first, then delegates inward.',
+        difficulty: 'hard',
+      },
+    ],
+  },
+
+  {
+    id: 'design-pattern-proxy',
+    title: 'Proxy Pattern',
+    category: 'advanced',
+    subcategory: 'design-patterns',
+    difficulty: 'advanced',
+    estimatedReadTime: 11,
+    interviewFrequency: 'medium',
+    prerequisites: ['design-pattern-decorator', 'proxy-reflect'],
+    nextConcepts: ['design-pattern-mediator'],
+    description: 'The Proxy Pattern provides a surrogate or placeholder for another object, controlling access to it. In JavaScript, the built-in Proxy object makes this pattern first-class, enabling interception of fundamental operations like property access, assignment, function invocation, and enumeration.',
+    shortDescription: 'Control access to objects via an intermediary',
+    keyPoints: [
+      'A proxy intercepts operations on a target object via trap functions in a handler',
+      'JavaScript has a native Proxy constructor — no manual implementation needed',
+      'Common traps: get, set, has, deleteProperty, apply (for functions), construct',
+      'Reflect methods provide the default behavior inside trap implementations',
+      'Use cases: validation, lazy loading, access control, change tracking, virtual properties',
+      'Proxies are transparent — code using the proxy does not know it is not the real object',
+    ],
+    examples: [
+      {
+        title: 'Validation Proxy',
+        code: `function createValidatedObject(schema) {
+  return new Proxy({}, {
+    set(target, prop, value) {
+      const validator = schema[prop];
+      if (validator && !validator(value)) {
+        throw new TypeError(prop + ' failed validation');
+      }
+      return Reflect.set(target, prop, value);
+    },
+  });
+}
+
+const user = createValidatedObject({
+  age: (v) => typeof v === 'number' && v >= 0 && v <= 150,
+  name: (v) => typeof v === 'string' && v.length > 0,
+});
+
+user.name = 'Alice'; // OK
+user.age = 25;       // OK
+user.age = -5;       // TypeError: age failed validation`,
+        explanation: 'The set trap validates every assignment. Invalid values are rejected before reaching the target.',
+      },
+      {
+        title: 'Change Tracking Proxy',
+        code: `function trackChanges(target) {
+  const changes = [];
+
+  const proxy = new Proxy(target, {
+    set(obj, prop, value) {
+      changes.push({
+        prop,
+        oldValue: obj[prop],
+        newValue: value,
+        timestamp: Date.now(),
+      });
+      return Reflect.set(obj, prop, value);
+    },
+  });
+
+  return { proxy, getChanges: () => [...changes] };
+}
+
+const { proxy: config, getChanges } = trackChanges({ debug: false });
+config.debug = true;
+config.logLevel = 'verbose';
+console.log(getChanges());
+// [{ prop: 'debug', oldValue: false, newValue: true, ... }, ...]`,
+        explanation: 'Every set operation is logged. This pattern powers reactive state systems and undo/redo features.',
+      },
+      {
+        title: 'Lazy Loading Proxy',
+        code: `function createLazyLoader(loader) {
+  let data = null;
+  let loaded = false;
+
+  return new Proxy({}, {
+    get(target, prop) {
+      if (!loaded) {
+        data = loader();
+        loaded = true;
+      }
+      return Reflect.get(data, prop);
+    },
+  });
+}
+
+const heavyConfig = createLazyLoader(() => {
+  console.log('Loading expensive config...');
+  return { apiKey: 'abc123', region: 'us-east', timeout: 5000 };
+});
+
+// Config is NOT loaded yet
+console.log(heavyConfig.apiKey);
+// "Loading expensive config..." then "abc123"
+console.log(heavyConfig.region); // "us-east" — no reload`,
+        explanation: 'The proxy defers the expensive loader call until the first property access, then caches the result.',
+      },
+    ],
+    commonMistakes: [
+      'Forgetting to use Reflect inside traps — without it, default behavior is lost and the proxy breaks',
+      'Creating performance bottlenecks by proxying hot-path objects accessed millions of times',
+      'Not realizing that proxy === target is false — identity checks fail with proxies',
+      'Using proxies when a simpler getter/setter would suffice',
+      'Not handling all necessary traps — for example, proxying an array requires the get trap for .length',
+    ],
+    interviewTips: [
+      'Know the native Proxy API and at least 3-4 trap names (get, set, has, apply)',
+      'Explain how Reflect provides the default behavior that traps override',
+      'Mention real-world uses: Vue 3 reactivity, MobX observables, API mocking',
+      'Discuss the performance trade-off — proxies add overhead per operation',
+    ],
+    explanation: `The Proxy Pattern places an intermediary between the client and the real object, intercepting and potentially modifying operations. JavaScript is unique among mainstream languages in having a native Proxy constructor that can intercept virtually every object operation: property reads, writes, deletion, enumeration, function calls, and even the in operator.
+
+The handler object defines trap functions that intercept these operations. Inside each trap, the Reflect API provides the default behavior, so you can selectively override only what you need. This combination of Proxy and Reflect is extremely powerful — it enables reactive state systems (Vue 3 uses Proxy for its reactivity), validation layers, change tracking, lazy loading, and access control, all without modifying the original object.
+
+The pattern is transparent: code that uses the proxy does not need to know it is not talking directly to the target. This transparency is both a strength and a risk — proxies can introduce subtle bugs if traps are incomplete or incorrect. Performance is another consideration: every intercepted operation goes through the trap function, so proxying objects in hot loops can cause measurable overhead.`,
+    commonQuestions: [
+      {
+        question: 'What is the difference between the Proxy Pattern and the Decorator Pattern?',
+        answer: 'The Decorator adds new behavior while preserving the original interface. The Proxy controls access to the original — it may add behavior, but its primary purpose is interception (validation, lazy loading, access control). Decorators enhance, proxies mediate.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'Why do you need Reflect when writing Proxy traps?',
+        answer: 'Reflect methods provide the default behavior for each operation (Reflect.get, Reflect.set, etc.). Without Reflect, you would need to manually implement the default semantics, which is error-prone especially for edge cases like inherited properties and property descriptors.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'How does Vue 3 use Proxy for reactivity?',
+        answer: 'Vue 3 wraps reactive objects with a Proxy. The get trap tracks which properties are read during component rendering (dependency collection). The set trap triggers re-renders when tracked properties change. This replaced Vue 2\'s Object.defineProperty approach, enabling reactive arrays and new property detection.',
+        difficulty: 'hard',
+      },
+    ],
+  },
+
+  {
+    id: 'design-pattern-mediator',
+    title: 'Mediator / Pub-Sub Pattern',
+    category: 'advanced',
+    subcategory: 'design-patterns',
+    difficulty: 'advanced',
+    estimatedReadTime: 12,
+    interviewFrequency: 'medium',
+    prerequisites: ['design-pattern-observer', 'design-pattern-singleton'],
+    nextConcepts: [],
+    description: 'The Mediator Pattern centralizes communication between objects through a single coordinator, preventing direct object-to-object coupling. Pub/Sub is a specialized form where publishers emit named events and subscribers listen for them through a shared bus, enabling fully decoupled architectures.',
+    shortDescription: 'Centralized communication hub for decoupled components',
+    keyPoints: [
+      'The mediator encapsulates how a set of objects interact, promoting loose coupling',
+      'Objects communicate through the mediator instead of referencing each other directly',
+      'Pub/Sub extends this with named channels — publishers and subscribers never know about each other',
+      'Widely used in chat systems, form validation, UI component coordination, and microservice messaging',
+      'Can become a god object if too much logic is placed in the mediator itself',
+      'TypeScript generics can enforce type-safe event maps for the event bus',
+      'Different from Observer: Observer is one-to-many from a subject, Mediator is many-to-many through a hub',
+    ],
+    examples: [
+      {
+        title: 'Type-Safe Event Bus (Pub/Sub)',
+        code: `class EventBus {
+  #channels = new Map();
+
+  publish(channel, data) {
+    const subs = this.#channels.get(channel) || [];
+    subs.forEach(fn => fn(data));
+  }
+
+  subscribe(channel, callback) {
+    if (!this.#channels.has(channel)) {
+      this.#channels.set(channel, []);
+    }
+    this.#channels.get(channel).push(callback);
+    return () => {
+      const subs = this.#channels.get(channel);
+      this.#channels.set(channel, subs.filter(fn => fn !== callback));
+    };
+  }
+}
+
+const bus = new EventBus();
+
+// Component A — publisher
+bus.publish('cart:updated', { items: 3, total: 99.99 });
+
+// Component B — subscriber (no reference to A)
+const unsub = bus.subscribe('cart:updated', (data) => {
+  console.log('Cart badge:', data.items);
+});`,
+        explanation: 'Component A and B communicate through named channels. Neither knows the other exists.',
+      },
+      {
+        title: 'Chat Room Mediator',
+        code: `class ChatRoom {
+  #users = new Map();
+
+  register(user) {
+    this.#users.set(user.name, user);
+    user.chatRoom = this;
+  }
+
+  send(message, from, to) {
+    if (to) {
+      // Direct message
+      const recipient = this.#users.get(to);
+      if (recipient) recipient.receive(message, from);
+    } else {
+      // Broadcast
+      this.#users.forEach((user, name) => {
+        if (name !== from) user.receive(message, from);
+      });
+    }
+  }
+}
+
+class User {
+  constructor(name) { this.name = name; }
+  send(message, to) { this.chatRoom.send(message, this.name, to); }
+  receive(message, from) { console.log(this.name + ' received from ' + from + ': ' + message); }
+}
+
+const room = new ChatRoom();
+const alice = new User('Alice');
+const bob = new User('Bob');
+room.register(alice);
+room.register(bob);
+alice.send('Hello!'); // Bob receives`,
+        explanation: 'Users communicate through the ChatRoom mediator. Adding or removing users requires no changes to other users.',
+      },
+      {
+        title: 'Form Validation Mediator',
+        code: `class FormMediator {
+  #fields = new Map();
+  #submitBtn = null;
+
+  registerField(name, element, validator) {
+    this.#fields.set(name, { element, validator, valid: false });
+    element.addEventListener('input', () => this.validate(name));
+  }
+
+  registerSubmit(btn) {
+    this.#submitBtn = btn;
+    this.updateSubmitState();
+  }
+
+  validate(name) {
+    const field = this.#fields.get(name);
+    field.valid = field.validator(field.element.value);
+    field.element.style.borderColor = field.valid ? 'green' : 'red';
+    this.updateSubmitState();
+  }
+
+  updateSubmitState() {
+    const allValid = [...this.#fields.values()].every(f => f.valid);
+    if (this.#submitBtn) this.#submitBtn.disabled = !allValid;
+  }
+}
+
+const form = new FormMediator();
+form.registerField('email', emailInput, v => v.includes('@'));
+form.registerField('name', nameInput, v => v.length > 0);
+form.registerSubmit(submitBtn);`,
+        explanation: 'Fields do not know about each other or the submit button. The mediator coordinates validation and submit state.',
+      },
+    ],
+    commonMistakes: [
+      'Putting too much business logic in the mediator, turning it into a god object',
+      'Not namespacing events in large Pub/Sub systems, causing event name collisions',
+      'Forgetting to unsubscribe, creating memory leaks identical to the Observer Pattern',
+      'Using Pub/Sub when direct function calls would be simpler and more debuggable',
+      'Creating circular publish chains that cause infinite loops',
+    ],
+    interviewTips: [
+      'Clearly distinguish Mediator from Observer — Mediator is many-to-many through a hub, Observer is one-to-many from a subject',
+      'Mention real-world examples: Redux (store as mediator), message queues, chat systems',
+      'Discuss the trade-off: loose coupling vs harder debugging (events are harder to trace than direct calls)',
+      'Know when NOT to use it — small apps with 2-3 components communicating directly are simpler without a mediator',
+    ],
+    explanation: `The Mediator Pattern replaces direct object-to-object communication with centralized coordination. Instead of component A calling component B directly, both communicate through a mediator. This eliminates the web of dependencies that forms when N components each reference M others, replacing it with a star topology where every component only knows the mediator.
+
+Pub/Sub is the most common specialization of the Mediator Pattern in JavaScript. Publishers emit named events with data, and subscribers register callbacks for event names they care about. The event bus is the mediator. This is the architecture behind Redux (dispatch is publish, subscribe is subscribe), Node.js EventEmitter in large systems, and browser CustomEvents.
+
+The main risk is that the mediator can become a god object — a single class that knows too much and does too much. The mediator should only route messages, not contain business logic. Another concern is debuggability: when communication flows through events, it is harder to trace the path from cause to effect compared to direct function calls. For this reason, typed event buses (with TypeScript generics constraining event names and payloads) are preferred in production codebases.`,
+    commonQuestions: [
+      {
+        question: 'What is the difference between the Mediator and Observer patterns?',
+        answer: 'Observer is one-to-many: a single subject notifies its observers directly. Mediator is many-to-many: multiple objects communicate through a central hub. In Observer, the subject knows its observers. In Mediator/Pub-Sub, publishers and subscribers are completely decoupled.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'How does Redux relate to the Mediator/Pub-Sub pattern?',
+        answer: 'The Redux store acts as a mediator. Components dispatch actions (publish) and subscribe to state changes (subscribe). Components never communicate directly — all state flows through the store, which is a centralized Pub/Sub bus with a reducer controlling how events modify state.',
+        difficulty: 'medium',
+      },
+      {
+        question: 'What is the god object problem with mediators?',
+        answer: 'When too much logic is placed in the mediator itself (validation, transformation, side effects), it becomes a monolithic class that is hard to test and modify. The mediator should only route messages — business logic belongs in the participants or in dedicated service functions.',
+        difficulty: 'hard',
+      },
+    ],
+  },
 ]
 
 export const conceptCategories = [
@@ -12497,6 +13609,11 @@ export const subcategories: Record<string, { name: string; description: string; 
     name: 'Error Handling',
     description: 'Circuit breakers, error boundaries, and graceful degradation for async code',
     order: 11
+  },
+  'design-patterns': {
+    name: 'Design Patterns',
+    description: 'Classic software design patterns implemented in JavaScript',
+    order: 12
   }
 }
 
@@ -12563,6 +13680,15 @@ const relatedConceptsMap: Record<string, string[]> = {
   'web-storage': ['json', 'dom-events'],
   'async-patterns-advanced': ['async-await-parallel', 'async-await-error-handling', 'async-iterators', 'abort-controller'],
   'async-error-boundaries': ['async-await-error-handling', 'async-patterns-advanced', 'promises-deep-dive'],
+  // Design Patterns
+  'design-pattern-module': ['closures', 'closure-module-pattern', 'design-pattern-singleton', 'design-pattern-factory'],
+  'design-pattern-singleton': ['design-pattern-module', 'design-pattern-factory', 'design-pattern-mediator', 'closures'],
+  'design-pattern-factory': ['design-pattern-module', 'design-pattern-singleton', 'design-pattern-strategy', 'functions'],
+  'design-pattern-observer': ['design-pattern-mediator', 'design-pattern-strategy', 'dom-events', 'closures'],
+  'design-pattern-strategy': ['design-pattern-factory', 'design-pattern-decorator', 'higher-order-functions', 'functions'],
+  'design-pattern-decorator': ['design-pattern-strategy', 'design-pattern-proxy', 'higher-order-functions', 'function-composition'],
+  'design-pattern-proxy': ['design-pattern-decorator', 'design-pattern-mediator', 'proxy-reflect', 'getters-setters'],
+  'design-pattern-mediator': ['design-pattern-observer', 'design-pattern-singleton', 'design-pattern-proxy', 'dom-events'],
 }
 
 export function getConceptById(id: string): Concept | undefined {
