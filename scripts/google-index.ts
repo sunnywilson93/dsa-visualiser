@@ -29,6 +29,8 @@ import {
 import { problemConcepts } from '../src/data/algorithmConcepts'
 import { topicHubs } from '../src/data/topicHubs'
 import { comparisons } from '../src/data/comparisons'
+import { reactChallenges } from '../src/data/reactChallenges'
+import { quizzes } from '../src/data/quizzes'
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -60,6 +62,9 @@ function buildUrlList(): string[] {
     '/interview/react',
     '/interview/bundlers',
     '/playground/event-loop',
+    '/playground/async-visualizer',
+    '/challenges/react',
+    '/quiz',
     '/concepts/dsa/roadmap',
     '/concepts/js/cheatsheet',
     '/concepts/dsa/cheatsheet',
@@ -94,6 +99,12 @@ function buildUrlList(): string[] {
 
   // Comparison pages
   comparisons.forEach((c) => urls.push(`${BASE_URL}/compare/${c.id}`))
+
+  // React challenge pages
+  reactChallenges.forEach((c) => urls.push(`${BASE_URL}/challenges/react/${c.id}`))
+
+  // Quiz pages
+  quizzes.forEach((q) => urls.push(`${BASE_URL}/quiz/${q.id}`))
 
   // Category pages
   const categoryMap = new Map(

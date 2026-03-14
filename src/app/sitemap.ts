@@ -14,10 +14,12 @@ import { systemDesignConcepts } from '@/data/systemDesignConcepts'
 import { problemConcepts } from '@/data/algorithmConcepts'
 import { topicHubs } from '@/data/topicHubs'
 import { comparisons } from '@/data/comparisons'
+import { reactChallenges } from '@/data/reactChallenges'
+import { quizzes } from '@/data/quizzes'
 
 // Content milestone dates — update when meaningful content is added or revised
-const JS_DSA_LAST_UPDATED = new Date('2026-03-10')
-const REACT_LAST_UPDATED = new Date('2026-03-10')
+const JS_DSA_LAST_UPDATED = new Date('2026-03-11')
+const REACT_LAST_UPDATED = new Date('2026-03-11')
 
 // Exported for concept page schemas; points to the most recent content update
 export const CONTENT_LAST_UPDATED = REACT_LAST_UPDATED
@@ -116,6 +118,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: CONTENT_LAST_UPDATED,
       changeFrequency: 'monthly',
       priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/playground/async-visualizer`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/challenges/react`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/quiz`,
+      lastModified: CONTENT_LAST_UPDATED,
+      changeFrequency: 'weekly',
+      priority: 0.8,
     },
     {
       url: `${BASE_URL}/concepts/dsa/roadmap`,
@@ -265,6 +285,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
+  // React challenge pages (/challenges/react/[challengeId])
+  const challengePages: MetadataRoute.Sitemap = reactChallenges.map((challenge) => ({
+    url: `${BASE_URL}/challenges/react/${challenge.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
+
+  // Quiz pages (/quiz/[quizId])
+  const quizPages: MetadataRoute.Sitemap = quizzes.map((quiz) => ({
+    url: `${BASE_URL}/quiz/${quiz.id}`,
+    lastModified: CONTENT_LAST_UPDATED,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
+
   // Updates/changelog page
   const updatesPage: MetadataRoute.Sitemap = [
     {
@@ -289,6 +325,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...problemPages,
     ...conceptVizPages,
     ...comparisonPages,
+    ...challengePages,
+    ...quizPages,
     ...updatesPage,
   ]
 }
